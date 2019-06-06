@@ -7,9 +7,6 @@ module.exports = {
     entry: {
         'photog': `${__dirname}/../apps/photog/js_src/index.js`,
     },
-    
-    
-    // [`${__dirname}/js_src/index.js`, `${__dirname}/sass/style.scss`,],
     output: {
         path: path.join(__dirname, '..', 'apps'),
         filename: '[name]/priv/static/assets/app.js',
