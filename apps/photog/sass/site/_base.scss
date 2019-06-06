@@ -1,0 +1,90 @@
+/*
+* Base
+*/
+
+//change to box sizing from bootstrap _reboot.scss
+*,
+*::before,
+*::after {
+  box-sizing: border-box; // 1
+}
+
+body{
+    margin: 0;
+    font-family: sans-serif;
+}
+
+ul{
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 0;
+}
+
+a:link{
+    text-decoration: none;
+}
+a:hover, a:target{
+    text-decoration: underline;
+}
+
+img{
+    max-width: 100%;
+}
+
+fieldset{
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+
+.container{
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2em;
+}
+.main{
+    padding-bottom: 5rem;
+}
+.footer{
+    padding-bottom: 2rem;
+}
+
+.invisible{
+    visibility: hidden;
+}
+
+//can't use display none or scrollIntoView won't work
+.alert:empty{
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+.spread-content, .pull-right{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
+.spread-content{
+    justify-content: space-between;
+}
+
+.pull-right{
+    justify-content: flex-end;
+}
+
+h1, h2, h3, h4{
+    margin-top: 0;
+}
+//major third type-scale
+h1{
+    font-size: 3.052rem;
+}
+h2{
+    font-size: 2.441rem;
+}
+h3{
+    font-size: 1.953rem;
+}

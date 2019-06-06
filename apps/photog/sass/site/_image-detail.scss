@@ -1,0 +1,41 @@
+/*Image show pages*/
+.image-show-thumbnail-container{
+    display: flex;
+    justify-content: center;
+}
+.image-show-link-container{
+    font-size: large;
+    text-align: center;
+    padding: 1em 0;
+}
+
+.subsection-title{
+    margin-bottom: 7px;
+}
+
+$image_show_dt_width: 10em;
+.image-show-info-section{
+	.image-info-section-heading{
+		margin-bottom: 0.5rem;
+	}
+	.image-exif-heading{
+		margin: 0 0 0.5rem;
+	}
+	dl{
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: 0;
+	}
+	dt{
+		font-weight: normal;
+		flex-basis: $image_show_dt_width;
+		margin-bottom: 0.5em;
+		&:after{
+			content: ":";
+		}
+	}
+	dd{
+		flex-basis: calc(100% - #{$image_show_dt_width});
+		margin-left: 0;
+	}
+}

@@ -1,0 +1,17 @@
+.btn{
+    &:hover{
+        cursor: pointer;
+    }
+    &[disabled]{
+        cursor: not-allowed;
+    }
+}
+
+//bootstrap 4 no longer has btn-xs
+//based on: https://stackoverflow.com/questions/33911049/btn-xs-no-longer-a-valid-option-in-bootstrap-4
+.btn-xs{
+    padding  : 0.25rem 0.4rem;
+    font-size  : 0.875rem;
+    line-height  : 0.9;
+    border-radius : 0.2rem;
+}
