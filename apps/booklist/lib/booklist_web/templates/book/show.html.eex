@@ -1,0 +1,90 @@
+<%= render(BooklistWeb.SharedView, "show-header.html", 
+      conn: @conn, 
+      resource_title_plural: "Books", 
+      resource_path_atom: :book_path, 
+      item: @book, 
+      item_name: to_s(@book),
+      search_query: to_search_query(@book)
+    ) 
+%>
+
+<%= render("changeset-button.html", 
+      conn: @conn, 
+      book: @book, 
+      changeset: @changeset_is_active, 
+      button_text: is_active_button_text(@book.is_active), 
+      button_class: changeset_button_css_class(@book.is_active))
+%>
+
+<%= render("changeset-button.html", 
+      conn: @conn, 
+      book: @book, 
+      changeset: @changeset_on_bookshelf, 
+      button_text: on_bookshelf_button_text(@book.on_bookshelf), 
+      button_class: changeset_button_css_class(@book.on_bookshelf))
+%>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @book.title %>
+  </li>
+
+  <li>
+    <strong>Sort title:</strong>
+    <%= @book.sort_title %>
+  </li>
+
+  <li>
+    <strong>Subtitle:</strong>
+    <%= @book.subtitle %>
+  </li>
+
+  <li>
+    <strong>Author:</strong>
+    <%= if !is_nil(@book.author) do
+      link BooklistWeb.AuthorView.to_s(@book.author), to: Routes.author_path(@conn, :show, @book.author)
+    end
+    %>
+  </li>
+
+  <li>
+    <strong>Genre:</strong>
+    <%= link BooklistWeb.GenreView.to_s(@book.genre), to: Routes.genre_path(@conn, :show, @book.genre) %>
+  </li>
+
+  <li>
+    <strong>Is fiction:</strong>
+    <%= @book.is_fiction %>
+  </li>
+
+</ul>
+
+<div class="show_category">
+  <div class="show_category_header">
+    <h3>Locations</h3>
+    <div class="btn_group">
+      <%= link "Add location", to: Routes.book_location_path(@conn, :new, @book.id), class: "btn btn-success" %>
+    </div>
+  </div>
+  <ul class="show_categories_list indented_list">
+    <%= for book_location <- @book.book_locations do %>
+      <li><%= link BooklistWeb.BookLocationView.to_s_location(book_location), to: Routes.book_location_path(@conn, :show, book_location) %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="show_category">
+  <div class="show_category_header">
+    <h3>Ratings</h3>
+    <div class="btn_group">
+      <%= link "Add rating", to: Routes.rating_path(@conn, :new, @book.id), class: "btn btn-success" %>
+    </div>
+  </div>
+  <ul class="show_categories_list indented_list">
+    <%= for rating <- @book.ratings do %>
+      <li><%= link BooklistWeb.RatingView.to_s_short(rating), to: Routes.rating_path(@conn, :show, rating) %></li>
+    <% end %>
+  </ul>
+</div>

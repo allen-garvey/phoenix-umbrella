@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Booklist</title>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+  </head>
+  <body>
+    <div class="total">
+      <nav class='nav'>
+        <div class="container nav_container">
+          <%= link "Booklist", to: Routes.page_path(@conn, :index), class: "brand nav_heading" %>
+          <ul class='nav_links clearfix'>
+            <li><%= link "Books", to: BooklistWeb.BookView.active_book_path(@conn) %></li>
+            <li><%= link "Bookshelf", to: Routes.page_path(@conn, :bookshelf) %></li>
+            <li><%= link "Libraries", to: Routes.library_path(@conn, :index) %></li>
+            <li><%= link "Loans", to: Routes.loan_path(@conn, :index) %></li>
+            <li><%= link "Add Book", to: Routes.book_path(@conn, :new), class: "btn btn-success" %></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container">
+        <%= render @view_module, @view_template, assigns %>
+      </div>
+    </div>
+    <div class="footer">
+      <ul class="footer_links container">
+        <li><%= link "Resources", to: Routes.page_path(@conn, :resources) %></li>
+        <li><%= link "Add Author", to: Routes.author_path(@conn, :new) %></li>
+        <li><%= link "Authors", to: Routes.author_path(@conn, :index) %></li>
+        <li><%= link "Inactive books", to: BooklistWeb.BookView.inactive_unread_book_path(@conn) %></li>
+        <li><%= link "Finished books", to: BooklistWeb.BookView.inactive_read_book_path(@conn) %></li>
+        <li><%= link "No location books", to: BooklistWeb.BookView.no_location_active_book_path(@conn) %></li>
+        <li><%= link "Reports", to: BooklistWeb.ReportsView.reports_for_current_year_path(@conn) %></li>
+      </ul>
+    </div>
+    <div class="modal_container" id="modal_container" style="display:none;">
+      <div class="modal_overlay" id="modal_overlay"></div>
+      <div class="modal" id="modal">
+        <div class="modal_body" id="modal_body"></div>
+        <div class="modal_buttons modal_confirm_buttons">
+          <button class="btn btn-default" id="modal_confirm_cancel"></button>
+          <button class="btn btn-danger" id="modal_confirm_confirm"></button>
+        </div>
+        <div class="modal_buttons modal_alert_buttons">
+          <button class="btn btn-default" id="modal_alert_confirm"></button>
+        </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>

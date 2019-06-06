@@ -1,0 +1,21 @@
+/*
+* Styles for reporting
+*/
+
+.stat_boxes{
+	display: flex;
+	justify-content: space-between;
+	margin-top: 1em;
+}
+.reporting_books_by_week{
+	margin-top: 3em;
+}
+
+.reporting_top_rated_books_list{
+	li{
+		margin-bottom: 1em;
+		& > *{
+			margin-right: 0.5em;
+		}
+	}
+}

@@ -1,0 +1,32 @@
+<%= render(BooklistWeb.SharedView, "show-header.html", 
+      conn: @conn, 
+      resource_title_plural: "Loans", 
+      resource_path_atom: :loan_path, 
+      item: @loan, 
+      item_name: to_s(@loan)) 
+%>
+
+<%= 
+	if !is_nil(@loan.library.url) do 
+		link "Renew loan", to: @loan.library.url
+	end
+%>
+
+<ul>
+
+	<li>
+		<strong>Library:</strong>
+		<%= link BooklistWeb.LibraryView.to_s(@loan.library), to: Routes.library_path(@conn, :show, @loan.library) %>
+	</li>
+
+	<li>
+		<strong>Due date:</strong>
+		<%= BooklistWeb.SharedView.us_formatted_date(@loan.due_date) %>
+	</li>
+
+	<li>
+		<strong>Item count:</strong>
+		<%= @loan.item_count %>
+	</li>
+
+</ul>

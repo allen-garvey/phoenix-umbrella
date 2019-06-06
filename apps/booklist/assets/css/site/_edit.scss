@@ -1,0 +1,13 @@
+/*
+* Styles for edit and new form view
+*/
+
+.edit, .new{
+	.form-control{
+		width: 30em;
+	}
+}
+.radio_group label{
+	font-weight: normal;
+	margin-right: 1em;
+}

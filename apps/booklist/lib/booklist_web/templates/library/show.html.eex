@@ -1,0 +1,50 @@
+<%= render(BooklistWeb.SharedView, "show-header.html", 
+      conn: @conn, 
+      resource_title_plural: "Libraries", 
+      resource_path_atom: :library_path, 
+      item: @library, 
+      item_name: to_s(@library)) 
+%>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @library.name %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= 
+      if !is_nil(@library.url) do 
+        link @library.url, to: @library.url
+      end
+    %>
+  </li>
+
+  <li>
+    <strong>Super search key:</strong>
+    <%= @library.super_search_key %>
+  </li>
+
+</ul>
+
+<div>
+  <div class="show_category_header">
+    <h2>Locations</h2>
+    <div class="btn_group">
+      <%= link "Add location", to: Routes.location_path(@conn, :new, @library.id), class: "btn btn-success" %>
+    </div>
+  </div>
+  <ul class="show_categories_list">
+    <%= for location <- @library.locations do %>
+      <li>
+        <h3><%= link BooklistWeb.LocationView.to_s(location), to: Routes.location_path(@conn, :show, location) %></h3>
+        <div class="show_subcategory js_qr_parent">
+          <h4 class="subcategory_heading">Books</h4>
+          <%= render(BooklistWeb.LocationView, "book-list.html", conn: @conn, location: location, library: @library) %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

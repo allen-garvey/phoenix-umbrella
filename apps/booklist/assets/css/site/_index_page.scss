@@ -1,0 +1,49 @@
+/*
+ * Styles for default index view
+ */
+
+ .index_list{
+ 	li{
+ 		display: flex;
+ 		justify-content: space-between;
+ 		padding: 0.5em 5px;
+ 		min-height: 65px;
+ 		@include font_size(1);
+ 		&:nth-of-type(odd){
+ 			background-color: lighten($color_secondary_accent, 35%);
+ 		}
+ 		a{
+ 			color: darken($color_primary_accent, 30%);
+ 		}
+ 		a:first-child{
+ 			flex-grow: 1;
+ 			align-self: center;
+ 		}
+ 		.btn_group{
+ 			text-align: right;
+ 			flex-basis: 60px;
+ 			align-self: center;
+ 		}
+ 	}
+ 	.btn_search{
+ 		color: white;
+ 		font-size: 1em;
+ 		padding-right: 1em;
+ 		padding-left: 1em;
+ 	}
+ }
+.search_container{
+	padding-top: 1rem;
+	input{
+		@include font_size(1);
+		box-sizing: border-box;
+		height: 2.5em;
+		width: 15em;
+		transition-property: width;
+		transition-duration: 0.5s;
+		&:focus{
+			width: 100%;
+		}
+	}
+}
+

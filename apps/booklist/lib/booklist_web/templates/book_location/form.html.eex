@@ -1,0 +1,20 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= BooklistWeb.SharedView.form_group :book_id, f, @books, &select/4 %>
+
+  <%= BooklistWeb.SharedView.form_group :location_id, f, @locations, &select/4 %>
+
+  <%= BooklistWeb.SharedView.form_group :call_number, f, &text_input/3 %>
+
+  <%= if !is_nil(assigns[:referrer]) do
+  		hidden_input(f, :referrer, name: :referrer, value: assigns[:referrer])
+  	end
+  %>
+
+  <%= BooklistWeb.SharedView.submit_button "Book Location" %>
+<% end %>

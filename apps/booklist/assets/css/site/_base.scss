@@ -1,0 +1,20 @@
+/*
+* Site base styles
+*/
+
+.alert:empty{
+	display: none;
+}
+
+.form-control{
+	@include font_size(1);
+	box-sizing: border-box;
+	height: 2.2em;
+}
+
+//for search icons on show and index pages
+.btn_search {
+	.search_icon{
+ 			transform: rotate(-45deg);
+ 		}
+}

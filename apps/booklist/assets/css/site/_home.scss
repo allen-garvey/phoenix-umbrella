@@ -1,0 +1,42 @@
+/*
+ * Styles for home page
+ */
+
+
+.home_header{
+	margin-bottom: 3em;
+	.alert{
+		//loans due soon list
+		ul{
+			margin-top: 0;
+		}
+	}
+}
+.home_section_container{
+	@include media_q(sm){
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-direction: row;
+		flex-direction: row;
+		-webkit-flex-wrap: wrap;
+		flex-wrap: wrap;
+	}
+}
+.home_section{
+	margin-bottom: 5em;
+	-webkit-flex-grow: 1;
+	-webkit-flex-basis: 49%;
+	flex-grow: 1;
+	flex-basis: 49%;
+	-webkit-order: 1;
+	order: 1;
+	&:nth-of-type(2){
+		@include media_q(sm){
+			-webkit-order: 0;
+			order: 0;
+		}
+	}
+	.btn{
+		margin-top: 3em;
+	}
+}

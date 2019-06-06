@@ -1,0 +1,13 @@
+<button class="btn btn-primary btn-xs" data-role="qr-button">QR Code</button>
+<ul class="show_subcategory_list" data-role="qr-list">
+	<%= for book_location <- @location.book_locations do %>
+		<li>
+			<input type="checkbox" data-role="qr-checkbox" checked/>
+			<%= link BooklistWeb.BookView.to_s(book_location.book), to: Routes.book_path(@conn, :show, book_location.book), data_role: "qr-title" %>
+			<%= BooklistWeb.BookLocationView.super_search_direct_link(@library.super_search_key, BooklistWeb.BookView.to_search_query(book_location.book), BooklistWeb.BookLocationView.get_call_number(book_location.call_number, book_location.book)) %>
+			<div class="btn_group">
+				<%= link content_tag(:div, "⚲", class: "search_icon"), to: BooklistWeb.SuperSearchHelpers.search_url(BooklistWeb.BookView.to_search_query(book_location.book)), class: "btn btn-primary btn-xs btn_search"  %>
+			</div>
+		</li>
+    <% end %>
+</ul>

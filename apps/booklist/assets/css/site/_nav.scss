@@ -1,0 +1,51 @@
+/*
+ * Nav styles
+ */
+
+.nav{
+	@include font_heading;
+	@include font_size(3);
+	padding: 0.5rem 0 0; //some sort of extra padding on bottom for some reason
+	background-color: $color_nav_background;
+	margin-bottom: 1rem;
+		a{
+			color: $color_nav_links;
+			@include media_q_inverse(sm){
+				display: block;
+			}
+		}
+	.btn{
+		color: white;
+		padding-top: 8px;
+		padding-bottom: 4px;
+	}
+	.nav_container{
+		display: flex;
+		justify-content: space-between;
+		@include media_q_inverse(sm){
+			flex-direction: column;
+		}
+	}
+	.nav_heading{
+		@include font_brand;
+	}
+
+	.nav_links{
+		@include font_size(2);
+		font-weight: 100;
+		margin-top: 0.1em;
+		margin-bottom: 0;
+		@include media_q(sm){
+			float: right;
+		}
+		li{
+			margin-right: 0.5rem;
+			@include media_q(sm){
+				display: inline-block;
+			}
+		}
+		li:last-of-type{
+			margin-right: 0;
+		}
+	}
+}

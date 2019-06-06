@@ -1,0 +1,25 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= BooklistWeb.SharedView.form_group :title, f, &text_input/3 %>
+
+  <%= BooklistWeb.SharedView.form_group :subtitle, f, &text_input/3 %>
+
+  <%= BooklistWeb.SharedView.form_group :author_id, f, @authors, &select/4 %>
+  
+  <div class="form-group">
+    <%= label f, :is_fiction_true, "Fiction" %>
+    <%= radio_button f, :is_fiction, "true" %>
+    <%= label f, :is_fiction_false, "Non-fiction" %>
+    <%= radio_button f, :is_fiction, "false" %>
+    <%= error_tag f, :is_fiction %>
+  </div>
+
+  <%= BooklistWeb.SharedView.form_group :genre_id, f, @genres, &select/4 %>
+
+  <%= BooklistWeb.SharedView.submit_button "Book" %>
+<% end %>

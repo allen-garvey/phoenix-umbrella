@@ -1,0 +1,7 @@
+<%= render BooklistWeb.SharedView, "index.html", 
+  conn: @conn, 
+  item_name: "Book", 
+  items: @books, 
+  item_path: :book_path, 
+  item_to_s: &to_s/1 
+%>

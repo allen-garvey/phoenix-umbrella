@@ -1,0 +1,39 @@
+/**
+* Constants
+*/
+//type scale descriptive names
+$type_scale_min3 : 1.20;
+$type_scale_maj3 : 1.25;
+$type_scale_p4   : 1.333;
+$type_scale_aug4 : 1.414;
+$type_scale_p5   : 1.5;
+
+//type scale
+$type_scale : $type_scale_p4;
+$rem_base : 16px;
+
+//fonts
+$font_brand : 'FranklinGothic URW', 'ITC Franklin Gothic Std', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font_heading : 'FranklinGothic URW', 'ITC Franklin Gothic Std', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font_body : Georgia, 'Times', serif;
+$font_code : Menlo, Monaco, Consolas, Inconsolata, 'Courier New', monospace;
+
+//color names
+
+//color roles
+$color_primary_text : black !default;
+$color_primary_accent : dodgerblue !default;
+$color_primary_background : white !default;
+$color_nav_links : lighten($color_primary_accent, 20%);
+$color_nav_background: black;
+$color_secondary_accent: #419641;
+
+//layout
+$container_width : 1000px;
+$container_horizontal_padding : 1rem;
+$total_height : 88vh;
+
+//media queries
+$breakpoint_sm : 768px;
+$breakpoint_med : 992px;
+$breakpoint_lg : 1200px;

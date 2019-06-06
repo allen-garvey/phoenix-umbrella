@@ -1,0 +1,12 @@
+<% #can't have whitespace in alert, or alert:empty CSS will break %>
+<div class="alert alert-info"><%= get_flash(@conn, :info) %></div>
+
+<h1><%= naive_pluralize(@item_name) %></h1>
+
+<%= link "Add " <> @item_name, to: apply(Routes, @item_path, [@conn, :new]), class: "btn btn-success btn-sm" %>
+
+<ul class="index_list">
+	<%= for item <- @items do %>
+		<li><%= link @item_to_s.(item), to: apply(Routes, @item_path, [@conn, :show, item]) %></li>
+	<% end %>
+</ul>

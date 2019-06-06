@@ -1,0 +1,35 @@
+<header class="home_header">
+  <%= if !Enum.empty?(@loans_due_soon) do %>
+    <div class="alert alert-info">
+      Due back soon:
+      <ul>
+        <%= for loan <- @loans_due_soon do %>
+          <li><%= link BooklistWeb.LoanView.to_s(loan), to: Routes.loan_path(@conn, :show, loan) %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <h1 class="home_heading">Booklist</h1>  
+    <p class="tagline">All your books, all in one place</p>
+  </div>
+</header>
+<div class="home_section_container">
+  <div class="home_section">
+    <h2 class="home_section_heading"><%= link "Books", to: BooklistWeb.BookView.active_book_path(@conn) %></h2>
+    <p class="description">All your books</p>
+    <%= link "Add Book", to: Routes.book_path(@conn, :new), class: "btn btn-success" %>
+  </div>
+  <div class="home_section">
+    <h2 class="home_section_heading"><%= link "Bookshelf", to: Routes.page_path(@conn, :bookshelf) %></h2>
+    <p class="description">What’s on your bookshelf now</p>
+  </div>
+  <div class="home_section">
+    <h2 class="home_section_heading"><%= link "Loans", to: Routes.loan_path(@conn, :index) %></h2>
+    <p class="description">Books you’ve checked out</p>
+  </div>
+  <div class="home_section">
+    <h2 class="home_section_heading"><%= link "Libraries", to: Routes.library_path(@conn, :index) %></h2>
+    <p class="description">Where all your books are</p>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+@mixin font_size($pow : 1, $scale : $type_scale){
+	font-size : #{pow($scale, $pow)}rem;
+}
+
+@mixin font_brand{
+	font-family: $font_brand;
+	font-weight: 500;
+	@content;
+}
+@mixin font_heading{
+	font-family: $font_heading;
+	@content;
+}
+@mixin font_body{
+	font-family: $font_body;
+	@content;
+}
+@mixin font_code{
+	font-family: $font_code;
+	@content;
+}
+
+@mixin media_q($breakpoint: sm){
+	@if $breakpoint == sm{
+		@media screen and (min-width: $breakpoint_sm){
+			@content;
+		}
+	}
+	@else if $breakpoint == med{
+		@media screen and (min-width: $breakpoint_med){
+			@content;
+		}
+	}
+	@else{
+		@media screen and (min-width: $breakpoint_lg){
+			@content;
+		}
+	}
+}
+
+@mixin media_q_inverse($breakpoint: sm){
+	@if $breakpoint == sm{
+		@media screen and (max-width: $breakpoint_sm - 1px){
+			@content;
+		}
+	}
+	@else if $breakpoint == med{
+		@media screen and (max-width: $breakpoint_med - 1px){
+			@content;
+		}
+	}
+	@else{
+		@media screen and (max-width: $breakpoint_lg - 1px){
+			@content;
+		}
+	}
+}

@@ -1,0 +1,7 @@
+<h1>Bookshelf</h1>
+
+<ul class="bookshelf_list">
+	<%= for book <- @books do %>
+		<li><%= link BooklistWeb.BookView.to_s(book), to: Routes.book_path(@conn, :show, book) %></li>
+	<% end %>
+</ul>

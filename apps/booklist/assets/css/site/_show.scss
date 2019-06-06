@@ -1,0 +1,97 @@
+/*
+ * Styles for show pages
+ */
+ $sublist_indent: 2em;
+%show_category{
+	display: flex;
+	.heading{
+	}
+	.btn_group{
+		text-align: right;
+		flex-basis: 150px;
+		align-self: center;
+ 	}
+}
+
+ .show_header{
+ 	@extend %show_category;
+ 	margin-bottom: 0.1rem;
+ }
+ .show{
+ 	.btn_search{
+ 		box-sizing: content-box;
+ 		width: 1.5em;
+ 		height: 1.5em;
+ 	}
+ }
+
+ .show_category_header{
+ 	@extend %show_category;
+ }
+
+ .show_categories_list{
+ 	&>li{
+ 		margin-bottom: 2em;
+ 	}
+ 	.show_subcategory{
+ 		padding-left: $sublist_indent;
+ 	}
+ }
+ .indented_list{
+ 	padding-left: $sublist_indent;
+ }
+
+
+.show_info_container{
+	margin-bottom: 2rem;
+	p{
+		margin-bottom: 0.5em;
+	}
+}
+
+.back_link{
+	display: block;
+	margin-bottom: 0.5em;
+	&:before{
+		content: '\2039';
+		font-size: 1.5em;
+		margin-right: 0.2em;
+	}
+}
+.show_category{
+	margin-bottom: 2rem;
+}
+
+.show_subcategory_list{
+	margin-top: 1em;
+	li{
+		margin-bottom: 1em;
+	}
+	a{
+		display: inline-block;
+		vertical-align: top;
+		width: 20em;
+		padding-right: 1em;
+	}
+	.super_search_link{
+		display: inline-block;
+		vertical-align: top;
+		width: 10em;
+	}
+	.btn_group{
+		display: inline-block;
+	}
+	.btn_search{
+		padding-left: 1em;
+		padding-right: 1em;
+		width: 7em;
+	}
+}
+.book_active_form{
+	display: inline-block;
+	margin-bottom: 1.5rem;
+}
+
+.delete_button_form{
+	display: inline-block;
+}

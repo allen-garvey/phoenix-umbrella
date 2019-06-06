@@ -1,0 +1,26 @@
+<%= render(BooklistWeb.SharedView, "show-header.html", 
+      conn: @conn, 
+      resource_title_plural: "Locations", 
+      resource_path_atom: :location_path, 
+      item: @location, 
+      item_name: to_s(@location)) 
+%>
+
+<ul>
+
+	<li>
+		<strong>Name:</strong>
+		<%= @location.name %>
+	</li>
+
+	<li>
+		<strong>Library:</strong>
+		<%= link BooklistWeb.LibraryView.to_s(@location.library), to: Routes.library_path(@conn, :show, @location.library) %>
+	</li>
+
+</ul>
+
+<div class="js_qr_parent">
+	<h3>Books</h3>
+	<%= render("book-list.html", conn: @conn, location: @location, library: @location.library)  %>
+</div>

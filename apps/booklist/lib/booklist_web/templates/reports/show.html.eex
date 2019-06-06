@@ -1,0 +1,75 @@
+<div class="spread_content">
+	<%= link "Previous year", to: reports_for_year_path(@conn, @year - 1) %>
+	<%= link "Next year", to: reports_for_year_path(@conn, @year + 1) %>
+</div>
+
+<h1>Reporting for <%= Integer.to_string(@year) %></h1>
+
+<div class="stat_boxes">
+	<div class="stat_box">
+		<div class="heading">Number of books read</div>
+		<div class="info"><%= @rating_stats[:count] %></div>
+	</div>
+	<div class="stat_box">
+		<%= if !is_nil(@lowest_rating) do  %>
+			<div class="heading">Lowest Rating</div>
+			<div class="info">
+				<%= link BooklistWeb.RatingView.to_reports_heading(@lowest_rating), to: Routes.rating_path(@conn, :show, @lowest_rating) %>
+			</div>
+		<% end %>
+	</div>
+	<div class="stat_box">
+		<%= if !is_nil(@highest_rating) do %>
+			<div class="heading">Highest Rating</div>
+			<div class="info">
+				<%= link BooklistWeb.RatingView.to_reports_heading(@highest_rating), to: Routes.rating_path(@conn, :show, @highest_rating) %>
+			</div>
+		<% end %>
+	</div>
+	<div class="stat_box">
+		<div class="heading">Average Rating</div>
+		<div class="info"><%= @rating_stats[:average] |> round_decimal %></div>
+	</div>
+</div>
+
+<section class="reporting_books_by_week">
+	<h2>Books Read Per Week</h2>
+	<div class="books_per_week_chart" id="books_per_week_chart"></div>
+</section>
+
+<section>
+	<h2>Top Rated Books</h2>
+	<ol class="reporting_top_rated_books_list">
+		<%= for rating <- @top_ratings do %>
+			<li>
+				<%= link BooklistWeb.BookView.to_s(rating.book), to: Routes.book_path(@conn, :show, rating.book) %>
+				<%= link BooklistWeb.RatingView.to_s_short(rating), to: Routes.rating_path(@conn, :show, rating) %>
+			</li>
+		<% end %>
+	</ol>
+</section>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+  	const data = new google.visualization.DataTable();
+  	data.addColumn('string', 'Week');
+  	data.addColumn('number', 'Count');
+    data.addRows(<%= raw(ratings_by_week_to_json(@ratings_count_by_week)) %>);
+    const options = {
+		legend: { position: 'none' },
+		// curveType: 'function',
+		chartArea: {top: 55, height: '40%'},
+		hAxis: {
+			title: 'Week of the year'
+		},
+		vAxis: {
+			title: 'Books read'
+		}
+    };
+    const chart = new google.visualization.LineChart(document.getElementById('books_per_week_chart'));
+    chart.draw(data, options);
+  }
+</script>

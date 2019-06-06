@@ -1,0 +1,10 @@
+/*
+* Styles for bookshelf
+*/
+
+.bookshelf_list{
+	@include font_size(1);
+	li{
+		padding: 0.25em 0;
+	}
+}

@@ -1,0 +1,36 @@
+<%= render(BooklistWeb.SharedView, "show-header.html", 
+      conn: @conn, 
+      resource_title_plural: "Authors", 
+      resource_path_atom: :author_path, 
+      item: @author, 
+      item_name: to_s(@author)) 
+%>
+
+
+<ul>
+
+  <li>
+    <strong>First name:</strong>
+    <%= @author.first_name %>
+  </li>
+
+  <li>
+    <strong>Middle name:</strong>
+    <%= @author.middle_name %>
+  </li>
+
+  <li>
+    <strong>Last name:</strong>
+    <%= @author.last_name %>
+  </li>
+
+</ul>
+
+
+<h3>Books</h3>
+
+<ul>
+  <%= for book <- @author.books do %>
+    <li><%= link BooklistWeb.BookView.to_s(book), to: Routes.book_path(@conn, :show, book) %></li>
+  <% end %>
+</ul>

@@ -1,0 +1,7 @@
+/**
+* Header styles
+*/
+.jumbotron{
+	@include font_brand;
+	// background-color: lighten($color_primary_accent, 40%);
+}

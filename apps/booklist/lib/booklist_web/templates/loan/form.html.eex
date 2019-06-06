@@ -1,0 +1,15 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= BooklistWeb.SharedView.form_group :library_id, f, @libraries, &select/4 %>
+
+  <%= BooklistWeb.SharedView.form_group :due_date, f, &date_input/3 %>
+  
+  <%= BooklistWeb.SharedView.form_group :item_count, f, &number_input/3 %>
+
+  <%= BooklistWeb.SharedView.submit_button "Loan" %>
+<% end %>

@@ -1,0 +1,16 @@
+<%= render(BooklistWeb.SharedView, "show-header.html", 
+      conn: @conn, 
+      resource_title_plural: "Genres", 
+      resource_path_atom: :genre_path, 
+      item: @genre, 
+      item_name: to_s(@genre)) 
+%>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @genre.name %>
+  </li>
+
+</ul>

@@ -1,0 +1,3 @@
+<h1>Edit Loan</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.loan_path(@conn, :update, @loan)) %>

@@ -1,0 +1,90 @@
+/**
+* Base styles
+*/
+html{
+	font-size: $rem_base;
+	box-sizing: border-box;
+}
+*, *:before, *:after{
+	box-sizing: inherit;
+}
+body{
+	@include font_body;
+	color: $color_primary_text;
+	background-color: $color_primary_background;
+	margin: 0;
+}
+.total{
+	min-height: $total_height;
+}
+
+h1,h2,h3,h4{
+	@include font_heading;
+	font-weight : normal;
+	margin: 0;
+}
+h1{
+	@include font_size(4);
+}
+h2{
+	@include font_size(3);
+}
+h3{
+	@include font_size(2);
+}
+h4{
+	@include font_size(1);
+}
+
+p{
+	margin-top: 0;
+	&:last-of-type{
+		margin-bottom: 0;
+	}
+}
+ul{
+	list-style-type: none;
+	padding: 0;
+}
+ol{
+	padding: 0;
+	list-style-position: inside;
+}
+img,svg{
+	max-width: 100%;
+}
+a{
+	color: $color_primary_accent;
+	text-decoration: none;
+	&:hover{
+		text-decoration: underline;
+	}
+}
+figure{
+	margin: 0;
+}
+
+/**
+* Layout
+*/
+.container{
+	max-width: $container_width;
+	margin: 0 auto;
+	padding: 0 $container_horizontal_padding;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.hidden{
+	display: none;
+}
+
+.spread_content{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}

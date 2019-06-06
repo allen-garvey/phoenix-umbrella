@@ -1,0 +1,11 @@
+/*
+ * Styles for fields page
+ */
+
+
+.fields_list{
+	@include font_size(1);
+	li{
+		margin-bottom: 0.5em;
+	}
+}
