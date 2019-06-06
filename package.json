@@ -1,42 +1,42 @@
 {
-    "name": "photog-phoenix",
-    "version": "1.0.0",
-    "description": "Turn your Apple Photos library into a web application",
-    "main": "index.js",
-    "directories": {
-      "lib": "lib",
-      "test": "test"
-    },
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "webpack:dev": "webpack --config webpack/webpack.config.js",
-      "webpack:prod": "webpack --config webpack/webpack.production.config.js",
-      "webpack:watch": "webpack --config webpack/webpack.watch.config.js"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/allen-garvey/photog-phoenix.git"
-    },
-    "author": "Allen Garvey",
-    "license": "MIT",
-    "bugs": {
-      "url": "https://github.com/allen-garvey/photog-phoenix/issues"
-    },
-    "homepage": "https://github.com/allen-garvey/photog-phoenix#readme",
-    "devDependencies": {
-      "bootstrap": "^4.3.1",
-      "css-loader": "^2.1.1",
-      "mini-css-extract-plugin": "^0.7.0",
-      "node-sass": "^4.12.0",
-      "optimize-css-assets-webpack-plugin": "^5.0.1",
-      "sass-loader": "^7.1.0",
-      "vue": "^2.6.10",
-      "vue-infinite-loading": "^2.4.4",
-      "vue-loader": "^15.7.0",
-      "vue-router": "^3.0.6",
-      "vue-template-compiler": "^2.6.10",
-      "webpack": "^4.32.2",
-      "webpack-cli": "^3.3.2"
-    }
+  "name": "photog-phoenix",
+  "version": "1.0.0",
+  "description": "Turn your Apple Photos library into a web application",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack:dev": "webpack --config webpack/webpack.config.js",
+    "webpack:prod": "webpack --config webpack/webpack.production.config.js",
+    "webpack:watch": "webpack --config webpack/webpack.watch.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allen-garvey/photog-phoenix.git"
+  },
+  "author": "Allen Garvey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/allen-garvey/photog-phoenix/issues"
+  },
+  "homepage": "https://github.com/allen-garvey/photog-phoenix#readme",
+  "devDependencies": {
+    "bootstrap": "^4.3.1",
+    "copy-webpack-plugin": "^5.0.3",
+    "css-loader": "^2.1.1",
+    "mini-css-extract-plugin": "^0.7.0",
+    "node-sass": "^4.12.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "sass-loader": "^7.1.0",
+    "vue": "^2.6.10",
+    "vue-infinite-loading": "^2.4.4",
+    "vue-loader": "^15.7.0",
+    "vue-router": "^3.0.6",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2"
   }
-  
+}

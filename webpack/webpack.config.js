@@ -4,10 +4,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: "development",
-    entry: [`${__dirname}/js_src/index.js`, `${__dirname}/sass/style.scss`,],
+    entry: {
+        'photog': `${__dirname}/../apps/photog/js_src/index.js`,
+    },
+    
+    
+    // [`${__dirname}/js_src/index.js`, `${__dirname}/sass/style.scss`,],
     output: {
-        filename: 'app.js',
-        path: path.resolve(__dirname, 'priv/static/js'),
+        path: path.join(__dirname, '..', 'apps'),
+        filename: '[name]/priv/static/assets/app.js',
     },
     module: {
         rules: [
@@ -37,7 +42,7 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
-            filename: '../css/style.css',
+            filename: '[name]/priv/static/assets/style.css',
         }),
     ],
 };
