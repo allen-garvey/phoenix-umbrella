@@ -36,19 +36,7 @@ defmodule Photog.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [
-      {:phoenix, "~> 1.4"},
-      {:phoenix_ecto, "~> 4.0"},
-      {:phoenix_pubsub, "~> 1.1.2"},
-      {:ecto_sql, "~> 3.0.3"},
-      {:postgrex, ">= 0.14.1"},
-      {:phoenix_html, "~> 2.12"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:gettext, "~> 0.16"},
-      {:cowboy, "~> 2.6"},
-      {:plug_cowboy, "~> 2.0"},
-      {:poison, "~> 3.0"},
-    ]
+    Umbrella.MixProject.shared_phoenix_deps()
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
