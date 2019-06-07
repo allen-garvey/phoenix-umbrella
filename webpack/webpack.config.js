@@ -6,6 +6,7 @@ module.exports = {
     mode: "development",
     entry: {
         'photog': `${__dirname}/../apps/photog/js_src/index.js`,
+        'booklist': `${__dirname}/../apps/booklist/assets/js/app.js`,
     },
     output: {
         path: path.join(__dirname, '..', 'apps'),
