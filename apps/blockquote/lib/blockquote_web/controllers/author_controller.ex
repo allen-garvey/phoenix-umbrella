@@ -10,7 +10,8 @@ defmodule BlockquoteWeb.AuthorController do
 
   def custom_render(conn, view_module, template, assigns) do
     assigns = [{:item_name_singular, "author"}] ++ assigns
-    render(conn, view_module, template, assigns)
+    put_view(conn, view_module)
+    |> render(template, assigns)
   end
 
   def index(conn, _params) do

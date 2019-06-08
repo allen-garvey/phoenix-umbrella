@@ -10,9 +10,10 @@ defmodule BlockquoteWeb.DailyQuoteController do
 
   def custom_render(conn, view_module, template, assigns) do
     assigns = [{:item_name_singular, "daily quote"}] ++ assigns
-    render(conn, view_module, template, assigns)
+    put_view(conn, view_module)
+    |> render(template, assigns)
   end
-  
+
   def related_fields do
     quotes = Admin.list_quotes() |> BlockquoteWeb.QuoteView.map_for_form
     [quotes: quotes]
@@ -22,11 +23,11 @@ defmodule BlockquoteWeb.DailyQuoteController do
     daily_quotes = Admin.list_daily_quotes_for_index()
     custom_render(conn, BlockquoteWeb.SharedView, "index.html", items: daily_quotes, item_view: view_module(conn), item_display_func: :to_s)
   end
-  
+
   def new_page(conn, changeset, _params) do
     custom_render(conn, "new.html", changeset: changeset, related_fields: related_fields())
   end
-  
+
   def edit_page(conn, changeset, daily_quote) do
     custom_render(conn, "edit.html", changeset: changeset, related_fields: related_fields(), item: daily_quote)
   end

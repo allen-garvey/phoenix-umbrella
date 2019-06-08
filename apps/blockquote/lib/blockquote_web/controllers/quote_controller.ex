@@ -11,9 +11,10 @@ defmodule BlockquoteWeb.QuoteController do
 
   def custom_render(conn, view_module, template, assigns) do
     assigns = [{:item_name_singular, "quote"}] ++ assigns
-    render(conn, view_module, template, assigns)
+    put_view(conn, view_module)
+    |> render(template, assigns)
   end
-  
+
   def related_fields do
     #need to add empty value at start of authors since it is optional
     authors = Admin.list_authors() |> BlockquoteWeb.AuthorView.map_for_form |> List.insert_at(0, {"", nil})
@@ -31,11 +32,11 @@ defmodule BlockquoteWeb.QuoteController do
     changeset = Admin.change_quote(%Quote{})
     new_page(conn, changeset, params)
   end
-  
+
   def new_page(conn, changeset, _params) do
     custom_render(conn, "new.html", changeset: changeset, related_fields: related_fields(), save_another: true)
   end
-  
+
   def edit_page(conn, changeset, quote) do
     custom_render(conn, "edit.html", changeset: changeset, related_fields: related_fields(), item: quote)
   end
@@ -53,7 +54,7 @@ defmodule BlockquoteWeb.QuoteController do
     changeset = Admin.create_quote_changeset(quote_params)
     source_id = Ecto.Changeset.get_field(changeset, :source_id)
     source = Admin.get_source!(source_id)
-    
+
     case Repo.insert(Quote.validate_author_id(changeset, source)) do
       {:ok, quote} ->
         conn
@@ -77,7 +78,7 @@ defmodule BlockquoteWeb.QuoteController do
 
   def update(conn, %{"id" => id, "quote" => quote_params}) do
     quote = Admin.get_quote!(id)
-    
+
     changeset = Admin.update_quote_changeset(quote, quote_params)
     source_id = Ecto.Changeset.get_field(changeset, :source_id)
     source = Admin.get_source!(source_id)
