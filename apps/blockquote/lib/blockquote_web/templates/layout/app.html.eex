@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content="A CMS for inspiring quotes"/>
     <title>Blockquote</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/admin.css") %>"/>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/assets/style.css") %>"/>
   </head>
 
   <body>

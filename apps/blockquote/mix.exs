@@ -5,7 +5,11 @@ defmodule Blockquote.Mixfile do
     [
       app: :blockquote,
       version: "0.0.1",
-      elixir: "~> 1.4",
+      elixir: "~> 1.6",
+      build_path: "../../_build",
+      config_path: "../../config/config.exs",
+      deps_path: "../../deps",
+      lockfile: "../../mix.lock",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
@@ -32,18 +36,7 @@ defmodule Blockquote.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [
-      {:phoenix, "~> 1.4"},
-      {:phoenix_ecto, "~> 4.0"},
-      {:ecto_sql, "~> 3.0.3"},
-      {:postgrex, ">= 0.14.1"},
-      {:phoenix_html, "~> 2.12"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:gettext, "~> 0.16"},
-      {:cowboy, "~> 2.6"},
-      {:plug_cowboy, "~> 2.0"},
-      {:poison, "~> 3.0"},
-    ]
+    Umbrella.MixProject.shared_phoenix_deps()
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

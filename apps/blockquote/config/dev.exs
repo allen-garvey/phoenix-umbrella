@@ -10,8 +10,7 @@ config :blockquote, BlockquoteWeb.Endpoint,
   http: [port: 6011],
   debug_errors: true,
   check_origin: false,
-  code_reloader: true,
-  watchers: [npm: ["run", "watch"]]
+  code_reloader: true
 
 # ## SSL Support
 #

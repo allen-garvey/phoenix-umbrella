@@ -33,6 +33,7 @@ Thumbs.db
 
 #compiled sass
 priv/static/css
+priv/static/assets
 #elixir dialyzer
 .elixir_ls/*
 #sql migration files
