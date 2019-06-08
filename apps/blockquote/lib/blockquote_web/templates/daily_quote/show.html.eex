@@ -1,0 +1,7 @@
+<%= render BlockquoteWeb.SharedView, "show_header.html",
+                                conn: @conn,
+                                title: "Daily quote",
+                                item_name_singular: @item_name_singular,
+                                item: @daily_quote,
+                                item_columns: item_columns(@conn, @daily_quote)
+%>

@@ -1,0 +1,44 @@
+/* HEADER */
+
+.header {
+    background: #33664d;
+    margin-bottom: 32px;
+}
+
+.header a:link, .header a:visited {
+    color: #fff;
+}
+
+.header a:hover, .header a:active{
+    text-decoration: none;
+}
+
+.branding h1 {
+    margin: 0;
+    font-weight: 300;
+    font-size: 1.953rem;
+    padding: 16px $contentHorizontalPadding;
+}
+
+/* BREADCRUMBS */
+
+.breadcrumbs {
+    background: $secondary_color;
+    padding: 10px 40px;
+    color: #c4dce8;
+}
+
+.breadcrumbs a, .breadcrumbs a:before {
+    color: #fff;
+}
+
+.breadcrumbs a:focus, .breadcrumbs a:hover {
+    color: #c4dce8;
+}
+
+.breadcrumbs a + a:before{
+	content: '\203a';
+	margin-right: 0.18em;
+	pointer-events: none;
+	display: inline-block;
+}

@@ -1,0 +1,23 @@
+<%= render BlockquoteWeb.SharedView, "show_header.html",
+                                conn: @conn,
+                                title: to_s(@author),
+                                item_name_singular: @item_name_singular,
+                                item: @author,
+                                item_columns: item_columns(@conn, @author)
+%>
+
+<%= render BlockquoteWeb.SharedView, "related_fields_list.html",
+                                conn: @conn,
+                                item_name_singular: "source",
+                                items: @author.sources,
+                                item_view: BlockquoteWeb.SourceView,
+                                item_display_func: :to_s
+%>
+
+<%= render BlockquoteWeb.SharedView, "related_fields_list.html",
+                                conn: @conn,
+                                item_name_singular: "quote",
+                                items: @author.quotes ++ Enum.flat_map(@author.sources, &(&1.quotes)),
+                                item_view: BlockquoteWeb.QuoteView,
+                                item_display_func: :to_excerpt
+%>

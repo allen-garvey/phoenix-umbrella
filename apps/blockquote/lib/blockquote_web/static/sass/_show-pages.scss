@@ -1,0 +1,21 @@
+.show-header-title-container{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+.show-header-buttons{
+	display: flex;
+	justify-content: flex-end;
+
+	.button + .button{
+		margin-left: 24px;
+	}
+}
+
+.related-fields-title{
+	color: #000;
+}
+.related-fields-list{
+	list-style-type: square;
+	padding-left: 2em;
+}

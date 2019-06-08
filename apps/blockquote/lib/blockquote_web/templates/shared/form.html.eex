@@ -1,0 +1,34 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= for { field, type, items } <- @form_fields do %>
+    <div class="form-group">
+        <%= form_item_label(f, field, @required_fields) %>
+        <%= form_input(f, type, field, @required_fields, items) %>
+        <%= error_tag(f, field) %>
+    </div>
+  <% end %>
+  
+  <%= if Enum.any?(@form_fields, fn {_, field_type, _} -> field_type == :text end) do %>
+    <ul class="text-symbols-list">
+      <li>Em dash <span class="symbol">&mdash;</span></li>
+      <li>En dash <span class="symbol">&ndash;</span></li>
+      <li>Ellipsis &hellip;</li>
+      <li>Single smart quote left <span class="symbol">&lsquo;</span></li>
+      <li>Single smart quote right <span class="symbol">&rsquo;</span></li>
+      <li>Double smart quote left <span class="symbol">&ldquo;</span></li>
+      <li>Double smart quote right <span class="symbol">&rdquo;</span></li>
+    </ul>
+  <% end %>
+
+  <div class="submit-row">
+    <%= if assigns[:save_another] do
+      submit "Save and add another", class: "button", name: "save_another", value: "true"
+    end %>
+    <%= submit "Save", class: "button default", name: "save_another", value: "false" %>
+  </div>
+<% end %>

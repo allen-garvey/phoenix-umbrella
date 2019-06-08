@@ -1,0 +1,10 @@
+<%= if !Enum.empty?(@items) do %>
+    <h3 class="related-fields-title"><%= String.capitalize(naive_pluralize(@item_name_singular)) %></h3>
+    <ul class="related-fields-list">
+        <%= for item <- @items do %>
+            <li>
+                <%= link apply(@item_view, @item_display_func, [item]) , to: path_for_item(@conn, @item_name_singular, :show, item) %>
+            </li>
+        <% end %>
+    </ul>
+<% end %>

@@ -1,0 +1,16 @@
+<div class="show-header-title-container">
+	<h2 class="page-title"><%= @title %></h2>
+	<div class="show-header-buttons">
+        <button class="button delete" data-button="delete">Delete</button>
+		<%= link "Edit", to: path_for_item(@conn, @item_name_singular, :edit, @item), class: "button" %>
+	</div>
+</div>
+<ul>
+    <%= for {column_name, column_value} <- @item_columns do %>
+        <li>
+            <strong><%= String.capitalize(column_name) %>:</strong>
+            <%= column_value %>
+        </li>
+    <% end %>
+</ul>
+<%= render "hidden_delete_form.html", conn: @conn, delete_path: path_for_item(@conn, @item_name_singular, :delete, @item) %>

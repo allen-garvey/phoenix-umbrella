@@ -1,0 +1,7 @@
+<%= if assigns[:back_link_title] do %>
+	<span><%= link @back_link_title, to: @back_link_path %></span>
+<% end %>
+
+<h2 class="page-title"><%= @title %></h2>
+
+<%= render "form.html", assigns %>

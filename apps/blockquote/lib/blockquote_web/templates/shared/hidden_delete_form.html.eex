@@ -1,0 +1,17 @@
+<%= form_for @conn, @delete_path, [method: "delete", data_form: "delete"], fn _f -> %>
+<% end %>
+
+<script>
+	(function(){
+		var deleteButton = document.querySelector("[data-button='delete']");
+		if(!deleteButton){
+			return;
+		}
+	   	deleteButton.onclick = function(){
+			var deleteForm = document.querySelector("[data-form='delete']");
+			if(deleteForm && window.confirm("Are you sure you want to delete this item?")){
+				deleteForm.submit();
+			}
+		}; 
+	})();
+</script>

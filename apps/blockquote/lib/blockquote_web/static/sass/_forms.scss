@@ -1,0 +1,171 @@
+/* FORM DEFAULTS */
+
+input, textarea, select, .form-row p, form .button, button {
+    padding: 2px 3px;
+    vertical-align: middle;
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-weight: normal;
+}
+
+textarea {
+    vertical-align: top;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=url],
+input[type=number], textarea, select{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 6px;
+    margin-top: 0;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus,
+input[type=url]:focus, input[type=number]:focus, textarea:focus, select:focus{
+    border-color: #999;
+}
+
+select {
+    height: 30px;
+}
+
+select[multiple] {
+    min-height: 150px;
+}
+
+
+/* FORM ROWS */
+$form_group_padding: 10px;
+.form-group {
+    padding: $form_group_padding;
+    border-bottom: 1px solid #eee;
+}
+
+/* FORM BUTTONS */
+
+.button, input[type=submit], input[type=button], .submit-row input, .submit-row .button, a.button {
+    font-size: 1rem;
+    background: $secondary_color;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    line-height: 1em;
+}
+
+.button:active, input[type=submit]:active, input[type=button]:active,
+.button:focus, input[type=submit]:focus, input[type=button]:focus,
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #609ab6;
+}
+
+.button[disabled], input[type=submit][disabled], input[type=button][disabled] {
+    opacity: 0.4;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    border: none;
+    font-weight: 400;
+    background: #417690;
+}
+
+.button.delete{
+    background: #ba2121;
+}
+
+.button.delete:focus,
+.button.delete:hover,
+.button.delete:active {
+    background: #a41515;
+}
+
+.button.default:active, input[type=submit].default:active,
+.button.default:focus, input[type=submit].default:focus,
+.button.default:hover, input[type=submit].default:hover {
+    background: #205067;
+}
+
+.button[disabled].default,
+input[type=submit][disabled].default,
+input[type=button][disabled].default {
+    opacity: 0.4;
+}
+
+.form-group input[type="text"]{
+    width: 30em;
+}
+
+/* FORM LABELS */
+
+label {
+    display: inline-block;
+    font-weight: normal;
+    color: #666;
+    min-width: 160px;
+}
+
+.required label, label.required {
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* SUBMIT ROW */
+.submit-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px 14px;
+    margin: 40px 0 20px;
+    background: #f8f8f8;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    text-align: right;
+}
+
+.submit-row input, .submit-row button {
+    height: 35px;
+    margin: 0 0 0 5px;
+}
+
+.submit-row .deletelink {
+    display: block;
+    background: #ba2121;
+    border-radius: 4px;
+    padding: 9px 15px;
+    border: 0;
+    color: #fff;
+}
+
+
+/* RELATED FIELD ADD ONE / LOOKUP */
+
+.add-another, .related-lookup {
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-size: 14px;
+}
+
+.add-another {
+    width: 16px;
+    height: 16px;
+}
+
+
+/*
+* Styles for symbols list for textarea inputs (quotes)
+*/
+.text-symbols-list{
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: $form_group_padding;
+
+    li{
+        margin-right: 2em;
+    }
+    .symbol{
+        font-weight: bold;
+    }
+}

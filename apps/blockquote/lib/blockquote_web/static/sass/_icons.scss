@@ -1,0 +1,63 @@
+/* ACTION ICONS */
+
+.addlink {
+    padding-left: 16px;
+}
+//based on: http://stackoverflow.com/questions/17359787/create-a-cross-shape-in-css
+.admin-fields-list .addlink:before, .object-tools .addlink:after{
+    content: '';
+    display: inline-block;
+    vertical-align: baseline;
+    width: 9px;
+    height: 9px;
+    margin-right: 4px;
+    background: linear-gradient(to bottom, transparent 35%, #70bf2b 35%, #70bf2b 65%,  transparent 65%),
+                linear-gradient(to right, transparent 35%, #70bf2b 35%, #70bf2b 65%, transparent 65%);
+}
+
+.object-tools .addlink:after{
+    margin-left: 4px;
+    margin-right: 0;
+    background: linear-gradient(to bottom, transparent 35%, #fff 35%, #fff 65%,  transparent 65%),
+                linear-gradient(to right, transparent 35%, #fff 35%, #fff 65%, transparent 65%);
+}
+
+/* OBJECT TOOLS */
+
+.object-tools {
+    font-size: 0.8rem;
+    font-weight: bold;
+    height: 16px;
+}
+
+//not sure if this is ever used
+// .form-row .object-tools {
+//     margin-top: 5px;
+//     margin-bottom: 5px;
+//     float: none;
+//     height: 2em;
+//     padding-left: 3.5em;
+// }
+
+.object-tools a {
+    border-radius: 15px;
+    display: inline-block;
+}
+
+.object-tools a:link, .object-tools a:visited {
+    padding: 6px 12px;
+    background: #999;
+    font-weight: 400;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #fff;
+}
+
+.object-tools a:focus, .object-tools a:hover {
+    background-color: #417690;
+}
+
+.object-tools a:focus{
+    text-decoration: none;
+}
