@@ -1,0 +1,25 @@
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+
+      <th><%= link "Add Genre", to: Routes.genre_path(@conn, :new), class: "btn btn-success" %></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for genre <- @genres do %>
+    <tr>
+      <td></td>
+      <td><%= genre.name %></td>
+
+      <td>
+        <%= link "Show", to: Routes.genre_path(@conn, :show, genre), class: "btn btn-xs btn-default" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+

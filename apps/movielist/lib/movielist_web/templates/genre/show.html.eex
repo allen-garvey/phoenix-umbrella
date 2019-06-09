@@ -1,0 +1,37 @@
+<%= render(MovielistWeb.SharedView, "show_header.html", 
+      conn: @conn, 
+      resource_title_plural: "Genres", 
+      resource_path_atom: :genre_path, 
+      item: @genre, 
+      item_name: to_s(@genre)
+    ) 
+%>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @genre.name %>
+  </li>
+
+  <li>
+    <strong>Movie count:</strong>
+    <%= @movie_count %>
+  </li>
+
+  <li>
+    <strong>Rating count:</strong>
+    <%= @rating_count %>
+  </li>
+
+  <li>
+    <strong>Average pre-rating:</strong>
+    <%= MovielistWeb.SharedView.round_decimal(@average_pre_rating) %>
+  </li>
+
+  <li>
+    <strong>Average post-rating:</strong>
+    <%= MovielistWeb.SharedView.round_decimal(@average_score) %>
+  </li>
+
+</ul>

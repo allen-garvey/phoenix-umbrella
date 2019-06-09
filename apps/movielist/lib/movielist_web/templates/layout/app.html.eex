@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Movie List</title>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+  </head>
+  <body>
+    <header class='jumbotron'>
+      <h1 class='main_title'><%= link "Movie List", to: Routes.page_path(@conn, :index) %></h1>
+      <nav>
+        <ul class="nav">
+          <li><%= link "Movies", to: Routes.movie_path(@conn, :index_active), class: active_nav_class(assigns[:page_atom], :movies_index) %></li>
+          <li><%= link "Suggestions", to: Routes.movie_path(@conn, :index_suggestions), class: active_nav_class(assigns[:page_atom], :movies_suggestions) %></li>
+          <li><%= link "Ratings", to: Routes.rating_path(@conn, :index), class: active_nav_class(assigns[:page_atom], :ratings_index) %></li>
+          <li><%= link "Genres", to: Routes.genre_path(@conn, :index), class: active_nav_class(assigns[:page_atom], :genres_index) %></li>
+          <li><%= link "Reports", to: MovielistWeb.ReportsView.reports_for_current_year_score_sorted_path(@conn), class: active_nav_class(assigns[:page_atom], :reports_show) %></li>
+          <li><%= link "Add Movie", to: Routes.movie_path(@conn, :new), class: "btn btn-primary" %></li>
+        </ul>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+    <% #only show pages require modal (and associated app.js) %>
+    <%= if(assigns[:require_modal]) do %>
+      <div class="modal_container" id="modal_container" style="display:none;">
+        <div class="modal_overlay" id="modal_overlay"></div>
+        <div class="modal" id="modal">
+          <div class="modal_body" id="modal_body"></div>
+          <div class="modal_buttons modal_confirm_buttons">
+            <button class="btn btn-default" id="modal_confirm_cancel"></button>
+            <button class="btn btn-danger" id="modal_confirm_confirm"></button>
+          </div>
+          <div class="modal_buttons modal_alert_buttons">
+            <button class="btn btn-default" id="modal_alert_confirm"></button>
+          </div>
+          </div>
+      </div>
+      <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <% end %>
+  </body>
+</html>

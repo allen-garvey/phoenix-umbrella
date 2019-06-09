@@ -1,0 +1,3 @@
+<h1>New Movie</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.movie_path(@conn, :create)) %>

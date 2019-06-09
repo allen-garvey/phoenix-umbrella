@@ -1,0 +1,73 @@
+<div class="spread_content">
+	<%= link "Previous year", to: reports_for_year_path_score_sorted(@conn, @year - 1) %>
+	<%= link "Next year", to: reports_for_year_path_score_sorted(@conn, @year + 1) %>
+</div>
+
+<h1>Reporting for <%= Integer.to_string(@year) %></h1>
+
+<div class="stats_container">
+	<div>
+		<div class="heading">Movies watched:</div>
+		<div><%= @rating_count %></div>
+	</div>
+	<div>
+		<div class="heading">Average rating:</div>
+		<div><%= MovielistWeb.SharedView.round_decimal(@average_score) %></div>
+	</div>
+</div>
+
+<section>
+	<h2>Movies Watched Per Month</h2>
+	<div id="movies_per_month_chart"></div>
+</section>
+
+
+<section>
+	<h2 class="center">Ratings</h2>
+	<table>
+	  <thead>
+	    <tr>
+	      <th></th>
+	      <th>Movie</th>
+	      <th><%= link "Date", to: reports_for_year_date_sorted_path(@conn, @year) %></th>
+	      <th><%= link "Score", to: reports_for_year_path_score_sorted(@conn, @year) %></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	<%= for rating <- @ratings do %>
+	    <tr class="<%= MovielistWeb.RatingView.css_class_for_score(rating.score) %>">
+	      <td></td>
+	      <td><%= MovielistWeb.MovieView.to_s(rating.movie) %></td>
+	      <td><%= MovielistWeb.SharedView.us_formatted_date(rating.date_scored) %></td>
+	      <td><%= rating.score %></td>
+	    </tr>
+	<% end %>
+	  </tbody>
+	</table>
+</section>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+  	const data = new google.visualization.DataTable();
+  	data.addColumn('string', 'Month');
+  	data.addColumn('number', 'Count');
+    data.addRows(<%= raw(ratings_by_month_to_json(@ratings_count_by_month)) %>);
+    const options = {
+		legend: { position: 'none' },
+		// curveType: 'function',
+		chartArea: {top: 55, height: '40%'},
+		hAxis: {
+			title: 'Month of the year'
+		},
+		vAxis: {
+			title: 'Movies watched'
+		}
+    };
+    const chart = new google.visualization.LineChart(document.getElementById('movies_per_month_chart'));
+    chart.draw(data, options);
+  }
+</script>

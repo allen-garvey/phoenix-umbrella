@@ -1,0 +1,103 @@
+/*
+ * Button styles from default bootstrap theme
+ */
+
+
+/*!
+ * Bootstrap v3.3.5 (http://getbootstrap.com)
+ * Copyright 2011-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+//
+// Load core variables and mixins
+// --------------------------------------------------
+
+// @import "variables";
+// @import "mixins";
+
+
+//
+// Buttons
+// --------------------------------------------------
+
+// Common styles
+.btn-default,
+.btn-primary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+  text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+  $shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
+  @include box-shadow($shadow);
+
+  // Reset the shadow
+  &:active,
+  &.active {
+    @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    @include box-shadow(none);
+  }
+
+  .badge {
+    text-shadow: none;
+  }
+}
+
+// Mixin for generating new styles
+@mixin btn-styles($btn-color: #555) {
+  @include gradient-vertical($start-color: $btn-color, $end-color: darken($btn-color, 12%));
+  @include reset-filter; // Disable gradients for IE9 because filter bleeds through rounded corners; see https://github.com/twbs/bootstrap/issues/10620
+  background-repeat: repeat-x;
+  border-color: darken($btn-color, 14%);
+
+  &:hover,
+  &:focus  {
+    background-color: darken($btn-color, 12%);
+    background-position: 0 -15px;
+  }
+
+  &:active,
+  &.active {
+    background-color: darken($btn-color, 12%);
+    border-color: darken($btn-color, 14%);
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background-color: darken($btn-color, 12%);
+      background-image: none;
+    }
+  }
+}
+
+// Common styles
+.btn {
+  // Remove the gradient for the pressed/active state
+  &:active,
+  &.active {
+    background-image: none;
+  }
+}
+
+// Apply the mixin to the buttons
+.btn-default { @include btn-styles($btn-default-bg); text-shadow: 0 1px 0 #fff; border-color: #ccc; }
+.btn-primary { @include btn-styles($btn-primary-bg); }
+.btn-success { @include btn-styles($btn-success-bg); }
+.btn-info    { @include btn-styles($btn-info-bg); }
+.btn-warning { @include btn-styles($btn-warning-bg); }
+.btn-danger  { @include btn-styles($btn-danger-bg); }
+
+

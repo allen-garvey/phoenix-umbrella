@@ -1,0 +1,19 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+  
+  <%= MovielistWeb.SharedView.form_group :title, f, &text_input/3 %>
+
+  <%= MovielistWeb.SharedView.form_group :genre_id, f, @genres, &select/4 %>
+
+  <%= MovielistWeb.SharedView.form_group :theater_release_date, f, &date_input/3 %>
+
+  <%= MovielistWeb.SharedView.form_group :home_release_date, f, &date_input/3 %>
+
+  <%= MovielistWeb.SharedView.form_group :pre_rating, f, &number_input/3 %>
+
+  <%= MovielistWeb.SharedView.submit_button "Movie" %>
+<% end %>

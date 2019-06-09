@@ -1,0 +1,13 @@
+.stats_container{
+	display: flex;
+	flex-wrap: wrap;
+
+	margin: 2em 0;
+
+	& > *{
+		margin-right: 3em;
+	}
+	.heading{
+		font-weight: bold;
+	}
+}

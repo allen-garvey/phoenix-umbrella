@@ -1,0 +1,44 @@
+/*
+* Table styles
+*/
+table{
+	margin-left: auto;
+	margin-right: auto;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+thead{
+	background-color: #eee;
+}
+//for CSS row numbers in first td of row
+tbody{
+	counter-reset: rowNumber;
+}
+tbody tr {
+    counter-increment: rowNumber;
+}
+tbody tr td:first-child::before {
+    content: counter(rowNumber);
+    min-width: 1em;
+    opacity: 0.3;
+}
+td, th{
+	padding: 0.8em;
+	text-align: left;	
+}
+th{
+	font-weight: normal;
+}
+.tr_primary{
+	background-color: $green;
+}
+.tr_warning{
+	background-color: $yellow;
+}
+.tr_error{
+	background-color: $red;
+}
+
+td a{
+	color: black;
+}

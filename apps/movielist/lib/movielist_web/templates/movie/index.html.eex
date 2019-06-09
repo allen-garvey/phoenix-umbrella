@@ -1,0 +1,32 @@
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th>Genre</th>
+      <th>Theater release date</th>
+      <th>Home release date</th>
+      <th>Pre rating</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for movie <- @movies do %>
+      <tr class="<%= row_class_for_active_status(movie.is_active) %>">
+        <td></td>
+        <td><%= link movie.title, to: MovielistWeb.SuperSearchHelpers.search_url(movie.title) %></td>
+        <td><%= MovielistWeb.GenreView.to_s(movie.genre) %></td>
+        <td><%= MovielistWeb.SharedView.us_formatted_date(movie.theater_release_date) %></td>
+        <td><%= MovielistWeb.SharedView.us_formatted_date(movie.home_release_date) %></td>
+        <td><%= movie.pre_rating %></td>
+        <td><%= is_active_status(movie.is_active) %></td>
+
+        <td>
+          <%= link "Show", to: Routes.movie_path(@conn, :show, movie), class: "btn btn-xs btn-default" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

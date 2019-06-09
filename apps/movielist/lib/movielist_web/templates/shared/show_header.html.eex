@@ -1,0 +1,12 @@
+<%= link "All " <> @resource_title_plural, to: apply(Routes, @resource_path_atom, [@conn, :index]), class: "back_link" %>
+
+<div class="show_header">
+	<h1 class="heading"><%= @item_name %></h1>
+	<div class="btn_group">
+		<%= link "Edit", to: apply(Routes, @resource_path_atom, [@conn, :edit, @item]), class: "btn btn-default btn-xs" %>
+		<%= form_for @conn, apply(Routes, @resource_path_atom, [@conn, :delete, @item]), [method: :delete, class: "delete_button_form", data_confirm: @item_name], fn _f ->
+				submit("Delete", class: "btn btn-danger btn-xs")
+			end
+		%>
+	</div>
+</div>

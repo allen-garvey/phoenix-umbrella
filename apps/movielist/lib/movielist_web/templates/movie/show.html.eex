@@ -1,0 +1,63 @@
+<%= render(MovielistWeb.SharedView, "show_header.html", 
+      conn: @conn, 
+      resource_title_plural: "Movies", 
+      resource_path_atom: :movie_path, 
+      item: @movie, 
+      item_name: to_s(@movie)
+    ) 
+%>
+
+<%=
+  form_for @changeset_is_active, Routes.movie_path(@conn, :update, @movie), [class: ""], fn f ->
+    [
+      hidden_input(f, :is_active),
+      submit(is_active_status(@movie.is_active), class: "btn " <> active_button_class(@movie.is_active))
+    ]
+  end
+%>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @movie.title %>
+  </li>
+
+  <li>
+    <strong>Sort title:</strong>
+    <%= @movie.sort_title %>
+  </li>
+
+  <li>
+    <strong>Genre:</strong>
+    <%= link MovielistWeb.GenreView.to_s(@movie.genre), to: Routes.genre_path(@conn, :show, @movie.genre) %>
+  </li>
+
+  <li>
+    <strong>Theater release date:</strong>
+    <%= @movie.theater_release_date %>
+  </li>
+
+  <li>
+    <strong>Home release date:</strong>
+    <%= @movie.home_release_date %>
+  </li>
+
+  <li>
+    <strong>Pre rating:</strong>
+    <%= @movie.pre_rating %>
+  </li>
+
+</ul>
+
+<h2>Ratings</h2>
+<div class="btn_group">
+  <%= link "Add rating", to: Routes.rating_path(@conn, :new, @movie.id), class: "btn btn-success" %>
+</div>
+<ul>
+  <%= for rating <- @movie.ratings do %>
+    <li>
+      <%= link MovielistWeb.RatingView.to_s_short(rating), to: Routes.rating_path(@conn, :show, rating) %>
+    </li>
+  <% end %>
+</ul>

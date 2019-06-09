@@ -1,0 +1,15 @@
+//styles for show pages
+
+.show_header{
+	display: flex;
+
+	.btn_group{
+		text-align: right;
+		flex-basis: 150px;
+		align-self: center;
+	}
+}
+
+.btn_group form{
+	display: inline-block;
+}
