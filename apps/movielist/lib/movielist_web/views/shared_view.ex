@@ -20,9 +20,9 @@ defmodule MovielistWeb.SharedView do
 		nil
 	end
 	def us_formatted_date(datetime) do
-		String.pad_leading(Integer.to_string(datetime.month), 2, "0") <> 
+		String.pad_leading(Integer.to_string(datetime.month), 2, "0") <>
 		"/" <>
-		String.pad_leading(Integer.to_string(datetime.day), 2, "0") <> 
+		String.pad_leading(Integer.to_string(datetime.day), 2, "0") <>
 		"/" <>
 		Integer.to_string(datetime.year)
 	end
@@ -30,9 +30,12 @@ defmodule MovielistWeb.SharedView do
 	@doc """
 	Rounds decimal
 	"""
+	def round_decimal(nil) do
+		0
+	end
 	def round_decimal(decimal) do
 		decimal
-		  |> Decimal.to_float 
+		  |> Decimal.to_float
 		  |> Float.round(2)
 	end
 
