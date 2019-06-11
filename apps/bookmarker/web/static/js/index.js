@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import BookmarkTagList from './vues/bookmark_tag_list.vue';
 
+import css from '../css/app.scss';
+
 
 (function(){
     const bookmarkTagListContainer = document.getElementById('bookmark_tag_list');

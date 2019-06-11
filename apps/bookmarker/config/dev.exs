@@ -10,8 +10,7 @@ config :bookmarker, Bookmarker.Endpoint,
   http: [port: 5051],
   debug_errors: true,
   code_reloader: true,
-  check_origin: false,
-  watchers: [npm: ["run", "watch"]]
+  check_origin: false
 
 
 # Watch static and templates for browser reloading.

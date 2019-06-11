@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <title>Bookmarker</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/assets/style.css") %>">
   </head>
 
   <body>
@@ -34,7 +34,7 @@
 
     </div> <!-- /container -->
     <%= if assigns[:enable_js] do %>
-      <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+      <script src="<%= static_path(@conn, "/assets/app.js") %>"></script>
     <% end %>
   </body>
 </html>
