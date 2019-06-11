@@ -7,7 +7,7 @@ module.exports = {
     entry: {
         'photog': `${__dirname}/../apps/photog/js_src/index.js`,
         'booklist': `${__dirname}/../apps/booklist/assets/js/app.js`,
-        'bookmarker': `${__dirname}/../apps/bookmarker/web/static/js/index.js`,
+        'bookmarker': `${__dirname}/../apps/bookmarker/assets/js/index.js`,
         'movielist': `${__dirname}/../apps/movielist/assets/js/app.js`,
         'blockquote': `${__dirname}/../apps/blockquote/assets/sass/admin.scss`,
     },
