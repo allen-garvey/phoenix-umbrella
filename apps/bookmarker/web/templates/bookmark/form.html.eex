@@ -1,0 +1,51 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :title, class: "control-label" %>
+    <%= text_input f, :title, class: "form-control" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :url, class: "control-label" %>
+    <%= url_input f, :url, class: "form-control" %>
+    <%= error_tag f, :url %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :description, class: "control-label" %>
+    <%= textarea f, :description, class: "form-control" %>
+    <%= error_tag f, :description %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :rss_url, class: "control-label" %>
+    <%= url_input f, :rss_url, class: "form-control" %>
+    <%= error_tag f, :rss_url %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :preview_image_selector, class: "control-label" %>
+    <%= text_input f, :preview_image_selector, class: "form-control" %>
+    <%= error_tag f, :preview_image_selector %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :thumbnail_url, class: "control-label" %>
+    <%= url_input f, :thumbnail_url, class: "form-control" %>
+    <%= error_tag f, :thumbnail_url %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :folder_id, "Folder", class: "control-label" %>
+    <%= select f, :folder_id, @folders ,class: "form-control" %>
+  </div>
+
+  <%= render Bookmarker.SharedView, "form_submit_buttons.html", form_type: @form_type, save_another: assigns[:save_another] %>
+  
+<% end %>

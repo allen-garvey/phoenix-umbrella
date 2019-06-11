@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "checkJs": true
+    },
+    "include": [
+        "web/static/js/**/*"
+    ]
+}

@@ -1,0 +1,24 @@
+<div class="jumbotron home-jumbotron">
+  <div>
+    <h1>Welcome to Bookmarker!</h1>
+    <p class="lead">A place for you and all your bookmarks.</p>
+  </div>
+</div>
+
+<div class="home-shortcuts-section">
+  <h4>Shortcuts</h4>
+  <ul>
+    <li>
+      <%= link "Add bookmark", to: bookmark_path(@conn, :new) %>
+    </li>
+    <li>
+      <%= link "Add folder", to: folder_path(@conn, :new) %>
+    </li>
+    <li>
+      <%= link "Add tag", to: tag_path(@conn, :new) %>
+    </li>
+    <li>
+      <%= link "Bookmarks Tags", to: bookmark_tag_path(@conn, :index) %>
+    </li>
+  </ul>
+</div>

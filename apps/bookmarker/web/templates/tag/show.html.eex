@@ -1,0 +1,3 @@
+<%= render Bookmarker.SharedView, "show_heading.html", heading: @tag.name, back_path: tag_path(@conn, :index), edit_path: tag_path(@conn, :edit, @tag), model_name_plural: "tags" %>
+
+<%= render Bookmarker.SharedView, "related_bookmarks_list.html", bookmarks: @tag.bookmarks, no_bookmarks_message: "No bookmarks have this tag", conn: @conn %>

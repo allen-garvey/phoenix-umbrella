@@ -1,0 +1,15 @@
+<%= render Bookmarker.SharedView, "show_heading.html", heading: @bookmark_tag.bookmark_id, back_path: bookmark_tag_path(@conn, :index), edit_path: bookmark_tag_path(@conn, :edit, @bookmark_tag), model_name_plural: "bookmarks tags" %>
+
+<ul>
+
+  <li>
+    <strong>Bookmark:</strong>
+    <%= link @bookmark_tag.bookmark.title, to: bookmark_path(@conn, :show, @bookmark_tag.bookmark) %>
+  </li>
+
+  <li>
+    <strong>Tag:</strong>
+    <%= link @bookmark_tag.tag.name, to: tag_path(@conn, :show, @bookmark_tag.tag) %>
+  </li>
+
+</ul>

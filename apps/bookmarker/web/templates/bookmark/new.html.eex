@@ -1,0 +1,13 @@
+<%= render Bookmarker.SharedView, "form_header.html", model_name: "bookmark", back_path: bookmark_path(@conn, :index) %>
+
+<%= if assigns[:flash] do %>
+  <div class="alert alert-info">
+  	<%= @flash %>
+  </div>
+<% end %>
+
+<%= render "form.html", changeset: @changeset,
+						folders: @folders,
+                        action: bookmark_path(@conn, :create),
+                        form_type: :new,
+                        save_another: true %>

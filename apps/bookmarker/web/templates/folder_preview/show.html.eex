@@ -1,0 +1,10 @@
+<%= content_tag :h1, Bookmarker.Folder.to_s(@folder) %>
+
+<ul class="folder-preview-list">
+	<%= for {img_element, bookmark} <- @preview_results do %>
+		<li>
+		<%= content_tag :h2, link(Bookmarker.Bookmark.to_s(bookmark), to: bookmark.url) %>
+		<%= link tag(:img, src: img_element.url, title: img_element.title, alt: img_element.alt), to: bookmark.url %>
+		</li>
+	<% end %>
+</ul>

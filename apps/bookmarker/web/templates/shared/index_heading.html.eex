@@ -1,0 +1,2 @@
+<h2><%= Bookmarker.SharedView.pluralize_and_capitalize(@item_name) %></h2>
+<%= link "Add " <> @item_name, to: @new_path, class: "btn btn-xs btn-success" %>

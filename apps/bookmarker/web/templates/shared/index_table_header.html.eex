@@ -1,0 +1,10 @@
+<table class="table index-table">
+  <thead>
+    <tr>
+      <%= for heading <- @headings do %>
+      <th><%= heading %></th>
+      <%end%>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>

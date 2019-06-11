@@ -1,0 +1,52 @@
+/*
+* Header and Nav
+*/
+/* Custom page header */
+.header {
+	padding-top: 1em;
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	border-bottom: 1px solid #e5e5e5;
+	margin-bottom: 1em;
+}
+.nav{
+	display: flex;
+	margin: 0;
+	align-items: baseline;
+	list-style-type: none;
+	padding-left: 0;
+
+	& > li > a{
+		display: block;
+		padding: 10px 15px;
+		&:not(.btn):hover{
+			text-decoration: none;
+			background-color: #eee;
+		}
+	}
+}
+.logo {
+	font-weight: bold;
+}
+
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+@media screen and (max-width: 500px){
+	.header, .nav, .logo, .logo a{
+		display: block;
+	}
+	.header, .nav{
+		flex-direction: column;
+	}
+
+	.nav > li > a:not(.btn){
+		padding-left: 0;
+	}
+	.logo{
+		margin-bottom: 8px;
+	}
+}

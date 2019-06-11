@@ -1,0 +1,21 @@
+<%= render Bookmarker.SharedView, "index_heading.html", item_name: "bookmark", new_path: bookmark_path(@conn, :new) %>
+
+<%= render Bookmarker.SharedView, "index_table_header.html", headings: ["Title", "Description"] %>
+    <%= for bookmark <- @bookmarks do %>
+        <tr>
+          <td>
+            <div>
+              <%= link bookmark.title, to: bookmark_path(@conn, :show, bookmark) %>
+              <a href="<%= bookmark.url %>" class="btn btn-xs btn-primary pull-right">Visit</a>
+            </div>
+            <div class="bookmark-url"><%= bookmark.url %></div>
+          </td>
+          <td><%= bookmark.description %></td>
+
+          <td class="text-right">
+            <%= link "Edit", to: bookmark_path(@conn, :edit, bookmark), class: "btn btn-default btn-xs" %>
+          </td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

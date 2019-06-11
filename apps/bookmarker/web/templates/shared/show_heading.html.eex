@@ -1,0 +1,7 @@
+<div>
+	<%= link "All " <> @model_name_plural, to: @back_path %>
+</div>
+<div class="show-header">
+	<h2 class="show-heading"><%= @heading %></h2>
+	<%= link "Edit", to: @edit_path, class: "btn btn-default btn-sm" %>
+</div>

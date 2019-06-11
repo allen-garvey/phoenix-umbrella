@@ -1,0 +1,31 @@
+/*
+* Base Styles
+*/
+
+body{
+	padding-bottom: 3em;
+}
+
+/* Space out content a bit */
+form, ul, table {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Phoenix flash messages */
+.alert:empty { display: none; }
+
+/* Phoenix inline forms in links and buttons */
+form.link, form.button {
+  display: inline;
+}
+
+.container{
+	margin: 0 auto;
+	max-width: 1200px;
+	padding: 0 15px;
+}
+
+img{
+	max-width: 100%;
+}

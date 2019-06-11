@@ -1,0 +1,81 @@
+
+
+/*
+* Show pages
+*/
+.show-heading{
+	display: inline-block;
+	vertical-align: bottom;
+	margin: 5px 1em 0 0;
+}
+.show-attribute-list{
+	list-style-type: none;
+	padding-left: 0;
+}
+.show-attribute-list li{
+	margin-bottom: 0.5em;
+}
+
+/*bookmark lists for folder and tag show pages*/
+
+.bookmark-url, 
+.folder-bookmark-list .bookmark-description{
+	font-size: 0.9em;
+}
+.bookmark-url{
+	color: #888;
+}
+.bookmark-title{
+	font-size: 16px;
+}
+
+.folder-bookmark-list{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-top: 0;
+	.list-group-item{
+		border: none;
+	}
+	.bookmark-thumbnail-container{
+		width: 300px;
+
+		&:empty{
+			display: none;
+		}
+	}
+}
+
+
+/*Bookmark Show Page*/
+.tag-list{
+	li.list-group-item:not(.list-group-item-info), .tag-list-header{
+		display: flex;
+		justify-content: space-between;
+	}
+	li.list-group-item:not(:first-child){
+		padding-top: 1em;
+		padding-bottom: 1em;
+	}
+	.add-tag-container.error .add-tag-alert{
+		display: block;
+	}
+	.add-tag-select-container{
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.tag-select{
+		flex-basis: 85%;
+	}
+}
+
+@media screen and (max-width: 1000px){
+	.add-tag-select-container{
+		flex-direction: column;
+	}
+	.tag-select{
+		margin-bottom: 1em;
+	}
+}
+

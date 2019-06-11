@@ -1,0 +1,15 @@
+<%= render Bookmarker.SharedView, "index_heading.html", item_name: "folder", new_path: folder_path(@conn, :new) %>
+
+<%= render Bookmarker.SharedView, "index_table_header.html", headings: ["Name", "Description"] %>
+    <%= for folder <- @folders do %>
+        <tr>
+          <td><%= link Bookmarker.Folder.to_s(folder) <> " (" <> Integer.to_string(folder.bookmark_count) <> ")", to: folder_path(@conn, :show, folder.id) %></td>
+          <td><%= folder.description %></td>
+
+          <td class="text-right">
+            <%= link "Edit", to: folder_path(@conn, :edit, folder.id), class: "btn btn-default btn-xs" %>
+          </td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bookmarker</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="header">
+        <span class="logo"><%= link "Bookmarker", to: "/" %></span>
+        <nav role="navigation">
+          <ul class="nav">
+            <li><%= link "Bookmarks", to: bookmark_path(@conn, :index) %></li>
+            <li><%= link "Folders", to: folder_path(@conn, :index) %></li>
+            <li><%= link "Tags", to: tag_path(@conn, :index) %></li>
+            <li><%= link "Add Bookmark", to: bookmark_path(@conn, :new), class: "btn btn-xs btn-success" %></li>
+          </ul>
+        </nav>
+      </header>
+
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+      <main role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </main>
+
+    </div> <!-- /container -->
+    <%= if assigns[:enable_js] do %>
+      <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <% end %>
+  </body>
+</html>

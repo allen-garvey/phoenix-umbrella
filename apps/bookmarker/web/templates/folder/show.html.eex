@@ -1,0 +1,18 @@
+<%= render Bookmarker.SharedView, "show_heading.html", heading: Bookmarker.Folder.to_s(@folder), back_path: folder_path(@conn, :index), edit_path: folder_path(@conn, :edit, @folder), model_name_plural: "folders" %>
+
+<ul class="show-attribute-list">
+	<%= if @folder.description != nil do %>
+		<li>
+			<strong>Description:</strong>
+		    <%= @folder.description %>
+		</li>
+	<% end %>
+	<li>
+		<%= link "Preview bookmarks", to: folder_preview_path(@conn, :show, @folder.name) %>
+	</li>
+</ul>
+
+<%= render Bookmarker.SharedView, "related_bookmarks_list.html", bookmarks: @folder.bookmarks, no_bookmarks_message: "This folder is empty.", conn: @conn %>
+
+
+

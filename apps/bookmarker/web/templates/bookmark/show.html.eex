@@ -1,0 +1,46 @@
+<%= render Bookmarker.SharedView, "show_heading.html", heading: @bookmark.title, back_path: bookmark_path(@conn, :index), edit_path: bookmark_path(@conn, :edit, @bookmark), model_name_plural: "bookmarks" %>
+
+<ul class="show-attribute-list">
+  <li>
+    <strong>Folder:</strong>
+    <%= link Bookmarker.Folder.to_s(@bookmark.folder), to: folder_path(@conn, :show, @bookmark.folder) %>
+  </li>
+  <li>
+    <strong>Url:</strong>
+    <%= link @bookmark.url, to: @bookmark.url %>
+  </li>
+  <%= if @bookmark.rss_url != nil do %>
+    <li>
+      <strong>RSS Url:</strong>
+      <%= link @bookmark.rss_url, to: @bookmark.rss_url %>
+    </li>
+  <% end %>
+  <%= if @bookmark.description != nil do %>
+    <li>
+      <strong>Description:</strong>
+      <%= @bookmark.description %>
+    </li>
+  <% end %>
+  <%= if @bookmark.preview_image_selector != nil do %>
+    <li>
+      <strong>Preview image selector:</strong>
+      <%= @bookmark.preview_image_selector %>
+    </li>
+  <% end %>
+</ul>
+
+<div>
+  <%= if @bookmark.thumbnail_url != nil do
+    link img_tag(@bookmark.thumbnail_url), to: @bookmark.thumbnail_url 
+  end %>
+</div>
+
+<div id="bookmark_tag_list" 
+  data-csrf-token="<%= @csrf_token %>"
+  data-bookmark-id="<%= @bookmark.id %>"
+  data-new-tag-url="<%= tag_path(@conn, :new) %>"
+  data-new-bookmark-tag-url="<%= api_bookmark_tag_path(@conn, :create_bookmark_tag) %>"
+  data-delete-bookmark-tag-url="<%= api_bookmark_tag_path(@conn, :delete_bookmark_tag) %>"
+  data-unused-tags-url="<%= api_tag_path(@conn, :unused_tags_for_bookmark, @bookmark.id) %>"
+  data-tags-url="<%= api_tag_path(@conn, :tags_for_bookmark, @bookmark.id) %>"
+></div>

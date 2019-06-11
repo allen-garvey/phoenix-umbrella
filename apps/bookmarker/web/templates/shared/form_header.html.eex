@@ -1,0 +1,3 @@
+<%= link "Back", to: @back_path %>
+
+<h2>New <%= @model_name %></h2>
