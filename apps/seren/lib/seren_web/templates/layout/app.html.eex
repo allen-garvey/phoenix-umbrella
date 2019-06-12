@@ -6,11 +6,11 @@
     <meta name="description" content="Seren - a web interface for your music">
 
     <title>Seren | Your music</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/style.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/assets/style.css") %>">
   </head>
 
   <body>
     <%= render @view_module, @view_template, assigns %>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script src="<%= static_path(@conn, "/assets/app.js") %>"></script>
   </body>
 </html>

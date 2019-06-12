@@ -18,6 +18,7 @@ erl_crash.dump
 #compiled assets
 priv/static/css
 priv/static/js
+priv/static/assets
 priv/static/media
 
 #script outputs
