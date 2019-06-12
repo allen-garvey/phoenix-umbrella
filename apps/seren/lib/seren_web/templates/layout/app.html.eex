@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Seren - a web interface for your music">
+
+    <title>Seren | Your music</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/style.css") %>">
+  </head>
+
+  <body>
+    <%= render @view_module, @view_template, assigns %>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+.nav{
+	font-family: sans-serif;
+}
+
+.nav-list{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding: 0;
+	list-style-type: none;
+}
+
+.nav-pills li a{
+	text-decoration: none;
+	color: $accent_color_text;
+	cursor: pointer;
+	padding: 0.5em 1em;
+
+	&:hover{
+		color: #0056b3;
+	}
+
+	&.router-link-active{
+		background: $accent_color_text;
+		color: white;
+		border-radius: 4px;	
+	}
+}

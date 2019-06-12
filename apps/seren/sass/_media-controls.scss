@@ -1,0 +1,58 @@
+/*
+* Layout
+*/
+
+.active-track-display, .track-time{
+	margin-bottom: 8px;
+}
+
+/*
+* Play buttons
+*/
+
+.media-controls-container{
+	position: fixed;
+	bottom: 0;
+	height: $media-controls-container-height;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: $media_controls_background_color;
+	box-shadow: 0px -1px 15px rgba(41, 56, 36, 0.6);
+	padding: 24px;
+	font-size: 15px;
+}
+
+.media-controls-button{
+	cursor: pointer;
+	font-size: 24px;
+	margin-right: 3px;
+	border: 2px solid transparent;
+
+	&:hover, &:active{
+		border: 2px solid #2166ab;
+	}
+	&:active{
+		background-color: #85b8ea;
+	}
+}
+
+.button-play{
+	height: 48px;
+	width: 48px;
+	border-radius: 50%;
+	//play icon doesn't get perfectly centered
+	&.is-paused span{
+		position: relative;
+		left: 2px;
+	}
+}
+.media-controls-button-rounded{
+	border-radius: 20%;
+	height: 34px;
+	width: 34px;
+}
+.button-next{
+	margin-right: 0;
+}
