@@ -1,9 +1,9 @@
 defmodule Blockquote.Admin.ModelHelpers.SortTitle do
-    import Ecto.Changeset
-
-	@doc """
-	Returns a sort title by taking a title and converting to lowercase and removing leading articles
+  import Ecto.Changeset
+	@moduledoc """
+	Adds a sort title attribute to a changeset by taking the title and converting to lowercase and removing leading articles
 	"""
+
 	defp sort_title_from_title(nil) do
 		nil
 	end
