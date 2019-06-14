@@ -37,7 +37,8 @@ defmodule Bookmarker.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    Umbrella.MixProject.shared_phoenix_deps() ++
+    Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
+    Umbrella.Common.Deps.shared_phoenix_deps() ++
     [
       {:httpoison, "~> 0.13"}, #for folder previews
       {:floki, "~> 0.20.4"},   #for folder previews
