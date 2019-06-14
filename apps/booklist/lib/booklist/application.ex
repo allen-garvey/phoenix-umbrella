@@ -10,8 +10,6 @@ defmodule Booklist.Application do
     children = [
       # Start the Ecto repository
       Booklist.Repo,
-      # Enable RepoLegacy if using teamster mix task
-      # Booklist.RepoLegacy,
       # Start the endpoint when the application starts
       BooklistWeb.Endpoint
       # Starts a worker by calling: Booklist.Worker.start_link(arg)

@@ -8,7 +8,7 @@
 use Mix.Config
 
 config :booklist,
-  ecto_repos: [Booklist.Repo, Booklist.RepoLegacy]
+  ecto_repos: [Booklist.Repo]
 
 # Configures the endpoint
 config :booklist, BooklistWeb.Endpoint,
