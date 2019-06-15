@@ -2,11 +2,11 @@ defmodule Photog.Image do
   alias Photog.Api.Image
 
   def masters_directory do
-    Path.absname("apps/photog/priv/static/media/images")
+    Path.expand("../../../priv/static/media/images", __DIR__)
   end
 
   def thumbnails_directory do
-    Path.absname("apps/photog/priv/static/media/thumbnails")
+    Path.expand("../../../priv/static/media/thumbnails", __DIR__)
   end
 
   def master_file_path(%Image{} = image) do
