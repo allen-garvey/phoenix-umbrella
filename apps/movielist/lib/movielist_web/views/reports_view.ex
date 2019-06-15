@@ -40,9 +40,9 @@ defmodule MovielistWeb.ReportsView do
   Returns database results as json string
   """
   def ratings_by_month_to_json(results) do
-    results 
+    results
       |> Enum.map(fn result -> [Integer.to_string(result[:month_number]), result[:count]] end)
-      |> Poison.encode!
+      |> Jason.encode!
   end
 
 end
