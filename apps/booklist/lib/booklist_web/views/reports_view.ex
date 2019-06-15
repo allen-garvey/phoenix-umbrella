@@ -21,7 +21,7 @@ defmodule BooklistWeb.ReportsView do
   """
   def round_decimal(decimal) do
     decimal
-      |> Decimal.to_float 
+      |> Decimal.to_float
       |> Float.round(2)
   end
 
@@ -29,9 +29,9 @@ defmodule BooklistWeb.ReportsView do
   Returns database results as json string
   """
   def ratings_by_week_to_json(results) do
-    results 
+    results
       |> Enum.map(fn result -> [Integer.to_string(result[:week_number]), result[:count]] end)
-      |> Poison.encode!
+      |> Jason.encode!
   end
 
 end
