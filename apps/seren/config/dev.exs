@@ -7,7 +7,7 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :seren, SerenWeb.Endpoint,
-  http: [port: 6099],
+  http: [port: 6013],
   debug_errors: true,
   code_reloader: true,
   check_origin: false#,
