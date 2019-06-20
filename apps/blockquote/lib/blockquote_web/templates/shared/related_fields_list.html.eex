@@ -1,5 +1,5 @@
 <%= if !Enum.empty?(@items) do %>
-    <h3 class="related-fields-title"><%= String.capitalize(naive_pluralize(@item_name_singular)) %></h3>
+    <h3 class="related-fields-title"><%= String.capitalize(Common.StringHelpers.naive_pluralize(@item_name_singular)) %></h3>
     <ul class="related-fields-list">
         <%= for item <- @items do %>
             <li>

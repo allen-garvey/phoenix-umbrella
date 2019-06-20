@@ -3,7 +3,7 @@
 <ul class="admin-fields-list">
     <%= for field <- @fields do %>
         <li>
-        	<%= link String.capitalize(BlockquoteWeb.SharedView.naive_pluralize(field)), to: BlockquoteWeb.SharedView.path_for_item(@conn, field, :index), class: "field-title" %>
+        	<%= link String.capitalize(Common.StringHelpers.naive_pluralize(field)), to: BlockquoteWeb.SharedView.path_for_item(@conn, field, :index), class: "field-title" %>
         	<%= link "Add", to: BlockquoteWeb.SharedView.path_for_item(@conn, field, :new), class: "addlink" %>
         </li>
     <% end %>
