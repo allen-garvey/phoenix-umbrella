@@ -1,12 +1,12 @@
 defmodule PhotogWeb.ImportView do
   use PhotogWeb, :view
   alias PhotogWeb.ImportView
-  alias PhotogWeb.DatetimeHelpers
+  alias Common.DateHelpers
 
   def import_name(import) do
-    DatetimeHelpers.to_us_formatted_date(import.import_time)
+    DateHelpers.us_formatted_date(import.import_time)
     <> " "
-    <> DatetimeHelpers.to_formatted_time(import.import_time)
+    <> DateHelpers.formatted_time(import.import_time)
   end
 
   def render("index.json", %{imports: imports}) do

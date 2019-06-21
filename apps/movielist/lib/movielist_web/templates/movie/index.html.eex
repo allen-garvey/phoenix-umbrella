@@ -18,8 +18,8 @@
         <td></td>
         <td><%= link movie.title, to: MovielistWeb.SuperSearchHelpers.search_url(movie.title) %></td>
         <td><%= MovielistWeb.GenreView.to_s(movie.genre) %></td>
-        <td><%= MovielistWeb.SharedView.us_formatted_date(movie.theater_release_date) %></td>
-        <td><%= MovielistWeb.SharedView.us_formatted_date(movie.home_release_date) %></td>
+        <td><%= Common.DateHelpers.us_formatted_date(movie.theater_release_date) %></td>
+        <td><%= Common.DateHelpers.us_formatted_date(movie.home_release_date) %></td>
         <td><%= movie.pre_rating %></td>
         <td><%= is_active_status(movie.is_active) %></td>
 

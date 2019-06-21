@@ -15,7 +15,7 @@
 
 	<li>
 		<strong>Date scored:</strong>
-		<%= BooklistWeb.SharedView.us_formatted_date(@rating.date_scored) %>
+		<%= Common.DateHelpers.us_formatted_date(@rating.date_scored) %>
 	</li>
 
 	<li>

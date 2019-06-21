@@ -21,7 +21,7 @@
 
 	<li>
 		<strong>Due date:</strong>
-		<%= BooklistWeb.SharedView.us_formatted_date(@loan.due_date) %>
+		<%= Common.DateHelpers.us_formatted_date(@loan.due_date) %>
 	</li>
 
 	<li>

@@ -38,7 +38,7 @@
 	    <tr class="<%= MovielistWeb.RatingView.css_class_for_score(rating.score) %>">
 	      <td></td>
 	      <td><%= MovielistWeb.MovieView.to_s(rating.movie) %></td>
-	      <td><%= MovielistWeb.SharedView.us_formatted_date(rating.date_scored) %></td>
+	      <td><%= Common.DateHelpers.us_formatted_date(rating.date_scored) %></td>
 	      <td><%= rating.score %></td>
 	    </tr>
 	<% end %>

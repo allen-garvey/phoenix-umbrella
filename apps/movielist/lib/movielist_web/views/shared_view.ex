@@ -2,21 +2,6 @@ defmodule MovielistWeb.SharedView do
   use MovielistWeb, :view
 
 	@doc """
-  	Takes date or datetime and
-  	returns string date in format MM-DD-YYYY
-  	"""
-  	def us_formatted_date(nil) do
-		nil
-	end
-	def us_formatted_date(datetime) do
-		String.pad_leading(Integer.to_string(datetime.month), 2, "0") <>
-		"/" <>
-		String.pad_leading(Integer.to_string(datetime.day), 2, "0") <>
-		"/" <>
-		Integer.to_string(datetime.year)
-	end
-
-	@doc """
 	Rounds decimal
 	"""
 	def round_decimal(nil) do

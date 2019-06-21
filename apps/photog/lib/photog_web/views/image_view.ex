@@ -1,8 +1,8 @@
 defmodule PhotogWeb.ImageView do
   use PhotogWeb, :view
   alias PhotogWeb.ImageView
-  alias PhotogWeb.DatetimeHelpers
   alias Photog.Image.Exif
+  alias Common.DateHelpers
 
   def render("index.json", %{images: images}) do
     %{data: render_many(images, ImageView, "image.json")}
@@ -81,8 +81,8 @@ defmodule PhotogWeb.ImageView do
       creation_time: %{
         raw: image.creation_time,
         formatted: %{
-          us_date: DatetimeHelpers.to_us_formatted_date(image.creation_time),
-          time: DatetimeHelpers.to_formatted_time(image.creation_time),
+          us_date: DateHelpers.us_formatted_date(image.creation_time),
+          time: DateHelpers.formatted_time(image.creation_time),
         }
       },
       master_path: image.master_path,
@@ -105,8 +105,8 @@ defmodule PhotogWeb.ImageView do
       creation_time: %{
         raw: image.creation_time,
         formatted: %{
-          us_date: DatetimeHelpers.to_us_formatted_date(image.creation_time),
-          time: DatetimeHelpers.to_formatted_time(image.creation_time),
+          us_date: DateHelpers.us_formatted_date(image.creation_time),
+          time: DateHelpers.formatted_time(image.creation_time),
         }
       },
       master_path: image.master_path,
