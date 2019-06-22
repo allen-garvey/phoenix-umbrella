@@ -26,12 +26,12 @@
 
   <li>
     <strong>Average pre-rating:</strong>
-    <%= MovielistWeb.SharedView.round_decimal(@average_pre_rating) %>
+    <%= Common.NumberHelpers.round_decimal(@average_pre_rating) %>
   </li>
 
   <li>
     <strong>Average post-rating:</strong>
-    <%= MovielistWeb.SharedView.round_decimal(@average_score) %>
+    <%= Common.NumberHelpers.round_decimal(@average_score) %>
   </li>
 
 </ul>

@@ -12,7 +12,7 @@
 	</div>
 	<div>
 		<div class="heading">Average rating:</div>
-		<div><%= MovielistWeb.SharedView.round_decimal(@average_score) %></div>
+		<div><%= Common.NumberHelpers.round_decimal(@average_score) %></div>
 	</div>
 </div>
 

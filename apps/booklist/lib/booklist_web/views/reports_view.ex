@@ -17,15 +17,6 @@ defmodule BooklistWeb.ReportsView do
   end
 
   @doc """
-  Rounds decimal
-  """
-  def round_decimal(decimal) do
-    decimal
-      |> Decimal.to_float
-      |> Float.round(2)
-  end
-
-  @doc """
   Returns database results as json string
   """
   def ratings_by_week_to_json(results) do
