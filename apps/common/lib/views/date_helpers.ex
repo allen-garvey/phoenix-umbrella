@@ -15,6 +15,20 @@ defmodule Common.DateHelpers do
   end
 
   @doc """
+  Takes a date or datetime struct and returns a string in iso format
+  yyyy-mm-dd separated by the separator string
+  """
+  def iso_formatted_date(datetime, separator \\ "-")
+
+  def iso_formatted_date(nil, _separator) do
+    nil
+  end
+
+	def iso_formatted_date(datetime, separator) do
+    "#{datetime.year}#{separator}#{integer_pad_2(datetime.month)}#{separator}#{integer_pad_2(datetime.day)}"
+  end
+
+  @doc """
   Returns time from datetime as string formatted as HH:MM:SS
   """
   def formatted_time(datetime) do
