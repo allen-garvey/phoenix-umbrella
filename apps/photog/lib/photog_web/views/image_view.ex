@@ -109,6 +109,7 @@ defmodule PhotogWeb.ImageView do
           time: DateHelpers.formatted_time(image.creation_time),
         }
       },
+      completion_date: DateHelpers.iso_formatted_date(image.completion_date),
       master_path: image.master_path,
       thumbnail_path: image.thumbnail_path,
       mini_thumbnail_path: image.mini_thumbnail_path,
