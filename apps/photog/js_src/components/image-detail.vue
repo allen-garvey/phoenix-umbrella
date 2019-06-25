@@ -33,6 +33,8 @@
             <dl>
                 <dt>Date Taken</dt>
                 <dd>{{image.creation_time.formatted.us_date}} {{image.creation_time.formatted.time}}</dd>
+                <dt>Completion Date</dt>
+                <dd>{{formatIsoDate(image.completion_date)}}</dd>
                 <dt>Favorite</dt>
                 <dd>{{image.is_favorite ? 'true' : 'false'}}</dd>
                 <template v-if="image.import">
@@ -66,6 +68,7 @@
 <script>
 import ImageItemsList from './image-items-list.vue';
 import { API_URL_BASE } from '../request-helpers';
+import { isoFormattedDateToUs } from '../date-helpers';
 
 //from: https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
 function capitalizeFirstLetter(string){
@@ -228,9 +231,10 @@ export default {
             this.sendJson(apiUrl, 'PATCH', data).then((response)=>{
                 this.image.is_favorite = response.data.is_favorite;
             });
-
-
         },
+        formatIsoDate(date){
+            return isoFormattedDateToUs(date);
+        }
     }
 }
 </script>
