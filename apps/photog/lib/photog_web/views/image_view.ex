@@ -32,6 +32,7 @@ defmodule PhotogWeb.ImageView do
     %{
       id: image.id,
       is_favorite: image.is_favorite,
+      completion_date: DateHelpers.iso_formatted_date(image.completion_date),
     }
   end
 
