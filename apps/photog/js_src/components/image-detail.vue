@@ -35,15 +35,15 @@
                 <dd>{{image.creation_time.formatted.us_date}} {{image.creation_time.formatted.time}}</dd>
                 <dt>Completion Date</dt>
                 <dd>
-                    <div>{{formatIsoDate(image.completion_date)}}</div>
-                    <div>
+                    <div v-show="!isEditingCompletionDate">{{formatIsoDate(image.completion_date)}}</div>
+                    <div v-if="isEditingCompletionDate">
                         <div><input type="date" v-model="completionDateModel"/></div>
                         <div>
-                            <button>Cancel</button>
+                            <button @click="cancelEditCompletionDate()">Cancel</button>
                             <button @click="updateImageCompletionDate()">Save</button>
                         </div>
                     </div>
-                    <div><button>Edit</button></div>
+                    <div v-show="!isEditingCompletionDate"><button @click="enableEditCompletionDate()">Edit</button></div>
                 </dd>
                 <dt>Favorite</dt>
                 <dd>{{image.is_favorite ? 'true' : 'false'}}</dd>
@@ -136,7 +136,9 @@ export default {
             imageModel: null, //for when the model is the parent of the image
             modelIndex: -1, //when model is parent, the index of the current image in the image array
             imageExif: null,
+            //following for completion date editing
             completionDateModel: null, //used for editing image completion date
+            isEditingCompletionDate: false,
         }
     },
     computed: {
@@ -176,6 +178,7 @@ export default {
         },
         loadModel(modelPath){
             this.completionDateModel = null;
+            this.isEditingCompletionDate = false;
             this.imageModel = null;
             this.modelIndex = -1;
 
@@ -257,6 +260,12 @@ export default {
             this.updateImage(data).then((response)=>{
                 this.image.completion_date = response.data.completion_date;
             });
+        },
+        enableEditCompletionDate(){
+            this.isEditingCompletionDate = true;
+        },
+        cancelEditCompletionDate(){
+            this.isEditingCompletionDate = false;
         },
         formatIsoDate(date){
             return isoFormattedDateToUs(date);
