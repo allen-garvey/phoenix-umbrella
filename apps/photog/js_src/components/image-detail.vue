@@ -34,7 +34,17 @@
                 <dt>Date Taken</dt>
                 <dd>{{image.creation_time.formatted.us_date}} {{image.creation_time.formatted.time}}</dd>
                 <dt>Completion Date</dt>
-                <dd>{{formatIsoDate(image.completion_date)}}</dd>
+                <dd>
+                    <div>{{formatIsoDate(image.completion_date)}}</div>
+                    <div>
+                        <div><input type="date" v-model="completionDateModel"/></div>
+                        <div>
+                            <button>Cancel</button>
+                            <button @click="updateImageCompletionDate()">Save</button>
+                        </div>
+                    </div>
+                    <div><button>Edit</button></div>
+                </dd>
                 <dt>Favorite</dt>
                 <dd>{{image.is_favorite ? 'true' : 'false'}}</dd>
                 <template v-if="image.import">
@@ -126,6 +136,7 @@ export default {
             imageModel: null, //for when the model is the parent of the image
             modelIndex: -1, //when model is parent, the index of the current image in the image array
             imageExif: null,
+            completionDateModel: null, //used for editing image completion date
         }
     },
     computed: {
@@ -164,6 +175,7 @@ export default {
             this.loadModel(this.modelApiPath);
         },
         loadModel(modelPath){
+            this.completionDateModel = null;
             this.imageModel = null;
             this.modelIndex = -1;
 
@@ -184,6 +196,7 @@ export default {
                         }
                     }
                 }
+                this.completionDateModel = this.image.completion_date;
             });
 
             this.getExif(this.imageId).then((imageExif)=>{
@@ -216,10 +229,12 @@ export default {
                 this.image[itemsKey] = updatedItems; 
             };
         },
+        updateImage(data){
+            const apiUrl = `${API_URL_BASE}/images/${this.image.id}`;
+            return this.sendJson(apiUrl, 'PATCH', data);
+        },
         toggleImageIsFavorite(){
             const newIsFavorite = !this.image.is_favorite;
-
-            const apiUrl = `${API_URL_BASE}/images/${this.image.id}`;
 
             const data = {
                 image: {
@@ -228,8 +243,19 @@ export default {
                 },
             };
 
-            this.sendJson(apiUrl, 'PATCH', data).then((response)=>{
+            this.updateImage(data).then((response)=>{
                 this.image.is_favorite = response.data.is_favorite;
+            });
+        },
+        updateImageCompletionDate(){
+            const data = {
+                image: {
+                    id: this.image.id,
+                    completion_date: this.completionDateModel,
+                },
+            };
+            this.updateImage(data).then((response)=>{
+                this.image.completion_date = response.data.completion_date;
             });
         },
         formatIsoDate(date){
