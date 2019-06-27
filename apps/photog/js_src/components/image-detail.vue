@@ -259,6 +259,7 @@ export default {
             };
             this.updateImage(data).then((response)=>{
                 this.image.completion_date = response.data.completion_date;
+                this.isEditingCompletionDate = false;
             });
         },
         enableEditCompletionDate(){
