@@ -36,14 +36,16 @@
                 <dt>Completion Date</dt>
                 <dd>
                     <div v-show="!isEditingCompletionDate">{{formatIsoDate(image.completion_date)}}</div>
-                    <div v-if="isEditingCompletionDate">
-                        <div><input type="date" v-model="completionDateModel"/></div>
+                    <div v-if="isEditingCompletionDate" class="image-info-edit-container">
+                        <div class="form-group"><input type="date" class="form-control" v-model="completionDateModel"/></div>
                         <div>
-                            <button @click="cancelEditCompletionDate()">Cancel</button>
-                            <button @click="updateImageCompletionDate()">Save</button>
+                            <button @click="cancelEditCompletionDate()" class="btn btn-outline-secondary btn-sm">Cancel</button>
+                            <button @click="updateImageCompletionDate()" class="btn btn-success btn-sm">Save</button>
                         </div>
                     </div>
-                    <div v-show="!isEditingCompletionDate"><button @click="enableEditCompletionDate()">Edit</button></div>
+                    <div v-show="!isEditingCompletionDate">
+                        <button @click="enableEditCompletionDate()" class="btn btn-outline-primary btn-sm">Edit</button>
+                    </div>
                 </dd>
                 <dt>Favorite</dt>
                 <dd>{{image.is_favorite ? 'true' : 'false'}}</dd>

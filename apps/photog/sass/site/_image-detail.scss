@@ -38,4 +38,14 @@ $image_show_dt_width: 10em;
 		flex-basis: calc(100% - #{$image_show_dt_width});
 		margin-left: 0;
 	}
+
+	.image-info-edit-container{
+		display: flex;
+		.form-control{
+			max-width: 14em;
+		}
+		.form-group{
+			margin-right: 1rem;
+		}
+	}
 }
