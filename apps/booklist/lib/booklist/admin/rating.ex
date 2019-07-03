@@ -24,23 +24,11 @@ defmodule Booklist.Admin.Rating do
     end
   end
 
-  @doc """
-  Adds default date as today if nil
-  """
-  def default_date_today(changeset, attribute_key) do
-    date_value = get_field(changeset, attribute_key)
-    if is_nil(date_value) do
-      change(changeset, %{attribute_key => Date.utc_today})
-    else
-      changeset
-    end
-  end
-
   @doc false
   def changeset(rating, attrs) do
     rating
     |> cast(attrs, [:date_scored, :score, :book_id])
-    |> default_date_today(:date_scored)
+    |> Common.ModelHelpers.Date.default_date_today(:date_scored)
     |> validate_required([:date_scored, :score, :book_id])
     |> assoc_constraint(:book)
     |> validate_score(:score)

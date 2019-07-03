@@ -16,7 +16,7 @@ defmodule Photog.Api.Import do
   def changeset(import, attrs) do
     import
     |> cast(attrs, [:import_time, :apple_photos_uuid])
-    |> Photog.ModelHelpers.Date.default_datetime_now(:import_time)
+    |> Common.ModelHelpers.Date.default_datetime_now(:import_time)
     |> validate_required([:import_time])
     |> unique_constraint(:apple_photos_uuid)
   end
