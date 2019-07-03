@@ -1,7 +1,7 @@
 {
-  "name": "photog-phoenix",
+  "name": "phoenix-umbrella",
   "version": "1.0.0",
-  "description": "Turn your Apple Photos library into a web application",
+  "description": "Elixir umbrella app for phoenix cms web apps",
   "main": "index.js",
   "directories": {
     "lib": "lib",
@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allen-garvey/photog-phoenix.git"
+    "url": "git+https://github.com/allen-garvey/phoenix-umbrella.git"
   },
   "author": "Allen Garvey",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/allen-garvey/photog-phoenix/issues"
+    "url": "https://github.com/allen-garvey/phoenix-umbrella/issues"
   },
-  "homepage": "https://github.com/allen-garvey/photog-phoenix#readme",
+  "homepage": "https://github.com/allen-garvey/phoenix-umbrella#readme",
   "devDependencies": {
     "bootstrap": "^4.3.1",
     "copy-webpack-plugin": "^5.0.3",
