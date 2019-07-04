@@ -2,8 +2,6 @@ defmodule Movielist.Admin.Movie do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Movielist.Admin.ModelHelpers
-
 
   schema "movies" do
     field :home_release_date, :date
@@ -42,7 +40,7 @@ defmodule Movielist.Admin.Movie do
     # sort_title is required, but we are not validating it here since it generated from the title
     |> validate_required([:title, :genre_id, :pre_rating, :is_active])
     |> generate_sort_title
-    |> ModelHelpers.validate_score(:pre_rating)
+    |> Common.ModelHelpers.Number.validate_score(:pre_rating)
     |> assoc_constraint(:genre)
   end
 end

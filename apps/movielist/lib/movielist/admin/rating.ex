@@ -2,8 +2,6 @@ defmodule Movielist.Admin.Rating do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Movielist.Admin.ModelHelpers
-
 
   schema "ratings" do
     field :date_scored, :date
@@ -20,7 +18,7 @@ defmodule Movielist.Admin.Rating do
     |> cast(attrs, [:movie_id, :date_scored, :score])
     |> Common.ModelHelpers.Date.default_date_today(:date_scored)
     |> validate_required([:movie_id, :date_scored, :score])
-    |> ModelHelpers.validate_score(:score)
+    |> Common.ModelHelpers.Number.validate_score(:score)
     |> assoc_constraint(:movie)
   end
 end

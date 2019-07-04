@@ -12,18 +12,6 @@ defmodule Booklist.Admin.Rating do
     timestamps()
   end
 
-  @doc """
-  Validates rating score is between 1-100
-  """
-  def validate_score(changeset, attribute_key) do
-    score = get_field(changeset, attribute_key)
-    if !is_integer(score) or score < 1 or score > 100 do
-      add_error(changeset, attribute_key, "Score must be between 1-100")
-    else
-      changeset
-    end
-  end
-
   @doc false
   def changeset(rating, attrs) do
     rating
@@ -31,6 +19,6 @@ defmodule Booklist.Admin.Rating do
     |> Common.ModelHelpers.Date.default_date_today(:date_scored)
     |> validate_required([:date_scored, :score, :book_id])
     |> assoc_constraint(:book)
-    |> validate_score(:score)
+    |> Common.ModelHelpers.Number.validate_score(:score)
   end
 end
