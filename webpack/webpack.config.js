@@ -14,7 +14,9 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, '..', 'apps'),
-        filename: '[name]/priv/static/assets/app.js',
+        filename: (info) => {
+            return `${info.chunk.name}/priv/static/assets/app.js`;
+        },
     },
     resolve: {
         alias: {
