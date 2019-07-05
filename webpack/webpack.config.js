@@ -52,7 +52,9 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
-            filename: '[name]/priv/static/assets/style.css',
+            moduleFilename: (chunk) => {
+                return `${chunk.name}/priv/static/assets/style.css`;
+            },
         }),
     ],
 };
