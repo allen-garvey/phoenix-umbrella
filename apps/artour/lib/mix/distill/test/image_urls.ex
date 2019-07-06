@@ -8,7 +8,7 @@ defmodule Mix.Tasks.Distill.Test.ImageUrls do
         #make sure base_url ends with trailing slash
         base_url = cond do
                         !String.ends_with?(base_url, "/") -> base_url <> "/"
-                        true -> base_url 
+                        true -> base_url
                     end
 
         #start app so repo is available
@@ -37,7 +37,7 @@ defmodule Mix.Tasks.Distill.Test.ImageUrls do
     end
 
     def print_image_response({:ok, {:ok, response}}) do
-        IO.puts "HTTP status code of " <> Integer.to_string(response.status_code) <> " for " <> response.request_url
+        IO.puts :stderr, "HTTP status code of " <> Integer.to_string(response.status_code) <> " for " <> response.request_url
     end
 
     #url sent no response
@@ -47,7 +47,7 @@ defmodule Mix.Tasks.Distill.Test.ImageUrls do
 
     #problem with running async task somehow
     def print_image_response({_task_status, {_httpoison_status, _message}}) do
-        IO.puts "Problem with testing image url async task"
+        IO.puts :stderr, "Problem with testing image url async task"
     end
 
 	def url_for_image(image, base_url, size) do
@@ -59,5 +59,5 @@ defmodule Mix.Tasks.Distill.Test.ImageUrls do
 		end
         URI.merge(base_url, image_filename) |> to_string
 	end
-	
+
 end
