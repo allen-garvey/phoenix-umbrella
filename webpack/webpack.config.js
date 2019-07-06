@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 function outputPathForApp(appName, extension){
     let appDir = appName;
-    let fileName = extension === 'js' ? 'app' : 'style';
+    let fileName = 'app';
 
     if(appName === 'artour_admin'){
         appDir = 'artour';
@@ -12,7 +12,6 @@ function outputPathForApp(appName, extension){
     }
     else if(appName === 'artour_public'){
         appDir = 'artour';
-        fileName = 'app';
     }
 
     return `${appDir}/priv/static/assets/${fileName}.${extension}`;

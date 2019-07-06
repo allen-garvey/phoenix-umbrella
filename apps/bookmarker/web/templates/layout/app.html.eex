@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <title>Bookmarker</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/assets/style.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/assets/app.css") %>">
   </head>
 
   <body>
