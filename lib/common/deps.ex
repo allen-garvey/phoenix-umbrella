@@ -30,6 +30,6 @@ defmodule Umbrella.Common.Deps do
   end
 
   def earmark do
-    {:earmark, "~> 1.3" }
+    {:earmark, "~> 1.3"}
   end
 end
