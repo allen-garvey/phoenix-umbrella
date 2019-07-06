@@ -24,4 +24,12 @@ defmodule Umbrella.Common.Deps do
   def http_poison do
     {:httpoison, "~> 1.5"}
   end
+
+  def floki do
+    {:floki, "~> 0.21"}
+  end
+
+  def earmark do
+    {:earmark, "~> 1.3" }
+  end
 end

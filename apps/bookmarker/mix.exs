@@ -41,7 +41,7 @@ defmodule Bookmarker.Mixfile do
     Umbrella.Common.Deps.shared_phoenix_deps() ++
     [
       Umbrella.Common.Deps.http_poison(), #for folder previews
-      {:floki, "~> 0.20.4"},   #for folder previews
+      Umbrella.Common.Deps.floki(),   #for folder previews
     ]
   end
 

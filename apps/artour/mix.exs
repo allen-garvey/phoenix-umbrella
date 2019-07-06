@@ -39,8 +39,8 @@ defmodule Artour.Mixfile do
     Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
     Umbrella.Common.Deps.shared_phoenix_deps() ++
     [
-      Umbrella.Common.Deps.http_poison(),
-      {:earmark, "1.3.1" }, #for markdown in post bodies
+      Umbrella.Common.Deps.http_poison(), # for mix task to test image urls for 404s
+      Umbrella.Common.Deps.earmark(), # for markdown in post bodies
     ]
   end
 
