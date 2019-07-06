@@ -1,0 +1,68 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :title, class: "control-label" %>
+    <%= text_input f, :title, class: "form-control", data_slug_source: true, spellcheck: "true" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :slug, class: "control-label" %>
+    <%= text_input f, :slug, class: "form-control", data_slug: true %>
+    <%= error_tag f, :slug %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :cover_image_id, class: "control-label" %>
+    <%= number_input f, :cover_image_id, class: "form-control" %>
+    <%= error_tag f, :cover_image_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :body, class: "control-label" %>
+    <%= textarea f, :body, class: "form-control", spellcheck: "true" %>
+    <%= error_tag f, :body %>
+  </div>
+
+  <div class="spread_content">
+    <div class="form-group">
+      <%= label f, :is_markdown, "Markdown body", class: "control-label" %>
+      <%= checkbox f, :is_markdown %>
+      <%= error_tag f, :is_markdown %>
+    </div>
+
+    <div class="form-group">
+      <%= label f, :is_nsfw, "NSFW", class: "control-label" %>
+      <%= checkbox f, :is_nsfw %>
+      <%= error_tag f, :is_nsfw %>
+    </div>
+
+    <div class="form-group">
+      <%= label f, :is_published, "Published", class: "control-label" %>
+      <%= checkbox f, :is_published %>
+      <%= error_tag f, :is_published %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :category_id, class: "control-label" %>
+    <%= select f, :category_id, @categories , class: "form-control" %>
+    <%= error_tag f, :category_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :publication_date, class: "control-label" %>
+    <%= date_input f, :publication_date, class: "form-control" %>
+    <%= error_tag f, :publication_date %>
+  </div>
+
+  <%= render Artour.SharedView, "form_submit_buttons.html",
+                                show_delete: @show_delete,
+                                save_another: @save_another
+  %>
+<% end %>

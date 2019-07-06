@@ -1,0 +1,24 @@
+.submit_buttons_container{
+	display: flex;
+	justify-content: space-between;
+}
+textarea.form-control{
+	height: 15em;
+}
+
+.form-group .help-block{
+	color: #a94442;
+}
+
+#autofill-image-button{
+	margin-left: 2em;
+}
+
+input[type="checkbox"]{
+	margin-left: 10px;
+	transform: scale(1.6);
+}
+
+.edit-image-preview-container img{
+	max-height: 300px;
+}

@@ -1,0 +1,33 @@
+/**
+* Nav Styles
+*/
+.header{
+	padding-top: 1em;
+	padding-bottom: 1em;
+	margin-bottom: 1em;
+}
+.nav{
+	display: flex;
+	justify-content: space-between;
+}
+.nav .brand{
+	font-weight: bold;
+}
+.nav .menu-list{
+	margin: 0;
+	list-style-type: none;
+	padding: 0;
+	display: flex;
+}
+.nav .menu-list a{
+	padding-left: 3em;
+}
+.nav a{
+	color: black;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+.nav a:hover{
+	text-decoration: none;
+	font-weight: bold;
+}

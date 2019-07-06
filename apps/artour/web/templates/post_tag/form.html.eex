@@ -1,0 +1,24 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :post_id, class: "control-label" %>
+    <%= number_input f, :post_id, class: "form-control" %>
+    <%= error_tag f, :post_id %>
+  </div>
+  
+  <div class="form-group">
+    <%= label f, :tag_id, class: "control-label" %>
+    <%= number_input f, :tag_id, class: "form-control" %>
+    <%= error_tag f, :tag_id %>
+  </div>
+
+  <%= render Artour.SharedView, "form_submit_buttons.html",
+                                show_delete: @show_delete,
+                                save_another: @save_another
+  %>
+<% end %>

@@ -1,0 +1,73 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" id="is_portrait_checkbox" checked> Portrait
+    </label>
+    <button id="autofill-image-button" class="btn btn-default" type="button" title="Regenerate image slug and filenames">Regenerate</button>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :title, class: "control-label" %>
+    <%= text_input f, :title, class: "form-control", data_slug_source: true, data_image_name: "true" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :slug, class: "control-label" %>
+    <%= text_input f, :slug, class: "form-control", data_slug: true %>
+    <%= error_tag f, :slug %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :description, class: "control-label" %>
+    <%= text_input f, :description, class: "form-control" %>
+    <%= error_tag f, :description %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :filename_large, class: "control-label" %>
+    <%= text_input f, :filename_large, class: "form-control", data_image_large: "true" %>
+    <%= error_tag f, :filename_large %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :filename_medium, class: "control-label" %>
+    <%= text_input f, :filename_medium, class: "form-control", data_image_medium: "true" %>
+    <%= error_tag f, :filename_medium %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :filename_small, class: "control-label" %>
+    <%= text_input f, :filename_small, class: "form-control", data_image_small: "true" %>
+    <%= error_tag f, :filename_small %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :filename_thumbnail, class: "control-label" %>
+    <%= text_input f, :filename_thumbnail, class: "form-control", data_image_thumbnail: true %>
+    <%= error_tag f, :filename_thumbnail %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :format_id, class: "control-label" %>
+    <%= select f, :format_id, @formats , class: "form-control" %>
+    <%= error_tag f, :format_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :completion_date, class: "control-label" %>
+    <%= date_input f, :completion_date, class: "form-control" %>
+    <%= error_tag f, :completion_date %>
+  </div>
+
+  <%= render Artour.SharedView, "form_submit_buttons.html",
+                                show_delete: @show_delete,
+                                save_another: @save_another
+  %>
+<% end %>

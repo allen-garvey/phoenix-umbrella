@@ -1,0 +1,103 @@
+.post-album-image-list-controls{
+	display: flex;
+	justify-content: flex-end;
+	padding: 1em;
+	border-radius: 3px;
+	margin-top: 3em;
+
+	&.hidden{
+		display: none;
+	}
+}
+.post-album-image-list{
+	padding: 0;
+	list-style-type: none;
+	margin-top: 10px;
+	img{
+		height: 114px;
+	}
+	li{
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		border-bottom: 1px solid #ddd;
+		&:last-of-type{
+			border-bottom: none;
+		}
+		& > *{
+			display: flex;
+			align-items: center;
+		}
+		.image-title{
+			width: 20em;
+			flex-direction: column;
+			justify-content: center;
+		}
+		.list-item-dragger{
+			padding: 0 2em;
+			font-size: 2em;
+			cursor: move;
+		}
+	}
+	.cover-image-container{
+		background-color: $item_selected_color;
+	}
+	.image-buttons > *{
+		margin-right: 1em;
+		&:last-child{
+			margin-right: 0;
+		}
+	} 
+}
+
+.post-tags-list{
+	margin-bottom: 40px;
+	//list header
+	& > .list-group-item:first-of-type{
+		padding-bottom: 2em;
+	}
+	.list-header{
+		display: flex;
+		justify-content: space-between;
+		.list-heading{
+			font-size: 1.563em;
+		}
+	}
+	.add-tag-link{
+		margin-top: 0.5em;
+		a:before{
+			content: '+';
+			//so not underlined on hover
+			display: inline-block;
+			margin-right: 0.2em;
+			font-weight: bold;
+		}
+	}
+
+	.add-tags-container{
+		label{
+			margin-right: 16px;
+		}
+		input[type="checkbox"]{
+			margin-right: 10px;
+		}
+		.button-container-right{
+			display: flex;
+			justify-content: flex-end;
+			button{
+				margin-right: 12px;
+				&:last-of-type{
+					margin-right: 0;
+				}
+			}
+		}
+	}
+
+	//tag list items
+	.tag-item{
+		display: flex;
+		justify-content: space-between;
+		padding-top: 1em;
+		padding-bottom: 1em;
+	}
+}

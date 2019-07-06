@@ -1,0 +1,17 @@
+<%= render Artour.SharedView, "form_page_heading.html",
+                                conn: @conn,
+                                item_name_singular: "post",
+                                heading: @heading
+%>
+
+<%= render "form.html", changeset: @changeset,
+                        action: @action,
+                        show_delete: assigns[:show_delete],
+                        save_another: assigns[:save_another],
+                        categories: @categories %>
+
+<%= if assigns[:show_delete] do
+  render Artour.SharedView, "hidden_delete_form.html",
+  						changeset: @changeset,
+  						delete_path: post_path(@conn, :delete, @post)
+end %>

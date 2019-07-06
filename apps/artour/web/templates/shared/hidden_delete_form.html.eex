@@ -1,0 +1,2 @@
+<%= form_for @changeset, @delete_path, [method: "delete", data_form: "delete", class: "hidden"], fn _f -> %>
+<% end %>

@@ -1,0 +1,40 @@
+//Shared styles for all post show pages
+$post_show_spacing_margin: 30px;
+
+.post-show-heading{
+	margin: $post_show_spacing_margin 0;
+}
+
+.post-body-container{
+	margin-bottom: $post_show_spacing_margin;
+	p{
+		margin: 0 0 $post_show_spacing_margin / 2;
+	}
+	& > p:last-of-type{
+		margin-bottom: 0;
+	}
+}
+
+.post-meta-info{
+	margin-top: 3em;
+	.post-meta-section{
+		display: flex;
+		margin-bottom: 0.5em;
+	}
+	.meta-title{
+		margin: 0 1em 0.4em 0;
+		flex-basis: 5em;
+	}
+}
+
+.post-tags-list{
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 0;
+	flex-grow: 1;
+	li{
+		flex-grow: 1;
+		margin-right: 1.5em;
+		margin-bottom: 0.5em;
+	}
+}

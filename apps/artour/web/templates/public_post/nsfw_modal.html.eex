@@ -1,0 +1,20 @@
+<div class="nsfw-modal">
+    <div class="nsfw-modal__backdrop"></div>
+    <div class="nsfw-modal__container">
+        <h1 class="nsfw-modal__header">The current post contains <strong>NSFW content.</strong> Are you sure you wish to proceed?</h1>
+        <div class="nsfw-modal__buttons">
+            <%= link "No, take me back", to: page_path(@conn, :index), class: "btn" %>
+            <button class="btn" id="nsfwModalAcceptButton">Yes, I'm sure</button>
+        </div>
+    </div>
+</div>
+<script>
+    var acceptNsfwKey = 'agree_to_nsfw';
+    if(!localStorage.getItem(acceptNsfwKey)){
+        document.getElementById('nsfwModalAcceptButton').addEventListener('click', ()=>{
+            localStorage.setItem(acceptNsfwKey, 'true');
+            document.body.classList.remove('nsfw-modal-show');
+        });
+        document.body.classList.add('nsfw-modal-show');
+    }
+</script>

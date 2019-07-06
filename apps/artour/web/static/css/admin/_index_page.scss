@@ -1,0 +1,39 @@
+.index-heading{
+	margin-top: 0;
+}
+
+.index_table{
+	td.has_children{
+		padding: 0;
+		height: 1px; //hack so below height of 100% works
+
+		& > *{
+			display: block;
+			padding: 8px;
+			height: 100%;
+		}
+
+		& > div{
+			text-align: center;
+		}
+
+		.thumbnail{
+			height: 80px;
+			width: 80px;
+		}
+		.thumbnail-sm{
+			height: 70px;
+			width: 70px;
+		}
+	}
+
+	.warning_cell{
+		background-color: #fff9b7;
+		// background-color: #fff48b;
+		color: #654e27;
+	}
+	.danger_cell{
+		background-color: $alert-danger-bg;
+		color: $alert-danger-text;
+	}
+}

@@ -1,0 +1,6 @@
+<h1>Posts by Date</h1>
+<ol class="link-text-list">
+	<%= for {page_title, page_num} <- Enum.with_index(@page_list, 1) do
+	  content_tag :li, link(page_title, to: page_path(@conn, :page, page_num))
+	end %>
+</ol>

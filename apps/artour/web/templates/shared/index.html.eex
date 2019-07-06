@@ -1,0 +1,35 @@
+<%= render "index_heading.html", conn: @conn, item_name_singular: @item_name_singular %>
+
+<table class="table index_table">
+  <thead>
+    <tr>
+      <%= for heading <- @column_headings do %>
+        <th><%= heading %></th>
+      <% end %>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for item <- @items do %>
+      <tr>
+        <% [first_value | tail_values] = apply(@item_view, @row_values_func_name, [@conn, item]) %>
+
+        <td><%= link first_value, to: path_for_item(@conn, @item_name_singular, :show, item) %></td>
+        
+        <%= for value <- tail_values do %>
+          <% #test for html elements instead of numbers or strings so we don't add padding %>
+          <%= if is_tuple(value) do %>
+            <td class="has_children"><%= value %></td>
+          <% else %>
+            <td><%= value %></td>
+          <% end %>
+        <% end %>
+        
+        <td class="text-right">
+          <%= link "Edit", to: path_for_item(@conn, @item_name_singular, :edit, item), class: "btn btn-default btn-xs" %>
+        </td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>

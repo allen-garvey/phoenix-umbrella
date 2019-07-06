@@ -1,0 +1,6 @@
+<h1><%= @title %></h1>
+<ul class="link-text-list">
+	<%= for item <- @items do
+	  content_tag :li, link(apply(@item_view, @item_display_func_name, [item]), to: apply(@item_view, @item_path_func_name, [@conn, item]))
+	end %>
+</ul>

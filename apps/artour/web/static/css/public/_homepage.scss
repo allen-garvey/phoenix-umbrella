@@ -1,0 +1,111 @@
+/**
+* Homepage
+*/
+.post-brief{
+	position: relative;
+	padding: 2rem 0 4rem;
+}
+
+/**
+* Pagination
+*/
+.pagination-container{
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 4em;
+}
+$hanging_symbol_margin: -1em;
+$symbol_margin: 5px;
+
+.back-container a:before{
+	content: "<<";
+	//so not underlined on hover
+	display: inline-block;
+	margin-left: $hanging_symbol_margin;
+	margin-right: $symbol_margin;
+}
+.forward-container a:after{
+	content: ">>";
+	//so not underlined on hover
+	display: inline-block;
+	margin-right: $hanging_symbol_margin;
+	margin-left: $symbol_margin;
+}
+
+/*
+* Post excerpt for homepage only
+*/
+.post-brief .post-heading{
+	position: relative;
+	z-index: 100;
+}
+
+.post-key-image-super-container{
+	display: flex;
+	justify-content: center;
+	position: relative;
+	padding-top: 2rem;
+}
+.post-excerpt-background-blur{
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	z-index: 1;
+	img{
+		opacity: 0.6;
+		filter: blur(25px) saturate(80%);
+		object-fit: cover;
+		max-width: initial;
+		max-height: initial;
+		width: 100%;
+		height: 100%;
+	}
+}
+.post-key-image-container{
+	position: relative;
+	z-index: 100;
+	box-shadow: -5px 5px 25px rgba(10,10,10,0.2), 5px -5px 25px rgba(10,10,10,0.2);
+	img{
+		display: block; //so takes up full height
+		max-height: 85vh;	
+	}
+}
+
+
+
+/*
+* Following styles are used on homepage and post show pages
+*/
+.post-heading{
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+}
+.post-title{
+	margin: 0;
+}
+.nsfw .post-title:after{
+	content: "NSFW";
+	color: crimson;
+	font-size: 0.6em;
+}
+.nsfw.post-show-heading .post-title:after{
+	margin-left: 1em;
+}
+.post-date{
+	font-size: 0.8em;
+	text-align: right;
+	min-width: 10em;
+}
+
+@media screen and (max-width: 600px){
+	.post-heading{
+		flex-direction: column;
+	}
+	.post-date{
+		text-align: left;
+		margin-top: 0.3em;
+	}
+}

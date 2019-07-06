@@ -1,0 +1,15 @@
+<div class="form-group">
+	<div class="submit_buttons_container">
+		<div>
+			<%= if @show_delete do %>
+			  <button type="button" class="btn btn-danger" data-button="delete">Delete</button>
+			<% end %>
+		</div>
+		<div>
+			<%= if @save_another do %>
+			  <%= submit "Save & Add Another", class: "btn btn-default", name: "form_submit_type", value: "add_another" %>
+			<% end %>
+			<%= submit "Save", class: "btn btn-primary", name: "form_submit_type", value: "save" %>
+		</div>
+	</div>
+</div>

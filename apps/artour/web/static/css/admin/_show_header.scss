@@ -1,0 +1,40 @@
+.show-title{
+	display: inline-block;
+	margin-top: 0;
+	margin-right: 10px;
+}
+.show-heading{
+	margin-bottom: 1em;
+	a{
+		vertical-align: super;
+	}
+}
+
+.back-link{
+	margin-left: -0.4em;
+}
+.back-link:before{
+	content: "\2039";
+	margin-right: 2px;
+	vertical-align: text-bottom;
+	display: inline-block;
+}
+
+.show-attribute-list{
+	dd{
+		display: inline;
+	}
+	dt{
+		display: inline-block;
+	}
+	dt{
+		min-width: 3.5em;
+	}
+	dt:after{
+		content: ":";
+	}
+	dd:after{
+		content: "";
+		display: block;
+	}
+}

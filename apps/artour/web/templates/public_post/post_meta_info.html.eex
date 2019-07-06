@@ -1,0 +1,16 @@
+<div class="post-meta-info">
+	<div class="post-meta-section">
+		<h4 class="meta-title">Category</h4>
+		<%= link Artour.CategoryView.display_name(@post.category), to: Artour.PublicCategoryView.show_path(@conn, @post.category) %>
+	</div>
+	<%= if length(@post.tags) > 0 do %>
+		<div class="post-meta-section">
+			<h4 class="meta-title">Tags</h4>
+			<ul class="post-tags-list">
+				<%= for tag <- @post.tags do
+				  content_tag :li, link(Artour.TagView.display_name(tag), to: Artour.PublicTagView.show_path(@conn, tag))
+				end %>
+			</ul>
+		</div>
+	<% end %>
+</div>

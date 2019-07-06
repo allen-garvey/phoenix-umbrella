@@ -1,0 +1,53 @@
+/**
+* Base Styles
+*/
+body{
+	font-family: 'Consolas', 'Inconsolata', 'Noto Mono', 'Ubuntu Mono', 'Monaco', 'Menlo', monospace;
+}
+
+.container{
+	max-width: 1064px;
+	margin: 0 auto;
+	padding: 0 1em;
+}
+img{
+	max-width: 100%;
+}
+a{
+	text-decoration: none;
+}
+a:hover{
+	text-decoration: underline;
+}
+
+.hidden{
+	display: none;
+}
+
+ul{
+	list-style-type: none;
+	padding-left: 0;
+}
+
+//used for lists of text links, such as on browse and index pages
+.link-text-list li{
+	margin-bottom: 1em;
+}
+
+//major third type scale
+//https://type-scale.com/
+h1{
+	font-size: 3.052rem;
+}
+h2{
+	font-size: 2.441rem;
+}
+h3{
+	font-size: 1.953rem;
+}
+h4{
+	font-size: 1.25rem;
+}
+
+
+

@@ -1,0 +1,9 @@
+<div class="add-images-top-links">
+	<%= link "Back", to: post_path(@conn, :show, @post), class: "back-link" %>
+</div>
+
+<div class="show-heading">
+	<%= content_tag :h1, "Add Images to " <> display_name(@post), class: "show-title" %>	
+</div>
+
+<div id="post_add_images_component" data-form-url="<%= post_path(@conn, :save_images, @post) %>" data-csrf-token="<%= @csrf_token %>" data-images-api-url="<%= api_post_path(@conn, :addable_images, @post) %>"></div>

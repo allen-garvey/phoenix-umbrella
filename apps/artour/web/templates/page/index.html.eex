@@ -1,0 +1,25 @@
+<%= for post <- @posts do
+  
+  render Artour.PublicPostView, "post_excerpt.html", conn: @conn, post: post
+
+end %>
+
+<div class="container">
+	<div class="pagination-container">
+		<div class="back-container">
+			<%= if @current_page != 1 do
+				link "Newer posts", to: page_path(@conn, :page, Integer.to_string(@current_page - 1))
+			end %>
+		</div>
+		<div>
+			<%= if @last_page != 1 do
+				link "All pages", to: page_path(@conn, :pagination_index)
+			end %>
+		</div>
+		<div class="forward-container">
+			<%= if @current_page != @last_page do
+				link "Older posts", to: page_path(@conn, :page, Integer.to_string(@current_page + 1))
+			end %>
+		</div>
+	</div>
+</div>

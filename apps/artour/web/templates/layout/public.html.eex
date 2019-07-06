@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= site_title assigns[:page_title] %></title>
+    <%= tag :link, rel: "stylesheet", href: static_path(@conn, "/css/app.css") %>
+    <%= tag :meta, name: "description", content: site_description() %>
+    <%= if assigns[:facebook_image] do
+      tag :meta, property: "og:image", content: Artour.ImageView.url_for(@conn, @facebook_image, :small, :cloud)
+    end %>
+    <%= if assigns[:page_title] do
+      tag :meta, property: "og:title", content: @page_title
+    end %>
+  </head>
+
+  <body>
+    <header class="header container">
+      <nav class="nav">
+        <div class="brand"><%= link site_title(), to: page_path(@conn, :index) %></div>
+        <ul class="menu-list">
+          <li><%= link "Browse", to: page_path(@conn, :browse) %></li>
+          <li><%= link "About", to: page_path(@conn, :about) %></li>
+        </ul>
+      </nav>
+    </header>
+
+    <%= if assigns[:is_nsfw] do
+	      render Artour.PublicPostView, "nsfw_modal.html", conn: @conn
+    end %>
+
+    <main class="<%= main_container_class(assigns[:main_container_class]) %>" role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+    <%= if assigns[:javascript] do
+      content_tag :script, "", src: static_path(@conn, "/js/app.min.js")
+    end %>
+  </body>
+</html>

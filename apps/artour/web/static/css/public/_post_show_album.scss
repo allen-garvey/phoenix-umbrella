@@ -1,0 +1,133 @@
+.post-thumbnails{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	a{
+		flex-basis: 200px;
+		display: inline-block;
+		margin-bottom: 16px;
+		height: 200px;
+		width: 200px;
+		overflow: hidden;
+		img{
+			max-width: none;
+			max-height: 100%;
+		}
+	}
+}
+
+.lightbox-container, .lightbox-background{
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
+
+.lightbox-container{
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	&.hidden{
+		display: none;
+	}
+	
+	.lightbox-background{
+		background-color: black;
+		opacity: 0.8;
+		z-index: 1;
+	}
+
+	.lightbox-images-container{
+		z-index: 99;
+		img{
+			max-height: 100vh;
+		}
+	}
+	//buttons
+	$lightbox_button_dimensions: 25px;
+	.lightbox-bottom-container{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		top: calc(100vh - #{$lightbox_button_dimensions * 2 + 50px});
+		z-index: 100;
+	}
+	.lightbox-button-container{
+		display: flex;
+		justify-content: space-between;
+		width: 120px;
+		
+	}
+	.caption-container{
+		position: relative;
+		text-align: center;
+		font-size: 1em;
+		padding: 0.7em;
+		margin-bottom: 10px;
+		max-width: 30em;
+
+		.caption-overlay{
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: black;
+			opacity: 0.4;
+		}
+		.caption-body{
+			position: relative;
+			z-index: 100;
+			color: white;
+		}
+		.caption-body:empty + .caption-overlay{
+			display: none;
+		}
+	}
+
+	.slideshow-right-button, .slideshow-left-button, .close-window-button{
+		font-family: 'Times', serif;
+		text-align: center;
+		font-size: 20px;
+		border: 2px solid white;
+		border-radius: 50%;
+		background-color: black;
+		color: white;
+		cursor: pointer;
+		height: $lightbox_button_dimensions;
+		width: $lightbox_button_dimensions;
+		opacity: 0.5;
+		&:hover{
+			opacity: 1;
+		}
+	}
+
+	.slideshow-right-button{
+		&:before{
+			content: '\203A';
+		}
+	}
+	.slideshow-left-button{
+		&:before{
+			content: '\2039';
+		}
+	}
+	.close-window-button{
+		position: absolute;
+		top: 8px;
+		right: 6px;
+		&:before{
+			content: '\2715';
+			height: $lightbox_button_dimensions;
+			width: $lightbox_button_dimensions;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+}

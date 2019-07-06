@@ -1,0 +1,16 @@
+<%= render Artour.SharedView, "show_heading.html",
+                                conn: @conn,
+                                item_attribute_names: attribute_names(),
+                                item_attribute_values: attribute_values(@image),
+                                item_name_singular: "image",
+                                item: @image,
+                                title: display_name(@image)
+%>
+
+<div class="image-thumbnails-container">
+	<%= for size <- Enum.filter([:thumbnail, :small, :medium], fn size -> size != :medium or @image.filename_large != @image.filename_medium end) do
+	  link img_tag_for(@conn, @image, size, :local), to: url_for(@conn, @image, size, :local)
+	end %>
+</div>
+
+<%= link img_tag_for(@conn, @image, :large, :local), to: url_for(@conn, @image, :large, :local) %>

@@ -1,0 +1,4 @@
+<h1>404</h1>
+<p>Sorry, it appears that the page you requested doesn&rsquo;t exist.</p>
+
+<p>Maybe try going back to the <%= link "home page?", to: page_path(@conn, :index) %> or you can try searching by category by visiting the <%= link "browse page.", to: page_path(@conn, :browse) %></p>
