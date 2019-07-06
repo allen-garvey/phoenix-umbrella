@@ -4,10 +4,6 @@ defmodule Mix.Tasks.Distill.Static do
 
   @shortdoc "Runs npm build script and copies static assets to given directory"
   def run(_args) do
-    IO.puts "Running npm production build script"
-    {_, 0} = System.cmd("npm", ["run", "deploy"], into: IO.stream(:stdio, :line))
-
-
     dest_dir = Distill.Directory.default_dest_directory
     #create root directory if it doesn't exist
     File.mkdir_p! dest_dir
@@ -35,9 +31,9 @@ defmodule Mix.Tasks.Distill.Static do
   Default directory for static assets
   """
   def default_static_assets_directory() do
-    File.cwd!
-      |> Path.join("priv")
-      |> Path.join("static")
+    [__DIR__, "..", "..", "..", "priv", "static"]
+    |> Path.join
+    |> Path.expand
   end
 
   @doc """
@@ -47,8 +43,8 @@ defmodule Mix.Tasks.Distill.Static do
     [
       "favicon.ico",
       "robots.txt",
-      Path.join("css", "app.css"),
-      Path.join("js", "app.min.js"),
+      Path.join("assets", "app.css"),
+      Path.join("assets", "app.js"),
     ]
   end
 
