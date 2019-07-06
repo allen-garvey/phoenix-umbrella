@@ -40,7 +40,7 @@ defmodule Bookmarker.Mixfile do
     Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
     Umbrella.Common.Deps.shared_phoenix_deps() ++
     [
-      {:httpoison, "~> 0.13"}, #for folder previews
+      Umbrella.Common.Deps.http_poison(), #for folder previews
       {:floki, "~> 0.20.4"},   #for folder previews
     ]
   end
