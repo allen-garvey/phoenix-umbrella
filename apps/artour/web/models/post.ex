@@ -27,7 +27,7 @@ defmodule Artour.Post do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:title, :slug, :body, :category_id, :cover_image_id, :is_nsfw, :is_markdown, :is_published, :publication_date])
-    |> Artour.ModelHelpers.Date.default_date_today(:publication_date)
+    |> Common.ModelHelpers.Date.default_date_today(:publication_date)
     |> validate_required([:title, :slug, :category_id, :cover_image_id, :is_nsfw, :is_markdown, :is_published, :publication_date])
     |> assoc_constraint(:category)
     |> assoc_constraint(:cover_image)
