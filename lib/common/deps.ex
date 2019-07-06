@@ -20,4 +20,8 @@ defmodule Umbrella.Common.Deps do
   def ecto do
     {:phoenix_ecto, "~> 4.0"}
   end
+
+  def http_poison do
+    {:httpoison, "~> 1.5"}
+  end
 end

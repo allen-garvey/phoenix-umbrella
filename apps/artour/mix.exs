@@ -2,15 +2,20 @@ defmodule Artour.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :artour,
-     version: "0.0.1",
-     elixir: "~> 1.5",
-     elixirc_paths: elixirc_paths(Mix.env),
-     compilers: [:phoenix, :gettext] ++ Mix.compilers,
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     aliases: aliases(),
-     deps: deps()]
+    [
+      app: :artour,
+      version: "0.0.1",
+      elixir: "~> 1.6",
+      build_path: "../../_build",
+      config_path: "../../config/config.exs",
+      deps_path: "../../deps",
+      lockfile: "../../mix.lock",
+      elixirc_paths: elixirc_paths(Mix.env),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers,
+      start_permanent: Mix.env == :prod,
+      aliases: aliases(),
+      deps: deps()
+    ]
   end
 
   # Configuration for the OTP application.
@@ -31,19 +36,10 @@ defmodule Artour.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
+    Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
+    Umbrella.Common.Deps.shared_phoenix_deps() ++
     [
-      {:phoenix, "~> 1.4"},
-      {:phoenix_pubsub, "~> 1.1"},
-      {:phoenix_ecto, "~> 4.0"},
-      {:ecto_sql, "~> 3.0.3"},
-      {:postgrex, ">= 0.14.1"},
-      {:phoenix_html, "~> 2.12"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:gettext, "~> 0.16"},
-      {:cowboy, "~> 2.6"},
-      {:plug_cowboy, "~> 2.0"},
-      {:poison, "~> 3.0"},
-      {:httpoison, "~> 1.4"},
+      Umbrella.Common.Deps.http_poison(),
       {:earmark, "1.3.1" }, #for markdown in post bodies
     ]
   end

@@ -7,11 +7,11 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :artour, Artour.Endpoint,
-  http: [port: 3000],
+  http: [port: 6010],
   debug_errors: true,
   code_reloader: true,
-  check_origin: false,
-  watchers: [npm: ["run", "watch"]]
+  check_origin: false #,
+  # watchers: [npm: ["run", "watch"]]
 
 
 # Watch static and templates for browser reloading.

@@ -2,6 +2,22 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+function outputPathForApp(appName, extension){
+    let appDir = appName;
+    let fileName = extension === 'js' ? 'app' : 'style';
+
+    if(appName === 'artour_admin'){
+        appDir = 'artour';
+        fileName = 'admin';
+    }
+    else if(appName === 'artour_public'){
+        appDir = 'artour';
+        fileName = 'app';
+    }
+
+    return `${appDir}/priv/static/assets/${fileName}.${extension}`;
+}
+
 module.exports = {
     mode: "development",
     entry: {
@@ -11,11 +27,13 @@ module.exports = {
         'bookmarker': `${__dirname}/../apps/bookmarker/assets/js/index.js`,
         'movielist': `${__dirname}/../apps/movielist/assets/js/app.js`,
         'blockquote': `${__dirname}/../apps/blockquote/assets/sass/admin.scss`,
+        'artour_admin': `${__dirname}/../apps/artour/web/static/js/admin/admin.js`,
+        'artour_public': `${__dirname}/../apps/artour/web/static/js/public/app.js`,
     },
     output: {
         path: path.join(__dirname, '..', 'apps'),
         filename: (info) => {
-            return `${info.chunk.name}/priv/static/assets/app.js`;
+            return outputPathForApp(info.chunk.name, 'js');
         },
     },
     resolve: {
@@ -53,7 +71,7 @@ module.exports = {
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             moduleFilename: (chunk) => {
-                return `${chunk.name}/priv/static/assets/style.css`;
+                return outputPathForApp(chunk.name, 'css');
             },
         }),
     ],

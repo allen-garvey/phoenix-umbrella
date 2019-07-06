@@ -7,7 +7,7 @@ defmodule Artour.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :artour, gzip: false,
-    only: ~w(css images media js favicon.ico robots.txt)
+    only: ~w(css images media js assets favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
