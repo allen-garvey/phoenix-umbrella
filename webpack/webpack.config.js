@@ -26,8 +26,8 @@ module.exports = {
         'bookmarker': `${__dirname}/../apps/bookmarker/assets/js/index.js`,
         'movielist': `${__dirname}/../apps/movielist/assets/js/app.js`,
         'blockquote': `${__dirname}/../apps/blockquote/assets/sass/admin.scss`,
-        'artour_admin': `${__dirname}/../apps/artour/web/static/js/admin/admin.js`,
-        'artour_public': `${__dirname}/../apps/artour/web/static/js/public/app.js`,
+        'artour_admin': `${__dirname}/../apps/artour/assets/js/admin/admin.js`,
+        'artour_public': `${__dirname}/../apps/artour/assets/js/public/app.js`,
     },
     output: {
         path: path.join(__dirname, '..', 'apps'),
