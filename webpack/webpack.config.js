@@ -21,7 +21,7 @@ module.exports = {
     mode: "development",
     entry: {
         'photog': `${__dirname}/../apps/photog/assets/js/index.js`,
-        'seren': `${__dirname}/../apps/seren/js_src/index.js`,
+        'seren': `${__dirname}/../apps/seren/assets/js/index.js`,
         'booklist': `${__dirname}/../apps/booklist/assets/js/index.js`,
         'bookmarker': `${__dirname}/../apps/bookmarker/assets/js/index.js`,
         'movielist': `${__dirname}/../apps/movielist/assets/js/index.js`,
