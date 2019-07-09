@@ -24,7 +24,7 @@ module.exports = {
         'seren': `${__dirname}/../apps/seren/js_src/index.js`,
         'booklist': `${__dirname}/../apps/booklist/assets/js/app.js`,
         'bookmarker': `${__dirname}/../apps/bookmarker/assets/js/index.js`,
-        'movielist': `${__dirname}/../apps/movielist/assets/js/app.js`,
+        'movielist': `${__dirname}/../apps/movielist/assets/js/index.js`,
         'blockquote': `${__dirname}/../apps/blockquote/assets/sass/admin.scss`,
         'artour_admin': `${__dirname}/../apps/artour/assets/js/admin/index.js`,
         'artour_public': `${__dirname}/../apps/artour/assets/js/public/index.js`,
