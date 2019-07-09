@@ -2,29 +2,16 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-function outputPathForApp(appName, extension){
-    let appDir = appName;
-    let fileName = 'app';
-
-    if(appName === 'artour_admin'){
-        appDir = 'artour';
-        fileName = 'admin';
-    }
-    else if(appName === 'artour_public'){
-        appDir = 'artour';
-    }
-
-    return `${appDir}/priv/static/assets/${fileName}.${extension}`;
-}
+const pathHelpers = require('./path.js');
 
 module.exports = {
     mode: "development",
     entry: {
-        'photog': `${__dirname}/../apps/photog/assets/js/index.js`,
-        'seren': `${__dirname}/../apps/seren/assets/js/index.js`,
-        'booklist': `${__dirname}/../apps/booklist/assets/js/index.js`,
-        'bookmarker': `${__dirname}/../apps/bookmarker/assets/js/index.js`,
-        'movielist': `${__dirname}/../apps/movielist/assets/js/index.js`,
+        'photog': pathHelpers.defaultEntrypointForApp('photog'),
+        'seren': pathHelpers.defaultEntrypointForApp('seren'),
+        'booklist': pathHelpers.defaultEntrypointForApp('booklist'),
+        'bookmarker': pathHelpers.defaultEntrypointForApp('bookmarker'),
+        'movielist': pathHelpers.defaultEntrypointForApp('movielist'),
         'blockquote': `${__dirname}/../apps/blockquote/assets/sass/admin.scss`,
         'artour_admin': `${__dirname}/../apps/artour/assets/js/admin/index.js`,
         'artour_public': `${__dirname}/../apps/artour/assets/js/public/index.js`,
@@ -32,7 +19,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, '..', 'apps'),
         filename: (info) => {
-            return outputPathForApp(info.chunk.name, 'js');
+            return pathHelpers.outputPathForApp(info.chunk.name, 'js');
         },
     },
     resolve: {
@@ -70,7 +57,7 @@ module.exports = {
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             moduleFilename: (chunk) => {
-                return outputPathForApp(chunk.name, 'css');
+                return pathHelpers.outputPathForApp(chunk.name, 'css');
             },
         }),
     ],
