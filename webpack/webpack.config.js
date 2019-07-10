@@ -12,6 +12,7 @@ module.exports = {
         'booklist': pathHelpers.defaultEntrypointForApp('booklist'),
         'bookmarker': pathHelpers.defaultEntrypointForApp('bookmarker'),
         'movielist': pathHelpers.defaultEntrypointForApp('movielist'),
+        'grenadier': pathHelpers.defaultEntrypointForApp('grenadier'),
         'blockquote': `${__dirname}/../apps/blockquote/assets/sass/admin.scss`,
         'artour_admin': `${__dirname}/../apps/artour/assets/js/admin/index.js`,
         'artour_public': `${__dirname}/../apps/artour/assets/js/public/index.js`,

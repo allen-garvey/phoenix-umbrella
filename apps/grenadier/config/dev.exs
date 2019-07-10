@@ -16,19 +16,10 @@ config :grenadier, Grenadier.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :grenadier, GrenadierWeb.Endpoint,
-  http: [port: 4000],
+  http: [port: 6009],
   debug_errors: true,
   code_reloader: true,
-  check_origin: false,
-  watchers: [
-    node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
-    ]
-  ]
+  check_origin: false
 
 # ## SSL Support
 #
