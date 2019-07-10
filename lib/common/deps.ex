@@ -32,4 +32,8 @@ defmodule Umbrella.Common.Deps do
   def earmark do
     {:earmark, "~> 1.3"}
   end
+
+  def argon2 do
+    {:argon2_elixir, "~> 2.0"}
+  end
 end
