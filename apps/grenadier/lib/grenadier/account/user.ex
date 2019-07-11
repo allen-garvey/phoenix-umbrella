@@ -25,7 +25,8 @@ defmodule Grenadier.Account.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:name, :password])
-    |> validate_required([:name])
+    |> validate_required([:name, :password])
+    |> validate_length(:password, min: 8)
     |> put_pass_hash
     |> validate_required([:password_hash])
     |> unique_constraint(:name)
