@@ -28,7 +28,7 @@ defmodule Mix.Tasks.Grenadier.CreateUser do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         Common.MixHelpers.Changeset.errors_to_string(changeset)
-        |> Common.MixHelpers.Error.exit_with_error(:could_not_create_user)
+        |> Error.exit_with_error(:could_not_create_user)
     end
 
   end
