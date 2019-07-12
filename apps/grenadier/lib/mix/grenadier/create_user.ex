@@ -15,7 +15,7 @@ defmodule Mix.Tasks.Grenadier.CreateUser do
   end
 
   def run(_args) do
-  	Error.exit_with_error("usage: mix create_user <user_name> <user_password>")
+  	Error.exit_with_error("usage: mix grenadier.create_user <user_name> <user_password>")
   end
 
   def create_user(user_name, user_password) do
