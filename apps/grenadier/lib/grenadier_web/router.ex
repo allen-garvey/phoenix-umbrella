@@ -17,6 +17,12 @@ defmodule GrenadierWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
+
+  scope "/admin", GrenadierWeb do
+    pipe_through :browser
+
+    get "/", UserController, :index
 
     resources "/users", UserController, only: [:index, :show]
   end
