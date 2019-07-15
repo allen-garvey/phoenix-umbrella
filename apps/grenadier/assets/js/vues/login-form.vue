@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { sendJson } from '../ajax.js';
+
 export default {
     props: {
         csrfToken: {
@@ -32,7 +34,10 @@ export default {
     },
     methods: {
         formSubmitted(){
-
+            sendJson(this.loginUrl, this.csrfToken, 'POST', {
+                username: this.username,
+                password: this.password,
+            })
         },
     }
 };
