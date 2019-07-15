@@ -13,6 +13,10 @@ export default {
             type: String,
             required: true,
         },
+        loginUrl: {
+            type: String,
+            required: true,
+        },
     },
     components: {
     },

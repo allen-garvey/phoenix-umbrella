@@ -10,11 +10,13 @@ import LoginForm from './vues/login-form.vue';
     const loginFormContainer = document.getElementById('login-form');
     
     if(loginFormContainer){
-        const csrfToken = loginFormContainer.dataset.csrfToken;
+        const dataset = loginFormContainer.dataset;
+        const csrfToken = dataset.csrfToken;
+        const loginUrl = dataset.loginUrl;
 
         new Vue({
             el: loginFormContainer,
-            render: h => h(LoginForm, {props: {csrfToken}}),
+            render: h => h(LoginForm, {props: {csrfToken, loginUrl}}),
         });
     }
 })();

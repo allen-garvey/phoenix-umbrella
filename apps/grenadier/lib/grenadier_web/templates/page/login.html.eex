@@ -1,1 +1,1 @@
-<div id="login-form" data-csrf-token="<%= @csrf_token %>"></div>
+<div id="login-form" data-csrf-token="<%= @csrf_token %>" data-login-url="<%= Routes.page_path(@conn, :login_submit) %>"></div>

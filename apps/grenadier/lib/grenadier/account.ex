@@ -37,11 +37,22 @@ defmodule Grenadier.Account do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
-   @doc """
+  @doc """
   Gets a single user by name
   """
   def get_user_by_name(name) do
     Repo.get_by(User, name: name)
+  end
+
+  @doc """
+  Gets a single user given name and password,
+  or false if either user does not exist or password is wrong
+  """
+  def authenticate_user(name, password) do
+    case get_user_by_name(name) do
+      %User{} = user -> {Argon2.check_pass(user, password), user}
+      nil -> {Argon2.no_user_verify(), nil}
+    end
   end
 
   @doc """

@@ -19,6 +19,7 @@ defmodule GrenadierWeb.Router do
     get "/", PageController, :login
 
     get "/login", PageController, :login
+    post "/login", PageController, :login_submit
   end
 
   scope "/admin", GrenadierWeb do
