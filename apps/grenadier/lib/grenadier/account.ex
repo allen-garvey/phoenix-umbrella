@@ -50,8 +50,8 @@ defmodule Grenadier.Account do
   """
   def authenticate_user(name, password) do
     case get_user_by_name(name) do
-      %User{} = user -> {Argon2.check_pass(user, password), user}
-      nil -> {Argon2.no_user_verify(), nil}
+      %User{} = user -> Argon2.check_pass(user, password)
+      nil -> {:error, Argon2.no_user_verify()}
     end
   end
 
