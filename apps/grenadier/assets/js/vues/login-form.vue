@@ -1,9 +1,9 @@
 <template>
-    <div class="login-form">
-        <input type="text" placeholder="Identifier"/>
-        <input type="password" placeholder="Proof"/>
-        <button>Login</button>
-    </div>
+    <form class="login-form" @submit.prevent="formSubmitted()">
+        <input type="text" placeholder="Identifier" v-model="username" />
+        <input type="password" placeholder="Proof" v-model="password" />
+        <button type="submit">Login</button>
+    </form>
 </template>
 
 <script>
@@ -16,12 +16,10 @@ export default {
     },
     components: {
     },
-    created(){
-    },
-    mounted(){
-    },
     data(){
         return {
+            username: '',
+            password: '',
         };
     },
     computed: {
@@ -29,5 +27,10 @@ export default {
     watch: {
     },
     methods: {
+        formSubmitted(){
+
+        },
     }
 };
+</script>
+
