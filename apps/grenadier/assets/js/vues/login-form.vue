@@ -1,7 +1,9 @@
 <template>
-    <form class="login-form" @submit.prevent="formSubmitted()">
-        <input type="text" placeholder="Identifier" v-model="username" />
-        <input type="password" placeholder="Proof" v-model="password" />
+    <form class="login-form" method="POST" :action="loginUrl">
+        <input type="hidden" name="_csrf_token" :value="csrfToken" />
+        <input name="_utf8" type="hidden" value="✓">
+        <input type="text" placeholder="Identifier" name="username" v-model="username" />
+        <input type="password" placeholder="Proof" name="password" v-model="password" />
         <button type="submit">Login</button>
     </form>
 </template>
@@ -30,15 +32,7 @@ export default {
     },
     computed: {
     },
-    watch: {
-    },
     methods: {
-        formSubmitted(){
-            sendJson(this.loginUrl, this.csrfToken, 'POST', {
-                username: this.username,
-                password: this.password,
-            })
-        },
     }
 };
 </script>
