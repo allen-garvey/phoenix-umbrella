@@ -15,7 +15,7 @@ defmodule GrenadierWeb.PageController do
   def login_submit(conn, %{"username" => username, "password" => password}) do
     case Account.authenticate_user(username, password) do
       {:ok, %User{} = user} -> conn
-                      |> put_session(:user_name, user.name)
+                      |> put_session(:user_id, user.id)
                       |> configure_session(renew: true)
                       |> redirect(to: Routes.user_path(conn, :index))
       _   -> login_failed(conn)
