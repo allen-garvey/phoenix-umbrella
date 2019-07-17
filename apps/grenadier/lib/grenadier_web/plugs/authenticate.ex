@@ -14,7 +14,13 @@ defmodule GrenadierWeb.Plugs.Authenticate do
     user_id = get_session(conn, :user_id)
     case user_id && Account.get_user(user_id) do
       %User{} = user -> assign(conn, :current_user, user)
-      nil -> halt(conn)
+      nil ->
+        # IO.inspect conn
+        # TODO change to redirect to remove subdomain from host and replace with grenadier
+        # and add grenadier login path user Routes
+        conn
+        |> Phoenix.Controller.redirect(external: "http://" <> conn.host)
+        |> halt()
     end
   end
 end
