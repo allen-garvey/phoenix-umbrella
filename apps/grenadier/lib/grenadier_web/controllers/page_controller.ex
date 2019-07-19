@@ -12,6 +12,12 @@ defmodule GrenadierWeb.PageController do
     render conn, "login.html", csrf_token: get_csrf_token()
   end
 
+  def logout(conn, _params) do
+    conn
+    |> clear_session()
+    |> render("logout.html")
+  end
+
   def login_submit(conn, %{"username" => username, "password" => password}) do
     case Account.authenticate_user(username, password) do
       {:ok, %User{} = user} -> conn
