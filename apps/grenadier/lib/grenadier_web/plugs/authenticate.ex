@@ -17,9 +17,6 @@ defmodule GrenadierWeb.Plugs.Authenticate do
     case user_id && Account.get_user(user_id) do
       %User{} = user -> disable_caching(conn) |> assign(:current_user, user)
       nil ->
-        # IO.inspect conn
-        # TODO change to redirect to remove subdomain from host and replace with grenadier
-        # and add grenadier login path user Routes
         conn
         |> disable_caching()
         |> put_session(:original_request_url, get_request_url(conn))
