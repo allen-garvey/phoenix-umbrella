@@ -7,13 +7,15 @@
 # General application configuration
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 config :booklist,
   ecto_repos: [Booklist.Repo]
 
 # Configures the endpoint
 config :booklist, BooklistWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "AwGggC3aYyY/qJ8XH5tTaaqeXhrPThd7wTQY317YHAr0j83cZniKbSGyVQTeWUOJ",
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: BooklistWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Booklist.PubSub, adapter: Phoenix.PubSub.PG2]
 

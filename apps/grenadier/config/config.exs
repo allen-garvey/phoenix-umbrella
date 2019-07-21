@@ -7,13 +7,15 @@
 # General application configuration
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 config :grenadier,
   ecto_repos: [Grenadier.Repo]
 
 # Configures the endpoint
 config :grenadier, GrenadierWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "pTlqYpnNuuhdjjy+uza2Ih+G6GdE8/nYiATPOT6PEAkcWTB4qjtH0+urfiYJwF0X",
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: GrenadierWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Grenadier.PubSub, adapter: Phoenix.PubSub.PG2]
 

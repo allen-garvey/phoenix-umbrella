@@ -5,6 +5,8 @@
 # is restricted to this project.
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 # General application configuration
 config :bookmarker,
   ecto_repos: [Bookmarker.Repo]
@@ -12,7 +14,7 @@ config :bookmarker,
 # Configures the endpoint
 config :bookmarker, Bookmarker.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "KhbxZihdofwazJHAnxhJMDTpMtQ7DWHgSGzDyT4KYqc6OYOhzvLbPmD0+/znczhp",
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: Bookmarker.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Bookmarker.PubSub, adapter: Phoenix.PubSub.PG2]
 

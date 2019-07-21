@@ -5,6 +5,8 @@
 # is restricted to this project.
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 # General application configuration
 config :seren,
   ecto_repos: [Seren.Repo]
@@ -12,7 +14,7 @@ config :seren,
 # Configures the endpoint
 config :seren, SerenWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "gZJkBJdi8WyXKCHgo4UbvCY+6KvzjemONORioSvDGcZSVUAoePWTJpDnPDA1CsEU",
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: SerenWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Seren.PubSub,
            adapter: Phoenix.PubSub.PG2]

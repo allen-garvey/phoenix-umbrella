@@ -5,6 +5,8 @@
 # is restricted to this project.
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 # General application configuration
 config :photog,
   ecto_repos: [Photog.Repo]
@@ -12,7 +14,7 @@ config :photog,
 # Configures the endpoint
 config :photog, PhotogWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "ml22C48NmRSK+oG0JxrGewaqVbjVJSpVDMMwy7jYo/sZmgUWjP7S39vPLfr90sae",
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: PhotogWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Photog.PubSub, adapter: Phoenix.PubSub.PG2]
 

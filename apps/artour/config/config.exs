@@ -5,6 +5,8 @@
 # is restricted to this project.
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 # General application configuration
 config :artour,
   ecto_repos: [Artour.Repo]
@@ -12,7 +14,7 @@ config :artour,
 # Configures the endpoint
 config :artour, Artour.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "HFASDja/QLCC9Tv9sreLiCsB1FfJaNswgMnhkYWckyZo2Wo/JtselfjNDteA4v5v",
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: Artour.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Artour.PubSub, adapter: Phoenix.PubSub.PG2]
 
