@@ -22,6 +22,7 @@ defmodule GrenadierWeb.Plugs.Authenticate do
         # and add grenadier login path user Routes
         conn
         |> disable_caching()
+        |> put_session(:original_request_url, get_request_url(conn))
         |> Phoenix.Controller.redirect(external: get_failed_login_redirect_url(conn))
         |> halt()
     end
@@ -39,10 +40,17 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   end
 
   @doc """
+  Get the original url to redirect back to after logged in
+  """
+  def get_request_url(conn) do
+    "#{scheme_to_string(conn.scheme)}://#{conn.host}#{get_redirect_port(conn.port)}#{conn.request_path}"
+  end
+
+  @doc """
   Gets url to redirect to after failed login
   """
   def get_failed_login_redirect_url(conn) do
-    "#{get_failed_login_redirect_scheme(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_failed_login_redirect_port(conn.port)}#{Routes.page_path(conn, :login)}"
+    "#{scheme_to_string(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_redirect_port(conn.port)}#{Routes.page_path(conn, :login)}"
   end
 
   @doc """
@@ -62,7 +70,7 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   @doc """
   Gets the port to redirect to in url after failed login
   """
-  def get_failed_login_redirect_port(origin_port) do
+  def get_redirect_port(origin_port) do
     if origin_port == 80 or origin_port == 443 do
       ""
     else
@@ -73,7 +81,7 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   @doc """
   Gets the scheme to redirect to in url after failed login
   """
-  def get_failed_login_redirect_scheme(origin_scheme) do
+  def scheme_to_string(origin_scheme) do
     case origin_scheme do
       :https -> "https"
       _      -> "http"

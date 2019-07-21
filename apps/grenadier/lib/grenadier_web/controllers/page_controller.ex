@@ -23,7 +23,7 @@ defmodule GrenadierWeb.PageController do
       {:ok, %User{} = user} -> conn
                       |> put_session(:user_id, user.id)
                       |> configure_session(renew: true)
-                      |> redirect(to: Routes.user_path(conn, :index))
+                      |> redirect_after_login()
       _   -> login_failed(conn)
     end
   end
@@ -36,5 +36,14 @@ defmodule GrenadierWeb.PageController do
     conn
     |> put_flash(:error, "Invalid username or password")
     |> login(nil)
+  end
+
+  defp redirect_after_login(conn) do
+    case get_session(conn, :original_request_url) do
+      nil -> redirect(conn, to: Routes.user_path(conn, :index))
+      original_request_url ->
+        delete_session(conn, :original_request_url)
+        |> redirect(external: original_request_url)
+    end
   end
 end
