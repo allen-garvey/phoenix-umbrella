@@ -12,6 +12,7 @@ defmodule Common.Endpoint do
       store: :cookie,
       key: "_umbrella_key",
       signing_salt: "hNWAwoxD",
+      domain: ".ares.test"
     ]
   end
 end
