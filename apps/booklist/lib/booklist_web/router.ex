@@ -9,12 +9,17 @@ defmodule BooklistWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  # pipeline :api do
+  #   plug :accepts, ["json"]
+  # end
+
+  pipeline :authenticate do
+    plug GrenadierWeb.Plugs.Authenticate
   end
 
   scope "/", BooklistWeb do
     pipe_through :browser
+    pipe_through :authenticate
 
     get "/", PageController, :index
     get "/resources", PageController, :resources
