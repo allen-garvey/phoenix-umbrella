@@ -9,12 +9,7 @@ defmodule GrenadierWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :browser_secure do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+  pipeline :authenticate do
     plug GrenadierWeb.Plugs.Authenticate
   end
 
@@ -34,7 +29,8 @@ defmodule GrenadierWeb.Router do
   end
 
   scope "/admin", GrenadierWeb do
-    pipe_through :browser_secure
+    pipe_through :browser
+    pipe_through :authenticate
 
     # get "/", UserController, :index
 
