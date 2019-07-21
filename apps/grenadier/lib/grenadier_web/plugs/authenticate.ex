@@ -42,7 +42,21 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   Gets url to redirect to after failed login
   """
   def get_failed_login_redirect_url(conn) do
-    "#{get_failed_login_redirect_scheme(conn.scheme)}://#{conn.host}#{get_failed_login_redirect_port(conn.port)}#{Routes.page_path(conn, :login)}"
+    "#{get_failed_login_redirect_scheme(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_failed_login_redirect_port(conn.port)}#{Routes.page_path(conn, :login)}"
+  end
+
+  @doc """
+  Gets host to redirect to in url after failed login
+  Does this by using the grenadier subdomain of the current host, or localhost
+  """
+  def get_failed_login_redirect_host(origin_host) do
+    case origin_host do
+      "localhost" -> "localhost"
+      host        -> host
+                     |> String.split(".")
+                     |> List.update_at(0, fn _ -> "grenadier" end)
+                     |> Enum.join(".")
+    end
   end
 
   @doc """
