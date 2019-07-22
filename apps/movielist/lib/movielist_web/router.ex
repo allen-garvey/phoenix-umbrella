@@ -13,8 +13,13 @@ defmodule MovielistWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticate do
+    plug GrenadierWeb.Plugs.Authenticate
+  end
+
   scope "/", MovielistWeb do
     pipe_through :browser
+    pipe_through :authenticate
 
     get "/", PageController, :index
     get "/movies/active", MovieController, :index_active #has to be before resources or conflicts with show pages

@@ -13,18 +13,24 @@ defmodule BlockquoteWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticate do
+    plug GrenadierWeb.Plugs.Authenticate
+  end
+
   scope "/", BlockquoteWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
+    pipe_through :authenticate
 
     # get "/", PageController, :index
     get "/", AdminController, :index
   end
-  
+
   scope "/admin", BlockquoteWeb do
-    pipe_through :browser # Use the default browser stack
-    
+    pipe_through :browser
+    pipe_through :authenticate
+
     get "/", AdminController, :index
-    
+
     resources "/authors", AuthorController
     resources "/categories", CategoryController
     resources "/source-types", SourceTypeController
@@ -36,6 +42,7 @@ defmodule BlockquoteWeb.Router do
 
   scope "/api", BlockquoteWeb do
     pipe_through :api
+    pipe_through :authenticate
 
     get "/daily-quote", ApiDailyQuoteController, :get_daily_quote
   end

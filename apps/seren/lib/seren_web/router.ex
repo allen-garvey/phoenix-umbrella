@@ -13,8 +13,13 @@ defmodule SerenWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticate do
+    plug GrenadierWeb.Plugs.Authenticate
+  end
+
   scope "/api", SerenWeb do
     pipe_through :api
+    pipe_through :authenticate
 
     resources "/tracks",      TrackController,    only: [:index, :show]
     resources "/artists",     ArtistController,   only: [:index, :show]
@@ -31,7 +36,8 @@ defmodule SerenWeb.Router do
   end
 
   scope "/", SerenWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
+    pipe_through :authenticate
 
     # catch all requests and send index page for single page application
     # note this has to be the last route, since routes declared after this one won't be triggered

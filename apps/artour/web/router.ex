@@ -22,6 +22,10 @@ defmodule Artour.Router do
     plug :protect_from_forgery
   end
 
+  pipeline :authenticate do
+    plug GrenadierWeb.Plugs.Authenticate
+  end
+
   # based on:
   # http://www.cultivatehq.com/posts/how-to-set-different-layouts-in-phoenix/
   pipeline :public_layout do
@@ -55,6 +59,7 @@ defmodule Artour.Router do
   #Admin site
   scope "/admin", Artour do
     pipe_through :browser
+    pipe_through :authenticate
 
     get "/", AdminController, :index
 
@@ -76,6 +81,7 @@ defmodule Artour.Router do
   # Other scopes may use custom stacks.
   scope "/admin/api", Artour do
     pipe_through :api
+    pipe_through :authenticate
 
     #edit post tags
     get "/posts/:post_id/tags", ApiPostController, :tags_for

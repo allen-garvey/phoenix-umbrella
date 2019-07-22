@@ -15,9 +15,14 @@ defmodule PhotogWeb.Router do
     plug :protect_from_forgery
   end
 
+  pipeline :authenticate do
+    plug GrenadierWeb.Plugs.Authenticate
+  end
+
   # Other scopes may use custom stacks.
   scope "/api", PhotogWeb do
     pipe_through :api
+    pipe_through :authenticate
 
     #has to be here so it doesn't conflict with import show route
     get "/imports/last", ImportController, :show_last
@@ -54,7 +59,8 @@ defmodule PhotogWeb.Router do
   end
 
   scope "/", PhotogWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
+    pipe_through :authenticate
 
     # catch all requests and send index page for single page application
     # note this has to be the last route, since routes declared after this one won't be triggered
