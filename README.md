@@ -9,7 +9,7 @@ Elixir umbrella project containing several custom CMSs made with Elixir/Phoenix.
 
 ## Getting Started
 
-* 
+* Set environment variable `UMBRELLA_COOKIE_DOMAIN` for shared session cookie (e.g. `export UMBRELLA_COOKIE_DOMAIN=".umbrella.test"`)
 * 
 
 ## License

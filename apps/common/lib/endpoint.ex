@@ -12,7 +12,7 @@ defmodule Common.Endpoint do
       store: :cookie,
       key: "_umbrella_key",
       signing_salt: "hNWAwoxD",
-      domain: ".ares.test"
+      domain: System.get_env("UMBRELLA_COOKIE_DOMAIN", ".umbrella.test")
     ]
   end
 end
