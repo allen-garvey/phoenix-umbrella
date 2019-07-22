@@ -9,7 +9,10 @@ defmodule GrenadierWeb.PageController do
   end
 
   def login(conn, _params) do
-    render conn, "login.html", csrf_token: get_csrf_token()
+    case  GrenadierWeb.Plugs.Authenticate.get_user_from_session(conn) do
+      nil -> render conn, "login.html", csrf_token: get_csrf_token()
+      _   -> redirect_after_login(conn)
+    end
   end
 
   def logout(conn, _params) do

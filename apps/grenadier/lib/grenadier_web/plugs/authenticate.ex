@@ -13,8 +13,7 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   end
 
   def call(conn, _opts) do
-    user_id = get_session(conn, :user_id)
-    case user_id && Account.get_user(user_id) do
+    case get_user_from_session(conn) do
       %User{} = user -> disable_caching(conn) |> assign(:current_user, user)
       nil ->
         conn
@@ -23,6 +22,14 @@ defmodule GrenadierWeb.Plugs.Authenticate do
         |> Phoenix.Controller.redirect(external: get_failed_login_redirect_url(conn))
         |> halt()
     end
+  end
+
+  @doc """
+  Returns either the user struct attached to current session or nil
+  """
+  def get_user_from_session(conn) do
+    user_id = get_session(conn, :user_id)
+    user_id && Account.get_user(user_id)
   end
 
   @doc """
