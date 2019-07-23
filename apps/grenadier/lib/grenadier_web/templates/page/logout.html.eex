@@ -1,1 +1,3 @@
 <div>You are now logged out</div>
+
+<div><%= link "Log back in?", to: Routes.page_path(@conn, :login) %></div>
