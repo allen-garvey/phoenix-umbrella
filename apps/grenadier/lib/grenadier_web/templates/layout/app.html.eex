@@ -12,7 +12,6 @@
         <nav role="navigation">
           <ul>
             <li><%= link "Logout", to: Routes.page_path(@conn, :logout) %></li>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
           </ul>
         </nav>
         <%= link "Grenadier", to: Routes.page_path(@conn, :login) %>
