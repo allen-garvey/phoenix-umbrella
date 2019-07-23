@@ -1,11 +1,14 @@
 <template>
-    <form class="login-form" method="POST" :action="loginUrl">
-        <input type="hidden" name="_csrf_token" :value="csrfToken" />
-        <input name="_utf8" type="hidden" value="✓">
-        <input type="text" placeholder="Identifier" name="username" v-model="username" />
-        <input type="password" placeholder="Proof" name="password" v-model="password" />
-        <button type="submit">Login</button>
-    </form>
+    <div>
+        <h1 @click="showForm()" v-if="!shouldShowForm">Under Construction</h1>
+        <form class="login-form" method="POST" :action="loginUrl" v-if="shouldShowForm">
+            <input type="hidden" name="_csrf_token" :value="csrfToken" />
+            <input name="_utf8" type="hidden" value="✓">
+            <input type="text" placeholder="Identifier" name="username" v-model="username" />
+            <input type="password" placeholder="Proof" name="password" v-model="password" />
+            <button type="submit">Login</button>
+        </form>
+    </div>
 </template>
 
 <script>
@@ -26,6 +29,7 @@ export default {
     },
     data(){
         return {
+            shouldShowForm: false,
             username: '',
             password: '',
         };
@@ -33,6 +37,9 @@ export default {
     computed: {
     },
     methods: {
+        showForm(){
+            this.shouldShowForm = true;
+        },
     }
 };
 </script>
