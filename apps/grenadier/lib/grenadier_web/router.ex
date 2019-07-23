@@ -9,6 +9,10 @@ defmodule GrenadierWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :bare_layout do
+    plug :put_layout, {GrenadierWeb.LayoutView, :bare}
+  end
+
   pipeline :authenticate do
     plug GrenadierWeb.Plugs.Authenticate
   end
@@ -19,6 +23,7 @@ defmodule GrenadierWeb.Router do
 
   scope "/", GrenadierWeb do
     pipe_through :browser
+    pipe_through :bare_layout
 
     get "/", PageController, :login
 
