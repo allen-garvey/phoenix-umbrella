@@ -25,7 +25,6 @@
   "homepage": "https://github.com/allen-garvey/phoenix-umbrella#readme",
   "devDependencies": {
     "bootstrap": "^4.3.1",
-    "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^3.0.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
