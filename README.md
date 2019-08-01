@@ -5,12 +5,32 @@ Elixir umbrella project containing several custom CMSs made with Elixir/Phoenix.
 ## Dependencies
 
 * Elixir >= 1.6
-* 
+
+* node >= 8
+
+* npm
+
+* postgresql
 
 ## Getting Started
 
 * Set environment variable `UMBRELLA_COOKIE_DOMAIN` for shared session cookie (e.g. `export UMBRELLA_COOKIE_DOMAIN=".umbrella.test"`)
-* 
+
+* Clone or download this repo
+
+* Run `mix deps.get`
+
+* Run `npm install`
+
+* Run `npm run deploy`
+
+* Run `mix ecto.setup`
+
+* Run `phxs`
+
+## Individual App Documentation
+
+Individual app documentation along with instructions for app specific mix tasks can be found in `README.md` files in the `./apps` directory
 
 ## License
 
