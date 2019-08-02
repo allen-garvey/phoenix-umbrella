@@ -31,7 +31,6 @@
     "sass-loader": "^7.1.0",
     "vue": "^2.6.10",
     "vue-infinite-loading": "^2.4.4",
-    "vue-infinite-scroll": "^2.0.2",
     "vue-loader": "^15.7.1",
     "vue-router": "^3.0.7",
     "vue-template-compiler": "^2.6.10",

@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import infiniteScroll from 'vue-infinite-scroll';
 import TrackList from './track-list.vue';
 import NavTabs from './nav-tabs.vue';
 import MediaControls from './media-controls.vue';
@@ -24,7 +23,6 @@ let elapsedTimeTimer = null;
 
 export default {
 	name: 'Seren-App',
-	directives: {infiniteScroll},
 	components: {
 		TrackList,
 		NavTabs,

@@ -1,30 +1,36 @@
 <template>
-    <table class="track-list" v-infinite-scroll="infiniteScrollTriggered" infinite-scroll-distance="10" infinite-scroll-disabled="isInfiniteScrollDisabled" infinite-scroll-immediate-check="false">
-        <thead>
-            <th class="col-play-btn"></th>
-            <template v-for="(column, i) in itemColumns">
-                <th :key="i" @click="sortItems(column.sort)">{{column.title}}</th>
-            </template>
-        </thead>
-        <tbody>
-            <template v-for="(item, i) in items">
-                <tr @dblclick="doubleClickRowAction(item, i)" :key="i">
-                    <td @click="rowPlayButtonClicked(item, i)" class="col-play-btn" :class="{'pause': canRowBePlayed && isTrackPlaying(item), 'track-play-button': canRowBePlayed}"></td>
-                    <template v-for="(field, j) in itemFields(item)">
-                        <td :key="`${item.id}${i}${field}${j}`">{{field}}</td>
-                    </template>
-                </tr>
-            </template>
-        </tbody>
-    </table>
+    <div>
+        <table class="track-list">
+            <thead>
+                <th class="col-play-btn"></th>
+                <template v-for="(column, i) in itemColumns">
+                    <th :key="i" @click="sortItems(column.sort)">{{column.title}}</th>
+                </template>
+            </thead>
+            <tbody>
+                <template v-for="(item, i) in items">
+                    <tr @dblclick="doubleClickRowAction(item, i)" :key="i">
+                        <td @click="rowPlayButtonClicked(item, i)" class="col-play-btn" :class="{'pause': canRowBePlayed && isTrackPlaying(item), 'track-play-button': canRowBePlayed}"></td>
+                        <template v-for="(field, j) in itemFields(item)">
+                            <td :key="`${item.id}${i}${field}${j}`">{{field}}</td>
+                        </template>
+                    </tr>
+                </template>
+                <infinite-observer :on-trigger="infiniteScrollTriggered" v-if="!isInfiniteScrollDisabled">
+                </infinite-observer>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script>
-import infiniteScroll from 'vue-infinite-scroll';
+import InfiniteObserver from './infinite-observer.vue';
 
 export default {
 	name: 'Track-List',
-    directives: {infiniteScroll},
+    components: {
+        InfiniteObserver,
+    },
     props: {
         loadMoreTracks: {
             type: Function,
@@ -116,9 +122,10 @@ export default {
                 this.items = items;
             });
         },
-        infiniteScrollTriggered(){
+        infiniteScrollTriggered($state){
             this.loadMoreTracks().then(()=>{
                 this.loadItems();
+                $state.loaded();
             });
         },
 		sortItems(key){

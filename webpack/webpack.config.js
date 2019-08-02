@@ -23,12 +23,6 @@ module.exports = {
             return pathHelpers.outputPathForApp(info.chunk.name, 'js');
         },
     },
-    resolve: {
-        alias: {
-            //for seren
-            'vue-infinite-scroll': path.resolve(__dirname, '../node_modules/vue-infinite-scroll/vue-infinite-scroll.js'),
-        }
-    },
     module: {
         rules: [
             {
