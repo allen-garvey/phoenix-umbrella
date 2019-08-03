@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import InfiniteObserver from './infinite-observer.vue';
+import InfiniteObserver from '../../../../common/assets/js/vue/components/infinite-observer.vue';
 
 export default {
 	name: 'Track-List',
