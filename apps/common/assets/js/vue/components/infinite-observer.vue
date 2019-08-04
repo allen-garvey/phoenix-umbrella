@@ -1,6 +1,10 @@
 <template>
   <div>
-
+    <div class="infinite-observer-wave-dots" v-if="isParentLoading">
+        <div class="infinite-observer-wave-dot bounce1"></div>
+        <div class="infinite-observer-wave-dot bounce2"></div>
+        <div class="infinite-observer-wave-dot bounce3"></div>
+    </div>
   </div>
 </template>
 
@@ -54,6 +58,7 @@ export default {
                         this.isParentLoading = false;
                 },
                 complete: ()=>{
+                    this.isParentLoading = false;
                     this.disconnectObserver();
                 },
             };
