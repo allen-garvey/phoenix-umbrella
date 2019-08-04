@@ -74,16 +74,14 @@
                 </h3>
             </li>
         </ul>
-        <infinite-loading @infinite="loadMoreThumbnails" spinner="waveDots" v-if="isInitialLoadComplete">
-            <template v-slot:no-results><div></div></template>
-            <template v-slot:no-more><div></div></template>
-        </infinite-loading>
+        <infinite-observer :on-trigger="loadMoreThumbnails" v-if="isInitialLoadComplete">
+        </infinite-observer>
     </main>
 </template>
 
 <script>
-import InfiniteLoading from 'vue-infinite-loading';
 import vue from 'vue';
+import InfiniteObserver from '../../../../common/assets/js/vue/components/infinite-observer.vue';
 
 import ResourceHeader from './resource-header.vue';
 import ThumbnailFilterControls from './thumbnail-filter-controls.vue';
@@ -186,7 +184,7 @@ export default {
         ResourceHeader,
         ThumbnailFilterControls,
         RelatedFieldsList,
-        InfiniteLoading,
+        InfiniteObserver,
     },
     created(){
         this.setup();

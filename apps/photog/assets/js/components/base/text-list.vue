@@ -6,15 +6,13 @@
                 <slot name="item" :item="item" :index="i"></slot>
             </li>
         </ul>
-        <infinite-loading @infinite="loadMoreItemsCallback" spinner="waveDots" v-if="isInitialLoadComplete && loadMoreItemsCallback">
-            <template v-slot:no-results><div></div></template>
-            <template v-slot:no-more><div></div></template>
-        </infinite-loading>
+        <infinite-observer :on-trigger="loadMoreItemsCallback" v-if="isInitialLoadComplete && loadMoreItemsCallback">
+        </infinite-observer>
     </main>
 </template>
 
 <script>
-import InfiniteLoading from 'vue-infinite-loading';
+import InfiniteObserver from '../../../../../common/assets/js/vue/components/infinite-observer.vue';
 import ReasourceHeader from '../resource-header.vue';
 
 export default {
@@ -44,7 +42,7 @@ export default {
         },
         components: {
             'Resource-Header': ReasourceHeader,
-            InfiniteLoading,
+            InfiniteObserver,
         },
     };
 </script>
