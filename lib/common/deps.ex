@@ -16,6 +16,13 @@ defmodule Umbrella.Common.Deps do
     ]
   end
 
+  def shared_authenticated_phoenix_deps do
+    shared_phoenix_deps() ++
+    [
+      {:grenadier, in_umbrella: true},
+    ]
+  end
+
   def ecto do
     {:phoenix_ecto, "~> 4.0"}
   end

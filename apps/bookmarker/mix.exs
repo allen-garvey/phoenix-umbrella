@@ -38,7 +38,7 @@ defmodule Bookmarker.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
-    Umbrella.Common.Deps.shared_phoenix_deps() ++
+    Umbrella.Common.Deps.shared_authenticated_phoenix_deps() ++
     [
       Umbrella.Common.Deps.http_poison(), #for folder previews
       Umbrella.Common.Deps.floki(),   #for folder previews
