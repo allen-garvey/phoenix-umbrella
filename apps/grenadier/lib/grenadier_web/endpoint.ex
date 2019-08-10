@@ -28,7 +28,7 @@ defmodule GrenadierWeb.Endpoint do
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Phoenix.json_library()
+    json_decoder: Jason
 
   plug Plug.MethodOverride
   plug Plug.Head

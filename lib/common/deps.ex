@@ -12,7 +12,6 @@ defmodule Umbrella.Common.Deps do
       {:gettext, "~> 0.16"},
       {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.1"},
-      {:poison, "~> 3.0"},
       {:common, in_umbrella: true},
     ]
   end
