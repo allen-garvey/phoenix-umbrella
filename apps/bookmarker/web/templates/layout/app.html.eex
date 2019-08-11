@@ -17,6 +17,9 @@
         <span class="logo"><%= link "Bookmarker", to: "/" %></span>
         <nav role="navigation">
           <ul class="nav">
+            <%= for folder <- @conn.assigns[:favorite_folders] do %>
+              <li><%= link Bookmarker.Folder.to_s(folder), to: folder_path(@conn, :show, folder) %></li>
+            <% end %>
             <li><%= link "Bookmarks", to: bookmark_path(@conn, :index) %></li>
             <li><%= link "Folders", to: folder_path(@conn, :index) %></li>
             <li><%= link "Tags", to: tag_path(@conn, :index) %></li>

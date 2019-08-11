@@ -19,9 +19,14 @@ defmodule Bookmarker.Router do
     plug GrenadierWeb.Plugs.Authenticate
   end
 
+  pipeline :fetch_favorite_folders do
+    plug Bookmarker.Plugs.FetchFavoriteFolders
+  end
+
   scope "/", Bookmarker do
     pipe_through :browser
     pipe_through :authenticate
+    pipe_through :fetch_favorite_folders
 
     get "/", PageController, :index
     resources "/folders", FolderController

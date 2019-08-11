@@ -14,4 +14,12 @@ defmodule Bookmarker.Admin do
     |> Enum.map(&{&1.name, &1.id})
   end
 
+  @doc """
+  Gets favorite folders for use in nav
+  """
+  def favorite_folders do
+    from(f in Folder, where: f.is_favorite == true, order_by: f.name)
+    |> Repo.all
+  end
+
 end
