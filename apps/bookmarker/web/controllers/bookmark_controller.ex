@@ -2,6 +2,7 @@ defmodule Bookmarker.BookmarkController do
   use Bookmarker.Web, :controller
 
   alias Bookmarker.Bookmark
+  alias Bookmarker.Admin
 
   def index(conn, _params) do
     bookmarks = Repo.all(from Bookmark, order_by: [desc: :id])
@@ -10,7 +11,7 @@ defmodule Bookmarker.BookmarkController do
 
   def new(conn, _params) do
     changeset = Bookmark.changeset(%Bookmark{})
-    folders = Bookmarker.Folder.form_list(Repo)
+    folders = Admin.folder_form_list()
     render(conn, "new.html", changeset: changeset, folders: folders)
   end
 
@@ -21,7 +22,7 @@ defmodule Bookmarker.BookmarkController do
       {:ok, bookmark} ->
         if submit_type == "add_another" do
           changeset = Bookmark.changeset(%Bookmark{folder_id: bookmark.folder_id})
-          folders = Bookmarker.Folder.form_list(Repo)
+          folders = Admin.folder_form_list()
           render(conn, "new.html", changeset: changeset, folders: folders, flash: Bookmark.to_s(bookmark) <> " saved.")
         else
           conn
@@ -29,7 +30,7 @@ defmodule Bookmarker.BookmarkController do
             |> redirect(to: bookmark_path(conn, :index))
         end
       {:error, changeset} ->
-        folders = Bookmarker.Folder.form_list(Repo)
+        folders = Admin.folder_form_list()
         render(conn, "new.html", changeset: changeset, folders: folders)
     end
   end
@@ -42,7 +43,7 @@ defmodule Bookmarker.BookmarkController do
   def edit(conn, %{"id" => id}) do
     bookmark = Repo.get!(Bookmark, id)
     changeset = Bookmark.changeset(bookmark)
-    folders = Bookmarker.Folder.form_list(Repo)
+    folders = Admin.folder_form_list()
     render(conn, "edit.html", bookmark: bookmark, changeset: changeset, folders: folders)
   end
 
@@ -56,7 +57,7 @@ defmodule Bookmarker.BookmarkController do
         |> put_flash(:info, "Bookmark updated successfully.")
         |> redirect(to: bookmark_path(conn, :show, bookmark))
       {:error, changeset} ->
-        folders = Bookmarker.Folder.form_list(Repo)
+        folders = Admin.folder_form_list()
         render(conn, "edit.html", bookmark: bookmark, changeset: changeset, folders: folders)
     end
   end
