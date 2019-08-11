@@ -2,7 +2,7 @@
     <div>
         <ul class="related-fields-list">
             <li v-for="item in items" :key="item.id" class="related-fields-list-item">
-                {{item.name}}
+                <a :href="urlForItem(item)">{{item.name}}</a>
             </li>
         </ul>
     </div>
@@ -15,14 +15,19 @@ export default {
             type: Array,
             default: [],
         },
+        urlBase: {
+            type: String,
+            required: true,
+        },
     },
     data(){
         return {
         };
     },
-    computed: {
-    },
     methods: {
+        urlForItem(item){
+            return `${this.urlBase}/${item.id}`;
+        }
     }
 };
 </script>
