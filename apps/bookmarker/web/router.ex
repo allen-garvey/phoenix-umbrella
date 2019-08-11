@@ -28,14 +28,8 @@ defmodule Bookmarker.Router do
     resources "/bookmarks", BookmarkController
     resources "/tags", TagController
     resources "/bookmarks_tags", BookmarkTagController
-  end
 
-  #preview bookmarks
-  scope "/preview", Bookmarker do
-    pipe_through :browser
-    pipe_through :authenticate
-
-    get "/folder/:folder_name", FolderPreviewController, :show
+    get "/preview/folder:folder_name", FolderPreviewController, :show
   end
 
   #JSON API
