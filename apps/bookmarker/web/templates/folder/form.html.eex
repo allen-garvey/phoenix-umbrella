@@ -17,5 +17,11 @@
     <%= error_tag f, :description %>
   </div>
 
+  <div class="form-group">
+    <%= label f, :is_favorite, class: "control-label" %>
+    <%= checkbox f, :is_favorite, class: "form-control" %>
+    <%= error_tag f, :is_favorite %>
+  </div>
+
   <%= render Bookmarker.SharedView, "form_submit_buttons.html", form_type: @form_type, save_another: assigns[:save_another] %>
 <% end %>

@@ -8,6 +8,10 @@
 		</li>
 	<% end %>
 	<li>
+		<strong>Is Favorite:</strong>
+		<%= @folder.is_favorite %>
+	</li>
+	<li>
 		<%= link "Preview bookmarks", to: folder_preview_path(@conn, :show, @folder.name) %>
 	</li>
 </ul>
