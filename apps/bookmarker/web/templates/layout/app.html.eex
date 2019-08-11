@@ -22,7 +22,6 @@
             <% end %>
             <li><%= link "Bookmarks", to: bookmark_path(@conn, :index) %></li>
             <li><%= link "Folders", to: folder_path(@conn, :index) %></li>
-            <li><%= link "Tags", to: tag_path(@conn, :index) %></li>
             <li><%= link "Add Bookmark", to: bookmark_path(@conn, :new), class: "btn btn-xs btn-success" %></li>
           </ul>
         </nav>
