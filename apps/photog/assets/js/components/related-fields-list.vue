@@ -2,7 +2,7 @@
     <div>
         <ul class="related-fields-list">
             <li v-for="item in items" :key="item.id" class="related-fields-list-item">
-                <a :href="urlForItem(item)">{{item.name}}</a>
+                <router-link :to="routeForItem(item)">{{item.name}}</router-link>
             </li>
         </ul>
     </div>
@@ -15,7 +15,7 @@ export default {
             type: Array,
             default: [],
         },
-        urlBase: {
+        routeName: {
             type: String,
             required: true,
         },
@@ -25,8 +25,14 @@ export default {
         };
     },
     methods: {
-        urlForItem(item){
-            return `${this.urlBase}/${item.id}`;
+        routeForItem(item){
+            return {
+                name: this.routeName,
+                params: {
+                    id: item.id,
+                },
+
+            };
         }
     }
 };
