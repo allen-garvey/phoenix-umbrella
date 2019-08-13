@@ -3,14 +3,14 @@
         <div>
             <h1>{{heading}}</h1>
         </div>
-        <div>
+        <form @submit.prevent="save()">
             <slot name="inputs"></slot>
 
             <div class="spread-content">
                 <router-link :to="backLink" class="btn btn-outline-dark">Cancel</router-link>
                 <button class="btn btn-success" @click="save()">Save</button>
             </div>
-        </div>
+        </form>
     </main>
 </template>
 
