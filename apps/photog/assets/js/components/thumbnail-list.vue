@@ -64,7 +64,7 @@
             * Items list
         -->
         <ul class="thumbnail-list"  :class="{'batch-select': isCurrentlyBatchSelect, 'reordering': isReordering}">
-            <li v-for="(item, i) in filteredThumbnailList" :key="i" :class="{'batch-selected': isCurrentlyBatchSelect && batchSelectedItems[i], 'reorder-select': isReordering && currentDragIndex === i, 'hover-detail': showDetailHover && isInThumbnailDefaultMode}" @click="batchSelectItem(item, i, $event)" :draggable="isReordering" @dragstart="itemDragStart(i)" @dragover="itemDragOver(i)">
+            <li v-for="(item, i) in filteredThumbnailList" :key="i" :class="{'batch-selected': isCurrentlyBatchSelect && batchSelectedItems[i], 'reorder-select': isReordering && currentDragIndex === i, 'hover-detail': showDetailHover && isInThumbnailDefaultMode}" @click="batchSelectItem(item, i, $event)" :draggable="isReordering" @dragstart="itemDragStart(i)" @dragover="itemDragOver(i, $event)">
                 <router-link :to="showRouteFor(item, model)" class="thumbnail-image-container" :event="thumbnailLinkEvent" :tag="isCurrentlyBatchSelect || isReordering ? 'div' : 'a'" :draggable="!isReordering">
                     <img :alt="altTextFor(item)" :src="thumbnailUrlFor(item)" :class="{'cover-image': !isCurrentlyBatchSelect && isThumbnailCoverImage(item)}" :draggable="!isReordering" />
                 </router-link>
@@ -535,10 +535,14 @@ export default {
         itemDragStart(index){
             this.currentDragIndex = index;
         },
-        itemDragOver(index){
+        itemDragOver(index, $event){
             if(this.currentDragIndex === index){
                 return;
             }
+            $event.target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
             this.isListReordered = true;
             //reorder array
             //https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another/6470794
