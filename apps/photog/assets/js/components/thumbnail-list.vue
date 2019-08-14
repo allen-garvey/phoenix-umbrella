@@ -549,6 +549,23 @@ export default {
             this.reorderedThumbnailList.splice(index, 0, this.reorderedThumbnailList.splice(this.currentDragIndex, 1)[0]);
             this.currentDragIndex = index;
         },
+        /**
+         * Keyboard shortcuts
+         */
+        onKeyPressed(key){
+            switch(key){
+                case 'r':
+                    if(!this.isReordering){
+                        this.reorderButtonAction()
+                    }
+                    break;
+                case 'Escape':
+                    if(this.isReordering){
+                        this.reorderButtonAction()
+                    }
+                    break;
+            }
+        },
     }
 }
 </script>
