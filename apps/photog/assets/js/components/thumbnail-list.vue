@@ -24,7 +24,7 @@
         <!-- 
             * Batch edit controls 
         -->
-        <div class="thumbnail-batch-select-container" :class="{invisible: isReordering}" v-if="(enableBatchSelectImages || enableBatchSelectAlbums) && filteredThumbnailList.length > 0">
+        <div class="thumbnail-batch-select-container" :class="{invisible: isReordering}" v-if="supportsBatchSelect">
             <button class="btn" :class="{'btn-outline-primary' : !isCurrentlyBatchSelect, 'btn-outline-secondary': isCurrentlyBatchSelect}" @click="toggleBatchSelect">{{isCurrentlyBatchSelect ? 'Cancel' : 'Batch edit'}}</button>
             <button class="btn btn-outline-primary" @click="batchSelectAll" v-if="isCurrentlyBatchSelect">{{anyItemsBatchSelected ? 'Deselect all' : 'Select all'}}</button>
             <!-- 
@@ -262,6 +262,9 @@ export default {
                 return this.batchResources;
             }
             return this.batchResources.slice(0, this.batchResourcesMoreLimit);
+        },
+        supportsBatchSelect(){
+            return (this.enableBatchSelectImages || this.enableBatchSelectAlbums) && this.filteredThumbnailList.length > 0;
         },
         /**
          * Reordering stuff
@@ -554,14 +557,26 @@ export default {
          */
         onKeyPressed(key){
             switch(key){
+                //start reorder
                 case 'r':
-                    if(!this.isReordering){
+                    if(!this.isReordering && this.shouldShowReorderButton){
                         this.reorderButtonAction()
                     }
                     break;
+                //start batch edit
+                case 'b':
+                    if(!this.isCurrentlyBatchSelect && this.supportsBatchSelect && !this.isReordering){
+                        this.toggleBatchSelect();
+                    }
+                    break;
                 case 'Escape':
+                    //cancel reordering
                     if(this.isReordering){
                         this.reorderButtonAction()
+                    }
+                    //cancel batch select
+                    else if(this.isCurrentlyBatchSelect){
+                        this.toggleBatchSelect();
                     }
                     break;
             }
