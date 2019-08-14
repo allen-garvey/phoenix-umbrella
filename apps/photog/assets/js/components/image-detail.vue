@@ -214,6 +214,16 @@ export default {
         generateImageUrl(rawUrl){
             return `/media/images/${encodeURI(rawUrl)}`;
         },
+        onKeyPressed(key){
+            switch(key){
+                case 'ArrowLeft':
+                    this.keyLeftAction();
+                    break;
+                case 'ArrowRight':
+                    this.keyRightAction();
+                    break;
+            }
+        },
         keyLeftAction(){
             if(this.previousImage){
                 this.$router.push(this.parent.showRouteFor(this.previousImage));
