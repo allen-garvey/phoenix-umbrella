@@ -27,6 +27,7 @@ export default {
             //person is for our edits, model is the immutable person response from the api
             person: {},
             resourceApiUrlBase: `${API_URL_BASE}/persons`,
+            routeBase: 'persons',
         }
     },
     computed: {

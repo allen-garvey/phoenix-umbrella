@@ -83,6 +83,18 @@ export function formMixinBuilder(){
                     }
                 });
             },
+            onKeyPressed(key){
+                if(key === 'Escape'){
+                    const route = {name: `${this.routeBase}Index`};
+                    if(this.isEditForm){
+                        route.name = `${this.routeBase}Show`;
+                        route.params = {
+                            id: this.modelId,
+                        };
+                    }
+                    this.$router.push(route);
+                }
+            },
         },
     };
 }

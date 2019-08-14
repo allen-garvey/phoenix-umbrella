@@ -24,6 +24,7 @@ export default {
             //tag is for our edits, model is the immutable album response from the api
             tag: {},
             resourceApiUrlBase: `${API_URL_BASE}/tags`,
+            routeBase: 'tags',
         }
     },
     computed: {

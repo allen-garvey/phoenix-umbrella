@@ -51,6 +51,7 @@ export default {
             tags: [],
             tagsActive: {},
             resourceApiUrlBase: `${API_URL_BASE}/albums`,
+            routeBase: 'albums',
         }
     },
     computed: {
