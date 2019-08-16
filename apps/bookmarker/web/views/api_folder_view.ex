@@ -40,9 +40,10 @@ defmodule Bookmarker.ApiFolderView do
       attributes: %{
         title: bookmark.title,
         url: bookmark.url,
-        rss_url: bookmark.rss_url,
+        # rss_url: bookmark.rss_url,
         description: bookmark.description,
-        preview_image_selector: bookmark.preview_image_selector
+        preview_image_selector: bookmark.preview_image_selector,
+        thumbnail_url: bookmark.thumbnail_url,
       }
     }
   end

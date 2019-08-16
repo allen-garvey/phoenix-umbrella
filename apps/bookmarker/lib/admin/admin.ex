@@ -2,6 +2,7 @@ defmodule Bookmarker.Admin do
   import Ecto.Query, warn: false
   alias Bookmarker.Repo
   alias Bookmarker.Folder
+  alias Bookmarker.Bookmark
 
   @doc """
   Returns list of folders with name and id
@@ -19,6 +20,14 @@ defmodule Bookmarker.Admin do
   """
   def favorite_folders do
     from(f in Folder, where: f.is_favorite == true, order_by: f.name)
+    |> Repo.all
+  end
+
+  @doc """
+  Returns all bookmarks for a given folder_id
+  """
+  def bookmarks_for_folder(folder_id) do
+    from(b in Bookmark, where: b.folder_id == ^folder_id, order_by: [desc: b.id])
     |> Repo.all
   end
 
