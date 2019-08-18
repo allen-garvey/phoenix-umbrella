@@ -16,7 +16,8 @@
 	</li>
 </ul>
 
-<%= render Bookmarker.SharedView, "related_bookmarks_list.html", bookmarks: @folder.bookmarks, no_bookmarks_message: "This folder is empty.", conn: @conn %>
+<div id="bookmark_list" data-bookmarks-api-url="<%= api_folder_path(@conn, :bookmarks_for_folder, @folder.id) %>">
+</div>
 
 
 

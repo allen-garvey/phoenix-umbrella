@@ -5,7 +5,7 @@ defmodule Bookmarker.FolderController do
 
   def index(conn, _params) do
     folders = Folder.with_bookmarks_count_query |> Repo.all
-    
+
     render(conn, "index.html", folders: folders)
   end
 
@@ -29,7 +29,7 @@ defmodule Bookmarker.FolderController do
 
   def show(conn, %{"id" => id}) do
     folder = Repo.get!(Folder, id) |> Repo.preload([bookmarks: from(bookmark in Bookmarker.Bookmark, order_by: [desc: :id])])
-    render(conn, "show.html", folder: folder)
+    render(conn, "show.html", enable_js: true, folder: folder)
   end
 
   def edit(conn, %{"id" => id}) do

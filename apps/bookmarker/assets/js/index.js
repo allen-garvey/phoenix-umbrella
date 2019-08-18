@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import BookmarkTagList from './vues/bookmark_tag_list.vue';
+import BookmarkList from './vues/bookmark_list.vue';
 
 import css from '../css/app.scss';
 
@@ -28,5 +29,21 @@ import css from '../css/app.scss';
     }
 })();
 
+(function(){
+    const bookmarkList = document.getElementById('bookmark_list');
+    if(bookmarkList){
+        const props = {};
+        [
+            'bookmarksApiUrl',
+        ].forEach((key)=>{
+            props[key] = bookmarkList.dataset[key];
+        });
+
+        new Vue({
+            el: bookmarkList,
+            render: h => h(BookmarkList, {props}),
+        });
+    }
+})();
 
 
