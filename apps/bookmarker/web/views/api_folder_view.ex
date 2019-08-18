@@ -36,15 +36,12 @@ defmodule Bookmarker.ApiFolderView do
   def bookmark_json(bookmark) do
     %{
       id: Integer.to_string(bookmark.id),
-      type: "bookmark",
-      attributes: %{
-        title: bookmark.title,
-        url: bookmark.url,
-        # rss_url: bookmark.rss_url,
-        description: bookmark.description,
-        preview_image_selector: bookmark.preview_image_selector,
-        thumbnail_url: bookmark.thumbnail_url,
-      }
+      title: bookmark.title,
+      url: bookmark.url,
+      # rss_url: bookmark.rss_url,
+      description: bookmark.description,
+      preview_image_selector: bookmark.preview_image_selector,
+      thumbnail_url: bookmark.thumbnail_url,
     }
   end
 end
