@@ -18,11 +18,16 @@
                 </div>
             </li>
 		</ul>
+        <infinite-observer :on-trigger="loadBookmarks"></infinite-observer>
 	</div>
 </div>
 </template>
 
 <script>
+import InfiniteObserver from '../../../../common/assets/js/vue/components/infinite-observer.vue';
+
+const BOOKMARK_PAGE_SIZE = 6;
+
 export default {
     props: {
         bookmarksApiUrl: {
@@ -31,24 +36,39 @@ export default {
         },
     },
     components: {
+        InfiniteObserver,
     },
     created(){
         fetch(this.bookmarksApiUrl).then((res)=>{
             return res.json();
         }).then((json)=>{
-            this.bookmarks = json.data;
+            this.model = json.data;
             this.initialLoadComplete = true;
         });
     },
     data(){
         return {
             initialLoadComplete: false,
-            bookmarks: [],
+            model: [],
+            currentPage: 1,
         };
     },
     computed: {
+        bookmarks(){
+            return this.model.slice(0, this.currentPage * BOOKMARK_PAGE_SIZE);
+        },
     },
     methods: {
+        loadBookmarks($state){
+            this.currentPage++;
+
+            if(this.bookmarks.length === this.model.length){
+                $state.complete();
+            }
+            else{
+                $state.loaded();
+            }
+        },
     }
 };
 </script>
