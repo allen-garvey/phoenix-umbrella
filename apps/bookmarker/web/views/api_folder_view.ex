@@ -42,6 +42,9 @@ defmodule Bookmarker.ApiFolderView do
       description: bookmark.description,
       preview_image_selector: bookmark.preview_image_selector,
       thumbnail_url: bookmark.thumbnail_url,
+      self: %{
+        show: bookmark_path(Bookmarker.Endpoint, :show, bookmark)
+      },
     }
   end
 end
