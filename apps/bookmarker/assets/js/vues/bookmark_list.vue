@@ -7,7 +7,7 @@
 			<li class="list-group-item bookmark-item" :class="{'list-group-item-success preview-enabled': bookmark.preview_image_selector}" v-for="bookmark in bookmarks" :key="bookmark.id">
 				<div>
 					<div>
-                        <a :href="bookmark.url" class="bookmark-title">{{bookmark.title}}</a>
+                        <a :href="bookmark.url" class="bookmark-title" rel="noreferrer noopener" target="_blank">{{bookmark.title}}</a>
                         <a :href="bookmark.self.show" class="btn btn-default btn-sm pull-right">Edit</a>
                     </div>
                     <div class="bookmark-url">{{ bookmark.url }}</div>
