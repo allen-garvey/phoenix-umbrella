@@ -4,19 +4,14 @@
 import css from "../css/app.scss"
 
 import Vue from 'vue';
+import { instantiateVue } from '../../../common/assets/js/vue/instantiate-vue.js';
 import LoginForm from './vues/login-form.vue';
 
 (function(){
-    const loginFormContainer = document.getElementById('login-form');
-    
-    if(loginFormContainer){
-        const dataset = loginFormContainer.dataset;
-        const csrfToken = dataset.csrfToken;
-        const loginUrl = dataset.loginUrl;
+    const propKeys = [
+        'csrfToken',
+        'loginUrl',
+    ];
 
-        new Vue({
-            el: loginFormContainer,
-            render: h => h(LoginForm, {props: {csrfToken, loginUrl}}),
-        });
-    }
+    instantiateVue('login-form', LoginForm, propKeys);
 })();
