@@ -1,4 +1,6 @@
 import Vue from 'vue';
+import { instantiateVue } from '../../../common/assets/js/vue/instantiate-vue';
+
 import BookmarkTagList from './vues/bookmark_tag_list.vue';
 import BookmarkList from './vues/bookmark_list.vue';
 
@@ -6,44 +8,25 @@ import css from '../css/app.scss';
 
 
 (function(){
-    const bookmarkTagListContainer = document.getElementById('bookmark_tag_list');
+    const propKeys = [
+        'csrfToken',
+        'bookmarkId', 
+        'newTagUrl', 
+        'newBookmarkTagUrl', 
+        'deleteBookmarkTagUrl',
+        'tagsUrl',
+        'unusedTagsUrl',
+    ];
 
-    if(bookmarkTagListContainer){
-        const props = {};
-        [
-            'csrfToken',
-            'bookmarkId', 
-            'newTagUrl', 
-            'newBookmarkTagUrl', 
-            'deleteBookmarkTagUrl',
-            'tagsUrl',
-            'unusedTagsUrl',
-        ].forEach((key)=>{
-            props[key] = bookmarkTagListContainer.dataset[key];
-        });
-
-        new Vue({
-            el: bookmarkTagListContainer,
-            render: h => h(BookmarkTagList, {props}),
-        });
-    }
+    instantiateVue('bookmark_tag_list', BookmarkTagList, propKeys);
 })();
 
 (function(){
-    const bookmarkList = document.getElementById('bookmark_list');
-    if(bookmarkList){
-        const props = {};
-        [
-            'bookmarksApiUrl',
-        ].forEach((key)=>{
-            props[key] = bookmarkList.dataset[key];
-        });
+    const propKeys = [
+        'bookmarksApiUrl',
+    ];
 
-        new Vue({
-            el: bookmarkList,
-            render: h => h(BookmarkList, {props}),
-        });
-    }
+    instantiateVue('bookmark_list', BookmarkList, propKeys);
 })();
 
 
