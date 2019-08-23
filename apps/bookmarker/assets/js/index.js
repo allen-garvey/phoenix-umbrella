@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { instantiateVue } from '../../../common/assets/js/vue/instantiate-vue';
+import { instantiateVue } from '../../../common/assets/js/vue/instantiate-vue.js';
 
 import BookmarkTagList from './vues/bookmark_tag_list.vue';
 import BookmarkList from './vues/bookmark_list.vue';
