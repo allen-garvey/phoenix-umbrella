@@ -23,6 +23,11 @@ module.exports = {
             return pathHelpers.outputPathForApp(info.chunk.name, 'js');
         },
     },
+    resolve: {
+        alias: {
+            'umbrella-common-js': path.resolve(__dirname, '../apps/common/assets/js/'),
+        },
+    },
     module: {
         rules: [
             {
