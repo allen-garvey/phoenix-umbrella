@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import { API_URL_BASE, fetchJson } from '../request-helpers.js';
+import { fetchJson } from 'umbrella-common-js/ajax.js';
+import { API_URL_BASE } from '../request-helpers.js';
 import { arrayRemove } from '../array-util.js';
 
 const MODE_ADD = 1;

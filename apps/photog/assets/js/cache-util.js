@@ -1,4 +1,4 @@
-import { fetchJson } from './request-helpers.js';
+import { fetchJson } from 'umbrella-common-js/ajax.js';
 
 function fetchIntoCache(url, cacheMap, mapId, forceRefresh=false){
     if(!forceRefresh && cacheMap.has(mapId)){

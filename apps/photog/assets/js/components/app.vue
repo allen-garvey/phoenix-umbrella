@@ -12,7 +12,8 @@ import PhotogHeader from './header.vue'
 import PhotogFooter from './footer.vue'
 import FlashAlert from './flash-alert.vue';
 import CacheUtil from '../cache-util.js'
-import { API_URL_BASE, sendJson } from '../request-helpers.js';
+import { API_URL_BASE } from '../request-helpers.js';
+import { sendJson } from 'umbrella-common-js/ajax.js';
 
 export default {
     name: 'Photog-App',

@@ -9,7 +9,7 @@
 <script>
 import vue from 'vue';
 
-import { fetchJson, sendJson } from '../request-helpers.js';
+import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';
 
 export default {
     name: 'Form-Field-Errors',

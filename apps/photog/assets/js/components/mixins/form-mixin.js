@@ -1,4 +1,4 @@
-import { fetchJson } from '../../request-helpers.js';
+import { fetchJson } from 'umbrella-common-js/ajax.js';
 
 import FormSection from '../base/form-section.vue';
 import FormInput from '../form-input.vue';
