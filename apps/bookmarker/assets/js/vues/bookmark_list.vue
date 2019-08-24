@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import InfiniteObserver from '../../../../common/assets/js/vue/components/infinite-observer.vue';
+import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 
 const BOOKMARK_PAGE_SIZE = 6;
 

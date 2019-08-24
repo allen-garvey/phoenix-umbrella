@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import InfiniteObserver from '../../../../../common/assets/js/vue/components/infinite-observer.vue';
+import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 import ReasourceHeader from '../resource-header.vue';
 
 export default {

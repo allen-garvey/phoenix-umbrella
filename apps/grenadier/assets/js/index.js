@@ -4,7 +4,7 @@
 import css from "../css/app.scss"
 
 import Vue from 'vue';
-import { instantiateVue } from '../../../common/assets/js/vue/instantiate-vue.js';
+import { instantiateVue } from 'umbrella-common-js/vue/instantiate-vue.js';
 import LoginForm from './vues/login-form.vue';
 
 (function(){
