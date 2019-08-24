@@ -16,7 +16,8 @@ import NavTabs from './nav-tabs.vue';
 import MediaControls from './media-controls.vue';
 
 import Models from '../models';
-import ApiHelpers from '../api-helpers';
+import { fetchJson } from 'umbrella-common-js/ajax.js';
+import { API_URL_BASE } from '../api-helpers';
 
 let audio = null;
 let elapsedTimeTimer = null;
@@ -90,8 +91,8 @@ export default {
 	methods: {
 		getItems(key){
 			if(typeof key === 'object'){
-				const apiUrl = `${ApiHelpers.apiUrlBase}/${key.apiPath}`;
-				return ApiHelpers.getJson(apiUrl);
+				const apiUrl = `${API_URL_BASE}/${key.apiPath}`;
+				return fetchJson(apiUrl);
 			}
 
 			if(key === 'searchTracks'){
@@ -102,8 +103,8 @@ export default {
 						resolve(searchResults);
 					});
 				}
-				const searchUrl = `${ApiHelpers.apiUrlBase}/search/tracks?q=${encodeURIComponent(searchQuery)}`;
-				return ApiHelpers.getJson(searchUrl).then((searchResults)=>{
+				const searchUrl = `${API_URL_BASE}/search/tracks?q=${encodeURIComponent(searchQuery)}`;
+				return fetchJson(searchUrl).then((searchResults)=>{
 					this.searchResults = searchResults;
 					this.savedSearchResultsQuery = searchQuery;
 					return this.searchResults;
@@ -117,11 +118,11 @@ export default {
 		loadMoreTracks(){
 			const offset = this.tracks ? this.tracks.length : false;
 
-			let url = `${ApiHelpers.apiUrlBase}/tracks?limit=100`;
+			let url = `${API_URL_BASE}/tracks?limit=100`;
 			if(offset){
 				url = `${url}&offset=${offset}`;
 			}
-			return ApiHelpers.getJson(url).then((tracks)=>{
+			return fetchJson(url).then((tracks)=>{
 				if(offset){
 					this.tracks = this.tracks.concat(tracks);
 				}

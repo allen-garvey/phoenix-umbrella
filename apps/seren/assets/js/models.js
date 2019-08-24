@@ -1,5 +1,6 @@
+import { fetchJson } from 'umbrella-common-js/ajax.js';
 import Util from './util';
-import ApiHelpers from './api-helpers';
+import { API_URL_BASE } from './api-helpers';
 
 function getTabs(){
     return [
@@ -178,8 +179,8 @@ function sortItems(items, sortKey, sortAsc, relatedFields){
 }
 
 function loadModelAndMap(modelName, target, itemsMap){
-	const url = `${ApiHelpers.apiUrlBase}/${modelName}`;
-	return ApiHelpers.getJson(url).then((items)=>{
+	const url = `${API_URL_BASE}/${modelName}`;
+	return fetchJson(url).then((items)=>{
         target[modelName] = items;
         
         items.forEach((item)=>{
