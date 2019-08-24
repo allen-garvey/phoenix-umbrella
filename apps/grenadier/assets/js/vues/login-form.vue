@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { sendJson } from '../ajax.js';
+import { sendJson } from 'umbrella-common-js/ajax.js';
 import focus from './directives/focus.js';
 
 export default {
