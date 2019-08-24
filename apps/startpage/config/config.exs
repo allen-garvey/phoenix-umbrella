@@ -7,13 +7,15 @@
 # General application configuration
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 config :startpage,
   ecto_repos: [Startpage.Repo]
 
 # Configures the endpoint
 config :startpage, StartpageWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "Ee6W/XKgbudBK5a+JEtmcSuH5QHyKfaJQS2Qg19Yw8ShEINjdQI/+GuL88m87RKR",
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: StartpageWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Startpage.PubSub, adapter: Phoenix.PubSub.PG2]
 
@@ -24,6 +26,9 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+config :phoenix, :format_encoders, json: Jason
+config :booklist, Booklist.Repo,
+  types: Common.PostgrexTypes
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
