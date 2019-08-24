@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { getJson, sendJson } from '../ajax.js';
+import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';
 
 export default {
     name: 'bookmark-tag-list',
@@ -69,7 +69,7 @@ export default {
         },
     },
     created(){
-        getJson(this.tagsUrl).then((data)=>{
+        fetchJson(this.tagsUrl).then((data)=>{
             this.tags = data;
             this.initialLoadComplete = true;
         });
@@ -88,7 +88,7 @@ export default {
     methods: {
         addButtonAction(){
             this.busy = true;
-            getJson(this.unusedTagsUrl).then((data)=>{
+            fetchJson(this.unusedTagsUrl).then((data)=>{
                 this.tagsThatCanBeAdded = data;
                 this.addTagMode = true;
                 this.busy = false;

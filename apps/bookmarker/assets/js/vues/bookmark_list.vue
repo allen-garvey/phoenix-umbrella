@@ -25,6 +25,7 @@
 
 <script>
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
+import { fetchJson } from 'umbrella-common-js/ajax.js';
 
 const BOOKMARK_PAGE_SIZE = 6;
 
@@ -39,10 +40,8 @@ export default {
         InfiniteObserver,
     },
     created(){
-        fetch(this.bookmarksApiUrl).then((res)=>{
-            return res.json();
-        }).then((json)=>{
-            this.model = json.data;
+        fetchJson(this.bookmarksApiUrl).then((data)=>{
+            this.model = data;
             this.initialLoadComplete = true;
         });
     },
