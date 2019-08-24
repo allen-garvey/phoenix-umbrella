@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { fetchJson, sendJson } from '../ajax.js';
+import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';
 
 export default {
     props: {

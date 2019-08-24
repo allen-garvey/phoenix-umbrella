@@ -25,7 +25,7 @@
 
 <script>
 import Vue from 'vue';
-import { fetchJson, sendJson } from '../ajax.js';
+import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';
 
 export default {
     props: {

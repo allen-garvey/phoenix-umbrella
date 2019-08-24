@@ -79,7 +79,7 @@
 import Vue from 'vue';
 import FormInputErrors from './form_input_errors.vue';
 import { extractImages } from '../import_images.js';
-import { fetchJson, sendJson } from '../ajax.js';
+import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';
 
 export default {
     props: {
