@@ -1,5 +1,7 @@
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -50,9 +52,4 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :photog, Photog.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "photog_dev",
-  hostname: "localhost",
-  pool_size: 10
+config :photog, Photog.Repo, Umbrella.Common.Config.postgres_config("photog_dev")

@@ -1,5 +1,7 @@
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -33,9 +35,4 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :artour, Artour.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "artour_dev",
-  hostname: "localhost",
-  pool_size: 10
+config :artour, Artour.Repo, Umbrella.Common.Config.postgres_config("artour_dev")

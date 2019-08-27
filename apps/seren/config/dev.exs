@@ -1,5 +1,7 @@
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -37,9 +39,4 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :seren, Seren.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "seren_dev",
-  hostname: "localhost",
-  pool_size: 10
+config :seren, Seren.Repo, Umbrella.Common.Config.postgres_config("seren_dev")

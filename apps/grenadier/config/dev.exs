@@ -1,13 +1,9 @@
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 # Configure your database
-config :grenadier, Grenadier.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "grenadier_dev",
-  hostname: "localhost",
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+config :grenadier, Grenadier.Repo, Umbrella.Common.Config.postgres_config("grenadier_dev")
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

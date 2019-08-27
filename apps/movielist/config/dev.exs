@@ -1,5 +1,7 @@
 use Mix.Config
 
+Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -58,9 +60,4 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 # Configure your database
-config :movielist, Movielist.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "movielist_dev",
-  hostname: "localhost",
-  pool_size: 10
+config :movielist, Movielist.Repo, Umbrella.Common.Config.postgres_config("movielist_dev")
