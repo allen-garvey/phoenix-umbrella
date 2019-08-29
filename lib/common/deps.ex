@@ -32,7 +32,7 @@ defmodule Umbrella.Common.Deps do
   end
 
   def floki do
-    {:floki, "~> 0.21"}
+    {:floki, "~> 0.22"}
   end
 
   def earmark do
