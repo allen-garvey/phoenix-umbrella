@@ -1,6 +1,8 @@
 defmodule GrenadierWeb.Plugs.Authenticate do
   import Plug.Conn
 
+  Code.require_file("config.ex",  "#{__DIR__}/../../../../../lib/common/")
+
   alias Grenadier.Account
   alias Grenadier.Account.User
 
@@ -54,7 +56,7 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   Gets url to redirect to after failed login
   """
   def get_failed_login_redirect_url(conn) do
-    "#{scheme_to_string(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_redirect_port(conn.port)}#{Routes.page_path(conn, :login)}"
+    "#{scheme_to_string(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_failed_redirect_port(conn.port)}#{Routes.page_path(conn, :login)}"
   end
 
   @doc """
@@ -72,13 +74,24 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   end
 
   @doc """
-  Gets the port to redirect to in url after failed login
+  Gets the port to redirect to in url after successful login
   """
   def get_redirect_port(origin_port) do
     if origin_port == 80 or origin_port == 443 do
       ""
     else
       ":#{origin_port}"
+    end
+  end
+
+  @doc """
+  Gets the port to redirect back to grenadier after failed login
+  """
+  def get_failed_redirect_port(origin_port) do
+    if origin_port == 80 or origin_port == 443 do
+      ""
+    else
+      ":#{Umbrella.Common.Config.grenadier_port()}"
     end
   end
 

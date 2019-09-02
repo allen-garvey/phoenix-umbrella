@@ -12,7 +12,7 @@ config :grenadier, Grenadier.Repo, Umbrella.Common.Config.postgres_config("grena
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :grenadier, GrenadierWeb.Endpoint,
-  http: [port: 6009],
+  http: [port: Umbrella.Common.Config.grenadier_port()],
   debug_errors: true,
   code_reloader: true,
   check_origin: false

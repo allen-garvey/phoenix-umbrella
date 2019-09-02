@@ -13,4 +13,8 @@ defmodule Umbrella.Common.Config do
       pool_size: 10
     ]
   end
+
+  def grenadier_port do
+    6009
+  end
 end
