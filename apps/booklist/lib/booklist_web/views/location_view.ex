@@ -13,6 +13,10 @@ defmodule BooklistWeb.LocationView do
   Maps a list of locations into tuples, used for forms
   """
   def map_for_form(locations) do
-    Enum.map(locations, &{to_s_full(&1), &1.id})
+    Enum.reduce(locations, %{}, fn location, locations_map ->
+      library_title = BooklistWeb.LibraryView.to_s(location.library)
+      locations_list = Map.get(locations_map, library_title, []) ++ [{to_s(location), location.id}]
+      Map.put(locations_map, library_title, locations_list)
+    end)
   end
 end
