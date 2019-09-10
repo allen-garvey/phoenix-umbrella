@@ -46,4 +46,11 @@ defmodule MovielistWeb.MovieView do
       1 -> "tr_primary"
     end
   end
+
+  def search_query_for_release_status(movie_title, release_status) do
+    case release_status do
+      2 -> "#{movie_title} dvd release date"
+      _ -> movie_title
+    end
+  end
 end

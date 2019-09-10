@@ -15,7 +15,7 @@
     <% movie = result[:movie] %>
       <tr class="<%= css_class_for_release_status(result[:release_status]) %>">
         <td></td>
-        <td><%= link movie.title, to: MovielistWeb.SuperSearchHelpers.search_url(movie.title) %></td>
+        <td><%= link movie.title, to: MovielistWeb.SuperSearchHelpers.search_url(search_query_for_release_status(movie.title, result[:release_status])) %></td>
         <td><%= MovielistWeb.GenreView.to_s(movie.genre) %></td>
         <td><%= movie.pre_rating %></td>
         <td><%= Common.DateHelpers.us_formatted_date(result[:release_date]) %></td>
