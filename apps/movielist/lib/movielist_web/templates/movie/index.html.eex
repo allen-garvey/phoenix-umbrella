@@ -16,7 +16,7 @@
     <%= for movie <- @movies do %>
       <tr class="<%= row_class_for_active_status(movie.is_active) %>">
         <td></td>
-        <td><%= link movie.title, to: MovielistWeb.SuperSearchHelpers.search_url(movie.title) %></td>
+        <td><%= link movie.title, to: Common.SuperSearch.search_url(movie.title) %></td>
         <td><%= MovielistWeb.GenreView.to_s(movie.genre) %></td>
         <td><%= Common.DateHelpers.us_formatted_date(movie.theater_release_date) %></td>
         <td><%= Common.DateHelpers.us_formatted_date(movie.home_release_date) %></td>

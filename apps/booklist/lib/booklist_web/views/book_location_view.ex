@@ -43,6 +43,6 @@ defmodule BooklistWeb.BookLocationView do
   end
 
   def super_search_direct_link(library_key, search_query, link_text) do
-    link link_text, to: BooklistWeb.SuperSearchHelpers.direct_search_url(library_key, search_query), class: "super_search_link", data_role: "qr-call-number"
+    link link_text, to: Common.SuperSearch.direct_search_url(library_key, search_query), class: "super_search_link", data_role: "qr-call-number"
   end
 end

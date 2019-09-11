@@ -1,4 +1,4 @@
-defmodule BooklistWeb.SuperSearchHelpers do
+defmodule Common.SuperSearch do
 	def base_url do
 		"http://search.alaska.test"
 	end

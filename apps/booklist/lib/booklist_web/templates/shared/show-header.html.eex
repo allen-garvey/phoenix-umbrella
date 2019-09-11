@@ -12,7 +12,7 @@
 			end
 		%>
 		<%= if assigns[:search_query] do
-				link content_tag(:div, "⚲", class: "search_icon"), to: BooklistWeb.SuperSearchHelpers.search_url(@search_query), class: "btn btn-primary btn-xs btn_search"	
+				link content_tag(:div, "⚲", class: "search_icon"), to: Common.SuperSearch.search_url(@search_query), class: "btn btn-primary btn-xs btn_search"	
 			end 
 		%>
 	</div>
