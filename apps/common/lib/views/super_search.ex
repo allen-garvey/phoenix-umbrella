@@ -1,6 +1,6 @@
 defmodule Common.SuperSearch do
 	def base_url do
-		"http://search.alaska.test"
+		Application.fetch_env!(:common, :super_search_url)
 	end
 
 	def search_url(query) do

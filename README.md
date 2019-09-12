@@ -16,6 +16,8 @@ Elixir umbrella project containing several custom CMSs made with Elixir/Phoenix.
 
 * Set environment variable `UMBRELLA_COOKIE_DOMAIN` for shared session cookie (e.g. `export UMBRELLA_COOKIE_DOMAIN=".umbrella.test"`)
 
+* Set environment variable `UMBRELLA_SUPER_SEARCH_URL` for super search url (e.g. `export UMBRELLA_SUPER_SEARCH_URL="http://search.alaska.test"`)
+
 * Clone or download this repo
 
 * Run `mix deps.get`
