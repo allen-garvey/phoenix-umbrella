@@ -41,16 +41,16 @@ defmodule MovielistWeb.MovieView do
 
   def css_class_for_release_status(release_status) do
     case release_status do
-      3 -> "tr_error"
-      2 -> "tr_warning"
-      1 -> "tr_primary"
+      :home_released    -> "tr_primary"
+      :theater_released -> "tr_warning"
+      _                 -> "tr_error"
     end
   end
 
   def search_query_for_release_status(movie_title, release_status) do
     case release_status do
-      2 -> "#{movie_title} dvd release date"
-      _ -> movie_title
+      :theater_released -> "#{movie_title} dvd release date"
+      _                 -> movie_title
     end
   end
 end

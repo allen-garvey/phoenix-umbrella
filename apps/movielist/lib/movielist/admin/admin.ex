@@ -138,12 +138,34 @@ defmodule Movielist.Admin do
   end
 
   @doc """
+  Manually preloads virtual release_date and release status fields for movies
+  """
+  def preload_movie_virtual_fields(results) do
+    results
+    |> Enum.map(fn %{movie: movie, release_status: release_status, release_date: release_date} ->
+      %Movie{movie | release_date: release_date, release_status: release_status_atom(release_status)}
+    end)
+  end
+
+  @doc """
+  Turns movie release status int from database to atom
+  """
+  def release_status_atom(release_status) when is_integer(release_status) do
+    case release_status do
+      1 -> :home_released
+      2 -> :theater_released
+      _ -> :unreleased
+    end
+  end
+
+  @doc """
   Returns the list of active along with calculated release dates movies.
   """
   def list_movies_active do
     list_movies_active_base_query()
      |> order_by([m], [fragment("release_status"), fragment("release_date"), :sort_title, :id])
      |> Repo.all
+     |> preload_movie_virtual_fields
   end
 
   @doc """
@@ -154,6 +176,7 @@ defmodule Movielist.Admin do
      |> where([m], fragment("(? <= CURRENT_DATE OR ? <= CURRENT_DATE)", m.home_release_date, m.theater_release_date))
      |> order_by([m], [asc: fragment("release_status"), desc: m.pre_rating, desc: fragment("release_date"), asc: :sort_title, asc: :id])
      |> Repo.all
+     |> preload_movie_virtual_fields
   end
 
   @doc """

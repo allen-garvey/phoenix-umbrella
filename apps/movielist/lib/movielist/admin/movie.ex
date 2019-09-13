@@ -11,6 +11,9 @@ defmodule Movielist.Admin.Movie do
     field :title, :string
     field :sort_title, :string
 
+    field :release_date, :date, virtual: true
+    field :release_status, :any, virtual: true
+
     belongs_to :genre, Movielist.Admin.Genre
 
     has_many :ratings, Movielist.Admin.Rating
