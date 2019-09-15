@@ -53,4 +53,12 @@ defmodule MovielistWeb.MovieView do
       _                 -> movie_title
     end
   end
+
+  def css_class_for_release_date(:theater_released, nil) do
+    "release-date--calculated"
+  end
+
+  def css_class_for_release_date(_movie_release_status, _movie_home_release_date) do
+    ""
+  end
 end

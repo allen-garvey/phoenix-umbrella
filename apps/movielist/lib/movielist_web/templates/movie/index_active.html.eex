@@ -17,7 +17,7 @@
         <td><%= link movie.title, to: Common.SuperSearch.search_url(search_query_for_release_status(movie.title, movie.release_status)) %></td>
         <td><%= MovielistWeb.GenreView.to_s(movie.genre) %></td>
         <td><%= movie.pre_rating %></td>
-        <td><%= Common.DateHelpers.us_formatted_date(movie.release_date) %></td>
+        <td class="<%= css_class_for_release_date(movie.release_status, movie.home_release_date) %>"><%= Common.DateHelpers.us_formatted_date(movie.release_date) %></td>
 
         <td>
           <%= link "Show", to: Routes.movie_path(@conn, :show, movie), class: "btn btn-xs btn-default" %>
