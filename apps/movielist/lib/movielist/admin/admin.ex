@@ -125,12 +125,12 @@ defmodule Movielist.Admin do
   """
   def list_movies_active_base_query do
     from(
-          m in Movie, 
-          join: genre in assoc(m, :genre), 
-          where: m.is_active == true, 
-          preload: [genre: genre], 
+          m in Movie,
+          join: genre in assoc(m, :genre),
+          where: m.is_active == true,
+          preload: [genre: genre],
           select: %{
-                    movie: m, 
+                    movie: m,
                     release_status: fragment("CASE WHEN ? <= CURRENT_DATE THEN 1 WHEN ? <= CURRENT_DATE THEN 2 ELSE 3 END AS release_status", m.home_release_date, m.theater_release_date),
                     #can't use release_status in release_date without subquery, and can't have nested maps or structs in ecto subqueries, so easiest just to repeat release_status logic here
                     release_date: fragment("CASE WHEN ? <= CURRENT_DATE THEN NULL WHEN ? <= CURRENT_DATE THEN COALESCE(?, ? + INTERVAL '? DAY') ELSE COALESCE(?, ?) END AS release_date", m.home_release_date, m.theater_release_date, m.home_release_date, m.theater_release_date, @movie_home_release_estimated_lead_time, m.theater_release_date, m.home_release_date)
@@ -163,7 +163,7 @@ defmodule Movielist.Admin do
   """
   def list_movies_active do
     list_movies_active_base_query()
-     |> order_by([m], [fragment("release_status"), fragment("release_date"), :sort_title, :id])
+     |> order_by([m], [asc: fragment("release_status"), asc: fragment("release_date"), desc: :pre_rating, asc: :sort_title, asc: :id])
      |> Repo.all
      |> preload_movie_virtual_fields
   end
