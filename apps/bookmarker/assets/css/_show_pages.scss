@@ -37,9 +37,26 @@
 	.list-group-item{
 		border: none;
 	}
-	.bookmark-thumbnail-container{
-		width: 300px;
+	.bookmark-item{
+		flex-basis: 33%;
 
+		@media screen and (max-width: 870px){
+			flex-basis: 50%;
+		}
+		@media screen and (max-width: 584px){
+			flex-basis: 100%;
+		}
+	}
+	.bookmark-header-container{
+		margin-bottom: 5px;
+	}
+	.bookmark-title-container{
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		margin-bottom: 3px;
+	}
+	.bookmark-thumbnail-container{
 		&:empty{
 			display: none;
 		}

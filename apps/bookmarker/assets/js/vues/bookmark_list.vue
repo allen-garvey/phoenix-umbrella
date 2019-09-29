@@ -5,8 +5,8 @@
 		<h4>Bookmarks</h4>
 		<ul class="list-group folder-bookmark-list">
 			<li class="list-group-item bookmark-item" :class="{'list-group-item-success preview-enabled': bookmark.preview_image_selector}" v-for="bookmark in bookmarks" :key="bookmark.id">
-				<div>
-					<div>
+				<div class="bookmark-header-container">
+					<div class="bookmark-title-container">
                         <a :href="bookmark.url" class="bookmark-title" rel="noreferrer noopener" target="_blank">{{bookmark.title}}</a>
                         <a :href="bookmark.self.show" class="btn btn-default btn-sm pull-right">Edit</a>
                     </div>
