@@ -8,7 +8,7 @@
 
             <div class="spread-content">
                 <router-link :to="backLink" class="btn btn-outline-dark">Cancel</router-link>
-                <button class="btn btn-success" @click="save()">Save</button>
+                <button class="btn btn-success" type="submit">Save</button>
             </div>
         </form>
     </main>
