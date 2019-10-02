@@ -316,12 +316,17 @@ export default {
             });
         },
         loadMoreThumbnails($state){
-            this.thumbnailList = this.thumnailListSource.slice(0, this.thumbnailList.length + THUMBNAIL_CHUNK_LENGTH);
-            if(this.thumbnailList.length === this.thumnailListSource.length){
-                $state.complete();
-            }
-            else{
-                $state.loaded();
+            const filteredThumbnailListGoalLength = this.filteredThumbnailList.length + THUMBNAIL_CHUNK_LENGTH;
+            while(true){
+                this.thumbnailList = this.thumnailListSource.slice(0, this.thumbnailList.length + THUMBNAIL_CHUNK_LENGTH);
+                if(this.thumbnailList.length === this.thumnailListSource.length){
+                    $state.complete();
+                    break;
+                }
+                if(this.filteredThumbnailList.length >= filteredThumbnailListGoalLength){
+                    $state.loaded();
+                    break;
+                }
             }
         },
         imageFor(item){
