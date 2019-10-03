@@ -42,11 +42,7 @@ defmodule Mix.Tasks.Shutterbug do
   Imports image files from directory
   """
   def import_images_from_directory(source_directory_name, masters_target_directory_name, thumbnails_target_directory_name) do
-  	image_files = Photog.Shutterbug.File.get_image_files(source_directory_name)
-
-  	if Enum.empty?(image_files) do
-  		Error.exit_with_error("No image files found in #{source_directory_name}", :no_images_in_source_directory)
-    end
+  	image_files = get_image_files(source_directory_name)
 
     #create directories for masters and thumbnails
     now = DateTime.utc_now()
@@ -115,5 +111,15 @@ defmodule Mix.Tasks.Shutterbug do
 
       end
     end)
+  end
+
+  def get_image_files(source_directory_name) do
+    image_files = Photog.Shutterbug.File.get_image_files(source_directory_name)
+
+  	if Enum.empty?(image_files) do
+  		Error.exit_with_error("No image files found in #{source_directory_name}", :no_images_in_source_directory)
+    end
+
+    image_files
   end
 end
