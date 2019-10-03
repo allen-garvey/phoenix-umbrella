@@ -46,19 +46,7 @@ defmodule Mix.Tasks.Shutterbug do
 
     #create directories for masters and thumbnails
     now = DateTime.utc_now()
-    target_relative_path = Directory.import_relative_path(now)
-    masters_path = Directory.masters_path(masters_target_directory_name, now)
-    thumbnails_path = Directory.thumbnails_path(thumbnails_target_directory_name, now)
-
-    if File.exists?(masters_path) do
-      Error.exit_with_error("#{masters_path} already exists", :masters_directory_exists)
-    end
-    File.mkdir_p!(masters_path)
-
-    if File.exists?(thumbnails_path) do
-      Error.exit_with_error("#{thumbnails_path} already exists", :thumbnails_directory_exists)
-    end
-    File.mkdir_p!(thumbnails_path)
+    {target_relative_path, masters_path, thumbnails_path} = create_directories_for_masters_and_thumbnails(masters_target_directory_name, thumbnails_target_directory_name, now)
 
     #start app so repo is available
     Mix.Task.run "app.start", []
@@ -121,5 +109,26 @@ defmodule Mix.Tasks.Shutterbug do
     end
 
     image_files
+  end
+
+  @doc """
+  Create directories for masters and thumbnails
+  """
+  def create_directories_for_masters_and_thumbnails(masters_target_directory_name, thumbnails_target_directory_name, now) do
+    target_relative_path = Directory.import_relative_path(now)
+    masters_path = Directory.masters_path(masters_target_directory_name, now)
+    thumbnails_path = Directory.thumbnails_path(thumbnails_target_directory_name, now)
+
+    if File.exists?(masters_path) do
+      Error.exit_with_error("#{masters_path} already exists", :masters_directory_exists)
+    end
+    File.mkdir_p!(masters_path)
+
+    if File.exists?(thumbnails_path) do
+      Error.exit_with_error("#{thumbnails_path} already exists", :thumbnails_directory_exists)
+    end
+    File.mkdir_p!(thumbnails_path)
+
+    {target_relative_path, masters_path, thumbnails_path}
   end
 end
