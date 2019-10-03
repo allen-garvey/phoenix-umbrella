@@ -1,6 +1,7 @@
 defmodule Mix.Tasks.Shutterbug do
   use Mix.Task
 
+  alias Photog.Repo
   alias Photog.Shutterbug.Error
   alias Photog.Shutterbug.Directory
   alias Photog.Shutterbug.FileValidator
@@ -66,51 +67,53 @@ defmodule Mix.Tasks.Shutterbug do
     #start app so repo is available
     Mix.Task.run "app.start", []
 
-    #create import
-    import_id = Photog.Shutterbug.Import.create_import()
+    Repo.transaction(fn ->
+      #create import
+      import_id = Photog.Shutterbug.Import.create_import()
 
-    image_file_count = Enum.count(image_files)
+      image_file_count = Enum.count(image_files)
 
-    for {image_source_path, index} <- Enum.with_index(image_files) do
-      IO.puts "Importing image #{index}/#{image_file_count} #{image_source_path}"
+      for {image_source_path, index} <- Enum.with_index(image_files) do
+        IO.puts "Importing image #{index}/#{image_file_count} #{image_source_path}"
 
-      #get image filename
-      image_file = Path.basename(image_source_path)
-      # copy image master
-      image_master_path = Path.join(masters_path, image_file)
-      Photog.Shutterbug.File.safe_copy(image_source_path, image_master_path)
+        #get image filename
+        image_file = Path.basename(image_source_path)
+        # copy image master
+        image_master_path = Path.join(masters_path, image_file)
+        Photog.Shutterbug.File.safe_copy(image_source_path, image_master_path)
 
-      #create thumbnails
-      thumbnail_name = Photog.Shutterbug.Image.thumbnail_name(image_file)
-      mini_thumbnail_name = Photog.Shutterbug.Image.mini_thumbnail_name(image_file)
+        #create thumbnails
+        thumbnail_name = Photog.Shutterbug.Image.thumbnail_name(image_file)
+        mini_thumbnail_name = Photog.Shutterbug.Image.mini_thumbnail_name(image_file)
 
-      image_thumbnail_path = Path.join(thumbnails_path, thumbnail_name)
-      image_mini_thumbnail_path = Path.join(thumbnails_path, mini_thumbnail_name)
+        image_thumbnail_path = Path.join(thumbnails_path, thumbnail_name)
+        image_mini_thumbnail_path = Path.join(thumbnails_path, mini_thumbnail_name)
 
-      Photog.Shutterbug.File.resize_image(image_source_path, image_thumbnail_path, 768)
-      Photog.Shutterbug.File.resize_image(image_source_path, image_mini_thumbnail_path, 250)
+        Photog.Shutterbug.File.resize_image(image_source_path, image_thumbnail_path, 768)
+        Photog.Shutterbug.File.resize_image(image_source_path, image_mini_thumbnail_path, 250)
 
-      #get paths needed when creating image resource
-      image_thumbnail_relative_path = Path.join(target_relative_path, thumbnail_name)
-      image_mini_thumbnail_relative_path = Path.join(target_relative_path, mini_thumbnail_name)
-      image_master_relative_path = Path.join(target_relative_path, image_file)
+        #get paths needed when creating image resource
+        image_thumbnail_relative_path = Path.join(target_relative_path, thumbnail_name)
+        image_mini_thumbnail_relative_path = Path.join(target_relative_path, mini_thumbnail_name)
+        image_master_relative_path = Path.join(target_relative_path, image_file)
 
-      #get exif data for creation_time
-      exif_map = Exif.exif_for(image_master_path)
-      creation_datetime = case Exif.exif_creation_time_as_datetime(exif_map) do
-        {:ok, datetime, _} -> datetime
-        {:error, reason}   -> Error.exit_with_error("#{image_source_path} exif creation date is in the wrong format because #{reason}", :image_exif_creation_date_wrong_format)
-        nil                -> now
+        #get exif data for creation_time
+        exif_map = Exif.exif_for(image_master_path)
+        creation_datetime = case Exif.exif_creation_time_as_datetime(exif_map) do
+          {:ok, datetime, _} -> datetime
+          {:error, reason}   -> Error.exit_with_error("#{image_source_path} exif creation date is in the wrong format because #{reason}", :image_exif_creation_date_wrong_format)
+          nil                -> now
+        end
+
+        Photog.Shutterbug.Image.create_image!(%{
+          master_path: image_master_relative_path,
+          mini_thumbnail_path: image_mini_thumbnail_relative_path,
+          thumbnail_path: image_thumbnail_relative_path,
+          import_id: import_id,
+          creation_time: creation_datetime,
+        })
+
       end
-
-      Photog.Shutterbug.Image.create_image!(%{
-        master_path: image_master_relative_path,
-        mini_thumbnail_path: image_mini_thumbnail_relative_path,
-        thumbnail_path: image_thumbnail_relative_path,
-        import_id: import_id,
-        creation_time: creation_datetime,
-      })
-
-  	end
+    end)
   end
 end
