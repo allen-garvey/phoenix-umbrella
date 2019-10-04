@@ -54,7 +54,7 @@ defmodule Mix.Tasks.Shutterbug do
     Repo.transaction(fn ->
       #create import
       import_id = Photog.Shutterbug.Import.create_import()
-
+      #get count for progress countdown
       image_file_count = Enum.count(image_files)
 
       for {image_source_path, index} <- Enum.with_index(image_files) do
@@ -67,14 +67,7 @@ defmodule Mix.Tasks.Shutterbug do
         Photog.Shutterbug.File.safe_copy(image_source_path, image_master_path)
 
         #create thumbnails
-        thumbnail_name = Photog.Shutterbug.Image.thumbnail_name(image_file)
-        mini_thumbnail_name = Photog.Shutterbug.Image.mini_thumbnail_name(image_file)
-
-        image_thumbnail_path = Path.join(thumbnails_path, thumbnail_name)
-        image_mini_thumbnail_path = Path.join(thumbnails_path, mini_thumbnail_name)
-
-        Photog.Shutterbug.File.resize_image(image_source_path, image_thumbnail_path, 768)
-        Photog.Shutterbug.File.resize_image(image_source_path, image_mini_thumbnail_path, 250)
+        {thumbnail_name, mini_thumbnail_name} = create_image_thumbnails(image_file, image_source_path, thumbnails_path)
 
         #get paths needed when creating image resource
         image_thumbnail_relative_path = Path.join(target_relative_path, thumbnail_name)
@@ -130,5 +123,21 @@ defmodule Mix.Tasks.Shutterbug do
     File.mkdir_p!(thumbnails_path)
 
     {target_relative_path, masters_path, thumbnails_path}
+  end
+
+  @doc """
+  Creates image thumbnails given image thumbnail file name, image source directory and path to create thumbnails in
+  """
+  def create_image_thumbnails(image_file, image_source_path, thumbnails_path) do
+    thumbnail_name = Photog.Shutterbug.Image.thumbnail_name(image_file)
+    mini_thumbnail_name = Photog.Shutterbug.Image.mini_thumbnail_name(image_file)
+
+    image_thumbnail_path = Path.join(thumbnails_path, thumbnail_name)
+    image_mini_thumbnail_path = Path.join(thumbnails_path, mini_thumbnail_name)
+
+    Photog.Shutterbug.File.resize_image(image_source_path, image_thumbnail_path, 768)
+    Photog.Shutterbug.File.resize_image(image_source_path, image_mini_thumbnail_path, 250)
+
+    {thumbnail_name, mini_thumbnail_name}
   end
 end
