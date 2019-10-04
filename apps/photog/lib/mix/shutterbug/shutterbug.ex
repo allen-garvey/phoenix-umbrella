@@ -75,12 +75,7 @@ defmodule Mix.Tasks.Shutterbug do
         image_master_relative_path = Path.join(target_relative_path, image_file)
 
         #get exif data for creation_time
-        exif_map = Exif.exif_for(image_master_path)
-        creation_datetime = case Exif.exif_creation_time_as_datetime(exif_map) do
-          {:ok, datetime, _} -> datetime
-          {:error, reason}   -> Error.exit_with_error("#{image_source_path} exif creation date is in the wrong format because #{reason}", :image_exif_creation_date_wrong_format)
-          nil                -> now
-        end
+        {_exif_map, creation_datetime} = get_image_exif(image_master_path, image_source_path, now)
 
         Photog.Shutterbug.Image.create_image!(%{
           master_path: image_master_relative_path,
@@ -139,5 +134,16 @@ defmodule Mix.Tasks.Shutterbug do
     Photog.Shutterbug.File.resize_image(image_source_path, image_mini_thumbnail_path, 250)
 
     {thumbnail_name, mini_thumbnail_name}
+  end
+
+  def get_image_exif(image_master_path, image_source_path, now) do
+    exif_map = Exif.exif_for(image_master_path)
+    creation_datetime = case Exif.exif_creation_time_as_datetime(exif_map) do
+      {:ok, datetime, _} -> datetime
+      {:error, reason}   -> Error.exit_with_error("#{image_source_path} exif creation date is in the wrong format because #{reason}", :image_exif_creation_date_wrong_format)
+      nil                -> now
+    end
+
+    {exif_map, creation_datetime}
   end
 end
