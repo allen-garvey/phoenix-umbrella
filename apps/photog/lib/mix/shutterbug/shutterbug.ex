@@ -86,7 +86,7 @@ defmodule Mix.Tasks.Shutterbug do
         })
 
       end
-    end)
+    end, timeout: :infinity)
   end
 
   def get_image_files(source_directory_name) do
