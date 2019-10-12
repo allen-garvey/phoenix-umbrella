@@ -14,7 +14,7 @@
     <%= for movie <- @movies do %>
       <tr class="<%= css_class_for_release_status(movie.release_status) %>">
         <td></td>
-        <td><%= link movie.title, to: Common.SuperSearch.search_url(search_query_for_release_status(movie.title, movie.release_status)) %></td>
+        <td><%= link movie.title, to: Common.SuperSearch.search_url(search_query_for_release_status(movie.title, movie.release_status, movie.home_release_date)) %></td>
         <td><%= MovielistWeb.GenreView.to_s(movie.genre) %></td>
         <td><%= movie.pre_rating %></td>
         <td class="<%= css_class_for_release_date(movie.release_status, movie.home_release_date) %>"><%= Common.DateHelpers.us_formatted_date(movie.release_date) %></td>

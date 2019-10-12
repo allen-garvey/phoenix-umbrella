@@ -47,11 +47,12 @@ defmodule MovielistWeb.MovieView do
     end
   end
 
-  def search_query_for_release_status(movie_title, release_status) do
-    case release_status do
-      :theater_released -> "#{movie_title} dvd release date"
-      _                 -> movie_title
-    end
+  def search_query_for_release_status(movie_title, :theater_released, nil) do
+    "#{movie_title} dvd release date"
+  end
+
+  def search_query_for_release_status(movie_title, _release_status, _home_release_date) do
+    movie_title
   end
 
   def css_class_for_release_date(:theater_released, nil) do
