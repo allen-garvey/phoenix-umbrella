@@ -4,13 +4,13 @@ Elixir umbrella project containing several custom CMSs made with Elixir/Phoenix.
 
 ## Dependencies
 
-* Elixir >= 1.6
+* Elixir >= 1.9
 
-* node >= 8
+* node >= 10
 
 * npm
 
-* postgresql
+* PostgreSQL
 
 ## Getting Started
 
