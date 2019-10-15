@@ -1,0 +1,33 @@
+<h1>Show Login</h1>
+
+<ul>
+
+  <li>
+    <strong>Attempt time:</strong>
+    <%= @login.attempt_time %>
+  </li>
+
+  <li>
+    <strong>Was successful:</strong>
+    <%= @login.was_successful %>
+  </li>
+
+  <li>
+    <strong>Username:</strong>
+    <%= @login.username %>
+  </li>
+
+  <li>
+    <strong>Ip:</strong>
+    <%= @login.ip %>
+  </li>
+
+  <li>
+    <strong>User agent:</strong>
+    <%= @login.user_agent %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.login_path(@conn, :edit, @login) %></span>
+<span><%= link "Back", to: Routes.login_path(@conn, :index) %></span>

@@ -40,6 +40,7 @@ defmodule GrenadierWeb.Router do
     # get "/", UserController, :index
 
     resources "/users", UserController, only: [:index, :show]
+    resources "/logins", LoginController, only: [:index, :show]
   end
 
   # Other scopes may use custom stacks.
