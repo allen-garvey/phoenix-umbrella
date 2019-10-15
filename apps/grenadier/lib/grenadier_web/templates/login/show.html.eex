@@ -29,5 +29,4 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.login_path(@conn, :edit, @login) %></span>
 <span><%= link "Back", to: Routes.login_path(@conn, :index) %></span>
