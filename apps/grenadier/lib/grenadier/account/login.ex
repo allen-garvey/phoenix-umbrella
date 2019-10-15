@@ -17,6 +17,6 @@ defmodule Grenadier.Account.Login do
     login
     |> cast(attrs, [:attempt_time, :was_successful, :username, :ip, :user_agent])
     |> Common.ModelHelpers.Date.default_datetime_now(:attempt_time)
-    |> validate_required([:attempt_time, :was_successful, :username, :ip])
+    |> validate_required([:attempt_time, :was_successful, :ip])
   end
 end
