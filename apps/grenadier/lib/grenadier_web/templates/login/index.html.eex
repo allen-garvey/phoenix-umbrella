@@ -15,7 +15,9 @@
 <%= for login <- @logins do %>
     <tr>
       <td><%= login.id %></td>
-      <td><%= login.attempt_time %></td>
+      <td>
+        <%= Common.DateHelpers.us_formatted_date(login.attempt_time) <> " " <> Common.DateHelpers.formatted_time(login.attempt_time) %>
+      </td>
       <td><%= login.was_successful %></td>
       <td><%= login.username %></td>
       <td><%= login.ip %></td>
