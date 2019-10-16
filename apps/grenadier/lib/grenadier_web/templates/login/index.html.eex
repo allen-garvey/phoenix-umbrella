@@ -1,29 +1,25 @@
-<h1>Listing Logins</h1>
+<h1>Login Attempts</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Attempt time</th>
-      <th>Was successful</th>
+      <th>Id</th>
+      <th>Time</th>
+      <th>Successful?</th>
       <th>Username</th>
-      <th>Ip</th>
+      <th>IP</th>
       <th>User agent</th>
-
-      <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for login <- @logins do %>
     <tr>
+      <td><%= login.id %></td>
       <td><%= login.attempt_time %></td>
       <td><%= login.was_successful %></td>
       <td><%= login.username %></td>
       <td><%= login.ip %></td>
       <td><%= login.user_agent %></td>
-
-      <td>
-        <span><%= link "Show", to: Routes.login_path(@conn, :show, login) %></span>
-      </td>
     </tr>
 <% end %>
   </tbody>
