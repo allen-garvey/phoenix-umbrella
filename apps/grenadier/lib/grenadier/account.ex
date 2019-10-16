@@ -137,7 +137,8 @@ defmodule Grenadier.Account do
 
   """
   def list_logins do
-    Repo.all(Login)
+    from(Login, order_by: [desc: :id])
+    |> Repo.all()
   end
 
   @doc """
