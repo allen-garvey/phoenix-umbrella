@@ -1,0 +1,13 @@
+.login-index-table{
+    margin-left: -1.5rem;
+    th, td{
+        &:first-child{
+            padding-left: 1.5rem;
+        }
+    }
+    .login-failed{
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+    }
+}

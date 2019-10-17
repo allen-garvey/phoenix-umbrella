@@ -1,9 +1,9 @@
 <h1>Login Attempts</h1>
 
-<table>
+<table class="login-index-table">
   <thead>
     <tr>
-      <th>Id</th>
+      <th>ID</th>
       <th>Time</th>
       <th>Successful?</th>
       <th>Username</th>
@@ -13,7 +13,7 @@
   </thead>
   <tbody>
 <%= for login <- @logins do %>
-    <tr>
+    <tr class="<%= login_row_class(login.was_successful)  %>">
       <td><%= login.id %></td>
       <td>
         <%= Common.DateHelpers.us_formatted_date(login.attempt_time) <> " " <> Common.DateHelpers.formatted_time(login.attempt_time) %>
