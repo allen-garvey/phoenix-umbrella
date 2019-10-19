@@ -46,7 +46,7 @@ defmodule GrenadierWeb.PageController do
 
   defp redirect_after_login(conn) do
     case get_session(conn, :original_request_url) do
-      nil -> redirect(conn, to: Routes.user_path(conn, :index))
+      nil -> redirect(conn, to: Routes.page_path(conn, :index))
       original_request_url ->
         delete_session(conn, :original_request_url)
         |> redirect(external: original_request_url)

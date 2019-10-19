@@ -37,7 +37,7 @@ defmodule GrenadierWeb.Router do
     pipe_through :browser
     pipe_through :authenticate
 
-    # get "/", UserController, :index
+    get "/", PageController, :index
 
     resources "/users", UserController, only: [:index, :show]
     resources "/logins", LoginController, only: [:index, :show]
