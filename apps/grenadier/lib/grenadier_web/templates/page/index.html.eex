@@ -4,3 +4,8 @@
   <li><%= link "Users", to: Routes.user_path(@conn, :index) %></li>
   <li><%= link "Logins", to: Routes.login_path(@conn, :index) %></li>
 </ul>
+
+<div class="latest-logins-section">
+  <h2 class="latest-logins__heading">Latest Logins</h2>
+  <%= render GrenadierWeb.LoginView, "login_table.html", logins: @logins %>
+</div>

@@ -1,0 +1,24 @@
+<table class="login-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Time</th>
+      <th>Username</th>
+      <th>IP</th>
+      <th>User agent</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for login <- @logins do %>
+    <tr class="<%= login_row_class(login.was_successful)  %>">
+      <td><%= login.id %></td>
+      <td>
+        <%= Common.DateHelpers.us_formatted_date(login.attempt_time) <> " " <> Common.DateHelpers.formatted_time(login.attempt_time) %>
+      </td>
+      <td><%= login.username %></td>
+      <td><%= login.ip %></td>
+      <td><%= login.user_agent %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

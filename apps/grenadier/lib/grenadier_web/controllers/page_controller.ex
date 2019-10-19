@@ -5,7 +5,9 @@ defmodule GrenadierWeb.PageController do
   alias Grenadier.Account.User
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    logins = Account.list_logins(10)
+
+    render(conn, "index.html", logins: logins)
   end
 
   def login(conn, _params) do

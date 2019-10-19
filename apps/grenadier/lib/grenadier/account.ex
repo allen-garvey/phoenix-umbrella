@@ -141,6 +141,11 @@ defmodule Grenadier.Account do
     |> Repo.all()
   end
 
+  def list_logins(limit) do
+    from(Login, order_by: [desc: :id], limit: ^limit)
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single login.
 
