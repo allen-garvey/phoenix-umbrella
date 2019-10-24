@@ -56,10 +56,15 @@
         <!-- 
             * Reorder items controls 
         -->
-        <div class="reorder-resources-controls-container" v-if="supportsReorder">
-            <button class="btn" :class="{'btn-outline-primary': !isReordering, 'btn-outline-secondary': isReordering}" v-show="shouldShowReorderButton" @click="reorderButtonAction()">{{isReordering ? 'Cancel' : 'Reorder'}}</button>
-            <button class="btn btn-success" v-show="isReordering && isListReordered" @click="saveOrder()">Save order</button>
-        </div>
+        <reorder-items-controls
+            :should-show-reorder-button="shouldShowReorderButton"
+            :is-list-reordered="isListReordered"
+            :is-reordering="isReordering"
+            :reorder-button-action="reorderButtonAction"
+            :save-order="saveOrder"
+            v-if="supportsReorder"
+        >
+        </reorder-items-controls>
         <!-- 
             * Items list
         -->
@@ -86,6 +91,7 @@ import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observe
 import ResourceHeader from './resource-header.vue';
 import ThumbnailFilterControls from './thumbnail-filter-controls.vue';
 import RelatedFieldsList from './related-fields-list.vue';
+import ReorderItemsControls from './thumbnail-list-components/reorder-items-controls.vue';
 
 import { thumbnailUrlFor } from '../image.js';
 import { API_URL_BASE } from '../request-helpers.js';
@@ -184,6 +190,7 @@ export default {
         ResourceHeader,
         ThumbnailFilterControls,
         RelatedFieldsList,
+        ReorderItemsControls,
         InfiniteObserver,
     },
     created(){
