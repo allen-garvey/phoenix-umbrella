@@ -68,17 +68,21 @@
         <!-- 
             * Items list
         -->
-        <ul class="thumbnail-list"  :class="{'batch-select': isCurrentlyBatchSelect, 'reordering': isReordering}">
-            <li v-for="(item, i) in filteredThumbnailList" :key="i" :class="{'batch-selected': isCurrentlyBatchSelect && batchSelectedItems[i], 'reorder-select': isReordering && currentDragIndex === i, 'hover-detail': showDetailHover && isInThumbnailDefaultMode}" @click="batchSelectItem(item, i, $event)" :draggable="isReordering" @dragstart="itemDragStart(i)" @dragover="itemDragOver(i, $event)">
-                <router-link :to="showRouteFor(item, model)" class="thumbnail-image-container" :event="thumbnailLinkEvent" :tag="isCurrentlyBatchSelect || isReordering ? 'div' : 'a'" :draggable="!isReordering">
-                    <img :alt="altTextFor(item)" :src="thumbnailUrlFor(item)" :class="{'cover-image': !isCurrentlyBatchSelect && isThumbnailCoverImage(item)}" :draggable="!isReordering" />
-                </router-link>
-                <h3 class="thumbnail-title" :class="{'default-title': !('name' in item), 'thumbnail-title-favorite': isThumbnailFavorited(item)}" :draggable="!isReordering">
-                    <router-link :to="showRouteFor(item, model)" :event="thumbnailLinkEvent" :tag="isCurrentlyBatchSelect || isReordering ? 'span' : 'a'" :draggable="!isReordering">{{titleFor(item)}}</router-link>
-                    <div v-if="isThumbnailFavorited(item)" class="heart" :draggable="!isReordering"></div>
-                </h3>
-            </li>
-        </ul>
+        <thumbnail-items-list
+            :items="filteredThumbnailList"
+            :model="model"
+            :show-route-for="showRouteFor"
+            :batch-selected-items="batchSelectedItems"
+            :batch-select-item="batchSelectItem"
+            :item-drag-start="itemDragStart"
+            :item-drag-over="itemDragOver"
+            :current-drag-index="currentDragIndex"
+            :thumbnail-link-event="thumbnailLinkEvent"
+            :is-reordering="isReordering"
+            :is-currently-batch-select="isCurrentlyBatchSelect"
+            :show-detail-hover="showDetailHover"
+        >
+        </thumbnail-items-list>
         <infinite-observer :on-trigger="loadMoreThumbnails" v-if="isInitialLoadComplete">
         </infinite-observer>
     </main>
@@ -92,8 +96,8 @@ import ResourceHeader from './resource-header.vue';
 import ThumbnailFilterControls from './thumbnail-filter-controls.vue';
 import RelatedFieldsList from './related-fields-list.vue';
 import ReorderItemsControls from './thumbnail-list-components/reorder-items-controls.vue';
+import ThumbnailItemsList from './thumbnail-list-components/thumbnail-items-list.vue'
 
-import { thumbnailUrlFor } from '../image.js';
 import { API_URL_BASE } from '../request-helpers.js';
 
 //amount of thumbnails to add each time vue infinite scroll is called
@@ -191,6 +195,7 @@ export default {
         ThumbnailFilterControls,
         RelatedFieldsList,
         ReorderItemsControls,
+        ThumbnailItemsList,
         InfiniteObserver,
     },
     created(){
@@ -335,44 +340,6 @@ export default {
                     break;
                 }
             }
-        },
-        imageFor(item){
-            if('cover_image' in item){
-                return item.cover_image;
-            }
-            return item;
-        },
-        isThumbnailFavorited(item){
-            //don't show favorite heart for cover image
-            if('cover_image' in item){
-                return false;
-            }
-            return this.imageFor(item).is_favorite;
-        },
-        isThumbnailCoverImage(item){
-            if(!('cover_image' in this.model)){
-                return false;
-            }
-            return this.imageFor(item).id === this.model.cover_image.id;
-        },
-        thumbnailUrlFor(item){
-            const image = this.imageFor(item);
-            if(image){
-                return thumbnailUrlFor(image.mini_thumbnail_path);
-            }
-            return '';
-        },
-        titleFor(item){
-            if('name' in item){
-                return item.name;
-            }
-            return `${item.creation_time.formatted.us_date} ${item.creation_time.formatted.time}`;
-        },
-        altTextFor(item){
-            if('name' in item){
-                return `Thumbnail for ${item.name}`;
-            }
-            return `Thumbnail for image taken on ${item.creation_time.formatted.us_date}`;
         },
         shouldShowItem(item){
             let albumValidation = true;
