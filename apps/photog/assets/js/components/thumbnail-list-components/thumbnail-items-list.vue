@@ -52,7 +52,8 @@ export default {
             required: true,
         },
         model: {
-            type: Object,
+            //type can be Array or Object
+            type: [Object, Array],
             required: true,
         },
         showRouteFor: {
