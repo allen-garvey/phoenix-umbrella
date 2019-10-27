@@ -24,35 +24,22 @@
         <!-- 
             * Batch edit controls 
         -->
-        <div class="thumbnail-batch-select-container" :class="{invisible: isReordering}" v-if="supportsBatchSelect">
-            <button class="btn" :class="{'btn-outline-primary' : !isCurrentlyBatchSelect, 'btn-outline-secondary': isCurrentlyBatchSelect}" @click="toggleBatchSelect">{{isCurrentlyBatchSelect ? 'Cancel' : 'Batch edit'}}</button>
-            <button class="btn btn-outline-primary" @click="batchSelectAll" v-if="isCurrentlyBatchSelect">{{anyItemsBatchSelected ? 'Deselect all' : 'Select all'}}</button>
-            <!-- 
-            * Batch edit controls when in batch edit mode
-            -->
-            <div class="resource-buttons-container" v-if="isCurrentlyBatchSelect">
-                <div v-if="enableBatchSelectImages" class="btn-group">
-                    <button class="btn btn-primary" @click="setBatchResourceMode(1)" :class="buttonClassForResourceMode(1)">Add Albums</button>
-                    <button class="btn btn-primary" @click="setBatchResourceMode(2)" :class="buttonClassForResourceMode(2)">Add Persons</button>
-                    <button class="btn btn-outline-primary" @click="createResourceWithImages('albumsNew')" :disabled="!anyItemsBatchSelected">Create Album</button>
-                    <button class="btn btn-outline-primary" @click="createResourceWithImages('personsNew')" :disabled="!anyItemsBatchSelected">Create Person</button>
-                </div>
-                <button class="btn btn-primary" @click="setBatchResourceMode(3)" :class="buttonClassForResourceMode(3)" v-if="enableBatchSelectAlbums">Add Tags</button>
-            </div>  
-            <!-- 
-                * List of batch edit resources that can be added to selected items
-            -->
-            <div v-if="shouldShowBatchResources">
-                <ul class="batch-resources-list">
-                    <li v-for="(resource, index) in batchResourcesDisplayed" :key="resource.id">
-                        <input type="checkbox" :id="idForBatchResource(resource, index)" v-model="batchResourcesSelected[index]" />
-                        <label :for="idForBatchResource(resource, index)">{{resource.name}}</label>
-                    </li>
-                </ul>
-                <button class="btn btn-outline-dark" v-if="batchResources.length > batchResourcesMoreLimit" @click="toggleDisplayMoreBatchResources">{{batchResourcesDisplayed.length < batchResources.length ? 'Show more' : 'Show less'}}</button>
-                <button class="btn btn-success" :disabled="!anyBatchResourcesSelected || !anyItemsBatchSelected" @click="saveBatchSelected">Save</button>
-            </div>
-        </div>
+        <batch-edit
+            :is-currently-batch-select="isCurrentlyBatchSelect"
+            :is-reordering="isReordering"
+            :toggle-batch-select="toggleBatchSelect"
+            :batch-select-all="batchSelectAll"
+            :enable-batch-select-images="enableBatchSelectImages"
+            :enable-batch-select-albums="enableBatchSelectAlbums"
+            :batch-select-resource-mode="batchSelectResourceMode"
+            :set-batch-resource-mode="setBatchResourceMode"
+            :create-resource-with-images="createResourceWithImages"
+            :batch-resources="batchResources"
+            :save-batch-selected="saveBatchSelected"
+            :any-items-batch-selected="anyItemsBatchSelected"
+            v-if="supportsBatchSelect"
+        >
+        </batch-edit>
         <!-- 
             * Reorder items controls 
         -->
@@ -95,6 +82,7 @@ import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observe
 import ResourceHeader from './resource-header.vue';
 import ThumbnailFilterControls from './thumbnail-filter-controls.vue';
 import RelatedFieldsList from './related-fields-list.vue';
+import BatchEdit from './thumbnail-list-components/batch-edit.vue';
 import ReorderItemsControls from './thumbnail-list-components/reorder-items-controls.vue';
 import ThumbnailItemsList from './thumbnail-list-components/thumbnail-items-list.vue'
 
@@ -195,6 +183,7 @@ export default {
         ThumbnailFilterControls,
         RelatedFieldsList,
         ReorderItemsControls,
+        BatchEdit,
         ThumbnailItemsList,
         InfiniteObserver,
     },
@@ -210,13 +199,10 @@ export default {
             personFilterMode: PERSON_FILTER_MODE_ALL,
             //following used for batch select multiple items
             isCurrentlyBatchSelect: false,
-            batchSelectedItems: [],
-            previouslySelectedBatchItemIndex: 0,
-            batchResources: [],
-            batchResourcesSelected: [],
+            batchSelectedItems: [], //thumbnails selected in batch select mode
+            previouslySelectedBatchItemIndex: 0, //last thumbnail selected in batch select mode
+            batchResources: [], //the resources (albums, persons) that can be added to thumbnails in batch select mode
             batchSelectResourceMode: BATCH_RESOURCE_MODE_NONE,
-            shouldShowAllBatchResources: false,
-            batchResourcesMoreLimit: 8,
             //following for reordering resources
             isReordering: false,
             isListReordered: false,
@@ -260,20 +246,8 @@ export default {
         isInThumbnailDefaultMode(){
             return !this.isCurrentlyBatchSelect && !this.isReordering;
         },
-        shouldShowBatchResources(){
-            return this.batchSelectResourceMode !== BATCH_RESOURCE_MODE_NONE;
-        },
         anyItemsBatchSelected(){
             return this.batchSelectedItems.some((isSelected)=>isSelected);
-        },
-        anyBatchResourcesSelected(){
-            return this.batchResourcesSelected.some((isSelected)=>isSelected);
-        },
-        batchResourcesDisplayed(){
-            if(this.shouldShowAllBatchResources){
-                return this.batchResources;
-            }
-            return this.batchResources.slice(0, this.batchResourcesMoreLimit);
         },
         supportsBatchSelect(){
             return (this.enableBatchSelectImages || this.enableBatchSelectAlbums) && this.filteredThumbnailList.length > 0;
@@ -303,7 +277,6 @@ export default {
             this.batchSelectedItems = [];
             this.previouslySelectedBatchItemIndex = 0;
             this.batchResources = [];
-            this.batchResourcesSelected = [];
             this.batchSelectResourceMode = BATCH_RESOURCE_MODE_NONE;
             this.shouldShowAllBatchResources = false;
             
@@ -395,9 +368,6 @@ export default {
             const anySelected = this.anyItemsBatchSelected;
             this.batchSelectedItems = this.batchSelectedItems.map((isSelected)=>!anySelected);
         },
-        idForBatchResource(item, index){
-            return `batch_resource_id_${item.id}_${index}`;
-        },
         setBatchResourceMode(newResourceMode){
             if(this.batchSelectResourceMode === newResourceMode){
                 return;
@@ -417,17 +387,10 @@ export default {
 
             this.getModel(apiUrl).then((data)=>{
                 this.batchResources = data;
-                this.batchResourcesSelected = this.batchResources.map(()=>false);
             });
 
         },
-        buttonClassForResourceMode(resourceMode){
-            return resourceMode === this.batchSelectResourceMode ? 'btn-primary' : 'btn-secondary';
-        },
-        toggleDisplayMoreBatchResources(){
-            this.shouldShowAllBatchResources = !this.shouldShowAllBatchResources;
-        },
-        saveBatchSelected(){
+        saveBatchSelected(batchResourcesSelected){
             //default is album_images
             let apiUrl = `${API_URL_BASE}/album_images`;
             let resourcesKey = 'album_ids';
@@ -444,7 +407,7 @@ export default {
             }
             const data = {};
             data[thumbnailsKey] = this.thumbnailListSelectedItems.map((item)=>item.id);
-            data[resourcesKey] = this.batchResources.filter((item, i)=>this.batchResourcesSelected[i]).map((item)=>item.id);
+            data[resourcesKey] = this.batchResources.filter((item, i)=>batchResourcesSelected[i]).map((item)=>item.id);
 
             this.sendJson(apiUrl, 'POST', data).then((response)=>{
                 const hasAtLeastOneThingSucceeded = response.data && response.data.length > 0;
