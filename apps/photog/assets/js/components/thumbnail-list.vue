@@ -101,10 +101,7 @@ const ALBUM_FILTER_MODE_NO_ALBUMS = 2;
 const ALBUM_FILTER_MODE_HAS_ALBUMS = 3;
 
 //thumbnail batch select
-const BATCH_RESOURCE_MODE_NONE = 0;
-const BATCH_RESOURCE_MODE_ALBUMS = 1;
-const BATCH_RESOURCE_MODE_PERSONS = 2;
-const BATCH_RESOURCE_MODE_TAGS = 3;
+import { BATCH_EDIT_RESOURCE_MODE } from './thumbnail-list/constants/batch-edit.js';
 
 export default {
     name: 'Thumbnail-List',
@@ -202,7 +199,7 @@ export default {
             batchSelectedItems: [], //thumbnails selected in batch select mode
             previouslySelectedBatchItemIndex: 0, //last thumbnail selected in batch select mode
             batchResources: [], //the resources (albums, persons) that can be added to thumbnails in batch select mode
-            batchSelectResourceMode: BATCH_RESOURCE_MODE_NONE,
+            batchSelectResourceMode: BATCH_EDIT_RESOURCE_MODE.NONE,
             //following for reordering resources
             isReordering: false,
             isListReordered: false,
@@ -277,7 +274,7 @@ export default {
             this.batchSelectedItems = [];
             this.previouslySelectedBatchItemIndex = 0;
             this.batchResources = [];
-            this.batchSelectResourceMode = BATCH_RESOURCE_MODE_NONE;
+            this.batchSelectResourceMode = BATCH_EDIT_RESOURCE_MODE.NONE;
             this.shouldShowAllBatchResources = false;
             
             this.loadModel().then(()=>{
@@ -335,7 +332,7 @@ export default {
         },
         toggleBatchSelect(){
             this.isCurrentlyBatchSelect = !this.isCurrentlyBatchSelect;
-            this.batchSelectResourceMode = BATCH_RESOURCE_MODE_NONE;
+            this.batchSelectResourceMode = BATCH_EDIT_RESOURCE_MODE.NONE;
             if(this.isCurrentlyBatchSelect){
                 this.batchSelectedItems = this.filteredThumbnailList.map(()=>false);
                 this.previouslySelectedBatchItemIndex = 0;
@@ -373,14 +370,14 @@ export default {
                 return;
             }
             this.batchSelectResourceMode = newResourceMode;
-            if(newResourceMode === BATCH_RESOURCE_MODE_NONE){
+            if(newResourceMode === BATCH_EDIT_RESOURCE_MODE.NONE){
                 return;
             }
             let apiUrl = '/albums?excerpt=true';
-            if(newResourceMode === BATCH_RESOURCE_MODE_PERSONS){
+            if(newResourceMode === BATCH_EDIT_RESOURCE_MODE.PERSONS){
                 apiUrl = '/persons?excerpt=true';
             }
-            else if(newResourceMode === BATCH_RESOURCE_MODE_TAGS){
+            else if(newResourceMode === BATCH_EDIT_RESOURCE_MODE.TAGS){
                 //no need for tags excerpt, since tags already only returns name and id
                 apiUrl = '/tags?sort=newest';
             }
@@ -396,11 +393,11 @@ export default {
             let resourcesKey = 'album_ids';
             let thumbnailsKey = 'image_ids';
 
-            if(this.batchSelectResourceMode === BATCH_RESOURCE_MODE_PERSONS){
+            if(this.batchSelectResourceMode === BATCH_EDIT_RESOURCE_MODE.PERSONS){
                 apiUrl = `${API_URL_BASE}/person_images`;
                 resourcesKey = 'person_ids';
             }
-            else if(this.batchSelectResourceMode === BATCH_RESOURCE_MODE_TAGS){
+            else if(this.batchSelectResourceMode === BATCH_EDIT_RESOURCE_MODE.TAGS){
                 apiUrl = `${API_URL_BASE}/album_tags`;
                 resourcesKey = 'tag_ids';
                 thumbnailsKey = 'album_ids';

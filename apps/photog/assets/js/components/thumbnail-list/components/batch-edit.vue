@@ -21,14 +21,14 @@
         >
             <div v-if="enableBatchSelectImages" class="btn-group">
                 <button class="btn btn-primary" 
-                    @click="setBatchResourceMode(1)" 
-                    :class="buttonClassForResourceMode(1)">
+                    @click="setBatchResourceMode(batchEditResourceMode.ALBUMS)" 
+                    :class="buttonClassForResourceMode(batchEditResourceMode.ALBUMS)">
                     Add Albums
                 </button>
                 <button 
                     class="btn btn-primary" 
-                    @click="setBatchResourceMode(2)" 
-                    :class="buttonClassForResourceMode(2)"
+                    @click="setBatchResourceMode(batchEditResourceMode.PERSONS)" 
+                    :class="buttonClassForResourceMode(batchEditResourceMode.PERSONS)"
                 >
                     Add Persons
                 </button>
@@ -47,8 +47,8 @@
             </div>
             <button 
                 class="btn btn-primary" 
-                @click="setBatchResourceMode(3)" 
-                :class="buttonClassForResourceMode(3)" 
+                @click="setBatchResourceMode(batchEditResourceMode.TAGS)" 
+                :class="buttonClassForResourceMode(batchEditResourceMode.TAGS)" 
                 v-if="enableBatchSelectAlbums"
             >
                 Add Tags
@@ -91,6 +91,8 @@
 </template>
 
 <script>
+import { BATCH_EDIT_RESOURCE_MODE } from '../constants/batch-edit.js';
+
 export default {
     props: {
         isCurrentlyBatchSelect: {
@@ -143,6 +145,9 @@ export default {
         },
     },
     computed: {
+        batchEditResourceMode(){
+            return BATCH_EDIT_RESOURCE_MODE;
+        },
         anyBatchResourcesSelected(){
             return this.batchResourcesSelected.some((isSelected)=>isSelected);
         },
@@ -154,9 +159,7 @@ export default {
             };
         },
         shouldShowBatchResources(){
-            // TODO, pass in batch resource mode constants as prop or import as module
-            // return this.batchSelectResourceMode !== BATCH_RESOURCE_MODE_NONE;
-            return this.batchSelectResourceMode !== 0;
+            return this.batchSelectResourceMode !== this.batchEditResourceMode.NONE;
         },
         batchResourcesDisplayed(){
             if(this.shouldShowAllBatchResources){
