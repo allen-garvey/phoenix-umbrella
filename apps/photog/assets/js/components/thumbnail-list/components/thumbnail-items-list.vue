@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { thumbnailUrlFor } from '../../image.js';
+import { thumbnailUrlFor } from '../../../image.js';
 
 export default {
     props: {

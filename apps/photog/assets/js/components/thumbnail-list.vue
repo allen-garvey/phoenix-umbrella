@@ -82,9 +82,9 @@ import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observe
 import ResourceHeader from './resource-header.vue';
 import ThumbnailFilterControls from './thumbnail-filter-controls.vue';
 import RelatedFieldsList from './related-fields-list.vue';
-import BatchEdit from './thumbnail-list-components/batch-edit.vue';
-import ReorderItemsControls from './thumbnail-list-components/reorder-items-controls.vue';
-import ThumbnailItemsList from './thumbnail-list-components/thumbnail-items-list.vue'
+import BatchEdit from './thumbnail-list/components/batch-edit.vue';
+import ReorderItemsControls from './thumbnail-list/components/reorder-items-controls.vue';
+import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list.vue'
 
 import { API_URL_BASE } from '../request-helpers.js';
 
