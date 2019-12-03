@@ -11,6 +11,7 @@ defmodule Photog.Api.Image do
     field :mini_thumbnail_path, :string
     field :thumbnail_path, :string
     field :completion_date, :date
+    field :exif, :map, load_in_query: false
 
     timestamps()
 
@@ -26,7 +27,7 @@ defmodule Photog.Api.Image do
   @doc false
   def changeset(image, attrs) do
     image
-    |> cast(attrs, [:apple_photos_id, :creation_time, :master_path, :thumbnail_path, :mini_thumbnail_path, :is_favorite, :import_id, :completion_date])
+    |> cast(attrs, [:apple_photos_id, :creation_time, :master_path, :thumbnail_path, :mini_thumbnail_path, :is_favorite, :import_id, :completion_date, :exif])
     |> validate_required([:creation_time, :master_path, :thumbnail_path, :mini_thumbnail_path, :is_favorite, :import_id])
     |> assoc_constraint(:import)
     |> unique_constraint(:master_path)
