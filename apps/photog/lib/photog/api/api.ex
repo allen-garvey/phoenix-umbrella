@@ -126,7 +126,7 @@ defmodule Photog.Api do
     from(
           i in Image,
           where: i.id == ^id,
-          select: %{id: i.id, master_path: i.master_path, exif: i.exif}
+          select: [:id, :master_path, :exif]
         )
     |> Repo.one!
   end
