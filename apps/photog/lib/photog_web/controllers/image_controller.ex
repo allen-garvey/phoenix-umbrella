@@ -43,9 +43,8 @@ defmodule PhotogWeb.ImageController do
   Gets the exif data from an image's master image
   """
   def exif_for(conn, %{"id" => id}) do
-    image = Api.get_image!(id)
-    exif_map = Photog.Image.Exif.exif_for(image)
-    render(conn, "exif.json", exif: exif_map, image: image)
+    image = Api.get_image_with_exif!(id)
+    render(conn, "exif.json", exif: image.exif, image: image)
   end
 
   @doc """

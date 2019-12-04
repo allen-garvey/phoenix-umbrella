@@ -109,6 +109,29 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Gets a single image with exif data preloaded.
+
+  Raises `Ecto.NoResultsError` if the Image does not exist.
+
+  ## Examples
+
+      iex> get_image!(123)
+      %Image{}
+
+      iex> get_image!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_image_with_exif!(id) do
+    from(
+          i in Image,
+          where: i.id == ^id,
+          select: %{id: i.id, master_path: i.master_path, exif: i.exif}
+        )
+    |> Repo.one!
+  end
+
+  @doc """
   Gets albums not used by an image given by id
   """
   def list_image_albums_unused(image_id) do
