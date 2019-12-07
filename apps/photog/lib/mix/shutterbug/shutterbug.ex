@@ -75,7 +75,7 @@ defmodule Mix.Tasks.Shutterbug do
         image_master_relative_path = Path.join(target_relative_path, image_file)
 
         #get exif data for creation_time
-        {_exif_map, creation_datetime} = get_image_exif(image_master_path, image_source_path, now)
+        {exif_map, creation_datetime} = get_image_exif(image_master_path, image_source_path, now)
 
         Photog.Shutterbug.Image.create_image!(%{
           master_path: image_master_relative_path,
@@ -83,6 +83,7 @@ defmodule Mix.Tasks.Shutterbug do
           thumbnail_path: image_thumbnail_relative_path,
           import_id: import_id,
           creation_time: creation_datetime,
+          exif: exif_map,
         })
 
       end
