@@ -22,17 +22,12 @@ defmodule Mix.Tasks.Distill.Test.ImageUrls do
         #parallel map based on:
         #http://elixir-recipes.github.io/concurrency/parallel-map/
     	Artour.Repo.all(Artour.Image)
-    		|> Enum.flat_map(fn image -> image_sizes() |> Enum.map(&(url_for_image(image, base_url, &1))) end)
+    		|> Enum.flat_map(fn image -> all_urls_for_image(image, base_url) end)
             |> Task.async_stream(&HTTPoison.head/1, max_concurrency: System.schedulers_online * 8, timeout: :infinity)
-            |> Enum.to_list()
             |> Enum.each(&print_image_response/1)
 
     	IO.puts "\nAll image urls checked"
 	end
-
-    def image_sizes() do
-        [:thumbnail, :small, :medium, :large]
-    end
 
     #task status and http status is ok, so do nothing
     def print_image_response({:ok, {:ok, %HTTPoison.Response{status_code: 200}}}) do
@@ -44,22 +39,31 @@ defmodule Mix.Tasks.Distill.Test.ImageUrls do
 
     #url sent no response
     def print_image_response({:ok, {:error, message}}) do
-        IO.puts message
+        IO.puts :stderr, message
     end
 
     #problem with running async task somehow
     def print_image_response({_task_status, {_httpoison_status, _message}}) do
-        IO.puts :stderr, "Problem with testing image url async task"
+        IO.puts :stderr, "Problem with image url async task"
     end
 
-	def url_for_image(image, base_url, size) do
-		image_filename = case size do
-			:thumbnail -> image.filename_thumbnail
-			:small -> image.filename_small
-			:medium -> image.filename_medium
-			:large -> image.filename_large
-		end
-        URI.merge(base_url, image_filename) |> to_string
-	end
+    def image_filenames(image) do
+        [
+            image.filename_thumbnail,
+            image.filename_small,
+            image.filename_medium,
+            image.filename_large,
+        ]
+    end
+
+	def url_for_image_filename(base_url, image_filename) do
+        URI.merge(base_url, image_filename)
+        |> to_string
+    end
+
+    def all_urls_for_image(image, base_url) do
+        image_filenames(image)
+        |> Enum.map(&(url_for_image_filename(base_url, &1)))
+    end
 
 end
