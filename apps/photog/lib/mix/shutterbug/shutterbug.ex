@@ -48,6 +48,8 @@ defmodule Mix.Tasks.Shutterbug do
     now = DateTime.utc_now()
     {target_relative_path, masters_path, thumbnails_path} = create_directories_for_masters_and_thumbnails(masters_target_directory_name, thumbnails_target_directory_name, now)
 
+    # disable logging of database queries
+    Logger.configure(level: :error)
     #start app so repo is available
     Mix.Task.run "app.start", []
 
