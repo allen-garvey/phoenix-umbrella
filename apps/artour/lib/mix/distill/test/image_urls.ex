@@ -11,6 +11,8 @@ defmodule Mix.Tasks.Distill.Test.ImageUrls do
                         true -> base_url
                     end
 
+        # disable logging of database queries
+        Logger.configure(level: :error)
         #start app so repo is available
         Mix.Task.run "app.start", []
 

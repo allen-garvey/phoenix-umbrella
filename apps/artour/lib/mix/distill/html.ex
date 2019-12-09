@@ -12,9 +12,11 @@ defmodule Mix.Tasks.Distill.Html do
 
     IO.puts "Generating HTML files in " <> dest_dir
 
+    # disable logging of database queries
+    Logger.configure(level: :error)
     #start app so repo is available
     Mix.Task.run "app.start", []
-    
+
     routes = Distill.Page.routes
               ++ Distill.Page.paginated_index_routes(Artour.Public.last_page())
               ++ Distill.Post.routes
@@ -31,7 +33,7 @@ defmodule Mix.Tasks.Distill.Html do
       filename = dest_dir |> Path.join(filename_for(page_route))
       save_to_file(conn, filename)
     end
-    
+
   end
 
   @doc """
@@ -83,7 +85,7 @@ defmodule Mix.Tasks.Distill.Html do
   Phoenix.Controller.render will work
   """
   def default_conn() do
-    conn(:get, "/") 
+    conn(:get, "/")
       |> Plug.Conn.put_private(:phoenix_endpoint, Artour.Endpoint)
       |> Phoenix.Controller.put_new_layout({Artour.LayoutView, "public.html"})
   end
@@ -104,9 +106,9 @@ defmodule Mix.Tasks.Distill.Html do
   (the same as controller name with controller replaced by view)
   """
   def default_view_for(controller) when is_atom(controller) do
-    controller 
-      |> Atom.to_string 
-      |> String.replace_suffix("Controller", "View") 
+    controller
+      |> Atom.to_string
+      |> String.replace_suffix("Controller", "View")
       |> String.to_atom
   end
 
