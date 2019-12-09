@@ -4,13 +4,6 @@ defmodule Mix.Tasks.Distill.Test.ImageUrls do
 
     @shortdoc "Checks that all image urls return HTTP 200 status code"
 	def run([base_url]) do
-
-        #make sure base_url ends with trailing slash
-        base_url = cond do
-                        !String.ends_with?(base_url, "/") -> base_url <> "/"
-                        true -> base_url
-                    end
-
         # disable logging of database queries
         Logger.configure(level: :error)
         #start app so repo is available
