@@ -60,7 +60,7 @@ defmodule Mix.Tasks.Shutterbug do
       image_file_count = Enum.count(image_files)
 
       for {image_source_path, index} <- Enum.with_index(image_files) do
-        IO.puts "Importing image #{index}/#{image_file_count} #{image_source_path}"
+        IO.puts "Importing image #{index+1}/#{image_file_count} #{image_source_path}"
 
         #get image filename
         image_file = Path.basename(image_source_path)
