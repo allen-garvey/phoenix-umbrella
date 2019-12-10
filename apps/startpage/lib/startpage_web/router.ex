@@ -19,6 +19,12 @@ defmodule StartpageWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/admin", StartpageWeb do
+    pipe_through :browser
+
+    resources "/folders", FolderController
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", StartpageWeb do
   #   pipe_through :api

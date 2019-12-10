@@ -1,0 +1,32 @@
+<h1>Listing Folders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Theme</th>
+      <th>Order</th>
+      <th>Content</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for folder <- @folders do %>
+    <tr>
+      <td><%= folder.name %></td>
+      <td><%= folder.theme %></td>
+      <td><%= folder.order %></td>
+      <td><%= folder.content %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.folder_path(@conn, :show, folder) %></span>
+        <span><%= link "Edit", to: Routes.folder_path(@conn, :edit, folder) %></span>
+        <span><%= link "Delete", to: Routes.folder_path(@conn, :delete, folder), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Folder", to: Routes.folder_path(@conn, :new) %></span>
