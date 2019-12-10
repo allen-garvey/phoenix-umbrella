@@ -13,14 +13,20 @@ defmodule StartpageWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticate do
+    plug GrenadierWeb.Plugs.Authenticate
+  end
+
   scope "/", StartpageWeb do
     pipe_through :browser
+    pipe_through :authenticate
 
     get "/", PageController, :index
   end
 
   scope "/admin", StartpageWeb do
     pipe_through :browser
+    pipe_through :authenticate
 
     resources "/folders", FolderController
   end
