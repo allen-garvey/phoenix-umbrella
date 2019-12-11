@@ -5,7 +5,7 @@ defmodule Startpage.Admin.Folder do
   schema "folders" do
     field :content, :string
     field :name, :string
-    field :order, :integer
+    field :order, :integer, default: 1
     field :theme, :string
 
     timestamps()
