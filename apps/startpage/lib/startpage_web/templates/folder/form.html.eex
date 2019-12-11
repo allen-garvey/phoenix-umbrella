@@ -5,23 +5,31 @@
     </div>
   <% end %>
 
-  <%= label f, :name %>
-  <%= text_input f, :name %>
-  <%= error_tag f, :name %>
+  <div class="form-group">
+    <%= label f, :name %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+  </div>
 
-  <%= label f, :theme %>
-  <%= text_input f, :theme %>
-  <%= error_tag f, :theme %>
+  <div class="form-group">
+    <%= label f, :theme %>
+    <%= text_input f, :theme, class: "form-control" %>
+    <%= error_tag f, :theme %>
+  </div>
 
-  <%= label f, :order %>
-  <%= number_input f, :order %>
-  <%= error_tag f, :order %>
+  <div class="form-group">
+    <%= label f, :order %>
+    <%= number_input f, :order, class: "form-control" %>
+    <%= error_tag f, :order %>
+  </div>
 
-  <%= label f, :content %>
-  <%= textarea f, :content, rows: 8 %>
-  <%= error_tag f, :content %>
+  <div class="form-group">
+    <%= label f, :content %>
+    <%= textarea f, :content, rows: 16, class: "form-control" %>
+    <%= error_tag f, :content %>
+  </div>
 
-  <div>
-    <%= submit "Save" %>
+  <div class="form-group">
+    <%= submit "Save", class: "btn btn-success" %>
   </div>
 <% end %>
