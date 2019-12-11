@@ -35,6 +35,8 @@ defmodule StartpageWeb.Router do
     pipe_through :authenticate
     pipe_through :admin_layout
 
+    get "/", FolderController, :index
+
     resources "/folders", FolderController
   end
 
