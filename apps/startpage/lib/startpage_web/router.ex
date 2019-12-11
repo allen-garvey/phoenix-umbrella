@@ -17,6 +17,12 @@ defmodule StartpageWeb.Router do
     plug GrenadierWeb.Plugs.Authenticate
   end
 
+  # based on:
+  # http://www.cultivatehq.com/posts/how-to-set-different-layouts-in-phoenix/
+  pipeline :admin_layout do
+    plug :put_layout, {StartpageWeb.LayoutView, :admin}
+  end
+
   scope "/", StartpageWeb do
     pipe_through :browser
     pipe_through :authenticate
@@ -27,6 +33,7 @@ defmodule StartpageWeb.Router do
   scope "/admin", StartpageWeb do
     pipe_through :browser
     pipe_through :authenticate
+    pipe_through :admin_layout
 
     resources "/folders", FolderController
   end

@@ -6,11 +6,11 @@
   <% end %>
 
   <%= label f, :name %>
-  <%= textarea f, :name %>
+  <%= text_input f, :name %>
   <%= error_tag f, :name %>
 
   <%= label f, :theme %>
-  <%= textarea f, :theme %>
+  <%= text_input f, :theme %>
   <%= error_tag f, :theme %>
 
   <%= label f, :order %>
@@ -18,7 +18,7 @@
   <%= error_tag f, :order %>
 
   <%= label f, :content %>
-  <%= textarea f, :content %>
+  <%= textarea f, :content, rows: 8 %>
   <%= error_tag f, :content %>
 
   <div>

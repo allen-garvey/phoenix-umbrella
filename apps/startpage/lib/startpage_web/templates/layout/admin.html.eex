@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Startpage</title>
-    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/assets/app.css") %>"/>
+    <title>Startpage | Admin</title>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/assets/admin.css") %>"/>
   </head>
   <body>
     <header>
@@ -17,8 +17,10 @@
       </section>
     </header>
     <main role="main" class="container">
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <%= render @view_module, @view_template, assigns %>
     </main>
-    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/assets/app.js") %>"></script>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/assets/admin.js") %>"></script>
   </body>
 </html>

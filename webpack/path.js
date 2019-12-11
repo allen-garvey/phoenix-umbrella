@@ -7,12 +7,19 @@ function outputPathForApp(appName, extension){
     let appDir = appName;
     let fileName = 'app';
 
-    if(appName === 'artour_admin'){
+    if(appName.match(/^artour_/)){
         appDir = 'artour';
-        fileName = 'admin';
+
+        if(appName === 'artour_admin'){
+            fileName = 'admin';
+        }
     }
-    else if(appName === 'artour_public'){
-        appDir = 'artour';
+    else if(appName.match(/^startpage_/)){
+        appDir = 'startpage';
+
+        if(appName === 'startpage_admin'){
+            fileName = 'admin';
+        }
     }
 
     return `${appDir}/priv/static/assets/${fileName}.${extension}`;
