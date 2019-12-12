@@ -22,6 +22,20 @@ defmodule Startpage.Admin do
   end
 
   @doc """
+  Returns the list of folders in order for publig pages.
+
+  ## Examples
+
+      iex> list_folders()
+      [%Folder{}, ...]
+
+  """
+  def list_folders_in_order do
+    from(Folder, order_by: :order)
+    |> Repo.all()
+  end
+
+  @doc """
   Gets a single folder.
 
   Raises `Ecto.NoResultsError` if the Folder does not exist.
