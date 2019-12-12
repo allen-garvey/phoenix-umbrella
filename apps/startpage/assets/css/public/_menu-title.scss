@@ -1,0 +1,39 @@
+/****************************
+* Menu Title Color Styles
+*****************************/
+
+@mixin title_color($border_color, $title_text_color : $border_color){
+	border-color: $border_color;
+	color: $title_text_color;
+}
+
+.orange_title{
+	@include title_color(#e16000);
+}
+.green_title{
+	@include title_color(#61be7c, green);
+}
+.blue_title{
+	@include title_color(#2738ff, #5065ff);
+}
+.yellow_title{
+	@include title_color(#f4be7c);
+}
+.dodgerBlue_title{
+	@include title_color(#2781ff, #2739ff);
+}
+.cadetBlue_title{
+	@include title_color(#5F9EA0);
+}
+.red_title{
+	@include title_color(#d9787c, #ff6575);
+}
+.pink_title{
+	@include title_color(#d9bdde, #a324ff);
+}
+.black_title{
+	@include title_color(#493764, #49124c);
+}
+.purple_title{
+	@include title_color(#9400d3, lighten(#751947, 10%));
+}

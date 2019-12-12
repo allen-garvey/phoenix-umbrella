@@ -1,0 +1,77 @@
+/****************************
+* Variables
+*****************************/
+$menu_contents_bg_color : white;
+$menu_min_width : 170px;
+$media_query_breakpoint : 600px;
+
+/****************************
+* Base
+*****************************/
+html{
+	font-size: 19.2px;
+	font-family: "Calendas Plus", "Fanwood Text", "Helvetica", "Droid Serif", "Times", serif;
+}
+*{
+	box-sizing: border-box;
+}
+body{
+	background-color: #c9c9c9;
+	background-repeat: no-repeat;
+}
+main{
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	max-width: 1300px;
+	align-content: space-between;
+	min-height: 100vh;
+}
+a{
+	text-decoration: none;
+}
+hr{
+	border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    width: 100%;
+    margin-left: 0;
+}
+
+.main_content{
+	display: flex;
+	flex-wrap: wrap;
+	flex-basis: 100%;
+}
+
+ul{
+	list-style: none;
+	padding-left: 0;
+	li{
+		padding: 0.5em 0.5em 0.5em 1.5em;
+		a{
+			display: block;
+			word-wrap: break-word;
+			&:hover{
+				text-decoration: underline;	
+			}
+		}
+	}
+}
+
+/****************************
+* Media Queries
+*****************************/
+
+@media screen and (max-width: $media_query_breakpoint) {
+	//base
+	.main_content{
+		flex-direction: column;
+	}
+	ul li{
+		padding: 20px;
+		font-size: 120%;
+		padding-left: 0.5em;
+	}
+}
