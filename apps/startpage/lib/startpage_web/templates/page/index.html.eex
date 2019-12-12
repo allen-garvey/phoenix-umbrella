@@ -10,3 +10,13 @@
     </ul>
   </section>
 <% end %>
+
+<div class="blockquote_container">
+	<blockquote>
+		<div class="quote_body"><%= @daily_quote[:body] %></div>
+		<div class="quote_attribution">
+		  <span class="quote_author"><%= @daily_quote[:author][:display_name] %></span>
+      <cite><%= @daily_quote[:source][:title] %></cite>
+		</div>
+	</blockquote>
+</div>

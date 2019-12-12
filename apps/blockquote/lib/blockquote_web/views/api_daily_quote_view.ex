@@ -29,7 +29,7 @@ defmodule BlockquoteWeb.ApiDailyQuoteView do
   def author_for_quote(nil, source_author) do
   	source_author
   end
-  def author_for_quote(quote_author, _source_author) do 
+  def author_for_quote(quote_author, _source_author) do
   	quote_author
   end
 
@@ -42,10 +42,10 @@ defmodule BlockquoteWeb.ApiDailyQuoteView do
 
   def author_display_name(author) do
   	first_name = initialize_name(author.first_name)
-	middle_name = initialize_name(author.middle_name)
-	last_name = initialize_name(author.last_name)
+		middle_name = initialize_name(author.middle_name)
+		last_name = initialize_name(author.last_name)
 
-	[first_name, middle_name, last_name] |> Enum.filter(fn x -> !is_nil(x) end) |> Enum.join(" ")
+		[first_name, middle_name, last_name] |> Enum.filter(fn x -> !is_nil(x) end) |> Enum.join(" ")
   end
 
 
