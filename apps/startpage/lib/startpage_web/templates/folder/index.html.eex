@@ -1,12 +1,13 @@
 <h1>Listing Folders</h1>
 
+<div><%= link "New Folder", to: Routes.folder_path(@conn, :new), class: "btn btn-success" %></div>
+
 <table>
   <thead>
     <tr>
       <th>Name</th>
       <th>Theme</th>
       <th>Order</th>
-      <th>Content</th>
 
       <th></th>
     </tr>
@@ -17,7 +18,6 @@
       <td><%= folder.name %></td>
       <td><%= folder.theme %></td>
       <td><%= folder.order %></td>
-      <td><%= folder.content %></td>
 
       <td>
         <span><%= link "Show", to: Routes.folder_path(@conn, :show, folder) %></span>
@@ -28,5 +28,3 @@
 <% end %>
   </tbody>
 </table>
-
-<span><%= link "New Folder", to: Routes.folder_path(@conn, :new) %></span>
