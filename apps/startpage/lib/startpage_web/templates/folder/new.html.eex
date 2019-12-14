@@ -1,5 +1,3 @@
 <h1>New Folder</h1>
 
 <%= render "form.html", Map.put(assigns, :action, Routes.folder_path(@conn, :create)) %>
-
-<span><%= link "Back", to: Routes.folder_path(@conn, :index) %></span>
