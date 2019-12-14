@@ -1,8 +1,8 @@
-<h1>Listing Folders</h1>
+<h1>Folders</h1>
 
 <div><%= link "New Folder", to: Routes.folder_path(@conn, :new), class: "btn btn-success" %></div>
 
-<table>
+<table class="index-table">
   <thead>
     <tr>
       <th>Name</th>
@@ -20,9 +20,8 @@
       <td><%= folder.order %></td>
 
       <td>
-        <span><%= link "Show", to: Routes.folder_path(@conn, :show, folder) %></span>
-        <span><%= link "Edit", to: Routes.folder_path(@conn, :edit, folder) %></span>
-        <span><%= link "Delete", to: Routes.folder_path(@conn, :delete, folder), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <span><%= link "Delete", to: Routes.folder_path(@conn, :delete, folder), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %></span>
+        <span><%= link "Edit", to: Routes.folder_path(@conn, :edit, folder), class: "btn btn-outline-primary" %></span>
       </td>
     </tr>
 <% end %>

@@ -7,15 +7,12 @@
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/assets/admin.css") %>"/>
   </head>
   <body>
-    <header>
-      <section class="container">
-        <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-          </ul>
-        </nav>
-      </section>
-    </header>
+    <%# <header>
+      <nav role="navigation">
+        <ul>
+        </ul>
+      </nav>
+    </header> %>
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
