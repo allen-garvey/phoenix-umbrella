@@ -25,7 +25,7 @@ defmodule StartpageWeb.FolderView do
   end
 
   def parse_link(line) when is_binary(line) do
-    [title, url] = String.split(line, ~r/\s+---\s+/)
+    [url, title] = String.split(line, ~r/\s+---\s+/)
     content_tag(:a, title, href: expand_url(url))
   end
 
