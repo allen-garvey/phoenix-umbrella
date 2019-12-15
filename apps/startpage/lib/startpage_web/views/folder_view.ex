@@ -31,6 +31,6 @@ defmodule StartpageWeb.FolderView do
 
   def expand_url(url) when is_binary(url) do
     umbrella_domain = System.get_env("UMBRELLA_COOKIE_DOMAIN", ".umbrella.test")
-    String.replace(url, ~r/\$\{umbrella_domain\}/, umbrella_domain)
+    String.replace(url, ~r/\$\{UMBRELLA_DOMAIN\}/, umbrella_domain)
   end
 end
