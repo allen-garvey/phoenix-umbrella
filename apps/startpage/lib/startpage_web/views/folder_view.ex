@@ -25,7 +25,12 @@ defmodule StartpageWeb.FolderView do
   end
 
   def parse_link(line) when is_binary(line) do
-    [title, content] = String.split(line, ~r/\s+---\s+/)
-    content_tag(:a, title, href: content)
+    [title, url] = String.split(line, ~r/\s+---\s+/)
+    content_tag(:a, title, href: expand_url(url))
+  end
+
+  def expand_url(url) when is_binary(url) do
+    umbrella_domain = System.get_env("UMBRELLA_COOKIE_DOMAIN", ".umbrella.test")
+    String.replace(url, ~r/\$\{umbrella_domain\}/, umbrella_domain)
   end
 end
