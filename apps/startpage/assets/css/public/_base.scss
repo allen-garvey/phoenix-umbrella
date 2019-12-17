@@ -10,7 +10,7 @@ $media_query_breakpoint : 600px;
 *****************************/
 html{
 	font-size: 19.2px;
-	font-family: "Calendas Plus", "Fanwood Text", "Helvetica", "Droid Serif", "Times", serif;
+	font-family: "Calendas Plus", "Fanwood Text", "Georgia", "Droid Serif", "Times", serif;
 }
 *{
 	box-sizing: border-box;
@@ -46,21 +46,6 @@ hr{
 	flex-basis: 100%;
 }
 
-ul{
-	list-style: none;
-	padding-left: 0;
-	li{
-		padding: 0.5em 0.5em 0.5em 1.5em;
-		a{
-			display: block;
-			word-wrap: break-word;
-			&:hover{
-				text-decoration: underline;	
-			}
-		}
-	}
-}
-
 /****************************
 * Media Queries
 *****************************/
@@ -69,10 +54,5 @@ ul{
 	//base
 	.main_content{
 		flex-direction: column;
-	}
-	ul li{
-		padding: 20px;
-		font-size: 120%;
-		padding-left: 0.5em;
 	}
 }
