@@ -31,7 +31,7 @@ defmodule Startpage.Admin do
 
   """
   def list_folders_in_order do
-    from(Folder, order_by: :order)
+    from(Folder, order_by: [:order, :id])
     |> Repo.all()
   end
 
