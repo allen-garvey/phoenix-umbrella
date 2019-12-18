@@ -24,26 +24,6 @@ blockquote{
 	padding-left: 8%;
 	padding-right: 8%;
 }
-/*
- * For smart quotes around quote body
-*/
-.quote_body{
-	&:before{
-		content: "\201C";
-		float:left;
-		margin-left: -1.5rem;
-	}
-	&:after{
-		content: "\201D";
-		position: absolute;
-		margin-left: 5px;
-	}
-	&:before, &:after{
-		font-size: 4em;
-		width: 1rem;
-		margin-top: 0.2em;
-	}
-}
 
 .quote_attribution{
 	text-align: center;
