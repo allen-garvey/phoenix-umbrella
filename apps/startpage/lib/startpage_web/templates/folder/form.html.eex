@@ -27,6 +27,16 @@
     <%= label f, :content %>
     <%= textarea f, :content, rows: 16, class: "form-control" %>
     <%= error_tag f, :content %>
+    <div class="form-example">
+      Example:
+      <code>
+        <pre>
+https://google.com --- Google
+====
+//test${UMBRELLA_DOMAIN} --- Umbrella test
+        </pre>
+      </code>
+    </div>
   </div>
 
   <div class="form-group form-button-container">
