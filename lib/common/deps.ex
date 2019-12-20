@@ -13,6 +13,7 @@ defmodule Umbrella.Common.Deps do
       {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.1"},
       {:common, in_umbrella: true},
+      {:assertions, "~> 0.14", only: :test},
     ]
   end
 
