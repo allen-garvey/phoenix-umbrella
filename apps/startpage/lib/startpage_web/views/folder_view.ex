@@ -13,11 +13,11 @@ defmodule StartpageWeb.FolderView do
   or is empty
   """
   def is_valid_line(line) when is_binary(line) do
-    !String.match?(line, ~r/^\s+$|^\s*#/)
+    !String.match?(line, ~r/^\s*$|^\s*#/)
   end
 
   def parse_line(line) when is_binary(line) do
-    if String.match?(line, ~r/^====\s+/) do
+    if String.match?(line, ~r/^====\s*/) do
       tag(:hr)
     else
       parse_link(line)
