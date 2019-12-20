@@ -1,5 +1,9 @@
 defmodule Common.Endpoint do
 
+  def cookie_domain do
+    System.get_env("UMBRELLA_COOKIE_DOMAIN", ".umbrella.test")
+  end
+
   @doc """
   Options for phoenix sessions
 
@@ -12,7 +16,7 @@ defmodule Common.Endpoint do
       store: :cookie,
       key: "_umbrella_key",
       signing_salt: "hNWAwoxD",
-      domain: System.get_env("UMBRELLA_COOKIE_DOMAIN", ".umbrella.test")
+      domain: cookie_domain()
     ]
   end
 end
