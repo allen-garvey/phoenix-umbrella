@@ -34,7 +34,7 @@ defmodule Bookmarker.Router do
     resources "/tags", TagController
     resources "/bookmarks_tags", BookmarkTagController
 
-    get "/preview/folder:folder_name", FolderPreviewController, :show
+    get "/preview/folder/:folder_name", FolderPreviewController, :show
   end
 
   #JSON API
