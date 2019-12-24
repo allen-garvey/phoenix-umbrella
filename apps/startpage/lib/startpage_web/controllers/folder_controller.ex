@@ -16,10 +16,10 @@ defmodule StartpageWeb.FolderController do
 
   def create(conn, %{"folder" => folder_params}) do
     case Admin.create_folder(folder_params) do
-      {:ok, folder} ->
+      {:ok, _folder} ->
         conn
         |> put_flash(:info, "Folder created successfully.")
-        |> redirect(to: Routes.folder_path(conn, :show, folder))
+        |> redirect(to: Routes.folder_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -41,10 +41,10 @@ defmodule StartpageWeb.FolderController do
     folder = Admin.get_folder!(id)
 
     case Admin.update_folder(folder, folder_params) do
-      {:ok, folder} ->
+      {:ok, _folder} ->
         conn
         |> put_flash(:info, "Folder updated successfully.")
-        |> redirect(to: Routes.folder_path(conn, :show, folder))
+        |> redirect(to: Routes.folder_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", folder: folder, changeset: changeset)
