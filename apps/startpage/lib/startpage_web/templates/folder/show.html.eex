@@ -24,5 +24,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.folder_path(@conn, :edit, @folder) %></span>
-<span><%= link "Back", to: Routes.folder_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.folder_path(@conn, :index), class: "btn btn-outline-secondary" %></span>
+<span><%= link "Edit", to: Routes.folder_path(@conn, :edit, @folder), class: "btn btn-success" %></span>
