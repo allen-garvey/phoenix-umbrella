@@ -41,7 +41,7 @@ defmodule Mix.Tasks.Shutterbug.LoadAmazonPhotos do
     for image_json <- api_json["data"] do
       amazon_id = image_json["id"]
       masters_filename = image_json["name"]
-      created_date = image_json["createdDate"]
+      created_date = image_json["contentProperties"]["contentDate"]
       created_year = String.slice(created_date, 0..3) |> String.to_integer()
       created_month = String.slice(created_date, 5..6) |> String.to_integer()
 
