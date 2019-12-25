@@ -19,6 +19,11 @@ defmodule PhotogWeb.ImageController do
     render(conn, "index.json", images: images)
   end
 
+  def index(conn, %{"amazon_photos_id" => "false"}) do
+    images = Api.list_images_with_no_amazon_photos_id()
+    render(conn, "index.json", images: images)
+  end
+
   def index(conn, _params) do
     images = Api.list_images()
     render(conn, "index.json", images: images)

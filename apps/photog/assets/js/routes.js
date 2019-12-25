@@ -131,6 +131,17 @@ export default {
                 pageTitle: 'Images not in an album',
             }
         ),
+        buildImagesIndexVariant(
+            '/images/no-amazon',
+            'imageNoAmazonIndex',
+            {
+                apiPath: '/images/?amazon_photos_id=false',
+                enableHasAlbumFilter: true,
+                enableHasPersonFilter: true,
+                enableBatchSelectImages: true,
+                pageTitle: 'Images with no Amazon Photos Id',
+            }
+        ),
         //new route has to be before show route
         { 
             path: '/albums/new',
