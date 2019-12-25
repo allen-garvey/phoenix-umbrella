@@ -26,13 +26,15 @@ defmodule Photog.Shutterbug do
       file_name_regex = "/#{master_file_name}$"
       now = DateTime.utc_now()
 
-      from(
-            i in Image,
-            where: fragment("? ~ ?", i.master_path, ^file_name_regex) and is_nil(i.amazon_photos_id) and fragment("EXTRACT(year FROM ?)", i.creation_time) == ^creation_year and fragment("EXTRACT(month FROM ?)", i.creation_time) == ^creation_month and fragment("EXTRACT(day FROM ?)", i.creation_time) == ^creation_day
-      )
-      |> Repo.update_all(set: [
-                                amazon_photos_id: amazon_photos_id,
-                                updated_at: now,
-                              ])
+      Repo.transaction(fn ->
+        from(
+          i in Image,
+          where: fragment("? ~ ?", i.master_path, ^file_name_regex) and is_nil(i.amazon_photos_id) and fragment("EXTRACT(year FROM ?)", i.creation_time) == ^creation_year and fragment("EXTRACT(month FROM ?)", i.creation_time) == ^creation_month and fragment("EXTRACT(day FROM ?)", i.creation_time) == ^creation_day
+        )
+        |> Repo.update_all(set: [
+          amazon_photos_id: amazon_photos_id,
+          updated_at: now,
+        ])
+      end)
   end
 end
