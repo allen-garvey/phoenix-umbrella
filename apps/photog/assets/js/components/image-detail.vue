@@ -18,12 +18,12 @@
             </div>
         </div>
         <div class="image-show-thumbnail-container">
-            <a :href="masterUrl">
+            <a :href="masterUrl" target="_blank" rel="noreferrer">
                 <img :src="thumbnailUrlFor(image.thumbnail_path)"/>
             </a>
         </div>
         <div class="image-show-link-container">
-            <a :href="masterUrl">View full-size</a>
+            <a :href="masterUrl" target="_blank" rel="noreferrer">View full-size</a>
             <a :href="amazonUrl" v-if="amazonUrl" target="_blank" rel="noreferrer">View in Amazon Photos</a>
         </div>
         <div>
