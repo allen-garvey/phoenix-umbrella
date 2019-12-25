@@ -1,4 +1,4 @@
-import { getOptionalParams } from './router-helpers.js'; 
+import { getOptionalParams, buildImagesIndexVariant } from './router-helpers.js'; 
 
 import ThumbnailList from './components/thumbnail-list.vue';
 import ImportsIndex from './components/imports-index.vue';
@@ -110,53 +110,27 @@ export default {
                 return props;
             },
         },
-        { 
-            path: '/images/favorites',
-            name: 'imageFavoritesIndex', 
-            component: ThumbnailList,
-            props: (route) => {
-                const props = {
-                    apiPath: '/images/?favorites=true',
-                    enableHasAlbumFilter: true,
-                    enableHasPersonFilter: true,
-                    enableBatchSelectImages: true,
-                    pageTitle: 'Favorite images',
-                    showRouteFor: (item, _model)=>{
-                        return {
-                            name: 'imagesShow',
-                            params: {
-                                id: item.id,
-                                image_id: item.id,
-                            },
-                        };
-                    },
-                }; 
-                return props;
-            },
-        },
-        { 
-            path: '/images/uncategorized',
-            name: 'imagesNotInAlbumIndex', 
-            component: ThumbnailList,
-            props: (route) => {
-                const props = {
-                    apiPath: '/images/?in_album=false',
-                    enableHasPersonFilter: true,
-                    enableBatchSelectImages: true,
-                    pageTitle: 'Images not in an album',
-                    showRouteFor: (item, _model)=>{
-                        return {
-                            name: 'imagesShow',
-                            params: {
-                                id: item.id,
-                                image_id: item.id,
-                            },
-                        };
-                    },
-                }; 
-                return props;
-            },
-        },
+        buildImagesIndexVariant(
+            '/images/favorites',
+            'imageFavoritesIndex',
+            {
+                apiPath: '/images/?favorites=true',
+                enableHasAlbumFilter: true,
+                enableHasPersonFilter: true,
+                enableBatchSelectImages: true,
+                pageTitle: 'Favorite images',
+            }
+        ),
+        buildImagesIndexVariant(
+            '/images/uncategorized',
+            'imagesNotInAlbumIndex',
+            {
+                apiPath: '/images/?in_album=false',
+                enableHasPersonFilter: true,
+                enableBatchSelectImages: true,
+                pageTitle: 'Images not in an album',
+            }
+        ),
         //new route has to be before show route
         { 
             path: '/albums/new',
