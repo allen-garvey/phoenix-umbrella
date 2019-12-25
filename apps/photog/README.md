@@ -22,6 +22,16 @@ For now, this only works on `.jpg` and `.png` image types. This mix task both ad
 
 * `mix shutterbug <source_folder> <masters_destination_folder> <thumbnails_destination_folder>` takes the images in the source folder and copies the images and generated thumbnails to `masters_destination_folder` and `thumbnails_destination_folder` respectivly
 
+## Adding Amazon Photos Ids to images
+
+By adding Amazon Photos Ids to images, you can see an Amazon photos link on the image details page
+
+* Sign in to Amazon photos and save the AJAX response for `https://www.amazon.com/drive/v1/search?asset=ALL&filters=type%3A(PHOTOS+OR+VIDEOS)` to a `.json` file
+
+* Run `mix shutterbug.load_amazon_photos <json_file_path>` to load the Amazon Photo Ids for those images
+
+* Keep scrolling down the Amazon Photos page to generate more requests and keep repeating
+
 
 ## License
 
