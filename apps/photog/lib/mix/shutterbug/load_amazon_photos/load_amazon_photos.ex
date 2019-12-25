@@ -1,8 +1,8 @@
 defmodule Mix.Tasks.Shutterbug.LoadAmazonPhotos do
   use Mix.Task
 
+  alias Photog.Shutterbug
   alias Photog.Shutterbug.Error
-  alias Photog.Api
 
   @moduledoc """
   Given a json file saved from Amazon photos api response, will add Amazon photo ids
@@ -32,9 +32,11 @@ defmodule Mix.Tasks.Shutterbug.LoadAmazonPhotos do
   """
   def add_amazon_photo_ids(api_json) do
     # disable logging of database queries
-    # Logger.configure(level: :error)
+    Logger.configure(level: :error)
     #start app so repo is available
     Mix.Task.run "app.start", []
+
+    count_of_images_before = Shutterbug.get_count_of_images_with_amazon_photos_id()
 
     for image_json <- api_json["data"] do
       amazon_id = image_json["id"]
@@ -43,9 +45,12 @@ defmodule Mix.Tasks.Shutterbug.LoadAmazonPhotos do
       created_year = String.slice(created_date, 0..3) |> String.to_integer()
       created_month = String.slice(created_date, 5..6) |> String.to_integer()
 
-      Api.add_amazon_photos_id(amazon_id, masters_filename, created_year, created_month)
+      Shutterbug.add_amazon_photos_id(amazon_id, masters_filename, created_year, created_month)
     end
 
+    count_of_images_after = Shutterbug.get_count_of_images_with_amazon_photos_id()
+
+    IO.puts "#{count_of_images_before} images with Amazon Photos id before now #{count_of_images_after} #{count_of_images_after - count_of_images_before} images updated"
 
   end
 end
