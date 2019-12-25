@@ -24,6 +24,7 @@
         </div>
         <div class="image-show-link-container">
             <a :href="masterUrl">View full-size</a>
+            <a :href="amazonUrl" v-if="amazonUrl" target="_blank" rel="noreferrer">View in Amazon Photos</a>
         </div>
         <div>
             <button class="btn" :class="image.is_favorite ? 'btn-primary' : 'btn-outline-dark'" @click="toggleImageIsFavorite">{{image.is_favorite ? 'Favorited' : 'Click to favorite'}}</button>
@@ -149,6 +150,12 @@ export default {
         },
         masterUrl(){
             return this.generateImageUrl(this.image.master_path);
+        },
+        amazonUrl(){
+            if(!this.image.amazon_photos_id){
+                return '';
+            }
+            return `https://www.amazon.com/photos/all/gallery/${this.image.amazon_photos_id}`;
         },
         image(){
             if(this.parent){
