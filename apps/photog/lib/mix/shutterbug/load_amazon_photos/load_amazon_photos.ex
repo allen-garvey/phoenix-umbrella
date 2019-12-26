@@ -41,16 +41,8 @@ defmodule Mix.Tasks.Shutterbug.LoadAmazonPhotos do
     for image_json <- api_json["data"] do
       amazon_id = image_json["id"]
       masters_filename = "#{folder_name}/#{image_json["name"]}"
-      created_date = cond do
-        !is_nil(image_json["contentProperties"]["contentDate"]) -> image_json["contentProperties"]["contentDate"]
-        !is_nil(image_json["clientProperties"]["dateCreated"]) -> image_json["clientProperties"]["dateCreated"]
-        true -> image_json["createdDate"]
-      end
-      created_year = String.slice(created_date, 0..3) |> String.to_integer()
-      created_month = String.slice(created_date, 5..6) |> String.to_integer()
-      created_day = String.slice(created_date, 8..9) |> String.to_integer()
 
-      Shutterbug.add_amazon_photos_id(amazon_id, masters_filename, created_year, created_month, created_day)
+      Shutterbug.add_amazon_photos_id(amazon_id, masters_filename)
     end
 
     count_of_images_after = Shutterbug.get_count_of_images_with_amazon_photos_id()

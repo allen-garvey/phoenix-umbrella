@@ -26,11 +26,9 @@ For now, this only works on `.jpg` and `.png` image types. This mix task both ad
 
 By adding Amazon Photos Ids to images, you can see an Amazon photos link on the image details page
 
-* Sign in to Amazon photos and save the AJAX response for `https://www.amazon.com/drive/v1/search?asset=ALL&filters=type%3A(PHOTOS+OR+VIDEOS)` to a `.json` file
+* Sign in to Amazon cloud drive and view the contents of a folder with images in it. Save the AJAX response for `https://www.amazon.com/drive/v1/nodes?asset=ALL&tempLink=false` to a `.json` file
 
-* Run `mix shutterbug.load_amazon_photos <json_file_path>` to load the Amazon Photo Ids for those images
-
-* Keep scrolling down the Amazon Photos page to generate more requests and keep repeating
+* Run `mix shutterbug.load_amazon_photos <json_file_path> <folder_name>` to load the Amazon Photo Ids for those images, where `folder_name` is the folder containing the images
 
 
 ## License
