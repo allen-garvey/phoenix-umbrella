@@ -32,6 +32,12 @@
         <div class="image-show-info-section">
             <h3 class="image-info-section-heading">Info</h3>
             <dl>
+                <dt>Master path</dt>
+                <dd class="image-info-master-path">
+                    <template v-for="(part, i) in masterPathSplit">
+                        <span :key="i">{{part}}</span><strong :key="`${i}-slash`" class="image-info-master-path-slash">/</strong>
+                    </template>
+                </dd>
                 <dt>Date Taken</dt>
                 <dd>{{image.creation_time.formatted.us_date}} {{image.creation_time.formatted.time}}</dd>
                 <dt>Completion Date</dt>
@@ -147,6 +153,9 @@ export default {
     computed: {
         isModelLoaded(){
             return this.model && this.image;
+        },
+        masterPathSplit(){
+            return this.image.master_path.split('/');
         },
         masterUrl(){
             return this.generateImageUrl(this.image.master_path);

@@ -59,4 +59,13 @@ $image_show_dt_width: 10em;
 			margin-right: 1rem;
 		}
 	}
+
+	.image-info-master-path{
+		.image-info-master-path-slash{
+			margin: 0 0.4em;
+			&:last-of-type{
+				display: none;
+			}
+		}
+	}
 }
