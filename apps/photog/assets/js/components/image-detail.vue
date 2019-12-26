@@ -40,7 +40,7 @@
                 </dd>
                 <dt>Date Taken</dt>
                 <dd>{{image.creation_time.formatted.us_date}} {{image.creation_time.formatted.time}}</dd>
-                <dt>Completion Date</dt>
+                <dt class="image-info-completion-date">Completion Date</dt>
                 <dd>
                     <div v-show="!isEditingCompletionDate">{{formatIsoDate(image.completion_date)}}</div>
                     <div v-if="isEditingCompletionDate" class="image-info-edit-container">
