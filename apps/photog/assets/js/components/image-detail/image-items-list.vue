@@ -27,8 +27,8 @@
 
 <script>
 import { fetchJson } from 'umbrella-common-js/ajax.js';
-import { API_URL_BASE } from '../request-helpers.js';
-import { arrayRemove } from '../array-util.js';
+import { API_URL_BASE } from '../../request-helpers.js';
+import { arrayRemove } from '../../array-util.js';
 
 const MODE_ADD = 1;
 const MODE_DEFAULT = 2;

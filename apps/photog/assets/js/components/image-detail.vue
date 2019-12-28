@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import ImageItemsList from './image-items-list.vue';
+import ImageItemsList from './image-detail/image-items-list.vue';
 import ExifInfo from './image-detail/exif-info.vue';
 import { API_URL_BASE } from '../request-helpers';
 import { isoFormattedDateToUs } from '../date-helpers';
