@@ -22,43 +22,11 @@
         <div>
             <button class="btn" :class="image.is_favorite ? 'btn-primary' : 'btn-outline-dark'" @click="toggleImageIsFavorite">{{image.is_favorite ? 'Favorited' : 'Click to favorite'}}</button>
         </div>
-        <div class="image-show-info-section">
-            <h3 class="image-info-section-heading">Info</h3>
-            <dl>
-                <dt>Master path</dt>
-                <dd class="image-info-master-path">
-                    <template v-for="(part, i) in masterPathSplit">
-                        <span :key="i">{{part}}</span><strong :key="`${i}-slash`" class="image-info-master-path-slash">/</strong>
-                    </template>
-                </dd>
-                <dt>Date Taken</dt>
-                <dd>{{image.creation_time.formatted.us_date}} {{image.creation_time.formatted.time}}</dd>
-                <dt class="image-info-completion-date">Completion Date</dt>
-                <dd>
-                    <div v-show="!isEditingCompletionDate">{{formatIsoDate(image.completion_date)}}</div>
-                    <div v-if="isEditingCompletionDate" class="image-info-edit-container">
-                        <div class="form-group"><input type="date" class="form-control" v-model="completionDateModel"/></div>
-                        <div>
-                            <button @click="cancelEditCompletionDate()" class="btn btn-outline-secondary btn-sm">Cancel</button>
-                            <button @click="updateImageCompletionDate()" class="btn btn-success btn-sm">Save</button>
-                        </div>
-                    </div>
-                    <div v-show="!isEditingCompletionDate">
-                        <button @click="enableEditCompletionDate()" class="btn btn-outline-primary btn-sm">Edit</button>
-                    </div>
-                </dd>
-                <dt>Favorite</dt>
-                <dd>{{image.is_favorite ? 'true' : 'false'}}</dd>
-                <template v-if="image.import">
-                    <dt>Import</dt>
-                    <dd>
-                        <router-link :to="{name: 'importsShow', params: {id: image.import.id}}" class="preview-container">
-                             {{image.import.name}}
-                        </router-link>
-                    </dd>
-                </template>
-            </dl>
-        </div>
+        <Image-Info
+            :image="image"
+            :update-image="updateImage"
+        >
+        </Image-Info>
         <Exif-Info :image-exif="imageExif" v-if="imageExif"></Exif-Info>
         <Image-Items-List :send-json="sendJson" heading="Albums" item-route-name="albumsShow" :items="image.albums" :unused-items-api-url="`/images/${image.id}/albums/?unused=true`" :add-items-api-url="`/images/${image.id}/albums`" items-api-name="albums" :remove-item-api-url-base="`/images/${image.id}/albums/`" :items-updated-callback="imageItemsUpdatedBuilder('albums')" />
         
@@ -68,10 +36,10 @@
 
 <script>
 import ParentThumbnails from './image-detail/parent-thumbnails.vue';
+import ImageInfo from './image-detail/image-info.vue';
 import ImageItemsList from './image-detail/image-items-list.vue';
 import ExifInfo from './image-detail/exif-info.vue';
 import { API_URL_BASE } from '../request-helpers';
-import { isoFormattedDateToUs } from '../date-helpers';
 
 export default {
     name: 'Image-Detail',
@@ -102,6 +70,7 @@ export default {
     },
     components: {
         'Parent-Thumbnails': ParentThumbnails,
+        'Image-Info': ImageInfo,
         'Image-Items-List': ImageItemsList,
         'Exif-Info': ExifInfo,
     },
@@ -114,17 +83,11 @@ export default {
             imageModel: null, //for when the model is the parent of the image
             modelIndex: -1, //when model is parent, the index of the current image in the image array
             imageExif: null,
-            //following for completion date editing
-            completionDateModel: null, //used for editing image completion date
-            isEditingCompletionDate: false,
         }
     },
     computed: {
         isModelLoaded(){
             return this.model && this.image;
-        },
-        masterPathSplit(){
-            return this.image.master_path.split('/');
         },
         masterUrl(){
             return this.generateImageUrl(this.image.master_path);
@@ -164,8 +127,6 @@ export default {
             this.loadModel(this.modelApiPath);
         },
         loadModel(modelPath){
-            this.completionDateModel = null;
-            this.isEditingCompletionDate = false;
             this.imageModel = null;
             this.modelIndex = -1;
 
@@ -186,7 +147,6 @@ export default {
                         }
                     }
                 }
-                this.completionDateModel = this.image.completion_date;
             });
 
             this.getExif(this.imageId).then((imageExif)=>{
@@ -244,27 +204,6 @@ export default {
                 this.image.is_favorite = response.data.is_favorite;
             });
         },
-        updateImageCompletionDate(){
-            const data = {
-                image: {
-                    id: this.image.id,
-                    completion_date: this.completionDateModel,
-                },
-            };
-            this.updateImage(data).then((response)=>{
-                this.image.completion_date = response.data.completion_date;
-                this.isEditingCompletionDate = false;
-            });
-        },
-        enableEditCompletionDate(){
-            this.isEditingCompletionDate = true;
-        },
-        cancelEditCompletionDate(){
-            this.isEditingCompletionDate = false;
-        },
-        formatIsoDate(date){
-            return isoFormattedDateToUs(date);
-        }
     }
 }
 </script>
