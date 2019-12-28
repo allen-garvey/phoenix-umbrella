@@ -66,18 +66,7 @@
                 </template>
             </dl>
         </div>
-        <div class="image-show-info-section" v-if="imageExif">
-            <h3 class="image-info-section-heading">Exif</h3>
-                <template v-for="sectionKey in Object.keys(imageExif).sort()">
-                    <h4 :key="sectionKey+'_heading'" class="image-exif-heading">{{formatExifPropertyName(sectionKey)}}</h4>
-                    <dl :key="sectionKey+'_list'">
-                        <template v-for="sectionPropertyKey in Object.keys(imageExif[sectionKey]).sort()">
-                            <dt :key="`${sectionKey}_${sectionPropertyKey}_dt`" v-if="imageExif[sectionKey][sectionPropertyKey]">{{formatExifPropertyName(sectionPropertyKey)}}</dt>
-                            <dd :key="`${sectionKey}_${sectionPropertyKey}_dd`" v-if="imageExif[sectionKey][sectionPropertyKey]">{{imageExif[sectionKey][sectionPropertyKey]}}</dd>
-                        </template>
-                    </dl>
-                </template>
-        </div>
+        <Exif-Info :image-exif="imageExif" v-if="imageExif"></Exif-Info>
         <Image-Items-List :send-json="sendJson" heading="Albums" item-route-name="albumsShow" :items="image.albums" :unused-items-api-url="`/images/${image.id}/albums/?unused=true`" :add-items-api-url="`/images/${image.id}/albums`" items-api-name="albums" :remove-item-api-url-base="`/images/${image.id}/albums/`" :items-updated-callback="imageItemsUpdatedBuilder('albums')" />
         
         <Image-Items-List :send-json="sendJson" heading="Persons" item-route-name="personsShow" :items="image.persons" :unused-items-api-url="`/images/${image.id}/persons/?unused=true`" :add-items-api-url="`/images/${image.id}/persons`" items-api-name="persons" :remove-item-api-url-base="`/images/${image.id}/persons/`" :items-updated-callback="imageItemsUpdatedBuilder('persons')" />
@@ -86,14 +75,9 @@
 
 <script>
 import ImageItemsList from './image-items-list.vue';
+import ExifInfo from './image-detail/exif-info.vue';
 import { API_URL_BASE } from '../request-helpers';
 import { isoFormattedDateToUs } from '../date-helpers';
-
-//from: https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
-function capitalizeFirstLetter(string){
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
 
 export default {
     name: 'Image-Detail',
@@ -124,6 +108,7 @@ export default {
     },
     components: {
         'Image-Items-List': ImageItemsList,
+        'Exif-Info': ExifInfo,
     },
     directives: {
         scrollToSelectedItem: {
@@ -249,9 +234,6 @@ export default {
             if(this.nextImage){
                 this.$router.push(this.parent.showRouteFor(this.nextImage));
             }
-        },
-        formatExifPropertyName(s){
-            return capitalizeFirstLetter(s).replace(/_/g, ' ');
         },
         imageItemsUpdatedBuilder(itemsKey){
             //because image is cached should really have callback on app to update cache,
