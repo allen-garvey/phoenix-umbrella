@@ -1,22 +1,15 @@
 <template>
     <main class="main container" v-if="isModelLoaded">
-        <div class="album-image-show-header" v-if="parent">
-            <router-link :to="{name: parent.parentRouteName, params: {id: model.id}}">Back to {{model.name}}</router-link>
-            <div class="album-image-nav">
-                <router-link :to="parent.showRouteFor(previousImage)" v-if="previousImage">Previous</router-link>
-                <div v-if="!previousImage"></div>
-                <router-link :to="parent.showRouteFor(nextImage)" v-if="nextImage">Next</router-link>
-            </div>
-            <div class="album-image-nav-previews">
-                <ul class="image-preview-list" v-scroll-to-selected-item="'.current-image'">
-                    <li :class="{'current-image': image.id === imageId}" v-for="(image, i) in model.images" :key="i">
-                        <router-link :to="parent.showRouteFor(image)" class="preview-container">
-                            <img :src="thumbnailUrlFor(image.mini_thumbnail_path)">
-                        </router-link>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <Parent-Thumbnails
+            :parent="parent"
+            :model="model"
+            :image-id="imageId"
+            :thumbnail-url-for="thumbnailUrlFor"
+            :previous-image="previousImage"
+            :next-image="nextImage" 
+            v-if="parent"
+        >
+        </Parent-Thumbnails>
         <div class="image-show-thumbnail-container">
             <a :href="masterUrl" target="_blank" rel="noreferrer">
                 <img :src="thumbnailUrlFor(image.thumbnail_path)"/>
@@ -74,6 +67,7 @@
 </template>
 
 <script>
+import ParentThumbnails from './image-detail/parent-thumbnails.vue';
 import ImageItemsList from './image-detail/image-items-list.vue';
 import ExifInfo from './image-detail/exif-info.vue';
 import { API_URL_BASE } from '../request-helpers';
@@ -107,19 +101,9 @@ export default {
         },
     },
     components: {
+        'Parent-Thumbnails': ParentThumbnails,
         'Image-Items-List': ImageItemsList,
         'Exif-Info': ExifInfo,
-    },
-    directives: {
-        scrollToSelectedItem: {
-            inserted(el, binding){
-                const selectedItemSelector = binding.value;
-                const currentItem = el.querySelector(selectedItemSelector);
-                if(currentItem){
-                    currentItem.scrollIntoView({behavior: 'instant'});
-                }
-            },
-        },
     },
     created(){
         this.setup();
