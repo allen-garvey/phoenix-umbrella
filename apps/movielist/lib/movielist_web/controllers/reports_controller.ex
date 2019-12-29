@@ -22,7 +22,7 @@ defmodule MovielistWeb.ReportsController do
         rating_count: rating_stats[:rating_count],
         average_score: rating_stats[:average_score],
         ratings_count_by_month: ratings_count_by_month,
-        should_show_next_year: should_show_next_year,
+        should_show_next_year: should_show_next_year
       )
     end
   end
