@@ -7,7 +7,7 @@ defmodule MovielistWeb.ReportsController do
   def report_for_year(conn, year, sort) when is_integer(year) and is_atom(sort) do
     current_year = Date.utc_today.year
 
-    if year > current_year do
+    if year > current_year or year < 1950 do
       invalid_year_redirect(conn)
     else
       rating_stats = Reports.rating_stats_for_year(year)
