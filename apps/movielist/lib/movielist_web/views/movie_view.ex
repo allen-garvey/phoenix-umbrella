@@ -28,7 +28,7 @@ defmodule MovielistWeb.MovieView do
   def active_button_class(is_active) do
     case is_active do
       true  -> "btn-primary"
-      false -> "btn-default"
+      false -> "btn-light"
     end
   end
 

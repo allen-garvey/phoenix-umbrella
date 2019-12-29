@@ -21,10 +21,10 @@
         <td class="<%= css_class_for_release_date(movie.release_status, movie.home_release_date) %>"><%= Common.DateHelpers.us_formatted_date(movie.release_date) %></td>
 
         <td>
-          <%= link "Edit", to: Routes.movie_path(@conn, :edit, movie), class: "btn btn-xs btn-primary" %>
+          <%= link "Edit", to: Routes.movie_path(@conn, :edit, movie), class: "btn btn-sm btn-primary" %>
         </td>
         <td>
-          <%= link "Show", to: Routes.movie_path(@conn, :show, movie), class: "btn btn-xs btn-default" %>
+          <%= link "Show", to: Routes.movie_path(@conn, :show, movie), class: "btn btn-sm btn-light" %>
         </td>
       </tr>
     <% end %>

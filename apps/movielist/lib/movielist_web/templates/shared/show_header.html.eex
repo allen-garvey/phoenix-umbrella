@@ -3,9 +3,9 @@
 <div class="show_header">
 	<h1 class="heading"><%= @item_name %></h1>
 	<div class="btn_group">
-		<%= link "Edit", to: apply(Routes, @resource_path_atom, [@conn, :edit, @item]), class: "btn btn-default btn-xs" %>
+		<%= link "Edit", to: apply(Routes, @resource_path_atom, [@conn, :edit, @item]), class: "btn btn-light btn-sm" %>
 		<%= form_for @conn, apply(Routes, @resource_path_atom, [@conn, :delete, @item]), [method: :delete, class: "delete_button_form", data_confirm: @item_name], fn _f ->
-				submit("Delete", class: "btn btn-danger btn-xs")
+				submit("Delete", class: "btn btn-danger btn-sm")
 			end
 		%>
 	</div>

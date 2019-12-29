@@ -53,3 +53,18 @@ a{
 	margin: 0 auto;
 	max-width: 1000px;
 }
+
+.btn{
+	font-family: $sans_serif_font_family;
+}
+
+// bootstrap 3 button color
+.btn-primary{
+	background-color: #337ab7;
+	border-color: #2e6da4;
+
+	&:hover{
+		background-color: #286090;
+		border-color: #204d74;
+	}
+}

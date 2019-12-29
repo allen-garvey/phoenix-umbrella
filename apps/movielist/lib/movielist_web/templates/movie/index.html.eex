@@ -24,7 +24,7 @@
         <td><%= is_active_status(movie.is_active) %></td>
 
         <td>
-          <%= link "Show", to: Routes.movie_path(@conn, :show, movie), class: "btn btn-xs btn-default" %>
+          <%= link "Show", to: Routes.movie_path(@conn, :show, movie), class: "btn btn-sm btn-light" %>
         </td>
       </tr>
     <% end %>
