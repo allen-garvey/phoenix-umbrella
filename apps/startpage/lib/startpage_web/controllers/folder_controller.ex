@@ -5,7 +5,7 @@ defmodule StartpageWeb.FolderController do
   alias Startpage.Admin.Folder
 
   def index(conn, _params) do
-    folders = Admin.list_folders()
+    folders = Admin.list_folders_in_order()
     render(conn, "index.html", folders: folders)
   end
 
