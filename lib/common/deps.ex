@@ -5,7 +5,7 @@ defmodule Umbrella.Common.Deps do
       {:phoenix, "~> 1.4.11"},
       {:phoenix_pubsub, "~> 1.1"},
       ecto(),
-      {:ecto_sql, "~> 3.2.1"},
+      {:ecto_sql, "~> 3.3.2"},
       {:postgrex, "~> 0.15"},
       {:phoenix_html, "~> 2.13"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
@@ -13,7 +13,7 @@ defmodule Umbrella.Common.Deps do
       {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.1"},
       {:common, in_umbrella: true},
-      {:assertions, "~> 0.14", only: :test},
+      {:assertions, "~> 0.15", only: :test},
     ]
   end
 
@@ -33,11 +33,11 @@ defmodule Umbrella.Common.Deps do
   end
 
   def floki do
-    {:floki, "~> 0.23"}
+    {:floki, "~> 0.23.1"}
   end
 
   def earmark do
-    {:earmark, "~> 1.4.2"}
+    {:earmark, "~> 1.4.3"}
   end
 
   def argon2 do
