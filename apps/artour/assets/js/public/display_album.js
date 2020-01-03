@@ -4,36 +4,36 @@
 import { aQuery as $ } from './aquery.js';
 
 export function initializeDisplayAlbumLightbox(){
-    var imageLinks = $('.post-thumbnails a');
+    const imageLinks = $('.post-thumbnails a');
     //used to keep track on if an image has been initialized to lightbox already
     //used to lazy-load images
-    var imageInitializedMap = imageLinks.map(function(){ return false; });
-    var currentImageIndex = null;
-    var isLightboxVisible = false;
+    const imageInitializedMap = imageLinks.map(() => false);
+    let currentImageIndex = null;
+    let isLightboxVisible = false;
 
     //history stuff
-    var BASE_URL = `${window.location.origin}${window.location.pathname}`;
-    var IMAGE_QUERY_STRING_KEY = 'image';
-    var history = window.history;
+    const BASE_URL = `${window.location.origin}${window.location.pathname}`;
+    const IMAGE_QUERY_STRING_KEY = 'image';
+    const history = window.history;
 
     function createDiv(className){
-        var div = document.createElement('div');
+        const div = document.createElement('div');
         div.className = className;
         return div;
     }
 
     function initializeLightbox(numImageLinks){
-    	var lightboxContainer = createDiv('lightbox-container hidden');
+    	const lightboxContainer = createDiv('lightbox-container hidden');
     	
-        var lightboxBackground = createDiv('lightbox-background');
+        const lightboxBackground = createDiv('lightbox-background');
     	lightboxBackground.onclick = hideLightbox;
 
-        var imagesContainer = createDiv('lightbox-images-container');
+        const imagesContainer = createDiv('lightbox-images-container');
         
         //add empty placeholder divs for images
         //will be lazy loaded by inserting img tag
         //when necessary
-        for(var i=0; i<numImageLinks;i++){
+        for(let i=0; i<numImageLinks;i++){
             imagesContainer.appendChild(createDiv('image-container'));
         }
 
@@ -41,29 +41,29 @@ export function initializeDisplayAlbumLightbox(){
         //have to add this after the .image-containers,
         //because nth-child and nth-of-type do not work
         //on class selectors, only elements
-        var closeButton = createDiv('close-window-button');
+        const closeButton = createDiv('close-window-button');
         closeButton.onclick = hideLightbox;
         imagesContainer.appendChild(closeButton);
 
-        var bottomContainer = createDiv('lightbox-bottom-container');
+        const bottomContainer = createDiv('lightbox-bottom-container');
 
         //captions
 
-        var captionContainer = createDiv('caption-container');
+        const captionContainer = createDiv('caption-container');
         bottomContainer.appendChild(captionContainer);
 
         captionContainer.appendChild(createDiv('caption-body'));
         captionContainer.appendChild(createDiv('caption-overlay'));
 
         //buttons
-        var buttonContainer = createDiv('lightbox-button-container');
+        const buttonContainer = createDiv('lightbox-button-container');
         bottomContainer.appendChild(buttonContainer);
 
-        var leftButton = createDiv('slideshow-left-button');
+        const leftButton = createDiv('slideshow-left-button');
         leftButton.onclick = showPreviousImage;
         buttonContainer.appendChild(leftButton);
 
-        var rightButton = createDiv('slideshow-right-button');
+        const rightButton = createDiv('slideshow-right-button');
         rightButton.onclick = showNextImage;
         buttonContainer.appendChild(rightButton);
     	
@@ -77,12 +77,12 @@ export function initializeDisplayAlbumLightbox(){
     //creates img tag if necessary - used for lazy loading
     function setVisibleImageAt(imageIndex){
         currentImageIndex = imageIndex;
-        var parentSelector = '.lightbox-images-container>div:nth-child('+(imageIndex + 1) + ')';
-        var imageLink = $(imageLinks.elementList[imageIndex]);
+        const parentSelector = `.lightbox-images-container>div:nth-child(${(imageIndex + 1)})`;
+        const imageLink = $(imageLinks.elementList[imageIndex]);
         //initialize img tag if necessary
         if(!imageInitializedMap[imageIndex]){
             imageInitializedMap[imageIndex] = true;
-            var imgTag = document.createElement('img');
+            const imgTag = document.createElement('img');
             imgTag.src = imageLink.data('src');
             imgTag.srcset = imageLink.data('srcset');
             document.querySelector(parentSelector).appendChild(imgTag);
@@ -90,14 +90,14 @@ export function initializeDisplayAlbumLightbox(){
         document.querySelector('.caption-body').textContent = imageLink.data('caption');
         
         //set history state
-        var imageSlug = imageLink.data('slug');
-        history.replaceState({image_slug: imageSlug}, '', BASE_URL+'?'+IMAGE_QUERY_STRING_KEY+'='+imageSlug);
+        const imageSlug = imageLink.data('slug');
+        history.replaceState({image_slug: imageSlug}, '', `${BASE_URL}?${IMAGE_QUERY_STRING_KEY}=${imageSlug}`);
 
         $('.lightbox-images-container>.image-container').addClass('hidden');
         $(parentSelector).removeClass('hidden');
     }
 
-    function displayLightbox(imageIndex){
+    function displayLightbox(){
         isLightboxVisible = true;
         $('.lightbox-container').removeClass('hidden');
     }
@@ -111,8 +111,8 @@ export function initializeDisplayAlbumLightbox(){
 
     function initializeImageLinkClickHandlers(imageLinks){
         //can't use on function since we need index
-        imageLinks.each(function(i, el){
-            el.onclick = function(e){
+        imageLinks.each((i, el)=>{
+            el.onclick = (e)=>{
                 e.preventDefault();
                 setVisibleImageAt(i);
                 displayLightbox();
@@ -121,30 +121,30 @@ export function initializeDisplayAlbumLightbox(){
     }
 
     function initializeImageSwipeHandlers(){
-        var imagesContainer = document.querySelector('.lightbox-images-container');
+        const imagesContainer = document.querySelector('.lightbox-images-container');
         //number of pixels allowed in diagonal between touch start and start end
-        var yThreshold = 100;
+        const yThreshold = 100;
         //number of pixels need to be swiped in x direction to register as swipe
-        var xThreshold = 50;
+        const xThreshold = 50;
 
-        var touchStartX = null;
-        var touchStartY = null;
+        let touchStartX = null;
+        let touchStartY = null;
 
         imagesContainer.addEventListener('touchstart', function(e){
-            var touch = e.touches[0];
+            const touch = e.touches[0];
             touchStartX = touch.clientX;
             touchStartY = touch.clientY;
         });
         imagesContainer.addEventListener('touchend', function(e){
-            var touch = e.changedTouches[0];
-            var touchEndX = touch.clientX;
-            var touchEndY = touch.clientY;
+            const touch = e.changedTouches[0];
+            const touchEndX = touch.clientX;
+            const touchEndY = touch.clientY;
 
-            var yDifference = Math.abs(touchEndY - touchStartY);
+            const yDifference = Math.abs(touchEndY - touchStartY);
             if(yDifference > yThreshold){
                 return;
             }
-            var xDifference = Math.abs(touchEndX - touchStartX);
+            const xDifference = Math.abs(touchEndX - touchStartX);
             if(xDifference < xThreshold){
                 return;
             }
@@ -202,7 +202,7 @@ export function initializeDisplayAlbumLightbox(){
         if(!imageSlugUrl){
             return;
         }
-        var matchFound = false;
+        let matchFound = false;
         imageLinks.each(function(index, el){
             if(!matchFound && $(el).data('slug') === imageSlugUrl){
                 matchFound = true;
@@ -218,8 +218,8 @@ export function initializeDisplayAlbumLightbox(){
         initializeImageSwipeHandlers();
         
         //display image based if query string in url
-        var queryString = window.location.search.substring(1); 
-        var imageQueryStringRegex = new RegExp('^'+IMAGE_QUERY_STRING_KEY+'=|[&].*$', 'g');
+        const queryString = window.location.search.substring(1); 
+        const imageQueryStringRegex = new RegExp('^'+IMAGE_QUERY_STRING_KEY+'=|[&].*$', 'g');
         displayImageFromUrl(imageLinks, queryString.replace(imageQueryStringRegex, ''));
     })();
 
