@@ -12,7 +12,7 @@ export function initializeDisplayAlbumLightbox(){
     var isLightboxVisible = false;
 
     //history stuff
-    var BASE_URL = window.location.href.replace(/[?#].*$/, '');
+    var BASE_URL = `${window.location.origin}${window.location.pathname}`;
     var IMAGE_QUERY_STRING_KEY = 'image';
     var history = window.history;
 
