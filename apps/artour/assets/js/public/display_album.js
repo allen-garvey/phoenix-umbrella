@@ -219,9 +219,8 @@ export function initializeDisplayAlbumLightbox(){
         initializeImageSwipeHandlers();
         
         //display image based if query string in url
-        const queryString = window.location.search.substring(1); 
-        const imageQueryStringRegex = new RegExp('^'+IMAGE_QUERY_STRING_KEY+'=|[&].*$', 'g');
-        displayImageFromUrl(imageLinks, queryString.replace(imageQueryStringRegex, ''));
+        const imageQuery = (new URLSearchParams(window.location.search)).get(IMAGE_QUERY_STRING_KEY);
+        displayImageFromUrl(imageLinks, imageQuery);
     })();
 
 
