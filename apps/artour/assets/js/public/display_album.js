@@ -78,6 +78,7 @@ export function initializeDisplayAlbumLightbox(){
     function setVisibleImageAt(imageIndex){
         currentImageIndex = imageIndex;
         const parentSelector = `.lightbox-images-container>div:nth-child(${(imageIndex + 1)})`;
+        const parent = document.querySelector(parentSelector);
         const imageLink = $(imageLinks.elementList[imageIndex]);
         //initialize img tag if necessary
         if(!imageInitializedMap[imageIndex]){
@@ -85,7 +86,7 @@ export function initializeDisplayAlbumLightbox(){
             const imgTag = document.createElement('img');
             imgTag.src = imageLink.data('src');
             imgTag.srcset = imageLink.data('srcset');
-            document.querySelector(parentSelector).appendChild(imgTag);
+            parent.appendChild(imgTag);
         }
         document.querySelector('.caption-body').textContent = imageLink.data('caption');
         
@@ -94,17 +95,17 @@ export function initializeDisplayAlbumLightbox(){
         history.replaceState({image_slug: imageSlug}, '', `${BASE_URL}?${IMAGE_QUERY_STRING_KEY}=${imageSlug}`);
 
         $('.lightbox-images-container>.image-container').addClass('hidden');
-        $(parentSelector).removeClass('hidden');
+        parent.classList.remove('hidden');
     }
 
     function displayLightbox(){
         isLightboxVisible = true;
-        $('.lightbox-container').removeClass('hidden');
+        document.querySelector('.lightbox-container').classList.remove('hidden');
     }
 
     function hideLightbox(){
         isLightboxVisible = false;
-        $('.lightbox-container').addClass('hidden');
+        document.querySelector('.lightbox-container').classList.add('hidden');
         //clear history
         history.replaceState({}, '', BASE_URL);
     }

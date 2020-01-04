@@ -53,12 +53,6 @@ export function aQuery(selector){
 		});
 		return this;
 	};
-	aQueryObject.prototype.removeClass = function(className){
-		this.each(function(i, element){
-			element.classList.remove(className);
-		});
-		return this;
-	};
 
 	return (new aQueryObject(selector));
 }
