@@ -7,7 +7,7 @@ export function initializeDisplayAlbumLightbox(){
     const imageLinks = $('.post-thumbnails a');
     //used to keep track on if an image has been initialized to lightbox already
     //used to lazy-load images
-    const imageInitializedMap = imageLinks.map(() => false);
+    const imageInitializedMap = {};
     let currentImageIndex = null;
     let isLightboxVisible = false;
 
