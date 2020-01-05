@@ -23,13 +23,10 @@ export function initializeDisplayAlbumLightbox(){
     }
 
     function initializeLightbox(numImageLinks){
-    	const lightboxContainer = createDiv('lightbox-container hidden');
-    	
-        const lightboxBackground = createDiv('lightbox-background');
+        const lightboxBackground = document.querySelector('.lightbox-background');
     	lightboxBackground.onclick = hideLightbox;
 
-        const imagesContainer = createDiv('lightbox-images-container');
-        
+        const imagesContainer = document.querySelector('.lightbox-images-container');
         //add empty placeholder divs for images
         //will be lazy loaded by inserting img tag
         //when necessary
@@ -45,32 +42,12 @@ export function initializeDisplayAlbumLightbox(){
         closeButton.onclick = hideLightbox;
         imagesContainer.appendChild(closeButton);
 
-        const bottomContainer = createDiv('lightbox-bottom-container');
-
-        //captions
-
-        const captionContainer = createDiv('caption-container');
-        bottomContainer.appendChild(captionContainer);
-
-        captionContainer.appendChild(createDiv('caption-body'));
-        captionContainer.appendChild(createDiv('caption-overlay'));
-
         //buttons
-        const buttonContainer = createDiv('lightbox-button-container');
-        bottomContainer.appendChild(buttonContainer);
-
-        const leftButton = createDiv('slideshow-left-button');
+        const leftButton = document.querySelector('.slideshow-left-button');
         leftButton.onclick = showPreviousImage;
-        buttonContainer.appendChild(leftButton);
 
-        const rightButton = createDiv('slideshow-right-button');
+        const rightButton = document.querySelector('.slideshow-right-button');
         rightButton.onclick = showNextImage;
-        buttonContainer.appendChild(rightButton);
-    	
-        lightboxContainer.appendChild(bottomContainer);
-        lightboxContainer.appendChild(imagesContainer);
-    	lightboxContainer.appendChild(lightboxBackground);
-    	document.body.appendChild(lightboxContainer);
     }
 
     //displays image at index
@@ -222,6 +199,4 @@ export function initializeDisplayAlbumLightbox(){
         const imageQuery = (new URLSearchParams(window.location.search)).get(IMAGE_QUERY_STRING_KEY);
         displayImageFromUrl(imageLinks, imageQuery);
     })();
-
-
 }

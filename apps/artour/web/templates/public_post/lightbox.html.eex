@@ -1,0 +1,15 @@
+<div class="lightbox-container hidden">
+    <div class="lightbox-bottom-container">
+        <div class="caption-container">
+            <div class="caption-body"></div>
+            <div class="caption-overlay"></div>
+        </div>
+        <div class="lightbox-button-container">
+            <div class="slideshow-left-button"></div>
+            <div class="slideshow-right-button"></div>
+        </div>
+    </div>
+    <div class="lightbox-images-container">
+    </div>
+    <div class="lightbox-background"></div>
+</div>
