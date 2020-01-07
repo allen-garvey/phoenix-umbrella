@@ -6,9 +6,6 @@ import { createDiv, getData, mapElements } from './dom-helpers';
 
 const imageLinks = document.querySelectorAll('.post-thumbnails a');
 const slideData = initializeSlideData(imageLinks);
-//used to keep track on if an image has been initialized to lightbox already
-//used to lazy-load images
-const imageInitializedMap = {};
 let currentImageIndex = null;
 let isLightboxVisible = false;
 
@@ -24,6 +21,7 @@ function initializeSlideData(links){
             src: getData(link, 'src'),
             srcset: getData(link, 'srcset'),
             slug: getData(link, 'slug'),
+            isInitialized: false,
         };
     });
 }
@@ -59,8 +57,8 @@ function setVisibleImageAt(imageIndex){
     const parent = document.querySelector(parentSelector);
     const currentImageData = slideData[imageIndex];
     //initialize img tag if necessary
-    if(!imageInitializedMap[imageIndex]){
-        imageInitializedMap[imageIndex] = true;
+    if(!currentImageData.isInitialized){
+        currentImageData.isInitialized = true;
         const imgTag = document.createElement('img');
         imgTag.src = currentImageData.src;
         imgTag.srcset = currentImageData.srcset;
