@@ -66,8 +66,11 @@ export function initializeDisplayAlbumLightbox(){
         const imageSlug = imageLink.data('slug');
         history.replaceState({image_slug: imageSlug}, '', `${BASE_URL}?${IMAGE_QUERY_STRING_KEY}=${imageSlug}`);
 
-        $('.lightbox-images-container>.image-container').addClass('hidden');
-        parent.classList.remove('hidden');
+        document.querySelectorAll('.lightbox-images-container>.image-container')
+            .forEach((element, i)=>{
+                const action = i === imageIndex ? 'remove' : 'add';
+                element.classList[action]('hidden');
+            });
     }
 
     function displayLightbox(){

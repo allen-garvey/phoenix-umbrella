@@ -42,17 +42,5 @@ export function aQuery(selector){
 		return this.elementList[0].getAttribute('data-' + key);
 	}
 
-
-
-	/*
-	* CSS Class methods
-	*/
-	aQueryObject.prototype.addClass = function(className){
-		this.each(function(i, element){
-			element.classList.add(className);
-		});
-		return this;
-	};
-
 	return (new aQueryObject(selector));
 }
