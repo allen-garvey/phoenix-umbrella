@@ -34,13 +34,8 @@ export function initializeDisplayAlbumLightbox(){
             imagesContainer.appendChild(createDiv('image-container'));
         }
 
-        //add close 'X' button
-        //have to add this after the .image-containers,
-        //because nth-child and nth-of-type do not work
-        //on class selectors, only elements
-        const closeButton = createDiv('close-window-button');
+        const closeButton = document.querySelector('.close-window-button');
         closeButton.onclick = hideLightbox;
-        imagesContainer.appendChild(closeButton);
 
         //buttons
         const leftButton = document.querySelector('.slideshow-left-button');

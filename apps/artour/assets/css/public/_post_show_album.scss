@@ -119,6 +119,7 @@
 	}
 	.close-window-button{
 		position: absolute;
+		z-index: 199;
 		top: 8px;
 		right: 6px;
 		&:before{

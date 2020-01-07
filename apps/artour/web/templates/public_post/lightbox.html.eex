@@ -1,4 +1,5 @@
 <div class="lightbox-container hidden">
+    <div class="close-window-button"></div>
     <div class="lightbox-bottom-container">
         <div class="caption-container">
             <div class="caption-body"></div>
@@ -9,7 +10,6 @@
             <div class="slideshow-right-button"></div>
         </div>
     </div>
-    <div class="lightbox-images-container">
-    </div>
+    <div class="lightbox-images-container"></div>
     <div class="lightbox-background"></div>
 </div>
