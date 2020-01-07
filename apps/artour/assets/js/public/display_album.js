@@ -1,9 +1,11 @@
 /*
  * Functionality to display album show pages in lightbox
  */
-import { aQuery as $ } from './aquery.js';
 
-const imageLinks = $('.post-thumbnails a');
+import { createDiv, getData, mapElements } from './dom-helpers';
+
+const imageLinks = document.querySelectorAll('.post-thumbnails a');
+const slideData = initializeSlideData(imageLinks);
 //used to keep track on if an image has been initialized to lightbox already
 //used to lazy-load images
 const imageInitializedMap = {};
@@ -15,10 +17,15 @@ const BASE_URL = `${window.location.origin}${window.location.pathname}`;
 const IMAGE_QUERY_STRING_KEY = 'image';
 const history = window.history;
 
-function createDiv(className){
-    const div = document.createElement('div');
-    div.className = className;
-    return div;
+function initializeSlideData(links){
+    return mapElements(links, (link)=>{
+        return {
+            caption: getData(link, 'caption'),
+            src: getData(link, 'src'),
+            srcset: getData(link, 'srcset'),
+            slug: getData(link, 'slug'),
+        };
+    });
 }
 
 function initializeLightbox(numImageLinks){
@@ -50,20 +57,20 @@ function setVisibleImageAt(imageIndex){
     currentImageIndex = imageIndex;
     const parentSelector = `.lightbox-images-container>div:nth-child(${(imageIndex + 1)})`;
     const parent = document.querySelector(parentSelector);
-    const imageLink = $(imageLinks.elementList[imageIndex]);
+    const currentImageData = slideData[imageIndex];
     //initialize img tag if necessary
     if(!imageInitializedMap[imageIndex]){
         imageInitializedMap[imageIndex] = true;
         const imgTag = document.createElement('img');
-        imgTag.src = imageLink.data('src');
-        imgTag.srcset = imageLink.data('srcset');
+        imgTag.src = currentImageData.src;
+        imgTag.srcset = currentImageData.srcset;
         parent.appendChild(imgTag);
     }
-    document.querySelector('.caption-body').textContent = imageLink.data('caption');
+    document.querySelector('.caption-body').textContent = currentImageData.caption;
     
     //set history state
-    const imageSlug = imageLink.data('slug');
-    history.replaceState({image_slug: imageSlug}, '', `${BASE_URL}?${IMAGE_QUERY_STRING_KEY}=${imageSlug}`);
+    const image_slug = currentImageData.slug;
+    history.replaceState({image_slug}, '', `${BASE_URL}?${IMAGE_QUERY_STRING_KEY}=${image_slug}`);
 
     document.querySelectorAll('.lightbox-images-container>.image-container')
         .forEach((element, i)=>{
@@ -86,7 +93,7 @@ function hideLightbox(){
 
 function initializeImageLinkClickHandlers(imageLinks){
     //can't use on function since we need index
-    imageLinks.each((i, el)=>{
+    imageLinks.forEach((el, i)=>{
         el.onclick = (e)=>{
             e.preventDefault();
             setVisibleImageAt(i);
@@ -136,7 +143,7 @@ function initializeImageSwipeHandlers(){
 
 function showNextImage(){
     //don't do anything if we are at the last image
-    if(currentImageIndex >= imageLinks.length - 1){
+    if(currentImageIndex >= slideData.length - 1){
         return;
     }
     setVisibleImageAt(currentImageIndex + 1);
@@ -178,8 +185,8 @@ function displayImageFromUrl(imageLinks, imageSlugUrl){
         return;
     }
     let matchFound = false;
-    imageLinks.each(function(index, el){
-        if(!matchFound && $(el).data('slug') === imageSlugUrl){
+    slideData.forEach((imageData, index)=>{
+        if(!matchFound && imageData.slug === imageSlugUrl){
             matchFound = true;
             setVisibleImageAt(index);
             displayLightbox();
