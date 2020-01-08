@@ -171,18 +171,17 @@ document.onkeydown = function(e){
 
 //display image in lightbox on page load if image slug is in
 //hash url
-function displayImageFromUrl(imageLinks, imageSlugUrl){
+function displayImageFromUrl(slideData, imageSlugUrl){
     if(!imageSlugUrl){
         return;
     }
-    let matchFound = false;
-    slideData.forEach((imageData, index)=>{
-        if(!matchFound && imageData.slug === imageSlugUrl){
-            matchFound = true;
-            setVisibleImageAt(index);
+    for(let i=0;i<slideData.length;i++){
+        if(slideData[i].slug === imageSlugUrl){
+            setVisibleImageAt(i);
             displayLightbox();
+            break;
         }
-    });
+    }
 }
 
 export function initializeDisplayAlbumLightbox(){
@@ -192,5 +191,5 @@ export function initializeDisplayAlbumLightbox(){
     
     //display image based if query string in url
     const imageQuery = (new URLSearchParams(window.location.search)).get(IMAGE_QUERY_STRING_KEY);
-    displayImageFromUrl(imageLinks, imageQuery);
+    displayImageFromUrl(slideData, imageQuery);
 }
