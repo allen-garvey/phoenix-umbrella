@@ -27,12 +27,13 @@ function initializeLightbox(numImageLinks){
     lightboxBackground.onclick = hideLightbox;
 
     const imagesContainer = document.querySelector('.lightbox-images-container');
+    const imagesFragment = document.createDocumentFragment();
     //add empty placeholder divs for images
-    //will be lazy loaded by inserting img tag
-    //when necessary
+    //will be lazy loaded by inserting img tag when necessary
     for(let i=0; i<numImageLinks;i++){
-        imagesContainer.appendChild(createDiv('image-container'));
+        imagesFragment.appendChild(createDiv('image-container'));
     }
+    imagesContainer.appendChild(imagesFragment);
 
     const closeButton = document.querySelector('.close-window-button');
     closeButton.onclick = hideLightbox;
