@@ -1,7 +1,7 @@
 .post-thumbnails{
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: center;
 	a{
 		flex-basis: 200px;
 		display: inline-block;
@@ -13,6 +13,12 @@
 			max-width: none;
 			max-height: 100%;
 		}
+	}
+}
+
+@media screen and (min-width: 447px){
+	.post-thumbnails{
+		justify-content: space-between;
 	}
 }
 
