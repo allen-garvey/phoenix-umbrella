@@ -133,6 +133,29 @@ function initializeImageSwipeHandlers(){
     });
 }
 
+function initializeKeyboardShortcuts(){
+    document.onkeydown = function(e){
+        //don't do anything if lightbox is invisible
+        if (!isLightboxVisible){
+            return;
+        }
+        switch(e.keyCode){
+            //escape key
+            case 27:
+                hideLightbox();       
+                break;
+            //right arrow
+            case 39:
+                showNextImage();
+                break;
+            //left arrow
+            case 37:
+                showPreviousImage();
+                break;
+        }
+    };
+}
+
 function showNextImage(){
     //don't do anything if we are at the last image
     if(currentImageIndex >= slideData.length - 1){
@@ -148,27 +171,6 @@ function showPreviousImage(){
     setVisibleImageAt(currentImageIndex - 1);
 
 }
-
-document.onkeydown = function(e){
-    //don't do anything if lightbox is invisible
-    if (!isLightboxVisible){
-        return;
-    }
-    switch(e.keyCode){
-        //escape key
-        case 27:
-            hideLightbox();       
-            break;
-        //right arrow
-        case 39:
-            showNextImage();
-            break;
-        //left arrow
-        case 37:
-            showPreviousImage();
-            break;
-    }
-};
 
 //display image in lightbox on page load if image slug is in
 //hash url
@@ -189,6 +191,7 @@ export function initializeDisplayAlbumLightbox(){
     initializeLightbox(imageLinks.length);
     initializeImageLinkClickHandlers(imageLinks);
     initializeImageSwipeHandlers();
+    initializeKeyboardShortcuts();
     
     //display image based if query string in url
     const imageQuery = (new URLSearchParams(window.location.search)).get(IMAGE_QUERY_STRING_KEY);
