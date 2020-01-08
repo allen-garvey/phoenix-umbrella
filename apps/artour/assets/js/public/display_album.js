@@ -3,16 +3,12 @@
  */
 
 import { createDiv, getData, mapElements } from './dom-helpers';
+import { IMAGE_QUERY_STRING_KEY, setImageUrl, clearImageUrl } from './history';
 
 const imageLinks = document.querySelectorAll('.post-thumbnails a');
 const slideData = initializeSlideData(imageLinks);
 let currentImageIndex = null;
 let isLightboxVisible = false;
-
-//history stuff
-const BASE_URL = `${window.location.origin}${window.location.pathname}`;
-const IMAGE_QUERY_STRING_KEY = 'image';
-const history = window.history;
 
 function initializeSlideData(links){
     return mapElements(links, (link)=>{
@@ -66,9 +62,7 @@ function setVisibleImageAt(imageIndex){
     }
     document.querySelector('.caption-body').textContent = currentImageData.caption;
     
-    //set history state
-    const image_slug = currentImageData.slug;
-    history.replaceState({image_slug}, '', `${BASE_URL}?${IMAGE_QUERY_STRING_KEY}=${image_slug}`);
+    setImageUrl(currentImageData.slug);
 
     document.querySelectorAll('.lightbox-images-container>.image-container')
         .forEach((element, i)=>{
@@ -85,8 +79,7 @@ function displayLightbox(){
 function hideLightbox(){
     isLightboxVisible = false;
     document.querySelector('.lightbox-container').classList.add('hidden');
-    //clear history
-    history.replaceState({}, '', BASE_URL);
+    clearImageUrl();
 }
 
 function initializeImageLinkClickHandlers(imageLinks){
