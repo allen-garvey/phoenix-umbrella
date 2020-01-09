@@ -156,16 +156,16 @@ function initializeKeyboardShortcuts(){
 }
 
 function showNextImage(){
-    //don't do anything if we are at the last image
+    //if at the end loop around to the beginning
     if(currentImageIndex >= slideData.length - 1){
-        return;
+        currentImageIndex = -1;
     }
     setVisibleImageAt(currentImageIndex + 1);
 }
 function showPreviousImage(){
-    //don't do anything if we are at the first image
+    //if at the beginning loop around to the end
     if(currentImageIndex <= 0){
-        return;
+        currentImageIndex = slideData.length;
     }
     setVisibleImageAt(currentImageIndex - 1);
 
