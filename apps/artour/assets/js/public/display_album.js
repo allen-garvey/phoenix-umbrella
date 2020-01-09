@@ -84,7 +84,6 @@ function hideLightbox(){
 }
 
 function initializeImageLinkClickHandlers(imageLinks){
-    //can't use on function since we need index
     imageLinks.forEach((el, i)=>{
         el.onclick = (e)=>{
             e.preventDefault();
