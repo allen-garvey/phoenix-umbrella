@@ -50,7 +50,7 @@ function initializeLightbox(numImageLinks){
 //creates img tag if necessary - used for lazy loading
 function setVisibleImageAt(imageIndex){
     currentImageIndex = imageIndex;
-    const parentSelector = `.lightbox-images-container>div:nth-child(${(imageIndex + 1)})`;
+    const parentSelector = `.lightbox-images-container .image-container:nth-child(${(imageIndex + 1)})`;
     const parent = document.querySelector(parentSelector);
     const currentImageData = slideData[imageIndex];
     //initialize img tag if necessary
