@@ -49,6 +49,13 @@
 		img{
 			max-height: 100vh;
 		}
+		
+		.image-container{
+			display: none;
+			&.active{
+				display: block;
+			}
+		}
 	}
 	//buttons
 	$lightbox_button_dimensions: 25px;

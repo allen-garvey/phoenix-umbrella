@@ -67,8 +67,8 @@ function setVisibleImageAt(imageIndex){
 
     document.querySelectorAll('.lightbox-images-container>.image-container')
         .forEach((element, i)=>{
-            const action = i === imageIndex ? 'remove' : 'add';
-            element.classList[action]('hidden');
+            const action = i === imageIndex ? 'add' : 'remove';
+            element.classList[action]('active');
         });
 }
 
