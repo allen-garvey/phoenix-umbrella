@@ -51,6 +51,7 @@
 		}
 		
 		.image-container{
+			transition: translateX 0.3s;
 			display: none;
 			&.active{
 				display: block;

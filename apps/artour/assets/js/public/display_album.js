@@ -69,6 +69,7 @@ function setVisibleImageAt(imageIndex){
         .forEach((element, i)=>{
             const action = i === imageIndex ? 'add' : 'remove';
             element.classList[action]('active');
+            element.style.transform = '';
         });
 }
 
@@ -98,35 +99,61 @@ function initializeImageSwipeHandlers(){
     //number of pixels allowed in diagonal between touch start and start end
     const yThreshold = 100;
     //number of pixels need to be swiped in x direction to register as swipe
-    const xThreshold = 50;
+    const xThreshold = 100;
 
     let touchStartX = null;
     let touchStartY = null;
+    let activeImageContainer= null;
 
     imagesContainer.addEventListener('touchstart', function(e){
+        // check if pinching to zoom
+        if(e.touches.length > 1){
+            activeImageContainer = null;
+            return;
+        }
         const touch = e.touches[0];
         touchStartX = touch.clientX;
         touchStartY = touch.clientY;
+        activeImageContainer = document.querySelector('.lightbox-images-container .image-container.active');
+    });
+    imagesContainer.addEventListener('touchmove', function(e){
+        if(activeImageContainer === null){
+            return;
+        }
+        const touch = e.touches[0];
+        activeImageContainer.style.transform = `translateX(calc(${touch.clientX}px - 50%))`;
     });
     imagesContainer.addEventListener('touchend', function(e){
+        if(activeImageContainer === null){
+            return;
+        }
         const touch = e.changedTouches[0];
         const touchEndX = touch.clientX;
         const touchEndY = touch.clientY;
+        let thresholdMet = true;
 
         const yDifference = Math.abs(touchEndY - touchStartY);
         if(yDifference > yThreshold){
-            return;
+            thresholdMet = false;
         }
         const xDifference = Math.abs(touchEndX - touchStartX);
         if(xDifference < xThreshold){
+            thresholdMet = false;
+        }
+
+        if(!thresholdMet){
+            activeImageContainer.style.transform = 'translateX(0px)';
             return;
         }
+
         //swiped right, show previous image
         if(touchEndX > touchStartX){
+            // activeImageContainer.style.transform = 'translateX(100%)';
             showPreviousImage();
         }
         //swiped left, show next image
         else{
+            // activeImageContainer.style.transform = 'translateX(0%)';
             showNextImage();
         }
     });
