@@ -3,8 +3,7 @@ defmodule BooklistWeb.ReportsController do
 
   alias Booklist.Reports
 
-  def report_for_year(conn, year) when is_integer(year) do
-    current_year = Date.utc_today.year
+  def report_for_year(conn, year, current_year) when is_integer(year) do
     should_show_next_year = year < current_year
     rating_stats = Reports.get_rating_statistics(year)
     lowest_rating = Reports.get_lowest_rating(year)
@@ -22,14 +21,27 @@ defmodule BooklistWeb.ReportsController do
       highest_rating: highest_rating,
       top_ratings: top_ratings,
       ratings_count_by_week: ratings_count_by_week,
-      should_show_next_year: should_show_next_year,
+      should_show_next_year: should_show_next_year
     )
+  end
+
+  def report_for_year_helper(conn, year) do
+    current_year = Date.utc_today.year
+    if year <= current_year and year > 1950 do
+      report_for_year(conn, year, current_year)
+    else
+      invalid_year_redirect(conn)
+    end
+  end
+
+  def invalid_year_redirect(conn) do
+    redirect(conn, to: BooklistWeb.ReportsView.reports_for_current_year_path(conn))
   end
 
   def show(conn, %{"year" => year_raw}) do
     case Integer.parse(year_raw) do
-      {year, _} -> report_for_year(conn, year)
-      _         -> redirect(conn, to: BooklistWeb.ReportsView.reports_for_current_year_path(conn))
+      {year, _} -> report_for_year_helper(conn, year)
+      _         -> invalid_year_redirect(conn)
     end
   end
 
