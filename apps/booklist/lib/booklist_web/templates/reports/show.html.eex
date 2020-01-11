@@ -1,6 +1,10 @@
 <div class="spread_content">
 	<%= link "Previous year", to: reports_for_year_path(@conn, @year - 1) %>
-	<%= link "Next year", to: reports_for_year_path(@conn, @year + 1) %>
+	<%= 
+		if @should_show_next_year == true do
+			link "Next year", to: reports_for_year_path(@conn, @year + 1) 
+		end
+	%>
 </div>
 
 <h1>Reporting for <%= Integer.to_string(@year) %></h1>
