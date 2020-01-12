@@ -14,9 +14,6 @@ body{
 	background-color: $color_primary_background;
 	margin: 0;
 }
-.total{
-	min-height: $total_height;
-}
 
 h1,h2,h3,h4{
 	@include font_heading;
