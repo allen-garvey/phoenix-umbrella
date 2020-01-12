@@ -28,14 +28,6 @@
 	-webkit-flex-basis: 49%;
 	flex-grow: 1;
 	flex-basis: 49%;
-	-webkit-order: 1;
-	order: 1;
-	&:nth-of-type(2){
-		@include media_q(sm){
-			-webkit-order: 0;
-			order: 0;
-		}
-	}
 	.btn{
 		margin-top: 3em;
 	}

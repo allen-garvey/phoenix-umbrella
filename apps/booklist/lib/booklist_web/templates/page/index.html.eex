@@ -17,15 +17,15 @@
 <div class="home_section_container">
   <div class="home_section">
     <h2 class="home_section_heading">
-      <%= link "Authors", to: Routes.author_path(@conn, :index) %>
-    </h2>
-    <%= link "Add Author", to: Routes.author_path(@conn, :new), class: "btn btn-success" %>
-  </div>
-  <div class="home_section">
-    <h2 class="home_section_heading">
       <%= link "Finished books", to: BooklistWeb.BookView.inactive_read_book_path(@conn) %>
     </h2>
     <p class="description">Books you’ve read</p>
+  </div>
+  <div class="home_section">
+    <h2 class="home_section_heading">
+      <%= link "Authors", to: Routes.author_path(@conn, :index) %>
+    </h2>
+    <%= link "Add Author", to: Routes.author_path(@conn, :new), class: "btn btn-success" %>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading"
