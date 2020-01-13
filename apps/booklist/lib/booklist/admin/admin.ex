@@ -245,8 +245,8 @@ defmodule Booklist.Admin do
   """
   def list_books_read_query(true) do
     #using inner join since no where in support
-    #use group_by instead of distinct since distinct orders by asc id automatically 
-    from(b in Book, join: r in assoc(b, :ratings), group_by: b.id, order_by: [desc: :id, asc: :sort_title])
+    #use group_by instead of distinct since distinct orders by asc id automatically
+    from(b in Book, join: r in assoc(b, :ratings), group_by: [b.id, r.id], order_by: [desc: r.id, asc: b.sort_title])
   end
 
   def list_books_read_query(false) do
