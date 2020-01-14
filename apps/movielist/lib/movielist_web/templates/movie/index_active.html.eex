@@ -24,7 +24,7 @@
           <%= link "Edit", to: Routes.movie_path(@conn, :edit, movie), class: "btn btn-sm btn-primary" %>
         </td>
         <td>
-          <%= link "Show", to: Routes.movie_path(@conn, :show, movie), class: "btn btn-sm btn-light" %>
+          <%= link "Rate", to: Routes.rating_path(@conn, :new, movie.id), class: "btn btn-sm btn-success" %>
         </td>
       </tr>
     <% end %>
