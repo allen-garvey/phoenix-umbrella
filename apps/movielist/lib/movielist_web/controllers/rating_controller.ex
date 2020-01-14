@@ -41,6 +41,9 @@ defmodule MovielistWeb.RatingController do
   def create_action(conn, rating_params, success_redirect_callback, referrer \\ nil) when is_function(success_redirect_callback, 2) do
     case Admin.create_rating(rating_params) do
       {:ok, rating} ->
+        # make movie inactive once rated
+        Admin.get_movie!(rating.movie_id)
+        |> Admin.update_movie(%{"is_active" => false})
         conn
         |> put_flash(:info, "Rating created successfully.")
         |> redirect(to: success_redirect_callback.(conn, rating))
