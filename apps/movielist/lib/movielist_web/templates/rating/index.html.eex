@@ -19,7 +19,7 @@
       <td><%= rating.score %></td>
 
       <td>
-        <%= link "Show", to: Routes.rating_path(@conn, :show, rating), class: "btn btn-sm btn-light" %>
+        <%= link "Edit", to: Routes.rating_path(@conn, :edit, rating), class: "btn btn-sm btn-success" %>
       </td>
     </tr>
 <% end %>
