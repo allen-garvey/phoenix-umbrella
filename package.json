@@ -36,5 +36,9 @@
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-livereload-plugin": "^2.2.0"
+  },
+  "dependencies": {
+    "chartist": "^0.11.4",
+    "chartist-plugin-axistitle": "0.0.7"
   }
 }

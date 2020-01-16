@@ -26,7 +26,7 @@
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <%= render @view_module, @view_template, assigns %>
     </main>
-    <% #only show pages require modal (and associated app.js) %>
+    <% #only show pages require modal %>
     <%= if(assigns[:require_modal]) do %>
       <div class="modal_container" id="modal_container" style="display:none;">
         <div class="modal_overlay" id="modal_overlay"></div>
@@ -41,7 +41,7 @@
           </div>
           </div>
       </div>
-      <script type="text/javascript" src="<%= Routes.static_path(@conn, "/assets/app.js") %>"></script>
     <% end %>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/assets/app.js") %>"></script>
   </body>
 </html>
