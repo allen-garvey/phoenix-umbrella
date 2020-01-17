@@ -1,0 +1,13 @@
+#books_per_week_chart > svg{
+    overflow: visible;
+}
+
+.ct-series-a .ct-point, .ct-series-a .ct-line, .ct-series-a .ct-bar, .ct-series-a .ct-slice-donut{
+    // stroke: #125bca; // blue option
+    stroke: #347934; // green option
+}
+
+.ct-axis-title{
+    @include font_size(-1);
+    @include font_heading;
+}

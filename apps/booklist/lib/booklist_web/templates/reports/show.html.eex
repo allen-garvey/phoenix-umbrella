@@ -53,27 +53,6 @@
 	</ol>
 </section>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
-  function drawChart() {
-  	const data = new google.visualization.DataTable();
-  	data.addColumn('string', 'Week');
-  	data.addColumn('number', 'Count');
-    data.addRows(<%= raw(ratings_by_week_to_json(@ratings_count_by_week)) %>);
-    const options = {
-		legend: { position: 'none' },
-		// curveType: 'function',
-		chartArea: {top: 55, height: '40%'},
-		hAxis: {
-			title: 'Week of the year'
-		},
-		vAxis: {
-			title: 'Books read'
-		}
-    };
-    const chart = new google.visualization.LineChart(document.getElementById('books_per_week_chart'));
-    chart.draw(data, options);
-  }
+window.BOOKLIST_CHART_DATA = <%= raw(ratings_by_week_to_json(@ratings_count_by_week)) %>;
 </script>

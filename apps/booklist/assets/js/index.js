@@ -17,9 +17,9 @@ import css from "../css/app.scss"
 // import socket from "./socket"
 
 import { initializeDeleteModals } from './delete-modals.js';
+import { initializeQRCodeButtons } from './qr-code-modal.js';
+import { initializeBooksPerWeekChart } from './reports/books-per-week-chart';
 
 initializeDeleteModals();
-
-import { initializeQRCodeButtons } from './qr-code-modal.js';
-
 initializeQRCodeButtons();
+initializeBooksPerWeekChart();
