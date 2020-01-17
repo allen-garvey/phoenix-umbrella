@@ -41,6 +41,6 @@ defmodule Umbrella.Common.Deps do
   end
 
   def argon2 do
-    {:argon2_elixir, "~> 2.1"}
+    {:argon2_elixir, "~> 2.2"}
   end
 end
