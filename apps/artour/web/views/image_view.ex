@@ -54,6 +54,24 @@ defmodule Artour.ImageView do
 
   @doc """
   Returns HTML img tag for a given image instance
+  lazy loaded version of img_tag_for/3
+  src is set to the small source file, and srcset is used for other sizes
+  location: atom that should be either :cloud or :local
+  """
+  def lazy_img_tag_for(conn, image, location) do
+    tag(:img,
+        data:
+          [
+            src: url_for(conn, image, :small, location),
+            srcset: srcset_for(conn, image, location)
+          ],
+          alt: image.description,
+          class: "lazy-image-placeholder"
+        )
+  end
+
+  @doc """
+  Returns HTML img tag for a given image instance
   src is set to the small source file, and srcset is used for other sizes
   location: atom that should be either :cloud or :local
   """

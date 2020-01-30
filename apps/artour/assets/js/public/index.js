@@ -5,3 +5,6 @@ import css from "../../css/main.scss"
 
 import { initializeDisplayAlbumLightbox } from './display_album.js';
 initializeDisplayAlbumLightbox();
+
+import { initializeImageLazyLoading } from './lazy-load-images';
+initializeImageLazyLoading();

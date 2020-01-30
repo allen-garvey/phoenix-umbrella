@@ -214,6 +214,9 @@ function displayImageFromUrl(slideData, imageSlugUrl){
 }
 
 export function initializeDisplayAlbumLightbox(){
+    if(!document.querySelector('.lightbox-container')){
+        return;
+    }
     initializeLightbox(imageLinks.length);
     initializeImageLinkClickHandlers(imageLinks);
     initializeImageSwipeHandlers();

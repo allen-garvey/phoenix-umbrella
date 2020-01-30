@@ -4,6 +4,10 @@
 .post-brief{
 	position: relative;
 	padding: 2rem 0 4rem;
+	
+	.lazy-image-placeholder{
+		min-height: 700px;
+	}
 }
 
 /**
