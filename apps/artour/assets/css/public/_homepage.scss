@@ -4,9 +4,13 @@
 .post-brief{
 	position: relative;
 	padding: 2rem 0 4rem;
-	
-	.lazy-image-placeholder{
-		min-height: 700px;
+
+	img{
+		transition: opacity 0.5s;
+		&.lazy-image-placeholder{
+			min-height: 700px;
+			opacity: 0;
+		}
 	}
 }
 
@@ -70,10 +74,10 @@ $symbol_margin: 5px;
 .post-key-image-container{
 	position: relative;
 	z-index: 100;
-	box-shadow: -5px 5px 25px rgba(10,10,10,0.2), 5px -5px 25px rgba(10,10,10,0.2);
 	img{
 		display: block; //so takes up full height
-		max-height: 85vh;	
+		max-height: 85vh;
+		box-shadow: -5px 5px 25px rgba(10,10,10,0.2), 5px -5px 25px rgba(10,10,10,0.2);
 	}
 }
 
