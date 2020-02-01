@@ -23,7 +23,7 @@ defmodule Artour.PageController do
               end
 
     posts = Public.posts_for_page(page_num)
-    render conn, "index.html", posts: posts, current_page: page_num, last_page: last_page, main_container_class: "", javascript: true
+    render conn, "index.html", posts: posts, current_page: page_num, last_page: last_page, main_container_class: "", javascript: true, facebook_image: Enum.fetch!(posts, 0).cover_image
   end
 
   @doc """
