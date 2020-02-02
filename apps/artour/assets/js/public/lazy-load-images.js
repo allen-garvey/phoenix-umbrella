@@ -8,6 +8,7 @@ export function initializeImageLazyLoading(){
             if(entry.isIntersecting){
                 const lazyImage = entry.target
                 lazyImage.src = lazyImage.dataset.src
+                lazyImage.setAttribute('srcset', lazyImage.dataset.srcset);
                 lazyImage.classList.remove('lazy-image-placeholder');
                 imgObserver.unobserve(lazyImage);
             }
