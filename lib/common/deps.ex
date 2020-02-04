@@ -7,7 +7,7 @@ defmodule Umbrella.Common.Deps do
       ecto(),
       {:ecto_sql, "~> 3.3.2"},
       {:postgrex, "~> 0.15"},
-      {:phoenix_html, "~> 2.13"},
+      {:phoenix_html, "~> 2.14"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.17.1"},
       {:jason, "~> 1.1"},
