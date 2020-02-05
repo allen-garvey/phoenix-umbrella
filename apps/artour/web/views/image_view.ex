@@ -37,7 +37,7 @@ defmodule Artour.ImageView do
   doesn't use large url, because assumes image is in container
   """
   def srcset_for(conn, image, location) do
-    url_for(conn, image, :medium, location) <> " 800w"
+    "#{url_for(conn, image, :small, location)} 400w, #{url_for(conn, image, :medium, location)} 800w"
   end
 
   @doc """
@@ -48,8 +48,7 @@ defmodule Artour.ImageView do
   (not in a container, such as in an album)
   """
   def srcset_for_fullsize(conn, image, location) do
-    url_for(conn, image, :medium, location) <> " 800w, "
-    <> url_for(conn, image, :large, location) <> " 1000w"
+    "#{srcset_for(conn, image, location)}, #{url_for(conn, image, :large, location)} 1000w"
   end
 
   @doc """
