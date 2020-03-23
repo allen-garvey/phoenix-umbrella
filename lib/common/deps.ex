@@ -10,7 +10,7 @@ defmodule Umbrella.Common.Deps do
       {:phoenix_html, "~> 2.14"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.17.1"},
-      {:jason, "~> 1.1"},
+      {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.1.2"},
       {:common, in_umbrella: true},
       {:assertions, "~> 0.15", only: :test},
