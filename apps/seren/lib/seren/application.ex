@@ -14,6 +14,7 @@ defmodule Seren.Application do
       supervisor(SerenWeb.Endpoint, []),
       # Start your own worker by calling: Seren.Worker.start_link(arg1, arg2, arg3)
       # worker(Seren.Worker, [arg1, arg2, arg3]),
+      {Phoenix.PubSub, [name: Seren.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
