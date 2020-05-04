@@ -2,8 +2,8 @@ defmodule Umbrella.Common.Deps do
   # Shared dependencies for phoenix projects
   def shared_phoenix_deps do
     [
-      {:phoenix, "~> 1.4.16"},
-      {:phoenix_pubsub, "~> 1.1"},
+      {:phoenix, "~> 1.5.1"},
+      {:phoenix_pubsub, "~> 2.0"},
       ecto(),
       {:ecto_sql, "~> 3.4.2"},
       {:postgrex, "~> 0.15"},
@@ -11,7 +11,7 @@ defmodule Umbrella.Common.Deps do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.17.1"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.1.2"},
+      {:plug_cowboy, "~> 2.2.1"},
       {:common, in_umbrella: true},
       {:assertions, "~> 0.15", only: :test},
     ]
