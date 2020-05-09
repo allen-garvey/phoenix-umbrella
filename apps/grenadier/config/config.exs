@@ -17,7 +17,7 @@ config :grenadier, GrenadierWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: GrenadierWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Grenadier.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: Grenadier.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
