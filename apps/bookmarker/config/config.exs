@@ -16,7 +16,7 @@ config :bookmarker, Bookmarker.Endpoint,
   url: [host: "localhost"],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: Bookmarker.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Bookmarker.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: Bookmarker.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
