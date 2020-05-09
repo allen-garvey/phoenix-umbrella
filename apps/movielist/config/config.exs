@@ -17,7 +17,7 @@ config :movielist, MovielistWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: MovielistWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Movielist.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: Movielist.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,

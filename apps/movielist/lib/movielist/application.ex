@@ -11,9 +11,10 @@ defmodule Movielist.Application do
       # Start the Ecto repository
       Movielist.Repo,
       # Start the endpoint when the application starts
-      MovielistWeb.Endpoint
+      MovielistWeb.Endpoint,
       # Starts a worker by calling: Movielist.Worker.start_link(arg)
       # {Movielist.Worker, arg},
+      {Phoenix.PubSub, [name: Movielist.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
