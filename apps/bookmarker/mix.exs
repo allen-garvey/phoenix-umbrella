@@ -24,7 +24,7 @@ defmodule Bookmarker.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Bookmarker, []},
+      mod: {Bookmarker.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
