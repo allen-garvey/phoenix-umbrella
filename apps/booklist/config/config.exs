@@ -17,7 +17,7 @@ config :booklist, BooklistWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: BooklistWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Booklist.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: Booklist.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
