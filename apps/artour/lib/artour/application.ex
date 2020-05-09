@@ -14,6 +14,7 @@ defmodule Artour.Application do
       supervisor(Artour.Endpoint, []),
       # Start your own worker by calling: Artour.Worker.start_link(arg1, arg2, arg3)
       # worker(Artour.Worker, [arg1, arg2, arg3]),
+      {Phoenix.PubSub, [name: Artour.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
