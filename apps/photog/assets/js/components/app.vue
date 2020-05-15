@@ -3,13 +3,11 @@
         <Photog-Header/>
         <Flash-Alert ref="flashAlert"/>
         <router-view :get-model="get" :put-flash="putFlash" ref="routerView" :get-exif="getExif" :send-json="sendJson" :set-window-title="setWindowTitle"/>
-        <Photog-Footer/>
     </div>
 </template>
 
 <script>
 import PhotogHeader from './header.vue'
-import PhotogFooter from './footer.vue'
 import FlashAlert from './flash-alert.vue';
 import CacheUtil from '../cache-util.js'
 import { API_URL_BASE } from '../request-helpers.js';
@@ -25,7 +23,6 @@ export default {
     },
     components: {
         'Photog-Header': PhotogHeader,
-        'Photog-Footer': PhotogFooter,
         'Flash-Alert': FlashAlert,
     },
     data() {
