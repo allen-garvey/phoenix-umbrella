@@ -28,6 +28,7 @@ module.exports = {
     resolve: {
         alias: {
             'umbrella-common-js': path.resolve(__dirname, '../apps/common/assets/js/'),
+            bootstrap: path.resolve(__dirname, '../node_modules/bootstrap/scss'),
         },
     },
     module: {
