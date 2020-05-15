@@ -40,17 +40,34 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: [
+                oneOf: [
+                    // this matches `<style module>`
                     {
-                        loader: MiniCssExtractPlugin.loader,
+                        resourceQuery: /module/,
+                        use: [
+                            'vue-style-loader',
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    modules: true,
+                                }
+                            },
+                            {
+                                loader: 'sass-loader',
+                            },
+                        ]
                     },
                     {
-                        loader: 'css-loader',
+                        use: [
+                            'vue-style-loader',
+                            {
+                                loader: MiniCssExtractPlugin.loader,
+                            },
+                            'css-loader',
+                            'sass-loader',
+                        ]
                     },
-                    {
-                        loader: 'sass-loader',
-                    },
-                ]
+                ],
             },
         ]
     },
