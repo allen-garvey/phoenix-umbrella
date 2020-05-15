@@ -17,24 +17,5 @@
 
 <script>
 export default {
-    name: 'Photog-Header',
-    props: {
-
-    },
-    components: {
-    },
-    data() {
-        return {
-
-        }
-    },
-    computed: {
-
-    },
-    created() {
-    },
-    methods: {
-
-    }
 }
 </script>
