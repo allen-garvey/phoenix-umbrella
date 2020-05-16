@@ -32,11 +32,10 @@
                     :tag="isCurrentlyBatchSelect || isReordering ? 'span' : 'a'" :draggable="!isReordering">
                         {{titleFor(item)}}
                 </router-link>
-                <div 
+                <heart 
                     v-if="isThumbnailFavorited(item)" 
-                    class="heart" 
                     :draggable="!isReordering">
-                </div>
+                </heart>
             </h3>
         </li>
     </ul>
@@ -44,6 +43,7 @@
 
 <script>
 import { thumbnailUrlFor } from '../../../image.js';
+import heart from './heart.vue';
 
 export default {
     props: {
@@ -96,6 +96,9 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    components: {
+        heart,
     },
     computed: {
         thumbnailListClass(){
