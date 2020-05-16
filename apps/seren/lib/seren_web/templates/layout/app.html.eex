@@ -10,7 +10,7 @@
   </head>
 
   <body>
-    <%= render @view_module, @view_template, assigns %>
+    <%= @inner_content %>
     <script src="<%= static_path(@conn, "/assets/app.js") %>"></script>
   </body>
 </html>

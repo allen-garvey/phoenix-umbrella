@@ -30,7 +30,7 @@
     end %>
 
     <main class="<%= main_container_class(assigns[:main_container_class]) %>" role="main">
-      <%= render @view_module, @view_template, assigns %>
+      <%= @inner_content %>
     </main>
     <%= if assigns[:javascript] do
       content_tag :script, "", src: static_path(@conn, "/assets/app.js")

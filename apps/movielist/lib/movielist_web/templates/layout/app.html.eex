@@ -24,7 +24,7 @@
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-      <%= render @view_module, @view_template, assigns %>
+      <%= @inner_content %>
     </main>
     <% #only show pages require modal %>
     <%= if(assigns[:require_modal]) do %>

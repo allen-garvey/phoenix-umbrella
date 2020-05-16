@@ -21,7 +21,7 @@
       </div>
     </nav>
     <div class="container">
-      <%= render @view_module, @view_template, assigns %>
+      <%= @inner_content %>
     </div>
     <div class="modal_container" id="modal_container" style="display:none;">
       <div class="modal_overlay" id="modal_overlay"></div>
