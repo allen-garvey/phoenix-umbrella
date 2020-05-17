@@ -1,29 +1,4 @@
 /*Image show pages*/
-.image-show-thumbnail-container{
-    display: flex;
-    justify-content: center;
-}
-.image-show-link-container{
-    font-size: large;
-    text-align: center;
-	padding: 1em 0;
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	
-	a{
-		display: block;
-		margin-left: 1em;
-		&:first-of-type{
-			margin-left: 0;
-		}
-	}
-}
-
-.subsection-title{
-    margin-bottom: 7px;
-}
-
 $image_show_dt_width: 10em;
 .image-show-info-section{
 	.image-info-section-heading{

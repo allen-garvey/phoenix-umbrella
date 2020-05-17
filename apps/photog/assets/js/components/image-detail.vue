@@ -10,12 +10,12 @@
             v-if="parent"
         >
         </Parent-Thumbnails>
-        <div class="image-show-thumbnail-container">
+        <div :class="$style['image-show-thumbnail-container']">
             <a :href="masterUrl" target="_blank" rel="noreferrer">
                 <img :src="thumbnailUrlFor(image.thumbnail_path)"/>
             </a>
         </div>
-        <div class="image-show-link-container">
+        <div :class="$style['image-show-link-container']">
             <a :href="masterUrl" target="_blank" rel="noreferrer">View full-size</a>
             <a :href="amazonUrl" v-if="amazonUrl" target="_blank" rel="noreferrer">View in Amazon Photos</a>
         </div>
@@ -33,6 +33,29 @@
         <Image-Items-List :send-json="sendJson" heading="Persons" item-route-name="personsShow" :items="image.persons" :unused-items-api-url="`/images/${image.id}/persons/?unused=true`" :add-items-api-url="`/images/${image.id}/persons`" items-api-name="persons" :remove-item-api-url-base="`/images/${image.id}/persons/`" :items-updated-callback="imageItemsUpdatedBuilder('persons')" />
     </main>
 </template>
+
+<style lang="scss" module>
+    .image-show-thumbnail-container{
+        display: flex;
+        justify-content: center;
+    }
+    .image-show-link-container{
+        font-size: large;
+        text-align: center;
+        padding: 1em 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        
+        a{
+            display: block;
+            margin-left: 1em;
+            &:first-of-type{
+                margin-left: 0;
+            }
+        }
+    }
+</style>
 
 <script>
 import ParentThumbnails from './image-detail/parent-thumbnails.vue';
