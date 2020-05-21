@@ -1,10 +1,20 @@
 <template>
-    <div v-if="errorsFlattened.length > 0" class="alert alert-danger form-field-errors">
+    <div 
+        v-if="errorsFlattened.length > 0" 
+        class="alert alert-danger"
+        :class="$style['form-field-errors']"
+    >
         <ul>
             <li v-for="(error, i) in errorsFlattened" :key="i">{{error}}</li>
         </ul>
     </div>
 </template>
+
+<style lang="scss" module>
+    .form-field-errors{
+        margin-bottom: 2em;
+    }
+</style>
 
 <script>
 import vue from 'vue';
