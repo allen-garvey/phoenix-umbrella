@@ -9,7 +9,11 @@
             <Cover-Image-Form-Input :id="idForField('cover_image_id')" :errors="[errors.cover_image, errors.cover_image_id]" :images="imagesInModel" v-model="album.cover_image_id" />
         </template>
     </Form-Section>
-    <div class="album-form-tags-container container" v-if="isEditForm && this.tags.length > 0">
+    <div 
+        class="container"
+        :class="$style['album-form-tags-container']" 
+        v-if="isEditForm && this.tags.length > 0"
+    >
         <h2>Tags</h2>
         <div class="form-group">
             <ul class="spread-content">
@@ -18,11 +22,25 @@
                     <label :for="idForTag(tag)">{{tag.name}}</label>
                 </li>
             </ul>
-            <div class="pull-right btn-container"><button class="btn btn-success" @click="updateTags()">Update tags</button></div>
+            <div 
+                class="pull-right"
+                :class="$style['btn-container']"
+            >
+                <button class="btn btn-success" @click="updateTags()">Update tags</button>
+            </div>
         </div>
     </div>
 </div>
 </template>
+
+<style lang="scss" module>
+    .album-form-tags-container{
+        padding-bottom: 4rem;
+    }
+    .btn-container{
+        margin-top: 3rem;
+    }
+</style>
 
 <script>
 import Vue from 'vue';
