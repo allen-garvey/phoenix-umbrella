@@ -1,5 +1,5 @@
 <template>
-<div class="thumbnail-filter-controls-container">
+<div :class="$style['thumbnail-filter-controls-container']">
     <fieldset v-if="enableAlbumFilter">
         <label for="album_filter_mode_select">Album</label>
         <select class="form-control" id="album_filter_mode_select" v-model="localAlbumFilterMode">
@@ -18,6 +18,32 @@
     </fieldset>
 </div>
 </template>
+
+<style lang="scss" module>
+    .thumbnail-filter-controls-container{
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 2em;
+
+        //have to do this on second child,
+        //since sometimes might have only 1 filter shown
+        & > *:nth-child(2){
+            margin-left: 4em;
+        }
+
+        fieldset{
+            border: none;
+            padding: 0;
+        }
+
+        legend{
+            font-weight: bold;
+        }
+        input[type="radio"]{
+            margin-right: 1em;
+        }
+    }
+</style>
 
 <script>
 export default {
