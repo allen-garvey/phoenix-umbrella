@@ -1,5 +1,5 @@
 <template>
-    <div class="thumbnail-batch-select-container" :class="{invisible: isReordering}">
+    <div :class="{invisible: isReordering, [$style['thumbnail-batch-select-container']]: true}">
         <button
             :class="toggleBatchEditButtonClass" 
             @click="toggleBatchSelect"
@@ -16,7 +16,7 @@
         * Batch edit controls when in batch edit mode
         -->
         <div 
-            class="resource-buttons-container" 
+            :class="$style['resource-buttons-container']" 
             v-if="isCurrentlyBatchSelect"
         >
             <div v-if="enableBatchSelectImages" class="btn-group">
@@ -58,7 +58,7 @@
             * List of batch edit resources that can be added to selected items
         -->
         <div v-if="shouldShowBatchResources">
-            <ul class="batch-resources-list">
+            <ul :class="$style['batch-resources-list']">
                 <li 
                     v-for="(resource, index) in batchResourcesDisplayed" 
                     :key="resource.id"
@@ -89,6 +89,27 @@
         </div>
     </div>
 </template>
+
+<style lang="scss" module>
+    .batch-resources-list{
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 1em;
+
+        li{
+            flex-basis: 25%;
+            margin-bottom: 0.5em;
+        }
+    }
+    .thumbnail-batch-select-container{
+        display: inline-block;
+        margin-bottom: 1em;
+        
+        .resource-buttons-container{
+            margin-top: 1em;
+        }
+    }
+</style>
 
 <script>
 import { BATCH_EDIT_RESOURCE_MODE } from '../constants/batch-edit.js';

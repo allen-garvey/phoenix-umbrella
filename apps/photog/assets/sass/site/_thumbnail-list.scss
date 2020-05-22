@@ -40,28 +40,8 @@ $thumbnail_dimensions: 205px;
     }
 }
 .reorder-resources-controls-container{
-    margin-left: 1.5em;   
-}
-.thumbnail-batch-select-container, .reorder-resources-controls-container{
     display: inline-block;
-}
-
-.thumbnail-batch-select-container{
-    margin-bottom: 1em;
-    .resource-buttons-container{
-        margin-top: 1em;
-    }
-}
-
-.batch-resources-list{
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 1em;
-
-    li{
-        flex-basis: 25%;
-        margin-bottom: 0.5em;
-    }
+    margin-left: 1.5em;   
 }
 
 .thumbnail-image-container{
