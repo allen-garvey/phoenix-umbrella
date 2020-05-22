@@ -1,5 +1,5 @@
 <template>
-    <div class="reorder-resources-controls-container">
+    <div :class="$style['reorder-resources-controls-container']">
         <button class="btn" :class="reorderButtonCssClass" v-show="shouldShowReorderButton" @click="reorderButtonAction()">
             {{reorderButtonText}}
         </button>
@@ -8,6 +8,13 @@
         </button>
     </div>
 </template>
+
+<style lang="scss" module>
+    .reorder-resources-controls-container{
+        display: inline-block;
+        margin-left: 1.5em;   
+    }
+</style>
 
 <script>
 export default {
