@@ -1,5 +1,5 @@
 <template>
-    <ul class="thumbnail-list" :class="thumbnailListClass">
+    <ul :class="thumbnailListClass">
         <li 
             v-for="(item, i) in items" 
             :key="i" 
@@ -11,7 +11,7 @@
         >
             <router-link 
                 :to="showRouteFor(item, model)" 
-                class="thumbnail-image-container" 
+                :class="$style['thumbnail-image-container']" 
                 :event="thumbnailLinkEvent" 
                 :tag="isCurrentlyBatchSelect || isReordering ? 'div' : 'a'" :draggable="!isReordering"
             >
@@ -40,6 +40,92 @@
         </li>
     </ul>
 </template>
+
+<style lang="scss" module>
+    @import '~photog-styles/site/variables';
+    $thumbnail_dimensions: 205px;
+
+    .thumbnail-list{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 205px);
+        grid-gap: 20px;
+
+        li{
+            flex-basis: $thumbnail_dimensions;
+            margin-bottom: 25px;
+        }
+
+        &.batch-select li{
+            opacity: 0.65;
+            cursor: pointer;
+            &:hover{
+                opacity: 1;
+            }
+            border: 6px solid transparent;
+            border-radius: 5px;
+
+            &.batch-selected{
+                border-color: $photog_selected_highlight_color;
+                background-color: $photog_selected_highlight_color;
+                color: white;
+                opacity: 1;
+            }
+        }
+        &.reordering li{
+            border: 6px solid transparent;
+            border-radius: 5px;
+
+            &.reorder-select{
+                border-color: $photog_selected_reorder_color;
+                background-color: $photog_selected_reorder_color;
+            }
+        }
+    }
+
+    .thumbnail-image-container{
+        position: relative; //for image hearts
+
+        img{
+            height: $thumbnail_dimensions;
+            width: $thumbnail_dimensions;
+            border-radius: 10px;
+            object-fit: cover;
+            transition: height 0.3s 0.15s ease-in;
+
+            &.cover-image{
+                border: 4px solid magenta;
+            }
+
+            .hover-detail:hover &{
+                transition: height 0.15s ease;
+                height: 300px;
+            }
+        }
+    }
+    .thumbnail-title{
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        min-height: 2em;
+        font-weight: normal;
+        margin: 8px 0 0;
+        font-size: 1.125rem;
+
+        a{
+            color: black;
+        }
+
+        &.thumbnail-title-favorite{
+            a{
+                color: $photog_selected_highlight_color;
+            }
+        }
+
+        &.default-title{
+            font-size: 0.98rem;
+        }
+    }
+</style>
 
 <script>
 import { thumbnailUrlFor } from '../../../image.js';
@@ -103,8 +189,9 @@ export default {
     computed: {
         thumbnailListClass(){
             return {
-                'batch-select': this.isCurrentlyBatchSelect, 
-                'reordering': this.isReordering,
+                [this.$style['thumbnail-list']]: true,
+                [this.$style['batch-select']]: this.isCurrentlyBatchSelect, 
+                [this.$style['reordering']]: this.isReordering,
             };
         },
     },
@@ -149,20 +236,21 @@ export default {
         },
         thumbnailImageClass(item){
             return {
-                'cover-image': !this.isCurrentlyBatchSelect && this.isThumbnailCoverImage(item)
+                [this.$style['cover-image']]: !this.isCurrentlyBatchSelect && this.isThumbnailCoverImage(item)
             };
         },
         thumbnailItemClass(i){
             return {
-                'batch-selected': this.isCurrentlyBatchSelect && this.batchSelectedItems[i], 'reorder-select': this.isReordering && this.currentDragIndex === i, 
-                'hover-detail': this.showDetailHover && this.isInThumbnailDefaultMode,
+                [this.$style['batch-selected']]: this.isCurrentlyBatchSelect && this.batchSelectedItems[i], 
+                [this.$style['reorder-select']]: this.isReordering && this.currentDragIndex === i, 
+                [this.$style['hover-detail']]: this.showDetailHover && this.isInThumbnailDefaultMode,
             };
         },
         thumbnailTitleClass(item){
             return {
-                'thumbnail-title': true,
-                'default-title': !('name' in item), 
-                'thumbnail-title-favorite': this.isThumbnailFavorited(item),
+                [this.$style['thumbnail-title']]: true,
+                [this.$style['default-title']]: !('name' in item), 
+                [this.$style['thumbnail-title-favorite']]: this.isThumbnailFavorited(item),
             };
         },
     }
