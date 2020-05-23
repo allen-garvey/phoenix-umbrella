@@ -7,8 +7,12 @@
             <button type="button" @click="toggleUnusedImages" class="btn btn-default">{{this.unusedImagesButtonText}}</button>
             <button type="submit" class="btn btn-primary" :disabled="areAllImagesUnchecked">Save</button>
         </div>
-        <ul class="post-add-images-list">
-            <li v-for="(image, index) in images" :key="index" :class="{'item-selected': imagesSelected[index]}">
+        <ul :class="$style['post-add-images-list']">
+            <li 
+                v-for="(image, index) in images" 
+                :key="index" 
+                :class="{[$style['item-selected']]: imagesSelected[index]}"
+            >
                 <div>
                     <label>
                         <input type="checkbox" @change="imageChecked(index)" :checked="imagesSelected[index]" name="images[]" :value="image.id"/>
@@ -22,8 +26,35 @@
             </li>
         </ul>
     </form>
-
 </template>
+
+<style lang="scss" module>
+    @import '~artour-styles/admin/variables';
+    
+    .post-add-images-list{
+        $post_add_images_item_margin: 10px;
+        list-style-type: none;
+        padding-left: 0;
+        li{
+            display: flex;
+            align-items: center;
+            padding: 5px 8px;
+            & > *{
+                margin-right: $post_add_images_item_margin;
+            }
+            &.item-selected{
+                background-color: $item_selected_color;
+            }
+        }
+        img{
+            width: 115px;
+            cursor: pointer;
+        }
+        input[type="checkbox"]{
+            margin-right: $post_add_images_item_margin;
+        }
+    }
+</style>
 
 <script>
 import Vue from 'vue';

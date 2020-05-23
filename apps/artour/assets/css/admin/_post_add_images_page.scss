@@ -1,28 +1,4 @@
 //Styles for page to add images to post
-.post-add-images-list{
-	$post_add_images_item_margin: 10px;
-	list-style-type: none;
-	padding-left: 0;
-	li{
-		display: flex;
-		align-items: center;
-		padding: 5px 8px;
-		& > *{
-			margin-right: $post_add_images_item_margin;
-		}
-		&.item-selected{
-			background-color: $item_selected_color;
-		}
-	}
-	img{
-		width: 115px;
-		cursor: pointer;
-	}
-	input[type="checkbox"]{
-		margin-right: $post_add_images_item_margin;
-	}
-}
-
 .button-container-right{
 	display: flex;
 	justify-content: flex-end;
