@@ -12,13 +12,5 @@ export default {
             default: [],
         },
     },
-    data(){
-        return {
-        };
-    },
-    computed: {
-    },
-    methods: {
-    }
 };
 </script>
