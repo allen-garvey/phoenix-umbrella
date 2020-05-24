@@ -1,38 +1,101 @@
 <template>
     <div v-if="initialLoadComplete">
-        <ul class="list-group post-tags-list">
-            <li class="list-group-item list-group-item-info">
-                <div class="list-header">
-                    <h4 class="list-heading">Tags</h4>
-                    <div class="header-buttons-container" v-show="!addTagMode">
+        <ul 
+            class="list-group"
+            :class="$style['post-tags-list']"
+        >
+            <li 
+                class="list-group-item list-group-item-info"
+                :class="$style['list-heading-container']"
+            >
+                <div :class="$style['list-header']">
+                    <h4 :class="$style['list-heading']">Tags</h4>
+                    <div v-show="!addTagMode">
                         <button class="btn btn-primary" @click="addButtonAction()" :disabled="busy">Add</button>
                     </div>
                 </div>
-                <div class="alert alert-warning error-container" v-if="addTagMode && tagsThatCanBeAdded.length === 0">
+                <div class="alert alert-warning" v-if="addTagMode && tagsThatCanBeAdded.length === 0">
                     This post has already been tagged with all available tags. <a :href="newTagUrl" target="_blank">Want to create more?</a>
                 </div>
-                <div class="add-tags-container" v-show="addTagMode">
-                    <div class="tag-checkboxes">
+                <div :class="$style['add-tags-container']" v-show="addTagMode">
+                    <div>
                         <label v-for="(tag, index) in tagsThatCanBeAdded" :key="tag.id">
                             <input type="checkbox" @change="tagSelected(index)">{{tag.name}}
                         </label>
                     </div>
-                    <div class="add-tag-link">
+                    <div :class="$style['add-tag-link']">
                         <a :href="newTagUrl" target="_blank">Create tag</a>
                     </div>
-                    <div class="button-container-right">
+                    <div :class="$style['button-container-right']">
                         <button class="btn btn-default" @click="cancelButtonAction()">Cancel</button>
                         <button class="btn btn-success" @click="saveButtonAction()" :disabled="busy">Save</button>
                     </div>
                 </div>
             </li>
-            <li class="list-group-item tag-item" v-for="tag in tags" :key="tag.id">
+            <li 
+                class="list-group-item" 
+                :class="$style['tag-item']"
+                v-for="tag in tags" 
+                :key="tag.id"
+            >
                 {{tag.name}}
                 <button class="btn btn-danger btn-xs" @click="removeTag(tag.id)">Remove</button>
             </li>
         </ul>
     </div>
 </template>
+
+<style lang="scss" module>
+    .post-tags-list{
+        margin-bottom: 40px;
+    }
+    .list-heading-container{
+        padding-top: 1.5em;
+        padding-bottom: 1.5em;
+    }
+    .list-header{
+        display: flex;
+        justify-content: space-between;
+    }
+    .list-heading{
+        margin-top: 0;
+        font-size: 1.563em;
+    }
+    .add-tag-link{
+        margin-top: 0.5em;
+        a:before{
+            content: '+';
+            //so not underlined on hover
+            display: inline-block;
+            margin-right: 0.2em;
+            font-weight: bold;
+        }
+    }
+    .add-tags-container{
+        label{
+            margin-right: 16px;
+        }
+        input[type="checkbox"]{
+            margin-right: 10px;
+        }
+        .button-container-right{
+            display: flex;
+            justify-content: flex-end;
+            button{
+                margin-right: 12px;
+                &:last-of-type{
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+    .tag-item{
+        display: flex;
+        justify-content: space-between;
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+</style>
 
 <script>
 import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';
