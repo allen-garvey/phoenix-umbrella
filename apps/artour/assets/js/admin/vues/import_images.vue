@@ -251,7 +251,6 @@ export default {
                     imageFile.src = e.target.result;
                     Vue.set(this.imageFiles, i, imageFile);
                 };
-                console.log(imageFile);
                 reader.readAsDataURL(imageFile.file);
                 return {
                     title: imageFile.title,
