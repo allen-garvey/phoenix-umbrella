@@ -23,7 +23,7 @@ export function extractImages(files){
                 fileObject.thumb = `${uniqueName}-thumb.jpg`;
             }
             
-            if(sizeSuffix === 'thumb' || (!fileObject.src && sizeSuffix === 'sm')){
+            if(sizeSuffix === 'thumb' || (!fileObject.file && sizeSuffix === 'sm') || !fileObject.file){
                 fileObject.file = file;
             }
             imageFilesMap.set(uniqueName, fileObject);
