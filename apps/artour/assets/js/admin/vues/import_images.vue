@@ -133,10 +133,6 @@
                 outline: -webkit-focus-ring-color auto 5px;
             }
         }
-        img{
-            max-width: 300px;
-            max-height: 240px;
-        }
     }
     .images-list-container{
         ul{
@@ -170,6 +166,10 @@
         .button-container{
             display: flex;
             justify-content: flex-end;
+        }
+        img{
+            max-width: 300px;
+            max-height: 240px;
         }
     }
 </style>
