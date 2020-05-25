@@ -1,5 +1,5 @@
 <template>
-<div class="import-images-container">
+<div :class="$style['import-images-container']">
     <div v-if="isInitialLoadComplete && formats.length === 0">Add some formats first</div>
     <div v-if="isInitialLoadComplete && formats.length > 0">
         <!-- File input -->
@@ -15,13 +15,13 @@
         </div>
 
         <!-- File display -->
-        <div v-if="imageFiles.length > 0" class="images-list-container">
+        <div v-if="imageFiles.length > 0" :class="$style['images-list-container']">
             <div class="alert alert-danger" v-show="errors" ref="errorAlert">
                 <p>Oops, something went wrong! Please check the errors below.</p>
             </div>
             <ul>
                 <li v-for="(image, i) in images" :key="i">
-                    <div class="image-form">
+                    <div :class="$style['image-form']">
                         <div class="form-group">
                             <label class="control-label" :for="`image_${i}_title`">Title</label>
                             <input class="form-control" type="text" :id="`image_${i}_title`" :value="image.title" @change="valueChanged($event, i, 'title')" />
@@ -49,16 +49,28 @@
                             <input class="form-control" type="date" :id="`image_${i}_completion_date`" @change="valueChanged($event, i, 'completion_date')" />
                             <form-input-errors :errors="getError(i, 'completion_date')" />
                         </div>
-                        <div class="form-group form-group-fixed">
+                        <div 
+                            class="form-group"
+                            :class="$style['form-group-fixed']"
+                        >
                             <label>Filename large</label>{{image.filename_large}}
                         </div>
-                        <div class="form-group form-group-fixed">
+                        <div 
+                            class="form-group"
+                            :class="$style['form-group-fixed']"
+                        >
                             <label>Filename medium</label>{{image.filename_medium}}
                         </div>
-                        <div class="form-group form-group-fixed">
+                        <div 
+                            class="form-group"
+                            :class="$style['form-group-fixed']"
+                        >
                             <label>Filename small</label>{{image.filename_small}}
                         </div>
-                        <div class="form-group form-group-fixed">
+                        <div 
+                            class="form-group"
+                            :class="$style['form-group-fixed']"
+                        >
                             <label>Filename thumbnail</label>{{image.filename_thumbnail}}
                         </div>
                     </div>
@@ -67,13 +79,100 @@
                     </figure>
                 </li>
             </ul>
-            <div class="button-container">
+            <div :class="$style['button-container']">
                 <button class="btn btn-success" @click="save()">Save</button>
             </div>
         </div>
     </div>
 </div>
 </template>
+
+<style lang="scss" module>
+    .import-images-container{
+        /*
+        * File input
+        * based on: https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way
+        * and
+        * https://css-tricks.com/drag-and-drop-file-uploading/
+        */
+        input[type='file'] {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+
+            & + label {
+                cursor: pointer;
+                font-size: 1.25em;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 2px dashed #333;
+                width: 100%;
+                min-height: 300px;
+                span{
+                    font-weight: 400;
+                }
+                svg{
+                    display: block;
+                    margin: 0 auto;
+                    height: 80px;
+                    width: 80px;
+                }
+            }
+            
+            &:focus + label,
+            & + label:hover,
+            & + label.dragged-over {
+                background-color: #e8e8e8;
+            }
+            &:focus + label{
+                outline: 1px dotted #000;
+                outline: -webkit-focus-ring-color auto 5px;
+            }
+        }
+        img{
+            max-width: 300px;
+            max-height: 240px;
+        }
+    }
+    .images-list-container{
+        ul{
+            padding-left: 0;
+            list-style-type: none;
+        }
+        li{
+            display: flex;
+            justify-content: space-between;
+            padding: 2em 0;
+            border-bottom: 1px solid #e5e5e5;
+
+            &:last-of-type{
+                padding-bottom: 0;
+                border-bottom: 0;
+            }
+
+            .image-form{
+                flex-basis: 100%;
+                padding-right: 2em;
+            }
+            figure{
+                flex-basis: 300px;
+            }
+        }
+        .form-group-fixed{
+            label{
+                min-width: 165px;
+            }
+        }
+        .button-container{
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+</style>
 
 <script>
 import Vue from 'vue';
@@ -152,6 +251,7 @@ export default {
                     imageFile.src = e.target.result;
                     Vue.set(this.imageFiles, i, imageFile);
                 };
+                console.log(imageFile);
                 reader.readAsDataURL(imageFile.file);
                 return {
                     title: imageFile.title,
