@@ -3,17 +3,11 @@
     <div v-if="isInitialLoadComplete && formats.length === 0">Add some formats first</div>
     <div v-if="isInitialLoadComplete && formats.length > 0">
         <!-- File input -->
-        <div v-if="imageFiles.length < 1">
-            <input type="file" multiple ref="fileInput" id="file_input" @change="filesSelected($event)"/>
-            <label for="file_input" :class="fileLabelCLass" @drop.prevent="filesDropped($event)" @dragover.prevent="doNothing()" @dragenter="dragStart()" @dragleave="dragLeave()" @dragend.prevent="dragLeave()">
-                <div>
-                    <!-- from: https://material.io/tools/icons/?icon=cloud_upload&style=baseline -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
-                    <strong>Choose an image file</strong><span> or drag it here</span>
-                </div>
-            </label>
-        </div>
-
+        <file-input
+            v-if="imageFiles.length < 1"
+            :files-uploaded="imageFilesReplaced"
+        >
+        </file-input>
         <!-- File display -->
         <div v-if="imageFiles.length > 0" :class="$style['images-list-container']">
             <div class="alert alert-danger" v-show="errors" ref="errorAlert">
@@ -88,52 +82,6 @@
 </template>
 
 <style lang="scss" module>
-    .import-images-container{
-        /*
-        * File input
-        * based on: https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way
-        * and
-        * https://css-tricks.com/drag-and-drop-file-uploading/
-        */
-        input[type='file'] {
-            width: 0.1px;
-            height: 0.1px;
-            opacity: 0;
-            overflow: hidden;
-            position: absolute;
-            z-index: -1;
-
-            & + label {
-                cursor: pointer;
-                font-size: 1.25em;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border: 2px dashed #333;
-                width: 100%;
-                min-height: 300px;
-                span{
-                    font-weight: 400;
-                }
-                svg{
-                    display: block;
-                    margin: 0 auto;
-                    height: 80px;
-                    width: 80px;
-                }
-            }
-            
-            &:focus + label,
-            & + label:hover,
-            & + label.dragged-over {
-                background-color: #e8e8e8;
-            }
-            &:focus + label{
-                outline: 1px dotted #000;
-                outline: -webkit-focus-ring-color auto 5px;
-            }
-        }
-    }
     .images-list-container{
         ul{
             padding-left: 0;
@@ -177,6 +125,7 @@
 <script>
 import Vue from 'vue';
 import FormInputErrors from './form_input_errors.vue';
+import FileInput from './import_images/file_input.vue';
 import { extractImages } from '../import_images.js';
 import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';
 
@@ -201,6 +150,7 @@ export default {
     },
     components: {
         FormInputErrors,
+        FileInput,
     },
     created(){
         fetchJson(this.apiFormatIndexUrl).then((formats)=>{
@@ -208,42 +158,18 @@ export default {
             this.isInitialLoadComplete = true;
         });
     },
-    mounted(){
-    },
     data(){
         return {
             isInitialLoadComplete: false,
             formats: [],
             imageFiles: [],
             images: [],
-            areFilesDraggedOver: false,
             errors: null,
         };
     },
-    computed: {
-        fileLabelCLass(){
-            return this.areFilesDraggedOver ? 'dragged-over' : '';
-        },
-    },
     methods: {
-        doNothing(){
-            //required to have drag over do something
-        },
-        dragStart(){
-            this.areFilesDraggedOver = true;
-        },
-        dragLeave(){
-            this.areFilesDraggedOver = false;
-        },
-        filesSelected(event){
-            this.imageFiles = extractImages(this.$refs.fileInput.files);
-        },
-        filesDropped(event){
-            this.areFilesDraggedOver = false;
-            this.imageFiles = extractImages(event.dataTransfer.files);
-            this.imageFilesReplaced();
-        },
-        imageFilesReplaced(){
+        imageFilesReplaced(files){
+            this.imageFiles = extractImages(files);
             this.images = this.imageFiles.map((imageFile, i)=>{
                 //preview image based on: https://stackoverflow.com/questions/5802580/html-input-type-file-get-the-image-before-submitting-the-form
                 const reader = new FileReader();
