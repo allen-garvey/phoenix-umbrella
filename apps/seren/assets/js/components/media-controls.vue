@@ -1,9 +1,11 @@
 <template>
     <div class="media-controls-container">
         <template v-if="hasActiveTrack">
-            <div class="active-track-display">
-                {{activeTrackDisplay}}
-            </div>
+            <active-track-display
+                :artists-map="artistsMap"
+                :active-track="activeTrack"
+            >
+            </active-track-display>
             <track-time
                 :elapsed-time="elapsedTime"
                 :total-time="activeTrack.track.length"
@@ -22,6 +24,7 @@
 </template>
 
 <script>
+import ActiveTrackDisplay from './media-controls/active-track-display.vue';
 import TrackTime from './media-controls/track-time.vue';
 
 export default {
@@ -73,19 +76,10 @@ export default {
         },
     },
     components: {
+        ActiveTrackDisplay,
         TrackTime,
     },
 	computed: {
-		activeTrackDisplay(){
-			if(!this.hasActiveTrack){
-				return '';
-			}
-			let ret = `${this.activeTrack.track.title} - ${this.artistsMap.get(this.activeTrack.track.artist_id).name}`;
-			if(this.activeTrack.track.album_title){
-				ret = `${ret} - ${this.activeTrack.track.album_title}`;
-			}
-			return ret;
-		},
 		playButtonTitle(){
 			if(this.isPlaying){
 				return `Pause ${this.activeTrack.track.title}`;
