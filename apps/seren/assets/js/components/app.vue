@@ -1,6 +1,6 @@
 <template>
 	<div class="app-container">
-		<div class="search-bar-container">
+		<div :class="$style['search-bar-container']">
 			<input type="search" placeholder="Search tracks" v-model="searchQuery" @keyup.enter="searchForTracks" aria-labelledby="Search tracks"/>
 			<button @click="searchForTracks" :disabled="!searchQuery" class="outline-button">Search</button>
 		</div>
@@ -9,6 +9,17 @@
 		<Media-Controls :elapsed-time="elapsedTime" :is-playing="isPlaying" :is-initial-load-complete="isInitialLoadComplete" :has-active-track="hasActiveTrack" :has-previous-track="hasPreviousTrack" :has-next-track="hasNextTrack" :artists-map="artistsMap" :active-track="activeTrack" :play-next-track="playNextTrack" :play-button-action="playButtonAction" :previous-button-action="previousButtonAction" />
 	</div>
 </template>
+
+<style lang="scss" module>
+	.search-bar-container{
+		display: flex;
+		justify-content: center;
+
+		& > *{
+			font-size: 16px;
+		}
+	}
+</style>
 
 <script>
 import TrackList from './track-list.vue';
