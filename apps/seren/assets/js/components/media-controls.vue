@@ -4,10 +4,11 @@
             <div class="active-track-display">
                 {{activeTrackDisplay}}
             </div>
-            <div class="track-time">
-                <span>{{formatTrackLength(elapsedTime)}}</span>
-                <span>{{formatTrackLength(activeTrack.track.length)}}</span>
-            </div>
+            <track-time
+                :elapsed-time="elapsedTime"
+                :total-time="activeTrack.track.length"
+            >
+            <track-time>
             <div class="media-controls">
                 <button class="button-previous media-controls-button media-controls-button-rounded" @click="previousButtonAction" :disabled="!hasPreviousTrack" title="Play previous track">&#9194;</button>
                 <button class="button-play media-controls-button" :class="{'is-paused': !isPlaying}" @click="playButtonAction" :title="playButtonTitle">
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import Util from '../util';
+import TrackTime from './media-controls/track-time.vue';
 
 export default {
 	name: 'Media-Controls',
@@ -70,11 +71,10 @@ export default {
             type: Function,
             required: true,
         },
-	},
-	data(){
-		return {
-		};
-	},
+    },
+    components: {
+        TrackTime,
+    },
 	computed: {
 		activeTrackDisplay(){
 			if(!this.hasActiveTrack){
@@ -103,8 +103,5 @@ export default {
 			return '&#9654;';
 		},
 	},
-	methods: {
-        formatTrackLength: Util.formatTrackLength,
-	}
 };
 </script>
