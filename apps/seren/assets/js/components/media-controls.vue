@@ -10,7 +10,7 @@
                 :elapsed-time="elapsedTime"
                 :total-time="activeTrack.track.length"
             >
-            <track-time>
+            </track-time>
             <controls
                 :has-next-track="hasNextTrack"
                 :is-playing="isPlaying"
