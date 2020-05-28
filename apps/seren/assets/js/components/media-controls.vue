@@ -1,5 +1,5 @@
 <template>
-    <div class="media-controls-container">
+    <div :class="$style['media-controls-container']">
         <template v-if="hasActiveTrack">
             <active-track-display
                 :artists-map="artistsMap"
@@ -11,21 +11,42 @@
                 :total-time="activeTrack.track.length"
             >
             <track-time>
-            <div class="media-controls">
-                <button class="button-previous media-controls-button media-controls-button-rounded" @click="previousButtonAction" :disabled="!hasPreviousTrack" title="Play previous track">&#9194;</button>
-                <button class="button-play media-controls-button" :class="{'is-paused': !isPlaying}" @click="playButtonAction" :title="playButtonTitle">
-                    <span v-html="playButtonText"></span>
-                </button>
-                <button class="button-next media-controls-button media-controls-button-rounded" @click="playNextTrack" :disabled="!hasNextTrack" title="Play next track">&#9193;</button>
-            </div>
+            <controls
+                :has-next-track="hasNextTrack"
+                :is-playing="isPlaying"
+                :active-track="activeTrack"
+                :play-button-action="playButtonAction"
+                :previous-button-action="previousButtonAction"
+                :has-previous-track="hasPreviousTrack"
+            >
+            </controls>
         </template>
         <div v-if="!isInitialLoadComplete">Loading&hellip;</div>
     </div>
 </template>
 
+<style lang="scss" module>
+    @import '~seren-styles/variables';
+
+    .media-controls-container{
+        position: fixed;
+        bottom: 0;
+        height: $media-controls-container-height;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: $media_controls_background_color;
+        box-shadow: 0px -1px 15px rgba(41, 56, 36, 0.6);
+        padding: 24px;
+        font-size: 15px;
+    }
+</style>
+
 <script>
 import ActiveTrackDisplay from './media-controls/active-track-display.vue';
 import TrackTime from './media-controls/track-time.vue';
+import Controls from './media-controls/controls.vue';
 
 export default {
 	name: 'Media-Controls',
@@ -78,24 +99,7 @@ export default {
     components: {
         ActiveTrackDisplay,
         TrackTime,
+        Controls,
     },
-	computed: {
-		playButtonTitle(){
-			if(this.isPlaying){
-				return `Pause ${this.activeTrack.track.title}`;
-			}
-			else if(this.hasActiveTrack){
-				return `Play ${this.activeTrack.track.title}`;
-			}
-			return 'Play track';
-
-		},
-		playButtonText(){
-			if(this.isPlaying){
-				return '&#9646;&#9646;';
-			}
-			return '&#9654;';
-		},
-	},
 };
 </script>
