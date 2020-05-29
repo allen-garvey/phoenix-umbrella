@@ -1,27 +1,18 @@
 <template>
 	<div class="app-container">
-		<div :class="$style['search-bar-container']">
-			<input type="search" placeholder="Search tracks" v-model="searchQuery" @keyup.enter="searchForTracks" aria-labelledby="Search tracks"/>
-			<button @click="searchForTracks" :disabled="!searchQuery" class="outline-button">Search</button>
-		</div>
+		<search-bar
+			v-model="searchQuery"
+			:on-search-requested="searchForTracks"
+		>
+		</search-bar>
 		<Nav-Tabs :search-query="searchQuery" />
 		<router-view v-if="isInitialLoadComplete" :load-more-tracks="loadMoreTracks" :is-track-playing="isTrackPlaying" :sort-items-func="sortItems" :play-track="playTrack" :stop-track="stop" :get-items="getItems" :artists-map="artistsMap" :albums-map="albumsMap" :genres-map="genresMap" :composers-map="composersMap" />
 		<Media-Controls :elapsed-time="elapsedTime" :is-playing="isPlaying" :is-initial-load-complete="isInitialLoadComplete" :has-active-track="hasActiveTrack" :has-previous-track="hasPreviousTrack" :has-next-track="hasNextTrack" :artists-map="artistsMap" :active-track="activeTrack" :play-next-track="playNextTrack" :play-button-action="playButtonAction" :previous-button-action="previousButtonAction" />
 	</div>
 </template>
 
-<style lang="scss" module>
-	.search-bar-container{
-		display: flex;
-		justify-content: center;
-
-		& > *{
-			font-size: 16px;
-		}
-	}
-</style>
-
 <script>
+import SearchBar from './search-bar.vue';
 import TrackList from './track-list.vue';
 import NavTabs from './nav-tabs.vue';
 import MediaControls from './media-controls.vue';
@@ -36,6 +27,7 @@ let elapsedTimeTimer = null;
 export default {
 	name: 'Seren-App',
 	components: {
+		SearchBar,
 		TrackList,
 		NavTabs,
 		MediaControls,
