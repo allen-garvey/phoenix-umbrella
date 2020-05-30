@@ -83,6 +83,10 @@ export default {
             type: Boolean,
             required: true,
         },
+        playNextTrack: {
+            type: Function,
+            required: true,
+        },
     },
     computed: {
         playButtonTitle(){

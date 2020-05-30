@@ -18,6 +18,7 @@
                 :play-button-action="playButtonAction"
                 :previous-button-action="previousButtonAction"
                 :has-previous-track="hasPreviousTrack"
+                :play-next-track="playNextTrack"
             >
             </controls>
         </template>
