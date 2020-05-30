@@ -1,27 +1,85 @@
 <template>
-    <div>
-        <table class="track-list">
-            <thead>
-                <th class="col-play-btn"></th>
-                <template v-for="(column, i) in itemColumns">
-                    <th :key="i" @click="sortItems(column.sort)">{{column.title}}</th>
-                </template>
-            </thead>
-            <tbody>
-                <template v-for="(item, i) in items">
-                    <tr @dblclick="doubleClickRowAction(item, i)" :key="i">
-                        <td @click="rowPlayButtonClicked(item, i)" class="col-play-btn" :class="{'pause': canRowBePlayed && isTrackPlaying(item), 'track-play-button': canRowBePlayed}"></td>
-                        <template v-for="(field, j) in itemFields(item)">
-                            <td :key="`${item.id}${i}${field}${j}`">{{field}}</td>
-                        </template>
-                    </tr>
-                </template>
-                <infinite-observer :on-trigger="infiniteScrollTriggered" v-if="!isInfiniteScrollDisabled">
-                </infinite-observer>
-            </tbody>
-        </table>
-    </div>
+    <table :class="$style['track-list']">
+        <thead>
+            <th :class="$style['col-play-btn']"></th>
+            <template v-for="(column, i) in itemColumns">
+                <th :key="i" @click="sortItems(column.sort)">{{column.title}}</th>
+            </template>
+        </thead>
+        <tbody>
+            <tr 
+                v-for="(item, i) in items"
+                :key="i"
+                @dblclick="doubleClickRowAction(item, i)"
+            >
+                <td 
+                    @click="rowPlayButtonClicked(item, i)" 
+                    :class="trackButtonClasses(item)"
+                >
+                </td>
+                <td 
+                    v-for="(field, j) in itemFields(item)"
+                    :key="`${item.id}${i}${field}${j}`"
+                >
+                    {{field}}
+                </td>
+            </tr>
+            <infinite-observer 
+                :on-trigger="infiniteScrollTriggered" 
+                v-if="!isInfiniteScrollDisabled"
+            >
+            </infinite-observer>
+        </tbody>
+    </table>
 </template>
+
+<style lang="scss" module>
+    .track-list{
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+
+        thead{
+            background: #b6cfe7;
+        }
+        th, td{
+            padding: 0.5em;
+        }
+        th{
+            text-align: left;
+            cursor: pointer;
+        }
+
+        tbody tr{
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            
+            &:nth-of-type(even){
+                background: #e6f2fe;
+            }
+            //has to be after nth-of-type or it won't work
+            &:active{
+                background: dodgerblue;
+            }
+        }
+    }
+
+    .col-play-btn{
+        width: 50px;
+    }
+
+    .track-play-button{
+        cursor: pointer;
+
+        &:hover::after{
+            content: 'Play';
+        }
+
+        &.pause::after{
+            content: 'Pause';
+        }
+    }
+</style>
 
 <script>
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
@@ -116,6 +174,13 @@ export default {
         },
     },
 	methods: {
+        trackButtonClasses(item){
+            return {
+                [this.$style['col-play-btn']]: true,
+                [this.$style.pause]: this.canRowBePlayed && this.isTrackPlaying(item), 
+                [this.$style['track-play-button']]: this.canRowBePlayed,
+            };
+        },
         loadItems(){
             this.items = [];
             this.getItems(this.getItemsKey).then((items)=>{
