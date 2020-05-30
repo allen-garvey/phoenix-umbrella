@@ -1,5 +1,5 @@
 <template>
-    <div class="media-controls">
+    <div :class="$style['media-controls']">
         <button 
             :class="[$style.button, $style['button-previous'], $style['button-rounded']]" 
             @click="previousButtonAction" 
@@ -22,6 +22,11 @@
 </template>
 
 <style lang="scss" module>
+    .media-controls{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
     .button{
         cursor: pointer;
         font-size: 24px;
@@ -40,10 +45,14 @@
         height: 48px;
         width: 48px;
         border-radius: 50%;
+        margin: 0 5px;
         //play icon doesn't get perfectly centered
-        &.is-paused span{
+        &.play-icon span{
             position: relative;
             left: 2px;
+        }
+        &.pause-icon{
+            font-size: 15px;
         }
     }
     .button-rounded{
@@ -51,7 +60,11 @@
         height: 34px;
         width: 34px;
     }
+    .button-previous{
+        padding: 0;
+    }
     .button-next{
+        padding: 0;
         margin-right: 0;
     }
 </style>
@@ -108,7 +121,8 @@ export default {
             return {
                 [this.$style.button]: true,
                 [this.$style['button-play']]: true,
-                [this.$style['is-paused']]: !this.isPlaying,
+                [this.$style['play-icon']]: !this.isPlaying,
+                [this.$style['pause-icon']]: this.isPlaying,
             };
         },
     },
