@@ -45,6 +45,7 @@
 
         thead{
             background: #b6cfe7;
+            font-family: sans-serif;
         }
         th, td{
             padding: 0.5em;
