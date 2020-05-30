@@ -2,9 +2,13 @@
     <table :class="$style['track-list']">
         <thead>
             <th :class="$style['col-play-btn']"></th>
-            <template v-for="(column, i) in itemColumns">
-                <th :key="i" @click="sortItems(column.sort)">{{column.title}}</th>
-            </template>
+            <th 
+                v-for="(column, i) in itemColumns"
+                :key="i" 
+                @click="sortItems(column.sort)"
+            >
+                {{column.title}}
+            </th>
         </thead>
         <tbody>
             <tr 
