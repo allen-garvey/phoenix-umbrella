@@ -28,11 +28,15 @@
                     {{field}}
                 </td>
             </tr>
-            <infinite-observer 
-                :on-trigger="infiniteScrollTriggered" 
-                v-if="!isInfiniteScrollDisabled"
-            >
-            </infinite-observer>
+            <tr>
+                <td :colspan="itemColumns.length + 1">
+                    <infinite-observer 
+                        :on-trigger="infiniteScrollTriggered" 
+                        v-if="!isInfiniteScrollDisabled"
+                    >
+                    </infinite-observer>
+                </td>
+            </tr>
         </tbody>
     </table>
 </template>
@@ -193,10 +197,10 @@ export default {
             });
         },
         infiniteScrollTriggered($state){
-            this.loadMoreTracks().then(()=>{
-                this.loadItems();
-                $state.loaded();
-            });
+            // this.loadMoreTracks().then(()=>{
+            //     this.loadItems();
+            //     $state.loaded();
+            // });
         },
 		sortItems(key){
 			if(key !== this.previousSortKey){
