@@ -197,10 +197,10 @@ export default {
             });
         },
         infiniteScrollTriggered($state){
-            // this.loadMoreTracks().then(()=>{
-            //     this.loadItems();
-            //     $state.loaded();
-            // });
+            this.loadMoreTracks().then(()=>{
+                this.loadItems();
+                $state.loaded();
+            });
         },
 		sortItems(key){
 			if(key !== this.previousSortKey){
