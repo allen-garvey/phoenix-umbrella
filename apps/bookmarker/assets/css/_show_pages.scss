@@ -16,53 +16,6 @@
 	margin-bottom: 0.5em;
 }
 
-/*bookmark lists for folder and tag show pages*/
-
-.bookmark-url, 
-.folder-bookmark-list .bookmark-description{
-	font-size: 0.9em;
-}
-.bookmark-url{
-	color: #888;
-}
-.bookmark-title{
-	font-size: 16px;
-}
-
-.folder-bookmark-list{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	margin-top: 0;
-	.list-group-item{
-		border: none;
-	}
-	.bookmark-item{
-		flex-basis: 33%;
-
-		@media screen and (max-width: 870px){
-			flex-basis: 50%;
-		}
-		@media screen and (max-width: 584px){
-			flex-basis: 100%;
-		}
-	}
-	.bookmark-header-container{
-		margin-bottom: 5px;
-	}
-	.bookmark-title-container{
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		margin-bottom: 3px;
-	}
-	.bookmark-thumbnail-container{
-		&:empty{
-			display: none;
-		}
-	}
-}
-
 
 /*Bookmark Show Page*/
 .tag-list{
