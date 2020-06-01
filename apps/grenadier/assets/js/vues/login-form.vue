@@ -26,8 +26,6 @@ export default {
             required: true,
         },
     },
-    components: {
-    },
     directives: {
         focus,
     },
@@ -37,8 +35,6 @@ export default {
             username: '',
             password: '',
         };
-    },
-    computed: {
     },
     methods: {
         showForm(){
