@@ -83,8 +83,6 @@ export default {
             busy: false,
         };
     },
-    computed: {
-    },
     methods: {
         addButtonAction(){
             this.busy = true;
