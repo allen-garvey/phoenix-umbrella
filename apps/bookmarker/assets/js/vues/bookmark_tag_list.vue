@@ -1,29 +1,47 @@
 <template>
     <div v-if="initialLoadComplete">
-        <ul class="list-group tag-list">
+        <ul 
+            class="list-group"
+            :class="$style['tag-list']"
+        >
             <li class="list-group-item list-group-item-info">
-            <div class="tag-list-header">
-                <h4>Tags</h4>
-                <div>
-                    <button class="btn btn-success" @click="addButtonAction()" :disabled="busy" v-show="!addTagMode">Add</button>
-                </div>
-            </div>
-            <div class="add-tag-container" v-show="addTagMode">
-                <div class="add-tag-select-container" v-show="tagsThatCanBeAdded.length > 0">
-                    <select class="form-control tag-select" ref="tagSelect">
-                        <option v-for="tag in tagsThatCanBeAdded" :key="tag.id">{{tag.name}}</option>
-                    </select>
+                <div :class="$style['tag-list-header']">
+                    <h4>Tags</h4>
                     <div>
-                        <button class="btn btn-default" @click="cancelButtonAction()">Cancel</button>
-                        <button class="btn btn-success" @click="saveButtonAction()" :disabled="busy">Save</button>
+                        <button class="btn btn-success" @click="addButtonAction()" :disabled="busy" v-show="!addTagMode">Add</button>
                     </div>
                 </div>
-                <div class="add-tag-alert alert alert-warning" v-show="tagsThatCanBeAdded.length === 0">
-                    This bookmark has already been tagged with all available tags. <a :href="newTagUrl">Want to create more?</a>
+                <div :class="$style['add-tag-container']" v-show="addTagMode">
+                    <div 
+                        :class="$style['add-tag-select-container']" v-show="tagsThatCanBeAdded.length > 0"
+                    >
+                        <select 
+                            class="form-control" 
+                            :class="$style['tag-select']"
+                            ref="tagSelect"
+                        >
+                            <option v-for="tag in tagsThatCanBeAdded" :key="tag.id">{{tag.name}}</option>
+                        </select>
+                        <div>
+                            <button class="btn btn-default" @click="cancelButtonAction()">Cancel</button>
+                            <button class="btn btn-success" @click="saveButtonAction()" :disabled="busy">Save</button>
+                        </div>
+                    </div>
+                    <div 
+                        class="alert alert-warning" 
+                        :class="$style['add-tag-alert']"
+                        v-show="tagsThatCanBeAdded.length === 0"
+                    >
+                        This bookmark has already been tagged with all available tags. <a :href="newTagUrl">Want to create more?</a>
+                    </div>
                 </div>
-            </div>
             </li>
-            <li class="list-group-item" v-for="tag in tags" :key="tag.id">
+            <li 
+                class="list-group-item" 
+                :class="$style['tag-item']"
+                v-for="tag in tags" 
+                :key="tag.id"
+            >
                 <div><a :href="tag.urls.show">{{tag.name}}</a></div>
                 <div>
                     <button class="btn btn-danger btn-xs" @click="removeTag(tag.id)">Remove</button>
@@ -32,6 +50,34 @@
         </ul>
     </div>
 </template>
+
+<style lang="scss" module>
+    .tag-item, 
+    .tag-list-header,
+    .add-tag-select-container{
+        display: flex;
+        justify-content: space-between;
+    }
+    .tag-item{
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+    .add-tag-alert{
+        display: block;
+    }
+    .tag-select{
+        flex-basis: 85%;
+    }
+
+    @media screen and (max-width: 1000px){
+        .add-tag-select-container{
+            flex-direction: column;
+        }
+        .tag-select{
+            margin-bottom: 1em;
+        }
+    }
+</style>
 
 <script>
 import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';

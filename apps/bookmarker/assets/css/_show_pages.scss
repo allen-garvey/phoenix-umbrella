@@ -15,37 +15,3 @@
 .show-attribute-list li{
 	margin-bottom: 0.5em;
 }
-
-
-/*Bookmark Show Page*/
-.tag-list{
-	li.list-group-item:not(.list-group-item-info), .tag-list-header{
-		display: flex;
-		justify-content: space-between;
-	}
-	li.list-group-item:not(:first-child){
-		padding-top: 1em;
-		padding-bottom: 1em;
-	}
-	.add-tag-container.error .add-tag-alert{
-		display: block;
-	}
-	.add-tag-select-container{
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.tag-select{
-		flex-basis: 85%;
-	}
-}
-
-@media screen and (max-width: 1000px){
-	.add-tag-select-container{
-		flex-direction: column;
-	}
-	.tag-select{
-		margin-bottom: 1em;
-	}
-}
-
