@@ -2,16 +2,16 @@ defmodule Umbrella.Common.Deps do
   # Shared dependencies for phoenix projects
   def shared_phoenix_deps do
     [
-      {:phoenix, "~> 1.5.1"},
+      {:phoenix, "~> 1.5.3"},
       {:phoenix_pubsub, "~> 2.0"},
       ecto(),
-      {:ecto_sql, "~> 3.4.2"},
+      {:ecto_sql, "~> 3.4.5"},
       {:postgrex, "~> 0.15"},
       {:phoenix_html, "~> 2.14"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_reload, "~> 1.2.4", only: :dev},
       {:gettext, "~> 0.17.1"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.2.1"},
+      {:plug_cowboy, "~> 2.3.0"},
       {:common, in_umbrella: true},
       {:assertions, "~> 0.15", only: :test},
     ]
@@ -29,15 +29,15 @@ defmodule Umbrella.Common.Deps do
   end
 
   def http_poison do
-    {:httpoison, "~> 1.6.2"}
+    {:httpoison, "~> 1.7.0"}
   end
 
   def floki do
-    {:floki, "~> 0.26.0"}
+    {:floki, "~> 0.27.0"}
   end
 
   def earmark do
-    {:earmark, "~> 1.4.3"}
+    {:earmark, "~> 1.4.9"}
   end
 
   def argon2 do
