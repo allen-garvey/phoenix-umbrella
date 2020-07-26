@@ -53,6 +53,7 @@ module.exports = {
                                 loader: 'css-loader',
                                 options: {
                                     url: false,
+                                    esModule: false,
                                     modules: {
                                         localIdentName: '[local]_[hash:base64:8]',
                                     },
