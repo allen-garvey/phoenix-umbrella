@@ -52,6 +52,7 @@ module.exports = {
                             {
                                 loader: 'css-loader',
                                 options: {
+                                    url: false,
                                     modules: {
                                         localIdentName: '[local]_[hash:base64:8]',
                                     },
@@ -68,7 +69,7 @@ module.exports = {
                             {
                                 loader: MiniCssExtractPlugin.loader,
                             },
-                            'css-loader',
+                            'css-loader?url=false',
                             'sass-loader',
                         ]
                     },
