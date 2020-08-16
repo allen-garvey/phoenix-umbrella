@@ -102,9 +102,7 @@ export default {
 				const searchQuery = this.$route.query.q;
 				if(!searchQuery || this.savedSearchResultsQuery === searchQuery){
 					const searchResults = !searchQuery ? [] : this.searchResults;
-					return new Promise((resolve, reject)=>{
-						resolve(searchResults);
-					});
+					return Promise.resolve(searchResults);
 				}
 				const searchUrl = `${API_URL_BASE}/search/tracks?q=${encodeURIComponent(searchQuery)}`;
 				return fetchJson(searchUrl).then((searchResults)=>{
@@ -113,10 +111,7 @@ export default {
 					return this.searchResults;
 				});
 			}
-
-			return new Promise((resolve, reject)=>{
-				resolve(this[key]);
-			});
+			return Promise.resolve(this[key]);
 		},
 		loadMoreTracks(){
 			const offset = this.tracks ? this.tracks.length : false;
