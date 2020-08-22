@@ -29,10 +29,10 @@
     "mini-css-extract-plugin": "^0.10.0",
     "node-sass": "^4.14.1",
     "sass-loader": "^9.0.3",
-    "vue": "^2.6.11",
+    "vue": "^2.6.12",
     "vue-loader": "^15.9.3",
     "vue-router": "^3.4.3",
-    "vue-template-compiler": "^2.6.11",
+    "vue-template-compiler": "^2.6.12",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-livereload-plugin": "^2.3.0"
