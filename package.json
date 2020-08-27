@@ -25,10 +25,10 @@
   "homepage": "https://github.com/allen-garvey/phoenix-umbrella#readme",
   "devDependencies": {
     "bootstrap": "^4.5.2",
-    "css-loader": "^4.2.1",
-    "mini-css-extract-plugin": "^0.10.0",
+    "css-loader": "^4.2.2",
+    "mini-css-extract-plugin": "^0.11.0",
     "node-sass": "^4.14.1",
-    "sass-loader": "^9.0.3",
+    "sass-loader": "^10.0.1",
     "vue": "^2.6.12",
     "vue-loader": "^15.9.3",
     "vue-router": "^3.4.3",
