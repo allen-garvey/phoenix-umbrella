@@ -2,7 +2,7 @@ defmodule Umbrella.Common.Deps do
   # Shared dependencies for phoenix projects
   def shared_phoenix_deps do
     [
-      {:phoenix, "~> 1.5.3"},
+      {:phoenix, "~> 1.5.4"},
       {:phoenix_pubsub, "~> 2.0"},
       ecto(),
       {:ecto_sql, "~> 3.4.5"},
@@ -25,7 +25,7 @@ defmodule Umbrella.Common.Deps do
   end
 
   def ecto do
-    {:phoenix_ecto, "~> 4.1"}
+    {:phoenix_ecto, "~> 4.2"}
   end
 
   def http_poison do
@@ -33,7 +33,7 @@ defmodule Umbrella.Common.Deps do
   end
 
   def floki do
-    {:floki, "~> 0.27.0"}
+    {:floki, "~> 0.28.0"}
   end
 
   def earmark do
