@@ -88,6 +88,7 @@ module.exports = {
         }),
         generateFaviconsPlugin([
             'artour',
+            'blockquote',
             'booklist',
             'bookmarker',
             'grenadier',
