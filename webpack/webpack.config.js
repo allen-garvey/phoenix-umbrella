@@ -3,6 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const pathHelpers = require('./path.js');
+const generateFaviconsPlugin = require('./generate-favicons-plugin');
 
 module.exports = {
     mode: "development",
@@ -85,5 +86,15 @@ module.exports = {
                 return pathHelpers.outputPathForApp(chunk.name, 'css');
             },
         }),
+        generateFaviconsPlugin([
+            'artour',
+            'booklist',
+            'bookmarker',
+            'grenadier',
+            'movielist',
+            'photog',
+            'seren',
+            'startpage',
+        ]),
     ],
 };
