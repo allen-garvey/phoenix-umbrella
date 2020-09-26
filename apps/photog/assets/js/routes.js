@@ -8,7 +8,6 @@ import PersonForm from './components/person-form.vue';
 import TagForm from './components/tag-form.vue';
 
 export default {
-    mode: 'history',
     routes: [
         { 
             path: '/', 

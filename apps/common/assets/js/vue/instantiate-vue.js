@@ -1,7 +1,7 @@
-import Vue from 'vue'
+import { createApp } from 'vue';
 
 
-export function instantiateVue(containerId, vueComponent, propKeys=[], options={}){
+export function instantiateVue(containerId, vueComponent, propKeys=[], router=null){
     const containerEl = document.getElementById(containerId);
     if(!containerEl){
         return;
@@ -11,8 +11,11 @@ export function instantiateVue(containerId, vueComponent, propKeys=[], options={
         return props;
     }, {});
 
-    options.el = containerEl;
-    options.render = h => h(vueComponent, {props});
+    const app = createApp(vueComponent, props);
     
-    new Vue(options);
+    if(router){
+        app.use(app);
+    }
+
+    app.mount(containerEl);
 }
