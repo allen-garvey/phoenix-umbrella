@@ -182,6 +182,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        isInThumbnailDefaultMode: {
+            type: Boolean,
+            required: true,
+        },
     },
     components: {
         heart,

@@ -68,6 +68,7 @@
             :is-reordering="isReordering"
             :is-currently-batch-select="isCurrentlyBatchSelect"
             :show-detail-hover="showDetailHover"
+            :is-in-thumbnail-default-mode="isInThumbnailDefaultMode"
         >
         </thumbnail-items-list>
         <infinite-observer :on-trigger="loadMoreThumbnails" v-if="isInitialLoadComplete">
