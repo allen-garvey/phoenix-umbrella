@@ -1,12 +1,12 @@
 const path = require('path');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const pathHelpers = require('./path.js');
 const generateFaviconsPlugin = require('./generate-favicons-plugin');
 
 module.exports = {
-    mode: "development",
+    mode: 'development',
     entry: {
         'photog': pathHelpers.defaultEntrypointForApp('photog'),
         'seren': pathHelpers.defaultEntrypointForApp('seren'),
