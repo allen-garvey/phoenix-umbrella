@@ -3,7 +3,6 @@
 // its own CSS file.
 import css from "../css/app.scss"
 
-import Vue from 'vue';
 import { instantiateVue } from 'umbrella-common-js/vue/instantiate-vue.js';
 import LoginForm from './vues/login-form.vue';
 

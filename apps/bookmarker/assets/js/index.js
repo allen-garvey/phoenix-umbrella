@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import { instantiateVue } from 'umbrella-common-js/vue/instantiate-vue.js';
 
 import BookmarkTagList from './vues/bookmark_tag_list.vue';

@@ -17,8 +17,6 @@
 </style>
 
 <script>
-import vue from 'vue';
-
 import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';
 
 export default {
