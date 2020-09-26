@@ -43,8 +43,6 @@
 </style>
 
 <script>
-import Vue from 'vue';
-
 import { formMixinBuilder } from './mixins/form-mixin.js';
 import { albumAndPersonFormMixinBuilder } from './mixins/album-and-person-form-mixin.js';
 import { toApiResource } from '../form-helpers.js';
@@ -91,7 +89,7 @@ export default {
             return `album_tag_${tag.id}_checkbox_id`;
         },
         tagChecked(tagId){
-            Vue.set(this.tagsActive, tagId, !this.tagsActive[tagId]);
+            this.tagsActive[tagId] = !this.tagsActive[tagId];
         },
         updateTags(){
             const tag_ids = this.tags.reduce((tagIds, tag)=>{

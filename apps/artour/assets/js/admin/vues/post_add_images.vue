@@ -57,7 +57,6 @@
 </style>
 
 <script>
-import Vue from 'vue';
 import { fetchJson } from 'umbrella-common-js/ajax.js';
 
 export default {
@@ -122,8 +121,7 @@ export default {
     },
     methods: {
         imageChecked(index){
-            //need to use vue.set to mutate array directly
-            Vue.set(this.imagesSelected, index, !this.imagesSelected[index]);
+            this.imagesSelected[index] = !this.imagesSelected[index];
         },
         toggleSelectAllImages(){
             if(this.areAllImagesChecked){

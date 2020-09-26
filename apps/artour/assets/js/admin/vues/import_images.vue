@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import FileInput from './import_images/file_input.vue';
 import FilesDisplay from './import_images/files_display.vue';
 import { extractImages } from '../import_images.js';
@@ -74,7 +73,7 @@ export default {
                 const reader = new FileReader();
                 reader.onload = (e)=>{
                     imageFile.src = e.target.result;
-                    Vue.set(this.imageFiles, i, imageFile);
+                    this.imageFiles[i] = imageFile;
                 };
                 reader.readAsDataURL(imageFile.file);
                 return {
@@ -94,7 +93,7 @@ export default {
             const newValue = event.target.value;
             const image = this.images[index];
             image[key] = newValue;
-            Vue.set(this.images, index, image);
+            this.images[index] = image;
         },
         save(){
             const data = {images: this.images};

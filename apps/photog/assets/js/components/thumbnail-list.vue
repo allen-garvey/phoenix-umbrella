@@ -76,7 +76,6 @@
 </template>
 
 <script>
-import vue from 'vue';
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 
 import ResourceHeader from './resource-header.vue';
@@ -353,11 +352,11 @@ export default {
                 }
                 //for loop is inclusive
                 for(let index=startIndex;index<=endIndex;index++){
-                    vue.set(this.batchSelectedItems, index, true);
+                    this.batchSelectedItems[index] = true;
                 }
             }
             else{
-                vue.set(this.batchSelectedItems, i, !this.batchSelectedItems[i]);
+                this.batchSelectedItems[i] = !this.batchSelectedItems[i];
             }
             this.previouslySelectedBatchItemIndex = i;
         },
