@@ -14,7 +14,7 @@ export function instantiateVue(containerId, vueComponent, propKeys=[], router=nu
     const app = createApp(vueComponent, props);
     
     if(router){
-        app.use(app);
+        app.use(router);
     }
 
     app.mount(containerEl);
