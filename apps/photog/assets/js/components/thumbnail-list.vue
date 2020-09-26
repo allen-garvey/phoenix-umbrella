@@ -183,9 +183,6 @@ export default {
         ThumbnailItemsList,
         InfiniteObserver,
     },
-    created(){
-        this.setup();
-    },
     data() {
         return {
             isInitialLoadComplete: false,
@@ -258,10 +255,8 @@ export default {
             return this.supportsReorder && !this.isCurrentlyBatchSelect && this.albumFilterMode === ALBUM_FILTER_MODE_ALL && this.personFilterMode === PERSON_FILTER_MODE_ALL && this.filteredThumbnailList.length > 1;
         },
     },
-    watch: {
-        '$route'(to, from){
-            this.setup();
-        },
+    beforeRouteEnter(to, from, next){
+        next((self) => self.setup());
     },
     methods: {
         setup(){
