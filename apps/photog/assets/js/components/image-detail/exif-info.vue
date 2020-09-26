@@ -2,23 +2,27 @@
     <image-info-section
         heading="Exif"
     >
-        <template v-for="sectionKey in Object.keys(imageExif).sort()">
+        <template 
+            v-for="sectionKey in Object.keys(imageExif).sort()"
+            :key="sectionKey" 
+        >
             <h4 
-                :key="sectionKey+'_heading'" 
                 :class="$style['image-exif-heading']"
             >
                 {{formatExifPropertyName(sectionKey)}}
             </h4>
-            <dl :key="sectionKey+'_list'">
-                <template v-for="sectionPropertyKey in Object.keys(imageExif[sectionKey]).sort()">
+            <dl>
+                <template 
+                    v-for="sectionPropertyKey in Object.keys(imageExif[sectionKey]).sort()"
+                    :key="`${sectionKey}_${sectionPropertyKey}`"
+                >
                     <dt 
-                        :key="`${sectionKey}_${sectionPropertyKey}_dt`" 
+                        
                         v-if="imageExif[sectionKey][sectionPropertyKey]"
                     >
                             {{formatExifPropertyName(sectionPropertyKey)}}
                     </dt>
                     <dd 
-                        :key="`${sectionKey}_${sectionPropertyKey}_dd`" 
                         v-if="imageExif[sectionKey][sectionPropertyKey]"
                     >
                         {{imageExif[sectionKey][sectionPropertyKey]}}

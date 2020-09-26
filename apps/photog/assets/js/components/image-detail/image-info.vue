@@ -5,8 +5,9 @@
         <dl>
             <dt>Master path</dt>
             <dd>
-                <template v-for="(part, i) in masterPathSplit">
-                    <span :key="i">{{part}}</span><strong :key="`${i}-slash`" :class="$style['image-info-master-path-slash']">/</strong>
+                <template v-for="(part, i) in masterPathSplit" :key="i">
+                    <span>{{part}}</span>
+                    <strong :class="$style['image-info-master-path-slash']">/</strong>
                 </template>
             </dd>
             <dt>Date Taken</dt>
