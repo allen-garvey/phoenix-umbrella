@@ -85,7 +85,7 @@ export default {
     },
     directives: {
         scrollToSelectedItem: {
-            inserted(el, binding){
+            mounted(el, binding){
                 const selectedItemSelector = binding.value;
                 const currentItem = el.querySelector(selectedItemSelector);
                 if(currentItem){

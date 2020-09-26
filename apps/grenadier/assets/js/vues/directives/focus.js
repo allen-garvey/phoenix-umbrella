@@ -3,8 +3,7 @@
 
 export default{
     name: 'focus',
-    inserted(el){
-        console.log('v-focus');
+    mounted(el){
         el.focus();
     }
 };
