@@ -63,7 +63,7 @@ export default {
         },
         //should be number, but can't specify it or we get 
         //all kinds of problems
-        value: {
+        modelValue: {
             required: true,
         },
         errors: {
@@ -79,7 +79,7 @@ export default {
         'Form-Input': FormInput,
     },
     created(){
-        this.coverImageId = this.value;
+        this.coverImageId = this.modelValue;
     },
     data(){
         return {
@@ -93,7 +93,7 @@ export default {
     },
     watch: {
         coverImageId(newValue){
-            this.$emit('input', newValue);
+            this.$emit('update:modelValue', newValue);
         },
     },
     methods: {

@@ -17,7 +17,7 @@ export default {
             type: String,
             required: true,
         },
-        value: {
+        modelValue: {
             required: true,
         },
         inputType: {
@@ -42,7 +42,7 @@ export default {
     created(){
         //have to create copy, otherwise have problem with mutating
         //object properties directly
-        this.internalValue = this.value;
+        this.internalValue = this.modelValue;
     },
     data(){
         return {
@@ -56,7 +56,7 @@ export default {
     },
     watch: {
         internalValue(newValue){
-            this.$emit('input', newValue);
+            this.$emit('update:modelValue', newValue);
         },
     },
 }
