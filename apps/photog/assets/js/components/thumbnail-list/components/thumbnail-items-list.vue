@@ -9,11 +9,23 @@
             @dragstart="itemDragStart(i)" 
             @dragover="itemDragOver(i, $event)"
         >
+            <div 
+                :class="$style['thumbnail-image-container']" 
+                v-if="isLinkDisabled"
+            >
+                <img 
+                    :alt="altTextFor(item)" 
+                    :src="thumbnailUrlFor(item)" 
+                    :class="thumbnailImageClass(item)"
+                    :draggable="!isReordering"
+                />
+            </div>
             <router-link 
                 :to="showRouteFor(item, model)" 
                 :class="$style['thumbnail-image-container']" 
                 :event="thumbnailLinkEvent" 
-                :tag="isCurrentlyBatchSelect || isReordering ? 'div' : 'a'" :draggable="!isReordering"
+                :draggable="!isReordering"
+                v-else
             >
                 <img 
                     :alt="altTextFor(item)" 
@@ -26,10 +38,17 @@
                 :class="thumbnailTitleClass(item)" 
                 :draggable="!isReordering"
             >
+                <span
+                    v-if="isLinkDisabled"
+                >
+                    {{titleFor(item)}}
+                </span>
                 <router-link 
                     :to="showRouteFor(item, model)" 
                     :event="thumbnailLinkEvent" 
-                    :tag="isCurrentlyBatchSelect || isReordering ? 'span' : 'a'" :draggable="!isReordering">
+                    :draggable="!isReordering"
+                    v-else
+                >
                         {{titleFor(item)}}
                 </router-link>
                 <heart 
@@ -197,6 +216,9 @@ export default {
                 [this.$style['batch-select']]: this.isCurrentlyBatchSelect, 
                 [this.$style['reordering']]: this.isReordering,
             };
+        },
+        isLinkDisabled(){
+            return this.isCurrentlyBatchSelect || this.isReordering;
         },
     },
     methods: {
