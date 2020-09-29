@@ -3,14 +3,14 @@
         <input 
             type="search" 
             placeholder="Search tracks" 
-            :value="value"
-            @input="$emit('input', $event.target.value)"
+            :value="modelValue"
+            @input="$emit('update:modelValue', $event.target.value)"
             @keyup.enter="onSearchRequested" 
             aria-labelledby="Search tracks"
         />
         <button 
             @click="onSearchRequested" 
-            :disabled="!value" 
+            :disabled="!modelValue" 
             :class="$style['outline-button']"
         >
             Search
@@ -56,7 +56,7 @@
 <script>
 export default {
     props: {
-        value: {
+        modelValue: {
             type: String,
             required: true,
         },
