@@ -161,10 +161,6 @@ export default {
             required: true,
         },
     },
-	created(){
-        //watch for $route will not be called on initial load
-        this.loadItems();
-	},
 	data(){
 		return {
             items: [],
@@ -177,10 +173,13 @@ export default {
             return !this.routeForItem;
         },
     },
-    watch: {
-        '$route'(){
-            this.loadItems();
-        },
+    beforeRouteLeave(to, from, ){
+        this.items = [];
+    },
+    beforeRouteEnter(to, from, next){
+        next((self) => {
+            self.loadItems();
+        });
     },
 	methods: {
         trackButtonClasses(item){
