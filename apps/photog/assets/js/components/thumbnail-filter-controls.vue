@@ -85,12 +85,12 @@ export default {
         },
         localAlbumFilterMode(newValue, oldValue){
             if(newValue != oldValue){
-                this.$emit('album-filter-mode-changed', newValue);
+                this.$emit('update:albumFilterMode', newValue);
             }
         },
         localPersonFilterMode(newValue, oldValue){
             if(newValue != oldValue){
-                this.$emit('person-filter-mode-changed', newValue);
+                this.$emit('update:personFilterMode', newValue);
             }
         },
     },

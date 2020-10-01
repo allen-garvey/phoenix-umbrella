@@ -14,11 +14,10 @@
             * Filtering controls 
         -->
         <Thumbnail-Filter-Controls 
-            :class="{invisible: isCurrentlyBatchSelect || isReordering}" :enable-album-filter="enableHasAlbumFilter" :enable-person-filter="enableHasPersonFilter" 
-            :album-filter-mode="albumFilterMode" 
-            :person-filter-mode="personFilterMode"
-            @album-filter-mode-changed="(newValue)=>{this.albumFilterMode = newValue;}"
-            @person-filter-mode-changed="(newValue)=>{this.personFilterMode = newValue;}"
+            :class="{invisible: isCurrentlyBatchSelect || isReordering}" :enable-album-filter="enableHasAlbumFilter" 
+            :enable-person-filter="enableHasPersonFilter" 
+            v-model:album-filter-mode="albumFilterMode" 
+            v-model:person-filter-mode="personFilterMode"
         />
 
         <!-- 
