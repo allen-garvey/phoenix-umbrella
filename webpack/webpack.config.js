@@ -22,8 +22,8 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, '..', 'apps'),
-        filename: (info) => {
-            return pathHelpers.outputPathForApp(info.chunk.name, 'js');
+        filename: ({ chunk }) => {
+            return pathHelpers.outputPathForApp(chunk.name, 'js');
         },
     },
     resolve: {
@@ -82,7 +82,7 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
-            moduleFilename: (chunk) => {
+            filename: ({ chunk }) => {
                 return pathHelpers.outputPathForApp(chunk.name, 'css');
             },
         }),
