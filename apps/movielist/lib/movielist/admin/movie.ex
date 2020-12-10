@@ -6,7 +6,7 @@ defmodule Movielist.Admin.Movie do
   schema "movies" do
     field :home_release_date, :date
     field :is_active, :boolean, default: true
-    field :pre_rating, :integer
+    field :pre_rating, :integer, default: 80
     field :theater_release_date, :date
     field :title, :string
     field :sort_title, :string
