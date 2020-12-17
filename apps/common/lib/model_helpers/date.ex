@@ -7,7 +7,11 @@ defmodule Common.ModelHelpers.Date do
   def default_date_today(changeset, attribute_key) do
     date_value = Changeset.get_field(changeset, attribute_key)
     if is_nil(date_value) do
-      Changeset.change(changeset, %{attribute_key => Date.utc_today})
+      date_now = DateTime.utc_now 
+        # EST UTC offset
+        |> DateTime.add(-5 * 3600, :second)
+        |> DateTime.to_date
+      Changeset.change(changeset, %{attribute_key => date_now})
     else
       changeset
     end
