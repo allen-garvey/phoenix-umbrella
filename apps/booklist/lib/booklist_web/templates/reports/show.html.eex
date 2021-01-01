@@ -42,9 +42,9 @@
 </section>
 
 <section>
-	<h2>Top Rated Books</h2>
+	<h2>Ratings</h2>
 	<ol class="reporting_top_rated_books_list">
-		<%= for rating <- @top_ratings do %>
+		<%= for rating <- @ratings do %>
 			<li>
 				<%= link BooklistWeb.BookView.to_s(rating.book), to: Routes.book_path(@conn, :show, rating.book) %>
 				<%= link BooklistWeb.RatingView.to_s_short(rating), to: Routes.rating_path(@conn, :show, rating) %>

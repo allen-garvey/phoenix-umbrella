@@ -6,12 +6,9 @@ defmodule BooklistWeb.ReportsController do
   def report_for_year(conn, year, current_year) when is_integer(year) do
     should_show_next_year = year < current_year
     rating_stats = Reports.get_rating_statistics(year)
-    lowest_rating = Reports.get_lowest_rating(year)
-    top_ratings = Reports.get_top_ratings(year, 10)
-    highest_rating = case Enum.fetch(top_ratings, 0) do
-      {:ok, rating} -> rating
-      _             -> nil
-    end
+    ratings = Reports.get_ratings(year)
+    highest_rating = Enum.at(ratings, 0)
+    lowest_rating = Enum.at(ratings, -1)
     ratings_count_by_week = Reports.get_ratings_count_by_week(year, year == current_year)
 
     render(conn, "show.html",
@@ -19,7 +16,7 @@ defmodule BooklistWeb.ReportsController do
       rating_stats: rating_stats,
       lowest_rating: lowest_rating,
       highest_rating: highest_rating,
-      top_ratings: top_ratings,
+      ratings: ratings,
       ratings_count_by_week: ratings_count_by_week,
       should_show_next_year: should_show_next_year
     )
