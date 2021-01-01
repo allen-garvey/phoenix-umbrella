@@ -5,11 +5,11 @@ defmodule MovielistWeb.ReportsView do
   Returns a link to the reports for the current year
   """
   def reports_for_current_year_date_sorted_path(conn) do
-    reports_for_year_date_sorted_path(conn, Date.utc_today.year)
+    reports_for_year_date_sorted_path(conn, Common.ModelHelpers.Date.today().year)
   end
 
   def reports_for_current_year_score_sorted_path(conn) do
-    reports_for_year_path_score_sorted(conn, Date.utc_today.year)
+    reports_for_year_path_score_sorted(conn, Common.ModelHelpers.Date.today().year)
   end
 
   @doc """

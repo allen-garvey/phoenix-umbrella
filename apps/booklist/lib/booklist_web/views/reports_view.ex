@@ -5,7 +5,7 @@ defmodule BooklistWeb.ReportsView do
   Returns a link to the reports for the current year
   """
   def reports_for_current_year_path(conn) do
-    current_year = Date.utc_today.year
+    current_year = Common.ModelHelpers.Date.today().year
     reports_for_year_path(conn, current_year)
   end
 

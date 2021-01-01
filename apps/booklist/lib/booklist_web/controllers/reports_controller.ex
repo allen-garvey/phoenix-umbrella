@@ -26,7 +26,7 @@ defmodule BooklistWeb.ReportsController do
   end
 
   def report_for_year_helper(conn, year) do
-    current_year = Date.utc_today.year
+    current_year = Common.ModelHelpers.Date.today().year
     if year <= current_year and year > 1950 do
       report_for_year(conn, year, current_year)
     else

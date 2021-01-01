@@ -5,7 +5,7 @@ defmodule MovielistWeb.ReportsController do
   alias MovielistWeb.ReportsView
 
   def report_for_year(conn, year, sort) when is_integer(year) and is_atom(sort) do
-    current_year = Date.utc_today.year
+    current_year = Common.ModelHelpers.Date.today().year
 
     if year > current_year or year < 1950 do
       invalid_year_redirect(conn)
