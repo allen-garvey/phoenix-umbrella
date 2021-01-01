@@ -31,23 +31,11 @@ defmodule Booklist.Admin.Loan do
     integer > 0
   end
 
-  @doc """
-  Adds default loan date as 3 weeks from today today if nil
-  """
-  def default_loan_date(changeset, attribute_key) do
-    date_value = get_field(changeset, attribute_key)
-    if is_nil(date_value) do
-      change(changeset, %{attribute_key => Date.add(Date.utc_today, 7 * 3)})
-    else
-      changeset
-    end
-  end
-
   @doc false
   def changeset(loan, attrs) do
     loan
     |> cast(attrs, [:library_id, :due_date, :item_count])
-    |> default_loan_date(:due_date)
+    |> Common.ModelHelpers.Date.default_date_today(:due_date)
     |> validate_required([:library_id, :due_date, :item_count])
     |> assoc_constraint(:library)
     |> validate_positive_integer(:item_count)
