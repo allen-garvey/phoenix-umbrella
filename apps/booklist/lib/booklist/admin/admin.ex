@@ -525,7 +525,7 @@ defmodule Booklist.Admin do
 
   """
   def list_loans_due_soon do
-    soon_date = Date.utc_today |> Date.add(7)
+    soon_date = Common.ModelHelpers.Date.today() |> Date.add(7)
     
     from(l in Loan, join: library in assoc(l, :library), preload: [library: library], where: l.due_date < ^soon_date, order_by: [:due_date, library.name])
       |> Repo.all
