@@ -32,8 +32,8 @@
     "sass-loader": "^10.1.0",
     "vue-loader": "^16.0.0",
     "vue-style-loader": "^4.1.2",
-    "webpack": "^5.11.1",
-    "webpack-cli": "^4.3.0",
+    "webpack": "^5.12.2",
+    "webpack-cli": "^4.3.1",
     "webpack-livereload-plugin": "^2.3.0"
   },
   "dependencies": {
