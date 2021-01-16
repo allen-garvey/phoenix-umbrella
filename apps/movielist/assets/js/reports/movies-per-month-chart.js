@@ -23,6 +23,7 @@ export function initializeMoviesPerMonthChart(){
     new Chartist.Line(`#${chartId}`, data, {
         axisY: {
             onlyInteger: true,
+            low: 0,
         },
         plugins: [
             ctAxisTitle({
