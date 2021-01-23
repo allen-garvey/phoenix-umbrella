@@ -29,7 +29,7 @@ defmodule Umbrella.Common.Deps do
   end
 
   def http_poison do
-    {:httpoison, "~> 1.7.0"}
+    {:httpoison, "~> 1.8.0"}
   end
 
   def floki do
