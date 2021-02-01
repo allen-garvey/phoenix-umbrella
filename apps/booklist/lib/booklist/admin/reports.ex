@@ -28,11 +28,7 @@ defmodule Booklist.Reports do
       |> Repo.one
   end
 
-  def get_nonfiction_count(year) do
-    book_subquery = from(
-      b in Book
-    )
-    
+  def get_nonfiction_count(year) do    
     from(
       r in Rating, 
       select: count(r.id),
