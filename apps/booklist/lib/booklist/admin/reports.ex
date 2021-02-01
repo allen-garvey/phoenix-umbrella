@@ -36,8 +36,7 @@ defmodule Booklist.Reports do
     from(
       r in Rating, 
       select: count(r.id),
-      left_join: book in subquery(book_subquery),
-      on: book.id == r.book_id,
+      left_join: book in assoc(r, :book),
       where: fragment("EXTRACT(year FROM ?)", r.date_scored) == ^year and book.is_fiction == false,
     )
     |> Repo.one
