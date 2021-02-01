@@ -15,9 +15,22 @@ defmodule Booklist.Reports do
     from(
       r in Rating, 
       left_join: book in assoc(r, :book), 
-      preload: [book: book], 
       where: fragment("EXTRACT(year FROM ?)", r.date_scored) == ^year, 
-      order_by: [desc: r.score, desc: r.id]
+      order_by: [desc: r.score, desc: r.id],
+      select: %{
+        id: r.id,
+        score: r.score,
+        date_scored: r.date_scored,
+        week_number: fragment("CAST(extract(week FROM ?) AS integer)", r.date_scored),
+        book: %{
+          id: book.id,
+          title: book.title,
+          sort_title: book.sort_title,
+          subtitle: book.subtitle,
+          is_fiction: book.is_fiction,
+          genre_id: book.genre_id
+        }
+      }
     )
       |> Repo.all
   end
@@ -29,52 +42,14 @@ defmodule Booklist.Reports do
   def calculate_nonfiction_count(ratings) do    
     Enum.count(ratings, fn (rating) -> rating.book.is_fiction == false end)
   end
-  
-  @doc """
-  Gets the week number and number of ratings (books read) in that week for the given year
-  How to group by using alias based on:
-  https://angelika.me/2016/09/10/how-to-order-by-the-result-of-select-count-in-ecto/
-  """
-  def get_ratings_count_by_week_base_query(year) do
-  	#need to create rating subquery or weeks with 0 ratings won't be returned
-    rating_subquery = from(
-      r in Rating,
-      where: fragment("EXTRACT(year FROM ?)", r.date_scored) == ^year,
-      select: %{
-        id: r.id,
-        date_scored: r.date_scored,
-      }
-    )
 
-    from(
-      r in subquery(rating_subquery), 
-      right_join: week_number in fragment("SELECT generate_series(1,53) AS week_number"), 
-      on: fragment("week_number = extract(week FROM ?)", r.date_scored), 
-      group_by: [fragment("week_number")], 
-      select: %{
-        week_number: fragment("week_number"), 
-        count: count(r.id)
-      }, 
-      order_by: [fragment("week_number")]
-    )
+  def calculate_ratings_by_week(ratings) do
+    week_numbers = 1..53
+    week_map_initial = week_numbers |> Enum.map(fn (i) -> {i, 0} end) |> Map.new
+    week_map = Enum.reduce(ratings, week_map_initial, fn (%{week_number: week_number}, week_map) -> 
+      Map.update!(week_map, week_number, fn (current_value) -> current_value + 1 end)
+    end)
+
+    Enum.map(week_numbers, fn (week_number) -> %{week_number: week_number, count: week_map[week_number]} end)
   end
-
-  def get_ratings_count_by_week_query(year, should_limit) do
-  	case should_limit do
-  		#limit results only to weeks in current year
-  		true  -> get_ratings_count_by_week_base_query(year) |> limit(fragment("SELECT EXTRACT(WEEK FROM current_timestamp)"))
-  		false -> get_ratings_count_by_week_base_query(year)
-  	end
-  end
-
-
-  @doc """
-  Gets the week number and number of ratings (books read) in that week for the given year
-  """
-  def get_ratings_count_by_week(year, should_limit) when is_boolean(should_limit) do
-  	get_ratings_count_by_week_query(year, should_limit)
-  	  |> Repo.all	
-  end
-
-
 end

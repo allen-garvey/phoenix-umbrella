@@ -18,7 +18,7 @@
 		<%= if !is_nil(@lowest_rating) do  %>
 			<div class="heading">Lowest Rating</div>
 			<div class="info">
-				<%= link BooklistWeb.RatingView.to_reports_heading(@lowest_rating), to: Routes.rating_path(@conn, :show, @lowest_rating) %>
+				<%= link BooklistWeb.RatingView.to_reports_heading(@lowest_rating), to: Routes.rating_path(@conn, :show, @lowest_rating.id) %>
 			</div>
 		<% end %>
 	</div>
@@ -26,7 +26,7 @@
 		<%= if !is_nil(@highest_rating) do %>
 			<div class="heading">Highest Rating</div>
 			<div class="info">
-				<%= link BooklistWeb.RatingView.to_reports_heading(@highest_rating), to: Routes.rating_path(@conn, :show, @highest_rating) %>
+				<%= link BooklistWeb.RatingView.to_reports_heading(@highest_rating), to: Routes.rating_path(@conn, :show, @highest_rating.id) %>
 			</div>
 		<% end %>
 	</div>
@@ -50,8 +50,8 @@
 	<ol class="reporting_top_rated_books_list">
 		<%= for rating <- @ratings do %>
 			<li>
-				<%= link BooklistWeb.BookView.to_s(rating.book), to: Routes.book_path(@conn, :show, rating.book) %>
-				<%= link BooklistWeb.RatingView.to_s_short(rating), to: Routes.rating_path(@conn, :show, rating) %>
+				<%= link BooklistWeb.BookView.to_s(rating.book), to: Routes.book_path(@conn, :show, rating.book.id) %>
+				<%= link BooklistWeb.RatingView.to_s_short(rating), to: Routes.rating_path(@conn, :show, rating.id) %>
 			</li>
 		<% end %>
 	</ol>
