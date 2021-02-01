@@ -5,17 +5,18 @@ defmodule BooklistWeb.ReportsController do
 
   def report_for_year(conn, year, current_year) when is_integer(year) do
     should_show_next_year = year < current_year
-    rating_stats = Reports.get_rating_statistics(year)
     ratings = Reports.get_ratings(year)
+    ratings_count = Enum.count(ratings)
+    average_rating = Reports.calculate_rating_total(ratings) / ratings_count |> Float.round(2)
     highest_rating = Enum.at(ratings, 0)
     lowest_rating = Enum.at(ratings, -1)
     ratings_count_by_week = Reports.get_ratings_count_by_week(year, year == current_year)
-    nonfiction_count = Reports.get_nonfiction_count(year)
-    nonfiction_percent = nonfiction_count / max(rating_stats[:count], 1) * 100 |> Float.round(2)
+    nonfiction_percent = Reports.calculate_nonfiction_count(ratings) / max(ratings_count, 1) * 100 |> Float.round(2)
 
     render(conn, "show.html",
       year: year,
-      rating_stats: rating_stats,
+      ratings_count: ratings_count,
+      average_rating: average_rating,
       lowest_rating: lowest_rating,
       highest_rating: highest_rating,
       nonfiction_percent: nonfiction_percent,

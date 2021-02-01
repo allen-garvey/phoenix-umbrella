@@ -22,19 +22,12 @@ defmodule Booklist.Reports do
       |> Repo.all
   end
 
-  def get_rating_statistics(year) do
-  	from(r in Rating, where: fragment("EXTRACT(year FROM ?)", r.date_scored) == ^year, select: %{count: count(r.id), average: coalesce(avg(r.score), 0)})
-      |> Repo.one
+  def calculate_rating_total(ratings) do
+    Enum.reduce(ratings, 0, fn (rating, total) -> total + rating.score end)
   end
 
-  def get_nonfiction_count(year) do    
-    from(
-      r in Rating, 
-      select: count(r.id),
-      left_join: book in assoc(r, :book),
-      where: fragment("EXTRACT(year FROM ?)", r.date_scored) == ^year and book.is_fiction == false
-    )
-    |> Repo.one
+  def calculate_nonfiction_count(ratings) do    
+    Enum.count(ratings, fn (rating) -> rating.book.is_fiction == false end)
   end
   
   @doc """
