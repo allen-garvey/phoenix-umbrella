@@ -7,7 +7,6 @@ defmodule Booklist.Reports do
   alias Booklist.Repo
 
   alias Booklist.Admin.Rating
-  alias Booklist.Admin.Book
 
   @doc """
   Gets all ratings for given year
@@ -33,7 +32,7 @@ defmodule Booklist.Reports do
       r in Rating, 
       select: count(r.id),
       left_join: book in assoc(r, :book),
-      where: fragment("EXTRACT(year FROM ?)", r.date_scored) == ^year and book.is_fiction == false,
+      where: fragment("EXTRACT(year FROM ?)", r.date_scored) == ^year and book.is_fiction == false
     )
     |> Repo.one
   end
