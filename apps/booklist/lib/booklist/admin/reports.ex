@@ -15,7 +15,7 @@ defmodule Booklist.Reports do
   def get_ratings(year) do
     from(
       r in Rating, 
-      join: book in assoc(r, :book), 
+      left_join: book in assoc(r, :book), 
       preload: [book: book], 
       where: fragment("EXTRACT(year FROM ?)", r.date_scored) == ^year, 
       order_by: [desc: r.score, desc: r.id]
