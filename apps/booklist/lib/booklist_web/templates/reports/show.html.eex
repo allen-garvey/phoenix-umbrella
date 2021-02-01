@@ -34,6 +34,10 @@
 		<div class="heading">Average Rating</div>
 		<div class="info"><%= @rating_stats[:average] |> Common.NumberHelpers.round_decimal %></div>
 	</div>
+	<div class="stat_box">
+		<div class="heading">Non-fiction</div>
+		<div class="info"><%= @nonfiction_percent %>%</div>
+	</div>
 </div>
 
 <section class="reporting_books_by_week">

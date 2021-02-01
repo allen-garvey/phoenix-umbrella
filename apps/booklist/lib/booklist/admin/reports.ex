@@ -7,6 +7,7 @@ defmodule Booklist.Reports do
   alias Booklist.Repo
 
   alias Booklist.Admin.Rating
+  alias Booklist.Admin.Book
 
   @doc """
   Gets all ratings for given year
@@ -25,6 +26,21 @@ defmodule Booklist.Reports do
   def get_rating_statistics(year) do
   	from(r in Rating, where: fragment("EXTRACT(year FROM ?)", r.date_scored) == ^year, select: %{count: count(r.id), average: coalesce(avg(r.score), 0)})
       |> Repo.one
+  end
+
+  def get_nonfiction_count(year) do
+    book_subquery = from(
+      b in Book
+    )
+    
+    from(
+      r in Rating, 
+      select: count(r.id),
+      left_join: book in subquery(book_subquery),
+      on: book.id == r.book_id,
+      where: fragment("EXTRACT(year FROM ?)", r.date_scored) == ^year and book.is_fiction == false,
+    )
+    |> Repo.one
   end
   
   @doc """

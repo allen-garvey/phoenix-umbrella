@@ -10,12 +10,15 @@ defmodule BooklistWeb.ReportsController do
     highest_rating = Enum.at(ratings, 0)
     lowest_rating = Enum.at(ratings, -1)
     ratings_count_by_week = Reports.get_ratings_count_by_week(year, year == current_year)
+    nonfiction_count = Reports.get_nonfiction_count(year)
+    nonfiction_percent = nonfiction_count / max(rating_stats[:count], 1) * 100 |> Float.round(2)
 
     render(conn, "show.html",
       year: year,
       rating_stats: rating_stats,
       lowest_rating: lowest_rating,
       highest_rating: highest_rating,
+      nonfiction_percent: nonfiction_percent,
       ratings: ratings,
       ratings_count_by_week: ratings_count_by_week,
       should_show_next_year: should_show_next_year
