@@ -43,13 +43,22 @@ defmodule Booklist.Reports do
     Enum.count(ratings, fn (rating) -> rating.book.is_fiction == false end)
   end
 
-  def calculate_ratings_by_week(ratings) do
+  def calculate_ratings_by_week(ratings, is_past_year) do
     week_numbers = 1..53
     week_map_initial = week_numbers |> Enum.map(fn (i) -> {i, 0} end) |> Map.new
     week_map = Enum.reduce(ratings, week_map_initial, fn (%{week_number: week_number}, week_map) -> 
       Map.update!(week_map, week_number, fn (current_value) -> current_value + 1 end)
     end)
 
-    Enum.map(week_numbers, fn (week_number) -> %{week_number: week_number, count: week_map[week_number]} end)
+    raw_week_count = Enum.map(week_numbers, fn (week_number) -> %{week_number: week_number, count: week_map[week_number]} end)
+
+    case is_past_year do
+      true -> 
+        Enum.filter(raw_week_count, fn (%{week_number: week_number, count: count}) -> week_number < 53 or count > 0 end)
+      false -> 
+        current_date = Common.ModelHelpers.Date.today
+        {_, current_week_num} = {current_date.year, current_date.month, current_date.day} |> :calendar.iso_week_number
+        Enum.filter(raw_week_count, fn (%{week_number: week_number, count: count}) -> week_number <= current_week_num or (week_number == 53 and count > 0) end)
+    end
   end
 end
