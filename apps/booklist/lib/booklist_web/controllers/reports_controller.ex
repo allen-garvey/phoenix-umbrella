@@ -7,7 +7,7 @@ defmodule BooklistWeb.ReportsController do
     should_show_next_year = year < current_year
     ratings = Reports.get_ratings(year)
     ratings_count = Enum.count(ratings)
-    average_rating = Reports.calculate_rating_total(ratings) / ratings_count |> Float.round(2)
+    average_rating = Reports.calculate_rating_total(ratings) / max(ratings_count, 1) |> Float.round(2)
     highest_rating = Enum.at(ratings, 0)
     lowest_rating = Enum.at(ratings, -1)
     ratings_count_by_week = Reports.calculate_ratings_by_week(ratings)
