@@ -8,6 +8,10 @@ defmodule Booklist.Reports do
 
   alias Booklist.Admin.Rating
 
+  def increment(num) do
+    num + 1
+  end
+
   @doc """
   Gets all ratings for given year
   """
@@ -47,7 +51,7 @@ defmodule Booklist.Reports do
     week_numbers = 1..53
     week_map_initial = week_numbers |> Enum.map(fn (i) -> {i, 0} end) |> Map.new
     week_map = Enum.reduce(ratings, week_map_initial, fn (%{week_number: week_number}, week_map) -> 
-      Map.update!(week_map, week_number, fn (current_value) -> current_value + 1 end)
+      Map.update!(week_map, week_number, &increment/1)
     end)
 
     raw_week_count = Enum.map(week_numbers, fn (week_number) -> %{week_number: week_number, count: week_map[week_number]} end)
