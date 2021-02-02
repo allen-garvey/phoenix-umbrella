@@ -85,8 +85,7 @@ defmodule Booklist.Reports do
 
   def get_genres() do
     from(
-      g in Genre,
-      order_by: g.name
+      g in Genre
     )
     |> Repo.all
   end
@@ -98,5 +97,11 @@ defmodule Booklist.Reports do
                 end)
     Enum.map(genres, fn (genre) -> %{genre: genre, count: genre_map[genre.id] |> calculate_percent_of_ratings(ratings_count)} end)
       |> Enum.filter(fn (%{genre: genre, count: count}) -> count > 0 end)
+      |> Enum.sort(fn (a, b) -> 
+        case a.count == b.count do
+          true -> a.genre.name < b.genre.name
+          false -> a.count > b.count
+        end 
+      end)
   end
 end
