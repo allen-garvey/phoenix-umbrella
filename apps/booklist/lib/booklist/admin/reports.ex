@@ -55,10 +55,22 @@ defmodule Booklist.Reports do
     case is_past_year do
       true -> 
         Enum.filter(raw_week_count, fn (%{week_number: week_number, count: count}) -> week_number < 53 or count > 0 end)
+          |> format_last_week_of_year
       false -> 
         current_date = Common.ModelHelpers.Date.today
         {_, current_week_num} = {current_date.year, current_date.month, current_date.day} |> :calendar.iso_week_number
-        Enum.filter(raw_week_count, fn (%{week_number: week_number, count: count}) -> week_number <= current_week_num or (week_number == 53 and count > 0) end)
+        Enum.filter(raw_week_count, fn (%{week_number: week_number, count: count}) -> week_number <= current_week_num or (week_number == 53 and count > 0) end) |> format_last_week_of_year
+    end
+  end
+
+  def format_last_week_of_year(ratings_by_week) do
+    last_week = List.last(ratings_by_week)
+
+    case last_week.week_number do
+      53 ->
+        [last_week | ratings_by_week]
+          |> List.delete_at(-1)
+      _  -> ratings_by_week
     end
   end
 end
