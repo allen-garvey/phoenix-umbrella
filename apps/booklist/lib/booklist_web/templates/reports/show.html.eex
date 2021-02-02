@@ -40,6 +40,15 @@
 	</div>
 </div>
 
+<div class="stat_boxes">
+	<%= for %{genre: genre, count: count} <- @genres_count do %>
+		<div class="genre_stat_box">
+			<span class="heading"><%= BooklistWeb.GenreView.to_s(genre) %></span>
+			<span class="info"><%= count %>%</span>
+		</div>
+	<% end %>
+</div>
+
 <section class="reporting_books_by_week">
 	<h2>Books Read Per Week</h2>
 	<div class="books_per_week_chart" id="books_per_week_chart"></div>

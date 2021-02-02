@@ -7,6 +7,7 @@ defmodule Booklist.Reports do
   alias Booklist.Repo
 
   alias Booklist.Admin.Rating
+  alias Booklist.Admin.Genre
 
   def increment(num) do
     num + 1
@@ -80,5 +81,22 @@ defmodule Booklist.Reports do
           |> List.delete_at(-1)
       _  -> ratings_by_week
     end
+  end
+
+  def get_genres() do
+    from(
+      g in Genre,
+      order_by: g.name
+    )
+    |> Repo.all
+  end
+
+  def calculate_genres_count(genres, ratings, ratings_count) do
+    initial_map = Enum.reduce(genres, %{}, fn (genre, map) -> Map.put(map, genre.id, 0)  end)
+    genre_map = Enum.reduce(
+                  ratings, initial_map, fn (rating, map) -> Map.update!(map, rating.book.genre_id, &increment/1) 
+                end)
+    Enum.map(genres, fn (genre) -> %{genre: genre, count: genre_map[genre.id] |> calculate_percent_of_ratings(ratings_count)} end)
+      |> Enum.filter(fn (%{genre: genre, count: count}) -> count > 0 end)
   end
 end

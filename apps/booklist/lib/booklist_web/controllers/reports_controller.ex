@@ -14,6 +14,7 @@ defmodule BooklistWeb.ReportsController do
     ratings_count_by_week = Reports.calculate_ratings_by_week(ratings, year < current_year)
     nonfiction_percent = Reports.calculate_nonfiction_count(ratings) 
       |> Reports.calculate_percent_of_ratings(ratings_count)
+    genres_count = Reports.get_genres() |> Reports.calculate_genres_count(ratings, ratings_count)
 
     render(conn, "show.html",
       year: year,
@@ -23,6 +24,7 @@ defmodule BooklistWeb.ReportsController do
       highest_rating: highest_rating,
       nonfiction_percent: nonfiction_percent,
       ratings: ratings,
+      genres_count: genres_count,
       ratings_count_by_week: ratings_count_by_week,
       should_show_next_year: should_show_next_year
     )

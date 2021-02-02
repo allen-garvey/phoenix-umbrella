@@ -4,9 +4,20 @@
 
 .stat_boxes{
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	margin-top: 1em;
 }
+
+.genre_stat_box {
+	flex-basis: 25%;
+	margin-bottom: 0.5rem;
+
+	.heading {
+		font-weight: bold;
+	}
+}
+
 .reporting_books_by_week{
 	margin: 3em 0 1em;
 }
