@@ -12,7 +12,7 @@ defmodule BooklistWeb.ReportsController do
     highest_rating = Enum.at(ratings, 0)
     lowest_rating = Enum.at(ratings, -1)
     ratings_count_by_week = Reports.calculate_ratings_by_week(ratings, year < current_year)
-    nonfiction_percent = Reports.calculate_nonfiction_count(ratings) 
+    nonfiction_percent = Reports.calculate_nonfiction_count(ratings) * 100
       |> Reports.calculate_percent_of_ratings(ratings_count)
     genres_count = Reports.get_genres() |> Reports.calculate_genres_count(ratings, ratings_count)
 
