@@ -10,8 +10,11 @@ defmodule MovielistWeb.ReportsController do
     if year > current_year or year < 1950 do
       invalid_year_redirect(conn)
     else
-      rating_stats = Reports.rating_stats_for_year(year)
       ratings = Reports.list_ratings_for_year(year, sort)
+      rating_count = Enum.count(ratings)
+      average_score = Reports.calculate_rating_total(ratings) 
+        |> Reports.calculate_percent_of_ratings(rating_count)
+      IO.puts "Average score is #{rating_count}"
       ratings_count_by_month = Reports.get_ratings_count_by_month(year, year == current_year)
       should_show_next_year = year < current_year
 
@@ -19,8 +22,8 @@ defmodule MovielistWeb.ReportsController do
         page_atom: :reports_show,
         year: year,
         ratings: ratings,
-        rating_count: rating_stats[:rating_count],
-        average_score: rating_stats[:average_score],
+        rating_count: rating_count,
+        average_score: average_score,
         ratings_count_by_month: ratings_count_by_month,
         should_show_next_year: should_show_next_year
       )

@@ -14,7 +14,7 @@
 	</div>
 	<div>
 		<div class="heading">Average rating:</div>
-		<div><%= Common.NumberHelpers.round_decimal(@average_score) %></div>
+		<div><%= @average_score %></div>
 	</div>
 </div>
 
