@@ -10,6 +10,10 @@ defmodule Movielist.Reports do
   alias Movielist.Admin.Movie
   alias Movielist.Admin.Rating
 
+  def increment(num) do
+    num + 1
+  end
+
   def calculate_percent_of_ratings(total, ratings_count) do
     total / max(ratings_count, 1) |> Float.round(2)
   end
@@ -60,45 +64,17 @@ defmodule Movielist.Reports do
   @doc """
   Gets the month number and number of ratings (movies watched) in that month for the given year
   """
-  def get_ratings_count_by_month_base_query(year) do
-    #need to create rating subquery or weeks with 0 ratings won't be returned
-    rating_subquery = from(
-      r in Rating,
-      where: fragment("EXTRACT(year FROM ?)", r.date_scored) == ^year,
-      select: %{
-        id: r.id,
-        date_scored: r.date_scored,
-      }
-    )
-
-    from(
-      r in subquery(rating_subquery), 
-      right_join: month_number in fragment("SELECT generate_series(1,12) AS month_number"), 
-      on: fragment("month_number = extract(month FROM ?)", r.date_scored), 
-      group_by: [fragment("month_number")], 
-      select: %{
-        month_number: fragment("month_number"), 
-        count: count(r.id)
-      }, 
-      order_by: [fragment("month_number")]
-    )
-  end
-
-  def get_ratings_count_by_month_query(year, should_limit) do
-    case should_limit do
-      #limit results only to weeks in current year
-      true  -> get_ratings_count_by_month_base_query(year) |> limit(fragment("SELECT EXTRACT(MONTH FROM current_timestamp)"))
-      false -> get_ratings_count_by_month_base_query(year)
+  def calculate_ratings_per_month(ratings, is_current_year) do
+    end_month = case is_current_year do
+      true -> Common.ModelHelpers.Date.today.month
+      false -> 12
     end
-  end
-
-
-  @doc """
-  Gets the week number and number of ratings (books read) in that week for the given year
-  """
-  def get_ratings_count_by_month(year, should_limit) when is_boolean(should_limit) do
-    get_ratings_count_by_month_query(year, should_limit)
-      |> Repo.all 
+    month_range = 1..end_month
+    initial_month_map = month_range |> Enum.map(fn (i) -> {i, 0} end) |> Map.new
+    month_map = ratings
+      |> Enum.reduce(initial_month_map, fn (rating, month_map) -> Map.update!(month_map, rating.date_scored.month, &increment/1) end)
+    month_range
+      |> Enum.map(fn (month_number) -> %{month_number: month_number, count: month_map[month_number]} end)
   end
 
 end

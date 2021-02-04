@@ -14,7 +14,7 @@ defmodule MovielistWeb.ReportsController do
       rating_count = Enum.count(ratings)
       average_score = Reports.calculate_rating_total(ratings) 
         |> Reports.calculate_percent_of_ratings(rating_count)
-      ratings_count_by_month = Reports.get_ratings_count_by_month(year, year == current_year)
+      ratings_count_by_month = Reports.calculate_ratings_per_month(ratings, year == current_year)
       should_show_next_year = year < current_year
 
       render(conn, "show.html",
