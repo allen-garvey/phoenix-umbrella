@@ -7,7 +7,6 @@ defmodule Movielist.Reports do
   alias Movielist.Repo
 
   alias Movielist.Admin
-  # alias Movielist.Admin.Genre
   alias Movielist.Admin.Movie
   alias Movielist.Admin.Rating
 
