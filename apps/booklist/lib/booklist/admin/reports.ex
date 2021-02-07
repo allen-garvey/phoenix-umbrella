@@ -14,7 +14,7 @@ defmodule Booklist.Reports do
   end
 
   def calculate_percent_of_ratings(total, ratings_count) do
-    total / max(ratings_count, 1) |> Float.round(2)
+    total / max(ratings_count, 1) * 100 |> Float.round(2)
   end
 
   @doc """
