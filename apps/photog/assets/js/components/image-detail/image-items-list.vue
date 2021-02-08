@@ -150,9 +150,6 @@ export default {
             return this.itemsThatCanBeAddedSelected.some((isSelected)=>isSelected);
         },
     },
-    watch: {
-
-    },
     methods: {
         idForItemToBeAdded(item, index){
             return `checkbox_${this.heading}_${index}_${item.id}`;
