@@ -24,13 +24,13 @@ defmodule GrenadierWeb.PageController do
     |> render("logout.html")
   end
 
-  def login_submit(conn, %{"username" => username, "password" => password, "redirect" => redirect}) do
+  def login_submit(conn, params = %{"username" => username, "password" => password}) do
     case Account.authenticate_user(username, password) do
       {:ok, %User{} = user} -> conn
                       |> generate_login_resource(username, true)
                       |> put_session(:user_id, user.id)
                       |> configure_session(renew: true)
-                      |> redirect_after_login(redirect)
+                      |> redirect_after_login(params["redirect"])
       _   -> conn
               |> generate_login_resource(username, false)
               |> login_failed()
