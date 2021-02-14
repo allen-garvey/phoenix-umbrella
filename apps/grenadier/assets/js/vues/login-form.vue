@@ -4,7 +4,7 @@
         <form class="login-form" method="POST" :action="loginUrl" v-if="shouldShowForm">
             <input type="hidden" name="_csrf_token" :value="csrfToken" />
             <input name="_utf8" type="hidden" value="✓"/>
-            <input name="redirect" type="hidden" :value="redirect">
+            <input name="redirect" type="hidden" :value="redirect" v-if="redirect">
             <input type="text" placeholder="Identifier" name="username" v-model="username" v-focus />
             <input type="password" placeholder="Proof" name="password" v-model="password" />
             <button type="submit">Login</button>
