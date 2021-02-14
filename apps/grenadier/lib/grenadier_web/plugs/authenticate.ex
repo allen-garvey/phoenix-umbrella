@@ -16,11 +16,12 @@ defmodule GrenadierWeb.Plugs.Authenticate do
 
   def call(conn, _opts) do
     case get_user_from_session(conn) do
-      %User{} = user -> disable_caching(conn) |> assign(:current_user, user)
+      %User{} = user -> 
+        disable_caching(conn) 
+        |> assign(:current_user, user)
       nil ->
         conn
         |> disable_caching()
-        |> put_session(:original_request_url, get_request_url(conn))
         |> Phoenix.Controller.redirect(external: get_failed_login_redirect_url(conn))
         |> halt()
     end
@@ -56,7 +57,11 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   Gets url to redirect to after failed login
   """
   def get_failed_login_redirect_url(conn) do
-    "#{scheme_to_string(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_failed_redirect_port(conn.port)}#{Routes.page_path(conn, :login)}"
+    redirect_url_param = conn 
+      |> get_request_url
+      |> :http_uri.encode
+    
+    "#{scheme_to_string(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_failed_redirect_port(conn.port)}#{Routes.page_path(conn, :login)}?redirect=#{redirect_url_param}"
   end
 
   @doc """

@@ -10,10 +10,11 @@ defmodule GrenadierWeb.PageController do
     render(conn, "index.html", logins: logins)
   end
 
-  def login(conn, _params) do
+  def login(conn, params) do
+    redirect_url = params["redirect"]
     case  GrenadierWeb.Plugs.Authenticate.get_user_from_session(conn) do
-      nil -> render conn, "login.html", csrf_token: get_csrf_token()
-      _   -> redirect_after_login(conn)
+      nil -> render(conn, "login.html", csrf_token: get_csrf_token(), redirect: redirect_url)
+      _   -> redirect_after_login(conn, redirect_url)
     end
   end
 
@@ -23,13 +24,13 @@ defmodule GrenadierWeb.PageController do
     |> render("logout.html")
   end
 
-  def login_submit(conn, %{"username" => username, "password" => password}) do
+  def login_submit(conn, %{"username" => username, "password" => password, "redirect" => redirect}) do
     case Account.authenticate_user(username, password) do
       {:ok, %User{} = user} -> conn
                       |> generate_login_resource(username, true)
                       |> put_session(:user_id, user.id)
                       |> configure_session(renew: true)
-                      |> redirect_after_login()
+                      |> redirect_after_login(redirect)
       _   -> conn
               |> generate_login_resource(username, false)
               |> login_failed()
@@ -46,12 +47,12 @@ defmodule GrenadierWeb.PageController do
     |> login(nil)
   end
 
-  defp redirect_after_login(conn) do
-    case get_session(conn, :original_request_url) do
-      nil -> redirect(conn, to: Routes.page_path(conn, :index))
+  defp redirect_after_login(conn, original_request_url) do
+    case original_request_url do
+      nil -> 
+        redirect(conn, to: Routes.page_path(conn, :index))
       original_request_url ->
-        delete_session(conn, :original_request_url)
-        |> redirect(external: original_request_url)
+        redirect(conn, external: original_request_url)
     end
   end
 
