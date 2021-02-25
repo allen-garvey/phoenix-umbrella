@@ -11,3 +11,9 @@
 		font-weight: bold;
 	}
 }
+
+#movies_per_month_chart {
+	svg {
+		overflow: visible;
+	}
+}
