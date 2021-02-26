@@ -47,11 +47,23 @@ defmodule GrenadierWeb.PageController do
     |> login(nil)
   end
 
-  defp redirect_after_login(conn, original_request_url) do
+  defp is_request_url_valid?(original_request_url) do
     case original_request_url do
       nil -> 
+        false
+      _ ->
+        uri = (original_request_url || "")
+          |> URI.parse
+        Regex.compile!("#{Common.Endpoint.cookie_domain()}$")
+          |> Regex.match?(uri.host || "")
+    end
+  end
+
+  defp redirect_after_login(conn, original_request_url) do
+    case is_request_url_valid?(original_request_url) do
+      false -> 
         redirect(conn, to: Routes.page_path(conn, :index))
-      original_request_url ->
+      true ->
         redirect(conn, external: original_request_url)
     end
   end
