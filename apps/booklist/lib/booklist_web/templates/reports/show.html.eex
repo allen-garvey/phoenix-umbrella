@@ -15,6 +15,10 @@
 		<div class="info"><%= @ratings_count %></div>
 	</div>
 	<div class="stat_box">
+		<div class="heading">Books per week</div>
+		<div class="info"><%= @books_per_week_average %></div>
+	</div>
+	<div class="stat_box">
 		<%= if !is_nil(@lowest_rating) do  %>
 			<div class="heading">Lowest Rating</div>
 			<div class="info">
