@@ -2,10 +2,10 @@ defmodule Umbrella.Common.Deps do
   # Shared dependencies for phoenix projects
   def shared_phoenix_deps do
     [
-      {:phoenix, "~> 1.5.7"},
+      {:phoenix, "~> 1.5.8"},
       {:phoenix_pubsub, "~> 2.0"},
       ecto(),
-      {:ecto_sql, "~> 3.5.3"},
+      {:ecto_sql, "~> 3.5.4"},
       {:postgrex, "~> 0.15"},
       {:phoenix_html, "~> 2.14"},
       {:phoenix_live_reload, "~> 1.3.0", only: :dev},
@@ -33,7 +33,7 @@ defmodule Umbrella.Common.Deps do
   end
 
   def floki do
-    {:floki, "~> 0.29.0"}
+    {:floki, "~> 0.30.0"}
   end
 
   def earmark do
@@ -41,6 +41,6 @@ defmodule Umbrella.Common.Deps do
   end
 
   def argon2 do
-    {:argon2_elixir, "~> 2.3.0"}
+    {:argon2_elixir, "~> 2.4.0"}
   end
 end
