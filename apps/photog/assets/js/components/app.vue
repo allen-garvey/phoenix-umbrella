@@ -2,7 +2,7 @@
     <div>
         <Photog-Header/>
         <Flash-Alert ref="flashAlert"/>
-        <router-view :get-model="get" :put-flash="putFlash" ref="routerView" :get-exif="getExif" :send-json="sendJson" :set-window-title="setWindowTitle"/>
+        <router-view :getModel="get" :putFlash="putFlash" ref="routerView" :getExif="getExif" :sendJson="sendJson" :setWindowTitle="setWindowTitle"/>
     </div>
 </template>
 
