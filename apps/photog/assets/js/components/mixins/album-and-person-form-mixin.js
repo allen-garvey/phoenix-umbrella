@@ -6,7 +6,7 @@ export function albumAndPersonFormMixinBuilder(){
         props: {
             //for when creating a resource with images
             images: {
-                type: Array
+                type: String,
             },
             successRedirect: {
                 type: Function
@@ -24,7 +24,7 @@ export function albumAndPersonFormMixinBuilder(){
                     return this.model.images;
                 }
                 else if(this.isCreateForm && this.images){
-                    return this.images;
+                    return JSON.parse(this.images);
                 }
                 return [];
             },

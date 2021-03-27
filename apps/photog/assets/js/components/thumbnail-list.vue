@@ -439,9 +439,15 @@ export default {
             };
         },
         createResourceWithImages(pathName){
-            const selectedImages = this.thumbnailListSelectedItems;
+            const selectedImages = this.thumbnailListSelectedItems.map(image => ({id: image.id, mini_thumbnail_path: image.mini_thumbnail_path}));
             const successRedirect = this.createSuccessRedirectForCurrentPath();
-            this.$router.push({name: pathName, params: {images: selectedImages, successRedirect}});
+            this.$router.push({
+                name: pathName, 
+                params: {
+                    images: JSON.stringify(selectedImages), 
+                    successRedirect
+                    }
+            });
         },
         /**
          * Reordering resources

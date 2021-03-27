@@ -1,6 +1,6 @@
 <template>
 <div>
-    <Form-Section :heading="headingText" :back-link="backLink" :save="save" v-if="isInitialLoadComplete">
+    <Form-Section :heading="headingText" :backLink="backLink" :save="save" v-if="isInitialLoadComplete">
         <template v-slot:inputs>
             <Form-Input :id="idForField('name')" label="Name" v-model="album.name" :errors="errors.name" />
 
@@ -126,8 +126,8 @@ export default {
             //new form
             else{
                 const album = {};
-                if(this.images){
-                    album['cover_image_id'] = this.images[0].id;
+                if(this.imagesInModel){
+                    album['cover_image_id'] = this.imagesInModel[0].id;
                 }
                 this.album = album;
             }
@@ -137,8 +137,8 @@ export default {
         },
         getResourceForSave(){
             const data = {album: toApiResource(this.album)};
-            if(this.isCreateForm && this.images){
-                data['image_ids'] = this.images.map(image => image.id);
+            if(this.isCreateForm && this.imagesInModel){
+                data['image_ids'] = this.imagesInModel.map(image => image.id);
             }
             return data;
         },
