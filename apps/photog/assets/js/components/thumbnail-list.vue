@@ -8,34 +8,34 @@
         <!-- 
             * Related fields list
         -->
-        <Related-Fields-List :items="model[relatedFieldsKey]" :route-name="`${relatedFieldsKey}Show`" v-if="relatedFieldsKey && isInitialLoadComplete" />
+        <Related-Fields-List :items="model[relatedFieldsKey]" :routeName="`${relatedFieldsKey}Show`" v-if="relatedFieldsKey && isInitialLoadComplete" />
         
         <!-- 
             * Filtering controls 
         -->
         <Thumbnail-Filter-Controls 
-            :class="{invisible: isCurrentlyBatchSelect || isReordering}" :enable-album-filter="enableHasAlbumFilter" 
-            :enable-person-filter="enableHasPersonFilter" 
-            v-model:album-filter-mode="albumFilterMode" 
-            v-model:person-filter-mode="personFilterMode"
+            :class="{invisible: isCurrentlyBatchSelect || isReordering}" :enableAlbumFilter="enableHasAlbumFilter" 
+            :enablePersonFilter="enableHasPersonFilter" 
+            v-model:albumFilterMode="albumFilterMode" 
+            v-model:personFilterMode="personFilterMode"
         />
 
         <!-- 
             * Batch edit controls 
         -->
         <batch-edit
-            :is-currently-batch-select="isCurrentlyBatchSelect"
-            :is-reordering="isReordering"
-            :toggle-batch-select="toggleBatchSelect"
-            :batch-select-all="batchSelectAll"
-            :enable-batch-select-images="enableBatchSelectImages"
-            :enable-batch-select-albums="enableBatchSelectAlbums"
-            :batch-select-resource-mode="batchSelectResourceMode"
-            :set-batch-resource-mode="setBatchResourceMode"
-            :create-resource-with-images="createResourceWithImages"
-            :batch-resources="batchResources"
-            :save-batch-selected="saveBatchSelected"
-            :any-items-batch-selected="anyItemsBatchSelected"
+            :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
+            :isReordering="isReordering"
+            :toggleBatchSelect="toggleBatchSelect"
+            :batchSelectAll="batchSelectAll"
+            :enableBatchSelectImages="enableBatchSelectImages"
+            :enableBatchSelectAlbums="enableBatchSelectAlbums"
+            :batchSelectResourceMode="batchSelectResourceMode"
+            :setBatchResourceMode="setBatchResourceMode"
+            :createResourceWithImages="createResourceWithImages"
+            :batchResources="batchResources"
+            :saveBatchSelected="saveBatchSelected"
+            :anyItemsBatchSelected="anyItemsBatchSelected"
             v-if="supportsBatchSelect"
         >
         </batch-edit>
@@ -43,11 +43,11 @@
             * Reorder items controls 
         -->
         <reorder-items-controls
-            :should-show-reorder-button="shouldShowReorderButton"
-            :is-list-reordered="isListReordered"
-            :is-reordering="isReordering"
-            :reorder-button-action="reorderButtonAction"
-            :save-order="saveOrder"
+            :shouldShowReorderButton="shouldShowReorderButton"
+            :isListReordered="isListReordered"
+            :isReordering="isReordering"
+            :reorderButtonAction="reorderButtonAction"
+            :saveOrder="saveOrder"
             v-if="supportsReorder"
         >
         </reorder-items-controls>
@@ -57,20 +57,20 @@
         <thumbnail-items-list
             :items="filteredThumbnailList"
             :model="model"
-            :show-route-for="showRouteFor"
-            :batch-selected-items="batchSelectedItems"
-            :batch-select-item="batchSelectItem"
-            :item-drag-start="itemDragStart"
-            :item-drag-over="itemDragOver"
-            :current-drag-index="currentDragIndex"
-            :thumbnail-link-event="thumbnailLinkEvent"
-            :is-reordering="isReordering"
-            :is-currently-batch-select="isCurrentlyBatchSelect"
-            :show-detail-hover="showDetailHover"
-            :is-in-thumbnail-default-mode="isInThumbnailDefaultMode"
+            :showRouteFor="showRouteFor"
+            :batchSelectedItems="batchSelectedItems"
+            :batchSelectItem="batchSelectItem"
+            :itemDragStart="itemDragStart"
+            :itemDragOver="itemDragOver"
+            :currentDragIndex="currentDragIndex"
+            :thumbnailLinkEvent="thumbnailLinkEvent"
+            :isReordering="isReordering"
+            :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
+            :showDetailHover="showDetailHover"
+            :isInThumbnailDefaultMode="isInThumbnailDefaultMode"
         >
         </thumbnail-items-list>
-        <infinite-observer :on-trigger="loadMoreThumbnails" v-if="isInitialLoadComplete">
+        <infinite-observer :onTrigger="loadMoreThumbnails" v-if="isInitialLoadComplete">
         </infinite-observer>
     </main>
 </template>
