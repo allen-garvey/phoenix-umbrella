@@ -126,7 +126,7 @@ export default {
             //new form
             else{
                 const album = {};
-                if(this.imagesInModel){
+                if(this.imagesInModel && this.imagesInModel.length > 0){
                     album['cover_image_id'] = this.imagesInModel[0].id;
                 }
                 this.album = album;
