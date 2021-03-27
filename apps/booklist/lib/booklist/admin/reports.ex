@@ -96,7 +96,7 @@ defmodule Booklist.Reports do
                   ratings, initial_map, fn (rating, map) -> Map.update!(map, rating.book.genre_id, &increment/1) 
                 end)
     Enum.map(genres, fn (genre) -> %{genre: genre, count: genre_map[genre.id] |> calculate_percent_of_ratings(ratings_count)} end)
-      |> Enum.filter(fn (%{genre: genre, count: count}) -> count > 0 end)
+      |> Enum.filter(fn (%{count: count}) -> count > 0 end)
       |> Enum.sort(fn (a, b) -> 
         case a.count == b.count do
           true -> a.genre.name < b.genre.name
