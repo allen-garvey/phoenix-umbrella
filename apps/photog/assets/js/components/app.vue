@@ -2,7 +2,17 @@
     <div>
         <Photog-Header/>
         <Flash-Alert ref="flashAlert"/>
-        <router-view :getModel="get" :putFlash="putFlash" ref="routerView" :getExif="getExif" :sendJson="sendJson" :setWindowTitle="setWindowTitle"/>
+        <router-view v-slot="{ Component }">
+            <component 
+                ref="routerView" 
+                :is="Component"
+                :getModel="get" 
+                :putFlash="putFlash" 
+                :getExif="getExif" 
+                :sendJson="sendJson" 
+                :setWindowTitle="setWindowTitle" 
+            />
+        </router-view>
     </div>
 </template>
 
