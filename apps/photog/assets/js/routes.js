@@ -170,7 +170,7 @@ export default {
                     itemsListKey: 'images',
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
-                    editItemLink: {name: 'albumsEdit', id: route.params.id},
+                    editItemLink: {name: 'albumsEdit', params: {id: route.params.id}},
                     reorderPathSuffix: '/images/reorder',
                     reorderItemsKey: 'image_ids',
                     showDetailHover: true,
@@ -217,7 +217,7 @@ export default {
                     itemsListKey: 'images',
                     enableHasAlbumFilter: true,
                     enableBatchSelectImages: true,
-                    editItemLink: {name: 'personsEdit', id: route.params.id},
+                    editItemLink: {name: 'personsEdit', params: {id: route.params.id}},
                     showRouteFor: (item, _model)=>{
                         return {
                             name: 'personImagesShow',
@@ -260,7 +260,7 @@ export default {
                     apiPath: route.path,
                     itemsListKey: 'albums',
                     enableBatchSelectAlbums: true,
-                    editItemLink: {name: 'tagsEdit', id: route.params.id},
+                    editItemLink: {name: 'tagsEdit', params: {id: route.params.id}},
                     reorderPathSuffix: '/albums/reorder',
                     reorderItemsKey: 'album_ids',
                     showRouteFor: (item)=>{
