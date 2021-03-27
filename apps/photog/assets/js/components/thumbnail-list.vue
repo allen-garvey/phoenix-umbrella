@@ -425,18 +425,16 @@ export default {
         createSuccessRedirectForCurrentPath(){
             //save current route name in variable, otherwise need to use iife
             //to create successRedirect
-            const currentRoute = this.$router.currentRoute;
+            const currentRoute = this.$router.currentRoute._rawValue;
             const currentRouteName = currentRoute.name;
             const params = {};
             for(const param in currentRoute.params){
                 params[param] = currentRoute.params[param];
             }
-            return (id) => {
-                return {
-                    name: currentRouteName,
-                    params,
-                };
-            };
+            return JSON.stringify({
+                name: currentRouteName,
+                params,
+            });
         },
         createResourceWithImages(pathName){
             const selectedImages = this.thumbnailListSelectedItems.map(image => ({id: image.id, mini_thumbnail_path: image.mini_thumbnail_path}));

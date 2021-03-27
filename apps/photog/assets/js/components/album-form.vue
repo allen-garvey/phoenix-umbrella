@@ -144,7 +144,7 @@ export default {
         },
         saveSuccessful(album){
             const modelId = album.id;
-            const redirectPath = this.successRedirect ? this.successRedirect(modelId) : {name: 'albumsShow', params: {id: modelId}};
+            const redirectPath = this.successRedirect ? JSON.parse(this.successRedirect) : {name: 'albumsShow', params: {id: modelId}};
             redirectPath.params.flashMessage = [`${album.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info'];
             this.$router.push(redirectPath);
         },

@@ -9,7 +9,7 @@ export function albumAndPersonFormMixinBuilder(){
                 type: String,
             },
             successRedirect: {
-                type: Function
+                type: String,
             },
         },
         components: {

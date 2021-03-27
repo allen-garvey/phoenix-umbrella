@@ -75,7 +75,7 @@ export default {
         },
         saveSuccessful(person){
             const modelId = person.id;
-            const redirectPath = this.successRedirect ? this.successRedirect(modelId) : {name: 'personsShow', params: {id: modelId}};
+            const redirectPath = this.successRedirect ? JSON.parse(this.successRedirect) : {name: 'personsShow', params: {id: modelId}};
             redirectPath.params.flashMessage = [`${person.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info'];
             this.$router.push(redirectPath);
         },
