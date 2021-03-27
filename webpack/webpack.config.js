@@ -70,6 +70,9 @@ module.exports = {
                             'vue-style-loader',
                             {
                                 loader: MiniCssExtractPlugin.loader,
+                                options: {
+                                    esModule: false,
+                                },
                             },
                             'css-loader?url=false',
                             'sass-loader',
