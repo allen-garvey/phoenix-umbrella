@@ -3,10 +3,10 @@
         <Parent-Thumbnails
             :parent="parent"
             :model="model"
-            :image-id="imageId"
-            :thumbnail-url-for="thumbnailUrlFor"
-            :previous-image="previousImage"
-            :next-image="nextImage" 
+            :imageId="imageId"
+            :thumbnailUrlFor="thumbnailUrlFor"
+            :previousImage="previousImage"
+            :nextImage="nextImage" 
             v-if="parent"
         >
         </Parent-Thumbnails>
@@ -24,13 +24,29 @@
         </div>
         <Image-Info
             :image="image"
-            :update-image="updateImage"
+            :updateImage="updateImage"
         >
         </Image-Info>
-        <Exif-Info :image-exif="imageExif" v-if="imageExif"></Exif-Info>
-        <Image-Items-List :send-json="sendJson" heading="Albums" item-route-name="albumsShow" :items="image.albums" :unused-items-api-url="`/images/${image.id}/albums/?unused=true`" :add-items-api-url="`/images/${image.id}/albums`" items-api-name="albums" :remove-item-api-url-base="`/images/${image.id}/albums/`" :items-updated-callback="imageItemsUpdatedBuilder('albums')" />
+        <Exif-Info :imageExif="imageExif" v-if="imageExif"></Exif-Info>
+        <Image-Items-List 
+            :sendJson="sendJson" 
+            heading="Albums" 
+            itemRouteName="albumsShow" 
+            :items="image.albums" 
+            :unusedItemsApiUrl="`/images/${image.id}/albums/?unused=true`" :addItemsApiUrl="`/images/${image.id}/albums`" 
+            itemsApiName="albums" 
+            :removeItemApiUrlBase="`/images/${image.id}/albums/`" :itemsUpdatedCallback="imageItemsUpdatedBuilder('albums')" 
+        />
         
-        <Image-Items-List :send-json="sendJson" heading="Persons" item-route-name="personsShow" :items="image.persons" :unused-items-api-url="`/images/${image.id}/persons/?unused=true`" :add-items-api-url="`/images/${image.id}/persons`" items-api-name="persons" :remove-item-api-url-base="`/images/${image.id}/persons/`" :items-updated-callback="imageItemsUpdatedBuilder('persons')" />
+        <Image-Items-List 
+            :sendJson="sendJson" 
+            heading="Persons" 
+            itemRouteName="personsShow"
+            :items="image.persons" 
+            :unusedItemsApiUrl="`/images/${image.id}/persons/?unused=true`" :addItemsApiUrl="`/images/${image.id}/persons`" 
+            itemsApiName="persons" 
+            :removeItemApiUrlBase="`/images/${image.id}/persons/`" :itemsUpdatedCallback="imageItemsUpdatedBuilder('persons')" 
+        />
     </main>
 </template>
 
