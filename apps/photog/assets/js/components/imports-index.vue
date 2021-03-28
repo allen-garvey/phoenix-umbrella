@@ -1,5 +1,9 @@
 <template>
-    <Text-List :title="pageTitle" :items-list="itemsList" :is-initial-load-complete="isInitialLoadComplete" :load-more-items-callback="loadMoreItems">
+    <Text-List 
+        :title="pageTitle" 
+        :itemsList="itemsList" 
+        :isInitialLoadComplete="isInitialLoadComplete" :loadMoreItemsCallback="loadMoreItems"
+    >
         <template v-slot:item="{item, index}">
             <router-link :to="showRouteFor(item)">
                 <div>{{titleFor(item)}}</div>
