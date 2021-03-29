@@ -101,6 +101,7 @@ const ALBUM_FILTER_MODE_HAS_ALBUMS = 3;
 
 //thumbnail batch select
 import { BATCH_EDIT_RESOURCE_MODE } from './thumbnail-list/constants/batch-edit.js';
+import { ALBUM_FILTER_QUERY_PARAM_NAME, PERSON_FILTER_QUERY_PARAM_NAME } from '../routes-helpers.js';
 
 export default {
     name: 'Thumbnail-List',
@@ -255,15 +256,28 @@ export default {
             return this.supportsReorder && !this.isCurrentlyBatchSelect && this.albumFilterMode === ALBUM_FILTER_MODE_ALL && this.personFilterMode === PERSON_FILTER_MODE_ALL && this.filteredThumbnailList.length > 1;
         },
     },
+    watch: {
+        '$route'(to, from){
+            // have to check if route is the same,
+            //otherwise will double trigger with beforeRouteEnter
+            if(to.name === from.name){
+                this.setup();
+            }
+        },
+    },
     beforeRouteEnter(to, from, next){
         next((self) => self.setup());
     },
     methods: {
         setup(){
+            const queryParams = this.$router.currentRoute._rawValue.query;
+            const albumFilterQueryParam = parseInt(queryParams[ALBUM_FILTER_QUERY_PARAM_NAME]);
+            const personFilterQueryParam = parseInt(queryParams[PERSON_FILTER_QUERY_PARAM_NAME]);
+
             this.isInitialLoadComplete = false;
             this.model = [];
-            this.albumFilterMode = ALBUM_FILTER_MODE_ALL;
-            this.personFilterMode = PERSON_FILTER_MODE_ALL;
+            this.albumFilterMode = !isNaN(albumFilterQueryParam) ? albumFilterQueryParam : ALBUM_FILTER_MODE_ALL;
+            this.personFilterMode = !isNaN(personFilterQueryParam) ? personFilterQueryParam : PERSON_FILTER_MODE_ALL;
             this.isCurrentlyBatchSelect = false;
             this.batchSelectedItems = [];
             this.previouslySelectedBatchItemIndex = 0;

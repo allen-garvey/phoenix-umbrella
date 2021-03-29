@@ -46,6 +46,8 @@
 </style>
 
 <script>
+import {ALBUM_FILTER_QUERY_PARAM_NAME, PERSON_FILTER_QUERY_PARAM_NAME} from '../routes-helpers.js';
+
 export default {
     name: 'Thumbnail-Filter-Controls',
     props: {
@@ -85,12 +87,20 @@ export default {
         },
         localAlbumFilterMode(newValue, oldValue){
             if(newValue != oldValue){
-                this.$emit('update:albumFilterMode', newValue);
+                const query = {
+                    ...this.$router.currentRoute._rawValue.query,
+                    [ALBUM_FILTER_QUERY_PARAM_NAME]: newValue
+                }
+                this.$router.replace({query});
             }
         },
         localPersonFilterMode(newValue, oldValue){
             if(newValue != oldValue){
-                this.$emit('update:personFilterMode', newValue);
+                const query = {
+                    ...this.$router.currentRoute._rawValue.query,
+                    [PERSON_FILTER_QUERY_PARAM_NAME]: newValue
+                }
+                this.$router.replace({query});
             }
         },
     },
