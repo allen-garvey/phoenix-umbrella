@@ -22,6 +22,13 @@ export default {
         },
     },
     mixins: [formMixinBuilder(), albumAndPersonFormMixinBuilder()],
+    beforeRouteEnter(to, from, next){
+        //unfortunately has to be duplicated here
+        //since beforeRouteEnter can't be added via mixin
+        next((self) => {
+            self.previousRoute = from;
+        });
+    },
     data() {
         return {
             //person is for our edits, model is the immutable person response from the api
@@ -75,7 +82,7 @@ export default {
         },
         saveSuccessful(person){
             const modelId = person.id;
-            const redirectPath = this.successRedirect ? JSON.parse(this.successRedirect) : {name: 'personsShow', params: {id: modelId}};
+            const redirectPath = this.successRedirect === '1' ? this.previousRoute : {name: 'personsShow', params: {id: modelId}};
             redirectPath.params.flashMessage = [`${person.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info'];
             this.$router.push(redirectPath);
         },

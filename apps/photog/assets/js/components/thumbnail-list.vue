@@ -436,28 +436,13 @@ export default {
 
             });
         },
-        createSuccessRedirectForCurrentPath(){
-            //save current route name in variable, otherwise need to use iife
-            //to create successRedirect
-            const currentRoute = this.$router.currentRoute._rawValue;
-            const currentRouteName = currentRoute.name;
-            const params = {};
-            for(const param in currentRoute.params){
-                params[param] = currentRoute.params[param];
-            }
-            return JSON.stringify({
-                name: currentRouteName,
-                params,
-            });
-        },
         createResourceWithImages(pathName){
             const selectedImages = this.thumbnailListSelectedItems.map(image => ({id: image.id, mini_thumbnail_path: image.mini_thumbnail_path}));
-            const successRedirect = this.createSuccessRedirectForCurrentPath();
             this.$router.push({
                 name: pathName, 
                 params: {
                     images: JSON.stringify(selectedImages), 
-                    successRedirect
+                    successRedirect: '1'
                     }
             });
         },

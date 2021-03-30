@@ -60,6 +60,13 @@ export default {
         },
     },
     mixins: [formMixinBuilder(), albumAndPersonFormMixinBuilder()],
+    beforeRouteEnter(to, from, next){
+        //unfortunately has to be duplicated here
+        //since beforeRouteEnter can't be added via mixin
+        next((self) => {
+            self.previousRoute = from;
+        });
+    },
     data() {
         return {
             //album is for our edits, model is the immutable album response from the api
@@ -144,7 +151,7 @@ export default {
         },
         saveSuccessful(album){
             const modelId = album.id;
-            const redirectPath = this.successRedirect ? JSON.parse(this.successRedirect) : {name: 'albumsShow', params: {id: modelId}};
+            const redirectPath = this.successRedirect === '1' ? this.previousRoute : {name: 'albumsShow', params: {id: modelId}};
             redirectPath.params.flashMessage = [`${album.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info'];
             this.$router.push(redirectPath);
         },

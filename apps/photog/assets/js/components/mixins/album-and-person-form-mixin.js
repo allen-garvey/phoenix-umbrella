@@ -15,6 +15,11 @@ export function albumAndPersonFormMixinBuilder(){
         components: {
             'Cover-Image-Form-Input': CoverImageFormInput,
         },
+        data(){
+            return {
+                previousRoute: null,
+            };
+        },
         computed: {
             shouldShowCoverImageInput(){
                 return this.imagesInModel.length === 0;
