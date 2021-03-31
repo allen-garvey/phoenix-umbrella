@@ -78,6 +78,7 @@ import ParentThumbnails from './image-detail/parent-thumbnails.vue';
 import ImageInfo from './image-detail/image-info.vue';
 import ImageItemsList from './image-detail/image-items-list.vue';
 import ExifInfo from './image-detail/exif-info.vue';
+import { thumbnailUrlFor, getMasterUrl } from '../image';
 import { API_URL_BASE } from '../request-helpers';
 
 export default {
@@ -129,7 +130,7 @@ export default {
             return this.model && this.image;
         },
         masterUrl(){
-            return this.generateImageUrl(this.image.master_path);
+            return getMasterUrl(this.image.master_path);
         },
         amazonUrl(){
             if(!this.image.amazon_photos_id){
@@ -193,10 +194,7 @@ export default {
             });
         },
         thumbnailUrlFor(thumbnailPath){
-            return `/media/thumbnails/${encodeURI(thumbnailPath)}`;
-        },
-        generateImageUrl(rawUrl){
-            return `/media/images/${encodeURI(rawUrl)}`;
+            return thumbnailUrlFor(thumbnailPath);
         },
         onKeyPressed(key){
             switch(key){
