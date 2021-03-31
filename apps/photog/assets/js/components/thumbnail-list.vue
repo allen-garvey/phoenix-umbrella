@@ -1,5 +1,5 @@
 <template>
-    <main class="main container">
+    <main class="main container" :class="$style.container">
         <!-- 
             * Header
         -->
@@ -51,9 +51,8 @@
             v-if="supportsReorder"
         >
         </reorder-items-controls>
-        <!-- 
-            * Items list
-        -->
+        <image-preview v-if="hoveredItem" :item="hoveredItem" :mousePosition="hoveredItemEvent" />
+        
         <thumbnail-items-list
             :items="filteredThumbnailList"
             :model="model"
@@ -68,12 +67,21 @@
             :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
             :showDetailHover="showDetailHover"
             :isInThumbnailDefaultMode="isInThumbnailDefaultMode"
+            @itemHover="onItemHovered"
+            @itemHoverEnd="onItemHoveredEnd"
         >
         </thumbnail-items-list>
         <infinite-observer :onTrigger="loadMoreThumbnails" v-if="isInitialLoadComplete">
         </infinite-observer>
     </main>
 </template>
+
+<style lang="scss" module>
+    .container {
+        position: relative;
+    }
+
+</style>
 
 <script>
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
@@ -83,7 +91,8 @@ import ThumbnailFilterControls from './thumbnail-filter-controls.vue';
 import RelatedFieldsList from './related-fields-list.vue';
 import BatchEdit from './thumbnail-list/components/batch-edit.vue';
 import ReorderItemsControls from './thumbnail-list/components/reorder-items-controls.vue';
-import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list.vue'
+import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list.vue';
+import ImagePreview from './thumbnail-list/components/image-preview.vue';
 
 import { API_URL_BASE } from '../request-helpers.js';
 
@@ -183,6 +192,7 @@ export default {
         BatchEdit,
         ThumbnailItemsList,
         InfiniteObserver,
+        ImagePreview,
     },
     data() {
         return {
@@ -202,6 +212,8 @@ export default {
             isListReordered: false,
             reorderedThumbnailList: [],
             currentDragIndex: -1,
+            hoveredItem: null,
+            hoveredItemEvent: null,
         }
     },
     computed: {
@@ -284,6 +296,8 @@ export default {
             this.batchResources = [];
             this.batchSelectResourceMode = BATCH_EDIT_RESOURCE_MODE.NONE;
             this.shouldShowAllBatchResources = false;
+            this.hoveredItem = null;
+            this.hoveredItemEvent = null;
             
             this.loadModel().then(()=>{
                 this.isInitialLoadComplete = true;
@@ -487,6 +501,14 @@ export default {
             //https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another/6470794
             this.reorderedThumbnailList.splice(index, 0, this.reorderedThumbnailList.splice(this.currentDragIndex, 1)[0]);
             this.currentDragIndex = index;
+        },
+        onItemHovered({item, $event}){
+            this.hoveredItem = item;
+            this.hoveredItemEvent = $event;
+        },
+        onItemHoveredEnd(){
+            this.hoveredItem = null;
+            this.hoveredItemEvent = null;
         },
         /**
          * Keyboard shortcuts

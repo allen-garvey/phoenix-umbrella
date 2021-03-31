@@ -8,6 +8,8 @@
             :draggable="isReordering" 
             @dragstart="itemDragStart(i)" 
             @dragover="itemDragOver(i, $event)"
+            @mouseenter="onItemHovered(item, $event)"
+            @mouseleave="onItemHoveredEnd"
         >
             <div 
                 :class="$style['thumbnail-image-container']" 
@@ -278,6 +280,12 @@ export default {
                 [this.$style['default-title']]: !('name' in item), 
                 [this.$style['thumbnail-title-favorite']]: this.isThumbnailFavorited(item),
             };
+        },
+        onItemHovered(item, $event){
+            this.$emit('itemHover', {item, $event});
+        },
+        onItemHoveredEnd(){
+            this.$emit('itemHoverEnd');
         },
     }
 };
