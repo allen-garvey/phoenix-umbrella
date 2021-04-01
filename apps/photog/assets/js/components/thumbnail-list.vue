@@ -505,6 +505,9 @@ export default {
             this.currentDragIndex = index;
         },
         onItemHovered({item, $event}){
+            if(this.isCurrentlyBatchSelect){
+                return;
+            }
             clearTimeout(this.hoveredEventTimout);
             this.hoveredEventTimout = setTimeout(() => {
                 this.hoveredItem = item;
