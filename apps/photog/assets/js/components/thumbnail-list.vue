@@ -214,6 +214,7 @@ export default {
             currentDragIndex: -1,
             hoveredItem: null,
             hoveredItemEvent: null,
+            hoveredEventTimout: null,
         }
     },
     computed: {
@@ -298,6 +299,7 @@ export default {
             this.shouldShowAllBatchResources = false;
             this.hoveredItem = null;
             this.hoveredItemEvent = null;
+            clearTimeout(this.hoveredEventTimout);
             
             this.loadModel().then(()=>{
                 this.isInitialLoadComplete = true;
@@ -503,12 +505,16 @@ export default {
             this.currentDragIndex = index;
         },
         onItemHovered({item, $event}){
-            this.hoveredItem = item;
-            this.hoveredItemEvent = $event;
+            clearTimeout(this.hoveredEventTimout);
+            this.hoveredEventTimout = setTimeout(() => {
+                this.hoveredItem = item;
+                this.hoveredItemEvent = $event;
+            }, 300);
         },
         onItemHoveredEnd(){
             this.hoveredItem = null;
             this.hoveredItemEvent = null;
+            clearTimeout(this.hoveredEventTimout);
         },
         /**
          * Keyboard shortcuts
