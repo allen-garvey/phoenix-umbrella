@@ -116,11 +116,6 @@
             &.cover-image{
                 border: 4px solid magenta;
             }
-
-            .hover-detail:hover &{
-                transition: height 0.15s ease;
-                height: 300px;
-            }
         }
     }
     .thumbnail-title{
@@ -199,14 +194,6 @@ export default {
             type: Boolean,
             required: true,
         },
-        showDetailHover: {
-            type: Boolean,
-            default: false,
-        },
-        isInThumbnailDefaultMode: {
-            type: Boolean,
-            required: true,
-        },
     },
     components: {
         heart,
@@ -271,7 +258,6 @@ export default {
             return {
                 [this.$style['batch-selected']]: this.isCurrentlyBatchSelect && this.batchSelectedItems[i], 
                 [this.$style['reorder-select']]: this.isReordering && this.currentDragIndex === i, 
-                [this.$style['hover-detail']]: this.showDetailHover && this.isInThumbnailDefaultMode,
             };
         },
         thumbnailTitleClass(item){

@@ -65,8 +65,6 @@
             :thumbnailLinkEvent="thumbnailLinkEvent"
             :isReordering="isReordering"
             :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
-            :showDetailHover="showDetailHover"
-            :isInThumbnailDefaultMode="isInThumbnailDefaultMode"
             @itemHover="onItemHovered"
             @itemHoverEnd="onItemHoveredEnd"
         >
@@ -174,10 +172,6 @@ export default {
         },
         reorderItemsKey: {
             type: String,
-        },
-        showDetailHover: {
-            type: Boolean,
-            default: false,
         },
         relatedFieldsKey: {
             type: String,

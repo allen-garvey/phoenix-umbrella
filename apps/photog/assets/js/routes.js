@@ -173,7 +173,6 @@ export default {
                     editItemLink: {name: 'albumsEdit', params: {id: route.params.id}},
                     reorderPathSuffix: '/images/reorder',
                     reorderItemsKey: 'image_ids',
-                    showDetailHover: true,
                     relatedFieldsKey: 'tags',
                     showRouteFor: (item, _model)=>{
                         return {
