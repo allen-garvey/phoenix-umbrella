@@ -30,7 +30,7 @@
 </style>
 
 <script>
-import { getMasterUrl } from '../../../image';
+import { thumbnailUrlFor } from '../../../image';
 
 export default {
     props: {
@@ -58,7 +58,7 @@ export default {
         imageSrc(){
             const item = this.item;
             const image = item.cover_image ? item.cover_image : item;
-            return getMasterUrl(image);
+            return thumbnailUrlFor(image.mini_thumbnail_path);
         },
     },
     methods: {
