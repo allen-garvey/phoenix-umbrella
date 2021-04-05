@@ -341,6 +341,15 @@ defmodule Booklist.Admin do
   end
 
   @doc """
+  Changes a book active status
+  """
+  def update_book_active_status(book_id, is_active) when is_integer(book_id) and is_boolean(is_active) do
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+    from(b in Book, where: b.id == ^book_id)
+    |> Repo.update_all(set: [is_active: is_active, updated_at: now])
+  end
+
+  @doc """
   Deletes a Book.
 
   ## Examples

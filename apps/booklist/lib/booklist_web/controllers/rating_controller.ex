@@ -36,6 +36,8 @@ defmodule BooklistWeb.RatingController do
   def create_action(conn, rating_params, success_redirect_callback, referrer \\ nil) when is_function(success_redirect_callback, 2) do
     case Admin.create_rating(rating_params) do
       {:ok, rating} ->
+        # make book inactive once rated
+        Admin.update_book_active_status(rating.book_id, false)
         conn
         |> put_flash(:info, "Rating created successfully.")
         |> redirect(to: success_redirect_callback.(conn, rating))
