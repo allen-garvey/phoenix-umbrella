@@ -24,7 +24,7 @@ defmodule PhotogWeb.AlbumView do
     %{
       id: album.id,
       name: album.name,
-      images_count: count,
+      items_count: count,
       cover_image: ImageView.image_to_map(album.cover_image),
     }
   end
