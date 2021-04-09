@@ -219,7 +219,8 @@ export default {
         },
         titleFor(item){
             if('name' in item){
-                return `${item.name} (${item.images_count})`;
+                const suffix = item.images_count ? ` (${item.images_count})`: '';
+                return `${item.name}${suffix}`;
             }
             return `${item.creation_time.formatted.us_date} ${item.creation_time.formatted.time}`;
         },
