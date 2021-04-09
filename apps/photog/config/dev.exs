@@ -11,7 +11,7 @@ Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 config :photog, PhotogWeb.Endpoint,
   http: [port: 6014],
   debug_errors: true,
-  code_reloader: false,
+  code_reloader: true,
   check_origin: false
   # watchers: [npm: ["run", "webpack:watch"]]
 
