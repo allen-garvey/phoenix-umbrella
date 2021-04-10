@@ -993,12 +993,14 @@ defmodule Photog.Api do
 
   """
   def get_tag!(id) do
-    albums_query = from album in Album,
-                      join: cover_image in assoc(album, :cover_image),
-                      join: album_tag in AlbumTag,
-                      on: album_tag.tag_id == ^id and album_tag.album_id == album.id,
-                      order_by: [album_tag.album_order, album_tag.id],
-                      preload: [cover_image: cover_image]
+    albums_query = from(
+      album in Album,
+      join: cover_image in assoc(album, :cover_image),
+      join: album_tag in assoc(album, :album_tags),
+      where: album_tag.tag_id == ^id,
+      order_by: [album_tag.album_order, album_tag.id],
+      preload: [cover_image: cover_image]
+    )
 
     Repo.get!(Tag, id)
     |> Repo.preload(albums: albums_query)
