@@ -4,9 +4,9 @@ defmodule Grenadier.Account.User do
 
   schema "users" do
     field :name, :string
-    field :password_hash, :string
+    field :password_hash, :string, redact: true
 
-    field :password, :string, virtual: true
+    field :password, :string, virtual: true, redact: true
 
     timestamps()
   end
