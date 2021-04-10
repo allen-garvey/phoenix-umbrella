@@ -20,13 +20,8 @@ defmodule PhotogWeb.AlbumView do
     %{data: render_one(album, AlbumView, "album_excerpt_mini.json")}
   end
 
-  def render("album_excerpt.json",   %{album: {album, count}}) do
-    %{
-      id: album.id,
-      name: album.name,
-      items_count: count,
-      cover_image: ImageView.image_to_map(album.cover_image),
-    }
+  def render("album_excerpt.json",   %{album: album}) do
+    album_excerpt_to_map(album)
   end
 
   def render("album_excerpt_mini.json", %{album: album}) do
@@ -48,6 +43,7 @@ defmodule PhotogWeb.AlbumView do
       id: album.id,
       name: album.name,
       cover_image: ImageView.image_to_map(album.cover_image),
+      items_count: album.images_count
     }
   end
 

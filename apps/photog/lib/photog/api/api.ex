@@ -275,7 +275,8 @@ defmodule Photog.Api do
       order_by: [desc: :id],
       select: {album, count(album.id)}
     )
-    |> Repo.all     
+    |> Repo.all
+    |> Enum.map(fn {album, count} -> %Album{album | images_count: count} end)
   end
 
   @doc """
