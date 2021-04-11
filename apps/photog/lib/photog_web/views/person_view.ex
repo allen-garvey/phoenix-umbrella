@@ -31,6 +31,7 @@ defmodule PhotogWeb.PersonView do
     %{
       id: person.id,
       name: person.name,
+      items_count: person.images_count,
       cover_image: %{
         mini_thumbnail_path: person.cover_image.mini_thumbnail_path
       },

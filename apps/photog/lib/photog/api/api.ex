@@ -430,10 +430,17 @@ defmodule Photog.Api do
 
   """
   def list_persons do
-    Repo.all from person in Person,
-          join: cover_image in assoc(person, :cover_image),
-          preload: [cover_image: cover_image],
-          order_by: :name
+    from(
+      person in Person,
+      join: cover_image in assoc(person, :cover_image),
+      left_join: person_image in assoc(person, :person_images),
+      group_by: [person.id, cover_image.id],
+      preload: [cover_image: cover_image],
+      order_by: :name,
+      select: {person, count(person.id)}
+    )
+    |> Repo.all
+    |> Enum.map(fn {person, count} -> %Person{person | images_count: count} end)
   end
 
   @doc """
