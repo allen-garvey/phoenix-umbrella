@@ -986,7 +986,7 @@ defmodule Photog.Api do
         on: true,
         left_join: album in Album,
         on: album.id == album_tag.album_id,
-        left_join: image in assoc(album, :cover_image),
+        join: image in assoc(album, :cover_image),
         order_by: tag.name,
         select: {tag, image}
     )
