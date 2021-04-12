@@ -6,6 +6,7 @@ defmodule Photog.Api.Tag do
   schema "tags" do
     field :apple_photos_uuid, :string
     field :name, :string
+    field :cover_image, :string, default: nil, virtual: true
 
     timestamps()
 

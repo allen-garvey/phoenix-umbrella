@@ -1,13 +1,14 @@
 defmodule PhotogWeb.TagView do
   use PhotogWeb, :view
   alias PhotogWeb.TagView
+  alias Photog.Api.Image
 
   def render("index.json", %{tags: tags}) do
     %{data: render_many(tags, TagView, "tag_excerpt.json")}
   end
 
-  def render("index_with_cover_image.json", %{results: results}) do
-    %{data: render_many(results, TagView, "tag_excerpt_with_cover_image.json")}
+  def render("index_with_cover_image.json", %{tags: tags}) do
+    %{data: render_many(tags, TagView, "tag_excerpt_with_cover_image.json")}
   end
 
   def render("show.json", %{tag: tag}) do
@@ -30,21 +31,18 @@ defmodule PhotogWeb.TagView do
     tag_excerpt(tag)
   end
 
-  def render("tag_excerpt_with_cover_image.json", %{tag: %{tag: tag, cover_image: nil}}) do
-    %{
-      id: tag.id,
-      name: tag.name,
-      cover_image: nil,
-    }
-  end
-
-  def render("tag_excerpt_with_cover_image.json", %{tag: %{tag: tag, cover_image: cover_image}}) do
-    %{
-      id: tag.id,
-      name: tag.name,
-      cover_image: %{
-        mini_thumbnail_path: cover_image.mini_thumbnail_path,
+  def render("tag_excerpt_with_cover_image.json", %{tag: tag}) do
+    cover_image = case tag.cover_image do
+      %Image{} -> %{
+        mini_thumbnail_path: tag.cover_image.mini_thumbnail_path,
       }
+      _ -> nil
+    end
+
+    %{
+      id: tag.id,
+      name: tag.name,
+      cover_image: cover_image
     }
   end
 

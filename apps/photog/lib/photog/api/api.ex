@@ -967,7 +967,7 @@ defmodule Photog.Api do
 
   ## Examples
 
-      iex> list_tags()
+      iex> list_tags([desc: :id])
       [%Tag{}, ...]
 
   """
@@ -979,18 +979,19 @@ defmodule Photog.Api do
   @doc """
   Returns the list of maps with tag and cover image with the cover image of the last album added as the cover image
   """
-  def list_tags_with_cover_image() do
+  def list_tags do
     from(
-        t in Tag,
-        left_lateral_join: album_tag in fragment("SELECT album_id FROM album_tags WHERE tag_id = ? ORDER BY id DESC LIMIT 1", t.id),
+        tag in Tag,
+        left_lateral_join: album_tag in fragment("SELECT album_id FROM album_tags WHERE tag_id = ? ORDER BY id DESC LIMIT 1", tag.id),
         on: true,
         left_join: album in Album,
         on: album.id == album_tag.album_id,
         left_join: image in assoc(album, :cover_image),
-        order_by: t.name,
-        select: %{tag: t, cover_image: image}
+        order_by: tag.name,
+        select: {tag, image}
     )
     |> Repo.all
+    |> Enum.map(fn {tag, image} -> %Tag{tag | cover_image: image} end)
   end
 
   @doc """

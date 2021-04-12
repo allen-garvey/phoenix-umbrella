@@ -12,8 +12,8 @@ defmodule PhotogWeb.TagController do
   end
 
   def index(conn, _params) do
-    results = Api.list_tags_with_cover_image()
-    render(conn, "index_with_cover_image.json", results: results)
+    tags = Api.list_tags()
+    render(conn, "index_with_cover_image.json", tags: tags)
   end
 
   def create(conn, %{"tag" => tag_params}) do
