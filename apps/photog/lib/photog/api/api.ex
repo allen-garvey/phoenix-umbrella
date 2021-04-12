@@ -1000,17 +1000,22 @@ defmodule Photog.Api do
 
   """
   def get_tag!(id) do
-    from(
-      tag in Tag,
-      left_join: album in assoc(tag, :albums),
+    tag = Repo.get!(Tag, id)
+
+    albums = from(album in Album,
       join: cover_image in assoc(album, :cover_image),
-      join: album_tag in AlbumTag,
-      on: album_tag.album_id == album.id and album_tag.tag_id == ^id,
-      where: tag.id == ^id,
+      left_join: album_image in assoc(album, :album_images),
+      join: album_tag in assoc(album, :album_tags),
+      where: album_tag.tag_id == ^id,
+      group_by: [album.id, cover_image.id, album_tag.id, album_tag.album_order],
       order_by: [album_tag.album_order, album_tag.id],
-      preload: [albums: {album, cover_image: cover_image}]
+      preload: [cover_image: cover_image],
+      select: {album, count(album.id)}
     )
-    |> Repo.one!
+    |> Repo.all
+    |> Enum.map(fn {album, count} -> %Album{album | images_count: count} end)
+
+    %Tag{tag | albums: albums}
   end
 
   @doc """
