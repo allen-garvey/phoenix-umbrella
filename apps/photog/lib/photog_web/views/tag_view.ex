@@ -42,7 +42,8 @@ defmodule PhotogWeb.TagView do
     %{
       id: tag.id,
       name: tag.name,
-      cover_image: cover_image
+      cover_image: cover_image,
+      items_count: tag.albums_count
     }
   end
 

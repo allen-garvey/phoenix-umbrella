@@ -987,11 +987,13 @@ defmodule Photog.Api do
         left_join: album in Album,
         on: album.id == album_tag.album_id,
         join: image in assoc(album, :cover_image),
+        left_join: album_tag_2 in assoc(tag, :album_tags),
+        group_by: [tag.id, image.id, album.id],
         order_by: tag.name,
-        select: {tag, image}
+        select: {tag, image, count(tag.id)}
     )
     |> Repo.all
-    |> Enum.map(fn {tag, image} -> %Tag{tag | cover_image: image} end)
+    |> Enum.map(fn {tag, image, albums_count} -> %Tag{tag | cover_image: image, albums_count: albums_count} end)
   end
 
   @doc """
