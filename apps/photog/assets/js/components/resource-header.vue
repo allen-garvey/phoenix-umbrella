@@ -6,7 +6,6 @@
         <div>
             <h1 
                 :class="$style['resource-header-title']" 
-                v-if="title"
             >
                 {{title}}
             </h1>
@@ -46,6 +45,7 @@ export default {
     props: {
         title: {
             type: String,
+            required: true,
         },
         description: {
             type: String,
