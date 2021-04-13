@@ -1,17 +1,18 @@
 <template>
     <div 
         class="spread-content"
-        :class="$style['resource-header-container']"
+        :class="$style.container"
     >
         <div>
             <h1 
-                :class="$style['resource-header-title']" 
+                :class="$style.title" 
             >
-                {{title}}
+                <span>{{title}}</span>
+                <span :class="$style.count" v-if="count">{{count}}</span>
             </h1>
             <p 
                 v-if="description" 
-                :class="$style['resource-header-description']"
+                :class="$style.description"
             >
                 {{description}}
             </p>
@@ -24,18 +25,24 @@
 </template>
 
 <style lang="scss" module>
-    .resource-header-container{
+    .container{
         margin-bottom: 0.5em;
     }
 
-    .resource-header-title{
+    .title{
         margin: 0;
     }
 
-    .resource-header-description{
+    .description{
         color: #777;
         margin: 0;
         font-size: 0.95em;
+    }
+
+    .count {
+        color: #aaa;
+        font-size: 1.563rem;
+        margin-left: 0.2em;
     }
 </style>
 
@@ -54,6 +61,9 @@ export default {
         },
         editItemLink: {
             type: Object,
+        },
+        count: {
+            type: Number,
         },
     },
 }

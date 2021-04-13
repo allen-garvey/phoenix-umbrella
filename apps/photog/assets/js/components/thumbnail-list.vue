@@ -3,7 +3,13 @@
         <!-- 
             * Header
         -->
-        <Resource-Header :title="titleForPage" :editItemLink="editItemLink" :newItemLink="newItemLink" :description="model.description" />
+        <Resource-Header 
+            :title="titleForPage" 
+            :editItemLink="editItemLink" 
+            :newItemLink="newItemLink" 
+            :description="model.description" 
+            :count="filteredThumbnailList.length"
+        />
 
         <!-- 
             * Related fields list
