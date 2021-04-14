@@ -43,8 +43,7 @@
                 <span
                     v-if="isLinkDisabled"
                 >
-                    <span>{{titleFor(item)}}</span>
-                    <span :class="$style['items-count']" v-if="item.items_count >= 0"> ({{item.items_count}})</span>
+                    <item-title :title="titleFor(item)" :itemsCount="item.items_count" />
                 </span>
                 <router-link 
                     :to="showRouteFor(item, model)" 
@@ -52,8 +51,7 @@
                     :draggable="!isReordering"
                     v-else
                 >
-                        <span>{{titleFor(item)}}</span>
-                        <span :class="$style['items-count']" v-if="item.items_count >= 0"> ({{item.items_count}})</span>
+                    <item-title :title="titleFor(item)" :itemsCount="item.items_count" />
                 </router-link>
                 <heart 
                     v-if="isThumbnailFavorited(item)" 
@@ -143,15 +141,12 @@
             font-size: 0.98rem;
         }
     }
-    .items-count {
-        color: #aaa;
-        font-size: 0.8em;
-    }
 </style>
 
 <script>
 import { thumbnailUrlFor } from '../../../image.js';
 import heart from './heart.vue';
+import itemTitle from './item-title.vue';
 
 export default {
     props: {
@@ -203,6 +198,7 @@ export default {
     },
     components: {
         heart,
+        itemTitle,
     },
     computed: {
         thumbnailListClass(){
