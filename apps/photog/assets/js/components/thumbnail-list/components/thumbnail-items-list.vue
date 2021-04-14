@@ -43,7 +43,8 @@
                 <span
                     v-if="isLinkDisabled"
                 >
-                    {{titleFor(item)}}
+                    <span>{{titleFor(item)}}</span>
+                    <span :class="$style['items-count']" v-if="item.items_count >= 0"> ({{item.items_count}})</span>
                 </span>
                 <router-link 
                     :to="showRouteFor(item, model)" 
@@ -51,7 +52,8 @@
                     :draggable="!isReordering"
                     v-else
                 >
-                        {{titleFor(item)}}
+                        <span>{{titleFor(item)}}</span>
+                        <span :class="$style['items-count']" v-if="item.items_count >= 0"> ({{item.items_count}})</span>
                 </router-link>
                 <heart 
                     v-if="isThumbnailFavorited(item)" 
@@ -141,6 +143,10 @@
             font-size: 0.98rem;
         }
     }
+    .items-count {
+        color: #aaa;
+        font-size: 0.8em;
+    }
 </style>
 
 <script>
@@ -219,8 +225,7 @@ export default {
         },
         titleFor(item){
             if('name' in item){
-                const suffix = item.items_count >= 0 ? ` (${item.items_count})`: '';
-                return `${item.name}${suffix}`;
+                return item.name;
             }
             return `${item.creation_time.formatted.us_date} ${item.creation_time.formatted.time}`;
         },
