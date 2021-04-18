@@ -26,8 +26,8 @@
   "devDependencies": {
     "@vue/compiler-sfc": "3.0.11",
     "bootstrap": "^4.6.0",
-    "css-loader": "^5.2.1",
-    "mini-css-extract-plugin": "^1.4.1",
+    "css-loader": "^5.2.2",
+    "mini-css-extract-plugin": "^1.5.0",
     "node-sass": "^5.0.0",
     "sass-loader": "^11.0.1",
     "vue-loader": "^16.1.2",
