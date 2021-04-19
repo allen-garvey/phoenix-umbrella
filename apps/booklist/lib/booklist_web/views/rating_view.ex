@@ -3,7 +3,7 @@ defmodule BooklistWeb.RatingView do
   alias Common.DateHelpers
 
   def to_s(rating) do
-  	BooklistWeb.BookView.to_s(rating.book) <> "—" <> DateHelpers.us_formatted_date(rating.date_scored)
+  	BooklistWeb.BookView.to_s(rating.book) <> "—" <> Integer.to_string(rating.score) <> "—" <> DateHelpers.us_formatted_date(rating.date_scored)
   end
 
   def to_s_short(rating) do
