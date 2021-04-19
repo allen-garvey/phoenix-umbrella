@@ -7,10 +7,17 @@
 %>
 
 <ul>
-
   <li>
     <strong>Name:</strong>
     <%= @genre.name %>
   </li>
-
 </ul>
+
+<div>
+  <h3>Ratings</h3>
+  <ol class="genre_ratings_list">
+    <%= for rating <- @ratings do
+		  content_tag :li, link(BooklistWeb.RatingView.to_s(rating), to: Routes.rating_path(@conn, :show, rating)), class: "genre_rating_item"
+	  end %>
+  </ol>
+</div>

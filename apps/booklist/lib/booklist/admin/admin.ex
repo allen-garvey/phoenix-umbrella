@@ -849,8 +849,27 @@ defmodule Booklist.Admin do
 
   """
   def list_ratings do
-    from(r in Rating, join: book in assoc(r, :book), preload: [book: book], order_by: [desc: :date_scored, desc: :id])
-      |> Repo.all
+    from(
+      r in Rating, 
+      join: book in assoc(r, :book), 
+      preload: [book: book], 
+      order_by: [desc: :date_scored, desc: :id]
+    )
+    |> Repo.all
+  end
+
+  @doc """
+  Returns the list of ratings for a given genre id
+  """
+  def list_ratings_for_genre(genre_id) do
+    from(
+      r in Rating, 
+      join: book in assoc(r, :book),
+      where: book.genre_id == ^genre_id,
+      preload: [book: book], 
+      order_by: [desc: :date_scored, desc: :id]
+    )
+    |> Repo.all
   end
 
   @doc """

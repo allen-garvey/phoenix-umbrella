@@ -28,7 +28,8 @@ defmodule BooklistWeb.GenreController do
 
   def show(conn, %{"id" => id}) do
     genre = Admin.get_genre!(id)
-    render(conn, "show.html", genre: genre)
+    ratings = Admin.list_ratings_for_genre(id)
+    render(conn, "show.html", genre: genre, ratings: ratings)
   end
 
   def edit(conn, %{"id" => id}) do
