@@ -48,6 +48,11 @@
   </div>
   <div class="home_section">
     <h2 class="home_section_heading">
+      <%= link "Genres", to: Routes.genre_path(@conn, :index) %>
+    </h2>
+  </div>
+  <div class="home_section">
+    <h2 class="home_section_heading">
       <%= link "Loans", to: Routes.loan_path(@conn, :index) %>
     </h2>
   </div>
