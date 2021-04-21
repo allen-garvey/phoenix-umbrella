@@ -30,8 +30,18 @@
     <p class="description">All resources</p>
   </div>
   <div class="home_section">
+    <h2 class="home_section_heading">
+      <%= link "Genres", to: Routes.genre_path(@conn, :index) %>
+    </h2>
+  </div>
+  <div class="home_section">
     <h2 class="home_section_heading"
       ><%= link "Ratings", to: Routes.rating_path(@conn, :index) %>
+    </h2>
+  </div>
+  <div class="home_section">
+    <h2 class="home_section_heading"
+      ><%= link "Top Ratings", to: Routes.rating_path(@conn, :index, sort: :score) %>
     </h2>
   </div>
   <div class="home_section">
@@ -45,11 +55,6 @@
       ><%= link "No location books", to: BooklistWeb.BookView.no_location_active_book_path(@conn) %>
     </h2>
     <p class="description">Books not assigned to a location</p>
-  </div>
-  <div class="home_section">
-    <h2 class="home_section_heading">
-      <%= link "Genres", to: Routes.genre_path(@conn, :index) %>
-    </h2>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading">

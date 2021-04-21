@@ -841,6 +841,19 @@ defmodule Booklist.Admin do
 
   @doc """
   Returns the list of ratings.
+  """
+  def list_ratings(sort) do
+    from(
+      r in Rating, 
+      join: book in assoc(r, :book), 
+      preload: [book: book], 
+      order_by: ^sort
+    )
+    |> Repo.all
+  end
+
+  @doc """
+  Returns the list of ratings.
 
   ## Examples
 
@@ -849,13 +862,14 @@ defmodule Booklist.Admin do
 
   """
   def list_ratings do
-    from(
-      r in Rating, 
-      join: book in assoc(r, :book), 
-      preload: [book: book], 
-      order_by: [desc: :date_scored, desc: :id]
-    )
-    |> Repo.all
+    list_ratings([desc: :date_scored, desc: :id])
+  end
+
+  @doc """
+  Returns the list of ratings sorted by score.
+  """
+  def list_ratings_by_score do
+    list_ratings([desc: :score, desc: :date_scored, desc: :id])
   end
 
   @doc """

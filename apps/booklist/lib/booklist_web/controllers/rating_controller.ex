@@ -10,6 +10,11 @@ defmodule BooklistWeb.RatingController do
     ]
   end
 
+  def index(conn, %{"sort" => "score"}) do
+    ratings = Admin.list_ratings_by_score()
+    render(conn, "index.html", ratings: ratings)
+  end
+
   def index(conn, _params) do
     ratings = Admin.list_ratings()
     render(conn, "index.html", ratings: ratings)
