@@ -44,7 +44,7 @@ defmodule GrenadierWeb.PageController do
   defp login_failed(conn, params) do
     query_params = case params["redirect"] do
       nil -> []
-      _ -> [{:redirect, params["redirect"]}]
+      _ -> [redirect: params["redirect"]]
     end
 
     conn
