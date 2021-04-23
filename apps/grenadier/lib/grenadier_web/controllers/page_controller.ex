@@ -13,7 +13,7 @@ defmodule GrenadierWeb.PageController do
   def login(conn, params) do
     redirect_url = params["redirect"]
     case  GrenadierWeb.Plugs.Authenticate.get_user_from_session(conn) do
-      nil -> render(conn, "login.html", csrf_token: get_csrf_token(), redirect: redirect_url)
+      nil -> render(conn, "login.html", csrf_token: get_csrf_token())
       _   -> redirect_after_login(conn, redirect_url)
     end
   end
