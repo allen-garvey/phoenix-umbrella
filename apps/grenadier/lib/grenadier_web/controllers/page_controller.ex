@@ -33,18 +33,23 @@ defmodule GrenadierWeb.PageController do
                       |> redirect_after_login(params["redirect"])
       _   -> conn
               |> generate_login_resource(username, false)
-              |> login_failed()
+              |> login_failed(params)
     end
   end
 
   def login_submit(conn, _params) do
-    login_failed(conn)
+    login_failed(conn, nil)
   end
 
-  defp login_failed(conn) do
+  defp login_failed(conn, params) do
+    query_params = case params["redirect"] do
+      nil -> []
+      _ -> [{:redirect, params["redirect"]}]
+    end
+
     conn
     |> put_flash(:error, "Invalid username or password")
-    |> login(nil)
+    |> redirect(to: Routes.page_path(conn, :login, query_params))
   end
 
   defp is_request_url_valid?(original_request_url) do
