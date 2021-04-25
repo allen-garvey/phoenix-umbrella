@@ -11,6 +11,10 @@
     <strong>Name:</strong>
     <%= @genre.name %>
   </li>
+  <li>
+    <strong>Average Rating:</strong>
+    <%= @average_rating %>
+  </li>
 </ul>
 
 <div>

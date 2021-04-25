@@ -3,6 +3,7 @@ defmodule BooklistWeb.GenreController do
 
   alias Booklist.Admin
   alias Booklist.Admin.Genre
+  alias Booklist.Reports
 
   def index(conn, _params) do
     genres = Admin.list_genres()
@@ -29,7 +30,10 @@ defmodule BooklistWeb.GenreController do
   def show(conn, %{"id" => id}) do
     genre = Admin.get_genre!(id)
     ratings = Admin.list_ratings_for_genre(id)
-    render(conn, "show.html", genre: genre, ratings: ratings)
+    ratings_count = Enum.count(ratings)
+    average_rating = Reports.calculate_rating_total(ratings)  / 100
+      |> Reports.calculate_percent_of_ratings(ratings_count)
+    render(conn, "show.html", genre: genre, ratings: ratings, average_rating: average_rating)
   end
 
   def edit(conn, %{"id" => id}) do
