@@ -767,7 +767,8 @@ defmodule Photog.Api do
 
     Enum.uniq_by(results, fn %{import: import, image: _image} -> import.id end)
     |> Enum.map(fn %{import: import, image: _image} ->
-        Map.get(import_id_map, import.id)
+        import = Map.get(import_id_map, import.id)
+        {import, Enum.count(import.images)}
     end)
   end
 
@@ -787,7 +788,6 @@ defmodule Photog.Api do
     )
     |> Repo.all
     |> manually_preload_images_for_imports
-    |> Enum.map(fn (import) -> {import, Enum.count(import.images)} end)
   end
 
   @doc """
@@ -810,7 +810,6 @@ defmodule Photog.Api do
     )
     |> Repo.all
     |> manually_preload_images_for_imports
-    |> Enum.map(fn (import) -> {import, Enum.count(import.images)} end)
   end
 
   @doc """
