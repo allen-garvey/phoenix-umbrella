@@ -795,12 +795,8 @@ defmodule Photog.Api do
   Also preloads a limited amount of images
   """
   def list_imports_with_count_and_limited_images(items_limit) do
-    # we are going to use a separate query for count because otherwise we have to group_by
-    # everything in images and import model, which is fragile if we ever add any fields to them
-    # only thing to remember is that the order_by statement is the same in both queries
-
     # have to use fragment and manual preloading for query in lateral joins
-    imports = from(
+    from(
         import in Import,
         # need to add inner join here for the limit to work properly because we don't know how many images each import has
         # and we need to get the set of import.ids we are selecting from
@@ -814,18 +810,7 @@ defmodule Photog.Api do
     )
     |> Repo.all
     |> manually_preload_images_for_imports
-
-    imports_images_count = from(
-        import in Import,
-        left_join: images_count in assoc(import, :images),
-        group_by: [import.id],
-        order_by: [desc: import.import_time, desc: import.id],
-        select: count(images_count.id)
-    )
-    |> limit(^items_limit)
-    |> Repo.all
-
-    Enum.zip(imports, imports_images_count)
+    |> Enum.map(fn (import) -> {import, Enum.count(import.images)} end)
   end
 
   @doc """
