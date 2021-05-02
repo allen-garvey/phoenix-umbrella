@@ -436,10 +436,9 @@ defmodule Photog.Api do
       group_by: [person.id, cover_image.id],
       preload: [cover_image: cover_image],
       order_by: :name,
-      select: {person, count(person.id)}
+      select: {%Person{person | images_count: count(person.id)}}
     )
     |> Repo.all
-    |> Enum.map(fn {person, count} -> %Person{person | images_count: count} end)
   end
 
   @doc """
