@@ -258,14 +258,6 @@ defmodule Photog.Api do
   end
 
   @doc """
-  Preloads images_count to albums
-  """
-  def preload_images_count_to_albums(albums) do
-    albums
-    |> Enum.map(fn {album, count} -> %Album{album | images_count: count} end)
-  end
-
-  @doc """
   Returns the list of albums.
 
   ## Examples
@@ -281,10 +273,9 @@ defmodule Photog.Api do
       group_by: [album.id, cover_image.id],
       preload: [cover_image: cover_image],
       order_by: [desc: :id],
-      select: {album, count(album.id)}
+      select: %Album{album | images_count: count(album.id)}
     )
     |> Repo.all
-    |> preload_images_count_to_albums
   end
 
   @doc """
@@ -1021,10 +1012,9 @@ defmodule Photog.Api do
       group_by: [album.id, cover_image.id, album_tag.id, album_tag.album_order],
       order_by: [album_tag.album_order, album_tag.id],
       preload: [cover_image: cover_image],
-      select: {album, count(album.id)}
+      select: %Album{album | images_count: count(album.id)}
     )
     |> Repo.all
-    |> preload_images_count_to_albums
 
     %Tag{tag | albums: albums}
   end
