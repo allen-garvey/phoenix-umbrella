@@ -777,11 +777,18 @@ defmodule Photog.Api do
   Also preloads a limited amount of images
   """
   def list_imports_with_count_and_limited_images do
-    # have to use fragment and manual preloading for query in lateral joins
+    # have to use manual preloading for query in lateral joins
     from(
         import in Import,
+        as: :import,
         # when we manually join images order will be reversed, but we still need to order by DESC so we are selecting most recent images
-        left_lateral_join: image in fragment("SELECT id, mini_thumbnail_path, import_id FROM images WHERE import_id = ? ORDER BY id DESC LIMIT 4", import.id),
+        left_lateral_join: image in subquery(
+          from Image,
+          where: [import_id: parent_as(:import).id],
+          order_by: [desc: :id],
+          limit: 4,
+          select: [:id, :mini_thumbnail_path, :import_id]
+        ),
         on: true,
         order_by: [desc: import.import_time, desc: import.id],
         select: %{import: import, image: %Image{id: image.id, mini_thumbnail_path: image.mini_thumbnail_path, import_id: image.import_id} }
@@ -798,12 +805,26 @@ defmodule Photog.Api do
     # have to use fragment and manual preloading for query in lateral joins
     from(
         import in Import,
+        as: :import,
         # need to add inner join here for the limit to work properly because we don't know how many images each import has
         # and we need to get the set of import.ids we are selecting from
-        inner_join: import_limit_ids in fragment("SELECT id from imports ORDER BY import_time DESC, id DESC LIMIT ?", ^items_limit),
+        inner_join: import_limit_ids in subquery(
+          from(
+            Import,
+            order_by: [desc: :import_time, desc: :id],
+            limit: ^items_limit,
+            select: [:id]
+          )
+        ),
         on: import_limit_ids.id == import.id,
         # when we manually join images order will be reversed, but we still need to order by DESC so we are selecting most recent images
-        left_lateral_join: image in fragment("SELECT id, mini_thumbnail_path, import_id FROM images WHERE import_id = ? ORDER BY id DESC LIMIT 4", import.id),
+        left_lateral_join: image in subquery(
+          from Image,
+          where: [import_id: parent_as(:import).id],
+          order_by: [desc: :id],
+          limit: 4,
+          select: [:id, :mini_thumbnail_path, :import_id]
+        ),
         on: true,
         order_by: [desc: import.import_time, desc: import.id],
         select: %{import: import, image: %Image{id: image.id, mini_thumbnail_path: image.mini_thumbnail_path, import_id: image.import_id}, import_limit_ids: import_limit_ids.id }
