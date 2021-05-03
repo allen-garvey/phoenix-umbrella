@@ -772,6 +772,17 @@ defmodule Photog.Api do
     end)
   end
 
+  def import_limited_images_query do
+    # when we manually join images order will be reversed, but we still need to order by DESC so we are selecting most recent images
+    from(
+      Image,
+      where: [import_id: parent_as(:import).id],
+      order_by: [desc: :id],
+      limit: 4,
+      select: [:id, :mini_thumbnail_path, :import_id]
+    )
+  end
+
   @doc """
   Returns the list of {import, image_count} with count of associated images
   Also preloads a limited amount of images
@@ -781,14 +792,7 @@ defmodule Photog.Api do
     from(
         import in Import,
         as: :import,
-        # when we manually join images order will be reversed, but we still need to order by DESC so we are selecting most recent images
-        left_lateral_join: image in subquery(
-          from Image,
-          where: [import_id: parent_as(:import).id],
-          order_by: [desc: :id],
-          limit: 4,
-          select: [:id, :mini_thumbnail_path, :import_id]
-        ),
+        left_lateral_join: image in subquery(import_limited_images_query()),
         on: true,
         order_by: [desc: import.import_time, desc: import.id],
         select: %{import: import, image: %Image{id: image.id, mini_thumbnail_path: image.mini_thumbnail_path, import_id: image.import_id} }
@@ -817,14 +821,7 @@ defmodule Photog.Api do
           )
         ),
         on: import_limit_ids.id == import.id,
-        # when we manually join images order will be reversed, but we still need to order by DESC so we are selecting most recent images
-        left_lateral_join: image in subquery(
-          from Image,
-          where: [import_id: parent_as(:import).id],
-          order_by: [desc: :id],
-          limit: 4,
-          select: [:id, :mini_thumbnail_path, :import_id]
-        ),
+        left_lateral_join: image in subquery(import_limited_images_query()),
         on: true,
         order_by: [desc: import.import_time, desc: import.id],
         select: %{import: import, image: %Image{id: image.id, mini_thumbnail_path: image.mini_thumbnail_path, import_id: image.import_id}, import_limit_ids: import_limit_ids.id }
