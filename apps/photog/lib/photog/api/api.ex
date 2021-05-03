@@ -754,7 +754,7 @@ defmodule Photog.Api do
   Manually preloads images for imports since we can't use preload macro when using fragment for left lateral join
   """
   def manually_preload_images_for_imports(results) do
-    import_id_map = Enum.reduce(results, %{}, fn %{import: import, image: image}, import_id_map ->
+    import_id_map = Enum.reduce(results, %{}, fn {import, image}, import_id_map ->
         saved_import = Map.get(import_id_map, import.id, import)
         saved_images = case {saved_import.images, image.id} do
             {%Ecto.Association.NotLoaded{}, nil}       -> []
@@ -765,8 +765,8 @@ defmodule Photog.Api do
         Map.put(import_id_map, import.id, %Import{saved_import | images: saved_images})
     end)
 
-    Enum.uniq_by(results, fn %{import: import, image: _image} -> import.id end)
-    |> Enum.map(fn %{import: import, image: _image} ->
+    Enum.uniq_by(results, fn {import, _image} -> import.id end)
+    |> Enum.map(fn {import, _image} ->
         saved_import = Map.get(import_id_map, import.id)
         {saved_import, Enum.count(saved_import.images)}
     end)
@@ -795,7 +795,7 @@ defmodule Photog.Api do
         left_lateral_join: image in subquery(import_limited_images_query()),
         on: true,
         order_by: [desc: import.import_time, desc: import.id],
-        select: %{import: import, image: %Image{id: image.id, mini_thumbnail_path: image.mini_thumbnail_path, import_id: image.import_id} }
+        select: {import, %Image{id: image.id, mini_thumbnail_path: image.mini_thumbnail_path, import_id: image.import_id}}
     )
     |> Repo.all
     |> manually_preload_images_for_imports
@@ -824,7 +824,7 @@ defmodule Photog.Api do
         left_lateral_join: image in subquery(import_limited_images_query()),
         on: true,
         order_by: [desc: import.import_time, desc: import.id],
-        select: %{import: import, image: %Image{id: image.id, mini_thumbnail_path: image.mini_thumbnail_path, import_id: image.import_id}, import_limit_ids: import_limit_ids.id }
+        select: {import, %Image{id: image.id, mini_thumbnail_path: image.mini_thumbnail_path, import_id: image.import_id}}
     )
     |> Repo.all
     |> manually_preload_images_for_imports
