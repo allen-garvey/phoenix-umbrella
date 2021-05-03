@@ -6,6 +6,7 @@ defmodule Photog.Api.Import do
   schema "imports" do
     field :apple_photos_uuid, :string
     field :import_time, :utc_datetime
+    field :images_count, :integer, default: -1, virtual: true
 
     timestamps()
 

@@ -8,13 +8,13 @@ defmodule PhotogWeb.ImportController do
 
   def index(conn, %{"limit" => limit}) do
     with {items_limit, ""} <- Integer.parse(limit) do
-      resources = Api.list_imports_with_count_and_limited_images(items_limit)
-      render(conn, "index_with_count_and_images.json", resources: resources)
+      imports = Api.list_imports_with_count_and_limited_images(items_limit)
+      render(conn, "index_with_count_and_images.json", imports: imports)
     end
   end
   def index(conn, _params) do
-    resources = Api.list_imports_with_count_and_limited_images()
-    render(conn, "index_with_count_and_images.json", resources: resources)
+    imports = Api.list_imports_with_count_and_limited_images()
+    render(conn, "index_with_count_and_images.json", imports: imports)
   end
 
   def create(conn, %{"import" => import_params}) do
