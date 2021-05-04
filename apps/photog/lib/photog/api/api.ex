@@ -806,7 +806,7 @@ defmodule Photog.Api do
   Also preloads a limited amount of images
   """
   def list_imports_with_count_and_limited_images(items_limit) do
-    # have to use fragment and manual preloading for query in lateral joins
+    # have to use manual preloading for query in lateral joins
     from(
         import in Import,
         as: :import,
