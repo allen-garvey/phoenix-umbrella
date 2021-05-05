@@ -751,83 +751,23 @@ defmodule Photog.Api do
   end
 
   @doc """
-  Manually preloads images for imports since we can't use preload macro when using fragment for left lateral join
-  """
-  def manually_preload_images_for_imports(results) do
-    import_id_map = Enum.reduce(results, %{}, fn {import, image}, import_id_map ->
-        saved_import = Map.get(import_id_map, import.id, import)
-        saved_images = case {saved_import.images, image.id} do
-            {%Ecto.Association.NotLoaded{}, nil}       -> []
-            {%Ecto.Association.NotLoaded{}, _image_id} -> [image]
-            {images, nil}                        ->       images
-            {images, _image_id}                        -> [image | images]
-        end
-        Map.put(import_id_map, import.id, %Import{saved_import | images: saved_images})
-    end)
-
-    Enum.uniq_by(results, fn {import, _image} -> import.id end)
-    |> Enum.map(fn {import, _image} ->
-        saved_import = Map.get(import_id_map, import.id)
-        %Import{saved_import | images_count: Enum.count(saved_import.images)}
-    end)
-  end
-
-  def import_limited_images_query do
-    # when we manually join images order will be reversed, but we still need to order by DESC so we are selecting most recent images
-    from(
-      Image,
-      where: [import_id: parent_as(:import).id],
-      order_by: [desc: :id],
-      limit: 4,
-      select: [:id, :mini_thumbnail_path, :import_id]
-    )
-  end
-
-  @doc """
-  Returns the list of {import, image_count} with count of associated images
+  Returns the list of imports
   Also preloads a limited amount of images
   """
   def list_imports_with_count_and_limited_images do
-    # have to use manual preloading for query in lateral joins
+    # Just gets all the images and then throws out what is needed,
+    # since it ends up only taking 2 sec average to do this
+    # compared with 4 for using lateral join or window function
     from(
         import in Import,
-        as: :import,
-        left_lateral_join: image in subquery(import_limited_images_query()),
-        on: true,
-        order_by: [desc: import.import_time, desc: import.id],
-        select: {import, %Image{id: image.id, mini_thumbnail_path: image.mini_thumbnail_path, import_id: image.import_id}}
+        join: image in assoc(import, :images),
+        preload: [images: image],
+        order_by: [desc: import.import_time, desc: import.id]
     )
     |> Repo.all
-    |> manually_preload_images_for_imports
-  end
-
-  @doc """
-  Returns the list of {import, image_count} with count of associated images
-  Also preloads a limited amount of images
-  """
-  def list_imports_with_count_and_limited_images(items_limit) do
-    # have to use manual preloading for query in lateral joins
-    from(
-        import in Import,
-        as: :import,
-        # need to add inner join here for the limit to work properly because we don't know how many images each import has
-        # and we need to get the set of import.ids we are selecting from
-        inner_join: import_limit_ids in subquery(
-          from(
-            Import,
-            order_by: [desc: :import_time, desc: :id],
-            limit: ^items_limit,
-            select: [:id]
-          )
-        ),
-        on: import_limit_ids.id == import.id,
-        left_lateral_join: image in subquery(import_limited_images_query()),
-        on: true,
-        order_by: [desc: import.import_time, desc: import.id],
-        select: {import, %Image{id: image.id, mini_thumbnail_path: image.mini_thumbnail_path, import_id: image.import_id}}
-    )
-    |> Repo.all
-    |> manually_preload_images_for_imports
+    |> Enum.map(fn import -> 
+      %Import{import | images_count: Enum.count(import.images), images: Enum.take(import.images, 4)}
+    end)
   end
 
   @doc """

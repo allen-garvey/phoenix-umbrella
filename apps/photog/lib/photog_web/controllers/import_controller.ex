@@ -6,12 +6,6 @@ defmodule PhotogWeb.ImportController do
 
   action_fallback PhotogWeb.FallbackController
 
-  def index(conn, %{"limit" => limit}) do
-    with {items_limit, ""} <- Integer.parse(limit) do
-      imports = Api.list_imports_with_count_and_limited_images(items_limit)
-      render(conn, "index_with_count_and_images.json", imports: imports)
-    end
-  end
   def index(conn, _params) do
     imports = Api.list_imports_with_count_and_limited_images()
     render(conn, "index_with_count_and_images.json", imports: imports)

@@ -40,18 +40,73 @@
 
 <script>
 import { thumbnailUrlFor } from '../image.js';
-import IndexTextListMixinBuilder from './mixins/index-text-list-mixin.js';
+import TextList from './base/text-list.vue';
+
+const ITEMS_PAGINATION_LIMIT_INITIAL = 10;
+const ITEMS_PAGINATION_LIMIT_SCROLL = 30;
 
 export default {
-        name: 'Imports-Index',
-        mixins: [IndexTextListMixinBuilder('Imports')],
+        props: {
+            setWindowTitle: {
+                type: Function,
+                required: true,
+            },
+            getModel: {
+                type: Function,
+                required: true,
+            },
+        },
+        components: {
+            'Text-List': TextList,
+        },
+        created(){
+            this.setup();
+        },
         data() {
             return {
-                modelPath: '/imports/?limit=20',
+                modelPath: '/imports',
                 showRouteName: 'importsShow',
+                model: [],
+                //need this property or there will be errors when we switch routes and new models haven't been loaded yet
+                isInitialLoadComplete: false,
+                pageTitle: 'Imports',
+                numItemsShown: 0,
+            }
+        },
+        computed: {
+            itemsList(){
+                if(!this.isInitialLoadComplete){
+                    return [];
+                }
+                return this.model.slice(0, this.numItemsShown);
+            },
+        },
+        watch: {
+            '$route'(to, from){
+                this.setup();
             }
         },
         methods: {
+            setup(){
+                this.setWindowTitle(this.pageTitle);
+                this.isInitialLoadComplete = false;
+                this.getModel(this.modelPath).then((itemsJson)=>{
+                    this.model = itemsJson;
+                    this.numItemsShown = Math.min(this.numItemsShown + ITEMS_PAGINATION_LIMIT_INITIAL, this.model.length);
+                    this.isInitialLoadComplete = true;
+                });
+            },
+            showRouteFor(item){
+                return {
+                    name: this.showRouteName,
+                    params: {
+                        id: item.id,
+                    },
+                };
+            },
+            titleFor(item){
+                return item.name;
+            },
             titleFor(item){
                 return `${item.name} (${item.images_count})`;
             },
@@ -62,10 +117,13 @@ export default {
             //at first load we only load the most recent imports, but if you scroll down we just load everything
             //instead of incremental loads with offsets
             loadMoreItems($state){
-                this.getModel('/imports').then((itemsJson)=>{
-                    this.model = itemsJson;
+                this.numItemsShown = Math.min(this.numItemsShown + ITEMS_PAGINATION_LIMIT_SCROLL, this.model.length);
+                if(this.numItemsShown === this.model.length) {
                     $state.complete();
-                });
+                }
+                else {
+                    $state.loaded();
+                }
             },
         }
     };
