@@ -194,9 +194,15 @@ defmodule Movielist.Admin do
 
   """
   def get_movie!(id) do
-    from(m in Movie, join: genre in assoc(m, :genre), where: m.id == ^id, preload: [genre: genre])
+    from(
+      movie in Movie,
+      join: genre in assoc(movie, :genre),
+      left_join: rating in assoc(movie, :ratings),
+      where: movie.id == ^id,
+      preload: [genre: genre, ratings: rating],
+      order_by: [desc: rating.date_scored, desc: rating.id]
+    )
     |> Repo.one!
-    |> Repo.preload([ratings: (from r in Rating, order_by: [desc: r.date_scored, desc: r.id])])
   end
 
   @doc """
