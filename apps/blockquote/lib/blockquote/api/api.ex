@@ -15,9 +15,19 @@ defmodule Blockquote.Api do
   Raises `Ecto.NoResultsError` if the Daily quote table is empty
 
   """
-  def get_random_quote!() do 
-    Repo.one!(from(Quote, order_by: fragment("random()"), limit: 1))
-      |> Repo.preload([ :author, :category, {:source, [:author, :parent_source]} ])
+  def get_random_quote!() do
+    from(
+      q in Quote,
+      join: author in assoc(q, :author),
+      join: category in assoc(q, :category),
+      join: source in assoc(q, :source),
+      join: source_author in assoc(source, :author),
+      left_join: parent_source in assoc(source, :parent_source),
+      preload: [author: author, category: category, source: {source, [author: source_author, parent_source: parent_source]}],
+      order_by: fragment("random()"),
+      limit: 1
+    )
+      |> Repo.one!
   end
 
   @doc """
@@ -25,8 +35,19 @@ defmodule Blockquote.Api do
 
   """
   def get_todays_daily_quote() do 
-    Repo.one(from(d in DailyQuote, where: d.date_used == ^Date.utc_today, limit: 1))
-      |> Repo.preload([ {:quote, [:author, :category, {:source, [:author, :parent_source]}]} ])
+    from(
+      daily_quote in DailyQuote,
+      join: q in assoc(daily_quote, :quote),
+      join: author in assoc(q, :author),
+      join: category in assoc(q, :category),
+      join: source in assoc(q, :source),
+      join: source_author in assoc(source, :author),
+      left_join: parent_source in assoc(source, :parent_source),
+      preload: [quote: {q, [author: author, category: category, source: {source, [author: source_author, parent_source: parent_source]}]}],
+      where: daily_quote.date_used == ^Date.utc_today,
+      limit: 1
+    )
+      |> Repo.one
   end
 
 end
