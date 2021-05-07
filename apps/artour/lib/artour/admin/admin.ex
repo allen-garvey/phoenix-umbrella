@@ -7,7 +7,6 @@ defmodule Artour.Admin do
   alias Artour.Repo
 
   alias Artour.Post
-  alias Artour.Tag
   alias Artour.PostTag
   alias Artour.Format
   # alias Artour.Category
@@ -36,13 +35,14 @@ defmodule Artour.Admin do
   """
   def get_post_for_show!(id) do
     from(
-          p in Post,
-          join: category in assoc(p, :category),
-          where: p.id == ^id,
-          preload: [category: category]
+          post in Post,
+          join: category in assoc(post, :category),
+          left_join: tag in assoc(post, :tags),
+          where: post.id == ^id,
+          preload: [category: category, tags: tag],
+          order_by: [tag.name]
         )
     |> Repo.one!
-    |> Repo.preload(tags: from(Tag, order_by: :name))
   end
 
   @doc """
