@@ -29,14 +29,15 @@ defmodule Artour.Public do
   """
   def get_post_by_slug!(slug) do
     from(
-          p in Post,
-          join: category in assoc(p, :category),
-          join: cover_image in assoc(p, :cover_image),
-          where: p.slug == ^slug and p.is_published == true,
-          preload: [category: category, cover_image: cover_image]
+          post in Post,
+          join: category in assoc(post, :category),
+          join: cover_image in assoc(post, :cover_image),
+          left_join: tag in assoc(post, :tags),
+          where: post.slug == ^slug and post.is_published == true,
+          preload: [category: category, cover_image: cover_image, tags: tag],
+          order_by: [tag.name]
         )
     |> Repo.one!
-    |> Repo.preload(tags: from(Tag, order_by: :name))
     |> Repo.preload(post_images: from(pi in PostImage, join: image in assoc(pi, :image), preload: [image: image], order_by: [pi.order, pi.id]))
   end
 
