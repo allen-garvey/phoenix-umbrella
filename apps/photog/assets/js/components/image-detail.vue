@@ -130,7 +130,7 @@ export default {
             return this.model && this.image;
         },
         masterUrl(){
-            return getMasterUrl(this.image.master_path);
+            return getMasterUrl(this.image);
         },
         amazonUrl(){
             if(!this.image.amazon_photos_id){
