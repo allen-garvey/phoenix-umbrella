@@ -136,8 +136,14 @@ defmodule Booklist.Admin do
 
   """
   def get_author!(id) do
-    Repo.get!(Author, id)
-      |> Repo.preload([books: (from b in Book, order_by: [b.sort_title, b.id])])
+    from(
+      author in Author,
+      left_join: book in assoc(author, :books),
+      preload: [books: book],
+      where: author.id == ^id,
+      order_by: [book.sort_title, book.id]
+    )
+    |> Repo.one!
   end
 
   @doc """
