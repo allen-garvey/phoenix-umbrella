@@ -303,11 +303,27 @@ defmodule Booklist.Admin do
 
   """
   def get_book!(id) do
-    #left_join author, since might be nil
-    from(b in Book, left_join: author in assoc(b, :author), join: genre in assoc(b, :genre), preload: [author: author, genre: genre], where: b.id == ^id, limit: 1)
+    from(
+      book in Book,
+      left_join: author in assoc(book, :author),
+      left_join: rating in assoc(book, :ratings),
+      join: genre in assoc(book, :genre),
+      preload: [author: author, genre: genre, ratings: rating],
+      where: book.id == ^id,
+      order_by: [desc: rating.date_scored, desc: rating.id]
+    )
       |> Repo.one!
-      |> Repo.preload([ratings: (from r in Rating, order_by: [desc: r.date_scored, desc: r.id])])
-      |> Repo.preload([book_locations: (from b_l in BookLocation, join: location in assoc(b_l, :location), join: library in assoc(location, :library), preload: [location: {location, library: library}], order_by: location.name)])
+      |> Repo.preload(
+        [
+          book_locations: from(
+            b_l in BookLocation,
+            join: location in assoc(b_l, :location),
+            join: library in assoc(location, :library),
+            preload: [location: {location, library: library}], 
+            order_by: location.name
+          )
+        ]
+      )
   end
 
   @doc """
