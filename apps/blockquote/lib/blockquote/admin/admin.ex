@@ -43,7 +43,17 @@ defmodule Blockquote.Admin do
   Raises `Ecto.NoResultsError` if the Author does not exist.
 
   """
-  def get_author_for_show!(id), do: Repo.get!(Author, id) |> Repo.preload([:quotes, {:sources, [:quotes]}])
+  def get_author_for_show!(id) do
+    from(
+      author in Author,
+      left_join: q in assoc(author, :quotes),
+      left_join: source in assoc(author, :sources),
+      left_join: q2 in assoc(source, :quotes),
+      preload: [quotes: q, sources: {source, [quotes: q2]}],
+      where: author.id == ^id
+    )
+    |> Repo.one!
+  end
 
   @doc """
   Creates a author.
