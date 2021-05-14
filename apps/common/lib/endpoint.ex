@@ -16,7 +16,8 @@ defmodule Common.Endpoint do
       store: :cookie,
       key: "_umbrella_key",
       signing_salt: "hNWAwoxD",
-      domain: cookie_domain()
+      domain: cookie_domain(),
+      max_age: 24*60*60*30 # 30 days
     ]
   end
 end
