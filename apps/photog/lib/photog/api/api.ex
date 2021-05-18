@@ -436,7 +436,7 @@ defmodule Photog.Api do
       group_by: [person.id, cover_image.id],
       preload: [cover_image: cover_image],
       order_by: :name,
-      select: {%Person{person | images_count: count(person.id)}}
+      select: %Person{person | images_count: count(person.id)}
     )
     |> Repo.all
   end
