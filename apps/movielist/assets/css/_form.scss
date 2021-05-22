@@ -1,0 +1,11 @@
+.form-control {
+    box-sizing: border-box;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+
+    select.form-control {
+        background-color: #fff;
+    }
+}
