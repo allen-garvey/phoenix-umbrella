@@ -26,6 +26,10 @@ input[type=url]:focus, input[type=number]:focus, textarea:focus, select:focus{
 
 select {
     height: 30px;
+    
+    &.form-control {
+        background-color: #fff;
+    }
 }
 
 select[multiple] {
