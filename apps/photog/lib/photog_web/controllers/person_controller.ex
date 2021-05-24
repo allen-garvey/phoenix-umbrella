@@ -63,7 +63,7 @@ defmodule PhotogWeb.PersonController do
   def delete(conn, %{"id" => id}) do
     person = Api.get_person!(id)
     with {:ok, %Person{}} <- Api.delete_person(person) do
-      send_resp(conn, :no_content, "")
+      send_resp(conn, 200, "{\"data\": \"ok\"}")
     end
   end
 end

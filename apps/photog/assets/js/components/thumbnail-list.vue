@@ -5,7 +5,9 @@
         -->
         <Resource-Header 
             :title="titleForPage" 
-            :editItemLink="editItemLink" 
+            :editItemLink="editItemLink"
+            :shouldShowDelete="isDeleteEnabled && thumbnailList.length === 0 && isInitialLoadComplete"
+            @triggerDelete="triggerDelete" 
             :newItemLink="newItemLink" 
             :description="model.description" 
             :count="filteredThumbnailList.length"
@@ -151,6 +153,10 @@ export default {
         },
         editItemLink: {
             type: Object,
+        },
+        isDeleteEnabled: {
+            type: Boolean,
+            default: false,
         },
         pageTitle: {
             type: String,
@@ -461,6 +467,18 @@ export default {
                     successRedirect: '1'
                     }
             });
+        },
+        triggerDelete(){
+            if(confirm('Sure you want to delete?')){
+                const apiUrl = `${API_URL_BASE}${this.apiPath}`;
+                const indexRouteName = this.$router.currentRoute._rawValue.name.replace(/Show$/, 'Index');
+
+                this.sendJson(apiUrl, 'DELETE').then(() => 
+                    this.$router.push({
+                        name: indexRouteName
+                    })
+                );
+            }
         },
         /**
          * Reordering resources

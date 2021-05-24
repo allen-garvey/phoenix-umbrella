@@ -19,6 +19,7 @@
         </div>
         <div class="pull-right" v-if="newItemLink || editItemLink">
             <router-link :to="newItemLink" class="btn btn-success" v-if="newItemLink">New</router-link>
+            <button class="btn btn-danger" :class="$style.deleteButton" v-if="shouldShowDelete" @click="$emit('triggerDelete')">Delete</button>
             <router-link :to="editItemLink" class="btn btn-outline-dark" v-if="editItemLink">Edit</router-link>
         </div>
     </div>
@@ -44,6 +45,10 @@
         font-size: 1.563rem;
         margin-left: 0.2em;
     }
+
+    .deleteButton {
+        margin-right: 2rem;
+    }
 </style>
 
 <script>
@@ -61,6 +66,10 @@ export default {
         },
         editItemLink: {
             type: Object,
+        },
+        shouldShowDelete: {
+            type: Boolean,
+            default: false,
         },
         count: {
             type: Number,

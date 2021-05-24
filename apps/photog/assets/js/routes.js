@@ -217,6 +217,7 @@ export default {
                     enableHasAlbumFilter: true,
                     enableBatchSelectImages: true,
                     editItemLink: {name: 'personsEdit', params: {id: route.params.id}},
+                    isDeleteEnabled: true,
                     showRouteFor: (item, _model)=>{
                         return {
                             name: 'personImagesShow',
