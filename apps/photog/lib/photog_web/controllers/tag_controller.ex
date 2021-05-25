@@ -50,7 +50,7 @@ defmodule PhotogWeb.TagController do
     tag = Api.get_tag!(id)
 
     with {:ok, %Tag{}} <- Api.delete_tag(tag) do
-      send_resp(conn, :no_content, "")
+      send_resp(conn, 200, "{\"data\": \"ok\"}")
     end
   end
 end

@@ -262,6 +262,7 @@ export default {
                     itemsListKey: 'albums',
                     enableBatchSelectAlbums: true,
                     editItemLink: {name: 'tagsEdit', params: {id: route.params.id}},
+                    isDeleteEnabled: true,
                     reorderPathSuffix: '/albums/reorder',
                     reorderItemsKey: 'album_ids',
                     showRouteFor: (item)=>{
