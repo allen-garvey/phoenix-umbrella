@@ -83,7 +83,7 @@ defmodule PhotogWeb.AlbumController do
   def delete(conn, %{"id" => id}) do
     album = Api.get_album!(id)
     with {:ok, %Album{}} <- Api.delete_album(album) do
-      send_resp(conn, :no_content, "")
+      send_resp(conn, 200, "{\"data\": \"ok\"}")
     end
   end
 end

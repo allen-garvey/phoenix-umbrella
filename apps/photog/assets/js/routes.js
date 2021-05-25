@@ -171,6 +171,7 @@ export default {
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
                     editItemLink: {name: 'albumsEdit', params: {id: route.params.id}},
+                    isDeleteEnabled: true,
                     reorderPathSuffix: '/images/reorder',
                     reorderItemsKey: 'image_ids',
                     relatedFieldsKey: 'tags',
