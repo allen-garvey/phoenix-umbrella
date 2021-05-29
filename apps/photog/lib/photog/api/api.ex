@@ -270,8 +270,9 @@ defmodule Photog.Api do
     from(album in Album,
       join: cover_image in assoc(album, :cover_image),
       left_join: album_image in assoc(album, :album_images),
-      group_by: [album.id, cover_image.id],
-      preload: [cover_image: cover_image],
+      left_join: tag in assoc(album, :tags),
+      group_by: [album.id, cover_image.id, tag.id],
+      preload: [cover_image: cover_image, tags: tag],
       order_by: [desc: :id],
       select: %Album{album | images_count: count(album.id)}
     )

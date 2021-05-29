@@ -52,7 +52,7 @@ export default {
                     newItemLink: {name: 'albumsNew'},
                     pageTitle: 'Albums',
                     itemPreviewContentCallback: (album) => {
-                        return album.name;
+                        return album.tags.map(tag => tag.name).join(', ');
                     },
                     showRouteFor: (item, _model)=>{
                         return {
