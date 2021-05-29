@@ -1,15 +1,21 @@
 <template>
     <div :class="containerClasses">
-        <img :class="$style.image" :src="imageSrc" alt="" />
+        <div :class="$style.imageContainer">
+            <img :class="$style.image" :src="imageSrc" alt="" />
+        </div>
+        <div v-if="content" :class="$style.content">
+            {{ content }}
+        </div>
     </div>
 </template>
 
 <style lang="scss" module>
     .container {
-        // background-color: white;
-        height: 500px;
-        width: 500px;
+        background-color: #fff;
+        border: 2px solid #000;
+        box-shadow: 2px 2px 5px rgba(63, 55, 55, 0.5);
         position: fixed;
+        top: 20vh;
         z-index: 10;
 
         &.left {
@@ -21,11 +27,23 @@
         }
     }
 
+    .imageContainer {
+        height: 70vh;
+        // needs to be uppercase to not collide with Sass min()
+        max-width: Min(600px, 35vw);
+    }
+
     .image {
+        display: block;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover;
         max-height: 100%;
         max-width: 100%;
+    }
+
+    .content {
+        background-color: #fff;
+        padding: 0.5em;
     }
 </style>
 
@@ -41,6 +59,9 @@ export default {
         mousePosition: {
             type: Object,
             required: true,
+        },
+        contentCallback: {
+            type: Function,
         },
     },
     computed: {
@@ -59,6 +80,9 @@ export default {
             const item = this.item;
             const image = item.cover_image ? item.cover_image : item;
             return thumbnailUrlFor(image.mini_thumbnail_path);
+        },
+        content(){
+            return this.contentCallback ? this.contentCallback(this.item) : null;
         },
     },
     methods: {

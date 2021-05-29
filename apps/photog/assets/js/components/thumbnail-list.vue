@@ -59,7 +59,12 @@
             v-if="supportsReorder"
         >
         </reorder-items-controls>
-        <image-preview v-if="hoveredItem" :item="hoveredItem" :mousePosition="hoveredItemEvent" />
+        <image-preview 
+            v-if="hoveredItem"
+            :item="hoveredItem"
+            :mousePosition="hoveredItemEvent"
+            :contentCallback="itemPreviewContentCallback"
+        />
         
         <thumbnail-items-list
             :items="filteredThumbnailList"
@@ -187,6 +192,10 @@ export default {
         },
         relatedFieldsKey: {
             type: String,
+            default: null,
+        },
+        itemPreviewContentCallback: {
+            type: Function,
             default: null,
         },
     },
