@@ -221,6 +221,7 @@ export default {
                     enableBatchSelectImages: true,
                     editItemLink: {name: 'personsEdit', params: {id: route.params.id}},
                     isDeleteEnabled: true,
+                    itemPreviewContentCallback: (image) => image.albums.map(album => album.name).join(', '),
                     showRouteFor: (item, _model)=>{
                         return {
                             name: 'personImagesShow',
