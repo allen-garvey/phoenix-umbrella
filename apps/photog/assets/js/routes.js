@@ -51,9 +51,7 @@ export default {
                     enableBatchSelectAlbums: true,
                     newItemLink: {name: 'albumsNew'},
                     pageTitle: 'Albums',
-                    itemPreviewContentCallback: (album) => {
-                        return album.tags.map(tag => tag.name).join(', ');
-                    },
+                    itemPreviewContentCallback: (album) => album.tags.map(tag => tag.name).join(', '),
                     showRouteFor: (item, _model)=>{
                         return {
                             name: 'albumsShow',
