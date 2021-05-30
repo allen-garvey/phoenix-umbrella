@@ -176,6 +176,7 @@ export default {
                     reorderPathSuffix: '/images/reorder',
                     reorderItemsKey: 'image_ids',
                     relatedFieldsKey: 'tags',
+                    itemPreviewContentCallback: (image) => image.persons.map(person => person.name).join(', '),
                     showRouteFor: (item, _model)=>{
                         return {
                             name: 'albumImagesShow',
