@@ -82,7 +82,12 @@ export default {
             return thumbnailUrlFor(image.mini_thumbnail_path);
         },
         content(){
-            return this.contentCallback ? this.contentCallback(this.item) : null;
+            try {
+                return this.contentCallback ? this.contentCallback(this.item) : null;
+            }
+            catch {
+                return null;
+            }
         },
     },
     methods: {
