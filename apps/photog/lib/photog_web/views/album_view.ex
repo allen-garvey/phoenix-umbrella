@@ -48,6 +48,15 @@ defmodule PhotogWeb.AlbumView do
     }
   end
 
+  def album_excerpt_no_tags_to_map(album) do
+    %{
+      id: album.id,
+      name: album.name,
+      cover_image: ImageView.image_to_map(album.cover_image),
+      items_count: album.images_count
+    }
+  end
+
   def album_excerpt_mini_to_map(album) do
     %{
       id: album.id,
