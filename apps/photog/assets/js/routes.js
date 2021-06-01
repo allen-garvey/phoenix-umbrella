@@ -119,6 +119,7 @@ export default {
                 enableHasPersonFilter: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Favorite images',
+                itemPreviewContentCallback: (image) => image.albums.map(album => album.name).join(', '),
             }
         ),
         buildImagesIndexVariant(
