@@ -44,6 +44,7 @@
     .content {
         background-color: #fff;
         padding: 0.5em;
+        white-space: pre-line;
     }
 </style>
 

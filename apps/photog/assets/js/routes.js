@@ -119,7 +119,18 @@ export default {
                 enableHasPersonFilter: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Favorite images',
-                itemPreviewContentCallback: (image) => image.albums.map(album => album.name).join(', '),
+                itemPreviewContentCallback: (image) => {
+                    const albums = image.albums.map(album => album.name).join(', ');
+                    const persons = image.persons.map(person => person.name).join(', ');
+                    const messages = [];
+                    if(albums){
+                        messages.push(`Albums: ${albums}`);
+                    }
+                    if(persons){
+                        messages.push(`Persons: ${persons}`);
+                    }
+                    return messages.join('\n');
+                },
             }
         ),
         buildImagesIndexVariant(
