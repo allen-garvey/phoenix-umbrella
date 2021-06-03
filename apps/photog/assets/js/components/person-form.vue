@@ -64,8 +64,8 @@ export default {
             //new form
             else{
                 const person = {};
-                if(this.images){
-                    person['cover_image_id'] = this.images[0].id;
+                if(this.hasImages){
+                    person['cover_image_id'] = this.imagesInModel[0].id;
                 }
                 this.person = person;
             }
@@ -75,8 +75,8 @@ export default {
         },
         getResourceForSave(){
             const data = {person: toApiResource(this.person)};
-            if(this.isCreateForm && this.images){
-                data['image_ids'] = this.images.map(image => image.id);
+            if(this.isCreateForm && this.hasImages){
+                data['image_ids'] = this.imagesInModel.map(image => image.id);
             }
             return data;
         },
