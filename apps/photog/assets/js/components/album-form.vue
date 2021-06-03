@@ -133,7 +133,7 @@ export default {
             //new form
             else{
                 const album = {};
-                if(this.imagesInModel && this.imagesInModel.length > 0){
+                if(this.hasImages){
                     album['cover_image_id'] = this.imagesInModel[0].id;
                 }
                 this.album = album;
@@ -144,7 +144,7 @@ export default {
         },
         getResourceForSave(){
             const data = {album: toApiResource(this.album)};
-            if(this.isCreateForm && this.imagesInModel){
+            if(this.isCreateForm && this.hasImages){
                 data['image_ids'] = this.imagesInModel.map(image => image.id);
             }
             return data;

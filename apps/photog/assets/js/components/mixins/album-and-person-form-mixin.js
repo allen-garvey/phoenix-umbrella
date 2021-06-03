@@ -33,6 +33,9 @@ export function albumAndPersonFormMixinBuilder(){
                 }
                 return [];
             },
+            hasImages(){
+                return this.imagesInModel.length > 0;
+            },
         },
         methods: {
             thumbnailUrlFor(image){
