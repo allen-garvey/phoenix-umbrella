@@ -27,10 +27,13 @@
         }
     }
 
-    .imageContainer {
-        height: 70vh;
+    .imageContainer, .content {
         // needs to be uppercase to not collide with Sass min()
         max-width: Min(600px, 35vw);
+    }
+
+    .imageContainer {
+        height: 70vh;
     }
 
     .image {
