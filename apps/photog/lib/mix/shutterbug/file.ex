@@ -45,7 +45,7 @@ defmodule Photog.Shutterbug.File do
   Resize on largest side from: https://www.imagemagick.org/discourse-server/viewtopic.php?t=13175
   """
   def resize_image(image_source_path, image_destination_path, size) when is_integer(size) do
-    with {_, 0} <- System.cmd("convert", [image_source_path, "-resize", "#{size}^>", "-quality", "80%", image_destination_path]) do
+    with {_, 0} <- System.cmd("convert", [image_source_path, "-resize", "#{size}^>", "-quality", "80%", "-auto-orient", image_destination_path]) do
       # file permissions should be correct (tested with convert command and permissions are +r) but set permissions just in case
       File.chmod!(image_destination_path, 0o644)
     else
