@@ -16,7 +16,7 @@
                     :key="i"
                 >
                     <router-link :to="parent.showRouteFor(image)">
-                        <img :src="thumbnailUrlFor(image.mini_thumbnail_path)">
+                        <img :src="thumbnailUrlFor(image.mini_thumbnail_path)" loading="lazy">
                     </router-link>
                 </li>
             </ul>
