@@ -20,6 +20,7 @@
                     :src="thumbnailUrlFor(item)" 
                     :class="thumbnailImageClass(item)"
                     :draggable="!isReordering"
+                    loading="lazy"
                 />
             </div>
             <router-link 
@@ -34,6 +35,7 @@
                     :src="thumbnailUrlFor(item)" 
                     :class="thumbnailImageClass(item)"
                     :draggable="!isReordering"
+                    loading="lazy"
                 />
             </router-link>
             <h3 
