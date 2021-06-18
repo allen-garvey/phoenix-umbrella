@@ -9,7 +9,7 @@
                 <div>{{titleFor(item)}}</div>
                 <ul :class="$style['imports-index-mini-thumbnail-list']">
                     <li v-for="image in item.images" :key="image.id">
-                        <img :src="thumbnailUrlFor(image)"/>
+                        <img :src="thumbnailUrlFor(image)" loading="lazy"/>
                     </li>
                 </ul>
             </router-link>
