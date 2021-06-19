@@ -13,7 +13,7 @@ defmodule Bookmarker.FolderPreviewController do
     folder = Repo.one! from folder in Folder, where: folder.name == ^folder_name, preload: [bookmarks: ^bookmarks_query]
     
     preview_results = folder.bookmarks
-                        |> Task.async_stream(&img_for_bookmark/1, max_concurrency: System.schedulers_online * 4)
+                        |> Task.async_stream(&img_for_bookmark/1, max_concurrency: System.schedulers_online * 4, on_timeout: :kill_task, timeout: 15000)
                         |> Enum.to_list()
                         |> Enum.zip(folder.bookmarks)
                         |> Enum.filter(&does_bookmark_have_img/1)
