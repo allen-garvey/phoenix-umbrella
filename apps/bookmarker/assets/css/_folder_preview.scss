@@ -1,4 +1,8 @@
 .folder-preview-list{
 	list-style-type: none;
 	padding-left: 0;
+
+	.folder-preview-image {
+		min-height: 200px;
+	}
 }
