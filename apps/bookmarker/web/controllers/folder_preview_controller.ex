@@ -59,7 +59,7 @@ defmodule Bookmarker.FolderPreviewController do
   end
 
   def extract_img_html(body, selector, base_url) do
-    img = Floki.find(body, selector) |> get_first_safe
+    img = Floki.parse_document!(body) |> Floki.find(selector)
     url = img |> Floki.attribute(url_attribute_for_img_selector(selector)) |> get_first_safe |> to_absolute_url(base_url)
     title = img |> Floki.attribute("title") |> get_first_safe
     alt = img |> Floki.attribute("alt") |> get_first_safe
