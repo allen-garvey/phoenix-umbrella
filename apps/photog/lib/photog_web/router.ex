@@ -37,6 +37,7 @@ defmodule PhotogWeb.Router do
     resources "/album_tags", AlbumTagController,        only: [:index, :show, :create]
 
     get "/images/:id/exif", ImageController, :exif_for
+    get "/images/years/:year", ImageController, :images_for_year
 
     # Reorder album images
     patch "/albums/:id/images/reorder",       AlbumController, :reorder_images

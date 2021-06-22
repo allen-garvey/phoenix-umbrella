@@ -110,6 +110,30 @@ export default {
                 return props;
             },
         },
+        { 
+            path: '/images/years/:year',
+            name: 'imagesIndex', 
+            component: ThumbnailList,
+            props: (route) => {
+                const props = {
+                    apiPath: route.path,
+                    enableHasAlbumFilter: true,
+                    enableHasPersonFilter: true,
+                    enableBatchSelectImages: true,
+                    pageTitle: `Images from ${route.params.year}`,
+                    showRouteFor: (item, _model)=>{
+                        return {
+                            name: 'imagesShow',
+                            params: {
+                                id: item.id,
+                                image_id: item.id,
+                            },
+                        };
+                    },
+                }; 
+                return props;
+            },
+        },
         buildImagesIndexVariant(
             '/images/favorites',
             'imageFavoritesIndex',

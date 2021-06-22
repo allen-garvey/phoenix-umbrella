@@ -43,7 +43,14 @@ defmodule PhotogWeb.ImageController do
     render(conn, "show.json", image: image)
   end
 
-  @spec exif_for(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  @doc """
+  Returns all images taken in given year
+  """
+  def images_for_year(conn, %{"year" => year}) do
+    images = String.to_integer(year) |> Api.list_images_for_year
+    render(conn, "index.json", images: images)
+  end
+
   @doc """
   Gets the exif data from an image's master image
   """

@@ -50,6 +50,20 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Returns the list of images taken in given year
+  """
+  def list_images_for_year(year) when is_integer(year) do
+    from(
+      image in Image,
+      where: fragment("EXTRACT(year FROM ?)", image.creation_time) == ^year, 
+      order_by: [:creation_time, :id]
+    )
+    |> image_preload_import
+    |> Repo.all
+    |> image_default_preloads
+  end
+
+  @doc """
   Returns the list of images that are marked as favorite.
 
   ## Examples
