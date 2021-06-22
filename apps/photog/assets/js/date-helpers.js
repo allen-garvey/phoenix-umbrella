@@ -5,3 +5,5 @@ export function isoFormattedDateToUs(isoDate, separator='/'){
     const dateSplit = isoDate.split('-');
     return `${dateSplit[1]}${separator}${dateSplit[2]}${separator}${dateSplit[0]}`;
 }
+
+export const getCurrentYear = () => (new Date()).getFullYear();

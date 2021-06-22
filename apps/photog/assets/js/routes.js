@@ -112,7 +112,7 @@ export default {
         },
         { 
             path: '/images/years/:year',
-            name: 'imagesIndex', 
+            name: 'imagesForYear', 
             component: ThumbnailList,
             props: (route) => {
                 const props = {
