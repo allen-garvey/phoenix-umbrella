@@ -59,7 +59,7 @@
 
             &:hover, &.router-link-exact-active{
                 background-color: $primary; //from bootstrap
-                color: color-yiq($primary);
+                color: #fff;
                 text-decoration: none;
             }
         }
