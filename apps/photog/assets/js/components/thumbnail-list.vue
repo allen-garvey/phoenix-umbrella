@@ -276,25 +276,15 @@ export default {
             return this.supportsReorder && !this.isCurrentlyBatchSelect && this.albumFilterMode === ALBUM_FILTER_MODE_ALL && this.personFilterMode === PERSON_FILTER_MODE_ALL && this.filteredThumbnailList.length > 1;
         },
     },
+    created(){
+        this.setup();
+    },
     watch: {
-        // '$route'(to, from){
-        //    // have to check if route is the same,
-        //    //otherwise will double trigger with beforeRouteEnter
-        //    if(to.name === from.name){
-        //        this.setup();
-        //    }
-        // },
-
-        // changes only when component is reused,
-        // so shouldn't overlap with beforeRouteEnter
+        // changes when route changes, and is for some reason faster
+        // than watching the route
         apiPath(){
-            console.log('api Path watch');
             this.setup();
         },
-    },
-    beforeRouteEnter(to, from, next){
-        console.log('before reoute entered');
-        next((self) => self.setup());
     },
     methods: {
         setup(){
