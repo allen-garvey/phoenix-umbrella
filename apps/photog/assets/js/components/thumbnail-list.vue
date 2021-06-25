@@ -9,6 +9,8 @@
             :shouldShowDelete="isDeleteEnabled && thumbnailList.length === 0 && isInitialLoadComplete"
             @triggerDelete="triggerDelete" 
             :newItemLink="newItemLink" 
+            :previousPageLink="previousPageLink"
+            :nextPageLink="nextPageLink"
             :description="model.description" 
             :count="filteredThumbnailList.length"
         />
@@ -190,6 +192,12 @@ export default {
         itemPreviewContentCallback: {
             type: Function,
             default: null,
+        },
+        previousPageLink: {
+            type: Object,
+        },
+        nextPageLink: {
+            type: Object,
         },
     },
     components: {

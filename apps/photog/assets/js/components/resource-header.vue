@@ -1,4 +1,5 @@
 <template>
+<div>
     <div 
         class="spread-content"
         :class="$style.container"
@@ -23,6 +24,21 @@
             <router-link :to="editItemLink" class="btn btn-outline-dark" v-if="editItemLink">Edit</router-link>
         </div>
     </div>
+    <div>
+        <router-link
+            :to="previousPageLink.link"
+            :class="$style.pageLink"
+            v-if="previousPageLink">
+                {{ previousPageLink.text }}
+        </router-link>
+        <router-link
+            :to="nextPageLink.link"
+            :class="$style.pageLink"
+            v-if="nextPageLink">
+                {{ nextPageLink.text }}
+        </router-link>
+    </div>
+</div>
 </template>
 
 <style lang="scss" module>
@@ -49,6 +65,15 @@
     .deleteButton {
         margin-right: 2rem;
     }
+
+    .pageLink {
+        display: inline-block;
+        margin-bottom: 1rem;
+
+        & + & {
+            margin-left: 4rem;
+        }
+    }
 </style>
 
 <script>
@@ -65,6 +90,12 @@ export default {
             type: Object,
         },
         editItemLink: {
+            type: Object,
+        },
+        previousPageLink: {
+            type: Object,
+        },
+        nextPageLink: {
             type: Object,
         },
         shouldShowDelete: {

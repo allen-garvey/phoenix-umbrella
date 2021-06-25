@@ -115,12 +115,24 @@ export default {
             name: 'imagesForYear', 
             component: ThumbnailList,
             props: (route) => {
+                const year = parseInt(route.params.year);
+                const previousYear = year - 1;
+                const nextYear = year + 1;
+
                 const props = {
                     apiPath: route.path,
                     enableHasAlbumFilter: true,
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
                     pageTitle: `Images from ${route.params.year}`,
+                    previousPageLink: {
+                        text: `Images from ${previousYear}`,
+                        link: {name: 'imagesForYear', params: {year: previousYear}},
+                    },
+                    nextPageLink: {
+                        text: `Images from ${nextYear}`,
+                        link: {name: 'imagesForYear', params: {year: nextYear}},
+                    },
                     showRouteFor: (item, _model)=>{
                         return {
                             name: 'imagesShow',
