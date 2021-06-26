@@ -93,8 +93,6 @@ export default {
             props: (route) => {
                 const props = {
                     apiPath: route.path,
-                    enableHasAlbumFilter: true,
-                    enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
                     doesRecommendLazyLoad: true,
                     pageTitle: 'Images',
@@ -122,8 +120,6 @@ export default {
 
                 const props = {
                     apiPath: route.path,
-                    enableHasAlbumFilter: true,
-                    enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
                     doesRecommendLazyLoad: true,
                     pageTitle: `Images from ${route.params.year}`,
