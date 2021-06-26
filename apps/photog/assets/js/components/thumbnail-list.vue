@@ -84,6 +84,10 @@
             @itemHoverEnd="onItemHoveredEnd"
         >
         </thumbnail-items-list>
+        <infinite-observer
+            :onTrigger="loadMoreThumbnails" 
+            v-if="isInitialLoadComplete && isLazyLoadingEnabled"
+        />
     </main>
 </template>
 
@@ -95,6 +99,7 @@
 </style>
 
 <script>
+import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 import ResourceHeader from './resource-header.vue';
 import ThumbnailFilterControls from './thumbnail-filter-controls.vue';
 import RelatedFieldsList from './related-fields-list.vue';
@@ -104,6 +109,9 @@ import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list
 import ImagePreview from './thumbnail-list/components/image-preview.vue';
 
 import { API_URL_BASE } from '../request-helpers.js';
+
+//amount of thumbnails to add each time vue infinite scroll is called
+const THUMBNAIL_CHUNK_LENGTH = 60;
 
 //thumbnail filtering
 const PERSON_FILTER_MODE_ALL = 1;
@@ -199,8 +207,13 @@ export default {
         nextPageLink: {
             type: Object,
         },
+        doesRecommendLazyLoad: {
+            type: Boolean,
+            default: false,
+        },
     },
     components: {
+        InfiniteObserver,
         ResourceHeader,
         ThumbnailFilterControls,
         RelatedFieldsList,
@@ -274,6 +287,9 @@ export default {
         supportsBatchSelect(){
             return (this.enableBatchSelectImages || this.enableBatchSelectAlbums) && this.filteredThumbnailList.length > 0;
         },
+        isLazyLoadingEnabled(){
+            return this.doesRecommendLazyLoad;
+        },
         /**
          * Reordering stuff
          */
@@ -327,12 +343,27 @@ export default {
         },
         modelLoaded(items){
             this.model = items;
-            this.thumbnailList = this.thumnailListSource.slice();
+            const end = this.isLazyLoadingEnabled ? THUMBNAIL_CHUNK_LENGTH : this.thumnailListSource.length;
+            this.thumbnailList = this.thumnailListSource.slice(0, end);
         },
         refreshModel(){
             return this.getModel(this.apiPath, true).then((items)=>{
                 this.modelLoaded(items);
             });
+        },
+        loadMoreThumbnails($state){
+            const filteredThumbnailListGoalLength = this.filteredThumbnailList.length + THUMBNAIL_CHUNK_LENGTH;
+            while(true){
+                this.thumbnailList = this.thumnailListSource.slice(0, this.thumbnailList.length + THUMBNAIL_CHUNK_LENGTH);
+                if(this.thumbnailList.length === this.thumnailListSource.length){
+                    $state.complete();
+                    break;
+                }
+                if(this.filteredThumbnailList.length >= filteredThumbnailListGoalLength){
+                    $state.loaded();
+                    break;
+                }
+            }
         },
         shouldShowItem(item){
             let albumValidation = true;

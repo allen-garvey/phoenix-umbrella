@@ -96,6 +96,7 @@ export default {
                     enableHasAlbumFilter: true,
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
+                    doesRecommendLazyLoad: true,
                     pageTitle: 'Images',
                     showRouteFor: (item, _model)=>{
                         return {
@@ -124,6 +125,7 @@ export default {
                     enableHasAlbumFilter: true,
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
+                    doesRecommendLazyLoad: true,
                     pageTitle: `Images from ${route.params.year}`,
                     previousPageLink: {
                         text: `Images from ${previousYear}`,
