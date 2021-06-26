@@ -153,8 +153,7 @@ export default {
             'imageFavoritesIndex',
             {
                 apiPath: '/images/?favorites=true',
-                enableHasAlbumFilter: true,
-                enableHasPersonFilter: true,
+                doesRecommendLazyLoad: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Favorite images',
                 itemPreviewContentCallback: (image) => {
