@@ -129,10 +129,6 @@ export default {
                         text: `Images from ${previousYear}`,
                         link: {name: 'imagesForYear', params: {year: previousYear}},
                     },
-                    nextPageLink: {
-                        text: `Images from ${nextYear}`,
-                        link: {name: 'imagesForYear', params: {year: nextYear}},
-                    },
                     showRouteFor: (item, _model)=>{
                         return {
                             name: 'imagesShow',
@@ -142,7 +138,15 @@ export default {
                             },
                         };
                     },
-                }; 
+                };
+
+                if(year < (new Date).getFullYear()){
+                    props.nextPageLink = {
+                        text: `Images from ${nextYear}`,
+                        link: {name: 'imagesForYear', params: {year: nextYear}},
+                    };
+                }
+
                 return props;
             },
         },
