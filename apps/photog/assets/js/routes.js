@@ -175,7 +175,7 @@ export default {
             'imagesNotInAlbumIndex',
             {
                 apiPath: '/images/?in_album=false',
-                enableHasPersonFilter: true,
+                doesRecommendLazyLoad: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Images not in an album',
             }
@@ -185,8 +185,7 @@ export default {
             'imageNoAmazonIndex',
             {
                 apiPath: '/images/?amazon_photos_id=false',
-                enableHasAlbumFilter: true,
-                enableHasPersonFilter: true,
+                doesRecommendLazyLoad: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Images with no Amazon Photos Id',
             }
