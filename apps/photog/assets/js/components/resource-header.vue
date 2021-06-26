@@ -9,7 +9,7 @@
                 :class="$style.title" 
             >
                 <span>{{title}}</span>
-                <span :class="$style.count" v-if="count">{{count}}</span>
+                <span :class="$style.count" v-if="countText">{{countText}}</span>
             </h1>
             <p 
                 v-if="description" 
@@ -104,6 +104,20 @@ export default {
         },
         count: {
             type: Number,
+        },
+        total: {
+            type: Number,
+        },
+    },
+    computed: {
+        countText(){
+            if(!this.count){
+                return false;
+            }
+            if(!this.total || this.total === this.count){
+                return this.count;
+            }
+            return `${this.count}/${this.total}`;
         },
     },
 }

@@ -13,6 +13,7 @@
             :nextPageLink="nextPageLink"
             :description="model.description" 
             :count="filteredThumbnailList.length"
+            :total="thumnailListSource.length"
         />
 
         <!-- 
