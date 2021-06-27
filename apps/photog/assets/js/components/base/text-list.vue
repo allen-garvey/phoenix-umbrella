@@ -1,7 +1,9 @@
 <template>
     <main class="main container">
         <Resource-Header 
-            :title="title" 
+            :title="title"
+            :count="count"
+            :total="total"
             :editItemLink="editItemLink" 
             :newItemLink="newItemLink" 
         />
@@ -34,6 +36,14 @@ export default {
             title: {
                 type: String,
                 required: true,
+            },
+            count: {
+                type: Number,
+                default: -1,
+            },
+            total: {
+                type: Number,
+                default: -1,
             },
             itemsList: {
                 type: Array,

@@ -111,7 +111,7 @@ export default {
     },
     computed: {
         countText(){
-            if(!this.count){
+            if(!this.count || this.count < 0){
                 return false;
             }
             if(!this.total || this.total === this.count){

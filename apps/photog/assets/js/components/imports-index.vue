@@ -1,8 +1,11 @@
 <template>
     <Text-List 
-        :title="pageTitle" 
+        :title="pageTitle"
+        :count="itemsList.length"
+        :total="model.length"
         :itemsList="itemsList" 
-        :isInitialLoadComplete="isInitialLoadComplete" :loadMoreItemsCallback="loadMoreItems"
+        :isInitialLoadComplete="isInitialLoadComplete"
+        :loadMoreItemsCallback="loadMoreItems"
     >
         <template v-slot:item="{item, index}">
             <router-link :to="showRouteFor(item)">
