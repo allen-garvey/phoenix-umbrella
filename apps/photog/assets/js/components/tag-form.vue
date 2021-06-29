@@ -2,6 +2,14 @@
     <Form-Section :heading="headingText" :back-link="backLink" :save="save" v-if="isInitialLoadComplete">
         <template v-slot:inputs>
             <Form-Input :id="idForField('name')" label="Name" v-model="tag.name" :errors="errors.name" />
+            <select class="form-control" v-model="tag.cover_album_id">
+                <option value=""></option>
+                <option 
+                    v-for="album in tag.albums"
+                    :key="album.id"
+                    :value="album.id"
+                >{{album.name}}</option>
+            </select>
         </template>
     </Form-Section>
 </template>
@@ -45,10 +53,7 @@ export default {
         setupModel(tag=null){
             //edit form
             if(tag){
-                this.tag = {
-                    id: tag.id,
-                    name: tag.name,
-                };
+                this.tag = tag;
             }
             //new form
             else{
@@ -59,7 +64,14 @@ export default {
             return `id_tag_${fieldName}_input`;
         },
         getResourceForSave(){
-            return {tag: toApiResource(this.tag)};
+            // don't want to send albums
+            const tag = {
+                id: this.tag.id,
+                name: this.tag.name,
+                cover_album_id: this.tag.cover_album_id,
+            };
+
+            return {tag: toApiResource(tag)};
         },
         saveSuccessful(tag){
             const flashMessage = [`${tag.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info'];
