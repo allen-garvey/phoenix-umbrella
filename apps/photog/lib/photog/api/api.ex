@@ -921,12 +921,20 @@ defmodule Photog.Api do
         on: album.id == album_tag.album_id,
         left_join: image in assoc(album, :cover_image),
         left_join: album_tag_2 in assoc(tag, :album_tags),
-        group_by: [tag.id, image.id, album.id],
+        left_join: cover_album in assoc(tag, :cover_album),
+        left_join: cover_album_image in assoc(cover_album, :cover_image),
+        group_by: [tag.id, image.id, album.id, cover_album.id, cover_album_image.id],
         order_by: tag.name,
-        select: {tag, image, count(tag.id)}
+        select: {tag, image, cover_album_image, count(tag.id)}
     )
     |> Repo.all
-    |> Enum.map(fn {tag, image, albums_count} -> %Tag{tag | cover_image: image, albums_count: albums_count} end)
+    |> Enum.map(fn {tag, image, cover_album_image, albums_count} -> 
+      cover_image = case cover_album_image do
+        nil -> image
+        _   -> cover_album_image
+      end
+      %Tag{tag | cover_image: cover_image, albums_count: albums_count} 
+    end)
   end
 
   @doc """
