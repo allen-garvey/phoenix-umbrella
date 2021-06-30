@@ -5,7 +5,7 @@
             <select class="form-control" v-model="tag.cover_album_id">
                 <option value=""></option>
                 <option 
-                    v-for="album in tag.albums"
+                    v-for="album in albums"
                     :key="album.id"
                     :value="album.id"
                 >{{album.name}}</option>
@@ -47,6 +47,9 @@ export default {
                 return {name: 'tagsShow', params: {id: this.modelId}};
             }
             return {name: 'tagsIndex'};
+        },
+        albums(){
+            return this.tag.albums.sort((albumA, albumB) => albumA.name.localeCompare(albumB.name));
         },
     },
     methods: {
