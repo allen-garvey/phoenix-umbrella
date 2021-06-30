@@ -2,7 +2,11 @@
     <Form-Section :heading="headingText" :back-link="backLink" :save="save" v-if="isInitialLoadComplete">
         <template v-slot:inputs>
             <Form-Input :id="idForField('name')" label="Name" v-model="tag.name" :errors="errors.name" />
-            <select class="form-control" v-model="tag.cover_album_id">
+            <select 
+                class="form-control" 
+                v-model="tag.cover_album_id"
+                v-if="isEditForm"
+            >
                 <option value=""></option>
                 <option 
                     v-for="album in albums"
