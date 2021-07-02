@@ -77,7 +77,6 @@ export default {
         getResourceForSave(){
             // don't want to send albums
             const tag = {
-                id: this.tag.id,
                 name: this.tag.name,
                 cover_album_id: this.tag.cover_album_id,
             };
