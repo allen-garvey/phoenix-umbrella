@@ -3,7 +3,7 @@ defmodule Photog.Repo.Migrations.AddDescriptionToAlbums do
 
   def change do
   	alter table(:albums) do
-	  add :description, :text
-	end
+      add :description, :text
+    end
   end
 end
