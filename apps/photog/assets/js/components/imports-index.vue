@@ -10,7 +10,7 @@
         <template v-slot:item="{item, index}">
             <router-link :to="showRouteFor(item)">
                 <div>{{titleFor(item)}}</div>
-                <ul :class="$style['imports-index-mini-thumbnail-list']">
+                <ul :class="$style.thumbnailList">
                     <li v-for="image in item.images" :key="image.id">
                         <img :src="thumbnailUrlFor(image)" loading="lazy"/>
                     </li>
@@ -21,7 +21,7 @@
 </template>
 
 <style lang="scss" module>
-    .imports-index-mini-thumbnail-list{
+    .thumbnailList{
         display: inline-flex;
         flex-wrap: wrap;
         img{
