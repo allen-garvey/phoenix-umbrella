@@ -11,7 +11,7 @@
             :newItemLink="newItemLink" 
             :previousPageLink="previousPageLink"
             :nextPageLink="nextPageLink"
-            :description="model.description" 
+            :description="getDescription(model)" 
             :count="filteredThumbnailList.length"
             :total="thumnailListSource.length"
         />
@@ -211,6 +211,10 @@ export default {
         doesRecommendLazyLoad: {
             type: Boolean,
             default: false,
+        },
+        getDescription: {
+            type: Function,
+            default: () => '',
         },
     },
     components: {

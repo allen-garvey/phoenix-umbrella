@@ -6,6 +6,7 @@ import ImageDetail from './components/image-detail.vue'
 import AlbumForm from './components/album-form.vue';
 import PersonForm from './components/person-form.vue';
 import TagForm from './components/tag-form.vue';
+import ImportForm from './components/import-form.vue';
 
 export default {
     routes: [
@@ -224,6 +225,7 @@ export default {
                     reorderPathSuffix: '/images/reorder',
                     reorderItemsKey: 'image_ids',
                     relatedFieldsKey: 'tags',
+                    getDescription: (album) => album.description,
                     itemPreviewContentCallback: (image) => image.persons.map(person => person.name).join(', '),
                     showRouteFor: (item, _model)=>{
                         return {
@@ -340,6 +342,7 @@ export default {
                     enableHasAlbumFilter: true,
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
+                    getDescription: (importModel) => importModel.notes,
                     showRouteFor: (item, model)=>{
                         return {
                             name: 'importImagesShow',
@@ -364,6 +367,8 @@ export default {
                     enableHasAlbumFilter: true,
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
+                    getDescription: (importModel) => importModel.notes,
+                    editItemLink: {name: 'importsEdit', params: {id: route.params.id}},
                     showRouteFor: (item)=>{
                         return {
                             name: 'importImagesShow',
@@ -375,6 +380,16 @@ export default {
                     },
                 };
                 return props;
+            },
+        },
+        { 
+            path: '/imports/:id/edit',
+            name: 'importsEdit', 
+            component: ImportForm,
+            props: (route) => {
+                return {
+                    modelId: parseInt(route.params.id),
+                }; 
             },
         },
         { 
