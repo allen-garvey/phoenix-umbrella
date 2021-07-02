@@ -1,6 +1,10 @@
 export function toApiResource(item){
     const resource = {};
     for(const key in item){
+        // don't set id
+        if(key === 'id'){
+            continue;
+        }
         const resourceKeyName = key;
         resource[resourceKeyName] = nullifyValue(item[key]);
     }
