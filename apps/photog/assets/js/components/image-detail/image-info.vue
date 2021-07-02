@@ -40,6 +40,10 @@
                         {{image.import.name}}
                     </router-link>
                 </dd>
+                <template v-if="image.import.notes">
+                    <dt>Import notes</dt>
+                    <dd>{{ image.import.notes }}</dd>
+                </template>
             </template>
         </dl>
     </image-info-section>
