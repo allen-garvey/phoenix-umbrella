@@ -370,11 +370,11 @@ export default {
                     enableBatchSelectImages: true,
                     getDescription: (importModel) => importModel.notes,
                     editItemLinkFor: (model) => ({name: 'importsEdit', params: {id: model.id}}),
-                    showRouteFor: (item)=>{
+                    showRouteFor: (item, model)=>{
                         return {
                             name: 'importImagesShow',
                             params: {
-                                import_id: route.params.id,
+                                import_id: model.id,
                                 image_id: item.id,
                             },
                         };
