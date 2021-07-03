@@ -30,3 +30,32 @@ export function buildImagesIndexVariant(path, name, props={}){
         },
     };
 }
+
+export function buildImportsShowVariant(path, name){
+    return { 
+        path,
+        name, 
+        component: ThumbnailList,
+        props: (route) => {
+            const props = {
+                apiPath: route.path,
+                itemsListKey: 'images',
+                enableHasAlbumFilter: true,
+                enableHasPersonFilter: true,
+                enableBatchSelectImages: true,
+                getDescription: (importModel) => importModel.notes,
+                editItemLinkFor: (model) => ({name: 'importsEdit', params: {id: model.id}}),
+                showRouteFor: (item, model)=>{
+                    return {
+                        name: 'importImagesShow',
+                        params: {
+                            import_id: model.id,
+                            image_id: item.id,
+                        },
+                    };
+                },
+            };
+            return props;
+        },
+    };
+};

@@ -1,4 +1,4 @@
-import { getOptionalParams, buildImagesIndexVariant } from './router-helpers.js'; 
+import { getOptionalParams, buildImagesIndexVariant, buildImportsShowVariant } from './router-helpers.js'; 
 
 import ThumbnailList from './components/thumbnail-list.vue';
 import ImportsIndex from './components/imports-index.vue';
@@ -331,58 +331,8 @@ export default {
             },
         },
         //has to be before importsShow route
-        { 
-            path: '/imports/last',
-            name: 'importsShowLast', 
-            component: ThumbnailList,
-            props: (route) => {
-                const props = {
-                    apiPath: route.path,
-                    itemsListKey: 'images',
-                    enableHasAlbumFilter: true,
-                    enableHasPersonFilter: true,
-                    enableBatchSelectImages: true,
-                    getDescription: (importModel) => importModel.notes,
-                    editItemLinkFor: (model) => ({name: 'importsEdit', params: {id: model.id}}),
-                    showRouteFor: (item, model)=>{
-                        return {
-                            name: 'importImagesShow',
-                            params: {
-                                import_id: model.id,
-                                image_id: item.id,
-                            },
-                        };
-                    },
-                };
-                return props;
-            },
-        },
-        { 
-            path: '/imports/:id',
-            name: 'importsShow', 
-            component: ThumbnailList,
-            props: (route) => {
-                const props = {
-                    apiPath: route.path,
-                    itemsListKey: 'images',
-                    enableHasAlbumFilter: true,
-                    enableHasPersonFilter: true,
-                    enableBatchSelectImages: true,
-                    getDescription: (importModel) => importModel.notes,
-                    editItemLinkFor: (model) => ({name: 'importsEdit', params: {id: model.id}}),
-                    showRouteFor: (item, model)=>{
-                        return {
-                            name: 'importImagesShow',
-                            params: {
-                                import_id: model.id,
-                                image_id: item.id,
-                            },
-                        };
-                    },
-                };
-                return props;
-            },
-        },
+        buildImportsShowVariant('/imports/last', 'importsShowLast'),
+        buildImportsShowVariant('/imports/:id', 'importsShow'),
         { 
             path: '/imports/:id/edit',
             name: 'importsEdit', 
