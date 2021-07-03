@@ -220,7 +220,7 @@ export default {
                     itemsListKey: 'images',
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
-                    editItemLink: {name: 'albumsEdit', params: {id: route.params.id}},
+                    editItemLinkFor: () => ({name: 'albumsEdit', params: {id: route.params.id}}),
                     isDeleteEnabled: true,
                     reorderPathSuffix: '/images/reorder',
                     reorderItemsKey: 'image_ids',
@@ -269,7 +269,7 @@ export default {
                     itemsListKey: 'images',
                     enableHasAlbumFilter: true,
                     enableBatchSelectImages: true,
-                    editItemLink: {name: 'personsEdit', params: {id: route.params.id}},
+                    editItemLinkFor: () => ({name: 'personsEdit', params: {id: route.params.id}}),
                     isDeleteEnabled: true,
                     itemPreviewContentCallback: (image) => image.albums.map(album => album.name).join(', '),
                     showRouteFor: (item, _model)=>{
@@ -314,7 +314,7 @@ export default {
                     apiPath: route.path,
                     itemsListKey: 'albums',
                     enableBatchSelectAlbums: true,
-                    editItemLink: {name: 'tagsEdit', params: {id: route.params.id}},
+                    editItemLinkFor: () => ({name: 'tagsEdit', params: {id: route.params.id}}),
                     isDeleteEnabled: true,
                     reorderPathSuffix: '/albums/reorder',
                     reorderItemsKey: 'album_ids',
@@ -343,6 +343,7 @@ export default {
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
                     getDescription: (importModel) => importModel.notes,
+                    editItemLinkFor: (model) => ({name: 'importsEdit', params: {id: model.id}}),
                     showRouteFor: (item, model)=>{
                         return {
                             name: 'importImagesShow',
@@ -368,7 +369,7 @@ export default {
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
                     getDescription: (importModel) => importModel.notes,
-                    editItemLink: {name: 'importsEdit', params: {id: route.params.id}},
+                    editItemLinkFor: (model) => ({name: 'importsEdit', params: {id: model.id}}),
                     showRouteFor: (item)=>{
                         return {
                             name: 'importImagesShow',

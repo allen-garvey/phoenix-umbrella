@@ -5,7 +5,7 @@
         -->
         <Resource-Header 
             :title="titleForPage" 
-            :editItemLink="editItemLink"
+            :editItemLink="editItemLinkFor(model)"
             :shouldShowDelete="isDeleteEnabled && thumbnailList.length === 0 && isInitialLoadComplete"
             @triggerDelete="triggerDelete" 
             :newItemLink="newItemLink" 
@@ -160,8 +160,9 @@ export default {
         newItemLink: {
             type: Object,
         },
-        editItemLink: {
-            type: Object,
+        editItemLinkFor: {
+            type: Function,
+            default: () => undefined,
         },
         isDeleteEnabled: {
             type: Boolean,
