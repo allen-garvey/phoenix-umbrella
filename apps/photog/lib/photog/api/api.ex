@@ -753,6 +753,28 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Manually preloads images for imports since we can't use preload macro when using fragment for left lateral join
+  """
+  def manually_preload_images_for_imports(results) do
+    import_id_map = Enum.reduce(results, %{}, fn {import, image}, import_id_map ->
+        saved_import = Map.get(import_id_map, import.id, import)
+        saved_images = case {saved_import.images, image.id} do
+            {%Ecto.Association.NotLoaded{}, nil}       -> []
+            {%Ecto.Association.NotLoaded{}, _image_id} -> [image]
+            {images, nil}                        ->       images
+            {images, _image_id}                        -> [image | images]
+        end
+        Map.put(import_id_map, import.id, %Import{saved_import | images: saved_images})
+    end)
+
+    Enum.uniq_by(results, fn {import, _image} -> import.id end)
+    |> Enum.map(fn {import, _image} ->
+        saved_import = Map.get(import_id_map, import.id)
+        %Import{saved_import | images_count: Enum.count(saved_import.images)}
+    end)
+  end
+
+  @doc """
   Returns the list of imports.
 
   ## Examples
@@ -770,18 +792,35 @@ defmodule Photog.Api do
   Also preloads a limited amount of images
   """
   def list_imports_with_count_and_limited_images do
+    images_query = from(
+      image in Image,
+      select: [:id, :exif, :import_id, :mini_thumbnail_path]
+    )
+
     # Just gets all the images and then throws out what is needed,
     # since it ends up only taking 2 sec average to do this
     # compared with 4 for using lateral join or window function
     from(
         import in Import,
-        join: image in assoc(import, :images),
-        preload: [images: image],
-        order_by: [desc: import.import_time, desc: import.id]
+        join: image in subquery(images_query),
+        on: image.import_id == import.id,
+        order_by: [desc: import.import_time, desc: import.id],
+        select: {import, image}
     )
     |> Repo.all
+    |> manually_preload_images_for_imports
     |> Enum.map(fn import -> 
-      %Import{import | images_count: Enum.count(import.images), images: Enum.take(import.images, 4)}
+      images_count = Enum.count(import.images)
+      images = Enum.take(import.images, 4)
+      camera_model = Enum.at(import.images, 0) 
+        |> (fn image -> 
+          case image do
+            %Image{} -> "#{image.exif["Make"]} #{image.exif["Model"]}"
+            _ -> nil
+          end
+        end).()
+
+      %Import{import | images_count: images_count, images: images, camera_model: camera_model}
     end)
   end
 

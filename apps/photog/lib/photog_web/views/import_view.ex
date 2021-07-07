@@ -20,6 +20,7 @@ defmodule PhotogWeb.ImportView do
         import_time: import.import_time,
         name: import_name(import),
         notes: import.notes,
+        camera_model: import.camera_model,
         images_count: import.images_count,
         images: Enum.map(import.images, &PhotogWeb.ImageView.image_thumbnail_to_map/1),
       }

@@ -8,6 +8,7 @@ defmodule Photog.Api.Import do
     field :import_time, :utc_datetime
     field :notes, :string
     field :images_count, :integer, default: -1, virtual: true
+    field :camera_model, :string, virtual: true
 
     timestamps()
 
