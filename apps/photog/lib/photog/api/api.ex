@@ -791,15 +791,11 @@ defmodule Photog.Api do
       image in Image,
       select: [:id, :exif, :import_id, :mini_thumbnail_path]
     )
-
-    # Just gets all the images and then throws out what is needed,
-    # since it ends up only taking 2 sec average to do this
-    # compared with 4 for using lateral join or window function
     from(
         import in Import,
         join: image in subquery(images_query),
         on: image.import_id == import.id,
-        order_by: [desc: import.import_time, desc: import.id],
+        order_by: [desc: import.import_time, desc: import.id, asc: image.id],
         select: {import, image}
     )
     |> Repo.all
