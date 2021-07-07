@@ -793,8 +793,11 @@ defmodule Photog.Api do
   """
   def list_imports_with_count_and_limited_images do
     images_query = from(
-      image in Image,
-      select: [:id, :exif, :import_id, :mini_thumbnail_path]
+      Image,
+      where: [import_id: parent_as(:import).id],
+      order_by: [desc: :id],
+      limit: 4,
+      select: [:id, :mini_thumbnail_path, :import_id, :exif]
     )
 
     # Just gets all the images and then throws out what is needed,
@@ -802,8 +805,9 @@ defmodule Photog.Api do
     # compared with 4 for using lateral join or window function
     from(
         import in Import,
-        join: image in subquery(images_query),
-        on: image.import_id == import.id,
+        as: :import,
+        left_lateral_join: image in subquery(images_query),
+        on: true,
         order_by: [desc: import.import_time, desc: import.id],
         select: {import, image}
     )
