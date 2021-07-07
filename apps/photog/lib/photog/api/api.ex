@@ -756,22 +756,17 @@ defmodule Photog.Api do
   Manually preloads images for imports since we can't use preload macro when using fragment for left lateral join
   """
   def manually_preload_images_for_imports(results) do
-    import_id_map = Enum.reduce(results, %{}, fn {import, image}, import_id_map ->
-        saved_import = Map.get(import_id_map, import.id, import)
-        saved_images = case {saved_import.images, image.id} do
-            {%Ecto.Association.NotLoaded{}, nil}       -> []
-            {%Ecto.Association.NotLoaded{}, _image_id} -> [image]
-            {images, nil}                        ->       images
-            {images, _image_id}                        -> [image | images]
+    Enum.chunk_by(results, fn {import, _image} -> import.id end)
+      |> Enum.map(fn chunked_results -> 
+        images = Enum.map(chunked_results, fn {_import, image} -> image end)
+        {first_import, first_image} = Enum.at(chunked_results, 0)
+        camera_model = case first_image do
+          %Image{} -> "#{first_image.exif["Make"]} #{first_image.exif["Model"]}"
+          _ -> nil
         end
-        Map.put(import_id_map, import.id, %Import{saved_import | images: saved_images})
-    end)
-
-    Enum.uniq_by(results, fn {import, _image} -> import.id end)
-    |> Enum.map(fn {import, _image} ->
-        saved_import = Map.get(import_id_map, import.id)
-        %Import{saved_import | images_count: Enum.count(saved_import.images)}
-    end)
+        
+        %Import{first_import | images_count: Enum.count(images), camera_model: camera_model, images: Enum.take(images, 4)}
+      end)
   end
 
   @doc """
@@ -793,11 +788,8 @@ defmodule Photog.Api do
   """
   def list_imports_with_count_and_limited_images do
     images_query = from(
-      Image,
-      where: [import_id: parent_as(:import).id],
-      order_by: [desc: :id],
-      limit: 4,
-      select: [:id, :mini_thumbnail_path, :import_id, :exif]
+      image in Image,
+      select: [:id, :exif, :import_id, :mini_thumbnail_path]
     )
 
     # Just gets all the images and then throws out what is needed,
@@ -805,27 +797,13 @@ defmodule Photog.Api do
     # compared with 4 for using lateral join or window function
     from(
         import in Import,
-        as: :import,
-        left_lateral_join: image in subquery(images_query),
-        on: true,
+        join: image in subquery(images_query),
+        on: image.import_id == import.id,
         order_by: [desc: import.import_time, desc: import.id],
         select: {import, image}
     )
     |> Repo.all
     |> manually_preload_images_for_imports
-    |> Enum.map(fn import -> 
-      images_count = Enum.count(import.images)
-      images = Enum.take(import.images, 4)
-      camera_model = Enum.at(import.images, 0) 
-        |> (fn image -> 
-          case image do
-            %Image{} -> "#{image.exif["Make"]} #{image.exif["Model"]}"
-            _ -> nil
-          end
-        end).()
-
-      %Import{import | images_count: images_count, images: images, camera_model: camera_model}
-    end)
   end
 
   @doc """
