@@ -10,6 +10,7 @@
         <template v-slot:item="{item, index}">
             <router-link :to="showRouteFor(item)">
                 <div>{{ titleFor(item) }}</div>
+                <p :class="$style.itemNotes" v-if="item.camera_model">{{ item.camera_model }}</p>
                 <p :class="$style.itemNotes" v-if="item.notes">{{ item.notes }}</p>
                 <ul :class="$style.thumbnailList">
                     <li v-for="image in item.images" :key="image.id">
