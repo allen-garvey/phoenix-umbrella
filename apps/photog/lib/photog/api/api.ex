@@ -761,7 +761,10 @@ defmodule Photog.Api do
         images = Enum.map(chunked_results, fn {_import, image} -> image end)
         {first_import, first_image} = Enum.at(chunked_results, 0)
         camera_model = case first_image do
-          %{} -> "#{first_image.camera_make} #{first_image.camera_model}"
+          %{camera_make: nil, camera_model: nil} -> nil
+          %{camera_make: camera_make, camera_model: nil} -> camera_make
+          %{camera_make: nil, camera_model: camera_model} -> camera_model
+          %{camera_make: camera_make, camera_model: camera_model} -> "#{camera_make} #{camera_model}"
           _ -> nil
         end
         
