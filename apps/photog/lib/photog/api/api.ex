@@ -761,7 +761,7 @@ defmodule Photog.Api do
         images = Enum.map(chunked_results, fn {_import, image} -> image end)
         {first_import, first_image} = Enum.at(chunked_results, 0)
         camera_model = case first_image do
-          %Image{} -> "#{first_image.exif["Make"]} #{first_image.exif["Model"]}"
+          %{} -> "#{first_image.camera_make} #{first_image.camera_model}"
           _ -> nil
         end
         
@@ -789,7 +789,7 @@ defmodule Photog.Api do
   def list_imports_with_count_and_limited_images do
     images_query = from(
       image in Image,
-      select: [:id, :exif, :import_id, :mini_thumbnail_path]
+      select: %{id: image.id, import_id: image.import_id, mini_thumbnail_path: image.mini_thumbnail_path, camera_make: image.exif["Make"], camera_model: image.exif["Model"]}
     )
     from(
         import in Import,
