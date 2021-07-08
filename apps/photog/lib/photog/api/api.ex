@@ -768,7 +768,7 @@ defmodule Photog.Api do
           _ -> nil
         end
         
-        %Import{first_import | images_count: Enum.count(images), camera_model: camera_model, images: Enum.take(images, 4)}
+        %Import{first_import | images_count: Enum.count(images), camera_model: camera_model, images: Enum.take(images, 3)}
       end)
   end
 
