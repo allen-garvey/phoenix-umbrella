@@ -792,13 +792,13 @@ defmodule Photog.Api do
   def list_imports_with_count_and_limited_images do
     images_query = from(
       image in Image,
-      select: %{id: image.id, import_id: image.import_id, mini_thumbnail_path: image.mini_thumbnail_path, camera_make: image.exif["Make"], camera_model: image.exif["Model"]}
+      select: %{id: image.id, creation_time: image.creation_time, import_id: image.import_id, mini_thumbnail_path: image.mini_thumbnail_path, camera_make: image.exif["Make"], camera_model: image.exif["Model"]}
     )
     from(
         import in Import,
         join: image in subquery(images_query),
         on: image.import_id == import.id,
-        order_by: [desc: import.import_time, desc: import.id, asc: image.id],
+        order_by: [desc: import.import_time, desc: import.id, asc: image.creation_time, asc: image.id],
         select: {import, image}
     )
     |> Repo.all
