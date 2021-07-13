@@ -16,6 +16,8 @@
             :total="thumnailListSource.length"
         />
 
+        <loading-animation v-if="!isInitialLoadComplete" />
+
         <!-- 
             * Related fields list
         -->
@@ -101,6 +103,7 @@
 
 <script>
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
+import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import ResourceHeader from './resource-header.vue';
 import ThumbnailFilterControls from './thumbnail-filter-controls.vue';
 import RelatedFieldsList from './related-fields-list.vue';
@@ -220,6 +223,7 @@ export default {
     },
     components: {
         InfiniteObserver,
+        LoadingAnimation,
         ResourceHeader,
         ThumbnailFilterControls,
         RelatedFieldsList,
