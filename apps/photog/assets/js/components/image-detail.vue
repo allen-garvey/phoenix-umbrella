@@ -1,4 +1,6 @@
 <template>
+<div>
+    <loading-animation v-if="!isModelLoaded" />
     <main class="main container" v-if="isModelLoaded">
         <Parent-Thumbnails
             :parent="parent"
@@ -48,6 +50,7 @@
             :removeItemApiUrlBase="`/images/${image.id}/persons/`" :itemsUpdatedCallback="imageItemsUpdatedBuilder('persons')" 
         />
     </main>
+</div>
 </template>
 
 <style lang="scss" module>
@@ -74,6 +77,7 @@
 </style>
 
 <script>
+import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import ParentThumbnails from './image-detail/parent-thumbnails.vue';
 import ImageInfo from './image-detail/image-info.vue';
 import ImageItemsList from './image-detail/image-items-list.vue';
@@ -109,10 +113,11 @@ export default {
         },
     },
     components: {
-        'Parent-Thumbnails': ParentThumbnails,
-        'Image-Info': ImageInfo,
-        'Image-Items-List': ImageItemsList,
-        'Exif-Info': ExifInfo,
+        LoadingAnimation,
+        ParentThumbnails,
+        ImageInfo,
+        ImageItemsList,
+        ExifInfo,
     },
     created(){
         this.setup();
