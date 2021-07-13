@@ -7,6 +7,7 @@
             :editItemLink="editItemLink" 
             :newItemLink="newItemLink" 
         />
+        <loading-animation v-if="!isInitialLoadComplete" />
         <ul :class="$style['text-list']">
             <li v-for="(item, i) in itemsList" :key="i">
                 <slot name="item" :item="item" :index="i"></slot>
@@ -28,6 +29,7 @@
 
 <script>
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
+import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import ReasourceHeader from '../resource-header.vue';
 
 export default {
@@ -64,8 +66,9 @@ export default {
             },
         },
         components: {
-            'Resource-Header': ReasourceHeader,
+            ReasourceHeader,
             InfiniteObserver,
+            LoadingAnimation,
         },
     };
 </script>
