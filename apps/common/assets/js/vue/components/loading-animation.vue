@@ -1,13 +1,13 @@
 <template>
-    <div :class="$style['wave-dots']" >
+    <div :class="$style.waveDots" >
         <div 
-            :class="[$style['wave-dot'], $style.bounce1]"
+            :class="[$style.waveDot, $style.bounce1]"
         ></div>
         <div 
-            :class="[$style['wave-dot'], $style.bounce2]"
+            :class="[$style.waveDot, $style.bounce2]"
         ></div>
         <div 
-            :class="[$style['wave-dot'], $style.bounce3]"
+            :class="[$style.waveDot, $style.bounce3]"
         ></div>
     </div>
 </template>
@@ -38,45 +38,51 @@
     CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     */  
 
-    .wave-dots {
+    .waveDots {
         margin: 100px auto 0;
-        width: 70px;
         text-align: center;
     }
+
+    $wave-dot-dimensions: 18px;
     
-    .wave-dots > .wave-dot {
-        width: 18px;
-        height: 18px;
-        background-color: #333;
+    .waveDot {
+        width: $wave-dot-dimensions;
+        height: $wave-dot-dimensions;
+        background-color: #0d6efd;
     
         border-radius: 100%;
         display: inline-block;
-        -webkit-animation: wave-dots-bouncedelay 1.6s infinite ease-in-out both;
-        animation: wave-dots-bouncedelay 1.5s infinite ease-in-out both;
+        -webkit-animation: waveDots-bouncedelay 1.6s infinite ease-in-out both;
+        animation: waveDots-bouncedelay 1.5s infinite ease-in-out both;
+
+        & + & {
+            margin-left: 6px;
+        }
     }
     
-    .wave-dots .bounce1 {
+    .bounce1 {
         -webkit-animation-delay: -0.32s;
         animation-delay: -0.32s;
     }
     
-    .wave-dots .bounce2 {
+    .bounce2 {
         -webkit-animation-delay: -0.16s;
         animation-delay: -0.16s;
     }
     
-    @-webkit-keyframes wave-dots-bouncedelay {
+    @-webkit-keyframes waveDots-bouncedelay {
         0%, 80%, 100% { -webkit-transform: scale(0) }
         40% { -webkit-transform: scale(1.0) }
     }
     
-    @keyframes wave-dots-bouncedelay {
+    @keyframes waveDots-bouncedelay {
         0%, 80%, 100% { 
-        -webkit-transform: scale(0);
-        transform: scale(0);
-        } 40% { 
-        -webkit-transform: scale(1.0);
-        transform: scale(1.0);
+            -webkit-transform: scale(0.6);
+            transform: scale(0.6);
+        } 
+        40% { 
+            -webkit-transform: scale(1.0);
+            transform: scale(1.0);
         }
     }
 </style>
