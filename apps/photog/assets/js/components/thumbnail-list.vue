@@ -1,5 +1,11 @@
 <template>
-    <main class="main container" :class="$style.container">
+<div>
+    <loading-animation v-if="!isInitialLoadComplete" />
+    <main 
+        class="main container"
+        :class="$style.container"
+        v-if="isInitialLoadComplete"
+    >
         <!-- 
             * Header
         -->
@@ -14,10 +20,7 @@
             :description="getDescription(model)" 
             :count="filteredThumbnailList.length"
             :total="thumnailListSource.length"
-            v-if="isInitialLoadComplete"
         />
-
-        <loading-animation v-if="!isInitialLoadComplete" />
 
         <!-- 
             * Related fields list
@@ -25,7 +28,7 @@
         <Related-Fields-List 
             :items="model[relatedFieldsKey]" 
             :routeName="`${relatedFieldsKey}Show`" 
-            v-if="relatedFieldsKey && isInitialLoadComplete" 
+            v-if="relatedFieldsKey" 
         />
         
         <!-- 
@@ -36,7 +39,6 @@
             :enablePersonFilter="enableHasPersonFilter" 
             v-model:albumFilterMode="albumFilterMode" 
             v-model:personFilterMode="personFilterMode"
-            v-if="isInitialLoadComplete"
         />
 
         <!-- 
@@ -71,10 +73,10 @@
         >
         </reorder-items-controls>
         <image-preview 
-            v-if="hoveredItem"
             :item="hoveredItem"
             :mousePosition="hoveredItemEvent"
             :contentCallback="itemPreviewContentCallback"
+            v-if="hoveredItem"
         />
         
         <thumbnail-items-list
@@ -95,9 +97,10 @@
         </thumbnail-items-list>
         <infinite-observer
             :onTrigger="loadMoreThumbnails" 
-            v-if="isInitialLoadComplete && isLazyLoadingEnabled"
+            v-if="isLazyLoadingEnabled"
         />
     </main>
+</div>
 </template>
 
 <style lang="scss" module>
