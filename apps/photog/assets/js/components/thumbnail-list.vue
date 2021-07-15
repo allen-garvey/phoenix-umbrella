@@ -14,6 +14,7 @@
             :description="getDescription(model)" 
             :count="filteredThumbnailList.length"
             :total="thumnailListSource.length"
+            v-if="isInitialLoadComplete"
         />
 
         <loading-animation v-if="!isInitialLoadComplete" />
@@ -21,7 +22,11 @@
         <!-- 
             * Related fields list
         -->
-        <Related-Fields-List :items="model[relatedFieldsKey]" :routeName="`${relatedFieldsKey}Show`" v-if="relatedFieldsKey && isInitialLoadComplete" />
+        <Related-Fields-List 
+            :items="model[relatedFieldsKey]" 
+            :routeName="`${relatedFieldsKey}Show`" 
+            v-if="relatedFieldsKey && isInitialLoadComplete" 
+        />
         
         <!-- 
             * Filtering controls 
@@ -31,6 +36,7 @@
             :enablePersonFilter="enableHasPersonFilter" 
             v-model:albumFilterMode="albumFilterMode" 
             v-model:personFilterMode="personFilterMode"
+            v-if="isInitialLoadComplete"
         />
 
         <!-- 
