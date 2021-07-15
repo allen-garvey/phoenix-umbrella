@@ -1,6 +1,6 @@
 <template>
     <main class="main container">
-        <Resource-Header 
+        <resource-header 
             :title="title"
             :count="count"
             :total="total"
@@ -30,7 +30,7 @@
 <script>
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
-import ReasourceHeader from '../resource-header.vue';
+import ResourceHeader from '../resource-header.vue';
 
 export default {
         name: 'Text-List',
@@ -66,7 +66,7 @@ export default {
             },
         },
         components: {
-            ReasourceHeader,
+            ResourceHeader,
             InfiniteObserver,
             LoadingAnimation,
         },
