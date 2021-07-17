@@ -1,4 +1,5 @@
-import { getOptionalParams, buildImagesIndexVariant, buildImportsShowVariant } from './router-helpers.js'; 
+import { getOptionalParams, buildImagesIndexVariant, buildImportsShowVariant } from './router-helpers.js';
+import { getPersonsInAlbum } from './routes-helpers';
 
 import ThumbnailList from './components/thumbnail-list.vue';
 import ImportsIndex from './components/imports-index.vue';
@@ -225,6 +226,8 @@ export default {
                     reorderPathSuffix: '/images/reorder',
                     reorderItemsKey: 'image_ids',
                     relatedFieldsKey: 'tags',
+                    computedRelatedFieldsCallback: getPersonsInAlbum,
+                    computedRelatedFieldsKey: 'persons',
                     getDescription: (album) => album.description,
                     itemPreviewContentCallback: (image) => image.persons.map(person => person.name).join(', '),
                     showRouteFor: (item, _model)=>{

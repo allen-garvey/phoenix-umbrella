@@ -30,6 +30,12 @@
             :routeName="`${relatedFieldsKey}Show`" 
             v-if="relatedFieldsKey" 
         />
+
+        <Related-Fields-List 
+            :items="computedRelatedFieldsCallback(model)" 
+            :routeName="`${computedRelatedFieldsKey}Show`" 
+            v-if="computedRelatedFieldsKey" 
+        />
         
         <!-- 
             * Filtering controls 
@@ -208,6 +214,14 @@ export default {
             type: String,
         },
         relatedFieldsKey: {
+            type: String,
+            default: null,
+        },
+        computedRelatedFieldsCallback: {
+            type: Function,
+            default: null,
+        },
+        computedRelatedFieldsKey: {
             type: String,
             default: null,
         },
