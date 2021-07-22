@@ -11,7 +11,8 @@ defmodule PhotogWeb.AlbumImageView do
   end
 
   def render("album_image.json", %{album_image: album_image}) do
-    %{id: album_image.id,
+    %{
+      id: album_image.id,
       image_order: album_image.image_order,
       image_id: album_image.image_id,
       album_id: album_image.album_id,
