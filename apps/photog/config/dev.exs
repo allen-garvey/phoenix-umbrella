@@ -39,8 +39,10 @@ config :photog, PhotogWeb.Endpoint,
       ~r{priv/static/js/app\.js$},
       ~r{priv/static/js/css/style\.css$},
       # ~r{priv/gettext/.*(po)$},
-      # ~r{lib/photog_web/views/.*(ex)$},
-      # ~r{lib/photog_web/templates/.*(eex)$}
+      ~r{lib/photog/api/api\.ex$},
+      ~r{lib/photog_web/controllers/.*(ex)$},
+      ~r{lib/photog_web/views/.*(ex)$},
+      ~r{lib/photog_web/templates/.*(eex)$}
     ]
   ]
 
