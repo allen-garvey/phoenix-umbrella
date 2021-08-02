@@ -52,5 +52,10 @@ defmodule BooklistWeb.ReportsController do
     end
   end
 
+  def authors_index(conn, _params) do
+    authors = Reports.list_authors()
+    render(conn, "authors.html", authors: authors)
+  end
+
 
 end

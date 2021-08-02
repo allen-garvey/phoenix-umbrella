@@ -8,6 +8,7 @@ defmodule Booklist.Reports do
 
   alias Booklist.Admin.Rating
   alias Booklist.Admin.Genre
+  alias Booklist.Admin.Author
 
   def increment(num) do
     num + 1
@@ -103,5 +104,25 @@ defmodule Booklist.Reports do
           false -> a.count > b.count
         end 
       end)
+  end
+
+  @doc """
+  Returns the list of authors.
+
+  ## Examples
+
+      iex> list_authors()
+      [%Author{}, ...]
+
+  """
+  def list_authors do
+    from(
+      author in Author,
+      join: book in assoc(author, :books),
+      join: rating in assoc(book, :ratings),
+      preload: [books: {book, [ratings: rating]}],
+      order_by: [author.last_name, author.first_name, author.middle_name]
+    )
+    |> Repo.all()
   end
 end

@@ -25,8 +25,6 @@ defmodule BooklistWeb.Router do
     get "/resources", PageController, :resources
     get "/bookshelf", PageController, :bookshelf
 
-    get "/reports/:year", ReportsController, :show
-
     resources "/authors", AuthorController
     resources "/books", BookController
     resources "/book-locations", BookLocationController
@@ -41,6 +39,14 @@ defmodule BooklistWeb.Router do
     get "/books/:book_id/ratings/new", RatingController, :new
 
     get "/libraries/:library_id/locations/new", LocationController, :new
+  end
+
+  scope "/reports", BooklistWeb do
+    pipe_through :browser
+    pipe_through :authenticate
+
+    get "/years/:year", ReportsController, :show
+    get "/authors", ReportsController, :authors_index
   end
 
   # Other scopes may use custom stacks.
