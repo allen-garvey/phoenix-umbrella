@@ -1,1 +1,10 @@
 <h2>Authors Report</h2>
+
+<ol>
+    <%= for {author, ratings_count, average_rating} <- @authors do %>
+        <li>
+            <%= link(BooklistWeb.AuthorView.to_s(author), to: Routes.author_path(@conn, :show, author)) %>
+            <%= " #{ratings_count} #{Float.round(average_rating, 2)}" %>
+        </li>
+    <% end %>
+</ol>

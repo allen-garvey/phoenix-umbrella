@@ -125,4 +125,35 @@ defmodule Booklist.Reports do
     )
     |> Repo.all()
   end
+
+  @doc """
+  Returns the list of authors with calculated sum of ratings
+
+  ## Examples
+
+      iex> calculate_authors_average_score()
+      [{ %Author{}, ratings_count, average_score }]
+
+  """
+  def calculate_authors_average_score(authors) do
+    authors
+    |> Enum.map(fn (author) -> 
+        ratings = Enum.flat_map(author.books, fn (book) -> book.ratings end)
+        ratings_count = Enum.count(ratings)
+        
+        ratings_sum = ratings
+        |> Enum.reduce(0, fn (rating, sum) -> rating.score + sum end)
+
+        ratings_average = ratings_sum / ratings_count
+
+        {author, ratings_count, ratings_average}
+    end)
+    |> Enum.sort(fn ({_author_1, _ratings_count_1, ratings_average_1}, {_author_2, _ratings_count_2, ratings_average_2}) -> 
+      if ratings_average_1 >= ratings_average_2 do
+        true
+      else
+        false
+      end
+    end)
+  end
 end

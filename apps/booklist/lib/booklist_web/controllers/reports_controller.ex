@@ -53,7 +53,7 @@ defmodule BooklistWeb.ReportsController do
   end
 
   def authors_index(conn, _params) do
-    authors = Reports.list_authors()
+    authors = Reports.list_authors() |> Reports.calculate_authors_average_score
     render(conn, "authors.html", authors: authors)
   end
 
