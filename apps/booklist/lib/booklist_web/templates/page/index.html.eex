@@ -61,4 +61,9 @@
       <%= link "Loans", to: Routes.loan_path(@conn, :index) %>
     </h2>
   </div>
+  <div class="home_section">
+    <h2 class="home_section_heading">
+      <%= link "Reports", to: Routes.reports_path(@conn, :index) %>
+    </h2>
+  </div>
 </div>

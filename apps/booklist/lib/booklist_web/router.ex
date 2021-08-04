@@ -45,7 +45,8 @@ defmodule BooklistWeb.Router do
     pipe_through :browser
     pipe_through :authenticate
 
-    get "/years/:year", ReportsController, :show
+    get "/", ReportsController, :index
+    get "/years/:year", ReportsController, :years_show
     get "/authors", ReportsController, :authors_index
   end
 

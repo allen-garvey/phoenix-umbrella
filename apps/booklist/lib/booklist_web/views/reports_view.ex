@@ -13,7 +13,7 @@ defmodule BooklistWeb.ReportsView do
   Returns a link to the reports for the given year
   """
   def reports_for_year_path(conn, year) do
-    Routes.reports_path(conn, :show, year)
+    Routes.reports_path(conn, :years_show, year)
   end
 
   @doc """

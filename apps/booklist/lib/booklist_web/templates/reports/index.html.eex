@@ -1,0 +1,10 @@
+<h2>Reports</h2>
+
+<ul>
+    <li>
+        <%= link "Yearly Report", to: BooklistWeb.ReportsView.reports_for_current_year_path(@conn) %>
+    </li>
+    <li>
+        <%= link "Authors Report", to: Routes.reports_path(@conn, :authors_index) %>
+    </li>
+</u>

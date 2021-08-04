@@ -45,7 +45,11 @@ defmodule BooklistWeb.ReportsController do
     redirect(conn, to: BooklistWeb.ReportsView.reports_for_current_year_path(conn))
   end
 
-  def show(conn, %{"year" => year_raw}) do
+  def index(conn, _params) do
+    render(conn, "index.html")
+  end
+
+  def years_show(conn, %{"year" => year_raw}) do
     case Integer.parse(year_raw) do
       {year, _} -> report_for_year_helper(conn, year)
       _         -> invalid_year_redirect(conn)
@@ -56,6 +60,5 @@ defmodule BooklistWeb.ReportsController do
     authors = Reports.list_authors() |> Reports.calculate_authors_average_score
     render(conn, "authors.html", authors: authors)
   end
-
 
 end
