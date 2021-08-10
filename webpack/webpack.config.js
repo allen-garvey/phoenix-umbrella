@@ -74,7 +74,13 @@ module.exports = {
                                     esModule: false,
                                 },
                             },
-                            'css-loader?url=false',
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    url: false,
+                                    esModule: false,
+                                },
+                            },
                             'sass-loader',
                         ]
                     },
