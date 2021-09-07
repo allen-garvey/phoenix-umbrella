@@ -48,7 +48,7 @@ defmodule MovielistWeb.MovieView do
   end
 
   def search_query_for_release_status(movie_title, :theater_released, nil) do
-    "#{movie_title} dvd release date"
+    "#{movie_title} streaming release date"
   end
 
   def search_query_for_release_status(movie_title, _release_status, _home_release_date) do
