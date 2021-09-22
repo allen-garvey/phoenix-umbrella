@@ -13,6 +13,8 @@
 
   <%= MovielistWeb.SharedView.form_group :home_release_date, f, &date_input/3 %>
 
+  <%= MovielistWeb.SharedView.form_group :length, f, &number_input/3 %>
+
   <%= MovielistWeb.SharedView.form_group :pre_rating, f, &number_input/3 %>
 
   <%= MovielistWeb.SharedView.submit_button "Movie" %>

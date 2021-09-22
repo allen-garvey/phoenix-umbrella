@@ -6,6 +6,7 @@
       <th>Title</th>
       <th>Genre</th>
       <th>Pre</th>
+      <th>Length</th>
       <th>Release</th>
       <th></th>
       <th></th>
@@ -19,8 +20,8 @@
         <td><%= link movie.title, to: Common.SuperSearch.search_url(search_query_for_release_status(movie.title, movie.release_status, movie.home_release_date)) %></td>
         <td><%= MovielistWeb.GenreView.to_s(movie.genre) %></td>
         <td><%= movie.pre_rating %></td>
+        <td><%= format_length(movie.length) %></td>
         <td class="<%= css_class_for_release_date(movie.release_status, movie.home_release_date) %>"><%= Common.DateHelpers.us_formatted_date(movie.release_date) %></td>
-
         <td>
           <%= link "Show", to: Routes.movie_path(@conn, :show, movie), class: "btn btn-sm btn-light" %>
         </td>

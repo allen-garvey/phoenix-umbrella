@@ -44,6 +44,11 @@
   </li>
 
   <li>
+    <strong>Length:</strong>
+    <%= format_length(@movie.length) %>
+  </li>
+
+  <li>
     <strong>Pre rating:</strong>
     <%= @movie.pre_rating %>
   </li>

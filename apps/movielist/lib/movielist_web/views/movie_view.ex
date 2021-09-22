@@ -62,4 +62,12 @@ defmodule MovielistWeb.MovieView do
   def css_class_for_release_date(_movie_release_status, _movie_home_release_date) do
     ""
   end
+
+  def format_length(nil) do
+    ""
+  end
+
+  def format_length(length) do
+    "#{div(length, 60)}h #{rem(length, 60)}m"
+  end
 end
