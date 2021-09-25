@@ -30,6 +30,7 @@ defmodule MovielistWeb.Router do
     resources "/genres", GenreController
     resources "/movies", MovieController
     resources "/ratings", RatingController
+    resources "/streamers", StreamerController
 
     get "/movies/:movie_id/ratings/new", RatingController, :new
   end

@@ -16,6 +16,7 @@
           <li><%= link "Suggestions", to: Routes.movie_path(@conn, :index_suggestions), class: active_nav_class(assigns[:page_atom], :movies_suggestions) %></li>
           <li><%= link "Ratings", to: Routes.rating_path(@conn, :index), class: active_nav_class(assigns[:page_atom], :ratings_index) %></li>
           <li><%= link "Genres", to: Routes.genre_path(@conn, :index), class: active_nav_class(assigns[:page_atom], :genres_index) %></li>
+          <li><%= link "Streamers", to: Routes.streamer_path(@conn, :index), class: active_nav_class(assigns[:page_atom], :streamers_index) %></li>
           <li><%= link "Reports", to: MovielistWeb.ReportsView.reports_for_current_year_score_sorted_path(@conn), class: active_nav_class(assigns[:page_atom], :reports_show) %></li>
           <li><%= link "Add Movie", to: Routes.movie_path(@conn, :new), class: "btn btn-primary" %></li>
         </ul>

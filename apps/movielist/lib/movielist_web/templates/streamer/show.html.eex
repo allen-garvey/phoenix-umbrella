@@ -1,0 +1,17 @@
+<%= render(MovielistWeb.SharedView, "show_header.html", 
+      conn: @conn, 
+      resource_title_plural: "Streamers", 
+      resource_path_atom: :streamer_path, 
+      item: @streamer, 
+      item_name: to_s(@streamer)
+    ) 
+%>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @streamer.name %>
+  </li>
+
+</ul>

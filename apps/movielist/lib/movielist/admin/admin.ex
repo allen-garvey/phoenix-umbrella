@@ -9,6 +9,7 @@ defmodule Movielist.Admin do
   alias Movielist.Admin.Genre
   alias Movielist.Admin.Movie
   alias Movielist.Admin.Rating
+  alias Movielist.Admin.Streamer
 
   #Estimated time in days between movies theater release and home release
   @movie_home_release_estimated_lead_time 110
@@ -400,5 +401,99 @@ defmodule Movielist.Admin do
   def change_rating_with_movie(%Rating{} = rating, movie_id) do
     Rating.changeset(rating, %{})
       |> Ecto.Changeset.put_change(:movie_id, movie_id)
+  end
+
+  @doc """
+  Returns the list of streamers.
+
+  ## Examples
+
+      iex> list_streamers()
+      [%Streamer{}, ...]
+
+  """
+  def list_streamers do
+    Repo.all(Streamer)
+  end
+
+  @doc """
+  Gets a single streamer.
+
+  Raises `Ecto.NoResultsError` if the Streamer does not exist.
+
+  ## Examples
+
+      iex> get_streamer!(123)
+      %Streamer{}
+
+      iex> get_streamer!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_streamer!(id), do: Repo.get!(Streamer, id)
+
+  @doc """
+  Creates a streamer.
+
+  ## Examples
+
+      iex> create_streamer(%{field: value})
+      {:ok, %Streamer{}}
+
+      iex> create_streamer(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_streamer(attrs \\ %{}) do
+    %Streamer{}
+    |> Streamer.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a streamer.
+
+  ## Examples
+
+      iex> update_streamer(streamer, %{field: new_value})
+      {:ok, %Streamer{}}
+
+      iex> update_streamer(streamer, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_streamer(%Streamer{} = streamer, attrs) do
+    streamer
+    |> Streamer.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a streamer.
+
+  ## Examples
+
+      iex> delete_streamer(streamer)
+      {:ok, %Streamer{}}
+
+      iex> delete_streamer(streamer)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_streamer(%Streamer{} = streamer) do
+    Repo.delete(streamer)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking streamer changes.
+
+  ## Examples
+
+      iex> change_streamer(streamer)
+      %Ecto.Changeset{data: %Streamer{}}
+
+  """
+  def change_streamer(%Streamer{} = streamer, attrs \\ %{}) do
+    Streamer.changeset(streamer, attrs)
   end
 end

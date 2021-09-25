@@ -1,0 +1,3 @@
+<h1>Edit <%= to_s(@streamer) %></h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.streamer_path(@conn, :update, @genre)) %>
