@@ -414,7 +414,7 @@ defmodule Movielist.Admin do
 
   """
   def list_streamers do
-    Repo.all(Streamer)
+    Repo.all(from(Streamer, order_by: :name))
   end
 
   @doc """
