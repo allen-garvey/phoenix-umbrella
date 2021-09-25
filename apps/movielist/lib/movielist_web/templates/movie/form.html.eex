@@ -17,5 +17,7 @@
 
   <%= MovielistWeb.SharedView.form_group :pre_rating, f, &number_input/3 %>
 
+  <%= MovielistWeb.SharedView.form_group :streamer_id, f, @streamers, &select/4 %>
+
   <%= MovielistWeb.SharedView.submit_button "Movie" %>
 <% end %>

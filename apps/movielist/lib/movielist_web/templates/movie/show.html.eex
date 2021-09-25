@@ -53,6 +53,13 @@
     <%= @movie.pre_rating %>
   </li>
 
+<%= if @movie.streamer do %>
+  <li>
+    <strong>Streamer:</strong>
+    <%= link MovielistWeb.StreamerView.to_s(@movie.streamer), to: Routes.streamer_path(@conn, :show, @movie.streamer) %>
+  </li>
+<% end %>
+
 </ul>
 
 <h2>Ratings</h2>

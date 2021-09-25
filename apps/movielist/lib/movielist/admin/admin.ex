@@ -198,9 +198,10 @@ defmodule Movielist.Admin do
     from(
       movie in Movie,
       join: genre in assoc(movie, :genre),
+      left_join: streamer in assoc(movie, :streamer),
       left_join: rating in assoc(movie, :ratings),
       where: movie.id == ^id,
-      preload: [genre: genre, ratings: rating],
+      preload: [genre: genre, ratings: rating, streamer: streamer],
       order_by: [desc: rating.date_scored, desc: rating.id]
     )
     |> Repo.one!

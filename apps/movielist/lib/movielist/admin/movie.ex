@@ -16,6 +16,7 @@ defmodule Movielist.Admin.Movie do
     field :release_status, :any, virtual: true
 
     belongs_to :genre, Movielist.Admin.Genre
+    belongs_to :streamer, Movielist.Admin.Streamer
 
     has_many :ratings, Movielist.Admin.Rating
 
@@ -40,11 +41,12 @@ defmodule Movielist.Admin.Movie do
   @doc false
   def changeset(movie, attrs) do
     movie
-    |> cast(attrs, [:title, :sort_title, :genre_id, :theater_release_date, :home_release_date, :pre_rating, :is_active, :length])
+    |> cast(attrs, [:title, :sort_title, :genre_id, :streamer_id, :theater_release_date, :home_release_date, :pre_rating, :is_active, :length])
     # sort_title is required, but we are not validating it here since it generated from the title
     |> validate_required([:title, :genre_id, :pre_rating, :is_active])
     |> generate_sort_title
     |> Common.ModelHelpers.Number.validate_score(:pre_rating)
     |> assoc_constraint(:genre)
+    |> assoc_constraint(:streamer)
   end
 end

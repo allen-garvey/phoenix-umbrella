@@ -7,6 +7,7 @@ defmodule MovielistWeb.MovieController do
   def related_fields() do
     [
       genres: Admin.list_genres() |> MovielistWeb.GenreView.map_for_form,
+      streamers: [nil | Admin.list_streamers() |> MovielistWeb.StreamerView.map_for_form],
     ]
   end
 
