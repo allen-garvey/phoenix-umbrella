@@ -128,8 +128,9 @@ defmodule Movielist.Admin do
     from(
           m in Movie,
           join: genre in assoc(m, :genre),
+          left_join: streamer in assoc(m, :streamer),
           where: m.is_active == true,
-          preload: [genre: genre],
+          preload: [genre: genre, streamer: streamer],
           select: %{
                     movie: m,
                     release_status: fragment("CASE WHEN ? <= CURRENT_DATE THEN 1 WHEN ? <= CURRENT_DATE THEN 2 ELSE 3 END AS release_status", m.home_release_date, m.theater_release_date),
