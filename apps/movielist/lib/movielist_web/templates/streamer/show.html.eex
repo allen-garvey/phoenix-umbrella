@@ -15,3 +15,22 @@
   </li>
 
 </ul>
+
+<%= if !Enum.empty?(@streamer.movies) do %>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for movie <- @streamer.movies do %>
+        <tr>
+          <td>
+            <%= link movie.title, to: Routes.movie_path(@conn, :show, movie) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

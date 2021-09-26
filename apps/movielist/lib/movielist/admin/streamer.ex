@@ -5,6 +5,8 @@ defmodule Movielist.Admin.Streamer do
   schema "streamers" do
     field :name, :string
 
+    has_many :movies, Movielist.Admin.Movie
+
     timestamps()
   end
 

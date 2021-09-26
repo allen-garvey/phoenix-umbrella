@@ -431,7 +431,22 @@ defmodule Movielist.Admin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_streamer!(id), do: Repo.get!(Streamer, id)
+  def get_streamer!(id) do
+    streamer = from(
+      streamer in Streamer,
+      left_join: movie in assoc(streamer, :movies),
+      where: streamer.id == ^id,
+      preload: [movies: movie],
+      order_by: [movie.sort_title]
+    )
+    |> Repo.one!
+    
+    case streamer.movies do
+      Ecto.Ecto.Association.NotLoaded ->
+        streamer
+      _ -> %Streamer{streamer | movies: Enum.filter(streamer.movies, fn(movie) -> movie.is_active end)}
+    end
+  end
 
   @doc """
   Creates a streamer.
