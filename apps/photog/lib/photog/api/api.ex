@@ -763,20 +763,18 @@ defmodule Photog.Api do
   Manually preloads images for imports since we can't use preload macro when using fragment for left lateral join
   """
   def manually_preload_images_for_imports(results) do
-    Enum.chunk_by(results, fn {import, _image} -> import.id end)
-      |> Enum.map(fn chunked_results -> 
-        images = Enum.map(chunked_results, fn {_import, image} -> image end)
-        {first_import, first_image} = Enum.at(chunked_results, 0)
-        camera_model = case first_image do
-          %{camera_make: nil, camera_model: nil} -> nil
-          %{camera_make: camera_make, camera_model: nil} -> camera_make
-          %{camera_make: nil, camera_model: camera_model} -> camera_model
-          %{camera_make: camera_make, camera_model: camera_model} -> "#{camera_make} #{camera_model}"
-          _ -> nil
-        end
-        
-        %Import{first_import | images_count: Enum.count(images), camera_model: camera_model, images: Enum.take(images, 3)}
-      end)
+    results
+    |> Enum.map(fn {import, cover_image} -> 
+      camera_model = case cover_image do
+        %{camera_make: nil, camera_model: nil} -> nil
+        %{camera_make: camera_make, camera_model: nil} -> camera_make
+        %{camera_make: nil, camera_model: camera_model} -> camera_model
+        %{camera_make: camera_make, camera_model: camera_model} -> "#{camera_make} #{camera_model}"
+        _ -> nil
+      end
+      
+      %Import{import | images_count: 1, camera_model: camera_model, images: [cover_image]}
+    end)
   end
 
   @doc """
@@ -797,16 +795,11 @@ defmodule Photog.Api do
   Also preloads a limited amount of images
   """
   def list_imports_with_count_and_limited_images do
-    images_query = from(
-      image in Image,
-      select: %{id: image.id, creation_time: image.creation_time, import_id: image.import_id, mini_thumbnail_path: image.mini_thumbnail_path, camera_make: image.exif["Make"], camera_model: image.exif["Model"]}
-    )
     from(
         import in Import,
-        join: image in subquery(images_query),
-        on: image.import_id == import.id,
-        order_by: [desc: import.import_time, desc: import.id, asc: image.creation_time, asc: image.id],
-        select: {import, image}
+        join: cover_image in assoc(import, :cover_image),
+        order_by: [desc: import.import_time, desc: import.id],
+        select: {import, %{id: cover_image.id, creation_time: cover_image.creation_time, import_id: cover_image.import_id, mini_thumbnail_path: cover_image.mini_thumbnail_path, camera_make: cover_image.exif["Make"], camera_model: cover_image.exif["Model"]}}
     )
     |> Repo.all
     |> manually_preload_images_for_imports
