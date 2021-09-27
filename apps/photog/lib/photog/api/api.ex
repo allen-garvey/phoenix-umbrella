@@ -760,20 +760,20 @@ defmodule Photog.Api do
   end
 
   @doc """
-  Manually preloads images for imports since we can't use preload macro when using fragment for left lateral join
+  Manually camera model for imports
   """
-  def manually_preload_images_for_imports(results) do
+  def manually_preload_camera_model(results) do
     results
-    |> Enum.map(fn {import, cover_image} -> 
-      camera_model = case cover_image do
-        %{camera_make: nil, camera_model: nil} -> nil
-        %{camera_make: camera_make, camera_model: nil} -> camera_make
-        %{camera_make: nil, camera_model: camera_model} -> camera_model
-        %{camera_make: camera_make, camera_model: camera_model} -> "#{camera_make} #{camera_model}"
+    |> Enum.map(fn { import, camera_info } -> 
+      camera_model = case camera_info do
+        {nil, nil} -> nil
+        {camera_make, nil} -> camera_make
+        {nil, camera_model} -> camera_model
+        {camera_make, camera_model} -> "#{camera_make} #{camera_model}"
         _ -> nil
       end
       
-      %Import{import | images_count: 1, camera_model: camera_model, images: [cover_image]}
+      %Import{import | camera_model: camera_model}
     end)
   end
 
@@ -798,11 +798,14 @@ defmodule Photog.Api do
     from(
         import in Import,
         join: cover_image in assoc(import, :cover_image),
+        left_join: image in assoc(import, :images),
+        group_by: [import.id, cover_image.id],
         order_by: [desc: import.import_time, desc: import.id],
-        select: {import, %{id: cover_image.id, creation_time: cover_image.creation_time, import_id: cover_image.import_id, mini_thumbnail_path: cover_image.mini_thumbnail_path, camera_make: cover_image.exif["Make"], camera_model: cover_image.exif["Model"]}}
+        select: {%Import{import | images_count: count(import.id), images: [cover_image]},
+        {cover_image.exif["Make"], cover_image.exif["Model"]}}
     )
     |> Repo.all
-    |> manually_preload_images_for_imports
+    |> manually_preload_camera_model
   end
 
   @doc """
