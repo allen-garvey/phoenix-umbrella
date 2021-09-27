@@ -25,4 +25,20 @@ defmodule Photog.Api.Import do
     |> unique_constraint(:apple_photos_uuid)
     |> assoc_constraint(:cover_image)
   end
+
+  def determine_camera_model(nil, nil) do
+    nil
+  end
+
+  def determine_camera_model(camera_make, nil) do
+    camera_make
+  end
+
+  def determine_camera_model(nil, camera_model) do
+    camera_model
+  end
+
+  def determine_camera_model(camera_make, camera_model) do
+    "#{camera_make} #{camera_model}"
+  end
 end

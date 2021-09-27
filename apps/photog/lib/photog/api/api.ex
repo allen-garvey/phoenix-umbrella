@@ -764,16 +764,8 @@ defmodule Photog.Api do
   """
   def manually_preload_camera_model(results) do
     results
-    |> Enum.map(fn { import, camera_info } -> 
-      camera_model = case camera_info do
-        {nil, nil} -> nil
-        {camera_make, nil} -> camera_make
-        {nil, camera_model} -> camera_model
-        {camera_make, camera_model} -> "#{camera_make} #{camera_model}"
-        _ -> nil
-      end
-      
-      %Import{import | camera_model: camera_model}
+    |> Enum.map(fn { import, {camera_make, camera_model} } -> 
+      %Import{import | camera_model: Import.determine_camera_model(camera_make, camera_model)}
     end)
   end
 
