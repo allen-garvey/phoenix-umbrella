@@ -3,9 +3,9 @@ defmodule Umbrella.Common.Deps do
   def shared_phoenix_deps do
     ecto() ++
     [
-      {:phoenix, "~> 1.5.11"},
+      {:phoenix, "~> 1.6.2"},
       {:phoenix_pubsub, "~> 2.0"},
-      {:phoenix_html, "~> 3.0.2"},
+      {:phoenix_html, "~> 3.1.0"},
       {:phoenix_live_reload, "~> 1.3.3", only: :dev},
       {:gettext, "~> 0.17.1"},
       {:jason, "~> 1.2.2"},
@@ -25,7 +25,7 @@ defmodule Umbrella.Common.Deps do
   def ecto do
     [
       {:phoenix_ecto, "~> 4.4.0"},
-      {:ecto_sql, "~> 3.7.0"},
+      {:ecto_sql, "~> 3.7.1"},
       {:postgrex, "~> 0.15.10"},
     ]
   end
