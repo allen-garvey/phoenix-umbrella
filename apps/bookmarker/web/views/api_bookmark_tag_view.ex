@@ -54,18 +54,15 @@ defmodule Bookmarker.ApiBookmarkTagView do
   end
   @doc """
   Takes error detail hash message and converts to string
+  otherwise simply returns string
   http://www.thisisnotajoke.com/blog/2015/09/serializing-ecto-changeset-errors-to-jsonapi-in-elixir.html
   """
-  def render_detail({message, values}) do
+  def render_detail({ message, values }) do
     Enum.reduce values, message, fn {k, v}, acc ->
       String.replace(acc, "%{#{k}}", to_string(v))
     end
   end
-  @doc """
-  Takes error detail string and returns it
-  required because error detail might be either hash or string
-  http://www.thisisnotajoke.com/blog/2015/09/serializing-ecto-changeset-errors-to-jsonapi-in-elixir.html
-  """
+  
   def render_detail(message) do
     message
   end
