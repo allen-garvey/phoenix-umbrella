@@ -4,9 +4,9 @@ Elixir umbrella project containing several custom CMSs made with Elixir/Phoenix.
 
 ## Dependencies
 
-* Elixir >= 1.9
+* Elixir >= 1.12
 
-* node >= 10
+* node >= 14
 
 * npm
 

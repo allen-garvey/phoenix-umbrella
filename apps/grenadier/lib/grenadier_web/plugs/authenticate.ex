@@ -57,11 +57,9 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   Gets url to redirect to after failed login
   """
   def get_failed_login_redirect_url(conn) do
-    redirect_url_param = conn 
-      |> get_request_url
-      |> :http_uri.encode
+    redirect_url_param = URI.encode_query(%{"redirect" => get_request_url(conn)})
     
-    "#{scheme_to_string(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_failed_redirect_port(conn.port)}#{Routes.page_path(conn, :login)}?redirect=#{redirect_url_param}"
+    "#{scheme_to_string(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_failed_redirect_port(conn.port)}#{Routes.page_path(conn, :login)}?#{redirect_url_param}"
   end
 
   @doc """
