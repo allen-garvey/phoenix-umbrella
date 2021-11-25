@@ -61,15 +61,12 @@ defmodule Mix.Tasks.Distill.Html do
   end
 
   @doc """
-  Returns the filename to save a current path as
+  Returns the html filename to save a current path as
   """
   def filename_for(%PageRoute{path: path}) do
     filename_for path
   end
 
-  @doc """
-  Returns the filename to save a current path as
-  """
   def filename_for(path) when is_binary(path) do
     if String.ends_with? path, ".html" do
       path
