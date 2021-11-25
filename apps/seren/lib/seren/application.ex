@@ -4,14 +4,12 @@ defmodule Seren.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
-    import Supervisor.Spec
-
     # Define workers and child supervisors to be supervised
     children = [
       # Start the Ecto repository
-      supervisor(Seren.Repo, []),
+      Seren.Repo,
       # Start the endpoint when the application starts
-      supervisor(SerenWeb.Endpoint, []),
+      SerenWeb.Endpoint,
       # Start your own worker by calling: Seren.Worker.start_link(arg1, arg2, arg3)
       # worker(Seren.Worker, [arg1, arg2, arg3]),
       {Phoenix.PubSub, [name: Seren.PubSub, adapter: Phoenix.PubSub.PG2]}
