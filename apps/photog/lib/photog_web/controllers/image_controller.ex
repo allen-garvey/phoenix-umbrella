@@ -24,6 +24,11 @@ defmodule PhotogWeb.ImageController do
     render(conn, "index.json", images: images)
   end
 
+  def index(conn, %{"limit" => limit, "offset" => offset}) do
+    images = Api.list_images(limit, offset)
+    render(conn, "index.json", images: images)
+  end
+
   def index(conn, _params) do
     images = Api.list_images()
     render(conn, "index.json", images: images)

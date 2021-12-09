@@ -50,6 +50,28 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Returns the list of images starting at offset, 
+  where number of results is less than or equal to the limit.
+
+  ## Examples
+
+      iex> list_images()
+      [%Image{}, ...]
+
+  """
+  def list_images(limit, offset) do
+    from(
+      Image, 
+      order_by: [desc: :creation_time, desc: :id],
+      limit: ^limit,
+      offset: ^offset
+    )
+    |> image_preload_import
+    |> Repo.all
+    |> image_default_preloads
+  end
+
+  @doc """
   Returns the list of images taken in given year
   """
   def list_images_for_year(year) when is_integer(year) do
