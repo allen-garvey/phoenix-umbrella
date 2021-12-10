@@ -3,7 +3,7 @@ defmodule Umbrella.Common.Deps do
   def shared_phoenix_deps do
     ecto() ++
     [
-      {:phoenix, "~> 1.6.2"},
+      {:phoenix, "~> 1.6.4"},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_html, "~> 3.1.0"},
       {:phoenix_live_reload, "~> 1.3.3", only: :dev},
