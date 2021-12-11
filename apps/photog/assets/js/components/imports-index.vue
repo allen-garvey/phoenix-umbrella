@@ -1,9 +1,9 @@
 <template>
     <Text-List 
         :title="pageTitle"
-        :count="itemsList.length"
+        :count="model.length"
         :total="itemsCount"
-        :itemsList="itemsList" 
+        :itemsList="model" 
         :isInitialLoadComplete="isInitialLoadComplete"
         :loadMoreItemsCallback="loadMoreItems"
     >
@@ -51,8 +51,7 @@
 import { thumbnailUrlFor } from '../image.js';
 import TextList from './base/text-list.vue';
 
-const ITEMS_PAGINATION_LIMIT_INITIAL = 10;
-const ITEMS_PAGINATION_LIMIT_SCROLL = 30;
+const ITEMS_CHUNK_SIZE = 10;
 
 export default {
         props: {
@@ -79,16 +78,12 @@ export default {
                 //need this property or there will be errors when we switch routes and new models haven't been loaded yet
                 isInitialLoadComplete: false,
                 pageTitle: 'Imports',
-                numItemsShown: 0,
                 itemsCount: 0,
             }
         },
         computed: {
-            itemsList(){
-                if(!this.isInitialLoadComplete){
-                    return [];
-                }
-                return this.model.slice(0, this.numItemsShown);
+            itemsOffset(){
+                return this.model.length;
             },
         },
         watch: {
@@ -100,9 +95,14 @@ export default {
             setup(){
                 this.setWindowTitle(this.pageTitle);
                 this.isInitialLoadComplete = false;
-                const getModelPromise = this.getModel(this.modelPath).then((itemsJson)=>{
+                const getModelPromise = this.getModel(this.modelPath, 
+                {
+                    isPaginated: true, 
+                    limit: ITEMS_CHUNK_SIZE, 
+                    offset: this.itemsOffset
+                })
+                .then((itemsJson)=>{
                     this.model = itemsJson;
-                    this.numItemsShown = Math.min(this.numItemsShown + ITEMS_PAGINATION_LIMIT_INITIAL, this.model.length);
                 });
                 const getCountPromise = this.getModel(`${this.modelPath}/count`).then((count)=>{
                     this.itemsCount = count;
@@ -132,13 +132,22 @@ export default {
             //at first load we only load the most recent imports, but if you scroll down we just load everything
             //instead of incremental loads with offsets
             loadMoreItems($state){
-                this.numItemsShown = Math.min(this.numItemsShown + ITEMS_PAGINATION_LIMIT_SCROLL, this.itemsCount);
-                if(this.numItemsShown === this.itemsCount) {
-                    $state.complete();
-                }
-                else {
-                    $state.loaded();
-                }
+                this.getModel(this.modelPath, 
+                {
+                    isPaginated: true, 
+                    limit: ITEMS_CHUNK_SIZE, 
+                    offset: this.itemsOffset,
+                })
+                .then((itemsJson)=>{
+                    this.model = itemsJson;
+                    
+                    if(this.itemsOffset === this.itemsCount) {
+                        $state.complete();
+                    }
+                    else {
+                        $state.loaded();
+                    }
+                });
             },
         }
     };
