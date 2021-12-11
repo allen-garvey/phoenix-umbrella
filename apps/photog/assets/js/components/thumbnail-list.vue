@@ -380,7 +380,7 @@ export default {
             this.thumbnailList = this.thumnailListSource.slice(0, end);
         },
         refreshModel(){
-            return this.getModel(this.apiPath, true).then((items)=>{
+            return this.getModel(this.apiPath, {forceRefresh: true}).then((items)=>{
                 this.modelLoaded(items);
             });
         },

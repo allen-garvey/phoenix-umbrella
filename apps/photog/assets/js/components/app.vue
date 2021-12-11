@@ -71,9 +71,9 @@ export default {
         setWindowTitle(title){
             document.title = `Photog | ${title}`;
         },
-        get(modelPath, forceRefresh=false){
+        get(modelPath, options){
             const apiUrl = API_URL_BASE + modelPath;
-            return CacheUtil.fetchIntoCache(apiUrl, this.cache, apiUrl, forceRefresh);
+            return CacheUtil.fetchIntoCache(apiUrl, this.cache, apiUrl, options);
         },
         getExif(imageId){
             const apiUrl = `${API_URL_BASE}/images/${imageId}/exif`;
