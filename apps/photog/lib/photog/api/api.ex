@@ -805,6 +805,23 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Returns the total number of imports
+
+  ## Examples
+
+      iex> imports_count()
+      10
+
+  """
+  def imports_count! do
+    from(
+      import in Import,
+      select: count(import.id)
+    )
+    |> Repo.one!
+  end
+
+  @doc """
   Returns the list of imports
   Also preloads a limited amount of images
   """
@@ -815,6 +832,22 @@ defmodule Photog.Api do
         left_join: image in assoc(import, :images),
         group_by: [import.id, cover_image.id],
         order_by: [desc: import.import_time, desc: import.id],
+        select: {%Import{import | images_count: count(import.id), images: [cover_image]},
+        {cover_image.exif["Make"], cover_image.exif["Model"]}}
+    )
+    |> Repo.all
+    |> manually_preload_camera_model
+  end
+
+  def list_imports_with_count_and_limited_images(limit, offset) do
+    from(
+        import in Import,
+        join: cover_image in assoc(import, :cover_image),
+        left_join: image in assoc(import, :images),
+        group_by: [import.id, cover_image.id],
+        order_by: [desc: import.import_time, desc: import.id],
+        limit: ^limit,
+        offset: ^offset,
         select: {%Import{import | images_count: count(import.id), images: [cover_image]},
         {cover_image.exif["Make"], cover_image.exif["Model"]}}
     )

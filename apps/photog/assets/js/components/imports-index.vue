@@ -2,7 +2,7 @@
     <Text-List 
         :title="pageTitle"
         :count="itemsList.length"
-        :total="model.length"
+        :total="itemsCount"
         :itemsList="itemsList" 
         :isInitialLoadComplete="isInitialLoadComplete"
         :loadMoreItemsCallback="loadMoreItems"
@@ -80,6 +80,7 @@ export default {
                 isInitialLoadComplete: false,
                 pageTitle: 'Imports',
                 numItemsShown: 0,
+                itemsCount: 0,
             }
         },
         computed: {
@@ -99,9 +100,14 @@ export default {
             setup(){
                 this.setWindowTitle(this.pageTitle);
                 this.isInitialLoadComplete = false;
-                this.getModel(this.modelPath).then((itemsJson)=>{
+                const getModelPromise = this.getModel(this.modelPath).then((itemsJson)=>{
                     this.model = itemsJson;
                     this.numItemsShown = Math.min(this.numItemsShown + ITEMS_PAGINATION_LIMIT_INITIAL, this.model.length);
+                });
+                const getCountPromise = this.getModel(`${this.modelPath}/count`).then((count)=>{
+                    this.itemsCount = count;
+                });
+                Promise.all([getModelPromise, getCountPromise]).then(() => {
                     this.isInitialLoadComplete = true;
                 });
             },
@@ -126,8 +132,8 @@ export default {
             //at first load we only load the most recent imports, but if you scroll down we just load everything
             //instead of incremental loads with offsets
             loadMoreItems($state){
-                this.numItemsShown = Math.min(this.numItemsShown + ITEMS_PAGINATION_LIMIT_SCROLL, this.model.length);
-                if(this.numItemsShown === this.model.length) {
+                this.numItemsShown = Math.min(this.numItemsShown + ITEMS_PAGINATION_LIMIT_SCROLL, this.itemsCount);
+                if(this.numItemsShown === this.itemsCount) {
                     $state.complete();
                 }
                 else {

@@ -6,6 +6,11 @@ defmodule PhotogWeb.ImportController do
 
   action_fallback PhotogWeb.FallbackController
 
+  def index(conn, %{"limit" => limit, "offset" => offset}) do
+    imports = Api.list_imports_with_count_and_limited_images(limit, offset)
+    render(conn, "index_with_count_and_images.json", imports: imports)
+  end
+
   def index(conn, _params) do
     imports = Api.list_imports_with_count_and_limited_images()
     render(conn, "index_with_count_and_images.json", imports: imports)
@@ -28,6 +33,11 @@ defmodule PhotogWeb.ImportController do
   def show_last(conn, _params) do
     import = Api.get_last_import!()
     render(conn, "show.json", import: import)
+  end
+
+  def count(conn, _params) do
+    count = Api.imports_count!()
+    render(conn, "count.json", count: count)
   end
 
   def update(conn, %{"id" => id, "import" => %{"notes" => _notes} = import_params}) do
