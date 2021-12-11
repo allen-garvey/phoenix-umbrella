@@ -239,6 +239,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        isPaginated: {
+            type: Boolean,
+            default: false,
+        },
         getDescription: {
             type: Function,
             default: () => '',
@@ -276,6 +280,8 @@ export default {
             hoveredItem: null,
             hoveredItemEvent: null,
             hoveredEventTimout: null,
+            // following for pagination
+            pageOffset: 0,
         }
     },
     computed: {
@@ -350,6 +356,7 @@ export default {
             const personFilterQueryParam = parseInt(queryParams[PERSON_FILTER_QUERY_PARAM_NAME]);
 
             this.isInitialLoadComplete = false;
+            this.pageOffset = 0;
             this.model = [];
             this.albumFilterMode = !isNaN(albumFilterQueryParam) ? albumFilterQueryParam : ALBUM_FILTER_MODE_ALL;
             this.personFilterMode = !isNaN(personFilterQueryParam) ? personFilterQueryParam : PERSON_FILTER_MODE_ALL;
@@ -370,33 +377,65 @@ export default {
         },
         loadModel(){
             this.thumbnailList = [];
-            return this.getModel(this.apiPath).then((items)=>{
+            return this.getModel(this.apiPath, 
+            {
+                offset: this.pageOffset,
+                limit: THUMBNAIL_CHUNK_LENGTH,
+                isPaginated: this.isPaginated,
+            }).then((items)=>{
                 this.modelLoaded(items);
             });
         },
         modelLoaded(items){
             this.model = items;
-            const end = this.isLazyLoadingEnabled ? THUMBNAIL_CHUNK_LENGTH : this.thumnailListSource.length;
+            const end = this.isLazyLoadingEnabled && !this.isPaginated ? THUMBNAIL_CHUNK_LENGTH : this.thumnailListSource.length;
             this.thumbnailList = this.thumnailListSource.slice(0, end);
+            this.pageOffset = this.thumnailListSource.length;
         },
         refreshModel(){
-            return this.getModel(this.apiPath, {forceRefresh: true}).then((items)=>{
+            return this.getModel(this.apiPath, 
+                {
+                    offset: this.pageOffset, 
+                    limit: THUMBNAIL_CHUNK_LENGTH, 
+                    isPaginated: this.isPaginated,
+                    forceRefresh: true,
+                }).then((items)=>{
                 this.modelLoaded(items);
             });
         },
         loadMoreThumbnails($state){
-            const filteredThumbnailListGoalLength = this.filteredThumbnailList.length + THUMBNAIL_CHUNK_LENGTH;
-            while(true){
-                this.thumbnailList = this.thumnailListSource.slice(0, this.thumbnailList.length + THUMBNAIL_CHUNK_LENGTH);
-                if(this.thumbnailList.length === this.thumnailListSource.length){
-                    $state.complete();
-                    break;
-                }
-                if(this.filteredThumbnailList.length >= filteredThumbnailListGoalLength){
-                    $state.loaded();
-                    break;
+            if(!this.isPaginated){
+                const filteredThumbnailListGoalLength = this.filteredThumbnailList.length + THUMBNAIL_CHUNK_LENGTH;
+                while(true){
+                    this.thumbnailList = this.thumnailListSource.slice(0, this.thumbnailList.length + THUMBNAIL_CHUNK_LENGTH);
+                    if(this.thumbnailList.length === this.thumnailListSource.length){
+                        $state.complete();
+                        break;
+                    }
+                    if(this.filteredThumbnailList.length >= filteredThumbnailListGoalLength){
+                        $state.loaded();
+                        break;
+                    }
                 }
             }
+            else {
+                this.getModel(this.apiPath, 
+                {
+                    offset: this.pageOffset, 
+                    limit: THUMBNAIL_CHUNK_LENGTH, 
+                    isPaginated: this.isPaginated,
+                    forceRefresh: true,
+                }).then((items)=>{
+                    if(this.thumnailListSource.length === items.length){
+                        $state.complete();
+                    }
+                    else {
+                       $state.loaded(); 
+                    }
+                    this.modelLoaded(items);
+                });
+            }
+            
         },
         shouldShowItem(item){
             let albumValidation = true;

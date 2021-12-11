@@ -97,6 +97,7 @@ export default {
                     apiPath: route.path,
                     enableBatchSelectImages: true,
                     doesRecommendLazyLoad: true,
+                    isPaginated: true,
                     pageTitle: 'Images',
                     showRouteFor: (item, _model)=>{
                         return {
