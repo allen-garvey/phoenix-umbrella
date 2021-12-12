@@ -74,11 +74,13 @@ defmodule Photog.Api do
   @doc """
   Returns the list of images taken in given year
   """
-  def list_images_for_year(year) when is_integer(year) do
+  def list_images_for_year(year, limit, offset) when is_integer(year) do
     from(
       image in Image,
       where: fragment("EXTRACT(year FROM ?)", image.creation_time) == ^year, 
-      order_by: [:creation_time, :id]
+      order_by: [:creation_time, :id],
+      limit: ^limit,
+      offset: ^offset
     )
     |> image_preload_import
     |> Repo.all
