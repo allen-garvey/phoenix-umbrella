@@ -19,7 +19,7 @@
             :nextPageLink="nextPageLink"
             :description="getDescription(model)" 
             :count="filteredThumbnailList.length"
-            :total="thumnailListSource.length"
+            :total="thumbnailListSource.length"
         />
 
         <!-- 
@@ -280,8 +280,6 @@ export default {
             hoveredItem: null,
             hoveredItemEvent: null,
             hoveredEventTimout: null,
-            // following for pagination
-            pageOffset: 0,
         }
     },
     computed: {
@@ -291,7 +289,7 @@ export default {
             }
             return this.pageTitle ? this.pageTitle : this.model.name;
         },
-        thumnailListSource(){
+        thumbnailListSource(){
             //this might happen when vue changed but model not yet loaded
             if(this.itemsListKey && !this.model[this.itemsListKey]){
                 return [];
@@ -301,6 +299,10 @@ export default {
             }
             return this.model;
 
+        },
+        pageOffset(){
+            console.log(this.thumbnailListSource);
+            return this.thumbnailListSource.length;
         },
         filteredThumbnailList(){
             if(this.isReordering){
@@ -356,7 +358,6 @@ export default {
             const personFilterQueryParam = parseInt(queryParams[PERSON_FILTER_QUERY_PARAM_NAME]);
 
             this.isInitialLoadComplete = false;
-            this.pageOffset = 0;
             this.model = [];
             this.albumFilterMode = !isNaN(albumFilterQueryParam) ? albumFilterQueryParam : ALBUM_FILTER_MODE_ALL;
             this.personFilterMode = !isNaN(personFilterQueryParam) ? personFilterQueryParam : PERSON_FILTER_MODE_ALL;
@@ -388,9 +389,8 @@ export default {
         },
         modelLoaded(items){
             this.model = items;
-            const end = this.isLazyLoadingEnabled && !this.isPaginated ? THUMBNAIL_CHUNK_LENGTH : this.thumnailListSource.length;
-            this.thumbnailList = this.thumnailListSource.slice(0, end);
-            this.pageOffset = this.thumnailListSource.length;
+            const end = this.isLazyLoadingEnabled && !this.isPaginated ? THUMBNAIL_CHUNK_LENGTH : this.thumbnailListSource.length;
+            this.thumbnailList = this.thumbnailListSource.slice(0, end);
         },
         refreshModel(){
             return this.getModel(this.apiPath, 
@@ -407,8 +407,8 @@ export default {
             if(!this.isPaginated){
                 const filteredThumbnailListGoalLength = this.filteredThumbnailList.length + THUMBNAIL_CHUNK_LENGTH;
                 while(true){
-                    this.thumbnailList = this.thumnailListSource.slice(0, this.thumbnailList.length + THUMBNAIL_CHUNK_LENGTH);
-                    if(this.thumbnailList.length === this.thumnailListSource.length){
+                    this.thumbnailList = this.thumbnailListSource.slice(0, this.thumbnailList.length + THUMBNAIL_CHUNK_LENGTH);
+                    if(this.thumbnailList.length === this.thumbnailListSource.length){
                         $state.complete();
                         break;
                     }
@@ -426,7 +426,7 @@ export default {
                     isPaginated: this.isPaginated,
                     forceRefresh: true,
                 }).then((items)=>{
-                    if(this.thumnailListSource.length === items.length){
+                    if(this.thumbnailListSource.length === items.length){
                         $state.complete();
                     }
                     else {
