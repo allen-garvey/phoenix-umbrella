@@ -158,6 +158,7 @@ export default {
             {
                 apiPath: '/images/?favorites=true',
                 doesRecommendLazyLoad: true,
+                isPaginated: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Favorite images',
                 itemPreviewContentCallback: (image) => {

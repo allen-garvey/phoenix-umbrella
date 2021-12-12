@@ -96,8 +96,14 @@ defmodule Photog.Api do
       [%Image{}, ...]
 
   """
-  def list_image_favorites(is_favorite) do
-    from(image in Image, where: image.is_favorite == ^is_favorite, order_by: [desc: :creation_time, desc: :id])
+  def list_image_favorites(is_favorite, limit, offset) do
+    from(
+      image in Image, 
+      where: image.is_favorite == ^is_favorite, 
+      order_by: [desc: :creation_time, desc: :id],
+      limit: ^limit,
+      offset: ^offset
+    )
     |> image_preload_import
     |> Repo.all
     |> image_default_preloads
