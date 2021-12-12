@@ -51,6 +51,8 @@ export default {
                 const props = {
                     apiPath: route.path,
                     enableBatchSelectAlbums: true,
+                    doesRecommendLazyLoad: true,
+                    isPaginated: true,
                     newItemLink: {name: 'albumsNew'},
                     pageTitle: 'Albums',
                     itemPreviewContentCallback: (album) => album.tags.map(tag => tag.name).join(', '),

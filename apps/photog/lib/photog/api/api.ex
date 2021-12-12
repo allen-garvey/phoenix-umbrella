@@ -323,6 +323,21 @@ defmodule Photog.Api do
     |> Repo.all
   end
 
+  def list_albums(limit, offset) do
+    from(album in Album,
+      join: cover_image in assoc(album, :cover_image),
+      left_join: album_image in assoc(album, :album_images),
+      left_join: tag in assoc(album, :tags),
+      group_by: [album.id, cover_image.id, tag.id],
+      preload: [cover_image: cover_image, tags: tag],
+      order_by: [desc: :id],
+      select: %Album{album | images_count: count(album.id)}
+    )
+    |> Repo.all
+    # need to do it this way since because of joins offset and limit don't work correctly
+    |> Enum.slice(offset, limit)
+  end
+
   @doc """
   Returns the list of albums.
   Used for forms when we only need name and id
