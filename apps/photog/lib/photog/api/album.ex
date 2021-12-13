@@ -4,7 +4,7 @@ defmodule Photog.Api.Album do
 
 
   schema "albums" do
-    field :apple_photos_id, :integer
+    field :apple_photos_id, :integer, load_in_query: false
     field :name, :string
     field :description, :string
     field :images_count, :integer, default: -1, virtual: true

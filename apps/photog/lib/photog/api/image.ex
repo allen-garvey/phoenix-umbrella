@@ -4,7 +4,7 @@ defmodule Photog.Api.Image do
 
 
   schema "images" do
-    field :apple_photos_id, :integer
+    field :apple_photos_id, :integer, load_in_query: false
     field :creation_time, :utc_datetime
     field :is_favorite, :boolean, default: false
     field :master_path, :string

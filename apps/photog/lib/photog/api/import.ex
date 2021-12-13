@@ -4,7 +4,7 @@ defmodule Photog.Api.Import do
 
 
   schema "imports" do
-    field :apple_photos_uuid, :string
+    field :apple_photos_uuid, :string, load_in_query: false
     field :import_time, :utc_datetime
     field :notes, :string
     field :images_count, :integer, default: -1, virtual: true

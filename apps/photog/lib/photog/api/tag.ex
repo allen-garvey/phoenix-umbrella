@@ -4,7 +4,7 @@ defmodule Photog.Api.Tag do
 
 
   schema "tags" do
-    field :apple_photos_uuid, :string
+    field :apple_photos_uuid, :string, load_in_query: false
     field :name, :string
     field :cover_image, :string, default: nil, virtual: true
     field :albums_count, :integer, default: -1, virtual: true
