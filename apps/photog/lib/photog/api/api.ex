@@ -140,12 +140,14 @@ defmodule Photog.Api do
       [%Image{}, ...]
 
   """
-  def list_images_with_no_amazon_photos_id() do
+  def list_images_with_no_amazon_photos_id(limit, offset) do
     from(
       image in Image,
       where: is_nil(image.amazon_photos_id),
-      order_by: [desc: :creation_time, desc: :id])
-    |> image_preload_import
+      order_by: [desc: :creation_time, desc: :id],
+      limit: ^limit,
+      offset: ^offset
+    )
     |> Repo.all
     |> image_default_preloads
   end

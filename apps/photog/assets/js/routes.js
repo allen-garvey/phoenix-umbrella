@@ -194,6 +194,7 @@ export default {
             {
                 apiPath: '/images/?amazon_photos_id=false',
                 doesRecommendLazyLoad: true,
+                isPaginated: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Images with no Amazon Photos Id',
             }
