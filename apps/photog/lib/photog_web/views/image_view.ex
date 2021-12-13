@@ -1,6 +1,7 @@
 defmodule PhotogWeb.ImageView do
   use PhotogWeb, :view
   alias PhotogWeb.ImageView
+  alias Photog.Api.Import
   alias Photog.Image.Exif
   alias Common.DateHelpers
 
@@ -101,6 +102,11 @@ defmodule PhotogWeb.ImageView do
   end
 
   def image_full_to_map(image) do
+    import_data = case image.import do
+      %Import{} -> PhotogWeb.ImportView.import_excerpt_to_map(image.import)
+      _ -> nil
+    end
+    
     %{
       id: image.id,
       creation_time: %{
@@ -116,7 +122,7 @@ defmodule PhotogWeb.ImageView do
       thumbnail_path: image.thumbnail_path,
       mini_thumbnail_path: image.mini_thumbnail_path,
       is_favorite: image.is_favorite,
-      import: PhotogWeb.ImportView.import_excerpt_to_map(image.import),
+      import: import_data,
       albums: Enum.map(image.albums, &PhotogWeb.AlbumView.album_excerpt_mini_to_map/1),
       persons: Enum.map(image.persons, &PhotogWeb.PersonView.person_excerpt_mini_to_map/1),
     }

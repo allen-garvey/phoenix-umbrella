@@ -114,20 +114,19 @@ defmodule Photog.Api do
 
   ## Examples
 
-      iex> list_images_not_in_album()
+      iex> list_images_not_in_album(limit, offset)
       [%Image{}, ...]
 
   """
-  def list_images_not_in_album() do
+  def list_images_not_in_album(limit, offset) do
     from(
         image in Image,
-        join: import in assoc(image, :import),
         left_join: album_image in assoc(image, :album_images),
-        where: is_nil(album_image.image_id),
-        preload: [import: import],
-        order_by: [desc: image.creation_time, desc: image.id]
+        where: is_nil(album_image),
+        order_by: [desc: image.creation_time, desc: image.id],
     )
     |> Repo.all
+    |> Enum.slice(offset, limit)
     |> image_default_preloads
   end
 

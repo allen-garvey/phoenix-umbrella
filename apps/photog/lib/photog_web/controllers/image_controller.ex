@@ -14,8 +14,8 @@ defmodule PhotogWeb.ImageController do
     render(conn, "index.json", images: images)
   end
 
-  def index(conn, %{"in_album" => "false"}) do
-    images = Api.list_images_not_in_album()
+  def index(conn, %{"in_album" => "false", "limit" => limit, "offset" => offset}) do
+    images = Api.list_images_not_in_album(String.to_integer(limit), String.to_integer(offset))
     render(conn, "index.json", images: images)
   end
 

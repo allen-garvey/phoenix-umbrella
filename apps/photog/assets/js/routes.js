@@ -183,6 +183,7 @@ export default {
             {
                 apiPath: '/images/?in_album=false',
                 doesRecommendLazyLoad: true,
+                isPaginated: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Images not in an album',
             }
