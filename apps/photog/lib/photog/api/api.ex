@@ -124,9 +124,10 @@ defmodule Photog.Api do
         left_join: album_image in assoc(image, :album_images),
         where: is_nil(album_image),
         order_by: [desc: image.creation_time, desc: image.id],
+        limit: ^limit,
+        offset: ^offset
     )
     |> Repo.all
-    |> Enum.slice(offset, limit)
     |> image_default_preloads
   end
 
