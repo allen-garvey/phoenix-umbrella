@@ -33,7 +33,6 @@ defmodule PhotogWeb.AlbumView do
       name: album.name,
       description: album.description,
       cover_image: ImageView.image_to_map(album.cover_image),
-      images: Enum.map(album.images, &ImageView.image_full_to_map/1),
       tags: Enum.map(album.tags, &TagView.tag_excerpt/1)
     }
   end

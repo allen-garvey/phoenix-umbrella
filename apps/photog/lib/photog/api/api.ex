@@ -382,18 +382,6 @@ defmodule Photog.Api do
 
   """
   def get_album!(id) do
-    # for some reason, if you put subquery directly in preload, it causes an error
-    image_albums_query = from(Album, order_by: :name)
-    image_persons_query = from(Person, order_by: :name)
-    # TODO: remove images preload
-    images_query = from(
-      image in Image,
-      join: album_image in assoc(image, :album_images),
-      join: import in assoc(image, :import),
-      where: album_image.album_id == ^id,
-      preload: [albums: ^image_albums_query, persons: ^image_persons_query, import: import],
-      order_by: [album_image.image_order, album_image.id]
-    )
     tags_query = from(
       tag in Tag,
       join: album_tag in assoc(tag, :album_tags),
@@ -405,7 +393,7 @@ defmodule Photog.Api do
       album in Album,
       join: cover_image in assoc(album, :cover_image),
       where: album.id == ^id,
-      preload: [cover_image: cover_image, images: ^images_query, tags: ^tags_query],
+      preload: [cover_image: cover_image, tags: ^tags_query],
       limit: 1
     )
       |> Repo.one!
