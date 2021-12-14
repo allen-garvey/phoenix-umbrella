@@ -350,6 +350,24 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Gets images for an album
+  """
+  def get_images_for_album(id, limit, offset) do
+    image_albums_query = from(Album, order_by: :name)
+    image_persons_query = from(Person, order_by: :name)
+
+    from(
+      image in Image,
+      join: album_image in assoc(image, :album_images),
+      where: album_image.album_id == ^id,
+      preload: [albums: ^image_albums_query, persons: ^image_persons_query],
+      order_by: [album_image.image_order, album_image.id]
+    )
+    |> Repo.all
+    |> Enum.slice(offset, limit)
+  end
+
+  @doc """
   Gets a single album.
 
   Raises `Ecto.NoResultsError` if the Album does not exist.
@@ -367,6 +385,7 @@ defmodule Photog.Api do
     # for some reason, if you put subquery directly in preload, it causes an error
     image_albums_query = from(Album, order_by: :name)
     image_persons_query = from(Person, order_by: :name)
+    # TODO: remove images preload
     images_query = from(
       image in Image,
       join: album_image in assoc(image, :album_images),
