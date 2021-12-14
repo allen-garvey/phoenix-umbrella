@@ -32,7 +32,7 @@
         />
 
         <Related-Fields-List 
-            :items="computedRelatedFieldsCallback(model)" 
+            :items="computedRelatedFieldsCallback(model, itemsModel)" 
             :routeName="`${computedRelatedFieldsKey}Show`" 
             v-if="computedRelatedFieldsKey" 
         />
@@ -168,6 +168,9 @@ export default {
             type: String,
             required: true,
         },
+        itemsApiPath: {
+            type: String,
+        },
         showRouteFor: {
             type: Function,
             required: true,
@@ -263,6 +266,7 @@ export default {
         return {
             isInitialLoadComplete: false,
             model: [],
+            itemsModel: [],
             thumbnailList: [],
             albumFilterMode: ALBUM_FILTER_MODE_ALL,
             personFilterMode: PERSON_FILTER_MODE_ALL,
@@ -296,6 +300,9 @@ export default {
             }
             if(this.itemsListKey){
                 return this.model[this.itemsListKey];
+            }
+            if(this.itemsApiPath){
+                return this.itemsModel;
             }
             return this.model;
 
@@ -358,6 +365,7 @@ export default {
 
             this.isInitialLoadComplete = false;
             this.model = [];
+            this.itemsModel = [];
             this.albumFilterMode = !isNaN(albumFilterQueryParam) ? albumFilterQueryParam : ALBUM_FILTER_MODE_ALL;
             this.personFilterMode = !isNaN(personFilterQueryParam) ? personFilterQueryParam : PERSON_FILTER_MODE_ALL;
             this.isCurrentlyBatchSelect = false;
@@ -377,17 +385,27 @@ export default {
         },
         loadModel(){
             this.thumbnailList = [];
-            return this.getModel(this.apiPath, 
+
+            const modelPromise = this.getModel(this.apiPath, 
             {
                 offset: this.pageOffset,
                 limit: THUMBNAIL_CHUNK_LENGTH,
-                isPaginated: this.isPaginated,
-            }).then((items)=>{
-                this.modelLoaded(items);
+                isPaginated: this.isPaginated && !this.itemsApiPath,
+            });
+
+            const itemsPromise = this.itemsApiPath ? this.getItemsPromise() : Promise.resolve(null);
+            
+            return Promise.all([modelPromise, itemsPromise]).then(([model, items])=>{
+                this.modelLoaded(model, items);
             });
         },
-        modelLoaded(items){
-            this.model = items;
+        modelLoaded(model, items){
+            if(model){
+                this.model = model;
+            } 
+            if(items){
+                this.itemsModel = items;
+            }
             const end = this.isLazyLoadingEnabled && !this.isPaginated ? THUMBNAIL_CHUNK_LENGTH : this.thumbnailListSource.length;
             this.thumbnailList = this.thumbnailListSource.slice(0, end);
         },
@@ -396,7 +414,7 @@ export default {
                 {
                     offset: this.pageOffset, 
                     limit: THUMBNAIL_CHUNK_LENGTH, 
-                    isPaginated: this.isPaginated,
+                    isPaginated: this.isPaginated && !this.itemsApiPath,
                     forceRefresh: true,
                 }).then((items)=>{
                 this.modelLoaded(items);
@@ -418,23 +436,41 @@ export default {
                 }
             }
             else {
-                this.getModel(this.apiPath, 
+                const path = this.itemsApiPath ? this.itemsApiPath : this.apiPath;
+
+                this.getModel(path, 
                 {
                     offset: this.pageOffset, 
                     limit: THUMBNAIL_CHUNK_LENGTH, 
                     isPaginated: this.isPaginated,
                     forceRefresh: true,
-                }).then((items)=>{
-                    if(this.thumbnailListSource.length === items.length){
+                }).then((loadedItems)=>{
+                    if(this.thumbnailListSource.length === loadedItems.length){
                         $state.complete();
                     }
                     else {
                        $state.loaded(); 
                     }
-                    this.modelLoaded(items);
+                    let model = null;
+                    let items = null;
+                    if(this.itemsApiPath){
+                        items = loadedItems;
+                    }
+                    else{
+                        model = loadedItems;
+                    }
+                    this.modelLoaded(model, items);
                 });
             }
             
+        },
+        getItemsPromise(){
+            return this.getModel(this.itemsApiPath, 
+            {
+                offset: this.pageOffset,
+                limit: THUMBNAIL_CHUNK_LENGTH,
+                isPaginated: true,
+            });
         },
         shouldShowItem(item){
             let albumValidation = true;
