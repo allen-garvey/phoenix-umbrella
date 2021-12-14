@@ -301,7 +301,6 @@ export default {
 
         },
         pageOffset(){
-            console.log(this.thumbnailListSource);
             return this.thumbnailListSource.length;
         },
         filteredThumbnailList(){
