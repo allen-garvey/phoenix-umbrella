@@ -51,7 +51,7 @@ export default {
                 const props = {
                     apiPath: route.path,
                     enableBatchSelectAlbums: true,
-                    doesRecommendLazyLoad: true,
+
                     isPaginated: true,
                     newItemLink: {name: 'albumsNew'},
                     pageTitle: 'Albums',
@@ -98,7 +98,7 @@ export default {
                 const props = {
                     apiPath: route.path,
                     enableBatchSelectImages: true,
-                    doesRecommendLazyLoad: true,
+
                     isPaginated: true,
                     pageTitle: 'Images',
                     showRouteFor: (item, _model)=>{
@@ -126,7 +126,7 @@ export default {
                 const props = {
                     apiPath: route.path,
                     enableBatchSelectImages: true,
-                    doesRecommendLazyLoad: true,
+
                     isPaginated: true,
                     pageTitle: `Images from ${route.params.year}`,
                     previousPageLink: {
@@ -159,7 +159,6 @@ export default {
             'imageFavoritesIndex',
             {
                 apiPath: '/images/?favorites=true',
-                doesRecommendLazyLoad: true,
                 isPaginated: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Favorite images',
@@ -182,7 +181,6 @@ export default {
             'imagesNotInAlbumIndex',
             {
                 apiPath: '/images/?in_album=false',
-                doesRecommendLazyLoad: true,
                 isPaginated: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Images not in an album',
@@ -193,7 +191,6 @@ export default {
             'imageNoAmazonIndex',
             {
                 apiPath: '/images/?amazon_photos_id=false',
-                doesRecommendLazyLoad: true,
                 isPaginated: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Images with no Amazon Photos Id',
@@ -227,7 +224,7 @@ export default {
                     apiPath: route.path,
                     itemsApiPath: `${route.path}/images`,
                     itemsCountKey: 'images_count',
-                    doesRecommendLazyLoad: true,
+
                     isPaginated: true,
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,

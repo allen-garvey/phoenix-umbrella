@@ -103,7 +103,7 @@
         </thumbnail-items-list>
         <infinite-observer
             :onTrigger="loadMoreThumbnails" 
-            v-if="isLazyLoadingEnabled"
+            v-if="isPaginated"
         />
     </main>
 </div>
@@ -241,10 +241,6 @@ export default {
         nextPageLink: {
             type: Object,
         },
-        doesRecommendLazyLoad: {
-            type: Boolean,
-            default: false,
-        },
         isPaginated: {
             type: Boolean,
             default: false,
@@ -343,9 +339,6 @@ export default {
         supportsBatchSelect(){
             return (this.enableBatchSelectImages || this.enableBatchSelectAlbums) && this.filteredThumbnailList.length > 0;
         },
-        isLazyLoadingEnabled(){
-            return this.doesRecommendLazyLoad;
-        },
         /**
          * Reordering stuff
          */
@@ -415,8 +408,7 @@ export default {
             if(items){
                 this.itemsModel = items;
             }
-            const end = this.isLazyLoadingEnabled && !this.isPaginated ? THUMBNAIL_CHUNK_LENGTH : this.thumbnailListSource.length;
-            this.thumbnailList = this.thumbnailListSource.slice(0, end);
+            this.thumbnailList = this.thumbnailListSource.slice(0, this.thumbnailListSource.length);
         },
         refreshModel(){
             return this.getModel(this.apiPath, 
@@ -430,50 +422,33 @@ export default {
             });
         },
         loadMoreThumbnails($state){
-            if(!this.isPaginated){
-                const filteredThumbnailListGoalLength = this.filteredThumbnailList.length + THUMBNAIL_CHUNK_LENGTH;
-                while(true){
-                    this.thumbnailList = this.thumbnailListSource.slice(0, this.thumbnailList.length + THUMBNAIL_CHUNK_LENGTH);
-                    if(this.thumbnailList.length === this.thumbnailListSource.length){
-                        $state.complete();
-                        break;
-                    }
-                    if(this.filteredThumbnailList.length >= filteredThumbnailListGoalLength){
-                        $state.loaded();
-                        break;
-                    }
-                }
-            }
-            else {
-                const path = this.itemsApiPath ? this.itemsApiPath : this.apiPath;
+            const path = this.itemsApiPath ? this.itemsApiPath : this.apiPath;
 
-                this.getModel(path, 
-                {
-                    offset: this.pageOffset, 
-                    limit: THUMBNAIL_CHUNK_LENGTH, 
-                    isPaginated: this.isPaginated,
-                    forceRefresh: true,
-                }).then((loadedItems)=>{
-                    const total = this.itemsCountKey ? this.model[this.itemsCountKey] : null;
-                    
-                    if(loadedItems.length === total || this.thumbnailListSource.length === loadedItems.length){
-                        $state.complete();
-                    }
-                    else {
-                       $state.loaded(); 
-                    }
-                    let model = null;
-                    let items = null;
-                    if(this.itemsApiPath){
-                        items = loadedItems;
-                    }
-                    else{
-                        model = loadedItems;
-                    }
-                    this.modelLoaded(model, items);
-                });
-            }
-            
+            this.getModel(path, 
+            {
+                offset: this.pageOffset, 
+                limit: THUMBNAIL_CHUNK_LENGTH, 
+                isPaginated: this.isPaginated,
+                forceRefresh: true,
+            }).then((loadedItems)=>{
+                const total = this.itemsCountKey ? this.model[this.itemsCountKey] : null;
+                
+                if(loadedItems.length === total || this.thumbnailListSource.length === loadedItems.length){
+                    $state.complete();
+                }
+                else {
+                    $state.loaded(); 
+                }
+                let model = null;
+                let items = null;
+                if(this.itemsApiPath){
+                    items = loadedItems;
+                }
+                else{
+                    model = loadedItems;
+                }
+                this.modelLoaded(model, items);
+            }); 
         },
         getItemsPromise(){
             return this.getModel(this.itemsApiPath, 
