@@ -387,16 +387,24 @@ defmodule Photog.Api do
       join: album_tag in assoc(tag, :album_tags),
       where: album_tag.album_id == ^id,
       order_by: [asc: tag.name, desc: tag.id]
-    ) 
+    )
 
-    from(
+    album = from(
       album in Album,
       join: cover_image in assoc(album, :cover_image),
       where: album.id == ^id,
-      preload: [cover_image: cover_image, tags: ^tags_query],
-      limit: 1
+      preload: [cover_image: cover_image, tags: ^tags_query]
     )
       |> Repo.one!
+
+    images_count = from(
+      album_image in AlbumImage,
+      where: album_image.album_id == ^id,
+      select: count(album_image.id)
+    )
+      |> Repo.one!
+
+    %Album{album | images_count: images_count}
   end
 
   @doc """

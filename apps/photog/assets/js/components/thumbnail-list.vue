@@ -19,7 +19,7 @@
             :nextPageLink="nextPageLink"
             :description="getDescription(model)" 
             :count="filteredThumbnailList.length"
-            :total="thumbnailListSource.length"
+            :total="itemsTotal"
         />
 
         <!-- 
@@ -171,6 +171,9 @@ export default {
         itemsApiPath: {
             type: String,
         },
+        itemsCountKey: {
+            type: String,
+        },
         showRouteFor: {
             type: Function,
             required: true,
@@ -310,6 +313,12 @@ export default {
         pageOffset(){
             return this.thumbnailListSource.length;
         },
+        itemsTotal(){
+            if(this.itemsCountKey){
+                return this.model[this.itemsCountKey];
+            }
+            return this.thumbnailListSource.length;
+        },
         filteredThumbnailList(){
             if(this.isReordering){
                 return this.reorderedThumbnailList;
@@ -445,7 +454,9 @@ export default {
                     isPaginated: this.isPaginated,
                     forceRefresh: true,
                 }).then((loadedItems)=>{
-                    if(this.thumbnailListSource.length === loadedItems.length){
+                    const total = this.itemsCountKey ? this.model[this.itemsCountKey] : null;
+                    
+                    if(loadedItems.length === total || this.thumbnailListSource.length === loadedItems.length){
                         $state.complete();
                     }
                     else {

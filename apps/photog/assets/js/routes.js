@@ -226,6 +226,7 @@ export default {
                 const props = {
                     apiPath: route.path,
                     itemsApiPath: `${route.path}/images`,
+                    itemsCountKey: 'images_count',
                     doesRecommendLazyLoad: true,
                     isPaginated: true,
                     enableHasPersonFilter: true,
