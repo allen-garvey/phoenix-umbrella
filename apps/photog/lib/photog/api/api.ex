@@ -549,23 +549,41 @@ defmodule Photog.Api do
 
   """
   def get_person!(id) do
-    #better than using separate preload, since only uses 1 query
-    #https://hexdocs.pm/ecto/Ecto.Query.html#preload/3
+    person = from(
+      person in Person,
+      join:  cover_image in assoc(person, :cover_image),
+      where: person.id == ^id,
+      preload: [cover_image: cover_image]
+    )
+    |> Repo.one!
+
+    images_count = from(
+      person_image in PersonImage,
+      where: person_image.person_id == ^id,
+      select: count(person_image.id)
+    )
+    |> Repo.one!
+
+    %Person{person | images_count: images_count}
+  end
+
+  @doc """
+  Gets images for a person
+  """
+  def get_images_for_person(id, limit, offset) do
     # for some reason, if you put subquery directly in preload, it causes an error
     image_albums_query = from(Album, order_by: :name)
     image_persons_query = from(Person, order_by: :name)
-    images_query = from image in Image,
-                      join: person_image in assoc(image, :person_images),
-                      join: import in assoc(image, :import),
-                      where: person_image.person_id == ^id,
-                      preload: [albums: ^image_albums_query, persons: ^image_persons_query, import: import],
-                      order_by: [desc: image.creation_time]
 
-    Repo.one! from person in Person,
-           join:  cover_image in assoc(person, :cover_image),
-           where: person.id == ^id,
-           preload: [images: ^images_query, cover_image: cover_image],
-           limit: 1
+    from(
+      image in Image,
+      join: person_image in assoc(image, :person_images),
+      where: person_image.person_id == ^id,
+      preload: [albums: ^image_albums_query, persons: ^image_persons_query],
+      order_by: [desc: image.creation_time]
+    )
+    |> Repo.all
+    |> Enum.slice(offset, limit)
   end
 
   @doc """

@@ -40,8 +40,9 @@ defmodule PhotogWeb.Router do
     get "/images/:id/exif", ImageController, :exif_for
     get "/images/years/:year", ImageController, :images_for_year
 
-    # Images for album
+    # Images for model
     get "/albums/:id/images",                 AlbumController, :images_for
+    get "/persons/:id/images",                PersonController, :images_for
 
     # Reorder album images
     patch "/albums/:id/images/reorder",       AlbumController, :reorder_images

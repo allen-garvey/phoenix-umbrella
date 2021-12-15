@@ -273,7 +273,9 @@ export default {
             props: (route) => {
                 const props = {
                     apiPath: route.path,
-                    itemsListKey: 'images',
+                    itemsApiPath: `${route.path}/images`,
+                    itemsCountKey: 'images_count',
+                    isPaginated: true,
                     enableHasAlbumFilter: true,
                     enableBatchSelectImages: true,
                     editItemLinkFor: () => ({name: 'personsEdit', params: {id: route.params.id}}),

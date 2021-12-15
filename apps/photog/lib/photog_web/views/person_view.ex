@@ -23,7 +23,7 @@ defmodule PhotogWeb.PersonView do
       id: person.id,
       name: person.name,
       cover_image: PhotogWeb.ImageView.image_to_map(person.cover_image),
-      images: Enum.map(person.images, &PhotogWeb.ImageView.image_full_to_map/1),
+      images_count: person.images_count,
     }
   end
 
