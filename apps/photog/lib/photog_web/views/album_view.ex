@@ -39,21 +39,17 @@ defmodule PhotogWeb.AlbumView do
   end
 
   def album_excerpt_to_map(album) do
+    tags = case Enumerable.impl_for(album.tags) do
+      nil -> []
+      _ -> Enum.map(album.tags, &TagView.tag_excerpt/1)
+    end
+
     %{
       id: album.id,
       name: album.name,
       cover_image: ImageView.image_to_map(album.cover_image),
       items_count: album.images_count,
-      tags: Enum.map(album.tags, &TagView.tag_excerpt/1)
-    }
-  end
-
-  def album_excerpt_no_tags_to_map(album) do
-    %{
-      id: album.id,
-      name: album.name,
-      cover_image: ImageView.image_to_map(album.cover_image),
-      items_count: album.images_count
+      tags: tags,
     }
   end
 

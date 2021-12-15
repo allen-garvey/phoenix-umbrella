@@ -1082,7 +1082,22 @@ defmodule Photog.Api do
   def get_tag!(id) do
     tag = Repo.get!(Tag, id)
 
-    albums = from(album in Album,
+    albums_count = from(
+      album_tag in AlbumTag,
+      where: album_tag.tag_id == ^id,
+      select: count(album_tag.id)
+    )
+    |> Repo.one!
+
+    %Tag{tag | albums_count: albums_count}
+  end
+
+  @doc """
+  Gets albums for a tag
+  """
+  def get_albums_for_tag(id, limit, offset) do
+    from(
+      album in Album,
       join: cover_image in assoc(album, :cover_image),
       left_join: album_image in assoc(album, :album_images),
       join: album_tag in assoc(album, :album_tags),
@@ -1093,8 +1108,7 @@ defmodule Photog.Api do
       select: %Album{album | images_count: count(album.id)}
     )
     |> Repo.all
-
-    %Tag{tag | albums: albums}
+    |> Enum.slice(offset, limit)
   end
 
   @doc """

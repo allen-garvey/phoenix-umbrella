@@ -321,7 +321,9 @@ export default {
             props: (route) => {
                 const props = {
                     apiPath: route.path,
-                    itemsListKey: 'albums',
+                    itemsApiPath: `${route.path}/albums`,
+                    itemsCountKey: 'albums_count',
+                    isPaginated: true,
                     enableBatchSelectAlbums: true,
                     editItemLinkFor: () => ({name: 'tagsEdit', params: {id: route.params.id}}),
                     isDeleteEnabled: true,
