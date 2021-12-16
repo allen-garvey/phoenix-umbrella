@@ -178,9 +178,6 @@ export default {
             type: Function,
             required: true,
         },
-        itemsListKey: {
-            type: String,
-        },
         newItemLink: {
             type: Object,
         },
@@ -293,13 +290,6 @@ export default {
             return this.pageTitle ? this.pageTitle : this.model.name;
         },
         thumbnailListSource(){
-            //this might happen when vue changed but model not yet loaded
-            if(this.itemsListKey && !this.model[this.itemsListKey]){
-                return [];
-            }
-            if(this.itemsListKey){
-                return this.model[this.itemsListKey];
-            }
             if(this.buildItemsApiUrl){
                 return this.itemsModel;
             }
