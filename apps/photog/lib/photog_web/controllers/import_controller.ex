@@ -35,6 +35,14 @@ defmodule PhotogWeb.ImportController do
     render(conn, "show.json", import: import)
   end
 
+  def images_for(conn, %{"id" => id, "limit" => limit, "offset" => offset}) do
+    images = Api.get_images_for_import(id, String.to_integer(limit), String.to_integer(offset))
+    
+    conn
+    |> put_view(PhotogWeb.ImageView)
+    |> render("index.json", images: images)
+  end
+
   def count(conn, _params) do
     count = Api.imports_count!()
     render(conn, "count.json", count: count)

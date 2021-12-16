@@ -220,7 +220,7 @@ export default {
             props: (route) => {
                 const props = {
                     apiPath: route.path,
-                    itemsApiPath: `${route.path}/images`,
+                    buildItemsApiUrl: () => `${route.path}/images`,
                     itemsCountKey: 'images_count',
                     isPaginated: true,
                     enableHasPersonFilter: true,
@@ -273,7 +273,7 @@ export default {
             props: (route) => {
                 const props = {
                     apiPath: route.path,
-                    itemsApiPath: `${route.path}/images`,
+                    buildItemsApiUrl: () => `${route.path}/images`,
                     itemsCountKey: 'images_count',
                     isPaginated: true,
                     enableHasAlbumFilter: true,
@@ -321,7 +321,7 @@ export default {
             props: (route) => {
                 const props = {
                     apiPath: route.path,
-                    itemsApiPath: `${route.path}/albums`,
+                    buildItemsApiUrl: () => `${route.path}/albums`,
                     itemsCountKey: 'albums_count',
                     isPaginated: true,
                     enableBatchSelectAlbums: true,
@@ -342,7 +342,9 @@ export default {
             },
         },
         //has to be before importsShow route
-        buildImportsShowVariant('/imports/last', 'importsShowLast'),
+        buildImportsShowVariant('/imports/last', 'importsShowLast', {
+            buildItemsApiUrl: (model) => `/imports/${model.id}/images`,
+        }),
         buildImportsShowVariant('/imports/:id', 'importsShow'),
         { 
             path: '/imports/:id/edit',

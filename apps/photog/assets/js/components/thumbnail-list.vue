@@ -168,8 +168,8 @@ export default {
             type: String,
             required: true,
         },
-        itemsApiPath: {
-            type: String,
+        buildItemsApiUrl: {
+            type: Function,
         },
         itemsCountKey: {
             type: String,
@@ -300,11 +300,17 @@ export default {
             if(this.itemsListKey){
                 return this.model[this.itemsListKey];
             }
-            if(this.itemsApiPath){
+            if(this.buildItemsApiUrl){
                 return this.itemsModel;
             }
             return this.model;
 
+        },
+        itemsApiPath(){
+            if(this.buildItemsApiUrl){
+                return this.buildItemsApiUrl(this.model);
+            }
+            return null;
         },
         pageOffset(){
             return this.thumbnailListSource.length;
@@ -388,16 +394,26 @@ export default {
         loadModel(){
             this.thumbnailList = [];
 
-            const modelPromise = this.getModel(this.apiPath, 
+            return this.getModel(this.apiPath, 
             {
                 offset: this.pageOffset,
                 limit: THUMBNAIL_CHUNK_LENGTH,
-                isPaginated: this.isPaginated && !this.itemsApiPath,
-            });
+                isPaginated: this.isPaginated && !this.buildItemsApiUrl,
+            })
+            .then((model) => {
+                if(!this.buildItemsApiUrl){
+                    return Promise.resolve([model, null]);
+                }
 
-            const itemsPromise = this.itemsApiPath ? this.getItemsPromise() : Promise.resolve(null);
-            
-            return Promise.all([modelPromise, itemsPromise]).then(([model, items])=>{
+                return this.getModel(this.buildItemsApiUrl(model), 
+                {
+                    offset: this.pageOffset,
+                    limit: THUMBNAIL_CHUNK_LENGTH,
+                    isPaginated: true,
+                })
+                .then((items) => Promise.resolve([model, items]));
+            })
+            .then(([model, items])=>{
                 this.modelLoaded(model, items);
             });
         },
@@ -415,7 +431,7 @@ export default {
                 {
                     offset: this.pageOffset, 
                     limit: THUMBNAIL_CHUNK_LENGTH, 
-                    isPaginated: this.isPaginated && !this.itemsApiPath,
+                    isPaginated: this.isPaginated && !this.buildItemsApiUrl,
                     forceRefresh: true,
                 }).then((items)=>{
                 this.modelLoaded(items);
@@ -449,14 +465,6 @@ export default {
                 }
                 this.modelLoaded(model, items);
             }); 
-        },
-        getItemsPromise(){
-            return this.getModel(this.itemsApiPath, 
-            {
-                offset: this.pageOffset,
-                limit: THUMBNAIL_CHUNK_LENGTH,
-                isPaginated: true,
-            });
         },
         shouldShowItem(item){
             let albumValidation = true;

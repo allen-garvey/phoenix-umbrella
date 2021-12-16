@@ -46,7 +46,7 @@ defmodule PhotogWeb.ImportView do
       import_time: import.import_time,
       name: import_name(import),
       notes: import.notes,
-      images: Enum.map(import.images, &PhotogWeb.ImageView.image_full_to_map/1),
+      images_count: import.images_count,
     }
   end
 

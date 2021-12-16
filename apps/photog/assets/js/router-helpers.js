@@ -31,15 +31,17 @@ export function buildImagesIndexVariant(path, name, props={}){
     };
 }
 
-export function buildImportsShowVariant(path, name){
+export function buildImportsShowVariant(path, name, props={}){
     return { 
         path,
         name, 
         component: ThumbnailList,
         props: (route) => {
-            const props = {
+            const defaultProps = {
                 apiPath: route.path,
-                itemsListKey: 'images',
+                buildItemsApiUrl: () => `${route.path}/images`,
+                itemsCountKey: 'images_count',
+                isPaginated: true,
                 enableHasAlbumFilter: true,
                 enableHasPersonFilter: true,
                 enableBatchSelectImages: true,
@@ -55,7 +57,7 @@ export function buildImportsShowVariant(path, name){
                     };
                 },
             };
-            return props;
+            return Object.assign(defaultProps, props);
         },
     };
 };

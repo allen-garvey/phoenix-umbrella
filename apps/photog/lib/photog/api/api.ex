@@ -928,16 +928,9 @@ defmodule Photog.Api do
 
   """
   def get_import!(id) do
-    # for some reason, if you put subquery directly in preload, it causes an error
-    image_albums_query = from(Album, order_by: :name)
-    image_persons_query = from(Person, order_by: :name)
-    images_query = from image in Image,
-                      join: import in assoc(image, :import),
-                      preload: [albums: ^image_albums_query, persons: ^image_persons_query, import: import],
-                      order_by: [image.creation_time, image.id]
+    import = Repo.get!(Import, id)
 
-    Repo.get!(Import, id)
-    |> Repo.preload(images: images_query)
+    %Import{import | images_count: import_images_count!(id)}
   end
 
   @doc """
@@ -946,16 +939,38 @@ defmodule Photog.Api do
   Raises `Ecto.NoResultsError` if there are no imports.
   """
   def get_last_import!() do
+    import = from(
+      import in Import, 
+      order_by: [desc: :import_time, desc: :id],
+      limit: 1
+    )
+    |> Repo.one!
+
+    %Import{import | images_count: import_images_count!(import.id)}
+  end
+
+  def import_images_count!(import_id) do
+    from(
+      image in Image,
+      where: image.import_id == ^import_id,
+      select: count(image.id)
+    )
+    |> Repo.one!
+  end
+
+  def get_images_for_import(id, limit, offset) do
     # for some reason, if you put subquery directly in preload, it causes an error
     image_albums_query = from(Album, order_by: :name)
     image_persons_query = from(Person, order_by: :name)
-    images_query = from image in Image,
-                      join: import in assoc(image, :import),
-                      preload: [albums: ^image_albums_query, persons: ^image_persons_query, import: import],
-                      order_by: [image.creation_time, image.id]
-
-    Repo.one!(from(import in Import, order_by: [desc: :import_time, desc: :id], limit: 1))
-    |> Repo.preload(images: images_query)
+    
+    from(
+      image in Image,
+      where: image.import_id == ^id,
+      preload: [albums: ^image_albums_query, persons: ^image_persons_query],
+      order_by: [image.creation_time, image.id]
+    )
+    |> Repo.all
+    |> Enum.slice(offset, limit)
   end
 
   @doc """
