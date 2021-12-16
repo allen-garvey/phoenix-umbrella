@@ -928,9 +928,13 @@ defmodule Photog.Api do
 
   """
   def get_import!(id) do
-    import = Repo.get!(Import, id)
+    import_task = Task.async(fn -> Repo.get!(Import, id) end)
+    images_count_task = Task.async(fn -> import_images_count!(id) end)
 
-    %Import{import | images_count: import_images_count!(id)}
+    import = Task.await(import_task)
+    images_count = Task.await(images_count_task)
+
+    %Import{import | images_count: images_count}
   end
 
   @doc """
