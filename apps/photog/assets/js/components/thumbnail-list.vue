@@ -168,6 +168,9 @@ export default {
             type: String,
             required: true,
         },
+        apiItemsCountPath: {
+            type: String,
+        },
         buildItemsApiUrl: {
             type: Function,
         },
@@ -263,6 +266,7 @@ export default {
             isInitialLoadComplete: false,
             model: [],
             itemsModel: [],
+            itemsCount: -1,
             thumbnailList: [],
             albumFilterMode: ALBUM_FILTER_MODE_ALL,
             personFilterMode: PERSON_FILTER_MODE_ALL,
@@ -306,6 +310,9 @@ export default {
             return this.thumbnailListSource.length;
         },
         itemsTotal(){
+            if(this.apiItemsCountPath && this.itemsCount >= 0){
+                return this.itemsCount;
+            }
             if(this.itemsCountKey){
                 return this.model[this.itemsCountKey];
             }
@@ -364,6 +371,7 @@ export default {
             this.isInitialLoadComplete = false;
             this.model = [];
             this.itemsModel = [];
+            this.itemsCount = -1;
             this.albumFilterMode = !isNaN(albumFilterQueryParam) ? albumFilterQueryParam : ALBUM_FILTER_MODE_ALL;
             this.personFilterMode = !isNaN(personFilterQueryParam) ? personFilterQueryParam : PERSON_FILTER_MODE_ALL;
             this.isCurrentlyBatchSelect = false;
@@ -383,6 +391,11 @@ export default {
         },
         loadModel(){
             this.thumbnailList = [];
+
+            if(this.apiItemsCountPath){
+                this.getModel(this.apiItemsCountPath)
+                .then((itemsCount) => this.itemsCount = itemsCount);
+            }
 
             return this.getModel(this.apiPath, 
             {

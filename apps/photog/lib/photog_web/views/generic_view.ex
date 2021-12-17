@@ -25,4 +25,11 @@ defmodule PhotogWeb.GenericView do
     }
   end
 
+  @doc """
+  Used for count of items
+  """
+  def render("count.json", %{count: count}) do
+    %{data: count}
+  end
+
 end

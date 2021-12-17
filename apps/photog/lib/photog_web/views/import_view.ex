@@ -9,10 +9,6 @@ defmodule PhotogWeb.ImportView do
     <> DateHelpers.formatted_time(import.import_time)
   end
 
-  def render("count.json", %{count: count}) do
-    %{data: count}
-  end
-
   def render("index.json", %{imports: imports}) do
     %{data: render_many(imports, ImportView, "import_excerpt.json")}
   end

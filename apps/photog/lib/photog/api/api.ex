@@ -88,6 +88,18 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Returns the count of images taken in given year
+  """
+  def images_count_for_year!(year) when is_integer(year) do
+    from(
+      image in Image,
+      where: fragment("EXTRACT(year FROM ?)", image.creation_time) == ^year, 
+      select: count(image.id)
+    )
+    |> Repo.one!
+  end
+
+  @doc """
   Returns the list of images that are marked as favorite.
 
   ## Examples

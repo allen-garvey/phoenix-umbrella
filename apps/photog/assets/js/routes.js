@@ -123,6 +123,7 @@ export default {
 
                 const props = {
                     apiPath: route.path,
+                    apiItemsCountPath: `${route.path}/count`,
                     enableBatchSelectImages: true,
 
                     isPaginated: true,

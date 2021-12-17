@@ -57,6 +57,17 @@ defmodule PhotogWeb.ImageController do
   end
 
   @doc """
+  Return count of all images taken in given year
+  """
+  def images_for_year_count(conn, %{"year" => year}) do
+    count = String.to_integer(year) |> Api.images_count_for_year!
+    
+    conn
+    |> put_view(PhotogWeb.GenericView)
+    |> render("count.json", count: count)
+  end
+
+  @doc """
   Gets the exif data from an image's master image
   """
   def exif_for(conn, %{"id" => id}) do

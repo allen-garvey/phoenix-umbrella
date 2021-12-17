@@ -45,7 +45,10 @@ defmodule PhotogWeb.ImportController do
 
   def count(conn, _params) do
     count = Api.imports_count!()
-    render(conn, "count.json", count: count)
+    
+    conn
+    |> put_view(PhotogWeb.GenericView)
+    |> render("count.json", count: count)
   end
 
   def update(conn, %{"id" => id, "import" => %{"notes" => _notes} = import_params}) do

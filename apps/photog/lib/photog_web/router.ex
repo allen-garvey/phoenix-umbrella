@@ -37,8 +37,9 @@ defmodule PhotogWeb.Router do
     resources "/tags", TagController
     resources "/album_tags", AlbumTagController,        only: [:index, :show, :create]
 
-    get "/images/:id/exif", ImageController, :exif_for
-    get "/images/years/:year", ImageController, :images_for_year
+    get "/images/:id/exif",           ImageController, :exif_for
+    get "/images/years/:year",        ImageController, :images_for_year
+    get "/images/years/:year/count",  ImageController, :images_for_year_count
 
     # Items for model
     get "/albums/:id/images",                 AlbumController,  :images_for
