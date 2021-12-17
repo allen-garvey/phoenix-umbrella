@@ -311,6 +311,7 @@ export default {
             props: (route) => {
                 return {
                     modelId: parseInt(route.params.id),
+                    itemsUrl: `/tags/${route.params.id}/albums?excerpt=true`,
                 }; 
             },
         },

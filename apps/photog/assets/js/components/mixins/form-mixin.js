@@ -1,11 +1,13 @@
-import { fetchJson } from 'umbrella-common-js/ajax.js';
-
 import FormSection from '../base/form-section.vue';
 import FormInput from '../form-input.vue';
 
 export function formMixinBuilder(){
     return {
         props:{
+            getModel: {
+                type: Function,
+                required: true,
+            },
             putFlash: {
                 type: Function,
                 required: true,
@@ -13,6 +15,9 @@ export function formMixinBuilder(){
             sendJson: {
                 type: Function,
                 required: true,
+            },
+            itemsUrl: {
+                type: String,
             },
         },
         components: {
@@ -23,6 +28,7 @@ export function formMixinBuilder(){
             return {
                 isInitialLoadComplete: false,
                 model: null,
+                items: [],
                 errors: {},
             }
         },
@@ -47,7 +53,9 @@ export function formMixinBuilder(){
                 this.isInitialLoadComplete = false;
                 this.errors = {};
                 if(this.isEditForm){
-                    this.loadModel().then((model)=>{
+                    this.loadModel().then(([model, items])=>{
+                        this.model = model;
+                        this.items = items;
                         this.setupModel(model);
                         this.isInitialLoadComplete = true;
                     });
@@ -60,10 +68,10 @@ export function formMixinBuilder(){
             },
             loadModel(){
                 const apiUrl = `${this.resourceApiUrlBase}/${this.modelId}`;
-                return fetchJson(apiUrl).then((model)=>{
-                    this.model = model;
-                    return model;
-                });
+                const modelPromise = this.getModel(apiUrl);
+                const itemsPromise = this.itemsUrl ? this.getModel(this.itemsUrl) : Promise.resolve(null);
+
+                return Promise.all([modelPromise, itemsPromise]);
             },
             save(){
                 let apiUrl = this.resourceApiUrlBase;

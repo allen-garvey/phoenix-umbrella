@@ -39,7 +39,7 @@ export default {
         return {
             //tag is for our edits, model is the immutable album response from the api
             tag: {},
-            resourceApiUrlBase: `${API_URL_BASE}/tags`,
+            resourceApiUrlBase: '/tags',
             routeBase: 'tags',
         }
     },
@@ -57,7 +57,7 @@ export default {
             return {name: 'tagsIndex'};
         },
         albums(){
-            return this.tag.albums.sort((albumA, albumB) => albumA.name.localeCompare(albumB.name));
+            return this.items.sort((albumA, albumB) => albumA.name.localeCompare(albumB.name));
         },
     },
     methods: {

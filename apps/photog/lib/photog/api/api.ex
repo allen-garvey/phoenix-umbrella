@@ -1114,7 +1114,7 @@ defmodule Photog.Api do
   @doc """
   Gets albums for a tag
   """
-  def get_albums_for_tag(id, limit, offset) do
+  def get_albums_for_tag(id) do
     from(
       album in Album,
       join: cover_image in assoc(album, :cover_image),
@@ -1127,6 +1127,10 @@ defmodule Photog.Api do
       select: %Album{album | images_count: count(album.id)}
     )
     |> Repo.all
+  end
+
+  def get_albums_for_tag(id, limit, offset) do
+    get_albums_for_tag(id)
     |> Enum.slice(offset, limit)
   end
 

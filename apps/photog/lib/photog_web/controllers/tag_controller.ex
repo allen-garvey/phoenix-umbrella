@@ -33,6 +33,14 @@ defmodule PhotogWeb.TagController do
     send_resp(conn, 200, "{\"data\": \"ok\"}")
   end
 
+  def albums_for(conn, %{"id" => id, "excerpt" => "true"}) do
+    albums = Api.get_albums_for_tag(id)
+    
+    conn
+    |> put_view(PhotogWeb.AlbumView)
+    |> render("index_excerpt.json", albums: albums)
+  end
+
   def albums_for(conn, %{"id" => id, "limit" => limit, "offset" => offset}) do
     albums = Api.get_albums_for_tag(id, String.to_integer(limit), String.to_integer(offset))
     
