@@ -26,7 +26,7 @@ export function albumAndPersonFormMixinBuilder(){
             },
             imagesInModel(){
                 if(this.isEditForm){
-                    return this.model.images;
+                    return this.items;
                 }
                 else if(this.isCreateForm && this.images){
                     return JSON.parse(this.images);

@@ -73,7 +73,7 @@ export default {
             album: {},
             tags: [],
             tagsActive: {},
-            resourceApiUrlBase: `${API_URL_BASE}/albums`,
+            resourceApiUrlBase: `/albums`,
             routeBase: 'albums',
         }
     },

@@ -352,7 +352,7 @@ defmodule Photog.Api do
   @doc """
   Gets images for an album
   """
-  def get_images_for_album(id, limit, offset) do
+  def get_images_for_album(id) do
     image_albums_query = from(Album, order_by: :name)
     image_persons_query = from(Person, order_by: :name)
 
@@ -364,6 +364,10 @@ defmodule Photog.Api do
       order_by: [album_image.image_order, album_image.id]
     )
     |> Repo.all
+  end
+
+  def get_images_for_album(id, limit, offset) do
+    get_images_for_album(id)
     |> Enum.slice(offset, limit)
   end
 

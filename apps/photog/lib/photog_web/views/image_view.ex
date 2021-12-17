@@ -9,6 +9,10 @@ defmodule PhotogWeb.ImageView do
     %{data: render_many(images, ImageView, "image.json")}
   end
 
+  def render("index_thumbnails.json", %{images: images}) do
+    %{data: render_many(images, ImageView, "image_thumbnail.json")}
+  end
+
   def render("show.json", %{image: image}) do
     %{data: render_one(image, ImageView, "image.json")}
   end
@@ -27,6 +31,10 @@ defmodule PhotogWeb.ImageView do
 
   def render("image.json", %{image: image}) do
     image_full_to_map(image)
+  end
+
+  def render("image_thumbnail.json", %{image: image}) do
+    image_thumbnail_to_map(image)
   end
 
   def render("image_excerpt_mini.json", %{image: image}) do

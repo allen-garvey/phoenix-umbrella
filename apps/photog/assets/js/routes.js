@@ -210,6 +210,7 @@ export default {
             props: (route) => {
                 return {
                     modelId: parseInt(route.params.id),
+                    itemsUrl: `/albums/${route.params.id}/images?excerpt=true`,
                 }; 
             },
         },
