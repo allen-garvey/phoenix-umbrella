@@ -4,8 +4,10 @@ defmodule BooklistWeb.ReportsController do
   alias Booklist.Reports
 
   def report_for_year(conn, year, current_year) when is_integer(year) do
-    should_show_next_year = year < current_year
-    ratings = Reports.get_ratings(year)
+    ratings_task = Task.async(fn -> Reports.get_ratings(year) end)
+    genres_task = Task.async(fn -> Reports.get_genres() end)
+    
+    ratings = Task.await(ratings_task)
     ratings_count = Enum.count(ratings)
     average_rating = Reports.calculate_rating_total(ratings)  / 100
       |> Reports.calculate_percent_of_ratings(ratings_count)
@@ -15,7 +17,7 @@ defmodule BooklistWeb.ReportsController do
     books_per_week_average = ratings_count / Enum.count(ratings_count_by_week) |> Float.round(2)
     nonfiction_percent = Reports.calculate_nonfiction_count(ratings)
       |> Reports.calculate_percent_of_ratings(ratings_count)
-    genres_count = Reports.get_genres() |> Reports.calculate_genres_count(ratings, ratings_count)
+    genres_count = Task.await(genres_task) |> Reports.calculate_genres_count(ratings, ratings_count)
 
     render(conn, "show.html",
       year: year,
@@ -28,7 +30,7 @@ defmodule BooklistWeb.ReportsController do
       ratings: ratings,
       genres_count: genres_count,
       ratings_count_by_week: ratings_count_by_week,
-      should_show_next_year: should_show_next_year
+      should_show_next_year: year < current_year
     )
   end
 
