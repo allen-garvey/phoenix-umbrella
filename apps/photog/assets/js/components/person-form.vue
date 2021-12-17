@@ -12,7 +12,6 @@
 import { formMixinBuilder } from './mixins/form-mixin.js';
 import { albumAndPersonFormMixinBuilder } from './mixins/album-and-person-form-mixin.js';
 import { toApiResource } from '../form-helpers.js';
-import { API_URL_BASE } from '../request-helpers.js';
 
 export default {
     name: 'Person-Form',
@@ -33,7 +32,7 @@ export default {
         return {
             //person is for our edits, model is the immutable person response from the api
             person: {},
-            resourceApiUrlBase: `${API_URL_BASE}/persons`,
+            resourceApiUrlBase: `/persons`,
             routeBase: 'persons',
         }
     },

@@ -264,6 +264,7 @@ export default {
             props: (route) => {
                 return {
                     modelId: parseInt(route.params.id),
+                    itemsUrl: `/persons/${route.params.id}/images?excerpt=true`,
                 }; 
             },
         },

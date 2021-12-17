@@ -574,7 +574,7 @@ defmodule Photog.Api do
   @doc """
   Gets images for a person
   """
-  def get_images_for_person(id, limit, offset) do
+  def get_images_for_person(id) do
     # for some reason, if you put subquery directly in preload, it causes an error
     image_albums_query = from(Album, order_by: :name)
     image_persons_query = from(Person, order_by: :name)
@@ -587,6 +587,10 @@ defmodule Photog.Api do
       order_by: [desc: image.creation_time]
     )
     |> Repo.all
+  end
+
+  def get_images_for_person(id, limit, offset) do
+    get_images_for_person(id)
     |> Enum.slice(offset, limit)
   end
 
