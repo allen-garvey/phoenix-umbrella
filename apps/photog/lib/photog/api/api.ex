@@ -100,6 +100,17 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Returns total count of images
+  """
+  def images_count! do
+    from(
+      image in Image,
+      select: count(image.id)
+    )
+    |> Repo.one!
+  end
+
+  @doc """
   Returns the list of images that are marked as favorite.
 
   ## Examples

@@ -68,6 +68,17 @@ defmodule PhotogWeb.ImageController do
   end
 
   @doc """
+  Return count of all images
+  """
+  def count(conn, _params) do
+    count = Api.images_count!
+    
+    conn
+    |> put_view(PhotogWeb.GenericView)
+    |> render("count.json", count: count)
+  end
+
+  @doc """
   Gets the exif data from an image's master image
   """
   def exif_for(conn, %{"id" => id}) do
