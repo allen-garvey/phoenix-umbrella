@@ -110,6 +110,15 @@ defmodule Photog.Api do
     |> Repo.one!
   end
 
+  def images_favorite_count!(is_favorite) when is_boolean(is_favorite) do
+    from(
+      image in Image,
+      where: image.is_favorite == ^is_favorite, 
+      select: count(image.id)
+    )
+    |> Repo.one!
+  end
+
   @doc """
   Returns the list of images that are marked as favorite.
 
@@ -119,7 +128,7 @@ defmodule Photog.Api do
       [%Image{}, ...]
 
   """
-  def list_image_favorites(is_favorite, limit, offset) do
+  def list_image_favorites(is_favorite, limit, offset) when is_boolean(is_favorite) do
     from(
       image in Image, 
       where: image.is_favorite == ^is_favorite, 

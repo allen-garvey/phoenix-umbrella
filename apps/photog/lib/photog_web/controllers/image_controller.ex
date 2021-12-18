@@ -70,6 +70,14 @@ defmodule PhotogWeb.ImageController do
   @doc """
   Return count of all images
   """
+  def count(conn, %{"favorites" => is_favorite_param}) do
+    count = Api.images_favorite_count!(is_favorite_param == "true")
+    
+    conn
+    |> put_view(PhotogWeb.GenericView)
+    |> render("count.json", count: count)
+  end
+
   def count(conn, _params) do
     count = Api.images_count!
     

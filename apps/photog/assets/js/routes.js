@@ -160,6 +160,7 @@ export default {
             'imageFavoritesIndex',
             {
                 apiPath: '/images/?favorites=true',
+                apiItemsCountPath: '/images/count/?favorites=true',
                 isPaginated: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Favorite images',
