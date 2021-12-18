@@ -16,7 +16,6 @@
 <script>
 import { formMixinBuilder } from './mixins/form-mixin.js';
 import { toApiResource } from '../form-helpers.js';
-import { API_URL_BASE } from '../request-helpers.js';
 
 export default {
     props: {
@@ -29,7 +28,7 @@ export default {
         return {
             //importModel is for our edits, model is the immutable album response from the api
             importModel: {},
-            resourceApiUrlBase: `${API_URL_BASE}/imports`,
+            resourceApiUrlBase: '/imports',
             routeBase: 'imports',
         }
     },
