@@ -450,7 +450,7 @@ export default {
                 isPaginated: this.isPaginated,
                 forceRefresh: true,
             }).then((loadedItems)=>{
-                const total = this.itemsCountKey ? this.model[this.itemsCountKey] : null;
+                const total = this.itemsCountKey ? this.model[this.itemsCountKey] : this.itemsCount;
                 
                 if(loadedItems.length === total || this.thumbnailListSource.length === loadedItems.length){
                     $state.complete();
