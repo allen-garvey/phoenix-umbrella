@@ -72,6 +72,17 @@ defmodule PhotogWeb.AlbumController do
     end
   end
 
+  @doc """
+  Return count of all albums
+  """
+  def count(conn, _params) do
+    count = Api.albums_count!
+    
+    conn
+    |> put_view(PhotogWeb.GenericView)
+    |> render("count.json", count: count)
+  end
+
   def images_for(conn, %{"id" => id, "excerpt" => "true"}) do
     images = Api.get_images_for_album(id)
     

@@ -24,10 +24,11 @@ defmodule PhotogWeb.Router do
     pipe_through :api
     pipe_through :authenticate
 
-    #has to be here so it doesn't conflict with import show route
+    # has to be here so it doesn't conflict with import show route
     get "/imports/last",  ImportController, :show_last
-    get "/imports/count", ImportController, :count
+    get "/albums/count",  AlbumController,  :count
     get "/images/count",  ImageController,  :count
+    get "/imports/count", ImportController, :count
 
     resources "/images", ImageController,               only: [:index, :show, :update]
     resources "/albums", AlbumController

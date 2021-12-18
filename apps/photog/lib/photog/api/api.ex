@@ -372,6 +372,14 @@ defmodule Photog.Api do
           order_by: [desc: :id]
   end
 
+  def albums_count! do
+    from(
+      album in Album,
+      select: count(album.id)
+    )
+    |> Repo.one!
+  end
+
   @doc """
   Gets images for an album
   """

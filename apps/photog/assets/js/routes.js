@@ -50,6 +50,7 @@ export default {
             props: (route) => {
                 const props = {
                     apiPath: route.path,
+                    apiItemsCountPath: `${route.path}/count`,
                     enableBatchSelectAlbums: true,
                     isPaginated: true,
                     newItemLink: {name: 'albumsNew'},
