@@ -78,6 +78,14 @@ defmodule PhotogWeb.ImageController do
     |> render("count.json", count: count)
   end
 
+  def count(conn, %{"in_album" => "false"}) do
+    count = Api.images_not_in_album_count!
+    
+    conn
+    |> put_view(PhotogWeb.GenericView)
+    |> render("count.json", count: count)
+  end
+
   def count(conn, _params) do
     count = Api.images_count!
     

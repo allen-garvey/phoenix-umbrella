@@ -183,6 +183,7 @@ export default {
             'imagesNotInAlbumIndex',
             {
                 apiPath: '/images/?in_album=false',
+                apiItemsCountPath: '/images/count/?in_album=false',
                 isPaginated: true,
                 enableBatchSelectImages: true,
                 pageTitle: 'Images not in an album',

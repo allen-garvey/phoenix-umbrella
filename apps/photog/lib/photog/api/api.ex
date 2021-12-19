@@ -119,6 +119,16 @@ defmodule Photog.Api do
     |> Repo.one!
   end
 
+  def images_not_in_album_count! do
+    from(
+      image in Image,
+      left_join: album_image in assoc(image, :album_images),
+      where: is_nil(album_image.id), 
+      select: count(image.id)
+    )
+    |> Repo.one!
+  end
+
   @doc """
   Returns the list of images that are marked as favorite.
 
