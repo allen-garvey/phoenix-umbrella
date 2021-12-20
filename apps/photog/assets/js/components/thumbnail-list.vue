@@ -448,7 +448,6 @@ export default {
                 offset: this.pageOffset, 
                 limit: THUMBNAIL_CHUNK_LENGTH, 
                 isPaginated: this.isPaginated,
-                forceRefresh: true,
             }).then((loadedItems)=>{
                 const total = this.itemsCountKey ? this.model[this.itemsCountKey] : this.itemsCount;
                 
