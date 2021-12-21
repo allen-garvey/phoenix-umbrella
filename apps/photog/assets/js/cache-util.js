@@ -1,10 +1,12 @@
 import { fetchJson } from 'umbrella-common-js/ajax.js';
 
 function fetchIntoCache(apiUrl, cacheMap, mapId, options={}){
+    const isCached = !options.forceRefresh && cacheMap.has(mapId);
+
     if(options.isPaginated){
         const desiredLength = options.offset + options.limit;
         
-        if(!options.forceRefresh && cacheMap.has(mapId) && cacheMap.get(mapId).length >= desiredLength){
+        if(isCached && cacheMap.get(mapId).length >= desiredLength){
             return Promise.resolve(cacheMap.get(mapId).slice(0, desiredLength));
         }
 
@@ -19,7 +21,7 @@ function fetchIntoCache(apiUrl, cacheMap, mapId, options={}){
         });
     }
 
-    if(!options.forceRefresh && cacheMap.has(mapId)){
+    if(isCached){
         return Promise.resolve(cacheMap.get(mapId));
     }
 

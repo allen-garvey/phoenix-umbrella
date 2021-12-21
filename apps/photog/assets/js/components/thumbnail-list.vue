@@ -442,15 +442,15 @@ export default {
         },
         loadMoreThumbnails($state){
             const path = this.itemsApiPath ? this.itemsApiPath : this.apiPath;
+            const total = this.itemsCountKey ? this.model[this.itemsCountKey] : this.itemsCount;
+            const limit = Math.min(total - this.pageOffset, THUMBNAIL_CHUNK_LENGTH);
 
             this.getModel(path, 
             {
                 offset: this.pageOffset, 
-                limit: THUMBNAIL_CHUNK_LENGTH, 
+                limit, 
                 isPaginated: this.isPaginated,
-            }).then((loadedItems)=>{
-                const total = this.itemsCountKey ? this.model[this.itemsCountKey] : this.itemsCount;
-                
+            }).then((loadedItems)=>{ 
                 if(loadedItems.length === total || this.thumbnailListSource.length === loadedItems.length){
                     $state.complete();
                 }
