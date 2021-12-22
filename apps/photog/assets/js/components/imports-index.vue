@@ -30,14 +30,14 @@
             object-fit: cover;
             object-position: center;
             height: 130px;
-            width: 140px;
+            width: 400px;
             transition: width 0.4s, height 0.75s;
         }
 
         &:hover{
             img{
                 height: 240px;
-                width: 280px;
+                width: 600px;
             }
         }
     }
