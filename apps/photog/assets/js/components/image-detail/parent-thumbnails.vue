@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-link :to="{name: parent.parentRouteName, params: {id: model.id}}">Back to {{model.name}}</router-link>
+        <router-link :to="{name: parent.parentRouteName, params: {id: parent.id}}">Back to {{parent.name}}</router-link>
         <div :class="$style['album-image-nav']">
             <router-link :to="parent.showRouteFor(previousImage)" v-if="previousImage">Previous</router-link>
             <div v-else></div>
@@ -12,7 +12,7 @@
             >
                 <li 
                     :class="{[$style['current-image']]: image.id === imageId}" 
-                    v-for="(image, i) in model.images" 
+                    v-for="(image, i) in images" 
                     :key="i"
                 >
                     <router-link :to="parent.showRouteFor(image)">
@@ -64,8 +64,8 @@ export default {
             type: Object,
             required: true,
         },
-        model: {
-            type: Object,
+        images: {
+            type: Array,
             required: true,
         },
         imageId: {

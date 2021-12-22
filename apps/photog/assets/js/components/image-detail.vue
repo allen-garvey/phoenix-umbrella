@@ -4,12 +4,12 @@
     <main class="main container" v-if="isModelLoaded">
         <Parent-Thumbnails
             :parent="parent"
-            :model="model"
+            :images="images"
             :imageId="imageId"
             :thumbnailUrlFor="thumbnailUrlFor"
             :previousImage="previousImage"
             :nextImage="nextImage" 
-            v-if="parent"
+            v-if="images"
         >
         </Parent-Thumbnails>
         <div :class="$style['image-show-thumbnail-container']">
@@ -124,16 +124,13 @@ export default {
     },
     data() {
         return {
+            isModelLoaded: false,
             model: null,
-            imageModel: null, //for when the model is the parent of the image
-            modelIndex: -1, //when model is parent, the index of the current image in the image array
+            images: null, // for when is image in parent
             imageExif: null,
         }
     },
     computed: {
-        isModelLoaded(){
-            return this.model && this.image;
-        },
         masterUrl(){
             return getMasterUrl(this.image);
         },
@@ -144,22 +141,31 @@ export default {
             return `https://www.amazon.com/photos/all/gallery/${this.image.amazon_photos_id}`;
         },
         image(){
-            if(this.parent){
-                return this.imageModel;
-            }
             return this.model;
         },
+        modelIndex(){
+            if(!this.images){
+                return -1;
+            }
+            for(let i=0;i<this.images.length;i++){
+                const image = this.images[i];
+                if(image.id === this.imageId){
+                    return i;
+                }
+            }
+
+        },
         previousImage(){
-            if(!this.parent || this.modelIndex < 0 || this.modelIndex === 0){
+            if(!this.images || this.modelIndex < 0 || this.modelIndex === 0){
                 return null;
             }
-            return this.model.images[this.modelIndex-1];
+            return this.images[this.modelIndex-1];
         },
         nextImage(){
-            if(!this.parent || this.modelIndex < 0 || this.model.images.length <= this.modelIndex){
+            if(!this.images || this.modelIndex < 0 || this.images.length <= this.modelIndex){
                 return null;
             }
-            return this.model.images[this.modelIndex+1];
+            return this.images[this.modelIndex+1];
         },
     },
     watch: {
@@ -169,29 +175,19 @@ export default {
     },
     methods: {
         setup(){
+            this.isModelLoaded = false;
             this.loadModel(this.modelApiPath);
         },
         loadModel(modelPath){
-            this.imageModel = null;
-            this.modelIndex = -1;
-
             this.imageExif = null;
 
-            this.getModel(modelPath).then((itemsJson)=>{
-                this.model = itemsJson;
-                
-                //if parent, lookup image in parent images
-                if(this.parent){
-                    const imageId = this.imageId;
-                    for(let i=0;i<this.model.images.length;i++){
-                        const image = this.model.images[i];
-                        if(image.id === imageId){
-                            this.imageModel = image;
-                            this.modelIndex = i;
-                            break;
-                        }
-                    }
-                }
+            const modelPromise = this.getModel(modelPath);
+            const imagesPromise = this.parent?.imagesApiPath ? this.getModel(this.parent.imagesApiPath) : Promise.resolve(null);
+
+            Promise.all([modelPromise, imagesPromise]).then(([model, images]) => {
+                this.model = model;
+                this.images = images;
+                this.isModelLoaded = true;
             });
 
             this.getExif(this.imageId).then((imageExif)=>{

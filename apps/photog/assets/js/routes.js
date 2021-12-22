@@ -381,10 +381,13 @@ export default {
             component: ImageDetail,
             props: (route) => {
                 return {
-                    modelApiPath: `/albums/${route.params.album_id}`,
+                    modelApiPath: `/images/${route.params.image_id}`,
                     imageId: parseInt(route.params.image_id),
                     parent: {
+                        id: route.params.album_id,
+                        name: 'Album',
                         parentRouteName: 'albumsShow',
+                        imagesApiPath: `/albums/${route.params.album_id}/images?excerpt=true`,
                         showRouteFor: (item)=>{
                             return {
                                 name: 'albumImagesShow',
