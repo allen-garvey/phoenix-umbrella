@@ -74,10 +74,10 @@ export function formMixinBuilder(){
                 return Promise.all([modelPromise, itemsPromise]);
             },
             save(){
-                let apiUrl = this.resourceApiUrlBase;
+                let apiUrl = `/api/${this.resourceApiUrlBase}`;
                 let apiMethod = 'POST';
                 if(this.isEditForm){
-                    apiUrl = `/api/${apiUrl}/${this.modelId}`;
+                    apiUrl = `${apiUrl}/${this.modelId}`;
                     apiMethod = 'PATCH';
                 }
                 const resource = this.getResourceForSave();
