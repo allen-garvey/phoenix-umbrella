@@ -77,7 +77,7 @@ export function formMixinBuilder(){
                 let apiUrl = this.resourceApiUrlBase;
                 let apiMethod = 'POST';
                 if(this.isEditForm){
-                    apiUrl = `${apiUrl}/${this.modelId}`;
+                    apiUrl = `/api/${apiUrl}/${this.modelId}`;
                     apiMethod = 'PATCH';
                 }
                 const resource = this.getResourceForSave();
