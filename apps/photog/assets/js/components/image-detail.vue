@@ -100,10 +100,6 @@ export default {
             type: Function,
             required: true,
         },
-        modelApiPath: {
-            type: String,
-            required: true,
-        },
         imageId: {
             type: Number,
             required: true,
@@ -176,7 +172,7 @@ export default {
     methods: {
         setup(){
             this.isModelLoaded = false;
-            this.loadModel(this.modelApiPath);
+            this.loadModel(`/images/${this.imageId}`);
         },
         loadModel(modelPath){
             this.imageExif = null;
