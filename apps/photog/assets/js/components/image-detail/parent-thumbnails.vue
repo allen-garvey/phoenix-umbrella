@@ -6,7 +6,7 @@
             <div v-else></div>
             <router-link :to="parent.showRouteFor(nextImage)" v-if="nextImage">Next</router-link>
         </div>
-        <div :class="$style['album-image-nav-previews']">
+        <!-- <div :class="$style['album-image-nav-previews']">
             <ul 
                 :class="$style['image-preview-list']" v-scroll-to-selected-item="'.current-image'"
             >
@@ -20,7 +20,7 @@
                     </router-link>
                 </li>
             </ul>
-        </div>
+        </div> -->
     </div>
 </template>
 
