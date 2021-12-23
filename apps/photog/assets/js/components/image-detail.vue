@@ -14,7 +14,7 @@
         </Parent-Thumbnails>
         <div :class="$style['image-show-thumbnail-container']">
             <a :href="masterUrl" target="_blank" rel="noreferrer">
-                <img :src="thumbnailUrlFor(image.thumbnail_path)"/>
+                <img :src="thumbnailUrlFor(image.thumbnail_path)" :onload="imageLoaded()" />
             </a>
         </div>
         <div :class="$style['image-show-link-container']">
@@ -49,6 +49,11 @@
             itemsApiName="persons" 
             :removeItemApiUrlBase="`/images/${image.id}/persons/`" :itemsUpdatedCallback="imageItemsUpdatedBuilder('persons')" 
         />
+        <infinite-observer
+            :class="$style.infiniteObserver"
+            :onTrigger="loadExif" 
+            v-if="isImageLoaded"
+        />
     </main>
 </div>
 </template>
@@ -74,9 +79,15 @@
             }
         }
     }
+    .infiniteObserver{
+        padding-top: 20em;
+    }
 </style>
 
 <script>
+import { nextTick } from 'vue';
+
+import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import ParentThumbnails from './image-detail/parent-thumbnails.vue';
 import ImageInfo from './image-detail/image-info.vue';
@@ -109,6 +120,7 @@ export default {
         },
     },
     components: {
+        InfiniteObserver,
         LoadingAnimation,
         ParentThumbnails,
         ImageInfo,
@@ -121,6 +133,7 @@ export default {
     data() {
         return {
             isModelLoaded: false,
+            isImageLoaded: false,
             model: null,
             images: null, // for when is image in parent
             imageExif: null,
@@ -172,11 +185,11 @@ export default {
     methods: {
         setup(){
             this.isModelLoaded = false;
+            this.isImageLoaded = false;
+            this.imageExif = null;
             this.loadModel(`/images/${this.imageId}`);
         },
         loadModel(modelPath){
-            this.imageExif = null;
-
             const modelPromise = this.getModel(modelPath);
             const imagesPromise = this.parent?.imagesApiPath ? this.getModel(this.parent.imagesApiPath) : Promise.resolve(null);
 
@@ -185,9 +198,16 @@ export default {
                 this.images = images;
                 this.isModelLoaded = true;
             });
-
+        },
+        loadExif($state){
             this.getExif(this.imageId).then((imageExif)=>{
                 this.imageExif = imageExif.exif;
+                $state.complete();
+            });
+        },
+        imageLoaded(){
+            nextTick().then(() => {
+                this.isImageLoaded = true;
             });
         },
         thumbnailUrlFor(thumbnailPath){
