@@ -35,6 +35,14 @@ defmodule PhotogWeb.ImportController do
     render(conn, "show.json", import: import)
   end
 
+  def images_for(conn, %{"id" => id, "excerpt" => "true"}) do
+    images = Api.get_images_for_import(id)
+    
+    conn
+    |> put_view(PhotogWeb.ImageView)
+    |> render("index_thumbnails.json", images: images)
+  end
+
   def images_for(conn, %{"id" => id, "limit" => limit, "offset" => offset}) do
     images = Api.get_images_for_import(id, String.to_integer(limit), String.to_integer(offset))
     

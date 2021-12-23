@@ -430,9 +430,11 @@ export default {
             component: ImageDetail,
             props: (route) => {
                 return {
-                    modelApiPath: `/imports/${route.params.import_id}`,
                     imageId: parseInt(route.params.image_id),
                     parent: {
+                        id: route.params.import_id,
+                        name: 'Import',
+                        imagesApiPath: `/imports/${route.params.import_id}/images?excerpt=true`,
                         parentRouteName: 'importsShow',
                         showRouteFor: (item)=>{
                             return {
