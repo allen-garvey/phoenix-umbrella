@@ -23,7 +23,8 @@ defmodule Mix.Tasks.Distill.Html do
               ++ Distill.Tag.routes
               ++ Distill.Category.routes
 
-    for page_route <- routes do
+    routes
+    |> Task.async_stream(fn page_route -> 
       #render the page
       conn = default_conn() |> render_page_route(page_route)
       #make sure directory for file exists
@@ -32,8 +33,7 @@ defmodule Mix.Tasks.Distill.Html do
       #save html to file
       filename = dest_dir |> Path.join(filename_for(page_route))
       save_to_file(conn, filename)
-    end
-
+    end, ordered: false, max_concurrency: System.schedulers_online * 4)
   end
 
   @doc """
