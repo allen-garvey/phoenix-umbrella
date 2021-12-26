@@ -33,7 +33,7 @@ defmodule Mix.Tasks.Distill.Html do
       #save html to file
       filename = dest_dir |> Path.join(filename_for(page_route))
       save_to_file(conn, filename)
-    end, ordered: false, max_concurrency: System.schedulers_online * 4)
+    end, ordered: false)
   end
 
   @doc """

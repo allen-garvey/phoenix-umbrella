@@ -12,7 +12,8 @@ defmodule Mix.Tasks.Distill.Static do
 
     IO.puts "\nCopying static assets\n"
 
-    for filename <- static_asset_filenames() do
+    static_asset_filenames()
+    |> Task.async_stream(fn filename ->
       dest_enclosing_dir = Path.join(dest_dir, Path.dirname(filename))
       #make sure enclosing directory in dest_dir exists
       File.mkdir_p! dest_enclosing_dir
@@ -20,11 +21,8 @@ defmodule Mix.Tasks.Distill.Static do
       source_full_filename = Path.join(source_dir, filename)
       dest_full_filename = Path.join(dest_dir, filename)
 
-      IO.puts "Copying #{source_full_filename} -> #{dest_full_filename}"
-
       File.cp source_full_filename, dest_full_filename
-    end
-
+    end, ordered: false)
   end
 
   @doc """
