@@ -433,20 +433,14 @@ defmodule Movielist.Admin do
 
   """
   def get_streamer!(id) do
-    streamer = from(
+    from(
       streamer in Streamer,
       left_join: movie in assoc(streamer, :movies),
-      where: streamer.id == ^id,
+      where: streamer.id == ^id and movie.is_active == true,
       preload: [movies: movie],
       order_by: [movie.sort_title]
     )
     |> Repo.one!
-    
-    case streamer.movies do
-      Ecto.Ecto.Association.NotLoaded ->
-        streamer
-      _ -> %Streamer{streamer | movies: Enum.filter(streamer.movies, fn(movie) -> movie.is_active end)}
-    end
   end
 
   @doc """
