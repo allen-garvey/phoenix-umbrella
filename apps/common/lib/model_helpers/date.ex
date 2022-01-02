@@ -19,6 +19,18 @@ defmodule Common.ModelHelpers.Date do
   end
 
   @doc """
+  Adds default year as today if nil
+  """
+  def default_year_today(changeset, attribute_key) do
+    year_value = Changeset.get_field(changeset, attribute_key)
+    if is_nil(year_value) do
+      Changeset.change(changeset, %{attribute_key => now().year})
+    else
+      changeset
+    end
+  end
+
+  @doc """
   Adds default date as today if nil
   """
   def default_date_today(changeset, attribute_key) do
