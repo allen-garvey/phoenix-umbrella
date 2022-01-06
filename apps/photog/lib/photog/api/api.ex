@@ -383,6 +383,25 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Returns the list of albums for the given year.
+  """
+  def list_albums_for_year(year, limit, offset) do
+    from(album in Album,
+      where: album.year == ^year,
+      join: cover_image in assoc(album, :cover_image),
+      left_join: album_image in assoc(album, :album_images),
+      left_join: tag in assoc(album, :tags),
+      group_by: [album.id, cover_image.id, tag.id],
+      preload: [cover_image: cover_image, tags: tag],
+      order_by: [desc: :id],
+      select: %Album{album | images_count: count(album.id)}
+    )
+    |> Repo.all
+    # need to do it this way since because of joins offset and limit don't work correctly
+    |> Enum.slice(offset, limit)
+  end
+
+  @doc """
   Returns the list of albums.
   Used for forms when we only need name and id
   """
@@ -394,6 +413,15 @@ defmodule Photog.Api do
   def albums_count! do
     from(
       album in Album,
+      select: count(album.id)
+    )
+    |> Repo.one!
+  end
+
+  def albums_count_for_year!(year) do
+    from(
+      album in Album,
+      where: album.year == ^year,
       select: count(album.id)
     )
     |> Repo.one!

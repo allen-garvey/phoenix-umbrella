@@ -99,6 +99,25 @@ defmodule PhotogWeb.AlbumController do
     |> render("index.json", images: images)
   end
 
+  @doc """
+  Returns all albums taken in given year
+  """
+  def albums_for_year(conn, %{"year" => year, "limit" => limit, "offset" => offset}) do
+    albums = String.to_integer(year) |> Api.list_albums_for_year(String.to_integer(limit), String.to_integer(offset))
+    render(conn, "index.json", albums: albums)
+  end
+
+  @doc """
+  Return count of all albums taken in given year
+  """
+  def albums_for_year_count(conn, %{"year" => year}) do
+    count = String.to_integer(year) |> Api.albums_count_for_year!
+    
+    conn
+    |> put_view(PhotogWeb.GenericView)
+    |> render("count.json", count: count)
+  end
+
   def show(conn, %{"id" => id}) do
     album = Api.get_album!(id)
     render(conn, "show.json", album: album)

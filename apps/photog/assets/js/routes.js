@@ -1,5 +1,6 @@
 import { getOptionalParams, buildImagesIndexVariant, buildImportsShowVariant } from './router-helpers.js';
 import { getPersonsInAlbum } from './routes-helpers';
+import { getCurrentYear } from './date-helpers';
 
 import ThumbnailList from './components/thumbnail-list.vue';
 import ImportsIndex from './components/imports-index.vue';
@@ -14,7 +15,12 @@ export default {
         { 
             path: '/', 
             name: 'home',
-            redirect: '/albums' 
+            redirect: (to) => ({
+                name: 'albumsForYear',
+                params: {
+                    year: getCurrentYear(),
+                }
+            })
         },
         { 
             path: '/tags',
@@ -127,7 +133,6 @@ export default {
                     apiPath: route.path,
                     apiItemsCountPath: `${route.path}/count`,
                     enableBatchSelectImages: true,
-
                     isPaginated: true,
                     pageTitle: `Images from ${route.params.year}`,
                     previousPageLink: {
@@ -149,6 +154,48 @@ export default {
                     props.nextPageLink = {
                         text: `Images from ${nextYear}`,
                         link: {name: 'imagesForYear', params: {year: nextYear}},
+                    };
+                }
+
+                return props;
+            },
+        },
+        { 
+            path: '/albums/years/:year',
+            name: 'albumsForYear', 
+            component: ThumbnailList,
+            props: (route) => {
+                const year = parseInt(route.params.year);
+                const previousYear = year - 1;
+                const nextYear = year + 1;
+
+                const props = {
+                    apiPath: route.path,
+                    apiItemsCountPath: `${route.path}/count`,
+                    enableBatchSelectAlbums: true,
+                    isPaginated: true,
+                    newItemLink: {name: 'albumsNew'},
+                    pageTitle: `Albums from ${route.params.year}`,
+                    previousPageLink: {
+                        text: `Albums from ${previousYear}`,
+                        link: {name: 'albumsForYear', params: {year: previousYear}},
+                    },
+                    itemPreviewContentCallback: (album) => album.tags.map(tag => tag.name).join(', '),
+                    showRouteFor: (item, _model)=>{
+                        return {
+                            name: 'albumsShow',
+                            params: {
+                                id: item.id,
+                                album_id: item.id,
+                            },
+                        };
+                    },
+                };
+
+                if(year < (new Date).getFullYear()){
+                    props.nextPageLink = {
+                        text: `Albums from ${nextYear}`,
+                        link: {name: 'albumsForYear', params: {year: nextYear}},
                     };
                 }
 
