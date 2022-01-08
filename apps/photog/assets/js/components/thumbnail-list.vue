@@ -392,33 +392,40 @@ export default {
         loadModel(){
             this.thumbnailList = [];
 
+            let itemsCountPromise = Promise.resolve(Infinity);
+
             if(this.apiItemsCountPath){
-                this.getModel(this.apiItemsCountPath)
-                .then((itemsCount) => this.itemsCount = itemsCount);
+                itemsCountPromise = this.getModel(this.apiItemsCountPath)
+                .then((itemsCount) => {
+                    this.itemsCount = itemsCount;
+                    return itemsCount;
+                });
             }
 
-            return this.getModel(this.apiPath, 
-            {
-                offset: this.pageOffset,
-                limit: THUMBNAIL_CHUNK_LENGTH,
-                isPaginated: this.isPaginated && !this.buildItemsApiUrl,
-            })
-            .then((model) => {
-                if(!this.buildItemsApiUrl){
-                    return Promise.resolve([model, null]);
-                }
-
-                return this.getModel(this.buildItemsApiUrl(model), 
+            return itemsCountPromise.then((itemsCount) => 
+                this.getModel(this.apiPath, 
                 {
                     offset: this.pageOffset,
-                    limit: THUMBNAIL_CHUNK_LENGTH,
-                    isPaginated: true,
+                    limit: Math.min(THUMBNAIL_CHUNK_LENGTH, itemsCount),
+                    isPaginated: this.isPaginated && !this.buildItemsApiUrl,
                 })
-                .then((items) => Promise.resolve([model, items]));
-            })
-            .then(([model, items])=>{
-                this.modelLoaded(model, items);
-            });
+                .then((model) => {
+                    if(!this.buildItemsApiUrl){
+                        return Promise.resolve([model, null]);
+                    }
+
+                    return this.getModel(this.buildItemsApiUrl(model), 
+                    {
+                        offset: this.pageOffset,
+                        limit: THUMBNAIL_CHUNK_LENGTH,
+                        isPaginated: true,
+                    })
+                    .then((items) => Promise.resolve([model, items]));
+                })
+                .then(([model, items])=>{
+                    this.modelLoaded(model, items);
+                })
+            );
         },
         modelLoaded(model, items){
             if(model){
