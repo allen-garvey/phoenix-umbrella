@@ -4,6 +4,8 @@
         <template v-slot:inputs>
             <Form-Input :id="idForField('name')" label="Name" v-model="album.name" :errors="errors.name" />
 
+            <Form-Input :id="idForField('year')" label="Year" v-model="album.year" :errors="errors.year" input-type="number" />
+
             <Form-Input :id="idForField('description')" label="Description" v-model="album.description" :errors="errors.description" input-type="textarea" :textarea-rows="4" />
 
             <Cover-Image-Form-Input :id="idForField('cover_image_id')" :errors="[errors.cover_image, errors.cover_image_id]" :images="imagesInModel" v-model="album.cover_image_id" />
@@ -121,6 +123,7 @@ export default {
                 this.album = {
                     id: album.id,
                     name: album.name,
+                    year: album.year,
                     description: album.description,
                     cover_image_id: album.cover_image.id,
                 };
