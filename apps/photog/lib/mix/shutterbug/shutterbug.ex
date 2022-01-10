@@ -79,7 +79,7 @@ defmodule Mix.Tasks.Shutterbug do
         #get exif data for creation_time
         {exif_map, creation_datetime} = get_image_exif(image_master_path, image_source_path, now)
 
-        image_id = Photog.Shutterbug.Image.create_image!(%{
+        image = Photog.Shutterbug.Image.create_image!(%{
           master_path: image_master_relative_path,
           mini_thumbnail_path: image_mini_thumbnail_relative_path,
           thumbnail_path: image_thumbnail_relative_path,
@@ -89,7 +89,7 @@ defmodule Mix.Tasks.Shutterbug do
         })
 
         if index == 0 do
-          Photog.Shutterbug.Import.update_cover_image(import_id, image_id)
+          Photog.Shutterbug.Import.update_cover_image(import_id, image.id)
         end
 
       end

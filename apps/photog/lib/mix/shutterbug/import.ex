@@ -11,7 +11,7 @@ defmodule Photog.Shutterbug.Import do
     import.id
   end
 
-  def update_cover_image(import_id, image_id) do
+  def update_cover_image(import_id, image_id) when is_integer(import_id) and is_integer(image_id) do
     from(i in Import, where: is_nil(i.cover_image_id) and i.id == ^import_id)
     |> Repo.update_all(set: [cover_image_id: image_id])
   end
