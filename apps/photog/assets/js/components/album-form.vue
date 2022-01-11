@@ -49,6 +49,7 @@ import { formMixinBuilder } from './mixins/form-mixin.js';
 import { albumAndPersonFormMixinBuilder } from './mixins/album-and-person-form-mixin.js';
 import { toApiResource } from '../form-helpers.js';
 import { API_URL_BASE } from '../request-helpers.js';
+import { getCurrentYear } from '../date-helpers';
 
 export default {
     name: 'Album-Form',
@@ -135,7 +136,9 @@ export default {
             }
             //new form
             else{
-                const album = {};
+                const album = {
+                    year: getCurrentYear(),
+                };
                 if(this.hasImages){
                     album['cover_image_id'] = this.imagesInModel[0].id;
                 }
