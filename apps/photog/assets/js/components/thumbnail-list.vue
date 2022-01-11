@@ -46,38 +46,38 @@
             v-model:albumFilterMode="albumFilterMode" 
             v-model:personFilterMode="personFilterMode"
         />
-
+        <div :class="$style.flex">
         <!-- 
             * Batch edit controls 
         -->
-        <batch-edit
-            :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
-            :isReordering="isReordering"
-            :toggleBatchSelect="toggleBatchSelect"
-            :batchSelectAll="batchSelectAll"
-            :enableBatchSelectImages="enableBatchSelectImages"
-            :enableBatchSelectAlbums="enableBatchSelectAlbums"
-            :batchSelectResourceMode="batchSelectResourceMode"
-            :setBatchResourceMode="setBatchResourceMode"
-            :createResourceWithImages="createResourceWithImages"
-            :batchResources="batchResources"
-            :saveBatchSelected="saveBatchSelected"
-            :anyItemsBatchSelected="anyItemsBatchSelected"
-            v-if="supportsBatchSelect"
-        >
-        </batch-edit>
-        <!-- 
-            * Reorder items controls 
-        -->
-        <reorder-items-controls
-            :shouldShowReorderButton="shouldShowReorderButton"
-            :isListReordered="isListReordered"
-            :isReordering="isReordering"
-            :reorderButtonAction="reorderButtonAction"
-            :saveOrder="saveOrder"
-            v-if="supportsReorder"
-        >
-        </reorder-items-controls>
+            <batch-edit
+                :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
+                :isReordering="isReordering"
+                :toggleBatchSelect="toggleBatchSelect"
+                :batchSelectAll="batchSelectAll"
+                :enableBatchSelectImages="enableBatchSelectImages"
+                :enableBatchSelectAlbums="enableBatchSelectAlbums"
+                :batchSelectResourceMode="batchSelectResourceMode"
+                :setBatchResourceMode="setBatchResourceMode"
+                :createResourceWithImages="createResourceWithImages"
+                :batchResources="batchResources"
+                :saveBatchSelected="saveBatchSelected"
+                :anyItemsBatchSelected="anyItemsBatchSelected"
+                v-if="supportsBatchSelect"
+            />
+            <!-- 
+                * Reorder items controls 
+            -->
+            <reorder-items-controls
+                :shouldShowReorderButton="shouldShowReorderButton"
+                :isListReordered="isListReordered"
+                :isReordering="isReordering"
+                :reorderButtonAction="reorderButtonAction"
+                :saveOrder="saveOrder"
+                :reorderByDate="reorderByDate"
+                v-if="supportsReorder"
+            />
+        </div>
         <image-preview 
             :item="hoveredItem"
             :mousePosition="hoveredItemEvent"
@@ -113,7 +113,9 @@
     .container {
         position: relative;
     }
-
+    .flex {
+        display: flex;
+    }
 </style>
 
 <script>
@@ -629,6 +631,12 @@ export default {
                 this.reorderedThumbnailList = [];
                 this.isReordering = false;
             }
+        },
+        reorderByDate(){
+            const thumbnailListCopy = this.thumbnailList.slice();
+            thumbnailListCopy.sort((a, b) => new Date(a.creation_time.raw).getTime() - new Date(b.creation_time.raw).getTime());
+            this.reorderedThumbnailList = thumbnailListCopy;
+            this.isListReordered = true;
         },
         saveOrder(){
             const url = `${API_URL_BASE}${this.apiPath}${this.reorderPathSuffix}`;

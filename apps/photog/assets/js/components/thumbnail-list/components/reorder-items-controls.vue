@@ -1,18 +1,32 @@
 <template>
-    <div :class="$style['reorder-resources-controls-container']">
-        <button class="btn" :class="reorderButtonCssClass" v-show="shouldShowReorderButton" @click="reorderButtonAction()">
-            {{reorderButtonText}}
-        </button>
-        <button class="btn btn-success" v-show="isReordering && isListReordered" @click="saveOrder()">
-            Save order
-        </button>
+    <div :class="$style.container">
+        <div>
+            <button class="btn" :class="reorderButtonCssClass" v-show="shouldShowReorderButton" @click="reorderButtonAction()">
+                {{reorderButtonText}}
+            </button>
+            <button class="btn btn-success" v-show="isReordering && isListReordered" @click="saveOrder()">
+                Save order
+            </button>
+        </div>
+        <div>
+            <button 
+                class="btn btn-outline-warning"  
+                v-show="isReordering"
+                @click="reorderByDate()"
+            >
+                Order by date
+            </button>
+        </div>
+        
     </div>
 </template>
 
 <style lang="scss" module>
-    .reorder-resources-controls-container{
-        display: inline-block;
-        margin-left: 1.5em;   
+    .container{
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 1;
+        margin-left: 1.5em;
     }
 </style>
 
@@ -36,6 +50,10 @@ export default {
             required: true,
         },
         saveOrder: {
+            type: Function,
+            required: true,
+        },
+        reorderByDate: {
             type: Function,
             required: true,
         },
