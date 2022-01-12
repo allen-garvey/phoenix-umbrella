@@ -1212,7 +1212,7 @@ defmodule Photog.Api do
       join: album_tag in assoc(album, :album_tags),
       where: album_tag.tag_id == ^id,
       group_by: [album.id, cover_image.id, album_tag.id, album_tag.album_order],
-      order_by: [album_tag.album_order, album_tag.id],
+      order_by: [asc: album_tag.album_order, desc: album_tag.id],
       preload: [cover_image: cover_image],
       select: %Album{album | images_count: count(album.id)}
     )

@@ -4,7 +4,7 @@ defmodule Photog.Api.AlbumTag do
 
 
   schema "album_tags" do
-    field :album_order, :integer
+    field :album_order, :integer, default: -1
 
     timestamps()
 
