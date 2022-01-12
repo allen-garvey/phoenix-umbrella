@@ -394,21 +394,17 @@ export default {
         loadModel(){
             this.thumbnailList = [];
 
-            let itemsCountPromise = Promise.resolve(Infinity);
-
             if(this.apiItemsCountPath){
-                itemsCountPromise = this.getModel(this.apiItemsCountPath)
-                .then((itemsCount) => {
-                    this.itemsCount = itemsCount;
-                    return itemsCount;
-                });
+                this.getModel(this.apiItemsCountPath)
+                    .then((itemsCount) => {
+                        this.itemsCount = itemsCount;
+                    });
             }
 
-            return itemsCountPromise.then((itemsCount) => 
-                this.getModel(this.apiPath, 
+            return this.getModel(this.apiPath, 
                 {
                     offset: this.pageOffset,
-                    limit: Math.min(THUMBNAIL_CHUNK_LENGTH, itemsCount),
+                    limit: THUMBNAIL_CHUNK_LENGTH,
                     isPaginated: this.isPaginated && !this.buildItemsApiUrl,
                 })
                 .then((model) => {
@@ -426,8 +422,7 @@ export default {
                 })
                 .then(([model, items])=>{
                     this.modelLoaded(model, items);
-                })
-            );
+                });
         },
         modelLoaded(model, items){
             if(model){
