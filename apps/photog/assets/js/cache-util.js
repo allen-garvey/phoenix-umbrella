@@ -1,7 +1,7 @@
 import { fetchJson } from 'umbrella-common-js/ajax.js';
 
 function fetchIntoCache(apiUrl, cacheMap, mapId, options={}){
-    let isCached = !options.forceRefresh && cacheMap.has(mapId);
+    const isCached = !options.forceRefresh && cacheMap.has(mapId);
 
     if(options.isPaginated){
         const cachedLength = isCached ? cacheMap.get(mapId).offset + cacheMap.get(mapId).limit : 0;
