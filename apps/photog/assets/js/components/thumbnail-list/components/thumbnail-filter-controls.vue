@@ -92,6 +92,7 @@ export default {
                     [ALBUM_FILTER_QUERY_PARAM_NAME]: newValue
                 }
                 this.$router.replace({query});
+                this.$emit('update:albumFilterMode', newValue);
             }
         },
         localPersonFilterMode(newValue, oldValue){
@@ -101,6 +102,7 @@ export default {
                     [PERSON_FILTER_QUERY_PARAM_NAME]: newValue
                 }
                 this.$router.replace({query});
+                this.$emit('update:personFilterMode', newValue);
             }
         },
     },
