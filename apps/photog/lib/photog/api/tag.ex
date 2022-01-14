@@ -21,7 +21,7 @@ defmodule Photog.Api.Tag do
   @doc false
   def changeset(tag, attrs) do
     tag
-    |> cast(attrs, [:name, :apple_photos_uuid, :cover_album_id])
+    |> cast(attrs, [:name, :apple_photos_uuid, :cover_album_id, :is_favorite])
     |> validate_required([:name, :is_favorite])
     |> unique_constraint(:name)
     |> unique_constraint(:apple_photos_uuid)

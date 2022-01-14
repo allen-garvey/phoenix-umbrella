@@ -2,6 +2,7 @@
     <Form-Section :heading="headingText" :back-link="backLink" :save="save" v-if="isInitialLoadComplete">
         <template v-slot:inputs>
             <Form-Input :id="idForField('name')" label="Name" v-model="tag.name" :errors="errors.name" />
+            <Form-Input :id="idForField('is_favorite')" label="Is Favorite" v-model="tag.is_favorite" :errors="errors.is_favorite" input-type="checkbox" />
             <div class="form-group">
                 <label for="cover_album_id_input">Cover Album</label>
                 <select 
@@ -78,6 +79,7 @@ export default {
             // don't want to send albums
             const tag = {
                 name: this.tag.name,
+                is_favorite: this.tag.is_favorite,
                 cover_album_id: this.tag.cover_album_id,
             };
 

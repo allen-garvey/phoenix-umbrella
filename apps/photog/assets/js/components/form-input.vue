@@ -2,7 +2,7 @@
     <div class="form-group">
         <label :for="id">{{label}}</label>
         <textarea :id="id" class="form-control" v-model="internalValue" :rows="textareaRows" v-if="isTextarea"></textarea>
-        <input :id="id" class="form-control" :type="inputType" v-model="internalValue" v-if="!isTextarea" />
+        <input :id="id" :class="inputClass" :type="inputType" v-model="internalValue" v-if="!isTextarea" />
         <Form-Field-Errors :errors="errors" />
     </div>
 </template>
@@ -52,7 +52,13 @@ export default {
     computed: {
         isTextarea(){
             return this.inputType === 'textarea';
-        }
+        },
+        inputClass(){
+            if(this.inputType === 'checkbox'){
+                return 'form-check-input';
+            }
+            return 'form-control';
+        },
     },
     watch: {
         internalValue(newValue){
