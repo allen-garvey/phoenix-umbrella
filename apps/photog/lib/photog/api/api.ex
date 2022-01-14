@@ -1174,6 +1174,11 @@ defmodule Photog.Api do
     end)
   end
 
+  def list_tags_by_favorite(is_favorite) when is_boolean(is_favorite) do
+    list_tags()
+    |> Enum.filter(fn tag -> tag.is_favorite == is_favorite end)
+  end
+
   @doc """
   Gets a single tag.
 

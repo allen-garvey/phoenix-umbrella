@@ -23,6 +23,7 @@ defmodule PhotogWeb.TagView do
     %{
       id: tag.id,
       name: tag.name,
+      is_favorite: tag.is_favorite,
       cover_album_id: tag.cover_album_id,
       albums_count: tag.albums_count,
     }
@@ -43,6 +44,7 @@ defmodule PhotogWeb.TagView do
     %{
       id: tag.id,
       name: tag.name,
+      is_favorite: tag.is_favorite,
       cover_image: cover_image,
       items_count: tag.albums_count
     }
