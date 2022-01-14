@@ -9,18 +9,14 @@ import AlbumForm from './components/album-form.vue';
 import PersonForm from './components/person-form.vue';
 import TagForm from './components/tag-form.vue';
 import ImportForm from './components/import-form.vue';
+import Home from './components/home.vue';
 
 export default {
     routes: [
         { 
             path: '/', 
             name: 'home',
-            redirect: (to) => ({
-                name: 'albumsForYear',
-                params: {
-                    year: getCurrentYear(),
-                }
-            })
+            component: Home,
         },
         { 
             path: '/tags',
