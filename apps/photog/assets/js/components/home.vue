@@ -90,7 +90,7 @@ export default {
         this.getModel('/albums', {
             isPaginated: true,
             offset: 0,
-            limit: 10,
+            limit: 6,
         }).then((albums) => {
             this.recentAlbums = albums;
         });
