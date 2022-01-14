@@ -234,11 +234,7 @@ export default {
             return item;
         },
         isThumbnailFavorited(item){
-            //don't show favorite heart for cover image
-            if('cover_image' in item){
-                return false;
-            }
-            return this.imageFor(item).is_favorite;
+            return !!item.is_favorite;
         },
         isThumbnailCoverImage(item){
             if(!('cover_image' in this.model)){
