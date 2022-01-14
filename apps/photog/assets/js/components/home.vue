@@ -27,6 +27,28 @@
                 @itemHoverEnd="()=>{}"
             />
         </div>
+
+        <div 
+            :class="$style.section"
+            v-if="favoriteTags.length > 0"
+        >
+            <h2 :class="$style.sectionHeading">Favorite Tags</h2>
+            <thumbnail-items-list
+                :items="favoriteTags"
+                :model="[]"
+                :showRouteFor="showRouteForTag"
+                :batchSelectedItems="[]"
+                :batchSelectItem="()=>{}"
+                :itemDragStart="()=>{}"
+                :itemDragOver="()=>{}"
+                :currentDragIndex="-1"
+                :thumbnailLinkEvent="''"
+                :isReordering="false"
+                :isCurrentlyBatchSelect="false"
+                @itemHover="()=>{}"
+                @itemHoverEnd="()=>{}"
+            />
+        </div>
     </div>
 </template>
 
@@ -72,6 +94,10 @@ export default {
         }).then((albums) => {
             this.recentAlbums = albums;
         });
+
+        this.getModel('/tags').then((tags) => {
+            this.favoriteTags = tags;
+        });
     },
     data(){
         return {
@@ -86,6 +112,14 @@ export default {
         showRouteForAlbum(item, _model) {
             return {
                 name: 'albumsShow',
+                params: {
+                    id: item.id,
+                },
+            };
+        },
+        showRouteForTag(item, _model) {
+            return {
+                name: 'tagsShow',
                 params: {
                     id: item.id,
                 },
