@@ -11,9 +11,17 @@ function fetchIntoCache(apiUrl, cacheMap, mapId, options={}){
             return Promise.resolve(cacheMap.get(mapId).data.slice(0, desiredLength));
         }
 
+        let adjustedOffset = options.offset;
+        let adjustedLimit = options.limit;
+
+        if(options.offset === 0){
+            adjustedOffset = cachedLength;
+            adjustedLimit = adjustedLimit - cachedLength;
+        }
+
         const url = new URL(apiUrl, window.location);
         const query = url.search ? url.search + '&' : '?';
-        const paginatedUrl = `${url.pathname}${query}offset=${options.offset}&limit=${options.limit}`;
+        const paginatedUrl = `${url.pathname}${query}offset=${adjustedOffset}&limit=${adjustedLimit}`;
         return fetchJson(paginatedUrl).then((data)=>{
             const oldData = cacheMap.has(mapId) ? cacheMap.get(mapId).data : [];
             const combinedData = oldData.concat(data);
