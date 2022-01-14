@@ -8,48 +8,17 @@
         :loadMoreItemsCallback="loadMoreItems"
     >
         <template v-slot:item="{item, index}">
-            <router-link :to="showRouteFor(item)">
-                <div>{{ titleFor(item) }}</div>
-                <p :class="$style.itemNotes" v-if="item.camera_model">{{ item.camera_model }}</p>
-                <p :class="$style.itemNotes" v-if="item.notes">{{ item.notes }}</p>
-                <ul :class="$style.thumbnailList">
-                    <li v-for="image in item.images" :key="image.id">
-                        <img :src="thumbnailUrlFor(image)" loading="lazy"/>
-                    </li>
-                </ul>
-            </router-link>
+            <import-item :item="item" />
         </template>
     </Text-List>
 </template>
 
 <style lang="scss" module>
-    .thumbnailList{
-        display: inline-flex;
-        flex-wrap: wrap;
-        img{
-            object-fit: cover;
-            object-position: center;
-            height: 130px;
-            width: 400px;
-            transition: width 0.4s, height 0.75s;
-        }
-
-        &:hover{
-            img{
-                height: 240px;
-                width: 600px;
-            }
-        }
-    }
-    .itemNotes{
-        color: #777;
-        margin: 0;
-    }
 </style>
 
 <script>
-import { thumbnailUrlFor } from '../image.js';
 import TextList from './base/text-list.vue';
+import ImportItem from './import-item.vue';
 
 const ITEMS_CHUNK_SIZE = 10;
 
@@ -66,6 +35,7 @@ export default {
         },
         components: {
             'Text-List': TextList,
+            ImportItem,
         },
         created(){
             this.setup();
@@ -73,7 +43,6 @@ export default {
         data() {
             return {
                 modelPath: '/imports',
-                showRouteName: 'importsShow',
                 model: [],
                 //need this property or there will be errors when we switch routes and new models haven't been loaded yet
                 isInitialLoadComplete: false,
@@ -110,23 +79,6 @@ export default {
                 Promise.all([getModelPromise, getCountPromise]).then(() => {
                     this.isInitialLoadComplete = true;
                 });
-            },
-            showRouteFor(item){
-                return {
-                    name: this.showRouteName,
-                    params: {
-                        id: item.id,
-                    },
-                };
-            },
-            titleFor(item){
-                return item.name;
-            },
-            titleFor(item){
-                return `${item.name} (${item.images_count})`;
-            },
-            thumbnailUrlFor(image){
-                return thumbnailUrlFor(image.mini_thumbnail_path);
             },
             //to make the code a bit easier, there are only 2 states for the infinite scroll
             //at first load we only load the most recent imports, but if you scroll down we just load everything
