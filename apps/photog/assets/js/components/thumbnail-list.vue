@@ -99,8 +99,7 @@
             :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
             @itemHover="onItemHovered"
             @itemHoverEnd="onItemHoveredEnd"
-        >
-        </thumbnail-items-list>
+        />
         <infinite-observer
             :onTrigger="loadMoreThumbnails" 
             v-if="isPaginated"
