@@ -80,9 +80,6 @@ export default {
                     this.isInitialLoadComplete = true;
                 });
             },
-            //to make the code a bit easier, there are only 2 states for the infinite scroll
-            //at first load we only load the most recent imports, but if you scroll down we just load everything
-            //instead of incremental loads with offsets
             loadMoreItems($state){
                 this.getModel(this.modelPath, 
                 {
