@@ -1,6 +1,5 @@
 import { getOptionalParams, buildImagesIndexVariant, buildImportsShowVariant } from './router-helpers.js';
 import { getPersonsInAlbum } from './routes-helpers';
-import { getCurrentYear } from './date-helpers';
 
 import ThumbnailList from './components/thumbnail-list.vue';
 import ImportsIndex from './components/imports-index.vue';
@@ -10,6 +9,7 @@ import PersonForm from './components/person-form.vue';
 import TagForm from './components/tag-form.vue';
 import ImportForm from './components/import-form.vue';
 import Home from './components/home.vue';
+import ImagesMenu from './components/images-menu.vue';
 
 export default {
     routes: [
@@ -115,6 +115,11 @@ export default {
                 }; 
                 return props;
             },
+        },
+        {
+            path: '/images-menu',
+            name: 'imagesMenu',
+            component: ImagesMenu,
         },
         { 
             path: '/images/years/:year',
