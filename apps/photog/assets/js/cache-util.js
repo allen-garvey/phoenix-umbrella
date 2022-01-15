@@ -11,13 +11,8 @@ function fetchIntoCache(apiUrl, cacheMap, mapId, options={}){
             return Promise.resolve(cacheMap.get(mapId).data.slice(0, desiredLength));
         }
 
-        let adjustedOffset = options.offset;
-        let adjustedLimit = options.limit;
-
-        if(options.offset === 0){
-            adjustedOffset = cachedLength;
-            adjustedLimit = adjustedLimit - cachedLength;
-        }
+        const adjustedOffset = Math.max(options.offset, cachedLength);
+        const adjustedLimit = desiredLength - cachedLength;
 
         const url = new URL(apiUrl, window.location);
         const query = url.search ? url.search + '&' : '?';
