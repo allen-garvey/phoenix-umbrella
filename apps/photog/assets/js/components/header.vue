@@ -3,6 +3,9 @@
         <h1 :class="$style.brand"><router-link :to="{name: 'home'}">Photog</router-link></h1>
         <nav>
             <ul :class="$style['nav-list']">
+                <li>
+                    <router-link :to="{name: 'albumsForYear', params: {year: currentYear}}">Yearly Albums</router-link>
+                </li>
                 <li><router-link :to="{name: 'albumsIndex'}">Albums</router-link></li>
                 <li><router-link :to="{name: 'tagsIndex'}">Tags</router-link></li>
                 <li><router-link :to="{name: 'personsIndex'}">Persons</router-link></li>
