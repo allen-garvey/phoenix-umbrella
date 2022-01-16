@@ -150,6 +150,7 @@ export default {
             return `https://www.amazon.com/photos/all/gallery/${this.image.amazon_photos_id}`;
         },
         image(){
+            console.log('model changed');
             return this.model;
         },
         modelIndex(){
@@ -179,7 +180,9 @@ export default {
     },
     watch: {
         '$route'(to, from){
-            this.setup();
+            nextTick().then(() => {
+                this.setup();
+            });
         }
     },
     methods: {
