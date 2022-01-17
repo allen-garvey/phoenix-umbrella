@@ -53,6 +53,19 @@ defmodule PhotogWeb.AlbumController do
   end
 
   @doc """
+  Removes images from an album
+  """
+  def remove_images_from_album(conn, %{"id" => album_id, "image_ids" => image_ids}) when is_list(image_ids) do
+    for image_id <- image_ids do
+      Api.delete_album_image(album_id, image_id)
+    end
+
+    conn
+    |> put_view(PhotogWeb.GenericView)
+    |> render("ok.json", message: "Album removed")
+  end
+
+  @doc """
   Reorders images in album
   """
   def reorder_images(conn, %{"id" => id, "image_ids" => image_ids}) when is_list(image_ids) do

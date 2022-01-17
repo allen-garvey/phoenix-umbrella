@@ -63,6 +63,8 @@
                 :batchResources="batchResources"
                 :saveBatchSelected="saveBatchSelected"
                 :anyItemsBatchSelected="anyItemsBatchSelected"
+                :enableRemoveItems="!!batchRemoveItemsCallback"
+                @remove-items="batchRemoveItems"
                 v-if="supportsBatchSelect"
             />
             <!-- 
@@ -213,6 +215,9 @@ export default {
         enableBatchSelectAlbums: {
             type: Boolean,
             default: false,
+        },
+        batchRemoveItemsCallback: {
+            type: Function,
         },
         reorderPathSuffix: {
             type: String,
@@ -587,6 +592,15 @@ export default {
                 }
 
             });
+        },
+        batchRemoveItems(){
+            if(confirm('Sure you want to remove selected items?')){
+                const items = this.thumbnailListSelectedItems.map((item)=>item.id);
+                this.batchRemoveItemsCallback(items, this.sendJson).then(() => {
+                    // just reloading page for now to avoid caching problems
+                    window.location.reload();
+                });
+            }
         },
         createResourceWithImages(pathName){
             const selectedImages = this.thumbnailListSelectedItems.map(image => ({id: image.id, mini_thumbnail_path: image.mini_thumbnail_path}));

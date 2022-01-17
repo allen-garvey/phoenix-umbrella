@@ -34,17 +34,27 @@
                 </button>
                 <button 
                     class="btn btn-outline-primary" 
-                    @click="createResourceWithImages('albumsNew')" :disabled="!anyItemsBatchSelected"
+                    @click="createResourceWithImages('albumsNew')" 
+                    :disabled="!anyItemsBatchSelected"
                 >
                     Create Album
                 </button>
                 <button 
                     class="btn btn-outline-primary" 
-                    @click="createResourceWithImages('personsNew')" :disabled="!anyItemsBatchSelected"
+                    @click="createResourceWithImages('personsNew')" 
+                    :disabled="!anyItemsBatchSelected"
                 >
                     Create Person
                 </button>
             </div>
+            <button 
+                class="btn btn-danger" 
+                @click="$emit('remove-items')"
+                :disabled="!anyItemsBatchSelected"
+                v-if="enableRemoveItems"
+            >
+                Remove items
+            </button>
             <button 
                 class="btn btn-primary" 
                 @click="setBatchResourceMode(batchEditResourceMode.TAGS)" 
@@ -104,8 +114,12 @@
     .thumbnail-batch-select-container{
         display: inline-block;
         margin-bottom: 1em;
+        width: 100%;
         
         .resource-buttons-container{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
             margin-top: 1em;
         }
     }
@@ -163,6 +177,10 @@ export default {
         anyItemsBatchSelected: {
             type: Boolean,
             required: true,
+        },
+        enableRemoveItems: {
+            type: Boolean,
+            default: false,
         },
     },
     computed: {

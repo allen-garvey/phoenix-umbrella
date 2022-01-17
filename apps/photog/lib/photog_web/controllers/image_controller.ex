@@ -154,7 +154,6 @@ defmodule PhotogWeb.ImageController do
     # it to always work (and if it does not, it will raise).
     Repo.delete!(album_image)
 
-    # send_resp(conn, :no_content, "")
     conn
     |> put_view(PhotogWeb.GenericView)
     |> render("ok.json", message: "Album removed")

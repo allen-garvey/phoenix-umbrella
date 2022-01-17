@@ -67,6 +67,7 @@ defmodule PhotogWeb.Router do
     get "/images/:id/albums",                 ImageController, :albums_for
     post "/images/:id/albums",                ImageController, :add_albums
     delete "/images/:id/albums/:album_id",    ImageController, :remove_album
+    delete "/albums/:id/images",              AlbumController, :remove_images_from_album
 
     # Edit person images
     get "/images/:id/persons",                ImageController, :persons_for
