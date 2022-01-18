@@ -27,6 +27,7 @@
         justify-content: space-between;
         flex-grow: 1;
         margin-left: 1.5em;
+        min-width: 255px;
     }
 </style>
 
