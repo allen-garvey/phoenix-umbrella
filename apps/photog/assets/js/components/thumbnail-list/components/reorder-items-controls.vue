@@ -11,10 +11,10 @@
         <div>
             <button 
                 class="btn btn-outline-warning"  
-                v-show="isReordering"
-                @click="reorderByDate()"
+                @click="$emit('reorder-by-sort')"
+                v-if="enableReorderBySort && isReordering"
             >
-                Order by date
+                Sort
             </button>
         </div>
         
@@ -53,9 +53,9 @@ export default {
             type: Function,
             required: true,
         },
-        reorderByDate: {
-            type: Function,
-            required: true,
+        enableReorderBySort: {
+            type: Boolean,
+            default: false,
         },
     },
     computed: {

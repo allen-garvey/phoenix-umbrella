@@ -13,3 +13,12 @@ export const getPersonsInAlbum = (album, images) => {
 
     return [...personsMap.keys()].sort((a, b) => a.localeCompare(b)).map((name) => personsMap.get(name));
 };
+
+export const sortImagesCallback = (thumbnailList, sortDirection) => {
+    thumbnailList.sort((a, b) => {
+        const aTime = new Date(a.creation_time.raw).getTime();
+        const bTime = new Date(b.creation_time.raw).getTime();
+        
+        return sortDirection ? aTime - bTime : bTime - aTime;
+    });
+};

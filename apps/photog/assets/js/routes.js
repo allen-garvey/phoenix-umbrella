@@ -1,5 +1,5 @@
 import { getOptionalParams, buildImagesIndexVariant, buildImportsShowVariant } from './router-helpers.js';
-import { getPersonsInAlbum } from './routes-helpers';
+import { getPersonsInAlbum, sortImagesCallback } from './routes-helpers';
 
 import ThumbnailList from './components/thumbnail-list.vue';
 import ImportsIndex from './components/imports-index.vue';
@@ -287,6 +287,7 @@ export default {
                     isDeleteEnabled: true,
                     reorderPathSuffix: '/images/reorder',
                     reorderItemsKey: 'image_ids',
+                    reorderBySortCallback: sortImagesCallback,
                     relatedFieldsKey: 'tags',
                     computedRelatedFieldsCallback: getPersonsInAlbum,
                     computedRelatedFieldsKey: 'persons',

@@ -76,7 +76,8 @@
                 :isReordering="isReordering"
                 :reorderButtonAction="reorderButtonAction"
                 :saveOrder="saveOrder"
-                :reorderByDate="reorderByDate"
+                :enableReorderBySort="!!reorderBySortCallback"
+                @reorder-by-sort="reorderBySort"
                 v-if="supportsReorder"
             />
         </div>
@@ -225,6 +226,9 @@ export default {
         reorderItemsKey: {
             type: String,
         },
+        reorderBySortCallback: {
+            type: Function,
+        },
         relatedFieldsKey: {
             type: String,
             default: null,
@@ -284,6 +288,7 @@ export default {
             batchSelectResourceMode: BATCH_EDIT_RESOURCE_MODE.NONE,
             //following for reordering resources
             isReordering: false,
+            reorderDirection: true,
             isListReordered: false,
             reorderedThumbnailList: [],
             currentDragIndex: -1,
@@ -633,6 +638,7 @@ export default {
                 this.reorderedThumbnailList = this.thumbnailList.slice();
                 this.currentDragIndex = -1;
                 this.isReordering = true;
+                this.reorderDirection = false;
             }
             else{
                 //when reordering is false, list is automatically put back in original order
@@ -640,9 +646,10 @@ export default {
                 this.isReordering = false;
             }
         },
-        reorderByDate(){
+        reorderBySort(){
+            this.reorderDirection = !this.reorderDirection;
             const thumbnailListCopy = this.thumbnailList.slice();
-            thumbnailListCopy.sort((a, b) => new Date(a.creation_time.raw).getTime() - new Date(b.creation_time.raw).getTime());
+            this.reorderBySortCallback(thumbnailListCopy, this.reorderDirection);
             this.reorderedThumbnailList = thumbnailListCopy;
             this.isListReordered = true;
         },
