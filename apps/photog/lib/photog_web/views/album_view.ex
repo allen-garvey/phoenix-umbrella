@@ -48,6 +48,7 @@ defmodule PhotogWeb.AlbumView do
     %{
       id: album.id,
       name: album.name,
+      year: album.year,
       cover_image: ImageView.image_to_map(album.cover_image),
       items_count: album.images_count,
       tags: tags,

@@ -14,11 +14,28 @@ export const getPersonsInAlbum = (album, images) => {
     return [...personsMap.keys()].sort((a, b) => a.localeCompare(b)).map((name) => personsMap.get(name));
 };
 
-export const sortImagesCallback = (thumbnailList, sortDirection) => {
-    thumbnailList.sort((a, b) => {
+export const sortImagesCallback = (itemsList, sortDirection) => {
+    itemsList.sort((a, b) => {
         const aTime = new Date(a.creation_time.raw).getTime();
         const bTime = new Date(b.creation_time.raw).getTime();
         
         return sortDirection ? aTime - bTime : bTime - aTime;
+    });
+};
+
+export const sortAlbumsCallback = (itemsList, sortDirection) => {
+    itemsList.sort((a, b) => {
+        if(!sortDirection){
+            const yearDiff = a.year - b.year;
+            if(yearDiff !== 0){
+                return yearDiff;
+            }
+            return a.id - b.id;
+        }
+        const yearDiff = b.year - a.year;
+        if(yearDiff !== 0){
+            return yearDiff;
+        }
+        return b.id - a.id;
     });
 };
