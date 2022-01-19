@@ -818,6 +818,14 @@ defmodule Photog.Api do
     Repo.delete(person_image)
   end
 
+  def delete_person_image(person_id, image_id) do
+    from(
+      person_image in PersonImage,
+      where: person_image.person_id == ^person_id and person_image.image_id == ^image_id
+    )
+    |> Repo.delete_all
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking person_image changes.
 

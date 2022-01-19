@@ -1,7 +1,6 @@
 defmodule PhotogWeb.ImageController do
   use PhotogWeb, :controller
 
-  alias Photog.Repo
   alias Photog.Api
   alias Photog.Api.Image
   alias Photog.Api.AlbumImage
@@ -145,21 +144,6 @@ defmodule PhotogWeb.ImageController do
   end
 
   @doc """
-  Removes a album from an image
-  """
-  def remove_album(conn, %{"id" => image_id, "album_id" => album_id}) do
-    album_image = Repo.get_by!(AlbumImage, image_id: image_id, album_id: album_id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(album_image)
-
-    conn
-    |> put_view(PhotogWeb.GenericView)
-    |> render("ok.json", message: "Album removed")
-  end
-
-  @doc """
   Adds persons to an image
   tags comma-delimited list of person ids
   """
@@ -183,22 +167,6 @@ defmodule PhotogWeb.ImageController do
         render(&1, "mixed_response.json", message: persons_added, error: errors)
       end
     )).()
-  end
-
-  @doc """
-  Removes a album from an image
-  """
-  def remove_person(conn, %{"id" => image_id, "person_id" => person_id}) do
-    person_image = Repo.get_by!(PersonImage, image_id: image_id, person_id: person_id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(person_image)
-
-    # send_resp(conn, :no_content, "")
-    conn
-    |> put_view(PhotogWeb.GenericView)
-    |> render("ok.json", message: "Person removed")
   end
 
   def update(conn, %{"id" => id, "image" => image_params}) do

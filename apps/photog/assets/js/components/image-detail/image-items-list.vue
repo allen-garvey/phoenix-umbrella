@@ -78,6 +78,10 @@ const MODE_EDIT = 3;
 export default {
     name: 'Image-Items-List',
     props: {
+        imageId: {
+            type: Number,
+            required: true,
+        },
         sendJson: {
             type: Function,
             required: true,
@@ -114,8 +118,6 @@ export default {
             type: Function,
             required: true,
         },
-    },
-    created(){
     },
     data() {
         return {
@@ -205,9 +207,7 @@ export default {
             });
         },
         deleteItem(item, index){
-            const removeItemUrl = this.removeItemApiUrlBase + item.id;
-
-            this.sendJson(API_URL_BASE + removeItemUrl, 'DELETE').then((response)=>{
+            this.sendJson(`${API_URL_BASE}${this.removeItemApiUrlBase}/${item.id}/images`, 'DELETE', {image_ids: [this.imageId]}).then((response)=>{
                 //remove item from array
                 this.itemsUpdatedCallback(arrayRemove(this.items, index));
             });

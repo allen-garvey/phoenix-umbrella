@@ -62,7 +62,7 @@ defmodule PhotogWeb.AlbumController do
 
     conn
     |> put_view(PhotogWeb.GenericView)
-    |> render("ok.json", message: "Album removed")
+    |> render("ok.json", message: "Images removed from album")
   end
 
   @doc """

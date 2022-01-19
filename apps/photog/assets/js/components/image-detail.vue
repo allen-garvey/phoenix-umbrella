@@ -31,23 +31,29 @@
         </Image-Info>
         <Exif-Info :imageExif="imageExif" v-if="imageExif"></Exif-Info>
         <Image-Items-List 
+            :imageId="image.id"
             :sendJson="sendJson" 
             heading="Albums" 
             itemRouteName="albumsShow" 
             :items="image.albums" 
-            :unusedItemsApiUrl="`/images/${image.id}/albums/?unused=true`" :addItemsApiUrl="`/images/${image.id}/albums`" 
+            :unusedItemsApiUrl="`/images/${image.id}/albums/?unused=true`" 
+            :addItemsApiUrl="`/images/${image.id}/albums`" 
             itemsApiName="albums" 
-            :removeItemApiUrlBase="`/images/${image.id}/albums/`" :itemsUpdatedCallback="imageItemsUpdatedBuilder('albums')" 
+            removeItemApiUrlBase="/albums" 
+            :itemsUpdatedCallback="imageItemsUpdatedBuilder('albums')" 
         />
         
         <Image-Items-List 
+            :imageId="image.id"
             :sendJson="sendJson" 
             heading="Persons" 
             itemRouteName="personsShow"
             :items="image.persons" 
-            :unusedItemsApiUrl="`/images/${image.id}/persons/?unused=true`" :addItemsApiUrl="`/images/${image.id}/persons`" 
+            :unusedItemsApiUrl="`/images/${image.id}/persons/?unused=true`" 
+            :addItemsApiUrl="`/images/${image.id}/persons`" 
             itemsApiName="persons" 
-            :removeItemApiUrlBase="`/images/${image.id}/persons/`" :itemsUpdatedCallback="imageItemsUpdatedBuilder('persons')" 
+            removeItemApiUrlBase="/persons" 
+            :itemsUpdatedCallback="imageItemsUpdatedBuilder('persons')" 
         />
         <infinite-observer
             :class="$style.infiniteObserver"
