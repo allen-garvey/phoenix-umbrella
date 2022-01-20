@@ -46,6 +46,10 @@ defmodule Photog.Image.Exif do
     nil
   end
 
+  defp creation_time_to_datetime("") do
+    nil
+  end
+
   defp creation_time_to_datetime(creation_time) do
     datetime_split = creation_time
     |> String.split(" ")
