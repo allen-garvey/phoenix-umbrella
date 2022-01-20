@@ -69,9 +69,11 @@ defmodule PhotogWeb.AlbumController do
   Reorders images in album
   """
   def reorder_images(conn, %{"id" => id, "image_ids" => image_ids}) when is_list(image_ids) do
+    view = conn |> put_view(PhotogWeb.GenericView)
+    
     case Api.reorder_images_for_album(id, image_ids) do
-      {:ok, _} -> send_resp(conn, 200, "{\"data\": \"ok\"}")
-      {:error, _} -> send_resp(conn, 400, "{\"error\": \"Could not reorder images for #{id}\"}")
+      {:ok, _} -> view |> render("ok.json", message: "ok")
+      {:error, _} -> view |> put_status(:bad_request) |> render("error.json", message: "Could not reorder images for #{id}")
     end
   end
 
@@ -79,9 +81,11 @@ defmodule PhotogWeb.AlbumController do
   Replaces an album's tags with given list of tags
   """
   def replace_tags(conn,  %{"id" => id, "tag_ids" => tag_ids}) when is_list(tag_ids) do
+    view = conn |> put_view(PhotogWeb.GenericView)
+
     case Api.replace_tags_for_album(id, tag_ids) do
-      {:ok, _} -> send_resp(conn, 200, "{\"data\": \"ok\"}")
-      {:error, _} -> send_resp(conn, 400, "{\"error\": \"Error saving tags for album #{id}\"}")
+      {:ok, _} -> view |> render("ok.json", message: "ok")
+      {:error, _} -> view |> put_status(:bad_request) |> render("error.json", message: "Error saving tags for album #{id}")
     end
   end
 
@@ -147,7 +151,9 @@ defmodule PhotogWeb.AlbumController do
   def delete(conn, %{"id" => id}) do
     album = Api.get_album!(id)
     with {:ok, %Album{}} <- Api.delete_album(album) do
-      send_resp(conn, 200, "{\"data\": \"ok\"}")
+      conn
+      |> put_view(PhotogWeb.GenericView)
+      |> render("ok.json", message: "ok")
     end
   end
 end

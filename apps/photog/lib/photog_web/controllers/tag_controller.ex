@@ -42,8 +42,9 @@ defmodule PhotogWeb.TagController do
   """
   def reorder_albums(conn, %{"id" => id, "album_ids" => album_ids}) when is_list(album_ids) do
     Api.reorder_albums_for_tag(id, album_ids)
-    # have to send something back for js to register request succeeded
-    send_resp(conn, 200, "{\"data\": \"ok\"}")
+    conn
+    |> put_view(PhotogWeb.GenericView)
+    |> render("ok.json", message: "ok")
   end
 
   def albums_for(conn, %{"id" => id, "excerpt" => "true"}) do
@@ -79,7 +80,9 @@ defmodule PhotogWeb.TagController do
     tag = Api.get_tag!(id)
 
     with {:ok, %Tag{}} <- Api.delete_tag(tag) do
-      send_resp(conn, 200, "{\"data\": \"ok\"}")
+      conn
+      |> put_view(PhotogWeb.GenericView)
+      |> render("ok.json", message: "ok")
     end
   end
 end
