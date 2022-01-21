@@ -15,16 +15,6 @@
                 :items="recentAlbums"
                 :model="[]"
                 :showRouteFor="showRouteForAlbum"
-                :batchSelectedItems="[]"
-                :batchSelectItem="()=>{}"
-                :itemDragStart="()=>{}"
-                :itemDragOver="()=>{}"
-                :currentDragIndex="-1"
-                :thumbnailLinkEvent="''"
-                :isReordering="false"
-                :isCurrentlyBatchSelect="false"
-                @itemHover="()=>{}"
-                @itemHoverEnd="()=>{}"
             />
         </div>
 
@@ -37,16 +27,6 @@
                 :items="favoriteTags"
                 :model="[]"
                 :showRouteFor="showRouteForTag"
-                :batchSelectedItems="[]"
-                :batchSelectItem="()=>{}"
-                :itemDragStart="()=>{}"
-                :itemDragOver="()=>{}"
-                :currentDragIndex="-1"
-                :thumbnailLinkEvent="''"
-                :isReordering="false"
-                :isCurrentlyBatchSelect="false"
-                @itemHover="()=>{}"
-                @itemHoverEnd="()=>{}"
             />
         </div>
     </div>

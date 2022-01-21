@@ -167,35 +167,31 @@ export default {
         },
         batchSelectedItems: {
             type: Array,
-            required: true,
+            efault: () => [],
         },
         batchSelectItem: {
             type: Function,
-            required: true,
+            default: () => {},
         },
         itemDragStart: {
             type: Function,
-            required: true,
+            default: () => {},
         },
         itemDragOver: {
             type: Function,
-            required: true,
+            default: () => {},
         },
         currentDragIndex: {
             type: Number,
-            required: true,
-        },
-        thumbnailLinkEvent: {
-            type: String,
-            required: true,
+            default: -1,
         },
         isReordering: {
             type: Boolean,
-            required: true,
+            default: false,
         },
         isCurrentlyBatchSelect: {
             type: Boolean,
-            required: true,
+            default: false,
         },
     },
     components: {
@@ -212,6 +208,9 @@ export default {
         },
         isLinkDisabled(){
             return this.isCurrentlyBatchSelect || this.isReordering;
+        },
+        thumbnailLinkEvent(){
+            return this.isLinkDisabled ? '' : 'click';
         },
     },
     methods: {

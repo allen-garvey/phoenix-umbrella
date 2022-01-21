@@ -97,7 +97,6 @@
             :itemDragStart="itemDragStart"
             :itemDragOver="itemDragOver"
             :currentDragIndex="currentDragIndex"
-            :thumbnailLinkEvent="thumbnailLinkEvent"
             :isReordering="isReordering"
             :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
             @itemHover="onItemHovered"
@@ -339,13 +338,6 @@ export default {
         },
         thumbnailListSelectedItems(){
             return this.filteredThumbnailList.filter((item, i) => this.batchSelectedItems[i]);
-        },
-        //so thumbnail links are disabled when we are in batch select mode
-        thumbnailLinkEvent(){
-            return !this.isInThumbnailDefaultMode ? '' : 'click';
-        },
-        isInThumbnailDefaultMode(){
-            return !this.isCurrentlyBatchSelect && !this.isReordering;
         },
         anyItemsBatchSelected(){
             return this.batchSelectedItems.some((isSelected)=>isSelected);
