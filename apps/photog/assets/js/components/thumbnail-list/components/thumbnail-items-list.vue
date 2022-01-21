@@ -167,7 +167,7 @@ export default {
         },
         batchSelectedItems: {
             type: Array,
-            efault: () => [],
+            default: () => [],
         },
         batchSelectItem: {
             type: Function,
