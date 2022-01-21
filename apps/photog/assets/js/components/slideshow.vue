@@ -3,12 +3,9 @@
         <loading-animation v-if="!areImagesLoaded" />
         <template v-else>
             <div :class="$style.imageContainer" ref="imageContainer">
-                <a :href="masterUrl" target="_blank" rel="noreferrer">
-                    <img :src="thumbnailUrl" />
-                </a>
+                <img :src="thumbnailUrl" @click="goFullScreen" />
             </div>
             <div>
-                <button @click="goFullScreen">Full-screen</button>
                 <router-link :to="parentRoute">Go to {{ parentName }}</router-link>
                 <router-link :to="getImageShowRoute(image)">Go to image</router-link>
             </div>
@@ -20,10 +17,15 @@
     .imageContainer {
         display: flex;
         justify-content: center;
+
+        img {
+            cursor: pointer;
+        }
     }
 
     :-webkit-full-screen {
         img {
+            cursor: auto;
             height: 100%;
             object-fit: contain;
         }
@@ -31,6 +33,7 @@
 
     :fullscreen {
         img {
+            cursor: auto;
             height: 100%;
             object-fit: contain;
         }
@@ -124,6 +127,9 @@ export default {
             }
         },
         goFullScreen(){
+            if(document.fullscreenElement){
+                return;
+            }
             const imageContainer = this.$refs.imageContainer;
 
             if(imageContainer.requestFullscreen){
