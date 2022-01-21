@@ -156,7 +156,6 @@ export default {
             return `https://www.amazon.com/photos/all/gallery/${this.image.amazon_photos_id}`;
         },
         image(){
-            console.log('model changed');
             return this.model;
         },
         modelIndex(){
