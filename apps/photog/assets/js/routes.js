@@ -437,7 +437,14 @@ export default {
                     imageId: parseInt(route.params.image_id),
                     parent: {
                         id: route.params.album_id,
-                        name: 'Album',
+                        getName(image){
+                            for(let i=0;i<image.albums.length;i++){
+                                const album = image.albums[i];
+                                if(album.id == route.params.album_id){
+                                    return album.name;
+                                }
+                            }
+                        },
                         parentRouteName: 'albumsShow',
                         imagesApiPath: `/albums/${route.params.album_id}/images?excerpt=true`,
                         showRouteFor: (item)=>{
@@ -462,7 +469,14 @@ export default {
                     imageId: parseInt(route.params.image_id),
                     parent: {
                         id: route.params.person_id,
-                        name: 'Person',
+                        getName(image){
+                            for(let i=0;i<image.persons.length;i++){
+                                const person = image.persons[i];
+                                if(person.id == route.params.person_id){
+                                    return person.name;
+                                }
+                            }
+                        },
                         imagesApiPath: `/persons/${route.params.person_id}/images?excerpt=true`,
                         parentRouteName: 'personsShow',
                         showRouteFor: (item)=>{

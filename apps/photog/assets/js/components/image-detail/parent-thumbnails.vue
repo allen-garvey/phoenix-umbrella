@@ -1,26 +1,17 @@
 <template>
     <div>
-        <router-link :to="{name: parent.parentRouteName, params: {id: parent.id}}">Back to {{parent.name}}</router-link>
+        <router-link :to="{name: parent.parentRouteName, params: {id: parent.id}}">Back to {{parentName}}</router-link>
         <div :class="$style['album-image-nav']">
             <router-link :to="parent.showRouteFor(previousImage)" v-if="previousImage">Previous</router-link>
             <div v-else></div>
             <router-link :to="parent.showRouteFor(nextImage)" v-if="nextImage">Next</router-link>
         </div>
-        <!-- <div :class="$style['album-image-nav-previews']">
-            <ul 
-                :class="$style['image-preview-list']" v-scroll-to-selected-item="'.current-image'"
-            >
-                <li 
-                    :class="{[$style['current-image']]: image.id === imageId}" 
-                    v-for="(image, i) in images" 
-                    :key="i"
-                >
-                    <router-link :to="parent.showRouteFor(image)">
-                        <img :src="thumbnailUrlFor(image.mini_thumbnail_path)" loading="lazy">
-                    </router-link>
-                </li>
-            </ul>
-        </div> -->
+        <!-- <thumbnail-previews 
+            :parent="parent"
+            :images="images"
+            :imageId="image.id"
+            :thumbnailUrlFor="thumbnailUrlFor"
+        /> -->
     </div>
 </template>
 
@@ -30,34 +21,11 @@
         justify-content: space-between;
         margin: 0.5em 0;
     }
-
-    $preview_size: 50px;
-
-    .album-image-nav-previews{
-        .image-preview-list{
-            display: flex;
-            overflow-x: scroll;
-            overflow-y: hidden;
-            li{
-                box-sizing: border-box;
-                height: $preview_size;
-                width: $preview_size;
-                flex-shrink: 0; //so horizontal scrolling works
-                &.current-image{
-                    border: 3px solid magenta;
-                }
-                img{
-                    height: 100%;
-                    width: 100%;
-                    max-width: none;
-                    object-fit: cover;
-                }
-            }
-        }
-    }
 </style>
 
 <script>
+// import thumbnailPreviews from './thumbnail-previews.vue';
+
 export default {
     props: {
         parent: {
@@ -68,8 +36,8 @@ export default {
             type: Array,
             required: true,
         },
-        imageId: {
-            type: Number,
+        image: {
+            type: Object,
             required: true,
         },
         thumbnailUrlFor: {
@@ -83,15 +51,12 @@ export default {
             type: Object,
         },
     },
-    directives: {
-        scrollToSelectedItem: {
-            mounted(el, binding){
-                const selectedItemSelector = binding.value;
-                const currentItem = el.querySelector(selectedItemSelector);
-                if(currentItem){
-                    currentItem.scrollIntoView({behavior: 'instant'});
-                }
-            },
+    components: {
+        // thumbnailPreviews,
+    },
+    computed: {
+        parentName(){
+            return this.parent.getName ? this.parent.getName(this.image) : this.parent.name;
         },
     },
 };

@@ -5,7 +5,7 @@
         <Parent-Thumbnails
             :parent="parent"
             :images="images"
-            :imageId="imageId"
+            :image="image"
             :thumbnailUrlFor="thumbnailUrlFor"
             :previousImage="previousImage"
             :nextImage="nextImage" 
