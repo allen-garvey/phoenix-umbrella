@@ -13,7 +13,6 @@
             <h2 :class="$style.sectionHeading">Recent Albums</h2>
             <thumbnail-items-list
                 :items="recentAlbums"
-                :model="[]"
                 :showRouteFor="showRouteForAlbum"
             />
         </div>
@@ -25,7 +24,6 @@
             <h2 :class="$style.sectionHeading">Favorite Tags</h2>
             <thumbnail-items-list
                 :items="favoriteTags"
-                :model="[]"
                 :showRouteFor="showRouteForTag"
             />
         </div>

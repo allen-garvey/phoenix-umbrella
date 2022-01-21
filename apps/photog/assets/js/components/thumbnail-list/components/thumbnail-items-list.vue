@@ -159,7 +159,7 @@ export default {
         model: {
             //type can be Array or Object
             type: [Object, Array],
-            required: true,
+            default: () => [],
         },
         showRouteFor: {
             type: Function,
