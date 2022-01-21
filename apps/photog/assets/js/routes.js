@@ -10,6 +10,7 @@ import TagForm from './components/tag-form.vue';
 import ImportForm from './components/import-form.vue';
 import Home from './components/home.vue';
 import ImagesMenu from './components/images-menu.vue';
+import Slideshow from './components/slideshow.vue';
 
 export default {
     routes: [
@@ -514,6 +515,27 @@ export default {
                             };
                         },
                     },
+                }; 
+            },
+        },
+        { 
+            path: '/slideshows/albums/:album_id',
+            name: 'albumSlideshow', 
+            component: Slideshow,
+            props: (route) => {
+                return {
+                    apiPath: `/albums/${route.params.album_id}/images?slideshow=true`,
+                    getImageShowRoute(image){
+                        return {
+                            name: 'albumImagesShow',
+                                params: {
+                                    album_id: route.params.album_id,
+                                    image_id: image.id,
+                                },
+                        };
+                    },
+                    parentRoute: {name: 'albumsShow', params: {id: route.params.album_id}},
+                    parentName: 'Album',
                 }; 
             },
         },

@@ -108,6 +108,14 @@ defmodule PhotogWeb.AlbumController do
     |> render("index_thumbnails.json", images: images)
   end
 
+  def images_for(conn, %{"id" => id, "slideshow" => "true"}) do
+    images = Api.get_images_for_album(id, :slideshow)
+    
+    conn
+    |> put_view(PhotogWeb.ImageView)
+    |> render("index_slideshow.json", images: images)
+  end
+
   def images_for(conn, %{"id" => id, "limit" => limit, "offset" => offset}) do
     images = Api.get_images_for_album(id, String.to_integer(limit), String.to_integer(offset))
     

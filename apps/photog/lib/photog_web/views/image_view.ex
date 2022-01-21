@@ -13,6 +13,10 @@ defmodule PhotogWeb.ImageView do
     %{data: render_many(images, ImageView, "image_thumbnail.json")}
   end
 
+  def render("index_slideshow.json", %{images: images}) do
+    %{data: render_many(images, ImageView, "image_slideshow.json")}
+  end
+
   def render("show.json", %{image: image}) do
     %{data: render_one(image, ImageView, "image.json")}
   end
@@ -42,6 +46,14 @@ defmodule PhotogWeb.ImageView do
       id: image.id,
       is_favorite: image.is_favorite,
       completion_date: DateHelpers.iso_formatted_date(image.completion_date),
+    }
+  end
+
+  def render("image_slideshow.json", %{image: image}) do
+    %{
+      id: image.id,
+      master_path: image.master_path,
+      thumbnail_path: image.thumbnail_path,
     }
   end
 

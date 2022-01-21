@@ -449,6 +449,16 @@ defmodule Photog.Api do
     |> Enum.slice(offset, limit)
   end
 
+  def get_images_for_album(id, :slideshow) do
+    from(
+      image in Image,
+      join: album_image in assoc(image, :album_images),
+      where: album_image.album_id == ^id,
+      order_by: [album_image.image_order, album_image.id]
+    )
+    |> Repo.all
+  end
+
   @doc """
   Gets a single album.
 
