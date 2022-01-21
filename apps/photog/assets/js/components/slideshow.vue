@@ -25,12 +25,14 @@
     :-webkit-full-screen {
         img {
             height: 100%;
+            object-fit: contain;
         }
     }
 
     :fullscreen {
         img {
             height: 100%;
+            object-fit: contain;
         }
     }
 </style>
