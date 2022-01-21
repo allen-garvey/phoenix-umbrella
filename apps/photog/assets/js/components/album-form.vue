@@ -14,7 +14,7 @@
     <div 
         class="container"
         :class="$style['album-form-tags-container']" 
-        v-if="isEditForm && this.tags.length > 0"
+        v-if="this.tags.length > 0"
     >
         <h2>Tags</h2>
         <div class="form-group">
@@ -27,6 +27,7 @@
             <div 
                 class="pull-right"
                 :class="$style['btn-container']"
+                v-if="isEditForm"
             >
                 <button class="btn btn-success" @click="updateTags()">Update tags</button>
             </div>
@@ -101,13 +102,16 @@ export default {
         tagChecked(tagId){
             this.tagsActive[tagId] = !this.tagsActive[tagId];
         },
-        updateTags(){
-            const tag_ids = this.tags.reduce((tagIds, tag)=>{
+        getTagIdsForSave(){
+            return this.tags.reduce((tagIds, tag)=>{
                 if(this.tagsActive[tag.id]){
                     tagIds.push(tag.id);
                 }
                 return tagIds;
-            }, [])
+            }, []);
+        },
+        updateTags(){
+            const tag_ids = this.getTagIdsForSave();
             this.sendJson(`${API_URL_BASE}/albums/${this.album.id}/tags`, 'PUT', {tag_ids}).then((res)=>{
                 if(!res.error){
                     this.saveSuccessful(this.album);
@@ -115,12 +119,12 @@ export default {
             });
         },
         setupModel(album=null){
+            this.getModel('/tags').then((tags)=>{
+                this.tags = tags;
+            });
+
             //edit form
             if(album){
-                this.getModel('/tags').then((tags)=>{
-                    this.tags = tags;
-                });
-
                 this.album = {
                     id: album.id,
                     name: album.name,
@@ -150,8 +154,14 @@ export default {
         },
         getResourceForSave(){
             const data = {album: toApiResource(this.album)};
-            if(this.isCreateForm && this.hasImages){
-                data['image_ids'] = this.imagesInModel.map(image => image.id);
+            if(this.isCreateForm){
+                if(this.hasImages){
+                    data.image_ids = this.imagesInModel.map(image => image.id);
+                }
+                const tag_ids = this.getTagIdsForSave();
+                if(tag_ids.length > 0){
+                    data.tag_ids = tag_ids;
+                }
             }
             return data;
         },

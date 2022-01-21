@@ -4,6 +4,7 @@ defmodule PhotogWeb.AlbumController do
   alias Photog.Api
   alias Photog.Api.Album
   alias Photog.Api.AlbumImage
+  alias Photog.Api.AlbumTag
 
   action_fallback PhotogWeb.FallbackController
 
@@ -22,17 +23,32 @@ defmodule PhotogWeb.AlbumController do
     render(conn, "index.json", albums: albums)
   end
 
-  def create(conn, %{"album" => album_params, "image_ids" => image_ids}) do
-    with {:ok, %Album{} = album} <- Api.create_album(album_params) do
+  def create(conn, %{"album" => album_params, "image_ids" => image_ids, "tag_ids" => tag_ids}) do
+    create_album(conn, album_params, fn album -> 
       {_, _} = add_images_to_album(album.id, image_ids)
-      conn
-      |> put_status(:created)
-      |> render("show_excerpt_mini.json", album: album)
-    end
+      {_, _} = add_tags_to_album(album.id, tag_ids)
+    end)
+  end
+
+  def create(conn, %{"album" => album_params, "tag_ids" => tag_ids}) do
+    create_album(conn, album_params, fn album -> 
+      {_, _} = add_tags_to_album(album.id, tag_ids)
+    end)
+  end
+
+  def create(conn, %{"album" => album_params, "image_ids" => image_ids}) do
+    create_album(conn, album_params, fn album -> 
+      {_, _} = add_images_to_album(album.id, image_ids)
+    end)
   end
 
   def create(conn, %{"album" => album_params}) do
+    create_album(conn, album_params, fn _album -> true end)
+  end
+
+  def create_album(conn, album_params, created_callback) do
     with {:ok, %Album{} = album} <- Api.create_album(album_params) do
+      created_callback.(album)
       conn
       |> put_status(:created)
       |> render("show_excerpt_mini.json", album: album)
@@ -48,6 +64,19 @@ defmodule PhotogWeb.AlbumController do
       case Api.create_album_image(%{"album_id" => album_id, "image_id" => image_id}) do
         {:ok, %AlbumImage{} = album_image} -> { [album_image.image_id | images_added], errors }
         {:error, _changeset}                -> { images_added, [ image_id | errors] }
+      end
+    end)
+  end
+
+  @doc """
+  Adds tags to an album
+  returns {tag_ids_added, errors}
+  """
+  def add_tags_to_album(album_id, tag_ids) do
+    Enum.reduce(tag_ids, {[], []}, fn tag_id, {tags_added, errors} ->
+      case Api.create_album_tag(%{"album_id" => album_id, "tag_id" => tag_id}) do
+        {:ok, %AlbumTag{} = album_tag} -> { [album_tag.tag_id | tags_added], errors }
+        {:error, _changeset}                -> { tags_added, [ tag_id | errors] }
       end
     end)
   end
