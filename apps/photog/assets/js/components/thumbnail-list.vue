@@ -310,6 +310,9 @@ export default {
             return this.model;
 
         },
+        totalItemsCount(){
+            return this.itemsCountKey ? this.model[this.itemsCountKey] : this.itemsCount;
+        },
         itemsApiPath(){
             if(this.buildItemsApiUrl){
                 return this.buildItemsApiUrl(this.model);
@@ -352,7 +355,15 @@ export default {
             return this.reorderPathSuffix && this.reorderItemsKey;
         },
         shouldShowReorderButton(){
-            return this.supportsReorder && !this.isCurrentlyBatchSelect && this.albumFilterMode === ALBUM_FILTER_MODE_ALL && this.personFilterMode === PERSON_FILTER_MODE_ALL && this.filteredThumbnailList.length > 1;
+            const isReorderPossible = this.supportsReorder && !this.isCurrentlyBatchSelect && this.albumFilterMode === ALBUM_FILTER_MODE_ALL && this.personFilterMode === PERSON_FILTER_MODE_ALL && this.filteredThumbnailList.length > 1;
+            
+            if(!isReorderPossible){
+                return false;
+            }
+            if(!this.isPaginated || this.totalItemsCount === this.thumbnailListSource.length){
+                return true;
+            }
+            return false;
         },
     },
     created(){
@@ -447,7 +458,7 @@ export default {
         },
         loadMoreThumbnails($state){
             const path = this.itemsApiPath ? this.itemsApiPath : this.apiPath;
-            const total = this.itemsCountKey ? this.model[this.itemsCountKey] : this.itemsCount;
+            const total = this.totalItemsCount;
             const limit = Math.min(total - this.pageOffset, THUMBNAIL_CHUNK_LENGTH);
 
             this.getModel(path, 
