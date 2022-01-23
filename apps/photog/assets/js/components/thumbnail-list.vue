@@ -638,10 +638,10 @@ export default {
                 this.isReordering = false;
             }
         },
-        reorderBySort(){
+        reorderBySort(reorderMode){
             this.reorderDirection = !this.reorderDirection;
             const thumbnailListCopy = this.thumbnailList.slice();
-            this.reorderBySortCallback(thumbnailListCopy, this.reorderDirection);
+            this.reorderBySortCallback(thumbnailListCopy, this.reorderDirection, reorderMode);
             this.reorderedThumbnailList = thumbnailListCopy;
             this.isListReordered = true;
         },

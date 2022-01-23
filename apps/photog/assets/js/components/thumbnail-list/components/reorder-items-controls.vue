@@ -1,21 +1,53 @@
 <template>
     <div :class="$style.container">
         <div>
-            <button class="btn" :class="reorderButtonCssClass" v-show="shouldShowReorderButton" @click="reorderButtonAction()">
+            <button 
+                class="btn" 
+                :class="reorderButtonCssClass" 
+                v-show="shouldShowReorderButton" 
+                @click="reorderButtonAction()"
+            >
                 {{reorderButtonText}}
             </button>
-            <button class="btn btn-success" v-show="isReordering && isListReordered" @click="saveOrder()">
+            <button 
+                class="btn btn-success"
+                :class="$style.saveButton" 
+                v-show="isReordering && isListReordered" 
+                @click="saveOrder()"
+            >
                 Save order
             </button>
         </div>
-        <div>
-            <button 
-                class="btn btn-outline-warning"  
-                @click="$emit('reorder-by-sort')"
-                v-if="enableReorderBySort && isReordering"
+        <div
+            :class="$style.sortContainer"
+            v-if="enableReorderBySort && isReordering"
+        >
+            <div 
+                class="form-group"
+                :class="$style.selectContainer"
             >
-                Sort
-            </button>
+                <select 
+                    class="form-control"
+                    :class="$style.select"
+                    v-model="selectedReorderMode"
+                >
+                    <option 
+                        v-for="reorderMode in reorderModes"
+                        :key="reorderMode.key"
+                        :value="reorderMode.key"
+                    >
+                    {{ reorderMode.name }}
+                    </option>
+                </select>
+            </div>
+            <div>
+                <button 
+                    class="btn btn-outline-warning"  
+                    @click="$emit('reorder-by-sort', selectedReorderMode)"
+                >
+                    Sort
+                </button>
+            </div>
         </div>
         
     </div>
@@ -27,11 +59,30 @@
         justify-content: space-between;
         flex-grow: 1;
         margin-left: 1.5em;
-        min-width: 255px;
+        min-width: 400px;
+    }
+
+    .saveButton {
+        margin-left: 1em;
+    }
+    
+    .sortContainer {
+        display: flex;
+    }
+
+    .selectContainer {
+        margin-right: 1em;
+    }
+
+    .select {
+        height: 100%;
+        appearance: auto;
     }
 </style>
 
 <script>
+import reorderModes from '../models/reorder-modes.js';
+
 export default {
     props: {
         shouldShowReorderButton: {
@@ -59,6 +110,11 @@ export default {
             default: false,
         },
     },
+    data(){
+        return {
+            selectedReorderMode: reorderModes[0].key,
+        };
+    },
     computed: {
         reorderButtonCssClass(){
             return {
@@ -68,6 +124,9 @@ export default {
         },
         reorderButtonText(){
             return this.isReordering ? 'Cancel' : 'Reorder';
+        },
+        reorderModes(){
+            return reorderModes;
         },
     },
 };
