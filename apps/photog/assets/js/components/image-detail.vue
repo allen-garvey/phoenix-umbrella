@@ -14,7 +14,7 @@
         </Parent-Thumbnails>
         <div :class="$style.imageShowThumbnailContainer">
             <a :href="masterUrl" target="_blank" rel="noreferrer">
-                <img :src="thumbnailUrlFor(image.thumbnail_path)" :onload="imageLoaded()" />
+                <img :src="thumbnailUrlFor(image.thumbnail_path)" />
             </a>
         </div>
         <div :class="$style.imageShowLinkContainer">
@@ -55,11 +55,6 @@
             removeItemApiUrlBase="/persons" 
             :itemsUpdatedCallback="imageItemsUpdatedBuilder('persons')" 
         />
-        <infinite-observer
-            :class="$style.infiniteObserver"
-            :onTrigger="loadExif" 
-            v-if="isImageLoaded"
-        />
     </main>
 </div>
 </template>
@@ -93,7 +88,6 @@
 <script>
 import { nextTick } from 'vue';
 
-import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import ParentThumbnails from './image-detail/parent-thumbnails.vue';
 import ImageInfo from './image-detail/image-info.vue';
@@ -126,7 +120,6 @@ export default {
         },
     },
     components: {
-        InfiniteObserver,
         LoadingAnimation,
         ParentThumbnails,
         ImageInfo,
@@ -139,9 +132,9 @@ export default {
     data() {
         return {
             isModelLoaded: false,
-            isImageLoaded: false,
             model: null,
             images: null, // for when is image in parent
+            hasExifBeenRequested: false,
             imageExif: null,
         }
     },
@@ -193,7 +186,7 @@ export default {
     methods: {
         setup(){
             this.isModelLoaded = false;
-            this.isImageLoaded = false;
+            this.hasExifBeenRequested = false;
             this.imageExif = null;
             this.loadModel(`/images/${this.imageId}`);
         },
@@ -211,11 +204,6 @@ export default {
             this.getExif(this.imageId).then((imageExif)=>{
                 this.imageExif = imageExif.exif;
                 $state.complete();
-            });
-        },
-        imageLoaded(){
-            nextTick().then(() => {
-                this.isImageLoaded = true;
             });
         },
         thumbnailUrlFor(thumbnailPath){
