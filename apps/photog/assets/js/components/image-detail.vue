@@ -12,12 +12,12 @@
             v-if="images"
         >
         </Parent-Thumbnails>
-        <div :class="$style['image-show-thumbnail-container']">
+        <div :class="$style.imageShowThumbnailContainer">
             <a :href="masterUrl" target="_blank" rel="noreferrer">
                 <img :src="thumbnailUrlFor(image.thumbnail_path)" :onload="imageLoaded()" />
             </a>
         </div>
-        <div :class="$style['image-show-link-container']">
+        <div :class="$style.imageShowLinkContainer">
             <a :href="masterUrl" target="_blank" rel="noreferrer">View full-size</a>
             <a :href="amazonUrl" v-if="amazonUrl" target="_blank" rel="noreferrer">View in Amazon Photos</a>
         </div>
@@ -65,11 +65,11 @@
 </template>
 
 <style lang="scss" module>
-    .image-show-thumbnail-container{
+    .imageShowThumbnailContainer{
         display: flex;
         justify-content: center;
     }
-    .image-show-link-container{
+    .imageShowLinkContainer{
         font-size: large;
         text-align: center;
         padding: 1em 0;
