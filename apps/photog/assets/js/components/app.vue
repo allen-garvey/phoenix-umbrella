@@ -75,9 +75,9 @@ export default {
             const apiUrl = API_URL_BASE + modelPath;
             return CacheUtil.fetchIntoCache(apiUrl, this.cache, apiUrl, options);
         },
-        getExif(imageId){
+        getExif(imageId, options){
             const apiUrl = `${API_URL_BASE}/images/${imageId}/exif`;
-            return CacheUtil.fetchIntoCache(apiUrl, this.exifCache, imageId);
+            return CacheUtil.fetchIntoCache(apiUrl, this.exifCache, imageId, options);
         },
         putFlash(message, type){
             const flashAlert = this.$refs.flashAlert;

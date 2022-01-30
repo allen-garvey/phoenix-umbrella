@@ -12,6 +12,7 @@
         <template 
             v-for="sectionKey in Object.keys(imageExif).sort()"
             :key="sectionKey" 
+            v-if="imageExif"
         >
             <h4 
                 :class="$style['image-exif-heading']"
@@ -58,7 +59,6 @@ export default {
     props: {
         imageExif: {
             type: Object,
-            required: true,
         }, 
         shouldShowRequestButton: {
             type: Boolean,

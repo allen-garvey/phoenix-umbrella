@@ -31,7 +31,7 @@
         </Image-Info>
         <Exif-Info 
             :imageExif="imageExif" 
-            :shouldShowRequestButton="!hasExifBeenRequested"
+            :shouldShowRequestButton="!imageExif && !hasExifBeenRequested"
             @exif-requested="loadExif"
         />
         <Image-Items-List 
@@ -139,7 +139,7 @@ export default {
             model: null,
             images: null, // for when is image in parent
             hasExifBeenRequested: false,
-            imageExif: {},
+            imageExif: null,
         }
     },
     computed: {
@@ -191,8 +191,9 @@ export default {
         setup(){
             this.isModelLoaded = false;
             this.hasExifBeenRequested = false;
-            this.imageExif = {};
+            this.imageExif = null;
             this.loadModel(`/images/${this.imageId}`);
+            this.loadExif(true);
         },
         loadModel(modelPath){
             const modelPromise = this.getModel(modelPath);
@@ -204,10 +205,14 @@ export default {
                 this.isModelLoaded = true;
             });
         },
-        loadExif(){
-            this.hasExifBeenRequested = true;
-            this.getExif(this.imageId).then((imageExif)=>{
-                this.imageExif = imageExif.exif;
+        loadExif(onlyIfCached = false){
+            if(!onlyIfCached){
+                this.hasExifBeenRequested = true;
+            }
+            this.getExif(this.imageId, { onlyIfCached }).then((imageExif)=>{
+                if(imageExif){
+                    this.imageExif = imageExif.exif;
+                }
             });
         },
         thumbnailUrlFor(thumbnailPath){
