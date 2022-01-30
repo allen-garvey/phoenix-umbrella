@@ -9,6 +9,7 @@
             :thumbnailUrlFor="thumbnailUrlFor"
             :previousImage="previousImage"
             :nextImage="nextImage" 
+            :imageIndex="modelIndex"
             v-if="images"
         >
         </Parent-Thumbnails>

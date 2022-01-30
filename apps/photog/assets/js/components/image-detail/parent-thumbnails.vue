@@ -7,8 +7,8 @@
                 Back to {{parentName}}
             </router-link>
             <router-link 
-                :to="parent.slideshowRoute"
-                v-if="parent.slideshowRoute"
+                :to="parent.getSlideshowRoute(imageIndex)"
+                v-if="parent.getSlideshowRoute"
             >
                 Slideshow
             </router-link>
@@ -66,6 +66,9 @@ export default {
         },
         nextImage: {
             type: Object,
+        },
+        imageIndex: {
+            type: Number,
         },
     },
     components: {
