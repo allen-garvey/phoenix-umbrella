@@ -5,7 +5,7 @@
             <div :class="$style.imageContainer" ref="imageContainer">
                 <img :src="thumbnailUrl" @click="goFullScreen" />
             </div>
-            <div>
+            <div :class="$style.linksContainer">
                 <router-link :to="parentRoute">Go to {{ parentName }}</router-link>
                 <router-link :to="getImageShowRoute(image)">Go to image</router-link>
             </div>
@@ -37,6 +37,11 @@
             height: 100%;
             object-fit: contain;
         }
+    }
+
+    .linksContainer {
+        display: flex;
+        justify-content: space-between;
     }
 </style>
 
