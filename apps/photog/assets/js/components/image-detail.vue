@@ -29,7 +29,11 @@
             :updateImage="updateImage"
         >
         </Image-Info>
-        <Exif-Info :imageExif="imageExif" v-if="imageExif"></Exif-Info>
+        <Exif-Info 
+            :imageExif="imageExif" 
+            :shouldShowRequestButton="!hasExifBeenRequested"
+            @exif-requested="loadExif"
+        />
         <Image-Items-List 
             :imageId="image.id"
             :sendJson="sendJson" 
@@ -135,7 +139,7 @@ export default {
             model: null,
             images: null, // for when is image in parent
             hasExifBeenRequested: false,
-            imageExif: null,
+            imageExif: {},
         }
     },
     computed: {
@@ -187,7 +191,7 @@ export default {
         setup(){
             this.isModelLoaded = false;
             this.hasExifBeenRequested = false;
-            this.imageExif = null;
+            this.imageExif = {};
             this.loadModel(`/images/${this.imageId}`);
         },
         loadModel(modelPath){
@@ -200,10 +204,10 @@ export default {
                 this.isModelLoaded = true;
             });
         },
-        loadExif($state){
+        loadExif(){
+            this.hasExifBeenRequested = true;
             this.getExif(this.imageId).then((imageExif)=>{
                 this.imageExif = imageExif.exif;
-                $state.complete();
             });
         },
         thumbnailUrlFor(thumbnailPath){

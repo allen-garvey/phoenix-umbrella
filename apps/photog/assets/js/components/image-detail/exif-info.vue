@@ -2,6 +2,13 @@
     <image-info-section
         heading="Exif"
     >
+        <button 
+            v-if="shouldShowRequestButton" 
+            class="btn btn-sm btn-outline-success"
+            @click="$emit('exif-requested')"
+        >
+            Display
+        </button>
         <template 
             v-for="sectionKey in Object.keys(imageExif).sort()"
             :key="sectionKey" 
@@ -53,6 +60,10 @@ export default {
             type: Object,
             required: true,
         }, 
+        shouldShowRequestButton: {
+            type: Boolean,
+            default: false,
+        },
     },
     components: {
         ImageInfoSection,
