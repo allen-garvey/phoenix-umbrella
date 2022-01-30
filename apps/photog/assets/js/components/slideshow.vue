@@ -105,11 +105,17 @@ export default {
     },
     methods: {
         setup(){
+            const imageIndexFromUrl = parseInt(window.location.hash.replace(/^#/, ''));
+
             this.areImagesLoaded = false;
-            this.currentImageIndex = 0;
+            this.currentImageIndex = isNaN(imageIndexFromUrl) || imageIndexFromUrl < 0 ? 0 : imageIndexFromUrl;
             this.images = [];
 
             this.getModel(this.apiPath).then((images) => {
+                if(this.currentImageIndex >= images.length){
+                    this.currentImageIndex = images.length - 1;
+                }
+                
                 this.images = images;
                 this.areImagesLoaded = true;
             });
