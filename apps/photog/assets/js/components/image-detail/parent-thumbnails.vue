@@ -1,7 +1,19 @@
 <template>
     <div>
-        <router-link :to="{name: parent.parentRouteName, params: {id: parent.id}}">Back to {{parentName}}</router-link>
-        <div :class="$style['album-image-nav']">
+        <div :class="$style.parentLinksContainer">
+            <router-link 
+                :to="{name: parent.parentRouteName, params: {id: parent.id}}"
+            >
+                Back to {{parentName}}
+            </router-link>
+            <router-link 
+                :to="parent.slideshowRoute"
+                v-if="parent.slideshowRoute"
+            >
+                Slideshow
+            </router-link>
+        </div>
+        <div :class="$style.albumImageNav">
             <router-link :to="parent.showRouteFor(previousImage)" v-if="previousImage">Previous</router-link>
             <div v-else></div>
             <router-link :to="parent.showRouteFor(nextImage)" v-if="nextImage">Next</router-link>
@@ -16,7 +28,12 @@
 </template>
 
 <style lang="scss" module>
-    .album-image-nav{
+    .parentLinksContainer {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .albumImageNav{
         display: flex;
         justify-content: space-between;
         margin: 0.5em 0;

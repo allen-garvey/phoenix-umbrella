@@ -457,6 +457,10 @@ export default {
                                 },
                             };
                         },
+                        slideshowRoute: {
+                            name: 'albumSlideshow', 
+                            params: { album_id: route.params.album_id }
+                        }
                     },
                 }; 
             },
