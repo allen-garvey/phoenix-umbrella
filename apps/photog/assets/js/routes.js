@@ -303,6 +303,10 @@ export default {
                             },
                         };
                     },
+                    slideshowRoute: {
+                        name: 'albumSlideshow', 
+                        params: { album_id: route.params.id }
+                    },
                 }; 
                 return props;
             },

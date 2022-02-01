@@ -80,6 +80,14 @@
                 @reorder-by-sort="reorderBySort"
                 v-if="supportsReorder"
             />
+            <router-link 
+                :to="slideshowRoute" 
+                class="btn btn-warning"
+                v-if="slideshowRoute"
+                v-show="!isCurrentlyBatchSelect && !isReordering"
+            >
+                Slideshow
+            </router-link>
         </div>
         <image-preview 
             :item="hoveredItem"
@@ -257,6 +265,9 @@ export default {
         getDescription: {
             type: Function,
             default: () => '',
+        },
+        slideshowRoute: {
+            type: Object,
         },
     },
     components: {
