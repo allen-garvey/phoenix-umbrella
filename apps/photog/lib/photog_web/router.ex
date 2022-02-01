@@ -53,6 +53,7 @@ defmodule PhotogWeb.Router do
     get "/persons/:id/images",                PersonController, :images_for
     get "/imports/:id/images",                ImportController, :images_for
     get "/tags/:id/albums",                   TagController,    :albums_for
+    get "/tags/:id/images",                   TagController,    :images_for
 
     # Reorder album images
     patch "/albums/:id/images/reorder",       AlbumController, :reorder_images

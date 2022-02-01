@@ -404,6 +404,10 @@ export default {
                             },
                         };
                     },
+                    slideshowRoute: {
+                        name: 'tagSlideshow', 
+                        params: { tag_id: route.params.id }
+                    },
                 }; 
                 return props;
             },
@@ -547,6 +551,26 @@ export default {
                     },
                     parentRoute: {name: 'albumsShow', params: {id: route.params.album_id}},
                     parentName: 'Album',
+                }; 
+            },
+        },
+        { 
+            path: '/slideshows/tags/:tag_id',
+            name: 'tagSlideshow', 
+            component: Slideshow,
+            props: (route) => {
+                return {
+                    apiPath: `/tags/${route.params.tag_id}/images?excerpt=true`,
+                    getImageShowRoute(image){
+                        return {
+                            name: 'imagesShow',
+                                params: {
+                                    id: image.id,
+                                },
+                        };
+                    },
+                    parentRoute: {name: 'tagsShow', params: {id: route.params.tag_id}},
+                    parentName: 'Tag',
                 }; 
             },
         },

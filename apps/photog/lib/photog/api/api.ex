@@ -1256,6 +1256,21 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Gets images for a tag
+  """
+  def get_images_for_tag(id, :excerpt) do
+    from(
+      image in Image,
+      join: album_image in assoc(image, :album_images),
+      join: album_tag in AlbumTag,
+      on: album_tag.album_id == album_image.album_id,
+      where: album_tag.tag_id == ^id,
+      order_by: [album_tag.album_order, album_image.image_order, album_image.id]
+    )
+    |> Repo.all
+  end
+
+  @doc """
   Creates a tag.
 
   ## Examples

@@ -63,6 +63,14 @@ defmodule PhotogWeb.TagController do
     |> render("index.json", albums: albums)
   end
 
+  def images_for(conn, %{"id" => id, "excerpt" => "true"}) do
+    images = Api.get_images_for_tag(id, :excerpt)
+    
+    conn
+    |> put_view(PhotogWeb.ImageView)
+    |> render("index_slideshow.json", images: images)
+  end
+
   def show(conn, %{"id" => id}) do
     tag = Api.get_tag!(id)
     render(conn, "show.json", tag: tag)
