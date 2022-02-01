@@ -7,6 +7,14 @@
     }
 }
 
+a.btn{
+    align-self: baseline;
+
+    &:hover{
+        text-decoration: none;
+    }
+}
+
 //bootstrap 4 no longer has btn-xs
 //based on: https://stackoverflow.com/questions/33911049/btn-xs-no-longer-a-valid-option-in-bootstrap-4
 .btn-xs{
