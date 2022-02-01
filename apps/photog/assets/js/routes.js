@@ -535,7 +535,7 @@ export default {
             component: Slideshow,
             props: (route) => {
                 return {
-                    apiPath: `/albums/${route.params.album_id}/images?slideshow=true`,
+                    apiPath: `/albums/${route.params.album_id}/images?excerpt=true`,
                     getImageShowRoute(image){
                         return {
                             name: 'albumImagesShow',

@@ -449,7 +449,7 @@ defmodule Photog.Api do
     |> Enum.slice(offset, limit)
   end
 
-  def get_images_for_album(id, :slideshow) do
+  def get_images_for_album(id, :excerpt) do
     from(
       image in Image,
       join: album_image in assoc(image, :album_images),
