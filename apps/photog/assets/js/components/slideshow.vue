@@ -46,6 +46,8 @@
 </style>
 
 <script>
+import { nextTick } from 'vue';
+
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 
 import { thumbnailUrlFor, getMasterUrl } from '../image';
@@ -118,6 +120,10 @@ export default {
                 
                 this.images = images;
                 this.areImagesLoaded = true;
+
+                nextTick().then(() => {
+                    this.goFullScreen();
+                });
             });
         },
         onKeyPressed(key){
