@@ -52,6 +52,7 @@ defmodule PhotogWeb.ImageView do
   def render("image_slideshow.json", %{image: image}) do
     %{
       id: image.id,
+      mini_thumbnail_path: image.mini_thumbnail_path,
       thumbnail_path: image.thumbnail_path,
     }
   end
