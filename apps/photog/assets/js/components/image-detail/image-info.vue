@@ -46,7 +46,7 @@
 
 <script>
 import ImageInfoSection from './image-info-section.vue';
-import ImagePath from './image-path.vue';
+import ImagePath from './image-info-image-path.vue';
 import CompletionDate from './image-info-completion-date.vue';
 
 export default {
