@@ -5,10 +5,15 @@
         <dl>
             <dt>Master path</dt>
             <dd>
-                <template v-for="(part, i) in masterPathSplit" :key="i">
-                    <span>{{part}}</span>
-                    <strong :class="$style['image-info-master-path-slash']">/</strong>
-                </template>
+                <image-path 
+                    :path="image.master_path"
+                />
+            </dd>
+            <dt>Thumbnail path</dt>
+            <dd>
+                <image-path 
+                    :path="image.thumbnail_path"
+                />
             </dd>
             <dt>Date Taken</dt>
             <dd>{{image.creation_time.formatted.us_date}} {{image.creation_time.formatted.time}}</dd>
@@ -50,12 +55,6 @@
 </template>
 
 <style lang="scss" module>
-    .image-info-master-path-slash{
-        margin: 0 0.4em;
-        &:last-of-type{
-            display: none;
-        }
-    }
     .image-info-completion-date{
 		margin-bottom: 1.5em;
     }
@@ -72,6 +71,7 @@
 
 <script>
 import ImageInfoSection from './image-info-section.vue';
+import ImagePath from './image-path.vue';
 import { isoFormattedDateToUs } from '../../date-helpers';
 
 export default {
@@ -87,6 +87,7 @@ export default {
     },
     components: {
         ImageInfoSection,
+        ImagePath,
     },
     data(){
         return {
@@ -95,9 +96,6 @@ export default {
         };
     },
     computed: {
-        masterPathSplit(){
-            return this.image.master_path.split('/');
-        },
     },
     watch: {
         image(){
