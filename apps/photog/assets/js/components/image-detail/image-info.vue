@@ -23,19 +23,18 @@
             />
             <dt>Favorite</dt>
             <dd>{{image.is_favorite ? 'true' : 'false'}}</dd>
-            <template v-if="image.import">
-                <dt>Import</dt>
-                <dd>
-                    <router-link 
-                        :to="{name: 'importsShow', params: {id: image.import.id}}" class="preview-container"
-                    >
-                        {{image.import.name}}
-                    </router-link>
-                </dd>
-                <template v-if="image.import.notes">
-                    <dt>Import notes</dt>
-                    <dd>{{ image.import.notes }}</dd>
-                </template>
+            <dt>Import</dt>
+            <dd>
+                <router-link 
+                    :to="{name: 'importsShow', params: {id: image.import.id}}" 
+                    class="preview-container"
+                >
+                    {{image.import.name}}
+                </router-link>
+            </dd>
+            <template v-if="image.import.notes">
+                <dt>Import notes</dt>
+                <dd>{{ image.import.notes }}</dd>
             </template>
         </dl>
     </image-info-section>
