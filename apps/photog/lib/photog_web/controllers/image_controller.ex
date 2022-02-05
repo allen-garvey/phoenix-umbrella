@@ -50,6 +50,11 @@ defmodule PhotogWeb.ImageController do
   @doc """
   Returns all images taken in given year
   """
+  def images_for_year(conn, %{"year" => year, "excerpt" => "true"}) do
+    images = String.to_integer(year) |> Api.list_images_for_year()
+    render(conn, "index_slideshow.json", images: images)
+  end
+
   def images_for_year(conn, %{"year" => year, "limit" => limit, "offset" => offset}) do
     images = String.to_integer(year) |> Api.list_images_for_year(limit, offset)
     render(conn, "index.json", images: images)

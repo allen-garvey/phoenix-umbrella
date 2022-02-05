@@ -150,6 +150,10 @@ export default {
                             },
                         };
                     },
+                    slideshowRoute: {
+                        name: 'imageYearSlideshow', 
+                        params: { year: route.params.year }
+                    },
                 };
 
                 if(year < (new Date).getFullYear()){
@@ -191,6 +195,10 @@ export default {
                                 album_id: item.id,
                             },
                         };
+                    },
+                    slideshowRoute: {
+                        name: 'imageYearSlideshow', 
+                        params: { year: route.params.year }
                     },
                 };
 
@@ -571,6 +579,26 @@ export default {
                     },
                     parentRoute: {name: 'tagsShow', params: {id: route.params.tag_id}},
                     parentName: 'Tag',
+                }; 
+            },
+        },
+        { 
+            path: '/slideshows/images/years/:year',
+            name: 'imageYearSlideshow', 
+            component: Slideshow,
+            props: (route) => {
+                return {
+                    apiPath: `/images/years/${route.params.year}/?excerpt=true`,
+                    getImageShowRoute(image){
+                        return {
+                            name: 'imagesShow',
+                                params: {
+                                    id: image.id,
+                                },
+                        };
+                    },
+                    parentRoute: {name: 'albumsForYear', params: {year: route.params.year}},
+                    parentName: 'Albums',
                 }; 
             },
         },
