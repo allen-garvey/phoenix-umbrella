@@ -248,7 +248,7 @@ export default {
         },
         updateImage(data){
             const apiUrl = `${API_URL_BASE}/images/${this.image.id}`;
-            return this.sendJson(apiUrl, 'PATCH', data);
+            return this.sendJson(apiUrl, 'PATCH', data).then(() => this.loadModel(`/images/${this.imageId}`));
         },
         toggleImageIsFavorite(){
             const newIsFavorite = !this.image.is_favorite;
