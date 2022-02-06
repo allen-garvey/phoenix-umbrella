@@ -63,6 +63,9 @@ export default {
             this.completionDateModel = this.image.completion_date;
         },
     },
+    created(){
+        this.completionDateModel = this.image.completion_date;
+    },
     methods: {
         formatIsoDate(date){
             return isoFormattedDateToUs(date);
