@@ -4,7 +4,7 @@
         <nav>
             <ul :class="$style['nav-list']">
                 <li>
-                    <router-link :to="{name: 'albumsForYear', params: {year: currentYear}}">Yearly Albums</router-link>
+                    <router-link :to="{name: 'albumsForYearIndex'}">Yearly Albums</router-link>
                 </li>
                 <li><router-link :to="{name: 'albumsIndex'}">Albums</router-link></li>
                 <li><router-link :to="{name: 'tagsIndex'}">Tags</router-link></li>

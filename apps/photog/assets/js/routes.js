@@ -190,6 +190,31 @@ export default {
                 return props;
             },
         },
+        {
+            path: '/albums/years',
+            name: 'albumsForYearIndex',
+            component: ListPage,
+            props(route){
+                const items = [];
+                const startYear = 2008;
+                const endYear = getCurrentYear();
+
+                for(let year=endYear;year>=startYear;year--){
+                    items.push({
+                        title: year,
+                        route: {
+                            name: 'albumsForYear',
+                            params: { year }
+                        },
+                    });
+                }
+
+                return {
+                    title: 'Albums for Year',
+                    items,
+                };
+            },
+        },
         { 
             path: '/albums/years/:year',
             name: 'albumsForYear', 
