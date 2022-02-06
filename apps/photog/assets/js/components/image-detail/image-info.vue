@@ -23,6 +23,10 @@
                 :image="image"
                 :update-image="updateImage"
             />
+            <source-image
+                :image="image"
+                :update-image="updateImage"
+            />
             <dt>Favorite</dt>
             <dd>{{image.is_favorite ? 'true' : 'false'}}</dd>
             <dt>Import</dt>
@@ -50,6 +54,7 @@
 import ImageInfoSection from './image-info-section.vue';
 import ImagePath from './image-info-image-path.vue';
 import CompletionDate from './image-info-completion-date.vue';
+import SourceImage from './image-info-source-image.vue';
 
 export default {
     props: {
@@ -66,6 +71,7 @@ export default {
         ImageInfoSection,
         ImagePath,
         CompletionDate,
+        SourceImage,
     },
     computed: {
     },
