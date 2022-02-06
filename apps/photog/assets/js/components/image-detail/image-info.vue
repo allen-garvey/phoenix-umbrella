@@ -3,6 +3,8 @@
         heading="Info"
     >
         <dl>
+            <dt>ID</dt>
+            <dd>{{ image.id }}</dd>
             <dt>Master path</dt>
             <dd>
                 <image-path 
