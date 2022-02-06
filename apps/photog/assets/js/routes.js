@@ -1,3 +1,4 @@
+import { getCurrentYear } from './date-helpers';
 import { getOptionalParams, buildImagesIndexVariant, buildImportsShowVariant } from './router-helpers.js';
 import { getPersonsInAlbum, sortImagesCallback, sortAlbumsCallback } from './routes-helpers';
 
@@ -9,8 +10,8 @@ import PersonForm from './components/person-form.vue';
 import TagForm from './components/tag-form.vue';
 import ImportForm from './components/import-form.vue';
 import Home from './components/home.vue';
-import ImagesMenu from './components/images-menu.vue';
 import Slideshow from './components/slideshow.vue';
+import ListPage from './components/list-page.vue';
 
 export default {
     routes: [
@@ -120,7 +121,30 @@ export default {
         {
             path: '/images-menu',
             name: 'imagesMenu',
-            component: ImagesMenu,
+            component: ListPage,
+            props(route){
+                return {
+                    title: 'Images',
+                    items: [
+                        {
+                            title: 'All Images',
+                            route: {name: 'imagesIndex'},
+                        },
+                        {
+                            title: 'Yearly Images',
+                            route: {name: 'imagesForYear', params: {year: getCurrentYear()}},
+                        },
+                        {
+                            title: 'Favorite Images',
+                            route: {name: 'imageFavoritesIndex'},
+                        },
+                        {
+                            title: 'Uncategorized Images',
+                            route: {name: 'imagesNotInAlbumIndex'},
+                        },
+                    ],
+                };
+            },
         },
         { 
             path: '/images/years/:year',
