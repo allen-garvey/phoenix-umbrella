@@ -10,7 +10,7 @@
             :previousImage="previousImage"
             :nextImage="nextImage" 
             :imageIndex="modelIndex"
-            v-if="images"
+            v-if="parent && images"
         >
         </Parent-Thumbnails>
         <div :class="$style.imageShowThumbnailContainer">
