@@ -178,7 +178,9 @@ defmodule PhotogWeb.ImageController do
     image = Api.get_image!(id)
 
     with {:ok, %Image{} = image} <- Api.update_image(image, image_params) do
-      render(conn, "show_excerpt_mini.json", image: image)
+      conn
+      |> put_view(PhotogWeb.GenericView)
+      |> render("ok.json", message: "Image #{image.id} updated")
     end
   end
 
