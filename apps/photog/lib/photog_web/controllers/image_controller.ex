@@ -43,7 +43,7 @@ defmodule PhotogWeb.ImageController do
   end
 
   def show(conn, %{"id" => id}) do
-    image = Api.get_image!(id)
+    image = Api.get_image!(id, :full)
     render(conn, "show.json", image: image)
   end
 

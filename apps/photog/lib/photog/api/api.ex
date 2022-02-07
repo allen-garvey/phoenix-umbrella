@@ -219,9 +219,18 @@ defmodule Photog.Api do
   """
   def get_image!(id) do
     from(image in Image, where: image.id == ^id)
+    |> Repo.one!
+  end
+
+  def get_image!(id, :full) do
+    from(
+      image in Image, 
+      where: image.id == ^id
+    )
     |> image_preload_import
     |> Repo.one!
     |> image_default_preloads
+    |> Repo.preload(versions: from(image in Image, select: [:id], order_by: [:id]))
   end
 
   @doc """

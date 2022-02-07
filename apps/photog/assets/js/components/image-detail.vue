@@ -28,8 +28,11 @@
         <Image-Info
             :image="image"
             :updateImage="updateImage"
-        >
-        </Image-Info>
+        />
+        <Image-Versions
+            :versions="image.versions"
+            v-if="image.versions"
+        />
         <Exif-Info 
             :imageExif="imageExif" 
             :shouldShowRequestButton="!imageExif && !hasExifBeenRequested"
@@ -96,6 +99,7 @@ import { nextTick } from 'vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import ParentThumbnails from './image-detail/parent-thumbnails.vue';
 import ImageInfo from './image-detail/image-info.vue';
+import ImageVersions from './image-detail/image-versions.vue';
 import ImageItemsList from './image-detail/image-items-list.vue';
 import ExifInfo from './image-detail/exif-info.vue';
 import { thumbnailUrlFor, getMasterUrl } from '../image';
@@ -128,6 +132,7 @@ export default {
         LoadingAnimation,
         ParentThumbnails,
         ImageInfo,
+        ImageVersions,
         ImageItemsList,
         ExifInfo,
     },

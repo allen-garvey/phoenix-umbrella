@@ -127,7 +127,7 @@ defmodule PhotogWeb.ImageView do
       _ -> nil
     end
     
-    %{
+    image_map = %{
       id: image.id,
       creation_time: %{
         raw: image.creation_time,
@@ -147,5 +147,10 @@ defmodule PhotogWeb.ImageView do
       persons: Enum.map(image.persons, &PhotogWeb.PersonView.person_excerpt_mini_to_map/1),
       source_image_id: image.source_image_id
     }
+
+    case Enumerable.impl_for(image.versions) do
+      nil -> image_map
+      _ -> Map.put(image_map, :versions, Enum.map(image.versions, fn image -> image.id end))
+    end
   end
 end
