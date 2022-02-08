@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <input 
                         :type="inputType" 
-                        class="form-control" 
+                        :class="inputClass" 
                         v-model="model"
                         ref="input"
                     />
@@ -78,6 +78,13 @@ export default {
         };
     },
     computed: {
+        inputClass(){
+            if(this.inputType === 'checkbox'){
+                return 'form-check-input';
+            }
+
+            return 'form-control';
+        },
     },
     watch: {
         image(){
