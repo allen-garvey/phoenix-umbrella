@@ -3,32 +3,62 @@
         heading="Info"
     >
         <dl>
+            <!-- ID -->
             <dt>ID</dt>
             <dd>{{ image.id }}</dd>
+            
+            <!-- Master path -->
             <dt>Master path</dt>
             <dd>
                 <image-path 
                     :path="image.master_path"
                 />
             </dd>
+
+            <!-- Thumbnail path -->
             <dt>Thumbnail path</dt>
             <dd>
                 <image-path 
                     :path="image.thumbnail_path"
                 />
             </dd>
+
+            <!-- Image date -->
             <dt>Date Taken</dt>
             <dd>{{image.creation_time.formatted.us_date}} {{image.creation_time.formatted.time}}</dd>
-            <completion-date 
+            
+            <!-- Completion Date -->
+            <image-info-form
+                label="Completion Date"
+                modelKey="completion_date"
+                inputType="date"
                 :image="image"
-                :update-image="updateImage"
-            />
-            <source-image
+                :updateImage="updateImage"
+            >
+                <div>{{formatIsoDate(image.completion_date)}}</div>
+            </image-info-form>
+            
+            <!-- Source Image -->
+            <image-info-form
+                label="Source Image"
+                modelKey="source_image_id"
+                inputType="number"
                 :image="image"
-                :update-image="updateImage"
-            />
+                :updateImage="updateImage"
+            >
+                <router-link
+                    :to="{ name: 'imagesShow', params: { id: image.source_image_id, image_id: image.source_image_id } }"
+                    v-if="image.source_image_id"
+                >
+                    View source image
+                </router-link>
+            </image-info-form>
+            
+            <!-- Favorite -->
             <dt>Favorite</dt>
             <dd>{{image.is_favorite ? 'true' : 'false'}}</dd>
+            
+            <!-- Import -->
             <dt>Import</dt>
             <dd>
                 <router-link 
@@ -38,6 +68,8 @@
                     {{image.import.name}}
                 </router-link>
             </dd>
+
+            <!-- Import Notes -->
             <template v-if="image.import.notes">
                 <dt>Import notes</dt>
                 <dd>{{ image.import.notes }}</dd>
@@ -51,10 +83,11 @@
 </style>
 
 <script>
+import { isoFormattedDateToUs } from '../../date-helpers';
+
 import ImageInfoSection from './image-info-section.vue';
 import ImagePath from './image-info-image-path.vue';
-import CompletionDate from './image-info-completion-date.vue';
-import SourceImage from './image-info-source-image.vue';
+import ImageInfoForm from './image-info-form.vue';
 
 export default {
     props: {
@@ -70,12 +103,14 @@ export default {
     components: {
         ImageInfoSection,
         ImagePath,
-        CompletionDate,
-        SourceImage,
+        ImageInfoForm,
     },
     computed: {
     },
     methods: {
+        formatIsoDate(date){
+            return isoFormattedDateToUs(date);
+        },
     }
 };
 </script>
