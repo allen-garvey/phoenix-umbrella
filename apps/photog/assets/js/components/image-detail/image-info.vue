@@ -35,7 +35,7 @@
                 :image="image"
                 :updateImage="updateImage"
             >
-                <div>{{formatIsoDate(image.completion_date)}}</div>
+                <span>{{formatIsoDate(image.completion_date)}}</span>
             </image-info-form>
             
             <!-- Source Image -->
@@ -55,8 +55,15 @@
             </image-info-form>
             
             <!-- Favorite -->
-            <dt>Favorite</dt>
-            <dd>{{image.is_favorite ? 'true' : 'false'}}</dd>
+            <image-info-form
+                label="Favorite"
+                modelKey="is_favorite"
+                inputType="checkbox"
+                :image="image"
+                :updateImage="updateImage"
+            >
+                <span>{{image.is_favorite ? 'true' : 'false'}}</span>
+            </image-info-form>
             
             <!-- Import -->
             <dt>Import</dt>
