@@ -1,6 +1,6 @@
 import { getCurrentYear } from './date-helpers';
 import { getOptionalParams, buildImagesIndexVariant, buildImportsShowVariant } from './router-helpers.js';
-import { getPersonsInAlbum, sortImagesCallback, sortAlbumsCallback } from './routes-helpers';
+import { albumRelatedFields, sortImagesCallback, sortAlbumsCallback } from './routes-helpers';
 
 import ThumbnailList from './components/thumbnail-list.vue';
 import ImportsIndex from './components/imports-index.vue';
@@ -346,9 +346,7 @@ export default {
                     reorderPathSuffix: '/images/reorder',
                     reorderItemsKey: 'image_ids',
                     reorderBySortCallback: sortImagesCallback,
-                    relatedFieldsKey: 'tags',
-                    computedRelatedFieldsCallback: getPersonsInAlbum,
-                    computedRelatedFieldsKey: 'persons',
+                    relatedFields: albumRelatedFields,
                     getDescription: (album) => album.description,
                     itemPreviewContentCallback: (image) => image.persons.map(person => person.name).join(', '),
                     showRouteFor: (item, _model)=>{

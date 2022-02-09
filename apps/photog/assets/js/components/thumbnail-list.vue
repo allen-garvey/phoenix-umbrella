@@ -26,15 +26,9 @@
             * Related fields list
         -->
         <Related-Fields-List 
-            :items="model[relatedFieldsKey]" 
-            :routeName="`${relatedFieldsKey}Show`" 
-            v-if="relatedFieldsKey" 
-        />
-
-        <Related-Fields-List 
-            :items="computedRelatedFieldsCallback(model, itemsModel)" 
-            :routeName="`${computedRelatedFieldsKey}Show`" 
-            v-if="computedRelatedFieldsKey" 
+            v-for="(relatedField, i) in relatedFields"
+            :key="relatedField.name"
+            :items="relatedField.getItems(model, itemsModel)" 
         />
         
         <!-- 
@@ -236,17 +230,9 @@ export default {
         reorderBySortCallback: {
             type: Function,
         },
-        relatedFieldsKey: {
-            type: String,
-            default: null,
-        },
-        computedRelatedFieldsCallback: {
-            type: Function,
-            default: null,
-        },
-        computedRelatedFieldsKey: {
-            type: String,
-            default: null,
+        relatedFields: {
+            type: Array,
+            default: () => [],
         },
         itemPreviewContentCallback: {
             type: Function,

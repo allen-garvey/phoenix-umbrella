@@ -14,6 +14,33 @@ export const getPersonsInAlbum = (album, images) => {
     return [...personsMap.keys()].sort((a, b) => a.localeCompare(b)).map((name) => personsMap.get(name));
 };
 
+export const albumRelatedFields = [
+    {
+        name: 'tags',
+        getItems(album, images){
+            return album.tags.map(tag => ({
+                name: tag.name,
+                to: {
+                    name: 'tagsShow',
+                    params: { id: tag.id }
+                },
+            }));
+        },
+    },
+    {
+        name: 'persons',
+        getItems(album, images){
+            return getPersonsInAlbum(album, images).map(person => ({
+                name: person.name,
+                to: {
+                    name: 'personsShow',
+                    params: { id: person.id }
+                },
+            }))
+        },
+    }
+];
+
 export const sortImagesCallback = (itemsList, sortDirection, reorderMode) => {
     if(reorderMode === 'NAME'){
         itemsList.sort((a, b) => {

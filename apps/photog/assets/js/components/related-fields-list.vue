@@ -1,24 +1,22 @@
 <template>
-    <div>
-        <ul :class="$style['related-fields-list']">
-            <li 
-                v-for="item in items" 
-                :key="item.id" 
-                :class="$style['related-fields-list-item']"
-            >
-                <router-link :to="routeForItem(item)">{{item.name}}</router-link>
-            </li>
-        </ul>
-    </div>
+    <ul :class="$style.relatedFieldsList">
+        <li 
+            v-for="item in items" 
+            :key="item.id" 
+            :class="$style.listItem"
+        >
+            <router-link :to="item.to">{{ item.name }}</router-link>
+        </li>
+    </ul>
 </template>
 
 <style lang="scss" module>
-    .related-fields-list{
+    .relatedFieldsList{
         display: flex;
         flex-wrap: wrap;
     }
 
-    .related-fields-list-item{
+    .listItem{
         padding: 1em;
         background-color: #eee;
         border-radius: 4px;
@@ -33,25 +31,6 @@ export default {
             type: Array,
             default: [],
         },
-        routeName: {
-            type: String,
-            required: true,
-        },
     },
-    data(){
-        return {
-        };
-    },
-    methods: {
-        routeForItem(item){
-            return {
-                name: this.routeName,
-                params: {
-                    id: item.id,
-                },
-
-            };
-        }
-    }
 };
 </script>
