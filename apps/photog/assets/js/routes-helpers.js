@@ -18,13 +18,23 @@ export const albumRelatedFields = [
     {
         name: 'tags',
         getItems(album, images){
-            return album.tags.map(tag => ({
+            const year = [
+                {
+                    name: album.year,
+                    to: {
+                        name: 'albumsForYear',
+                        params: { year: album.year }
+                    },
+                }
+            ];
+
+            return year.concat(album.tags.map(tag => ({
                 name: tag.name,
                 to: {
                     name: 'tagsShow',
                     params: { id: tag.id }
                 },
-            }));
+            })));
         },
     },
     {
