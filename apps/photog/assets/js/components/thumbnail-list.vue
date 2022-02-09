@@ -95,7 +95,7 @@
             :model="model"
             :showRouteFor="showRouteFor"
             :batchSelectedItems="batchSelectedItems"
-            :batchSelectItem="batchSelectItem"
+            :onThumbnailItemClicked="onThumbnailItemClicked"
             :itemDragStart="itemDragStart"
             :itemDragOver="itemDragOver"
             :currentDragIndex="currentDragIndex"
@@ -508,10 +508,17 @@ export default {
                 this.previouslySelectedBatchItemIndex = 0;
             }
         },
-        batchSelectItem(item, i, event){
-            if(!this.isCurrentlyBatchSelect){
+        onThumbnailItemClicked(item, i, event){
+            if(this.isCurrentlyBatchSelect){
+                this.batchSelectItem(item, i, event);
                 return;
             }
+            if(this.isReordering){
+                this.onClickWhenReordering(item, i, event);
+                return;
+            }
+        },
+        batchSelectItem(item, i, event){
             //if shift key is enabled, select all in range
             if(event.shiftKey){
                 let startIndex = this.previouslySelectedBatchItemIndex;
@@ -661,6 +668,25 @@ export default {
                 this.thumbnailList = this.reorderedThumbnailList;
                 this.isReordering = false;
             });
+        },
+        onClickWhenReordering(item, index, event){
+            if(this.currentDragIndex === index){
+                this.currentDragIndex = -1;
+                return;
+            }
+
+            if(!event.ctrlKey){
+                this.currentDragIndex = index;
+                return;
+            }
+            if(this.currentDragIndex >= 0 && event.ctrlKey && event.shiftKey){
+                //reorder array
+                //https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another/6470794
+                this.reorderedThumbnailList.splice(index, 0, this.reorderedThumbnailList.splice(this.currentDragIndex, 1)[0]);
+                this.currentDragIndex = -1;
+
+                return;
+            }
         },
         itemDragStart(index){
             this.currentDragIndex = index;

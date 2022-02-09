@@ -4,7 +4,7 @@
             v-for="(item, i) in items" 
             :key="i" 
             :class="thumbnailItemClass(i)"
-            @click="batchSelectItem(item, i, $event)" 
+            @click="onThumbnailItemClicked(item, i, $event)" 
             :draggable="isReordering" 
             @dragstart="itemDragStart(i)" 
             @dragover="itemDragOver(i, $event)"
@@ -169,7 +169,7 @@ export default {
             type: Array,
             default: () => [],
         },
-        batchSelectItem: {
+        onThumbnailItemClicked: {
             type: Function,
             default: () => {},
         },
