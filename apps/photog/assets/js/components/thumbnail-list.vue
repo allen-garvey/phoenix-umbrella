@@ -99,6 +99,7 @@
             :itemDragStart="itemDragStart"
             :itemDragOver="itemDragOver"
             :currentDragIndex="currentDragIndex"
+            :selectedItemsToBatchReorder="selectedItemsToBatchReorder"
             :isReordering="isReordering"
             :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
             @itemHover="onItemHovered"
@@ -133,6 +134,7 @@ import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list
 import ImagePreview from './thumbnail-list/components/image-preview.vue';
 
 import { API_URL_BASE } from '../request-helpers.js';
+import { arrayMove, batchReorderArray } from '../array-util.js';
 
 //amount of thumbnails to add each time vue infinite scroll is called
 const THUMBNAIL_CHUNK_LENGTH = 60;
@@ -284,6 +286,7 @@ export default {
             batchSelectResourceMode: BATCH_EDIT_RESOURCE_MODE.NONE,
             //following for reordering resources
             isReordering: false,
+            selectedItemsToBatchReorder: {}, // indexes of items to reorder at the same time
             reorderDirection: true,
             isListReordered: false,
             reorderedThumbnailList: [],
@@ -646,11 +649,13 @@ export default {
                 this.currentDragIndex = -1;
                 this.isReordering = true;
                 this.reorderDirection = false;
+                this.selectedItemsToBatchReorder = {};
             }
             else{
                 //when reordering is false, list is automatically put back in original order
                 this.reorderedThumbnailList = [];
                 this.isReordering = false;
+                this.selectedItemsToBatchReorder = {};
             }
         },
         reorderBySort(reorderMode){
@@ -670,26 +675,48 @@ export default {
             });
         },
         onClickWhenReordering(item, index, event){
-            if(this.currentDragIndex === index){
+            const hasBatchItems = Object.keys(this.selectedItemsToBatchReorder).filter(key => this.selectedItemsToBatchReorder[key]).length > 0;
+
+            if(this.currentDragIndex === index && !hasBatchItems){
                 this.currentDragIndex = -1;
+                this.selectedItemsToBatchReorder = {};
                 return;
             }
 
             if(!event.ctrlKey){
                 this.currentDragIndex = index;
+
+                if(hasBatchItems){
+                    this.selectedItemsToBatchReorder = {};
+                }
+                else {
+                    this.selectedItemsToBatchReorder[index] = !this.selectedItemsToBatchReorder[index];
+                }
                 return;
             }
-            if(this.currentDragIndex >= 0 && event.ctrlKey && event.shiftKey){
-                //reorder array
-                //https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another/6470794
-                this.reorderedThumbnailList.splice(index, 0, this.reorderedThumbnailList.splice(this.currentDragIndex, 1)[0]);
-                this.currentDragIndex = -1;
+            if(event.ctrlKey && event.shiftKey){
+                if(!hasBatchItems){
+                    arrayMove(this.reorderedThumbnailList, this.currentDragIndex, index);
+                }
+                else {
+                    this.reorderedThumbnailList = batchReorderArray(this.reorderedThumbnailList, this.selectedItemsToBatchReorder, index);
+                    this.selectedItemsToBatchReorder = {};
+                }
 
+                this.currentDragIndex = -1;
+                this.isListReordered = true;
+                
+                return;
+            }
+
+            if(event.ctrlKey){
+                this.selectedItemsToBatchReorder[index] = !this.selectedItemsToBatchReorder[index];
                 return;
             }
         },
         itemDragStart(index){
             this.currentDragIndex = index;
+            this.selectedItemsToBatchReorder = {};
         },
         itemDragOver(index, $event){
             if(this.currentDragIndex === index){
@@ -700,9 +727,7 @@ export default {
                 block: 'center',
             });
             this.isListReordered = true;
-            //reorder array
-            //https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another/6470794
-            this.reorderedThumbnailList.splice(index, 0, this.reorderedThumbnailList.splice(this.currentDragIndex, 1)[0]);
+            arrayMove(this.reorderedThumbnailList, this.currentDragIndex, index);
             this.currentDragIndex = index;
         },
         onItemHovered({item, $event}){

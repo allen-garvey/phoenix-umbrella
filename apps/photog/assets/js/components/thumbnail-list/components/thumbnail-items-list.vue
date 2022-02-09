@@ -189,6 +189,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        selectedItemsToBatchReorder: {
+            type: Object,
+            default: () => ({}),
+        },
         isCurrentlyBatchSelect: {
             type: Boolean,
             default: false,
@@ -256,7 +260,7 @@ export default {
         thumbnailItemClass(i){
             return {
                 [this.$style['batch-selected']]: this.isCurrentlyBatchSelect && this.batchSelectedItems[i], 
-                [this.$style['reorder-select']]: this.isReordering && this.currentDragIndex === i, 
+                [this.$style['reorder-select']]: this.isReordering && (this.currentDragIndex === i || this.selectedItemsToBatchReorder[i]), 
             };
         },
         thumbnailTitleClass(item){
