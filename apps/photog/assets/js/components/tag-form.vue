@@ -79,7 +79,7 @@ export default {
             // don't want to send albums
             const tag = {
                 name: this.tag.name,
-                is_favorite: this.tag.is_favorite,
+                is_favorite: !!this.tag.is_favorite,
                 cover_album_id: this.tag.cover_album_id,
             };
 
