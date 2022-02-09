@@ -7,6 +7,7 @@
             </div>
             <div :class="$style.linksContainer">
                 <router-link :to="parentRoute">Go to {{ parentName }}</router-link>
+                <span>{{ currentImageIndex + 1 }} / {{ images.length }}</span>
                 <router-link :to="getImageShowRoute(image)">Go to image</router-link>
             </div>
         </template>
@@ -40,6 +41,7 @@
     }
 
     .linksContainer {
+        margin-top: 2em;
         display: flex;
         justify-content: space-between;
     }
