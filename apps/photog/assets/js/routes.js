@@ -196,7 +196,7 @@ export default {
             component: ListPage,
             props(route){
                 const items = [];
-                const startYear = 2008;
+                const startYear = 2006;
                 const endYear = getCurrentYear();
 
                 for(let year=endYear;year>=startYear;year--){
