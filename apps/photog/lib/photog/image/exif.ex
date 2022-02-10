@@ -47,9 +47,7 @@ defmodule Photog.Image.Exif do
   end
 
   defp creation_time_to_datetime(creation_time)  when is_binary(creation_time) do
-    datetime_split = creation_time
-    |> String.split(" ")
-    |> Enum.flat_map(fn s -> Regex.split(~r/[:-]/, s) end)
+    datetime_split =  Regex.split(~r/[ :-]/, creation_time)
 
     #sometimes timezone is after seconds
     last_item = Enum.at(datetime_split, 5)
