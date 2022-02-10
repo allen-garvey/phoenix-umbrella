@@ -42,18 +42,14 @@ defmodule Photog.Image.Exif do
     |> creation_time_to_datetime
   end
 
-  defp creation_time_to_datetime(nil) do
-    nil
-  end
-
   defp creation_time_to_datetime("") do
     nil
   end
 
-  defp creation_time_to_datetime(creation_time) do
+  defp creation_time_to_datetime(creation_time)  when is_binary(creation_time) do
     datetime_split = creation_time
     |> String.split(" ")
-    |> Enum.flat_map(fn s -> String.split(s, ":") end)
+    |> Enum.flat_map(fn s -> Regex.split(~r/[:-]/, s) end)
 
     #sometimes timezone is after seconds
     last_item = Enum.at(datetime_split, 5)
@@ -67,5 +63,9 @@ defmodule Photog.Image.Exif do
 
     "#{Enum.at(datetime_split, 0)}-#{Enum.at(datetime_split, 1)}-#{Enum.at(datetime_split, 2)}T#{Enum.at(datetime_split, 3)}:#{Enum.at(datetime_split, 4)}:#{seconds}#{timezone}"
     |> DateTime.from_iso8601
+  end
+
+  defp creation_time_to_datetime(_creation_time) do
+    nil
   end
 end
