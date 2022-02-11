@@ -40,13 +40,13 @@ defmodule PhotogWeb.Router do
     resources "/album_tags", AlbumTagController,        only: [:index, :show, :create]
 
     # Images
-    get "/images/:id/exif",           ImageController, :exif_for
-    get "/images/years/:year",        ImageController, :images_for_year
-    get "/images/years/:year/count",  ImageController, :images_for_year_count
+    get "/images/:id/exif",                   ImageController, :exif_for
+    get "/images/years/:year",                ImageController, :images_for_year
+    get "/images/years/:year/count",          ImageController, :images_for_year_count
 
     # Albums
-    get "/albums/years/:year",        AlbumController, :albums_for_year
-    get "/albums/years/:year/count",  AlbumController, :albums_for_year_count
+    get "/albums/years/:year",                AlbumController, :albums_for_year
+    get "/albums/years/:year/count",          AlbumController, :albums_for_year_count
 
     # Items for model
     get "/albums/:id/images",                 AlbumController,  :images_for
