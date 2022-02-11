@@ -126,7 +126,7 @@ defmodule PhotogWeb.AlbumController do
     
     conn
     |> put_view(PhotogWeb.GenericView)
-    |> render("count.json", count: count)
+    |> render("data.json", data: count)
   end
 
   def images_for(conn, %{"id" => id, "excerpt" => "true"}) do
@@ -152,7 +152,7 @@ defmodule PhotogWeb.AlbumController do
     years = Api.distinct_album_years()
     conn
     |> put_view(PhotogWeb.GenericView)
-    |> render("scalar_list.json", items: years)
+    |> render("data.json", data: years)
   end
 
   @doc """
@@ -171,7 +171,7 @@ defmodule PhotogWeb.AlbumController do
     
     conn
     |> put_view(PhotogWeb.GenericView)
-    |> render("count.json", count: count)
+    |> render("data.json", data: count)
   end
 
   def show(conn, %{"id" => id}) do

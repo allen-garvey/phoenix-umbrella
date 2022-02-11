@@ -56,7 +56,7 @@ defmodule PhotogWeb.ImportController do
     
     conn
     |> put_view(PhotogWeb.GenericView)
-    |> render("count.json", count: count)
+    |> render("data.json", data: count)
   end
 
   def update(conn, %{"id" => id, "import" => %{"notes" => _notes} = import_params}) do

@@ -26,17 +26,10 @@ defmodule PhotogWeb.GenericView do
   end
 
   @doc """
-  Used for count of items
+  Used to send data that doesn't need further conversion to JSON (no structs)
   """
-  def render("count.json", %{count: count}) do
-    %{data: count}
-  end
-
-  @doc """
-  Used for list of scalar (int, string) items
-  """
-  def render("scalar_list.json", %{items: items}) do
-    %{data: items}
+  def render("data.json", %{data: data}) do
+    %{data: data}
   end
 
 end

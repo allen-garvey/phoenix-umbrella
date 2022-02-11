@@ -68,7 +68,7 @@ defmodule PhotogWeb.ImageController do
     
     conn
     |> put_view(PhotogWeb.GenericView)
-    |> render("count.json", count: count)
+    |> render("data.json", data: count)
   end
 
   @doc """
@@ -79,7 +79,7 @@ defmodule PhotogWeb.ImageController do
     
     conn
     |> put_view(PhotogWeb.GenericView)
-    |> render("count.json", count: count)
+    |> render("data.json", data: count)
   end
 
   def count(conn, %{"in_album" => "false"}) do
@@ -87,7 +87,7 @@ defmodule PhotogWeb.ImageController do
     
     conn
     |> put_view(PhotogWeb.GenericView)
-    |> render("count.json", count: count)
+    |> render("data.json", data: count)
   end
 
   def count(conn, _params) do
@@ -95,7 +95,7 @@ defmodule PhotogWeb.ImageController do
     
     conn
     |> put_view(PhotogWeb.GenericView)
-    |> render("count.json", count: count)
+    |> render("data.json", data: count)
   end
 
   @doc """
