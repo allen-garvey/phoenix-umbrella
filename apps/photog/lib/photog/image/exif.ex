@@ -46,6 +46,10 @@ defmodule Photog.Image.Exif do
     nil
   end
 
+  defp creation_time_to_datetime("0000:00:00 00:00:00") do
+    nil
+  end
+
   defp creation_time_to_datetime(creation_time)  when is_binary(creation_time) do
     datetime_split =  Regex.split(~r/[ :-]/, creation_time)
 
