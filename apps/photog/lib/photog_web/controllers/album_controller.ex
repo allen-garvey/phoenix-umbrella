@@ -146,6 +146,16 @@ defmodule PhotogWeb.AlbumController do
   end
 
   @doc """
+  Returns distinct years that exist for albums
+  """
+  def albums_years_list(conn, _params) do
+    years = Api.distinct_album_years()
+    conn
+    |> put_view(PhotogWeb.GenericView)
+    |> render("scalar_list.json", items: years)
+  end
+
+  @doc """
   Returns all albums taken in given year
   """
   def albums_for_year(conn, %{"year" => year, "limit" => limit, "offset" => offset}) do

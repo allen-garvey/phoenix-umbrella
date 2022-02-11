@@ -32,4 +32,11 @@ defmodule PhotogWeb.GenericView do
     %{data: count}
   end
 
+  @doc """
+  Used for list of scalar (int, string) items
+  """
+  def render("scalar_list.json", %{items: items}) do
+    %{data: items}
+  end
+
 end

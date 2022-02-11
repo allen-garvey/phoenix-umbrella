@@ -420,6 +420,20 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Returns the string list of years where there are albums
+  """
+  def distinct_album_years do
+    from(
+      album in Album,
+      distinct: [desc: :year],
+      order_by: [desc: :year],
+      select: album.year
+    )
+    |> Repo.all
+  end
+
+
+  @doc """
   Returns the list of albums.
   Used for forms when we only need name and id
   """

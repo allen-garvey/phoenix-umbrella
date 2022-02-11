@@ -1,7 +1,7 @@
 <template>
     <div class="main container">
         <h2>{{ title }}</h2>
-        <ul :class="$style.list">
+        <ul :class="$style.list" v-if="isInitialLoadComplete">
             <li v-for="(item, index) in items" :key="index">
                 <router-link :to="item.route">{{ item.title }}</router-link>
             </li>
@@ -21,15 +21,48 @@
 </style>
 
 <script>
+import { nextTick } from 'vue';
+
 export default {
     props: {
+        getModel: {
+            type: Function,
+            required: true,
+        },
         title: {
             type: String,
             required: true,
         },
-        items: {
-            type: Array,
+        getItems: {
+            type: Function,
             required: true,
+        },
+    },
+    data() {
+        return {
+            isInitialLoadComplete: false,
+            items: [],
+        }
+    },
+    created(){
+        this.setup();
+    },
+    watch: {
+        '$route'(to, from){
+            nextTick().then(() => {
+                this.setup();
+            });
+        }
+    },
+    methods: {
+        setup(){
+            this.isInitialLoadComplete = false;
+            this.items = [];
+            
+            this.getItems(this.getModel).then((items) => {
+                this.items = items;
+                this.isInitialLoadComplete = true;
+            });
         },
     },
 };

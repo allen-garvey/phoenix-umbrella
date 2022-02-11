@@ -125,7 +125,7 @@ export default {
             props(route){
                 return {
                     title: 'Images',
-                    items: [
+                    getItems: () => Promise.resolve([
                         {
                             title: 'All Images',
                             route: {name: 'imagesIndex'},
@@ -142,7 +142,7 @@ export default {
                             title: 'Uncategorized Images',
                             route: {name: 'imagesNotInAlbumIndex'},
                         },
-                    ],
+                    ]),
                 };
             },
         },
@@ -195,23 +195,18 @@ export default {
             name: 'albumsForYearIndex',
             component: ListPage,
             props(route){
-                const items = [];
-                const startYear = 2006;
-                const endYear = getCurrentYear();
-
-                for(let year=endYear;year>=startYear;year--){
-                    items.push({
+                const getItems = (getModel) => getModel('/albums/years/index').then(years => 
+                    Promise.resolve(years.map(year => ({
                         title: year,
                         route: {
                             name: 'albumsForYear',
                             params: { year }
                         },
-                    });
-                }
+                    }))));
 
                 return {
                     title: 'Albums for Year',
-                    items,
+                    getItems,
                 };
             },
         },
