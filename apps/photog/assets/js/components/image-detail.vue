@@ -15,7 +15,7 @@
         </Parent-Thumbnails>
         <div :class="$style.imageShowThumbnailContainer">
             <a :href="masterUrl" target="_blank" rel="noreferrer">
-                <img :src="thumbnailUrlFor(image.thumbnail_path)" />
+                <img :class="$style.image" :src="thumbnailUrlFor(image.thumbnail_path)" />
             </a>
         </div>
         <div :class="$style.imageShowLinkContainer">
@@ -87,6 +87,9 @@
                 margin-left: 0;
             }
         }
+    }
+    .image {
+        min-width: 200px;
     }
     .infiniteObserver{
         padding-top: 20em;

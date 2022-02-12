@@ -131,16 +131,35 @@ defmodule Mix.Tasks.Shutterbug do
   Creates image thumbnails given image thumbnail file name, image source directory and path to create thumbnails in
   """
   def create_image_thumbnails(image_file, image_source_path, thumbnails_path) do
+    thumbnail_name = Regex.match?(~r/\.svg$/, image_file) |> create_thumbnail(image_file, image_source_path, thumbnails_path)
+
+    {thumbnail_name, create_mini_thumbnail(image_file, image_source_path, thumbnails_path)}
+  end
+
+  @doc """
+  First argument is should_copy - if true just copies, otherwise resizes
+  """
+  def create_thumbnail(true, image_file, image_source_path, thumbnails_path) do
+    image_thumbnail_path = Path.join(thumbnails_path, image_file)
+    Photog.Shutterbug.File.safe_copy(image_source_path, image_thumbnail_path)
+
+    image_file
+  end
+
+  def create_thumbnail(false, image_file, image_source_path, thumbnails_path) do
     thumbnail_name = Photog.Shutterbug.Image.thumbnail_name(image_file)
-    mini_thumbnail_name = Photog.Shutterbug.Image.mini_thumbnail_name(image_file)
-
     image_thumbnail_path = Path.join(thumbnails_path, thumbnail_name)
-    image_mini_thumbnail_path = Path.join(thumbnails_path, mini_thumbnail_name)
-
     Photog.Shutterbug.File.resize_image(image_source_path, image_thumbnail_path, 768)
+
+    thumbnail_name
+  end
+
+  def create_mini_thumbnail(image_file, image_source_path, thumbnails_path) do
+    mini_thumbnail_name = Photog.Shutterbug.Image.mini_thumbnail_name(image_file)
+    image_mini_thumbnail_path = Path.join(thumbnails_path, mini_thumbnail_name)
     Photog.Shutterbug.File.resize_image(image_source_path, image_mini_thumbnail_path, 250)
 
-    {thumbnail_name, mini_thumbnail_name}
+    mini_thumbnail_name
   end
 
   def get_image_exif(image_master_path, image_source_path, now) do
