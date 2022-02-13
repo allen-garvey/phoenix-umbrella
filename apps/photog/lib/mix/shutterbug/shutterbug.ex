@@ -64,9 +64,10 @@ defmodule Mix.Tasks.Shutterbug do
 
         #get image filename
         image_file = Path.basename(image_source_path)
-        # copy image master
+        
+        # create image master
         image_master_path = Path.join(masters_path, image_file)
-        Photog.Shutterbug.File.safe_copy(image_source_path, image_master_path)
+        master_name = create_image_master(image_source_path, image_master_path)
 
         #create thumbnails
         {thumbnail_name, mini_thumbnail_name} = create_image_thumbnails(image_file, image_source_path, thumbnails_path)
@@ -74,10 +75,10 @@ defmodule Mix.Tasks.Shutterbug do
         #get paths needed when creating image resource
         image_thumbnail_relative_path = Path.join(target_relative_path, thumbnail_name)
         image_mini_thumbnail_relative_path = Path.join(target_relative_path, mini_thumbnail_name)
-        image_master_relative_path = Path.join(target_relative_path, image_file)
+        image_master_relative_path = Path.join(target_relative_path, master_name)
 
         #get exif data for creation_time
-        {exif_map, creation_datetime} = get_image_exif(image_master_path, image_source_path, now)
+        {exif_map, creation_datetime} = get_image_exif(image_source_path, now)
 
         image = Photog.Shutterbug.Image.create_image!(%{
           master_path: image_master_relative_path,
@@ -128,6 +129,16 @@ defmodule Mix.Tasks.Shutterbug do
   end
 
   @doc """
+  Either converts png image to webp lossless, or for other image types copies to masters foldel
+  """
+  def create_image_master(image_source_path, image_master_path) do
+    case Path.extname(image_source_path) do
+      ".png" -> Photog.Shutterbug.File.convert_to_webp_lossless(image_source_path, image_master_path)
+      _ -> Photog.Shutterbug.File.safe_copy(image_source_path, image_master_path)
+    end
+  end
+
+  @doc """
   Creates image thumbnails given image thumbnail file name, image source directory and path to create thumbnails in
   """
   def create_image_thumbnails(image_file, image_source_path, thumbnails_path) do
@@ -162,8 +173,8 @@ defmodule Mix.Tasks.Shutterbug do
     mini_thumbnail_name
   end
 
-  def get_image_exif(image_master_path, image_source_path, now) do
-    exif_map = Exif.exif_for(image_master_path)
+  def get_image_exif(image_source_path, now) do
+    exif_map = Exif.exif_for(image_source_path)
     creation_datetime = case Exif.exif_creation_time_as_datetime(exif_map) do
       {:ok, datetime, _} -> datetime
       {:error, reason}   -> Error.exit_with_error("#{image_source_path} exif creation date is in the wrong format because #{reason}", :image_exif_creation_date_wrong_format)

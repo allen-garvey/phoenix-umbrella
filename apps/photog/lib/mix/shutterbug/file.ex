@@ -38,6 +38,24 @@ defmodule Photog.Shutterbug.File do
     File.cp!(source_path, destination_path, fn _,  dest -> Error.exit_with_error("#{dest} already exists", :dest_file_already_exists) end)
     # make sure permissions are good, since some devices (such as phones) can have too restrictive permissions which won't allow web server to serve image file
     File.chmod!(destination_path, 0o644)
+
+    Path.basename(destination_path)
+  end
+
+  @doc """
+  Takes image at source path and converts to webp lossless at destination path
+  """
+  def convert_to_webp_lossless(image_source_path, image_destination_path) do
+    webp_destination_path = Photog.Shutterbug.Image.webp_name(image_destination_path)
+
+    with {_, 0} <- System.cmd("convert", [image_source_path, "-define", "webp:lossless=true", "-auto-orient", webp_destination_path]) do
+      # file permissions should be correct (tested with convert command and permissions are +r) but set permissions just in case
+      File.chmod!(webp_destination_path, 0o644)
+    else
+      _ -> Error.exit_with_error("Error converting #{image_source_path} to #{webp_destination_path} using convert", :error_converting_to_webp_lossless)
+    end
+
+    Path.basename(webp_destination_path)
   end
 
   @doc """
@@ -49,7 +67,7 @@ defmodule Photog.Shutterbug.File do
       # file permissions should be correct (tested with convert command and permissions are +r) but set permissions just in case
       File.chmod!(image_destination_path, 0o644)
     else
-      _ -> Error.exit_with_error("Error creating #{image_destination_path} using convert", :error_creating_thumbnail)
+      _ -> Error.exit_with_error("Error converting #{image_source_path} to #{image_destination_path} using convert", :error_creating_thumbnail)
     end
   end
 
