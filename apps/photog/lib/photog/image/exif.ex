@@ -26,7 +26,7 @@ defmodule Photog.Image.Exif do
   "2010:08:29 15:44:22"
   """
   def exif_creation_time(exif_map) do
-    exif_map["CreateDate"]
+    exif_map["CreateDate"] || exif_map["FileModifyDate"]
   end
 
   @doc """
