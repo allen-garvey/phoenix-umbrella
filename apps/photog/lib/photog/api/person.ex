@@ -4,7 +4,6 @@ defmodule Photog.Api.Person do
 
 
   schema "persons" do
-    field :apple_photos_id, :integer, load_in_query: false
     field :name, :string
     field :images_count, :integer, default: -1, virtual: true
 
@@ -18,9 +17,8 @@ defmodule Photog.Api.Person do
   @doc false
   def changeset(person, attrs) do
     person
-    |> cast(attrs, [:apple_photos_id, :name, :cover_image_id])
+    |> cast(attrs, [:name, :cover_image_id])
     |> validate_required([:name, :cover_image_id])
-    |> unique_constraint(:apple_photos_id)
     |> unique_constraint(:name)
     |> assoc_constraint(:cover_image)
   end

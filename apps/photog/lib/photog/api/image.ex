@@ -4,7 +4,6 @@ defmodule Photog.Api.Image do
 
 
   schema "images" do
-    field :apple_photos_id, :integer, load_in_query: false
     field :creation_time, :utc_datetime
     field :is_favorite, :boolean, default: false
     field :master_path, :string
@@ -30,12 +29,11 @@ defmodule Photog.Api.Image do
   @doc false
   def changeset(image, attrs) do
     image
-    |> cast(attrs, [:apple_photos_id, :creation_time, :master_path, :thumbnail_path, :mini_thumbnail_path, :is_favorite, :import_id, :completion_date, :exif, :amazon_photos_id, :source_image_id])
+    |> cast(attrs, [:creation_time, :master_path, :thumbnail_path, :mini_thumbnail_path, :is_favorite, :import_id, :completion_date, :exif, :amazon_photos_id, :source_image_id])
     |> validate_required([:creation_time, :master_path, :thumbnail_path, :mini_thumbnail_path, :is_favorite, :import_id])
     |> assoc_constraint(:import)
     |> assoc_constraint(:source_image)
     |> unique_constraint(:master_path)
-    |> unique_constraint(:apple_photos_id)
     |> unique_constraint(:amazon_photos_id)
   end
 end
