@@ -43,7 +43,7 @@
 
         //checked styles
         [type=radio]:checked + img {
-            border: 5px solid $photog_selected_highlight_color;
+            border: 5px solid $photog_cover_image_color;
             border-radius: 4px;
         }
     }
