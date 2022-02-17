@@ -88,8 +88,8 @@
             border-radius: 5px;
 
             &.batch-selected{
-                border-color: $photog_selected_highlight_color;
-                background-color: $photog_selected_highlight_color;
+                border-color: $photog_favorited_color;
+                background-color: $photog_favorited_color;
                 color: white;
                 opacity: 1;
             }
@@ -135,7 +135,7 @@
 
         &.thumbnail-title-favorite{
             a{
-                color: $photog_selected_highlight_color;
+                color: $photog_favorited_color;
             }
         }
 

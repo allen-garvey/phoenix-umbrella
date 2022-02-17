@@ -130,7 +130,7 @@
     }
 
     .favoritedItem {
-        color: $photog_selected_highlight_color;
+        color: $photog_favorited_color;
     }
 </style>
 
