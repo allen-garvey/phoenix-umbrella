@@ -68,6 +68,7 @@
             * List of batch edit resources that can be added to selected items
         -->
         <div v-if="shouldShowBatchResources">
+            <label>Search <input class="form-control" v-model="searchValue" /></label>
             <ul :class="$style['batch-resources-list']">
                 <li 
                     v-for="(resource, index) in batchResourcesDisplayed" 
@@ -85,7 +86,7 @@
             </ul>
             <button 
                 class="btn btn-outline-dark" 
-                v-if="batchResources.length > batchResourcesMoreLimit" @click="toggleDisplayMoreBatchResources"
+                v-if="!isSearchEnabled && batchResources.length > batchResourcesMoreLimit" @click="toggleDisplayMoreBatchResources"
             >
                 {{batchResourcesDisplayed.length < batchResources.length ? 'Show more' : 'Show less'}}
             </button>
@@ -200,7 +201,16 @@ export default {
         shouldShowBatchResources(){
             return this.batchSelectResourceMode !== this.batchEditResourceMode.NONE;
         },
+        isSearchEnabled(){
+            return this.searchValue.length >= 2;
+        },
         batchResourcesDisplayed(){
+            if(this.isSearchEnabled){
+                return this.batchResources
+                    .filter(
+                        ({ name }) => name.toLowerCase().indexOf(this.searchValue.toLowerCase()) >= 0
+                );
+            }
             if(this.shouldShowAllBatchResources){
                 return this.batchResources;
             }
@@ -219,6 +229,7 @@ export default {
             shouldShowAllBatchResources: false,
             batchResourcesMoreLimit: 8,
             batchResourcesSelected: [],
+            searchValue: '',
         };
     },
     methods: {
