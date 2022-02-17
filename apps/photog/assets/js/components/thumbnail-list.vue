@@ -582,9 +582,10 @@ export default {
                 resourcesKey = 'tag_ids';
                 thumbnailsKey = 'album_ids';
             }
-            const data = {};
-            data[thumbnailsKey] = this.thumbnailListSelectedItems.map((item)=>item.id);
-            data[resourcesKey] = this.batchResources.filter((item, i)=>batchResourcesSelected[i]).map((item)=>item.id);
+            const data = {
+                [thumbnailsKey]: this.thumbnailListSelectedItems.map((item)=>item.id),
+                [resourcesKey]: batchResourcesSelected,
+            };
 
             this.sendJson(apiUrl, 'POST', data).then((response)=>{
                 const hasAtLeastOneThingSucceeded = response.data && response.data.length > 0;

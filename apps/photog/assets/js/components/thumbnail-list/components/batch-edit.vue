@@ -76,7 +76,9 @@
                 >
                     <input 
                         type="checkbox" 
-                        :id="idForBatchResource(resource, index)" v-model="batchResourcesSelected[index]" 
+                        :id="idForBatchResource(resource, index)" 
+                        :checked="selectedItemsMap[resource.id]"
+                        @change="onBatchItemCheckboxChanged(resource.id)"  
                     />
                     <label 
                         :for="idForBatchResource(resource, index)"
@@ -196,8 +198,13 @@ export default {
         batchEditResourceMode(){
             return BATCH_EDIT_RESOURCE_MODE;
         },
+        batchResourcesSelected(){
+            return this.batchResources
+                    .map( ({ id }) => id )
+                    .filter( id => this.selectedItemsMap[id] );
+        },
         anyBatchResourcesSelected(){
-            return this.batchResourcesSelected.some((isSelected)=>isSelected);
+            return this.batchResourcesSelected.length > 0;
         },
         toggleBatchEditButtonClass(){
             return {
@@ -229,14 +236,14 @@ export default {
         //called when model changes
         batchResources(newValue){
             this.shouldShowAllBatchResources = false;
-            this.batchResourcesSelected = this.batchResources.map(()=>false);
+            this.selectedItemsMap = {};
         },
     },
     data(){
         return {
             shouldShowAllBatchResources: false,
             batchResourcesMoreLimit: 8,
-            batchResourcesSelected: [],
+            selectedItemsMap: {},
             searchValue: '',
         };
     },
@@ -249,6 +256,9 @@ export default {
         },
         toggleDisplayMoreBatchResources(){
             this.shouldShowAllBatchResources = !this.shouldShowAllBatchResources;
+        },
+        onBatchItemCheckboxChanged(id){
+            this.selectedItemsMap[id] = !this.selectedItemsMap[id];
         },
     }
 };
