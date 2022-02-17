@@ -4,6 +4,8 @@
         <template v-slot:inputs>
             <Form-Input :id="idForField('name')" label="Name" v-model="album.name" :errors="errors.name" />
 
+            <Form-Input :id="idForField('is_favorite')" label="Is Favorite" v-model="album.is_favorite" :errors="errors.is_favorite" input-type="checkbox" />
+
             <Form-Input :id="idForField('year')" label="Year" v-model="album.year" :errors="errors.year" input-type="number" />
 
             <Form-Input :id="idForField('description')" label="Description" v-model="album.description" :errors="errors.description" input-type="textarea" :textarea-rows="4" />
@@ -131,6 +133,7 @@ export default {
                     year: album.year,
                     description: album.description,
                     cover_image_id: album.cover_image.id,
+                    is_favorite: album.is_favorite,
                 };
 
                 this.tagsActive = album.tags.reduce((tagsActive, tag)=>{
@@ -142,6 +145,7 @@ export default {
             else{
                 const album = {
                     year: getCurrentYear(),
+                    is_favorite: false,
                 };
                 if(this.hasImages){
                     album['cover_image_id'] = this.imagesInModel[0].id;

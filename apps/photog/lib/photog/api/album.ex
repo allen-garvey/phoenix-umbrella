@@ -7,6 +7,7 @@ defmodule Photog.Api.Album do
     field :name, :string
     field :description, :string
     field :year, :integer
+    field :is_favorite, :boolean, default: false
     field :images_count, :integer, default: -1, virtual: true
 
     timestamps()
@@ -23,9 +24,9 @@ defmodule Photog.Api.Album do
   @doc false
   def changeset(album, attrs) do
     album
-    |> cast(attrs, [:name, :cover_image_id, :description, :year])
+    |> cast(attrs, [:name, :cover_image_id, :description, :year, :is_favorite])
     |> Common.ModelHelpers.Date.default_year_today(:year)
-    |> validate_required([:name, :cover_image_id, :year])
+    |> validate_required([:name, :cover_image_id, :year, :is_favorite])
     |> assoc_constraint(:cover_image)
   end
 end
