@@ -17,6 +17,7 @@
 </template>
 
 <style lang="scss" module>
+    @import '~photog-styles/site/variables';  
     $preview_size: 50px;
 
     .album-image-nav-previews{
@@ -30,7 +31,7 @@
                 width: $preview_size;
                 flex-shrink: 0; //so horizontal scrolling works
                 &.current-image{
-                    border: 3px solid magenta;
+                    border: 3px solid $photog_cover_image_color;
                 }
                 img{
                     height: 100%;

@@ -116,7 +116,7 @@
             transition: height 0.3s 0.15s ease-in;
 
             &.cover-image{
-                border: 4px solid magenta;
+                border: 4px solid $photog_cover_image_color;
             }
         }
     }
