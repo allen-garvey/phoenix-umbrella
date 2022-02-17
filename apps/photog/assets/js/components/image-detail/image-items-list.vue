@@ -21,7 +21,7 @@
                     {{ addButtonText }}
                 </button>
                 <button 
-                    :disabled="!areAnyItemsToBeAddedSelected" 
+                    :disabled="selectedItems.length === 0" 
                     v-if="isAddMode" 
                     @click="saveAddItems" 
                     class="btn btn-sm btn-success"
@@ -36,8 +36,9 @@
                 <li v-for="(item, index) in filteredItemsThatCanBeAdded" :key="index">
                     <input 
                         type="checkbox" 
-                        :id="idForItemToBeAdded(item, index)" 
-                        v-model="itemsThatCanBeAddedSelected[index]" 
+                        :id="idForItemToBeAdded(item, index)"
+                        :checked="selectedItemsMap[item.id]"
+                        @change="onAddItemCheckboxChanged(item.id)" 
                     />
                     <label 
                         :for="idForItemToBeAdded(item, index)" 
@@ -170,7 +171,7 @@ export default {
     data() {
         return {
             itemsThatCanBeAdded: [],
-            itemsThatCanBeAddedSelected: [],
+            selectedItemsMap: {},
             mode: MODE_DEFAULT,
             searchValue: '',
         }
@@ -197,8 +198,8 @@ export default {
         isDefaultMode(){
             return this.mode === MODE_DEFAULT;
         },
-        areAnyItemsToBeAddedSelected(){
-            return this.itemsThatCanBeAddedSelected.some((isSelected)=>isSelected);
+        selectedItems(){
+            return this.itemsThatCanBeAdded.filter(({id}) => this.selectedItemsMap[id]);
         },
         filteredItemsThatCanBeAdded(){
             if(this.searchValue.length >= 2){
@@ -223,6 +224,9 @@ export default {
                 this.mode = MODE_EDIT;
             }
         },
+        onAddItemCheckboxChanged(id){
+            this.selectedItemsMap[id] = !this.selectedItemsMap[id];
+        },
         addItemsButtonAction(){
             if(this.isAddMode){
                 this.mode = MODE_DEFAULT;
@@ -234,22 +238,16 @@ export default {
         fetchAddItems(){
             fetchJson(API_URL_BASE + this.unusedItemsApiUrl).then((items) => {
                 this.itemsThatCanBeAdded = items;
-                this.itemsThatCanBeAddedSelected = this.itemsThatCanBeAdded.map(()=>false);
+                this.selectedItemsMap = {};
                 this.mode = MODE_ADD;
             });
         },
         saveAddItems(){
-            const itemIds = [];
-            const itemsToBeAdded = [];
-            this.itemsThatCanBeAddedSelected.forEach((isSelected, i)=>{
-                if(isSelected){
-                    const itemToAdd = this.itemsThatCanBeAdded[i];
-                    itemIds.push(itemToAdd.id);
-                    itemsToBeAdded.push(itemToAdd);
-                }
-            });
-            const data = {};
-            data[this.itemsApiName] = itemIds.join(',');
+            const itemsToBeAdded = [...this.selectedItems];
+
+            const data = {
+                [this.itemsApiName]: itemsToBeAdded.map(({id}) => id).join(','),
+            };
 
             this.sendJson(API_URL_BASE + this.addItemsApiUrl, 'POST', data).then((response)=>{
                 //display error message if any
