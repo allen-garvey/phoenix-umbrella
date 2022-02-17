@@ -39,7 +39,12 @@
                         :id="idForItemToBeAdded(item, index)" 
                         v-model="itemsThatCanBeAddedSelected[index]" 
                     />
-                    <label :for="idForItemToBeAdded(item, index)">{{ item.name }}</label>
+                    <label 
+                        :for="idForItemToBeAdded(item, index)" 
+                        :class="{[$style.favoritedItem]: item.is_favorite}"
+                    >
+                        {{ item.name }}
+                    </label>
                 </li>
             </ul>
         </div>
@@ -63,6 +68,8 @@
 </template>
 
 <style lang="scss" module>
+    @import '~photog-styles/site/variables';
+
     .textListContainer{
         margin-top: 3.5em;
     }
@@ -99,6 +106,10 @@
         li{
             margin-bottom: 0.5em;
             flex-basis: 25%;
+        }
+
+        .favoritedItem {
+            color: $photog_selected_highlight_color;
         }
     }
 </style>

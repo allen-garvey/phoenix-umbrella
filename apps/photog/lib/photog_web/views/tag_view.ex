@@ -53,7 +53,8 @@ defmodule PhotogWeb.TagView do
   def tag_excerpt(tag) do
     %{
       id: tag.id,
-      name: tag.name
+      name: tag.name,
+      is_favorite: tag.is_favorite,
     }
   end
 

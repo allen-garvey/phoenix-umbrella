@@ -79,7 +79,9 @@
                         :id="idForBatchResource(resource, index)" v-model="batchResourcesSelected[index]" 
                     />
                     <label 
-                        :for="idForBatchResource(resource, index)">
+                        :for="idForBatchResource(resource, index)"
+                        :class="{[$style.favoritedItem]: resource.is_favorite}"
+                    >
                         {{resource.name}}
                     </label>
                 </li>
@@ -102,6 +104,8 @@
 </template>
 
 <style lang="scss" module>
+    @import '~photog-styles/site/variables';
+
     .batch-resources-list{
         display: flex;
         flex-wrap: wrap;
@@ -123,6 +127,10 @@
             justify-content: space-between;
             margin-top: 1em;
         }
+    }
+
+    .favoritedItem {
+        color: $photog_selected_highlight_color;
     }
 </style>
 

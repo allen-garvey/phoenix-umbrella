@@ -61,6 +61,7 @@ defmodule PhotogWeb.AlbumView do
     %{
       id: album.id,
       name: album.name,
+      is_favorite: album.is_favorite,
     }
   end
 end
