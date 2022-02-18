@@ -436,8 +436,12 @@ defmodule Photog.Api do
   Used for forms when we only need name and id
   """
   def list_albums_excerpt do
-    Repo.all from album in Album,
-          order_by: [desc: :id]
+    from(
+      Album,
+      order_by: [desc: :id],
+      select: [:id, :name, :is_favorite]
+    )
+    |> Repo.all
   end
 
   def albums_count! do
