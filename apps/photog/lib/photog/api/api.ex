@@ -363,6 +363,18 @@ defmodule Photog.Api do
     Image.changeset(image, %{})
   end
 
+  def list_albums_query do
+    from(album in Album,
+      join: cover_image in assoc(album, :cover_image),
+      left_join: album_image in assoc(album, :album_images),
+      left_join: tag in assoc(album, :tags),
+      group_by: [album.id, cover_image.id, tag.id],
+      preload: [cover_image: cover_image, tags: tag],
+      order_by: [desc: :id],
+      select: %Album{album | images_count: count(album.id)}
+    )
+  end
+
   @doc """
   Returns the list of albums.
 
@@ -373,15 +385,7 @@ defmodule Photog.Api do
 
   """
   def list_albums do
-    from(album in Album,
-      join: cover_image in assoc(album, :cover_image),
-      left_join: album_image in assoc(album, :album_images),
-      left_join: tag in assoc(album, :tags),
-      group_by: [album.id, cover_image.id, tag.id],
-      preload: [cover_image: cover_image, tags: tag],
-      order_by: [desc: :id],
-      select: %Album{album | images_count: count(album.id)}
-    )
+    list_albums_query()
     |> Repo.all
   end
 
@@ -390,15 +394,13 @@ defmodule Photog.Api do
     # need to do it this way since because of joins offset and limit don't work correctly
     |> Enum.slice(offset, limit)
   end
-    from(album in Album,
-      join: cover_image in assoc(album, :cover_image),
-      left_join: album_image in assoc(album, :album_images),
-      left_join: tag in assoc(album, :tags),
-      group_by: [album.id, cover_image.id, tag.id],
-      preload: [cover_image: cover_image, tags: tag],
-      order_by: [desc: :id],
-      select: %Album{album | images_count: count(album.id)}
-    )
+
+  @doc """
+  Returns the list of albums based on whether or not they are favorited
+  """
+  def list_album_favorites(is_favorite, limit, offset) when is_boolean(is_favorite) do
+    list_albums_query()
+    |> where([album], album.is_favorite == ^is_favorite)
     |> Repo.all
     # need to do it this way since because of joins offset and limit don't work correctly
     |> Enum.slice(offset, limit)
@@ -408,16 +410,8 @@ defmodule Photog.Api do
   Returns the list of albums for the given year.
   """
   def list_albums_for_year(year, limit, offset) do
-    from(album in Album,
-      where: album.year == ^year,
-      join: cover_image in assoc(album, :cover_image),
-      left_join: album_image in assoc(album, :album_images),
-      left_join: tag in assoc(album, :tags),
-      group_by: [album.id, cover_image.id, tag.id],
-      preload: [cover_image: cover_image, tags: tag],
-      order_by: [desc: :id],
-      select: %Album{album | images_count: count(album.id)}
-    )
+    list_albums_query()
+    |> where([album], album.year == ^year)
     |> Repo.all
     # need to do it this way since because of joins offset and limit don't work correctly
     |> Enum.slice(offset, limit)

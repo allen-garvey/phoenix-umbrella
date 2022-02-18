@@ -13,6 +13,11 @@ defmodule PhotogWeb.AlbumController do
     render(conn, "index_excerpt.json", albums: albums)
   end
 
+  def index(conn, %{"favorites" => is_favorite_param, "limit" => limit, "offset" => offset}) do
+    albums = Api.list_album_favorites(is_favorite_param == "true", String.to_integer(limit), String.to_integer(offset))
+    render(conn, "index.json", albums: albums)
+  end
+
   def index(conn, %{"limit" => limit, "offset" => offset}) do
     albums = Api.list_albums(String.to_integer(limit), String.to_integer(offset))
     render(conn, "index.json", albums: albums)
