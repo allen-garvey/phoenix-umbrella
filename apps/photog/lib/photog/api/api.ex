@@ -386,6 +386,10 @@ defmodule Photog.Api do
   end
 
   def list_albums(limit, offset) do
+    list_albums()
+    # need to do it this way since because of joins offset and limit don't work correctly
+    |> Enum.slice(offset, limit)
+  end
     from(album in Album,
       join: cover_image in assoc(album, :cover_image),
       left_join: album_image in assoc(album, :album_images),
