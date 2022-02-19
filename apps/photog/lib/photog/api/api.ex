@@ -987,36 +987,32 @@ defmodule Photog.Api do
     |> Repo.one!
   end
 
+  def list_imports_with_count_and_limited_images_query do
+    from(
+        import in Import,
+        join: cover_image in assoc(import, :cover_image),
+        left_join: image in assoc(import, :images),
+        group_by: [import.id, cover_image.id],
+        order_by: [desc: import.import_time, desc: import.id],
+        select: {%Import{import | images_count: count(import.id), images: [cover_image]},
+        {cover_image.exif["Make"], cover_image.exif["Model"]}}
+    )
+  end
+
   @doc """
   Returns the list of imports
   Also preloads a limited amount of images
   """
   def list_imports_with_count_and_limited_images do
-    from(
-        import in Import,
-        join: cover_image in assoc(import, :cover_image),
-        left_join: image in assoc(import, :images),
-        group_by: [import.id, cover_image.id],
-        order_by: [desc: import.import_time, desc: import.id],
-        select: {%Import{import | images_count: count(import.id), images: [cover_image]},
-        {cover_image.exif["Make"], cover_image.exif["Model"]}}
-    )
+    list_imports_with_count_and_limited_images_query()
     |> Repo.all
     |> manually_preload_camera_model
   end
 
   def list_imports_with_count_and_limited_images(limit, offset) do
-    from(
-        import in Import,
-        join: cover_image in assoc(import, :cover_image),
-        left_join: image in assoc(import, :images),
-        group_by: [import.id, cover_image.id],
-        order_by: [desc: import.import_time, desc: import.id],
-        limit: ^limit,
-        offset: ^offset,
-        select: {%Import{import | images_count: count(import.id), images: [cover_image]},
-        {cover_image.exif["Make"], cover_image.exif["Model"]}}
-    )
+    list_imports_with_count_and_limited_images_query()
+    |> limit(^limit)
+    |> offset(^offset)
     |> Repo.all
     |> manually_preload_camera_model
   end
