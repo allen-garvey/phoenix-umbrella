@@ -116,7 +116,6 @@
 </style>
 
 <script>
-import { fetchJson } from 'umbrella-common-js/ajax.js';
 import { API_URL_BASE } from '../../request-helpers.js';
 import { arrayRemove } from '../../array-util.js';
 
@@ -129,6 +128,10 @@ export default {
     props: {
         imageId: {
             type: Number,
+            required: true,
+        },
+        getModel: {
+            type: Function,
             required: true,
         },
         sendJson: {
@@ -240,7 +243,7 @@ export default {
             }
         },
         fetchAddItems(){
-            fetchJson(API_URL_BASE + this.getItemsApiUrl).then((items) => {
+            this.getModel(this.getItemsApiUrl).then((items) => {
                 this.itemsThatCanBeAdded = items.filter(item => !this.currentItemsSet.has(item.id));
                 this.selectedItemsMap = {};
                 this.mode = MODE_ADD;

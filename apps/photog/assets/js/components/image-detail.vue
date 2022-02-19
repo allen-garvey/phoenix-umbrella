@@ -40,6 +40,7 @@
         />
         <Image-Items-List 
             :imageId="image.id"
+            :getModel="getModel"
             :sendJson="sendJson" 
             heading="Albums" 
             itemRouteName="albumsShow" 
@@ -54,6 +55,7 @@
         
         <Image-Items-List 
             :imageId="image.id"
+            :getModel="getModel"
             :sendJson="sendJson" 
             heading="Persons" 
             itemRouteName="personsShow"
