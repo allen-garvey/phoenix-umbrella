@@ -107,22 +107,6 @@ defmodule PhotogWeb.ImageController do
   end
 
   @doc """
-  Gets the albums unused by an image
-  """
-  def albums_for(conn, %{"id" => id, "unused" => "true"}) do
-    albums = Api.list_image_albums_unused(id)
-    render(conn, "albums.json", albums: albums)
-  end
-
-  @doc """
-  Gets the persons unused by an image
-  """
-  def persons_for(conn, %{"id" => id, "unused" => "true"}) do
-    persons = Api.list_image_persons_unused(id)
-    render(conn, "persons.json", persons: persons)
-  end
-
-  @doc """
   Adds albums to an image
   tags comma-delimited list of album ids
   """

@@ -151,8 +151,12 @@ export default {
             type: String,
             required: true,
         },
-        unusedItemsApiUrl: {
+        getItemsApiUrl: {
             type: String,
+            required: true,
+        },
+        currentItemsSet: {
+            type: Set,
             required: true,
         },
         addItemsApiUrl: {
@@ -236,8 +240,8 @@ export default {
             }
         },
         fetchAddItems(){
-            fetchJson(API_URL_BASE + this.unusedItemsApiUrl).then((items) => {
-                this.itemsThatCanBeAdded = items;
+            fetchJson(API_URL_BASE + this.getItemsApiUrl).then((items) => {
+                this.itemsThatCanBeAdded = items.filter(item => !this.currentItemsSet.has(item.id));
                 this.selectedItemsMap = {};
                 this.mode = MODE_ADD;
             });

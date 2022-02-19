@@ -66,12 +66,10 @@ defmodule PhotogWeb.Router do
     patch "/tags/:id/albums/reorder",         TagController, :reorder_albums
 
     # Edit album images
-    get "/images/:id/albums",                 ImageController, :albums_for
     post "/images/:id/albums",                ImageController, :add_albums
     delete "/albums/:id/images",              AlbumController, :remove_images_from_album
 
     # Edit person images
-    get "/images/:id/persons",                ImageController, :persons_for
     post "/images/:id/persons",               ImageController, :add_persons
     delete "/persons/:id/images",             PersonController, :remove_images_from_person
   end

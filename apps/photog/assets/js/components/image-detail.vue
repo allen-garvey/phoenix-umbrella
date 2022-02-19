@@ -44,7 +44,8 @@
             heading="Albums" 
             itemRouteName="albumsShow" 
             :items="image.albums" 
-            :unusedItemsApiUrl="`/images/${image.id}/albums/?unused=true`" 
+            getItemsApiUrl="/albums/?excerpt=true"
+            :currentItemsSet="itemsToIdSet(image.albums)"
             :addItemsApiUrl="`/images/${image.id}/albums`" 
             itemsApiName="albums" 
             removeItemApiUrlBase="/albums" 
@@ -57,7 +58,8 @@
             heading="Persons" 
             itemRouteName="personsShow"
             :items="image.persons" 
-            :unusedItemsApiUrl="`/images/${image.id}/persons/?unused=true`" 
+            getItemsApiUrl="/persons/?excerpt=true"
+            :currentItemsSet="itemsToIdSet(image.persons)" 
             :addItemsApiUrl="`/images/${image.id}/persons`" 
             itemsApiName="persons" 
             removeItemApiUrlBase="/persons" 
@@ -271,6 +273,12 @@ export default {
             this.updateImage(data).then((response)=>{
                 this.image.is_favorite = response.data.is_favorite;
             });
+        },
+        itemsToIdSet(items){
+            return items.reduce((set, item) => { 
+                set.add(item.id);
+                return set;
+            }, new Set());
         },
     }
 }

@@ -257,48 +257,6 @@ defmodule Photog.Api do
   end
 
   @doc """
-  Gets albums not used by an image given by id
-  """
-  def list_image_albums_unused(image_id) do
-    album_images_suquery = from(
-                                album_image in AlbumImage,
-                                where: album_image.image_id == ^image_id,
-                                distinct: album_image.album_id,
-                                select: %{album_id: album_image.album_id}
-                            )
-
-    from(
-        album in Album,
-        left_join: album_image in subquery(album_images_suquery),
-        on: album.id == album_image.album_id,
-        where: is_nil(album_image.album_id),
-        order_by: [album.name, album.id]
-    )
-    |> Repo.all
-  end
-
-  @doc """
-  Gets persons not used by an image given by id
-  """
-  def list_image_persons_unused(image_id) do
-    person_images_suquery = from(
-                                person_image in PersonImage,
-                                where: person_image.image_id == ^image_id,
-                                distinct: person_image.person_id,
-                                select: %{person_id: person_image.person_id}
-                            )
-
-    from(
-        person in Person,
-        left_join: person_image in subquery(person_images_suquery),
-        on: person.id == person_image.person_id,
-        where: is_nil(person_image.person_id),
-        order_by: [person.name, person.id]
-    )
-    |> Repo.all
-  end
-
-  @doc """
   Creates a image.
 
   ## Examples
