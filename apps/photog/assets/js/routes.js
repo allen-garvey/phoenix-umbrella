@@ -1,5 +1,5 @@
 import { getCurrentYear } from './date-helpers';
-import { getOptionalParams, buildImagesIndexVariant, buildImportsShowVariant } from './router-helpers.js';
+import { getOptionalParams, buildImagesIndexVariant, buildImportsShowVariant, buildAlbumVariant } from './router-helpers.js';
 import { albumRelatedFields, sortImagesCallback, sortAlbumsCallback } from './routes-helpers';
 
 import ThumbnailList from './components/thumbnail-list.vue';
@@ -47,32 +47,7 @@ export default {
             name: 'importsIndex', 
             component: ImportsIndex,
         },
-        { 
-            path: '/albums',
-            name: 'albumsIndex', 
-            component: ThumbnailList,
-            props: (route) => {
-                const props = {
-                    apiPath: route.path,
-                    apiItemsCountPath: `${route.path}/count`,
-                    enableBatchSelectAlbums: true,
-                    isPaginated: true,
-                    newItemLink: {name: 'albumsNew'},
-                    pageTitle: 'Albums',
-                    itemPreviewContentCallback: (album) => album.tags.map(tag => tag.name).join(', '),
-                    showRouteFor: (item, _model)=>{
-                        return {
-                            name: 'albumsShow',
-                            params: {
-                                id: item.id,
-                            },
-                        };
-                    },
-                };
-
-                return props;
-            },
-        },
+        buildAlbumVariant('/albums', 'albumsIndex'),
         { 
             path: '/persons',
             name: 'personsIndex', 
@@ -210,52 +185,41 @@ export default {
                 };
             },
         },
-        { 
-            path: '/albums/years/:year',
-            name: 'albumsForYear', 
-            component: ThumbnailList,
-            props: (route) => {
-                const year = parseInt(route.params.year);
-                const previousYear = year - 1;
-                const nextYear = year + 1;
+        buildAlbumVariant('/albums/favorites', 'albumFavoritesIndex', (route) => {
+            const props = {
+                apiPath: '/albums/?favorites=true',
+                apiItemsCountPath: '/albums/count?favorites=true',
+                pageTitle: 'Favorite Albums',
+            };
 
-                const props = {
-                    apiPath: route.path,
-                    apiItemsCountPath: `${route.path}/count`,
-                    enableBatchSelectAlbums: true,
-                    isPaginated: true,
-                    newItemLink: {name: 'albumsNew'},
-                    pageTitle: `Albums from ${route.params.year}`,
-                    previousPageLink: {
-                        text: `Albums from ${previousYear}`,
-                        link: {name: 'albumsForYear', params: {year: previousYear}},
-                    },
-                    itemPreviewContentCallback: (album) => album.tags.map(tag => tag.name).join(', '),
-                    showRouteFor: (item, _model)=>{
-                        return {
-                            name: 'albumsShow',
-                            params: {
-                                id: item.id,
-                                album_id: item.id,
-                            },
-                        };
-                    },
-                    slideshowRoute: {
-                        name: 'imageYearSlideshow', 
-                        params: { year: route.params.year }
-                    },
+            return props;
+        }),
+        buildAlbumVariant('/albums/years/:year', 'albumsForYear', (route) => {
+            const year = parseInt(route.params.year);
+            const previousYear = year - 1;
+            const nextYear = year + 1;
+
+            const props = {
+                pageTitle: `Albums from ${route.params.year}`,
+                previousPageLink: {
+                    text: `Albums from ${previousYear}`,
+                    link: {name: 'albumsForYear', params: {year: previousYear}},
+                },
+                slideshowRoute: {
+                    name: 'imageYearSlideshow', 
+                    params: { year: route.params.year }
+                },
+            };
+
+            if(year < (new Date).getFullYear()){
+                props.nextPageLink = {
+                    text: `Albums from ${nextYear}`,
+                    link: {name: 'albumsForYear', params: {year: nextYear}},
                 };
+            }
 
-                if(year < (new Date).getFullYear()){
-                    props.nextPageLink = {
-                        text: `Albums from ${nextYear}`,
-                        link: {name: 'albumsForYear', params: {year: nextYear}},
-                    };
-                }
-
-                return props;
-            },
-        },
+            return props;
+        }),
         buildImagesIndexVariant(
             '/images/favorites',
             'imageFavoritesIndex',
