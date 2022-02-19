@@ -656,8 +656,12 @@ defmodule Photog.Api do
   Used for such things as forms, when just need name and id
   """
   def list_persons_excerpt do
-    Repo.all from person in Person,
-          order_by: :name
+    from(
+      Person,
+      order_by: :name,
+      select: [:id, :name]
+    )
+    |> Repo.all
   end
 
   @doc """
