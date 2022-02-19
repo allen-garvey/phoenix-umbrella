@@ -126,6 +126,14 @@ defmodule PhotogWeb.AlbumController do
   @doc """
   Return count of all albums
   """
+  def count(conn, %{"favorites" => is_favorite_param}) do
+    count = Api.albums_favorite_count!(is_favorite_param == "true")
+    
+    conn
+    |> put_view(PhotogWeb.GenericView)
+    |> render("data.json", data: count)
+  end
+
   def count(conn, _params) do
     count = Api.albums_count!
     

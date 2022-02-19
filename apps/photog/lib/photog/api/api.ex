@@ -419,6 +419,15 @@ defmodule Photog.Api do
     |> Repo.one!
   end
 
+  def albums_favorite_count!(is_favorite) when is_boolean(is_favorite) do
+    from(
+      album in Album,
+      where: album.is_favorite == ^is_favorite, 
+      select: count(album.id)
+    )
+    |> Repo.one!
+  end
+
   @doc """
   Gets images for an album
   """
