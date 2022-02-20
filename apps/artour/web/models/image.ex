@@ -26,7 +26,7 @@ defmodule Artour.Image do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :completion_date, :year])
-    |> validate_required([:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :completion_date])
+    |> validate_required([:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :year])
     |> unique_constraint(:title)
     |> unique_constraint(:slug)
     |> validate_slug(:slug)
