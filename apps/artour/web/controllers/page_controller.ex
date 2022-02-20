@@ -4,7 +4,7 @@ defmodule Artour.PageController do
   alias Artour.Public
 
   @doc """
-  Index defaults to first page
+  Displays all posts, images are lazy loaded
   """
   def index(conn, _params) do
     posts = Public.posts_for_homepage()
