@@ -18,11 +18,8 @@ defmodule Mix.Tasks.Distill.Html do
     Mix.Task.run "app.start", []
 
     routes = Distill.Page.routes
-              ++ Distill.Page.paginated_index_routes(Artour.Public.last_page())
               ++ Distill.Post.routes
-              ++ Distill.Tag.routes
-              ++ Distill.Category.routes
-
+    
     routes
     |> Task.async_stream(fn page_route -> 
       #render the page
@@ -34,6 +31,7 @@ defmodule Mix.Tasks.Distill.Html do
       filename = dest_dir |> Path.join(filename_for(page_route))
       save_to_file(conn, filename)
     end, ordered: false)
+    |> Enum.map(&Function.identity/1)
   end
 
   @doc """

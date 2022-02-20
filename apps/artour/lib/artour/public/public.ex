@@ -42,13 +42,6 @@ defmodule Artour.Public do
   end
 
   @doc """
-  Number of posts per page in index post list
-  """
-  def posts_per_page() do
-    30
-  end
-
-  @doc """
   Returns posts for homepage
   """
   def posts_for_homepage do
@@ -60,16 +53,6 @@ defmodule Artour.Public do
           order_by: [desc: :publication_date, desc: :id],
         )
     |> Repo.all
-  end
-
-  @doc """
-  Returns last page number (1 indexed)
-  """
-  def last_page do
-    post_count = Repo.one!(from p in Post, where: p.is_published, select: count(p.id))
-    (1.0 * post_count / posts_per_page())
-      |> Float.ceil
-      |> trunc()
   end
 
   @doc """
