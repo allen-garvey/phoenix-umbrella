@@ -2,7 +2,7 @@
 defmodule Mix.Tasks.Distill.Static do
   use Mix.Task
 
-  @shortdoc "Runs npm build script and copies static assets to given directory"
+  @shortdoc "Copies static assets to distill directory. Make sure to run `npm run deploy` first."
   def run(_args) do
     dest_dir = Distill.Directory.default_dest_directory
     #create root directory if it doesn't exist
@@ -13,7 +13,7 @@ defmodule Mix.Tasks.Distill.Static do
     IO.puts "\nCopying static assets\n"
 
     static_asset_filenames()
-    |> Task.async_stream(fn filename ->
+    |> Enum.map(fn filename ->
       dest_enclosing_dir = Path.join(dest_dir, Path.dirname(filename))
       #make sure enclosing directory in dest_dir exists
       File.mkdir_p! dest_enclosing_dir
@@ -22,7 +22,7 @@ defmodule Mix.Tasks.Distill.Static do
       dest_full_filename = Path.join(dest_dir, filename)
 
       File.cp source_full_filename, dest_full_filename
-    end, ordered: false)
+    end)
   end
 
   @doc """
