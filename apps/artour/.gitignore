@@ -35,3 +35,5 @@ erl_crash.dump
 
 #dialyzer
 .elixir_ls/*
+
+!/assets/static/favicon.ico
