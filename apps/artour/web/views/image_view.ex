@@ -125,7 +125,7 @@ defmodule Artour.ImageView do
   same order as the attribute_values function
   """
   def attribute_names_short() do
-    ["Title", "Thumbnail", "Description", "Date Completed"]
+    ["Title", "Thumbnail", "Description", "Date Completed", "Year"]
   end
 
   @doc """
@@ -133,7 +133,7 @@ defmodule Artour.ImageView do
   formatted values
   """
   def attribute_values_short(conn, image) do
-  	[image.title, img_tag(url_for(conn, image, :thumbnail, :local), class: "thumbnail", loading: "lazy"), image.description, Artour.DateHelpers.date_to_us_date(image.completion_date)]
+  	[image.title, img_tag(url_for(conn, image, :thumbnail, :local), class: "thumbnail", loading: "lazy"), image.description, Artour.DateHelpers.date_to_us_date(image.completion_date), image.year]
   end
 
   @doc """
@@ -141,7 +141,7 @@ defmodule Artour.ImageView do
   same order as the attribute_values function
   """
   def attribute_names() do
-    ["Title", "Slug", "Description", "Filename Large", "Filename Medium", "Filename Small", "Filename Thumbnail", "Date Completed"]
+    ["Title", "Slug", "Description", "Filename Large", "Filename Medium", "Filename Small", "Filename Thumbnail", "Date Completed", "Year"]
   end
 
   @doc """
@@ -149,6 +149,6 @@ defmodule Artour.ImageView do
   formatted values
   """
   def attribute_values(image) do
-    [image.title, image.slug, image.description, image.filename_large, image.filename_medium, image.filename_small, image.filename_thumbnail, Artour.DateHelpers.date_to_us_date(image.completion_date)]
+    [image.title, image.slug, image.description, image.filename_large, image.filename_medium, image.filename_small, image.filename_thumbnail, Artour.DateHelpers.date_to_us_date(image.completion_date), image.year]
   end
 end

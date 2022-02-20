@@ -12,6 +12,7 @@ defmodule Artour.Image do
     field :filename_small, :string
     field :filename_thumbnail, :string
     field :completion_date, :date
+    field :year, :integer
 
     has_many :post_images, Artour.PostImage
 
@@ -24,7 +25,7 @@ defmodule Artour.Image do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :completion_date])
+    |> cast(params, [:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :completion_date, :year])
     |> validate_required([:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :completion_date])
     |> unique_constraint(:title)
     |> unique_constraint(:slug)
