@@ -1,23 +1,19 @@
 <template>
 <div>
-    <div v-if="isInitialLoadComplete && formats.length === 0">Add some formats first</div>
-    <div v-if="isInitialLoadComplete && formats.length > 0">
-        <file-input
-            v-if="imageFiles.length < 1"
-            :files-uploaded="imageFilesReplaced"
-        >
-        </file-input>
-        <files-display
-            v-if="imageFiles.length > 0"
-            :images="images"
-            :image-files="imageFiles"
-            :formats="formats"
-            :errors="errors"
-            :value-changed="valueChanged"
-            :save="save"
-        >
-        </files-display>
-    </div>
+    <file-input
+        v-if="imageFiles.length < 1"
+        :files-uploaded="imageFilesReplaced"
+    >
+    </file-input>
+    <files-display
+        v-if="imageFiles.length > 0"
+        :images="images"
+        :image-files="imageFiles"
+        :errors="errors"
+        :value-changed="valueChanged"
+        :save="save"
+    >
+    </files-display>
 </div>
 </template>
 
@@ -30,10 +26,6 @@ import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';
 export default {
     props: {
         csrfToken: {
-            type: String,
-            required: true,
-        },
-        apiFormatIndexUrl: {
             type: String,
             required: true,
         },
@@ -50,16 +42,8 @@ export default {
         FileInput,
         FilesDisplay,
     },
-    created(){
-        fetchJson(this.apiFormatIndexUrl).then((formats)=>{
-            this.formats = formats;
-            this.isInitialLoadComplete = true;
-        });
-    },
     data(){
         return {
-            isInitialLoadComplete: false,
-            formats: [],
             imageFiles: [],
             images: [],
             errors: null,
@@ -79,7 +63,6 @@ export default {
                 return {
                     title: imageFile.title,
                     slug: imageFile.slug,
-                    format_id: this.formats[0].id,
                     description: null,
                     completion_date: null,
                     filename_large: imageFile.lg || imageFile.med,

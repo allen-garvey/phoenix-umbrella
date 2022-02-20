@@ -26,13 +26,6 @@
                         <form-input-errors :errors="getError(i, 'description')" />
                     </div>
                     <div class="form-group">
-                        <label class="control-label" :for="`image_${i}_format`">Format</label>
-                        <select class="form-control" :id="`image_${i}_format`" :value="image.format_id" @change="valueChanged($event, i, 'format_id')">
-                            <option v-for="(format, i) in formats" :key="i" :value="format.id">{{format.name}}</option>
-                        </select>
-                        <form-input-errors :errors="getError(i, 'format_id')" />
-                    </div>
-                    <div class="form-group">
                         <label class="control-label" :for="`image_${i}_completion_date`">Completion date</label>
                         <input class="form-control" type="date" :id="`image_${i}_completion_date`" @change="valueChanged($event, i, 'completion_date')" />
                         <form-input-errors :errors="getError(i, 'completion_date')" />
@@ -124,10 +117,6 @@ export default {
             required: true,
         },
         imageFiles: {
-            type: Array,
-            required: true,
-        },
-        formats: {
             type: Array,
             required: true,
         },
