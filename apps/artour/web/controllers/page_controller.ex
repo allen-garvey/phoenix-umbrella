@@ -39,15 +39,6 @@ defmodule Artour.PageController do
   end
 
   @doc """
-  Shows about page
-  """
-  def about(conn, _params) do
-    heading = "About " <> Artour.LayoutHelpers.site_title
-
-    render conn, "basic_page.html", page_title: "About", heading: heading, body: Page.about_text
-  end
-
-  @doc """
   Shows list of categories that contain 1 or more related posts
   """
   def browse(conn, _params) do

@@ -42,7 +42,6 @@ defmodule Artour.Router do
     #pagination for index
     get "/pages/:page_num", PageController, :page
 
-    get "/about", PageController, :about
     get "/browse", PageController, :browse
     get "/404.html", PageController, :error_404
 
