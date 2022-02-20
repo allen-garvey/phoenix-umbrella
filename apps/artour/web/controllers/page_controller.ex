@@ -2,7 +2,6 @@ defmodule Artour.PageController do
   use Artour.Web, :controller
 
   alias Artour.Public
-  alias Artour.Page
 
   @doc """
   Index defaults to first page
@@ -24,18 +23,6 @@ defmodule Artour.PageController do
 
     posts = Public.posts_for_page(page_num)
     render conn, "index.html", posts: posts, current_page: page_num, last_page: last_page, main_container_class: "", javascript: true, facebook_image: Enum.fetch!(posts, 0).cover_image
-  end
-
-  @doc """
-  Displays list of all pages in paginated index
-  """
-  def pagination_index(conn, _params) do
-    page_list = Public.list_posts()
-            #more verbose version of chunk needed so that unfilled pages will not be discarded
-            |> Enum.chunk_every(Public.posts_per_page, Public.posts_per_page, [])
-            |> Enum.map(&Artour.PageView.page_summary_title/1)
-
-    render conn, "pagination_index.html", page_list: page_list
   end
 
   @doc """

@@ -37,8 +37,6 @@ defmodule Artour.Router do
     pipe_through [:public_browser, :public_layout]
 
     get "/", PageController, :index
-    #show all list of all pages in paginated index
-    get "/pages", PageController, :pagination_index
     #pagination for index
     get "/pages/:page_num", PageController, :page
 
