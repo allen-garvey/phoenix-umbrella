@@ -14,29 +14,6 @@
 	}
 }
 
-/**
-* Pagination
-*/
-.pagination-container{
-	display: flex;
-	justify-content: space-between;
-	padding-bottom: 4em;
-}
-$symbol_margin: 5px;
-
-.back-container a:before{
-	content: "<<";
-	//so not underlined on hover
-	display: inline-block;
-	margin-right: $symbol_margin;
-}
-.forward-container a:after{
-	content: ">>";
-	//so not underlined on hover
-	display: inline-block;
-	margin-left: $symbol_margin;
-}
-
 /*
 * Post excerpt for homepage only
 */

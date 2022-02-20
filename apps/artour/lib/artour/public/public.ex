@@ -49,24 +49,15 @@ defmodule Artour.Public do
   end
 
   @doc """
-  Returns posts for current page
-  page_num is 1 indexed page
+  Returns posts for homepage
   """
-  def posts_for_page(page_num) when is_integer(page_num) do
-    post_offset = cond do
-              page_num <= 0 -> 1
-              true -> (page_num - 1) * posts_per_page()
-          end
-
+  def posts_for_homepage do
     from(
           p in Post,
-          join: category in assoc(p, :category),
           join: cover_image in assoc(p, :cover_image),
           where: p.is_published == true,
-          preload: [category: category, cover_image: cover_image],
+          preload: [cover_image: cover_image],
           order_by: [desc: :publication_date, desc: :id],
-          limit: ^posts_per_page(),
-          offset: ^post_offset
         )
     |> Repo.all
   end

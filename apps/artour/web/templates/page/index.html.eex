@@ -4,22 +4,3 @@
 
 end %>
 
-<div class="container">
-	<div class="pagination-container">
-		<%= if @current_page != 1 do %>
-			<div class="back-container">
-				<%= link "Newer", to: page_path(@conn, :page, Integer.to_string(@current_page - 1)) %>
-			</div>
-		<% end %>
-		<%= if @last_page != 1 do %>
-			<div>
-				<%= link "All", to: page_path(@conn, :pagination_index) %>
-			</div>
-		<% end %>
-		<%= if @current_page != @last_page do %>
-			<div class="forward-container">
-				<%= link "Older", to: page_path(@conn, :page, Integer.to_string(@current_page + 1)) %>
-			</div>
-		<% end %>
-	</div>
-</div>
