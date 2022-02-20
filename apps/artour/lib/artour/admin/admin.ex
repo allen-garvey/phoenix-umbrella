@@ -8,7 +8,6 @@ defmodule Artour.Admin do
 
   alias Artour.Post
   alias Artour.PostTag
-  alias Artour.Format
   # alias Artour.Category
   alias Artour.Image
   # alias Artour.PostImage
@@ -50,9 +49,7 @@ defmodule Artour.Admin do
   """
   def list_images do
     from(
-          i in Image,
-          join: format in assoc(i, :format),
-          preload: [format: format],
+          Image,
           order_by: [desc: :id]
         )
     |> Repo.all
@@ -64,8 +61,6 @@ defmodule Artour.Admin do
   def get_image!(image_id) do
     from(
           i in Image,
-          join: format in assoc(i, :format),
-          preload: [format: format],
           where: i.id == ^image_id,
           limit: 1
     )
@@ -145,14 +140,6 @@ defmodule Artour.Admin do
       {1, nil} = from(pt in PostTag, where: pt.post_id == ^post_id and pt.tag_id ==^tag_id)
       |> Repo.delete_all()
     end)
-  end
-
-  @doc """
-  Returns list of formats
-  """
-  def list_formats() do
-    from(Format, order_by: :name)
-    |> Repo.all
   end
 
 end

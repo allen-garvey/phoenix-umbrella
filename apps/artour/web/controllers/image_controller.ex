@@ -18,8 +18,7 @@ defmodule Artour.ImageController do
 
   def new(conn, _params) do
     changeset = Admin.change_image(%Image{})
-    formats = Artour.Format.form_list(Repo)
-    render(conn, "new.html", changeset: changeset, formats: formats)
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"image" => image_params, "form_submit_type" => submit_type}) do
@@ -28,19 +27,17 @@ defmodule Artour.ImageController do
     case Repo.insert(changeset) do
       {:ok, image} ->
         if submit_type == "add_another" do
-          changeset = Image.changeset(%Image{format_id: image.format_id, completion_date: image.completion_date})
-          formats = Artour.Format.form_list(Repo)
+          changeset = Image.changeset(%Image{completion_date: image.completion_date})
           conn
             |> put_flash(:info, Artour.ImageView.display_name(image) <> " saved.")
-            |> render("new.html", changeset: changeset, formats: formats)
+            |> render("new.html", changeset: changeset)
         else
           conn
             |> put_flash(:info, "Image created successfully.")
             |> redirect(to: image_path(conn, :index))
         end
       {:error, changeset} ->
-        formats = Artour.Format.form_list(Repo)
-        render(conn, "new.html", changeset: changeset, formats: formats)
+        render(conn, "new.html", changeset: changeset)
     end
   end
 
@@ -52,8 +49,7 @@ defmodule Artour.ImageController do
   def edit(conn, %{"id" => id}) do
     image = Repo.get!(Image, id)
     changeset = Image.changeset(image)
-    formats = Artour.Format.form_list(Repo)
-    render(conn, "edit.html", image: image, changeset: changeset, formats: formats)
+    render(conn, "edit.html", image: image, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "image" => image_params}) do
@@ -65,8 +61,7 @@ defmodule Artour.ImageController do
         |> put_flash(:info, "Image updated successfully.")
         |> redirect(to: image_path(conn, :show, image))
       {:error, changeset} ->
-        formats = Artour.Format.form_list(Repo)
-        render(conn, "edit.html", image: image, changeset: changeset, formats: formats)
+        render(conn, "edit.html", image: image, changeset: changeset)
     end
   end
 

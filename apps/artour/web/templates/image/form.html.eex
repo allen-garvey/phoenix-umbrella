@@ -55,12 +55,6 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :format_id, class: "control-label" %>
-    <%= select f, :format_id, @formats , class: "form-control" %>
-    <%= error_tag f, :format_id %>
-  </div>
-
-  <div class="form-group">
     <%= label f, :completion_date, class: "control-label" %>
     <%= date_input f, :completion_date, class: "form-control" %>
     <%= error_tag f, :completion_date %>

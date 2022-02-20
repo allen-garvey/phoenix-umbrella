@@ -1,2 +1,2 @@
 <h1 class="import-images-header">Import images</h1>
-<div id="import_images" data-csrf-token="<%= @csrf_token %>" data-api-format-index-url="<%= api_format_path(@conn, :index) %>" data-api-create-images-url="<%= api_image_path(@conn, :create_many) %>" data-images-index-url="<%= image_path(@conn, :index) %>"></div>
+<div id="import_images" data-csrf-token="<%= @csrf_token %>" data-api-create-images-url="<%= api_image_path(@conn, :create_many) %>" data-images-index-url="<%= image_path(@conn, :index) %>"></div>

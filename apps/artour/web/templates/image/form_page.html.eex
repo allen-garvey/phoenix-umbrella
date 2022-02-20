@@ -12,8 +12,8 @@ end %>
 <%= render "form.html", changeset: @changeset,
                         action: @action,
                         show_delete: assigns[:show_delete],
-                        save_another: assigns[:save_another],
-                        formats: @formats %>
+                        save_another: assigns[:save_another]
+%>
 
 <%= if assigns[:show_delete] do
   render Artour.SharedView, "hidden_delete_form.html",

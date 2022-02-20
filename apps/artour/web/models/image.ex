@@ -13,8 +13,6 @@ defmodule Artour.Image do
     field :filename_thumbnail, :string
     field :completion_date, :date
 
-    belongs_to :format, Artour.Format
-
     has_many :post_images, Artour.PostImage
 
     many_to_many :posts, Artour.Post, join_through: "post_images", on_delete: :delete_all
@@ -26,9 +24,8 @@ defmodule Artour.Image do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :completion_date, :format_id])
-    |> validate_required([:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :completion_date, :format_id])
-    |> assoc_constraint(:format)
+    |> cast(params, [:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :completion_date])
+    |> validate_required([:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :completion_date])
     |> unique_constraint(:title)
     |> unique_constraint(:slug)
     |> validate_slug(:slug)
