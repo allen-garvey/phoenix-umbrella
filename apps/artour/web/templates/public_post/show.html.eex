@@ -17,5 +17,4 @@
 	%>
 </div>
 <%= render "album.html", conn: @conn, post_images: @post.post_images %>
-<%= render "post_meta_info.html", conn: @conn, post: @post %>
 <%= render "lightbox.html" %>
