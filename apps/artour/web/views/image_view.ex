@@ -75,7 +75,7 @@ defmodule Artour.ImageView do
   location: atom that should be either :cloud or :local
   """
   def img_tag_for(conn, image, location) do
-    img_tag url_for(conn, image, :small, location), alt: image.description, srcset: srcset_for(conn, image, location)
+    img_tag(url_for(conn, image, :small, location), alt: image.description, srcset: srcset_for(conn, image, location), loading: "lazy")
   end
 
   @doc """
@@ -84,7 +84,7 @@ defmodule Artour.ImageView do
   location: atom that should be either :cloud or :local
   """
   def img_tag_for(conn, image, size, location) do
-    img_tag url_for(conn, image, size, location), alt: image.description
+    img_tag(url_for(conn, image, size, location), alt: image.description, loading: "lazy")
   end
 
   @doc """
@@ -133,7 +133,7 @@ defmodule Artour.ImageView do
   formatted values
   """
   def attribute_values_short(conn, image) do
-  	[image.title, img_tag(url_for(conn, image, :thumbnail, :local), class: "thumbnail"), image.description, Artour.FormatView.display_name(image.format), Artour.DateHelpers.date_to_us_date(image.completion_date)]
+  	[image.title, img_tag(url_for(conn, image, :thumbnail, :local), class: "thumbnail", loading: "lazy"), image.description, Artour.FormatView.display_name(image.format), Artour.DateHelpers.date_to_us_date(image.completion_date)]
   end
 
   @doc """
