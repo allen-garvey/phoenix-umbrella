@@ -18,10 +18,6 @@
     <header class="header container">
       <nav class="nav">
         <div class="brand"><%= link site_title(), to: page_path(@conn, :index) %></div>
-        <ul class="menu-list">
-          <li><%= link "Browse", to: page_path(@conn, :browse) %></li>
-          <li><%= link "About", to: page_path(@conn, :about) %></li>
-        </ul>
       </nav>
     </header>
 
