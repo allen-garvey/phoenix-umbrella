@@ -1,11 +1,9 @@
 defmodule Artour.Image do
   use Artour.Web, :model
   import Artour.ModelHelpers.FilenameValidator, only: [validate_image_filename: 2]
-  import Artour.ModelHelpers.SlugValidator, only: [validate_slug: 2]
 
   schema "images" do
     field :title, :string
-    field :slug, :string
     field :description, :string
     field :filename_large, :string
     field :filename_medium, :string
@@ -25,11 +23,9 @@ defmodule Artour.Image do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :completion_date, :year])
-    |> validate_required([:title, :slug, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :year])
+    |> cast(params, [:title, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :completion_date, :year])
+    |> validate_required([:title, :description, :filename_large, :filename_medium, :filename_small, :filename_thumbnail, :year])
     |> unique_constraint(:title)
-    |> unique_constraint(:slug)
-    |> validate_slug(:slug)
     |> validate_image_filename(:filename_large)
     |> validate_image_filename(:filename_medium)
     |> validate_image_filename(:filename_small)

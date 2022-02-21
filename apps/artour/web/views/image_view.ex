@@ -141,7 +141,7 @@ defmodule Artour.ImageView do
   same order as the attribute_values function
   """
   def attribute_names() do
-    ["Title", "Slug", "Description", "Filename Large", "Filename Medium", "Filename Small", "Filename Thumbnail", "Date Completed", "Year"]
+    ["Title", "Description", "Filename Large", "Filename Medium", "Filename Small", "Filename Thumbnail", "Date Completed", "Year"]
   end
 
   @doc """
@@ -149,6 +149,6 @@ defmodule Artour.ImageView do
   formatted values
   """
   def attribute_values(image) do
-    [image.title, image.slug, image.description, image.filename_large, image.filename_medium, image.filename_small, image.filename_thumbnail, Artour.DateHelpers.date_to_us_date(image.completion_date), image.year]
+    [image.title, image.description, image.filename_large, image.filename_medium, image.filename_small, image.filename_thumbnail, Artour.DateHelpers.date_to_us_date(image.completion_date), image.year]
   end
 end
