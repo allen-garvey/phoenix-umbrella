@@ -20,7 +20,8 @@ defmodule Photog.Shutterbug.Command do
     if !is_command_available(image_magick_command)  do
       Error.exit_with_error("Image magick '#{image_magick_command}' command is not installed or unavailable", :image_magick_not_available)
     end
-    if !is_command_available(image_magick_command) do
+    
+    if !is_command_available(exiftool_command) do
       Error.exit_with_error("'#{exiftool_command}' command is not installed or unavailable", :exiftool_not_available)
     end
     true
