@@ -22,9 +22,22 @@ defmodule Mix.Tasks.Guggenheim do
         Error.exit_with_error("#{source_directory_name} contains no detected images", :no_images_found)
       end
 
+      # Create temp dir for converted images, exit if already exists
+      # Create liquid thumbnails in temp dir
+
+      # Create image resource for each image path
       for image_path <- image_paths do
-        IO.puts "Image_name #{Image.path_to_title(image_path)} Image_year #{image_year}"
+        image_title = Image.path_to_title(image_path)
+        # Figure out if image is landscape
+        # generate image names
+        # Create image sizes in temp dir
+        # Use title as temporary description
+        IO.puts "Image_name #{image_title} Image_year #{image_year}"
       end
+
+      # Run optipng on temp folder
+      # Run jpg optimization on temp folder
+      # Copy temp dir to artour image directory
     end
     
     def run(_args) do
