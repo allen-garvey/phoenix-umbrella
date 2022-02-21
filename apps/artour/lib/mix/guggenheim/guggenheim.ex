@@ -7,6 +7,9 @@ defmodule Mix.Tasks.Guggenheim do
   
     @shortdoc "Import images into artour"
     def run([source_directory_name]) do
+      # Check if imagemagick and exiftool are installed
+      Artour.Guggenheim.Command.are_import_commands_available()
+
       # Validate source directory
       if !File.dir?(source_directory_name) do
         Error.exit_with_error("#{source_directory_name} is not a valid directory", :dir_not_exists)
@@ -25,6 +28,7 @@ defmodule Mix.Tasks.Guggenheim do
       # Create temp dir for converted images, exit if already exists
       # Create liquid thumbnails in temp dir
 
+      # Start Artour app so db is available
       # Create image resource for each image path
       for image_path <- image_paths do
         image_title = Image.path_to_title(image_path)
