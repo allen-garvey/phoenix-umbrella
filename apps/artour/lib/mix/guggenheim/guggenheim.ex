@@ -3,6 +3,7 @@ defmodule Mix.Tasks.Guggenheim do
     use Mix.Task
 
     alias Artour.Guggenheim.Error
+    alias Artour.Guggenheim.Filesystem
     alias Artour.Guggenheim.Image
   
     @shortdoc "Import images into artour"
@@ -26,7 +27,10 @@ defmodule Mix.Tasks.Guggenheim do
       end
 
       # Create temp dir for converted images, exit if already exists
+      temp_dir = Filesystem.create_temp_dir(source_directory_name)
+
       # Create liquid thumbnails in temp dir
+      Image.create_liquid_thumbnails(temp_dir, source_image_models)
 
       # Start Artour app so db is available
       # Create image resource for each image path
@@ -39,7 +43,9 @@ defmodule Mix.Tasks.Guggenheim do
       end
 
       # Fix permissions on temp folder
+      Filesystem.fix_permissions(temp_dir)
       # Run optipng on temp folder
+      Image.optimize_pngs(temp_dir)
       # Run jpg optimization on temp folder
       # Copy temp dir to artour image directory
     end
