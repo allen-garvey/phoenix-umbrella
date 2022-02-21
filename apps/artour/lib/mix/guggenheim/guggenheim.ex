@@ -20,8 +20,8 @@ defmodule Mix.Tasks.Guggenheim do
       image_year = Image.get_image_year(source_directory_name, current_year)
       
       # Get list of image filenames
-      image_paths = Image.get_images_from_dir(source_directory_name)
-      if Enum.count(image_paths) == 0 do
+      source_image_models = Image.get_images_from_dir(source_directory_name)
+      if Enum.count(source_image_models) == 0 do
         Error.exit_with_error("#{source_directory_name} contains no detected images", :no_images_found)
       end
 
@@ -30,15 +30,15 @@ defmodule Mix.Tasks.Guggenheim do
 
       # Start Artour app so db is available
       # Create image resource for each image path
-      for image_path <- image_paths do
+      for {image_path, image_orientation} <- source_image_models do
         image_title = Image.path_to_title(image_path)
-        # Figure out if image is landscape
         # generate image names
         # Create image sizes in temp dir
         # Use title as temporary description
-        IO.puts "Image_name #{image_title} Image_year #{image_year}"
+        IO.puts "Image_name #{image_title} Image_year #{image_year} image_orientation #{image_orientation}"
       end
 
+      # Fix permissions on temp folder
       # Run optipng on temp folder
       # Run jpg optimization on temp folder
       # Copy temp dir to artour image directory

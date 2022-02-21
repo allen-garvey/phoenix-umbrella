@@ -21,6 +21,8 @@ defmodule Artour.Guggenheim.Image do
     def get_images_from_dir(source_directory_name) do
         File.ls!(source_directory_name)
         |> Enum.filter(&is_image_filename/1)
+        |> Enum.map(fn image_path -> Path.join(source_directory_name, image_path) end)
+        |> Enum.map(fn image_path -> {image_path, get_orientation(image_path)} end)
     end
 
     @doc """
@@ -48,6 +50,23 @@ defmodule Artour.Guggenheim.Image do
         |> (fn name -> Regex.split(~r/[ _-]+/, name) end).()
         |> Enum.map(&String.capitalize/1)
         |> Enum.join(" ")
+    end
+
+    def exif_for(image_file_path) when is_binary(image_file_path) do
+        with {exif_results, 0} <- System.cmd("exiftool", ["-unknown", "-json", image_file_path]) do
+            Jason.decode!(exif_results)
+            |> Enum.at(0)
+        end
+    end
+
+    def get_orientation(image_path) do
+        exif = exif_for(image_path)
+
+        # square images are considered landscape
+        case exif["ImageWidth"] < exif["ImageHeight"] do
+            false -> :landscape
+            true -> :portrait
+        end
     end
   
 end
