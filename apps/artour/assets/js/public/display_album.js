@@ -16,7 +16,7 @@ function initializeSlideData(links){
             caption: getData(link, 'caption'),
             src: getData(link, 'src'),
             srcset: getData(link, 'srcset'),
-            slug: getData(link, 'slug'),
+            id: getData(link, 'slug'),
             isInitialized: false,
         };
     });
@@ -63,7 +63,7 @@ function setVisibleImageAt(imageIndex){
     }
     document.querySelector('.caption-body').textContent = currentImageData.caption;
     
-    setImageUrl(currentImageData.slug);
+    setImageUrl(currentImageData.id);
 
     document.querySelectorAll('.lightbox-images-container>.image-container')
         .forEach((element, i)=>{
@@ -198,14 +198,14 @@ function showPreviousImage(){
 
 }
 
-//display image in lightbox on page load if image slug is in
+//display image in lightbox on page load if image id is in
 //hash url
-function displayImageFromUrl(slideData, imageSlugUrl){
-    if(!imageSlugUrl){
+function displayImageFromUrl(slideData, imageId){
+    if(!imageId){
         return;
     }
     for(let i=0;i<slideData.length;i++){
-        if(slideData[i].slug === imageSlugUrl){
+        if(slideData[i].id === imageId){
             setVisibleImageAt(i);
             displayLightbox();
             break;
