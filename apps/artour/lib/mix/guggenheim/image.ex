@@ -91,7 +91,12 @@ defmodule Artour.Guggenheim.Image do
     Optimize pngs file size
     """
     def optimize_pngs(temp_dir) do
-        System.cmd("optipng", Path.join(temp_dir, "*.png") |> Path.wildcard)
+        pngs = Path.join(temp_dir, "*.png") |> Path.wildcard
+
+        if Enum.count(pngs) > 0 do
+            System.cmd("optipng", pngs)
+        end
+
     end
   
 end
