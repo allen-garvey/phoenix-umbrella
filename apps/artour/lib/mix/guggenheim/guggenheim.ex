@@ -47,7 +47,9 @@ defmodule Mix.Tasks.Guggenheim do
       # Run optipng on temp folder
       Image.optimize_pngs(temp_dir)
       # Run jpg optimization on temp folder
-      # Copy temp dir to artour image directory
+      Image.optimize_jpgs(temp_dir)
+      # Print message to copy temp dir to source image folders
+      IO.puts "Images imported. Copy contents of #{temp_dir} to image source directory"
     end
     
     def run(_args) do
