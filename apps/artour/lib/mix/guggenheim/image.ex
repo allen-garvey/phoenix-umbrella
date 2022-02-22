@@ -128,14 +128,14 @@ defmodule Artour.Guggenheim.Image do
 
     def generate_image_size(image_path, temp_dir, size, suffix) do
         case Path.extname(image_path) do
-            ".png" -> generate_image_size(image_path, temp_dir, size, suffix, :lossless)
-            ".webp" -> generate_image_size(image_path, temp_dir, size, suffix, :lossless)
+            # ".png" -> generate_image_size(image_path, temp_dir, size, suffix, :lossless)
+            # ".webp" -> generate_image_size(image_path, temp_dir, size, suffix, :lossless)
             _ -> generate_image_size(image_path, temp_dir, size, suffix, :lossy)
         end
     end
 
     def generate_image_size(image_path, temp_dir, size, suffix, :lossy) do
-        System.cmd("convert", [image_path, "-resize", "#{size}", "-quality", "80%", "-set", "filename:name", "%t", Path.join(temp_dir, "%[filename:name]-#{suffix}.jpg")])
+        System.cmd("convert", [image_path, "-resize", "#{size}", "-quality", "90%", "-set", "filename:name", "%t", Path.join(temp_dir, "%[filename:name]-#{suffix}.jpg")])
 
         "#{Path.basename(image_path, Path.extname(image_path))}-#{suffix}.jpg"
     end
