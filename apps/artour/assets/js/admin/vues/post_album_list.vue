@@ -14,7 +14,7 @@
                 v-for="(postImage, index) in postImages" 
                 :key="postImage.id" 
                 draggable="true" 
-                :class="{[$style['cover-image-container']]: postImage.image.id === coverImageId}" 
+                :class="{[$style['cover-image-container']]: postImage.image.id === coverImageIdModel}" 
                 @dragstart="imageDragStart($event, index)" 
                 @dragover="imageDraggedOver($event, index)" 
                 @drop="imageDropped($event)"
@@ -30,7 +30,7 @@
                 </div>
                 <div :class="$style['image-buttons']">
                     <a :href="postImage.url.edit" class="btn btn-default" target="_blank">Edit</a>
-                    <button class=" btn btn-primary" v-show="postImage.image.id != coverImageId" @click="setCoverImage(postImage.image.id)">Make cover image</button>
+                    <button class=" btn btn-primary" v-show="postImage.image.id != coverImageIdModel" @click="setCoverImage(postImage.image.id)">Make cover image</button>
                 </div>
                 <div :class="$style['list-item-dragger']">&#9776;</div>
             </li>
@@ -119,12 +119,14 @@ export default {
     },
     created(){
         this.fetchImages();
+        this.coverImageIdModel = this.coverImageId;
     },
     data(){
         return {
             postImages: [],
             haveImagesBeenReordered: false,
             currentDragIndex: null,
+            coverImageIdModel: '',
         };
     },
     computed: {
@@ -143,7 +145,7 @@ export default {
         },
         setCoverImage(imageId){
             sendJson(this.editPostApiUrl, this.csrfToken, 'PATCH', {cover_image_id: imageId}).then((_response)=>{
-                this.coverImageId = imageId;
+                this.coverImageIdModel = imageId;
             });
         },
         saveImageOrder(){
