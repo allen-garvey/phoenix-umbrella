@@ -37,7 +37,11 @@ defmodule Artour.DateHelpers do
 	@doc """
   	Takes date string as argument
   	returns string date in format MM-DD-YYYY
-  	"""
+	"""
+	def date_to_us_date(nil) do
+		nil
+	end
+	
 	def date_to_us_date(date) do
 		datetime_to_us_date(date)
 	end
