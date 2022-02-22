@@ -33,13 +33,19 @@ defmodule Mix.Tasks.Guggenheim do
       Image.create_liquid_thumbnails(temp_dir, source_image_models)
 
       # Start Artour app so db is available
+      # Wrap for loop in transaction
       # Create image resource for each image path
       for {image_path, image_orientation} <- source_image_models do
         image_title = Image.path_to_title(image_path)
-        # generate image names
-        # Create image sizes in temp dir
-        # Use title as temporary description
-        IO.puts "Image_name #{image_title} Image_year #{image_year} image_orientation #{image_orientation}"
+        
+        image_map = %{
+          "title" => image_title,
+          "description" => image_title,
+          "year" => image_year,
+        }
+        |> Map.merge(Image.generate_images(image_path, temp_dir, image_orientation))
+        
+        IO.inspect image_map
       end
 
       # Fix permissions on temp folder
