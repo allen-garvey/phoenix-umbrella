@@ -15,15 +15,13 @@ defmodule Photog.Shutterbug.Command do
   Valiates commands needed to run import are installed on system
   """
   def are_import_commands_available do
-    image_magick_command = "convert"
-    exiftool_command = "exiftool"
-    if !is_command_available(image_magick_command)  do
-      Error.exit_with_error("Image magick '#{image_magick_command}' command is not installed or unavailable", :image_magick_not_available)
-    end
+    ["convert", "exiftool"]
+    |> Enum.map(fn command -> 
+      if !is_command_available(command)  do
+        Error.exit_with_error("#{command} command is not installed or unavailable", :command_not_available)
+      end
+    end)
     
-    if !is_command_available(exiftool_command) do
-      Error.exit_with_error("'#{exiftool_command}' command is not installed or unavailable", :exiftool_not_available)
-    end
     true
   end
 
