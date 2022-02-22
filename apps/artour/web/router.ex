@@ -62,8 +62,6 @@ defmodule Artour.Router do
     get "/posts/:post/images/add", PostController, :add_images
     post "/posts/:post/images", PostController, :save_images
 
-    get "/images/import", ImageController, :import_images
-
     resources "/categories", CategoryController
     resources "/posts", PostController
     resources "/images", ImageController
@@ -89,8 +87,5 @@ defmodule Artour.Router do
 
     #add images to post
     get "/posts/:post/images/addable", ApiPostController, :addable_images
-
-    #create images from file import
-    post "/images/import", ApiImageController, :create_many
   end
 end

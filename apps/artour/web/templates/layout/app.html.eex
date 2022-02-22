@@ -20,7 +20,6 @@
             <li><%= link "Images", to: image_path(@conn, :index) %></li>
             <li><%= link "Tags", to: tag_path(@conn, :index) %></li>
             <li><%= link "Add post", to: post_path(@conn, :new) %></li>
-            <li><%= link "Import images", to: image_path(@conn, :import_images) %></li>
             <li><%= link "Resources", to: admin_path(@conn, :index) %></li>
           </ul>
         </nav>
