@@ -4,7 +4,7 @@ defmodule Artour.Guggenheim.Filesystem do
     @doc """
     Creates temp directory for converted image
     """
-    def create_temp_dir(source_directory_name) do
+    def create_temp_dir!(source_directory_name) do
         temp_dir_name = Path.join(source_directory_name, "__temp__artour-guggenheim")
 
         if File.exists?(temp_dir_name) do

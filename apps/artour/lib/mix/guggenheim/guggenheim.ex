@@ -39,7 +39,7 @@ defmodule Mix.Tasks.Guggenheim do
       end
 
       # Create temp dir for converted images, exit if already exists
-      temp_dir = Filesystem.create_temp_dir(source_directory_name)
+      temp_dir = Filesystem.create_temp_dir!(source_directory_name)
 
       # Create liquid thumbnails in temp dir
       Image.create_liquid_thumbnails(temp_dir, source_image_models)
