@@ -7,7 +7,19 @@ defmodule Mix.Tasks.Guggenheim do
     alias Artour.Guggenheim.Image
   
     @shortdoc "Import images into artour"
+    def run([source_directory_name, image_description]) do
+      import_images(source_directory_name, image_description)
+    end
+
     def run([source_directory_name]) do
+      import_images(source_directory_name)
+    end
+    
+    def run(_args) do
+      Error.exit_with_error("usage: mix guggenheim <image_source_directory>")
+    end
+
+    def import_images(source_directory_name, image_description \\ nil) do
       # Check if imagemagick and exiftool are installed
       Artour.Guggenheim.Command.are_import_commands_available()
 
@@ -44,7 +56,7 @@ defmodule Mix.Tasks.Guggenheim do
           
           image_map = %{
             "title" => image_title,
-            "description" => image_title,
+            "description" => image_description || image_title,
             "year" => image_year,
           }
           |> Map.merge(Image.generate_images(image_path, temp_dir, image_orientation))
@@ -61,9 +73,5 @@ defmodule Mix.Tasks.Guggenheim do
       image_priv_dir = Path.join([__ENV__.file, "..", "..", "..", "..", "priv", "static", "media", "images"])
       |> Path.expand
       IO.puts "\n\nImages imported. Copy contents of #{temp_dir} to #{image_priv_dir}"
-    end
-    
-    def run(_args) do
-      Error.exit_with_error("usage: mix guggenheim <image_source_directory>")
     end
   end
