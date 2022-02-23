@@ -1,5 +1,5 @@
 defmodule Photog.Shutterbug.File do
-  alias Photog.Shutterbug.Error
+  alias Common.MixHelpers.Error
 
   @doc """
   Returns list of image files for a given directory

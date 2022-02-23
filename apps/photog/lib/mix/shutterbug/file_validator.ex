@@ -1,5 +1,5 @@
 defmodule Photog.Shutterbug.FileValidator do
-  alias Photog.Shutterbug.Error
+  alias Common.MixHelpers.Error
 
   def validate_import_directory!(directory_path) do
     cond do

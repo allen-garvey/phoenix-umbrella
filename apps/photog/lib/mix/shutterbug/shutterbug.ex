@@ -2,10 +2,10 @@ defmodule Mix.Tasks.Shutterbug do
   use Mix.Task
 
   alias Photog.Repo
-  alias Photog.Shutterbug.Error
+  alias Common.MixHelpers.Error
   alias Photog.Shutterbug.Directory
   alias Photog.Shutterbug.FileValidator
-  alias Photog.Shutterbug.Command
+  alias Common.MixHelpers.Command
   alias Photog.Image.Exif
 
   @moduledoc """
@@ -17,25 +17,32 @@ defmodule Mix.Tasks.Shutterbug do
   def run([source_directory_name]) do
     masters_destination_path = Photog.Image.masters_directory()
     thumbnails_destination_path = Photog.Image.thumbnails_directory()
-    if FileValidator.validate_import_directory!(source_directory_name) and FileValidator.validate_import_directory!(masters_destination_path) and FileValidator.validate_import_directory!(thumbnails_destination_path) and Command.are_import_commands_available do
+    if validate_args([source_directory_name, masters_destination_path, thumbnails_destination_path]) do
       import_images_from_directory(source_directory_name, masters_destination_path, thumbnails_destination_path)
     end
   end
 
   def run([source_directory_name, target_directory_name]) do
-    if FileValidator.validate_import_directory!(source_directory_name) and FileValidator.validate_import_directory!(target_directory_name) and Command.are_import_commands_available do
+    if validate_args([source_directory_name, target_directory_name]) do
       import_images_from_directory(source_directory_name, Path.join(target_directory_name, "Masters"), Path.join(target_directory_name, "Thumbnails"))
     end
   end
 
   def run([source_directory_name, target_masters_directory_name, target_thumbnails_directory_name]) do
-    if FileValidator.validate_import_directory!(source_directory_name) and FileValidator.validate_import_directory!(target_masters_directory_name) and FileValidator.validate_import_directory!(target_thumbnails_directory_name) and Command.are_import_commands_available do
+    if validate_args([source_directory_name, target_masters_directory_name, target_thumbnails_directory_name]) do
       import_images_from_directory(source_directory_name, target_masters_directory_name, target_thumbnails_directory_name)
     end
   end
 
   def run(_args) do
   	Error.exit_with_error("usage: mix shutterbug <image_source_directory> <image_library_destination_directory>")
+  end
+
+  def validate_args(directories) do
+    directories
+    |> Enum.reduce(true, fn directory, is_valid -> 
+      is_valid and FileValidator.validate_import_directory!(directory)
+    end) and Command.validate_commands_are_installed!(["convert", "exiftool"])
   end
 
   @doc """

@@ -2,7 +2,7 @@
 defmodule Mix.Tasks.Guggenheim do
     use Mix.Task
 
-    alias Artour.Guggenheim.Error
+    alias Common.MixHelpers.Error
     alias Artour.Guggenheim.Filesystem
     alias Artour.Guggenheim.Image
   
@@ -20,8 +20,8 @@ defmodule Mix.Tasks.Guggenheim do
     end
 
     def import_images(source_directory_name, image_description \\ nil) do
-      # Check if imagemagick and exiftool are installed
-      Artour.Guggenheim.Command.are_import_commands_available()
+      # Check if necessary shell commands are installed
+      Common.MixHelpers.Command.validate_commands_are_installed!(["convert", "exiftool", "jpegoptim"])
 
       # Validate source directory
       if !File.dir?(source_directory_name) do

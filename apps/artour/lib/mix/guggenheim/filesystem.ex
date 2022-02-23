@@ -1,5 +1,5 @@
 defmodule Artour.Guggenheim.Filesystem do
-    alias Artour.Guggenheim.Error
+    alias Common.MixHelpers.Error
     
     @doc """
     Creates temp directory for converted image

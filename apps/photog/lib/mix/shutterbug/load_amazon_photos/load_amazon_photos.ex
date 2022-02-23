@@ -2,7 +2,7 @@ defmodule Mix.Tasks.Shutterbug.LoadAmazonPhotos do
   use Mix.Task
 
   alias Photog.Shutterbug
-  alias Photog.Shutterbug.Error
+  alias Common.MixHelpers.Error
 
   @moduledoc """
   Given a json file saved from Amazon photos api response, will add Amazon photo ids
