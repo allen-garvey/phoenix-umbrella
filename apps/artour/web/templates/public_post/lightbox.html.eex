@@ -5,7 +5,7 @@
             <div class="caption-body"></div>
             <div class="caption-overlay"></div>
         </div>
-        <div class="lightbox-button-container">
+        <div class="lightbox-button-container" id="lightbox-button-container">
             <div class="slideshow-left-button"></div>
             <div class="slideshow-right-button"></div>
         </div>

@@ -71,12 +71,6 @@
 		top: calc(100vh - #{$lightbox_button_dimensions * 2 + 50px});
 		z-index: 100;
 	}
-	.lightbox-button-container{
-		display: flex;
-		justify-content: space-between;
-		width: 120px;
-		
-	}
 	.caption-container{
 		position: relative;
 		text-align: center;
@@ -101,6 +95,20 @@
 		}
 		.caption-body:empty + .caption-overlay{
 			display: none;
+		}
+	}
+
+	.lightbox-button-container{
+		display: flex;
+		justify-content: space-between;
+		width: 120px;	
+
+		&.first-image .slideshow-left-button {
+			visibility: hidden;
+		}
+
+		&.last-image .slideshow-right-button {
+			visibility: hidden;
 		}
 	}
 

@@ -5,6 +5,8 @@
 import { createDiv, getData, mapElements } from './dom-helpers';
 import { IMAGE_QUERY_STRING_KEY, setImageUrl, clearImageUrl } from './history';
 
+const FIRST_IMAGE_CLASS = 'first-image';
+const LAST_IMAGE_CLASS = 'last-image';
 const imageLinks = document.querySelectorAll('.post-thumbnails a');
 const slideData = initializeSlideData(imageLinks);
 let currentImageIndex = null;
@@ -50,6 +52,23 @@ function initializeLightbox(numImageLinks){
 //creates img tag if necessary - used for lazy loading
 function setVisibleImageAt(imageIndex){
     currentImageIndex = imageIndex;
+
+    // hide or show prev / next buttons
+    const controlsContainer = document.getElementById('lightbox-button-container');
+    if(imageIndex === 0){
+        controlsContainer.classList.add(FIRST_IMAGE_CLASS);
+    }
+    else {
+        controlsContainer.classList.remove(FIRST_IMAGE_CLASS);
+    }
+
+    if(imageIndex === slideData.length - 1){
+        controlsContainer.classList.add(LAST_IMAGE_CLASS);
+    }
+    else {
+        controlsContainer.classList.remove(LAST_IMAGE_CLASS);
+    }
+
     const parentSelector = `.lightbox-images-container .image-container:nth-child(${(imageIndex + 1)})`;
     const parent = document.querySelector(parentSelector);
     const currentImageData = slideData[imageIndex];
@@ -148,14 +167,20 @@ function initializeImageSwipeHandlers(){
 
         //swiped right, show previous image
         if(touchEndX > touchStartX){
-            // activeImageContainer.style.transform = 'translateX(100%)';
-            showPreviousImage();
+            if(currentImageIndex > 0){
+                showPreviousImage();
+                return;
+            }
         }
         //swiped left, show next image
-        else{
-            // activeImageContainer.style.transform = 'translateX(0%)';
-            showNextImage();
+        else {
+            if(currentImageIndex < slideData.length - 2){
+                showNextImage();
+                return;
+            }
         }
+
+        activeImageContainer.style.transform = 'translateX(0px)';
     });
 }
 
@@ -183,16 +208,16 @@ function initializeKeyboardShortcuts(){
 }
 
 function showNextImage(){
-    //if at the end loop around to the beginning
+    //stop at the end
     if(currentImageIndex >= slideData.length - 1){
-        currentImageIndex = -1;
+        return;
     }
     setVisibleImageAt(currentImageIndex + 1);
 }
 function showPreviousImage(){
-    //if at the beginning loop around to the end
+    //stop at beginning
     if(currentImageIndex <= 0){
-        currentImageIndex = slideData.length;
+        return;
     }
     setVisibleImageAt(currentImageIndex - 1);
 
