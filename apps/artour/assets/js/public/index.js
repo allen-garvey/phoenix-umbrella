@@ -3,7 +3,7 @@
 // its own CSS file.
 import css from "../../css/main.scss"
 
-import { initializeDisplayAlbumLightbox } from './display_album.js';
+import { initializeDisplayAlbumLightbox } from './album_carousel';
 initializeDisplayAlbumLightbox();
 
 import { initializeImageLazyLoading } from './lazy-load-images';
