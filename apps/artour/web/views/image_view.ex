@@ -125,7 +125,7 @@ defmodule Artour.ImageView do
   same order as the attribute_values function
   """
   def attribute_names_short() do
-    ["Title", "Thumbnail", "Description", "Date Completed", "Year"]
+    ["Title", "Thumbnail", "Description", "Year"]
   end
 
   @doc """
@@ -133,7 +133,7 @@ defmodule Artour.ImageView do
   formatted values
   """
   def attribute_values_short(conn, image) do
-  	[image.title, img_tag(url_for(conn, image, :thumbnail, :local), class: "thumbnail", loading: "lazy"), image.description, Artour.DateHelpers.date_to_us_date(image.completion_date), image.year]
+  	[image.title, img_tag(url_for(conn, image, :thumbnail, :local), class: "thumbnail", loading: "lazy"), image.description, image.year]
   end
 
   @doc """
