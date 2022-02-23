@@ -16,7 +16,7 @@ defmodule Mix.Tasks.Guggenheim do
     end
     
     def run(_args) do
-      Error.exit_with_error("usage: mix guggenheim <image_source_directory>")
+      Error.exit_with_error("usage: mix guggenheim <image_source_directory> <?image_description>")
     end
 
     def import_images(source_directory_name, image_description \\ nil) do
