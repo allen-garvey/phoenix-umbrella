@@ -139,8 +139,16 @@ function initializeImageSwipeHandlers(){
         if(activeImageContainer === null){
             return;
         }
+        const isFirstImage = currentImageIndex === 0;
+        const isLastImage = currentImageIndex === slideData.length - 1;
         const touch = e.touches[0];
-        activeImageContainer.style.transform = `translateX(calc(${touch.clientX}px - 50%))`;
+        const xCoordinate = touch.clientX;
+
+        if((isFirstImage && xCoordinate > touchStartX) || (isLastImage && xCoordinate < touchStartX)){
+            return;
+        }
+
+        activeImageContainer.style.transform = `translateX(calc(${xCoordinate}px - 50%))`;
     });
     imagesContainer.addEventListener('touchend', function(e){
         if(activeImageContainer === null){
