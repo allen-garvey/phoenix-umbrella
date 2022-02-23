@@ -17,6 +17,7 @@ defmodule Mix.Tasks.Shutterbug do
   def run([source_directory_name]) do
     masters_destination_path = Photog.Image.masters_directory()
     thumbnails_destination_path = Photog.Image.thumbnails_directory()
+    
     if validate_args([source_directory_name, masters_destination_path, thumbnails_destination_path]) do
       import_images_from_directory(source_directory_name, masters_destination_path, thumbnails_destination_path)
     end
