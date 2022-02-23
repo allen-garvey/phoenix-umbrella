@@ -67,7 +67,6 @@ defmodule Mix.Tasks.Guggenheim do
 
       # Fix permissions and optimize pngs/jpgs
       Filesystem.fix_permissions(temp_dir)
-      Image.optimize_pngs(temp_dir)
       Image.optimize_jpgs(temp_dir)
       
       image_priv_dir = Path.join([__ENV__.file, "..", "..", "..", "..", "priv", "static", "media", "images"])

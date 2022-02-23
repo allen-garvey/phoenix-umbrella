@@ -15,7 +15,7 @@ defmodule Artour.Guggenheim.Command do
     Valiates commands needed to run import are installed on system
     """
     def are_import_commands_available do
-      ["convert", "exiftool", "optipng", "jpegoptim"]
+      ["convert", "exiftool", "jpegoptim"]
       |> Enum.map(fn command -> 
         if !is_command_available(command)  do
           Error.exit_with_error("#{command} command is not installed or unavailable", :command_not_available)

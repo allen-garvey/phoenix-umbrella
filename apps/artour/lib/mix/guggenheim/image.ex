@@ -91,17 +91,6 @@ defmodule Artour.Guggenheim.Image do
     end
 
     @doc """
-    Optimize pngs file size
-    """
-    def optimize_pngs(temp_dir) do
-        pngs = Path.join(temp_dir, "*.png") |> Path.wildcard
-
-        if Enum.count(pngs) > 0 do
-            System.cmd("optipng", pngs)
-        end
-    end
-
-    @doc """
     Optimize jpg file size
     """
     def optimize_jpgs(temp_dir) do
@@ -126,25 +115,16 @@ defmodule Artour.Guggenheim.Image do
         Map.merge(images, large_image)
     end
 
+    @doc """
+    Create a resized version of an image in the temp dir with suffix
+    Image created is jpeg, but even if source was png quality still looks sufficient
+    and image size is much smaller
+    Eventually replace with lossy webp once iOS / iPad OS < 14 market share is low enough
+    """
     def generate_image_size(image_path, temp_dir, size, suffix) do
-        case Path.extname(image_path) do
-            # ".png" -> generate_image_size(image_path, temp_dir, size, suffix, :lossless)
-            # ".webp" -> generate_image_size(image_path, temp_dir, size, suffix, :lossless)
-            _ -> generate_image_size(image_path, temp_dir, size, suffix, :lossy)
-        end
-    end
-
-    def generate_image_size(image_path, temp_dir, size, suffix, :lossy) do
         System.cmd("convert", [image_path, "-resize", "#{size}", "-quality", "80%", "-set", "filename:name", "%t", Path.join(temp_dir, "%[filename:name]-#{suffix}.jpg")])
 
         "#{Path.basename(image_path, Path.extname(image_path))}-#{suffix}.jpg"
     end
-
-    def generate_image_size(image_path, temp_dir, size, suffix, :lossless) do
-        System.cmd("convert", [image_path, "-resize", "#{size}", "-set", "filename:name", "%t", Path.join(temp_dir, "%[filename:name]-#{suffix}.png")])
-
-        "#{Path.basename(image_path, Path.extname(image_path))}-#{suffix}.png"
-    end
-  
 end
   
