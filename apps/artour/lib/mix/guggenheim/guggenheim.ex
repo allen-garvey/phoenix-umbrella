@@ -65,7 +65,7 @@ defmodule Mix.Tasks.Guggenheim do
         end
       end, timeout: :infinity)
 
-      # Fix permissions and optimize pngs/jpgs
+      # Fix permissions and optimize jpgs
       Filesystem.fix_permissions(temp_dir)
       Image.optimize_jpgs(temp_dir)
       
