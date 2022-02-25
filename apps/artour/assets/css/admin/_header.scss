@@ -4,22 +4,23 @@
 /* Custom page header */
 .header {
 	padding-top: 1em;
-	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
-	border-bottom: 1px solid #e5e5e5;
 	margin-bottom: 1em;
 
-	.brand{
-		align-self: center;
+	ul {
+		margin-top: 0;
 	}
 }
-.nav{
-	display: flex;
-	margin-top: 0;
-	align-items: baseline;
+
+.navbar {
+	@media screen and (min-width: 576px) {
+		justify-content: space-between;
+	}
 }
 
-.container-narrow > hr {
-  margin: 30px 0;
+.navbar-light .nav-link.btn{
+	color: #fff;
+
+	&:hover {
+		color: #ccc;
+	}
 }
