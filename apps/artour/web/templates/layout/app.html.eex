@@ -15,12 +15,22 @@
       <header class="header">
         <div class="brand"><%= link site_title(), to: page_path(@conn, :index) %></div>
         <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><%= link "Posts", to: post_path(@conn, :index) %></li>
-            <li><%= link "Images", to: image_path(@conn, :index) %></li>
-            <li><%= link "Tags", to: tag_path(@conn, :index) %></li>
-            <li><%= link "Add post", to: post_path(@conn, :new) %></li>
-            <li><%= link "Resources", to: admin_path(@conn, :index) %></li>
+          <ul class="nav pull-right">
+            <li class="nav-item">
+              <%= link "Posts", to: post_path(@conn, :index), class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link "Images", to: image_path(@conn, :index), class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link "Tags", to: tag_path(@conn, :index), class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link "Add post", to: post_path(@conn, :new), class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link "Resources", to: admin_path(@conn, :index), class: "nav-link" %>
+            </li>
           </ul>
         </nav>
       </header>

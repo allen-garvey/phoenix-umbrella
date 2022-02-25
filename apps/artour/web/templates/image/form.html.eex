@@ -9,7 +9,7 @@
     <label>
       <input type="checkbox" id="is_portrait_checkbox" checked> Portrait
     </label>
-    <button id="autofill-image-button" class="btn btn-default" type="button" title="Regenerate filenames">Regenerate</button>
+    <button id="autofill-image-button" class="btn btn-primary" type="button" title="Regenerate filenames">Regenerate</button>
   </div>
 
   <div class="form-group">

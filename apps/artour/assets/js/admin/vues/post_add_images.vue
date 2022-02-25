@@ -3,8 +3,8 @@
         <input name="_csrf_token" type="hidden" :value="csrfToken">
         <input name="_utf8" type="hidden" value="✓">
         <div class="button-container-right">
-            <button type="button" @click="toggleSelectAllImages" class="btn btn-default" v-show="images.length > 0">{{this.selectAllButtonText}}</button>
-            <button type="button" @click="toggleUnusedImages" class="btn btn-default">{{this.unusedImagesButtonText}}</button>
+            <button type="button" @click="toggleSelectAllImages" class="btn btn-primary" v-show="images.length > 0">{{this.selectAllButtonText}}</button>
+            <button type="button" @click="toggleUnusedImages" class="btn btn-primary">{{this.unusedImagesButtonText}}</button>
             <button type="submit" class="btn btn-primary" :disabled="areAllImagesUnchecked">Save</button>
         </div>
         <ul :class="$style['post-add-images-list']">

@@ -29,8 +29,8 @@
                     <p v-if="postImage.caption">{{postImage.caption}}</p>
                 </div>
                 <div :class="$style['image-buttons']">
-                    <a :href="postImage.url.edit" class="btn btn-default" target="_blank">Edit</a>
-                    <button class=" btn btn-primary" v-show="postImage.image.id != coverImageIdModel" @click="setCoverImage(postImage.image.id)">Make cover image</button>
+                    <a :href="postImage.url.edit" class="btn btn-primary btn-sm" target="_blank">Edit</a>
+                    <button class=" btn btn-primary btn-sm" v-show="postImage.image.id != coverImageIdModel" @click="setCoverImage(postImage.image.id)">Make cover image</button>
                 </div>
                 <div :class="$style['list-item-dragger']">&#9776;</div>
             </li>

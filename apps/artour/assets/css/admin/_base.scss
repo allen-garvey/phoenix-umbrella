@@ -12,6 +12,18 @@
 	padding-bottom: 100px;
 }
 
+a {
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.btn:hover {
+	text-decoration: none;
+}
+
 img{
 	max-width: 100%;
 }

@@ -65,7 +65,7 @@ defmodule Artour.PostView do
   def publication_date_index_cell_class(is_published) do
     case is_published do
       true  -> ""
-      false -> "warning_cell"
+      false -> "alert-warning"
     end
   end
 
@@ -74,7 +74,7 @@ defmodule Artour.PostView do
   """
   def is_nsfw_index_cell_class(is_nsfw) do
     case is_nsfw do
-      true  -> "danger_cell"
+      true  -> "alert-danger"
       false -> ""
     end
   end

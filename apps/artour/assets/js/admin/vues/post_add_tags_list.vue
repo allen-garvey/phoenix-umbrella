@@ -27,7 +27,7 @@
                         <a :href="newTagUrl" target="_blank">Create tag</a>
                     </div>
                     <div :class="$style['button-container-right']">
-                        <button class="btn btn-default" @click="cancelButtonAction()">Cancel</button>
+                        <button class="btn btn-primary" @click="cancelButtonAction()">Cancel</button>
                         <button class="btn btn-success" @click="saveButtonAction()" :disabled="busy">Save</button>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                 :key="tag.id"
             >
                 {{tag.name}}
-                <button class="btn btn-danger btn-xs" @click="removeTag(tag.id)">Remove</button>
+                <button class="btn btn-danger btn-sm" @click="removeTag(tag.id)">Remove</button>
             </li>
         </ul>
     </div>
