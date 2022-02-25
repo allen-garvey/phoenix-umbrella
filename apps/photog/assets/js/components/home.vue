@@ -34,6 +34,11 @@
             <router-link :to="{name: 'albumFavoritesIndex'}">
                  <h2 :class="$style.sectionHeading">Favorite Albums</h2>
             </router-link>
+            <thumbnail-items-list
+                :items="favoriteAlbums"
+                :showRouteFor="showRouteForAlbum"
+                v-if="favoriteAlbums"
+            />
         </div>
     </div>
 </template>
@@ -81,6 +86,14 @@ export default {
             this.recentAlbums = albums;
         });
 
+        this.getModel('/albums?favorites=true', {
+            isPaginated: true,
+            offset: 0,
+            limit: 12,
+        }).then((albums) => {
+            this.favoriteAlbums = albums;
+        });
+
         this.getModel('/tags?is_favorite=1').then((tags) => {
             this.favoriteTags = tags;
         });
@@ -90,6 +103,7 @@ export default {
             lastImport: null,
             recentAlbums: [],
             favoriteTags: [],
+            favoriteAlbums: [],
         };
     },
     computed: {
