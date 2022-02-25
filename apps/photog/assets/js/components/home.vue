@@ -35,14 +35,6 @@
                  <h2 :class="$style.sectionHeading">Favorite Albums</h2>
             </router-link>
         </div>
-
-        <div 
-            :class="$style.section"
-        >
-            <router-link :to="{name: 'imageFavoritesIndex'}">
-                 <h2 :class="$style.sectionHeading">Favorite Images</h2>
-            </router-link>
-        </div>
     </div>
 </template>
 
