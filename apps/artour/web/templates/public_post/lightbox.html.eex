@@ -1,13 +1,13 @@
 <div class="lightbox-container hidden">
-    <div class="close-window-button"></div>
+    <button class="close-window-button">✕</button>
     <div class="lightbox-bottom-container">
         <div class="caption-container">
             <div class="caption-body"></div>
             <div class="caption-overlay"></div>
         </div>
         <div class="lightbox-button-container" id="lightbox-button-container">
-            <div class="slideshow-left-button"></div>
-            <div class="slideshow-right-button"></div>
+            <button class="slideshow-left-button">‹</button>
+            <button class="slideshow-right-button">›</button>
         </div>
     </div>
     <div class="lightbox-images-container"></div>
