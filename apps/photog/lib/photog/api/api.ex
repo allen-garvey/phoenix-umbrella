@@ -359,6 +359,8 @@ defmodule Photog.Api do
   def list_album_favorites(is_favorite, limit, offset) when is_boolean(is_favorite) do
     list_albums_query()
     |> where([album], album.is_favorite == ^is_favorite)
+    |> exclude(:order_by)
+    |> order_by([:name, :id])
     |> Repo.all
     # need to do it this way since because of joins offset and limit don't work correctly
     |> Enum.slice(offset, limit)
