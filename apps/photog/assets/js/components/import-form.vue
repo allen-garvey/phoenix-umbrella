@@ -9,6 +9,13 @@
                 input-type="textarea" 
                 :textarea-rows="4" 
             />
+            <Form-Input 
+                :id="idForField('cover_image_id')" 
+                label="Cover Image ID" 
+                v-model="importModel.cover_image_id" 
+                :errors="errors.cover_image_id" 
+                input-type="number"
+            />
         </template>
     </Form-Section>
 </template>
@@ -64,6 +71,7 @@ export default {
             // only want to send notes
             const importModel = {
                 notes: this.importModel.notes,
+                cover_image_id: this.importModel.cover_image_id,
             };
 
             return {import: toApiResource(importModel)};
