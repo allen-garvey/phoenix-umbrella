@@ -34,8 +34,17 @@
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
+	
 	&.hidden{
 		display: none;
+	}
+
+	&.first-image .slideshow-left-button {
+		visibility: hidden;
+	}
+
+	&.last-image .slideshow-right-button {
+		visibility: hidden;
 	}
 	
 	.lightbox-background{
@@ -98,27 +107,24 @@
 		}
 	}
 
-	.lightbox-button-container{
-		display: flex;
-		justify-content: space-between;
-		width: 120px;	
+	.slideshow-right-button {
+		right: 10px;
+	}
 
-		&.first-image .slideshow-left-button {
-			visibility: hidden;
-		}
-
-		&.last-image .slideshow-right-button {
-			visibility: hidden;
-		}
+	.slideshow-left-button {
+		left: 10px;
 	}
 
 	.slideshow-right-button, .slideshow-left-button, .close-window-button{
 		border: none;
 		background-color: transparent;
+		box-sizing: content-box;
 		cursor: pointer;
-		height: $lightbox_button_dimensions;
-		width: $lightbox_button_dimensions;
+		width: 70px;
 		opacity: 0.5;
+		position: absolute;
+		z-index: 199;
+		top: calc(50% - 50px);
 		
 		&:hover, &:focus{
 			font-weight: bold;
@@ -126,14 +132,21 @@
 		}
 	}
 
+	.slideshow-right-button, .slideshow-left-button {
+		padding: 50px 0;
+
+		@media screen and (max-width: 700px) {
+			width: 60px;
+			bottom: 0;
+			padding: 30px 0 10px;
+			top: unset;
+		}
+	}
+
 	.close-window-button{
-		align-items: center;
-		position: absolute;
-		z-index: 199;
 		top: 12px;
 		right: 8px;
-		height: 50px;
-		width: 50px;
-		line-height: 1;
+		height: 60px;
+		width: 60px;
 	}
 }

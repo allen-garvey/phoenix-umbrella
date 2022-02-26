@@ -54,7 +54,7 @@ function setVisibleImageAt(imageIndex){
     currentImageIndex = imageIndex;
 
     // hide or show prev / next buttons
-    const controlsContainer = document.getElementById('lightbox-button-container');
+    const controlsContainer = document.getElementById('lightbox-container');
     if(imageIndex === 0){
         controlsContainer.classList.add(FIRST_IMAGE_CLASS);
     }
