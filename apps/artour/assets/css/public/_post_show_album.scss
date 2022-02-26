@@ -59,7 +59,7 @@
 		}
 	}
 	//buttons
-	$lightbox_button_dimensions: 35px;
+	$lightbox_button_dimensions: 45px;
 	.lightbox-bottom-container{
 		display: flex;
 		flex-direction: column;
@@ -113,15 +113,8 @@
 	}
 
 	.slideshow-right-button, .slideshow-left-button, .close-window-button{
-		display: flex;
-		justify-content: center;
-		font-family: 'Times', serif;
-		text-align: center;
-		font-size: 20px;
-		border: 2px solid white;
-		border-radius: 50%;
-		background-color: black;
-		color: white;
+		border: none;
+		background-color: transparent;
 		cursor: pointer;
 		height: $lightbox_button_dimensions;
 		width: $lightbox_button_dimensions;
@@ -139,8 +132,8 @@
 		z-index: 199;
 		top: 12px;
 		right: 8px;
-		height: 40px;
-		width: 40px;
+		height: 50px;
+		width: 50px;
 		line-height: 1;
 	}
 }

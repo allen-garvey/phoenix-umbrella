@@ -1,13 +1,19 @@
 <div class="lightbox-container hidden">
-    <button class="close-window-button">✕</button>
+    <button class="close-window-button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle" xmlns="http://www.w3.org/2000/svg"><circle style="fill:#0b0b0b;fill-opacity:1;stroke:#fff;stroke-width:0;stroke-linejoin:round;stroke-opacity:1;paint-order:markers fill stroke" cx="11.855" cy="11.971" r="10.065" stroke="none"/><circle cx="12" cy="12" r="10" style="stroke:#fff;stroke-opacity:1"/><path style="stroke:#fff;stroke-opacity:1" d="m15 9-6 6"/><path style="fill:none;fill-opacity:1;stroke:#fff;stroke-opacity:1" d="m9 9 6 6"/></svg>
+    </button>
     <div class="lightbox-bottom-container">
         <div class="caption-container">
             <div class="caption-body"></div>
             <div class="caption-overlay"></div>
         </div>
         <div class="lightbox-button-container" id="lightbox-button-container">
-            <button class="slideshow-left-button">‹</button>
-            <button class="slideshow-right-button">›</button>
+            <button class="slideshow-left-button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left-circle" xmlns="http://www.w3.org/2000/svg"><circle style="fill:#000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke" cx="11.931" cy="11.999" r="10.275" stroke="none"/><circle cx="12" cy="12" r="10" style="stroke:#fff;stroke-opacity:1"/><path style="stroke:#fff;stroke-opacity:1" d="m12 8-4 4 4 4M16 12H8"/></svg>
+            </button>
+            <button class="slideshow-right-button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle" xmlns="http://www.w3.org/2000/svg"><circle style="fill:#050901;fill-opacity:1;stroke:none;stroke-width:0;stroke-linejoin:round;paint-order:markers fill stroke;stroke-opacity:1" cx="12.031" cy="11.837" r="10.081" stroke="none"/><circle cx="12" cy="12" r="10" style="stroke:#fdfdfd;stroke-opacity:1"/><path style="stroke:#fff;stroke-opacity:1" d="m12 16 4-4-4-4M8 12h8"/></svg>
+            </button>
         </div>
     </div>
     <div class="lightbox-images-container"></div>
