@@ -24,10 +24,10 @@ defmodule Artour.PostController do
     changeset = Post.changeset(%Post{}, post_params)
 
     case Repo.insert(changeset) do
-      {:ok, _post} ->
+      {:ok, post} ->
         conn
         |> put_flash(:info, "Post created successfully.")
-        |> redirect(to: post_path(conn, :index))
+        |> redirect(to: post_path(conn, :show, post))
       {:error, changeset} ->
         categories = Artour.Category.form_list(Repo)
         render(conn, "new.html", changeset: changeset, categories: categories)
