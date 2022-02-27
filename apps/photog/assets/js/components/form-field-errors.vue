@@ -17,7 +17,6 @@
 </style>
 
 <script>
-import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';
 
 export default {
     name: 'Form-Field-Errors',
