@@ -29,6 +29,7 @@ defmodule PhotogWeb.Router do
     get "/albums/count",  AlbumController,  :count
     get "/images/count",  ImageController,  :count
     get "/imports/count", ImportController, :count
+    get "/images/search", ImageController,  :search
 
     resources "/images", ImageController,               only: [:index, :show, :update]
     resources "/albums", AlbumController

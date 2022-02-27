@@ -99,6 +99,15 @@ defmodule PhotogWeb.ImageController do
   end
 
   @doc """
+  Search for image by master path
+  """
+  def search(conn, %{"q" => search_query}) do
+    images = Api.list_images_for_query(search_query)
+    
+    render(conn, "index.json", images: images)
+  end
+
+  @doc """
   Gets the exif data from an image's master image
   """
   def exif_for(conn, %{"id" => id}) do

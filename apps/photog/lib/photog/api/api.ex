@@ -161,6 +161,19 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Returns the list of images where master_path matches search query
+  """
+  def list_images_for_query(search_query) when is_binary(search_query) do
+    from(
+      image in Image,
+      where: ilike(image.master_path, ^"%#{search_query}%"), 
+      order_by: [:creation_time, :id],
+      limit: 100
+    )
+    |> Repo.all
+  end
+
+  @doc """
   Returns the list of images that are not in any albums
 
   ## Examples

@@ -12,6 +12,7 @@ import ImportForm from './components/import-form.vue';
 import Home from './components/home.vue';
 import Slideshow from './components/slideshow.vue';
 import ListPage from './components/list-page.vue';
+import ImagesSearch from './components/images-search.vue';
 
 export default {
     routes: [
@@ -116,6 +117,10 @@ export default {
                         {
                             title: 'Uncategorized Images',
                             route: {name: 'imagesNotInAlbumIndex'},
+                        },
+                        {
+                            title: 'Search Images',
+                            route: {name: 'imagesSearch'},
                         },
                     ]),
                 };
@@ -427,6 +432,11 @@ export default {
             },
         },
         //has to be before importsShow route
+        { 
+            path: '/images/search',
+            name: 'imagesSearch', 
+            component: ImagesSearch,
+        },
         buildImportsShowVariant('/imports/last', 'importsShowLast', {
             buildItemsApiUrl: (model) => `/imports/${model.id}/images`,
         }),
