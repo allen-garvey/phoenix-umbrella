@@ -5,7 +5,7 @@ defmodule Artour.Guggenheim.Image do
     def get_image_year(source_directory_name, current_year) do
         year = Regex.split(~r/[ _-]+/, source_directory_name)
         |> Enum.reduce(nil, fn part, year -> 
-            if is_nil(year) and Regex.match?(~r/^[1-9]\d{3}$/, part) do
+            if is_nil(year) and Regex.match?(~r/^[1-2]\d{3}$/, part) do
                 String.to_integer(part)
             else
                 year
