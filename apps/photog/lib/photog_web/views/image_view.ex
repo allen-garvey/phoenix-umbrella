@@ -118,6 +118,16 @@ defmodule PhotogWeb.ImageView do
       %Import{} -> PhotogWeb.ImportView.import_excerpt_to_map(image.import)
       _ -> nil
     end
+
+    albums = case image.albums do
+      %Ecto.Association.NotLoaded{} -> []
+      _ -> image.albums
+    end
+
+    persons = case image.persons do
+      %Ecto.Association.NotLoaded{} -> []
+      _ -> image.persons
+    end
     
     image_map = %{
       id: image.id,
@@ -135,8 +145,8 @@ defmodule PhotogWeb.ImageView do
       mini_thumbnail_path: image.mini_thumbnail_path,
       is_favorite: image.is_favorite,
       import: import_data,
-      albums: Enum.map(image.albums, &PhotogWeb.AlbumView.album_excerpt_mini_to_map/1),
-      persons: Enum.map(image.persons, &PhotogWeb.PersonView.person_excerpt_mini_to_map/1),
+      albums: Enum.map(albums, &PhotogWeb.AlbumView.album_excerpt_mini_to_map/1),
+      persons: Enum.map(persons, &PhotogWeb.PersonView.person_excerpt_mini_to_map/1),
       source_image_id: image.source_image_id
     }
 
