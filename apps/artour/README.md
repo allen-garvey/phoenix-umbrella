@@ -14,4 +14,9 @@ Now you can visit [`localhost:3000`](http://localhost:3000) from your browser.
   * Render site to static HTML files `mix distill.html`
   * Copy static assets for static site `mix distill.static`
   * Convenience task to combine previous two tasks `mix distill.site`
-  * Test image urls for 404s `mix distill.test.image_urls http://site_url.com/media/images/`
+  * Test image urls for 404s `mix distill.test.image_urls https://site_url.com/media/images/`
+
+### Guggenheim
+  * Create image sizes and import images to database `mix guggenhiem <folder_path>`
+  * If there is a four digit year in the folder name, separated from other words by spaces, underscores or hypens it will be used as the year for the imported images
+  * Optionally you can pass a second argument that will be used as the description for all imported images
