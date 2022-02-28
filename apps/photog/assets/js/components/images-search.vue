@@ -1,9 +1,9 @@
 <template>
     <div class="main container">
         <h2 :class="$style.sectionHeading">Image Search</h2>
-        <form @submit.prevent="onSearchSubmit">
-            <label>File name <input type="search" class="form-control" v-model="query" /></label>
-            <button type="submit" class="btn btn-success" :disabled="!isSearchEnabled">Search</button>
+        <form @submit.prevent="onSearchSubmit" :class="$style.form">
+            <label :class="$style.label">File name <input type="search" class="form-control" v-model="query" /></label>
+            <button type="submit" class="btn btn-success" :class="$style.submitButton" :disabled="!isSearchEnabled">Search</button>
         </form>
         <template v-if="!isLoading && lastQuery">
             <template v-if="images.length > 0">
@@ -20,12 +20,23 @@
 </template>
 
 <style lang="scss" module>
-    .section {
-        margin-bottom: 2rem;
-    }
     .sectionHeading {
         margin: 0 0 0.5rem;
     }
+
+    .form {
+        display: flex;
+    }
+
+    .label {
+        flex-grow: 1;
+    }
+
+    .submitButton {
+        align-self: end;
+        margin-left: 1em;
+    }
+
 </style>
 
 <script>
