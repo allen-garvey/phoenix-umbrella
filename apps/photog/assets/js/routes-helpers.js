@@ -60,7 +60,19 @@ const getRelatedFieldsForImage = (images, key, showRouteName) => {
         });
     });
 
-    return Object.keys(map).map(itemId => {
+    return Object.keys(map).sort((a, b) => {
+        const itemA = map[a];
+        const itemB = map[b];
+        
+        if(itemA.name < itemB.name){
+            return -1;
+        }
+        if(itemA.name > itemB.name){
+            return 1;
+        }
+        return 0;
+    })
+    .map(itemId => {
         const item = map[itemId];
 
         return {
