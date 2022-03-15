@@ -1,8 +1,8 @@
-export const ALBUM_FILTER_QUERY_PARAM_NAME = 'album-filter-mode';
+export const ALBUM_FILTER_QUERY_PARAM_NAME = 'item-filter-mode';
 
 export const PERSON_FILTER_QUERY_PARAM_NAME = 'person-filter-mode';
 
-export const getPersonsInAlbum = (album, images) => {
+export const getPersonsInAlbum = (item, images) => {
     const personsMap = new Map();
 
     images.forEach((image) => {
@@ -17,18 +17,18 @@ export const getPersonsInAlbum = (album, images) => {
 export const albumRelatedFields = [
     {
         name: 'tags',
-        getItems(album, images){
+        getItems(item, images){
             const year = [
                 {
-                    name: album.year,
+                    name: item.year,
                     to: {
                         name: 'albumsForYear',
-                        params: { year: album.year }
+                        params: { year: item.year }
                     },
                 }
             ];
 
-            return year.concat(album.tags.map(tag => ({
+            return year.concat(item.tags.map(tag => ({
                 name: tag.name,
                 to: {
                     name: 'tagsShow',
@@ -39,8 +39,8 @@ export const albumRelatedFields = [
     },
     {
         name: 'persons',
-        getItems(album, images){
-            return getPersonsInAlbum(album, images).map(person => ({
+        getItems(item, images){
+            return getPersonsInAlbum(item, images).map(person => ({
                 name: person.name,
                 to: {
                     name: 'personsShow',
@@ -51,53 +51,39 @@ export const albumRelatedFields = [
     }
 ];
 
+const getRelatedFieldsForImage = (images, key, showRouteName) => {
+    const map = {};
+
+    images.forEach(image => {
+        image[key].forEach(item => {
+            map[item.id] = item;
+        });
+    });
+
+    return Object.keys(map).map(itemId => {
+        const item = map[itemId];
+
+        return {
+            name: item.name,
+            to: {
+                name: showRouteName,
+                params: { id: item.id },
+            },
+        };
+    });
+};
+
 export const importRelatedFields = [
     {
         name: 'albums',
         getItems(importModel, images){
-            const albumsMap = {};
-
-            images.forEach(image => {
-                image.albums.forEach(album => {
-                    albumsMap[album.id] = album;
-                });
-            });
-
-            return Object.keys(albumsMap).map(albumId => {
-                const album = albumsMap[albumId];
-
-                return {
-                    name: album.name,
-                    to: {
-                        name: 'albumsShow',
-                        params: { id: album.id },
-                    },
-                };
-            });
+            return getRelatedFieldsForImage(images, 'albums', 'albumsShow');
         },
     },
     {
         name: 'persons',
         getItems(importModel, images){
-            const personsMap = {};
-
-            images.forEach(image => {
-                image.persons.forEach(person => {
-                    personsMap[person.id] = person;
-                });
-            });
-
-            return Object.keys(personsMap).map(personId => {
-                const person = personsMap[personId];
-
-                return {
-                    name: person.name,
-                    to: {
-                        name: 'personsShow',
-                        params: { id: person.id },
-                    },
-                };
-            });
+            return getRelatedFieldsForImage(images, 'persons', 'personsShow');
         },
     },
 ];
