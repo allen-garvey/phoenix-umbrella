@@ -51,6 +51,57 @@ export const albumRelatedFields = [
     }
 ];
 
+export const importRelatedFields = [
+    {
+        name: 'albums',
+        getItems(importModel, images){
+            const albumsMap = {};
+
+            images.forEach(image => {
+                image.albums.forEach(album => {
+                    albumsMap[album.id] = album;
+                });
+            });
+
+            return Object.keys(albumsMap).map(albumId => {
+                const album = albumsMap[albumId];
+
+                return {
+                    name: album.name,
+                    to: {
+                        name: 'albumsShow',
+                        params: { id: album.id },
+                    },
+                };
+            });
+        },
+    },
+    {
+        name: 'persons',
+        getItems(importModel, images){
+            const personsMap = {};
+
+            images.forEach(image => {
+                image.persons.forEach(person => {
+                    personsMap[person.id] = person;
+                });
+            });
+
+            return Object.keys(personsMap).map(personId => {
+                const person = personsMap[personId];
+
+                return {
+                    name: person.name,
+                    to: {
+                        name: 'personsShow',
+                        params: { id: person.id },
+                    },
+                };
+            });
+        },
+    },
+];
+
 export const sortImagesCallback = (itemsList, sortDirection, reorderMode) => {
     if(reorderMode === 'NAME'){
         itemsList.sort((a, b) => {

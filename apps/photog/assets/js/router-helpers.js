@@ -1,3 +1,5 @@
+import { importRelatedFields } from './routes-helpers';
+
 import ThumbnailList from './components/thumbnail-list.vue';
 
 export function getOptionalParams(routeParams, optionalParams, props={}){
@@ -46,6 +48,7 @@ export function buildImportsShowVariant(path, name, props={}){
                 enableHasPersonFilter: true,
                 enableBatchSelectImages: true,
                 getDescription: (importModel) => importModel.notes,
+                relatedFields: importRelatedFields,
                 editItemLinkFor: (model) => ({name: 'importsEdit', params: {id: model.id}}),
                 showRouteFor: (item, model)=>{
                     return {
