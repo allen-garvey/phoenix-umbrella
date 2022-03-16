@@ -68,7 +68,7 @@
             * List of batch edit resources that can be added to selected items
         -->
         <div v-if="shouldShowBatchResources">
-            <label>Search <input class="form-control" v-model="searchValue" /></label>
+            <label>Search <input class="form-control" v-model="searchValue" v-focus /></label>
             <ul :class="$style['batch-resources-list']">
                 <li 
                     v-for="(resource, index) in batchResourcesDisplayed" 
@@ -137,6 +137,7 @@
 </style>
 
 <script>
+import focus from 'umbrella-common-js/vue/directives/focus.js';
 import { BATCH_EDIT_RESOURCE_MODE } from '../constants/batch-edit.js';
 
 export default {
@@ -193,6 +194,9 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    directives: {
+        focus,
     },
     computed: {
         batchEditResourceMode(){

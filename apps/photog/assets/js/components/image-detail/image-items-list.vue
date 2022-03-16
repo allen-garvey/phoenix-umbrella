@@ -31,7 +31,7 @@
             </div>
         </div>
         <div v-if="isAddMode">
-            <label>Search <input class="form-control" v-model="searchValue" /></label>
+            <label>Search <input class="form-control" v-model="searchValue" v-focus /></label>
             <ul :class="$style.addItemsList">
                 <li v-for="(item, index) in filteredItemsThatCanBeAdded" :key="index">
                     <input 
@@ -116,6 +116,7 @@
 </style>
 
 <script>
+import focus from 'umbrella-common-js/vue/directives/focus.js';
 import { API_URL_BASE } from '../../request-helpers.js';
 import { arrayRemove } from '../../array-util.js';
 
@@ -174,6 +175,9 @@ export default {
             type: Function,
             required: true,
         },
+    },
+    directives: {
+        focus,
     },
     data() {
         return {
