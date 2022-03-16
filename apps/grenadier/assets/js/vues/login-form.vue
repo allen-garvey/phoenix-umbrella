@@ -14,7 +14,7 @@
 
 <script>
 import { sendJson } from 'umbrella-common-js/ajax.js';
-import focus from './directives/focus.js';
+import focus from 'umbrella-common-js/vue/directives/focus.js';
 
 export default {
     props: {
