@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -106,5 +107,9 @@ module.exports = {
             'seren',
             'startpage',
         ]),
+        new webpack.DefinePlugin({
+            __VUE_OPTIONS_API__: true,
+            __VUE_PROD_DEVTOOLS__: false,
+        }),
     ],
 };
