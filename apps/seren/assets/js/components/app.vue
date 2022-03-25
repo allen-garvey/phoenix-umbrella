@@ -6,8 +6,32 @@
 		>
 		</search-bar>
 		<Nav-Tabs :search-query="searchQuery" />
-		<router-view v-if="isInitialLoadComplete" :load-more-tracks="loadMoreTracks" :is-track-playing="isTrackPlaying" :sort-items-func="sortItems" :play-track="playTrack" :stop-track="stop" :get-items="getItems" :artists-map="artistsMap" :albums-map="albumsMap" :genres-map="genresMap" :composers-map="composersMap" />
-		<Media-Controls :elapsed-time="elapsedTime" :is-playing="isPlaying" :is-initial-load-complete="isInitialLoadComplete" :has-active-track="hasActiveTrack" :has-previous-track="hasPreviousTrack" :has-next-track="hasNextTrack" :artists-map="artistsMap" :active-track="activeTrack" :play-next-track="playNextTrack" :play-button-action="playButtonAction" :previous-button-action="previousButtonAction" />
+		<router-view 
+			v-if="isInitialLoadComplete" 
+			:load-more-tracks="loadMoreTracks" 
+			:is-track-playing="isTrackPlaying" 
+			:sort-items-func="sortItems" 
+			:play-track="playTrack" 
+			:stop-track="stop" 
+			:get-items="getItems" 
+			:artists-map="artistsMap" 
+			:albums-map="albumsMap" 
+			:genres-map="genresMap" 
+			:composers-map="composersMap" 
+		/>
+		<Media-Controls 
+			:elapsed-time="elapsedTime" 
+			:is-playing="isPlaying" 
+			:is-initial-load-complete="isInitialLoadComplete" 
+			:has-active-track="hasActiveTrack" 
+			:has-previous-track="hasPreviousTrack" 
+			:has-next-track="hasNextTrack" 
+			:artists-map="artistsMap" 
+			:active-track="activeTrack" 
+			:play-next-track="playNextTrack" 
+			:play-button-action="playButtonAction" 
+			:previous-button-action="previousButtonAction" 
+		/>
 	</div>
 </template>
 
@@ -148,7 +172,7 @@ export default {
 			}
 			if(this.activeTrack.track.id !== track.id){
 				this.activeTrack = {
-					track: track,
+					track,
 					path: trackPath,
 					index: trackIndex,
 				};
