@@ -24,14 +24,17 @@ export default {
     },
     computed: {
         activeTrackDisplay(){
-			if(!this.hasActiveTrack){
+			if(!this.activeTrack.track){
 				return '';
 			}
-			let ret = `${this.activeTrack.track.title} - ${this.artistsMap.get(this.activeTrack.track.artist_id).name}`;
+            const titleArray = [
+                this.artistsMap.get(this.activeTrack.track.artist_id).name,
+                this.activeTrack.track.title,
+            ];
 			if(this.activeTrack.track.album_title){
-				ret = `${ret} - ${this.activeTrack.track.album_title}`;
+                titleArray.push(this.activeTrack.track.album_title);
 			}
-			return ret;
+			return titleArray.join(' - ');;
 		},
     },
 };
