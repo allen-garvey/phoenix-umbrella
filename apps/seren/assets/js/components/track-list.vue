@@ -14,7 +14,7 @@
             <tr 
                 v-for="(item, i) in items"
                 :key="i"
-                @dblclick="doubleClickRowAction(item, i)"
+                @click="rowClicked(item, i)"
             >
                 <td 
                     @click="rowPlayButtonClicked(item, i)" 
@@ -222,12 +222,9 @@ export default {
                 this.playTrack(item, i, this.items);
             }
         },
-        doubleClickRowAction(item, i){
+        rowClicked(item, i){
             if(this.routeForItem){
                 this.$router.push(this.routeForItem(item));
-            }
-            else{
-                this.playTrack(item, i, this.items);
             }
         },
 	}
