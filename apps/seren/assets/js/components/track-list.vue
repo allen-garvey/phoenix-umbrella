@@ -1,7 +1,7 @@
 <template>
     <table :class="$style['track-list']">
         <thead>
-            <th :class="$style['col-play-btn']"></th>
+            <th :class="$style.colPlayBtn"></th>
             <th 
                 v-for="(column, i) in itemColumns"
                 :key="i" 
@@ -18,8 +18,14 @@
             >
                 <td 
                     @click="rowPlayButtonClicked(item, i)" 
-                    :class="trackButtonClasses(item)"
+                    :class="{[$style.colPlayBtn]: true, [$style.isPlaying]: isTrackPlaying(item)}"
                 >
+                    <button :class="$style.playButton" v-if="this.canRowBePlayed">
+                        <svg>
+                            <use href="#icon-pause" v-if="isTrackPlaying(item)" />
+                            <use href="#icon-play" v-else />
+                        </svg>
+                    </button>
                 </td>
                 <td 
                     v-for="(field, j) in itemFields(item)"
@@ -73,19 +79,39 @@
         }
     }
 
-    .col-play-btn{
+    .colPlayBtn{
+        height: 50px;
         width: 50px;
-    }
 
-    .track-play-button{
-        cursor: pointer;
-
-        &:hover::after{
-            content: 'Play';
+        svg {
+            display: none;
         }
 
-        &.pause::after{
-            content: 'Pause';
+        &:hover, &.isPlaying {
+            svg {
+                display: block;
+            }
+        }
+
+        &:hover {
+            svg {
+                color: dodgerblue;
+            }
+        }
+    }
+
+    .playButton {
+        height: 50px;
+        background-color: transparent;
+        border: none;
+        width: 100%;
+
+        &:active, &:focus {
+            border: none;
+
+            svg {
+                display: block;
+            }
         }
     }
 </style>
@@ -182,13 +208,6 @@ export default {
         });
     },
 	methods: {
-        trackButtonClasses(item){
-            return {
-                [this.$style['col-play-btn']]: true,
-                [this.$style.pause]: this.canRowBePlayed && this.isTrackPlaying(item), 
-                [this.$style['track-play-button']]: this.canRowBePlayed,
-            };
-        },
         loadItems(){
             this.items = [];
             this.getItems(this.getItemsKey).then((items)=>{

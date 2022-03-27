@@ -11,3 +11,16 @@ html, body{
 	padding-bottom: $media-controls-container-height + 20px;
 	padding-top: 18px;
 }
+
+img {
+	max-width: 100%;
+}
+
+svg {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+button {
+	cursor: pointer;
+}
