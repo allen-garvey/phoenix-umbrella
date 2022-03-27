@@ -1,69 +1,86 @@
 <template>
-    <div :class="$style['media-controls']">
+    <div :class="$style.mediaControls">
         <button 
-            :class="[$style.button, $style['button-previous'], $style['button-rounded']]" 
+            :class="[$style.button, $style.buttonPrevious, $style.buttonRounded]" 
             @click="previousButtonAction" 
             :disabled="!hasPreviousTrack" 
-            title="Play previous track">&#9194;</button>
+            title="Play previous track">
+            <svg>
+                <use href="#icon-skip-back" />
+            </svg>
+        </button>
         <button 
-            :class="playButtonClasses"
+            :class="[$style.button, $style.buttonPlay]"
             @click="playButtonAction" 
             :title="playButtonTitle"
         >
-            <span v-html="playButtonText"></span>
+            <svg :class="{[$style.playIcon]: !isPlaying}">
+                <use href="#icon-pause" v-if="isPlaying" />
+                <use href="#icon-play" v-else />
+            </svg>
         </button>
         <button 
-            :class="[$style.button, $style['button-next'], $style['button-rounded']]"
+            :class="[$style.button, $style.buttonNext, $style.buttonRounded]"
             @click="playNextTrack" 
             :disabled="!hasNextTrack" 
             title="Play next track"
-        >&#9193;</button>
+        >
+            <svg>
+                <use href="#icon-skip-forward" />
+            </svg>
+        </button>
     </div>
 </template>
 
 <style lang="scss" module>
-    .media-controls{
+    svg {
+        max-height: 100%;
+        max-width: 100%;
+        position: relative;
+    }
+
+    .mediaControls{
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
     .button{
         cursor: pointer;
+        border: none;
+        background-color: transparent;
         font-size: 24px;
         margin-right: 3px;
-        border: 2px solid transparent;
 
         &:hover, &:active{
-            border: 2px solid #2166ab;
+            border-color: white;
+            color: white;
         }
         &:active{
             background-color: #85b8ea;
         }
     }
 
-    .button-play{
+    .buttonPlay{
         height: 48px;
         width: 48px;
+        border: 2px solid transparent;
         border-radius: 50%;
         margin: 0 5px;
-        //play icon doesn't get perfectly centered
-        &.play-icon span{
-            position: relative;
-            left: 2px;
-        }
-        &.pause-icon{
-            font-size: 15px;
-        }
     }
-    .button-rounded{
+
+    .playIcon {
+        right: -2px;
+    }
+
+    .buttonRounded{
         border-radius: 20%;
         height: 34px;
         width: 34px;
     }
-    .button-previous{
+    .buttonPrevious{
         padding: 0;
     }
-    .button-next{
+    .buttonNext{
         padding: 0;
         margin-right: 0;
     }
@@ -110,20 +127,6 @@ export default {
 				return `Play ${this.activeTrack.track.title}`;
 			}
 			return 'Play track';
-        },
-        playButtonText(){
-			if(this.isPlaying){
-				return '&#9646;&#9646;';
-			}
-			return '&#9654;';
-        },
-        playButtonClasses(){
-            return {
-                [this.$style.button]: true,
-                [this.$style['button-play']]: true,
-                [this.$style['play-icon']]: !this.isPlaying,
-                [this.$style['pause-icon']]: this.isPlaying,
-            };
         },
     },
 };
