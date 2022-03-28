@@ -14,7 +14,6 @@
             <tr 
                 v-for="(item, i) in items"
                 :key="i"
-                @click="rowClicked(item, i)"
             >
                 <td 
                     @click="rowPlayButtonClicked(item, i)" 
@@ -31,7 +30,13 @@
                     v-for="(field, j) in itemFields(item)"
                     :key="`${item.id}${i}${field}${j}`"
                 >
-                    {{field}}
+                    <router-link 
+                        :to="routeForItem(item)"
+                        v-if="routeForItem && j === 0"
+                    >
+                        {{field}}
+                    </router-link>
+                    <span v-else>{{field}}</span>
                 </td>
             </tr>
             <tr>
@@ -53,6 +58,10 @@
         table-layout: fixed;
         border-collapse: collapse;
 
+        a {
+            text-decoration: none;
+        }
+
         thead{
             background: #b6cfe7;
             font-family: sans-serif;
@@ -67,14 +76,9 @@
 
         tbody tr{
             transition: background-color 0.3s ease;
-            cursor: pointer;
             
             &:nth-of-type(even){
                 background: #e6f2fe;
-            }
-            //has to be after nth-of-type or it won't work
-            &:active{
-                background: dodgerblue;
             }
         }
     }
@@ -239,11 +243,6 @@ export default {
             }
             else{
                 this.playTrack(item, i, this.items);
-            }
-        },
-        rowClicked(item, i){
-            if(this.routeForItem){
-                this.$router.push(this.routeForItem(item));
             }
         },
 	}
