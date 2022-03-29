@@ -1,27 +1,27 @@
 <template>
-    <div :class="$style['search-bar-container']">
-        <input 
-            type="search" 
-            placeholder="Search tracks" 
-            :value="modelValue"
-            @input="$emit('update:modelValue', $event.target.value)"
-            @keyup.enter="onSearchRequested" 
-            aria-labelledby="Search tracks"
-        />
-        <button 
-            @click="onSearchRequested" 
-            :disabled="!modelValue" 
-            :class="$style['outline-button']"
-        >
-            Search
-        </button>
+    <div :class="$style.searchBarContainer">
+        <form @submit.prevent="onFormSubmitted">
+            <input 
+                type="search" 
+                placeholder="Search tracks" 
+                v-model="searchValue"
+                aria-labelledby="Search tracks"
+            />
+            <button 
+                type="submit" 
+                :disabled="!searchValue" 
+                :class="$style.button"
+            >
+                Search
+            </button>
+        </form>
     </div>
 </template>
 
 <style lang="scss" module>
     @import '~seren-styles/variables';
 
-    .search-bar-container{
+    .searchBarContainer{
 		display: flex;
 		justify-content: center;
 
@@ -30,7 +30,7 @@
 		}
     }
     
-    .outline-button {
+    .button {
         color: $accent_color_text;
         background: rgba(0,0,0,0);
         border: solid 1px $accent_color_text;
@@ -60,9 +60,20 @@ export default {
             type: String,
             required: true,
         },
-        onSearchRequested: {
-            type: Function,
-            required: true,
+    },
+    data(){
+        return {
+            searchValue: '',
+        };
+    },
+    watch: {
+        modelValue(newValue){
+            this.searchValue = newValue;
+        },
+    },
+    methods: {
+        onFormSubmitted(){
+            this.$emit('update:modelValue', this.searchValue);
         },
     },
 };

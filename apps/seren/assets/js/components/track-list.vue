@@ -121,6 +121,7 @@
 </style>
 
 <script>
+import { nextTick } from 'vue';
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 
 export default {
@@ -203,13 +204,16 @@ export default {
             return !this.routeForItem;
         },
     },
-    beforeRouteLeave(to, from, ){
-        this.items = [];
+    created(){
+        this.loadItems();
     },
-    beforeRouteEnter(to, from, next){
-        next((self) => {
-            self.loadItems();
-        });
+    watch: {
+        '$route'(to, from){
+            this.items = [];
+            nextTick().then(() => {
+                this.loadItems();
+            });
+        },
     },
 	methods: {
         loadItems(){

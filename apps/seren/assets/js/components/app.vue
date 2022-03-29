@@ -2,7 +2,6 @@
 	<div class="app-container">
 		<search-bar
 			v-model="searchQuery"
-			:on-search-requested="searchForTracks"
 		>
 		</search-bar>
 		<Nav-Tabs :search-query="searchQuery" />
@@ -103,6 +102,13 @@ export default {
 			savedSearchResultsQuery: '',
 			isInitialLoadComplete: false,
 		};
+	},
+	watch: {
+		searchQuery(newValue){
+			if(newValue){
+				this.$router.push({name: 'searchTracks', query: { q: newValue }});
+			}
+		},
 	},
 	computed: {
 		hasActiveTrack(){
@@ -248,9 +254,6 @@ export default {
 				composers: this.composersMap,
 			};
 			Models.sortItems(items, key, sortAsc, relatedFields);
-		},
-		searchForTracks(){
-			this.$router.push({name: 'searchTracks', query: { q: this.searchQuery }});
 		},
 	}
 };
