@@ -56,24 +56,28 @@
 <script>
 export default {
     props: {
-        modelValue: {
+        initialValue: {
             type: String,
             required: true,
         },
+
     },
     data(){
         return {
             searchValue: '',
         };
     },
+    created(){
+        this.searchValue = this.initialValue;
+    },
     watch: {
-        modelValue(newValue){
+        initialValue(newValue){
             this.searchValue = newValue;
         },
     },
     methods: {
         onFormSubmitted(){
-            this.$emit('update:modelValue', this.searchValue);
+            this.$router.push({name: 'searchTracks', query: { q: this.searchValue }});
         },
     },
 };

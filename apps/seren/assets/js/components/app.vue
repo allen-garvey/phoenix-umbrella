@@ -1,7 +1,7 @@
 <template>
 	<div class="app-container">
 		<search-bar
-			v-model="searchQuery"
+			:initialValue="searchQuery"
 		>
 		</search-bar>
 		<Nav-Tabs :search-query="searchQuery" />
@@ -103,13 +103,6 @@ export default {
 			isInitialLoadComplete: false,
 		};
 	},
-	watch: {
-		searchQuery(newValue){
-			if(newValue){
-				this.$router.push({name: 'searchTracks', query: { q: newValue }});
-			}
-		},
-	},
 	computed: {
 		hasActiveTrack(){
 			return 'id' in this.activeTrack.track;
@@ -138,6 +131,7 @@ export default {
 				return fetchJson(searchUrl).then((searchResults)=>{
 					this.searchResults = searchResults;
 					this.savedSearchResultsQuery = searchQuery;
+					this.searchQuery = searchQuery;
 					return this.searchResults;
 				});
 			}
