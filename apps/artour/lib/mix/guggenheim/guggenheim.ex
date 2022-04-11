@@ -7,6 +7,10 @@ defmodule Mix.Tasks.Guggenheim do
     alias Artour.Guggenheim.Image
   
     @shortdoc "Import images into artour"
+    def run([source_directory_name, image_description, use_liquid_resize]) do
+      import_images(source_directory_name, image_description, use_liquid_resize == "true")
+    end
+
     def run([source_directory_name, image_description]) do
       import_images(source_directory_name, image_description)
     end
@@ -16,10 +20,10 @@ defmodule Mix.Tasks.Guggenheim do
     end
     
     def run(_args) do
-      Error.exit_with_error("usage: mix guggenheim <image_source_directory> <?image_description>")
+      Error.exit_with_error("usage: mix guggenheim <image_source_directory> <?image_description> <?use_liquid_resize:true|false>")
     end
 
-    def import_images(source_directory_name, image_description \\ nil) do
+    def import_images(source_directory_name, image_description \\ nil, use_liquid_resize \\ true) do
       # Check if necessary shell commands are installed
       Common.MixHelpers.Command.validate_commands_are_installed!(["convert", "exiftool", "jpegoptim"])
 
@@ -41,8 +45,11 @@ defmodule Mix.Tasks.Guggenheim do
       # Create temp dir for converted images, exit if already exists
       temp_dir = Filesystem.create_temp_dir!(source_directory_name)
 
-      # Create liquid thumbnails in temp dir
-      Image.create_liquid_thumbnails(temp_dir, source_image_models)
+      # Create thumbnails in temp dir
+      case use_liquid_resize do
+        true -> Image.create_liquid_thumbnails(temp_dir, source_image_models)
+        false -> Image.create_thumbnails(temp_dir, source_image_models)
+      end
 
       # Start Artour app so db is available
       Mix.Task.run "app.start", []

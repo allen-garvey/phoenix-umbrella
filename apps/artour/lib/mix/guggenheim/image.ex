@@ -1,4 +1,6 @@
 defmodule Artour.Guggenheim.Image do
+    @thumbnail_size "200"
+
     @doc """
     Parses year from source directory if possible
     """
@@ -70,20 +72,29 @@ defmodule Artour.Guggenheim.Image do
     end
 
     @doc """
-    Create square thumbnails using liquid resize
+    Create square thumbnails
     """
-    def create_liquid_thumbnails(temp_dir, source_image_models) do
-        thumbnail_size = "200"
-
+    def create_thumbnails(temp_dir, source_image_models) do
         source_image_models
         # Resize images first to make liqid resize faster
         |> Enum.map(fn {image_path, _orientation} -> 
-            {_res, 0} = System.cmd("convert", [image_path, "-resize", thumbnail_size, "-set", "filename:name", "%t", Path.join(temp_dir, "%[filename:name]-thumb.png")])
+            {_res, 0} = System.cmd("convert", [image_path, "-thumbnail", "#{@thumbnail_size}x#{@thumbnail_size}^", "-gravity", "center", "-extent", "#{@thumbnail_size}x#{@thumbnail_size}", "-quality", "40%", "-set", "filename:name", "%t", Path.join(temp_dir, "%[filename:name]-thumb.jpg")])
+        end)
+    end
+    
+    @doc """
+    Create square thumbnails using liquid resize
+    """
+    def create_liquid_thumbnails(temp_dir, source_image_models) do
+        source_image_models
+        # Resize images first to make liqid resize faster
+        |> Enum.map(fn {image_path, _orientation} -> 
+            {_res, 0} = System.cmd("convert", [image_path, "-resize", @thumbnail_size, "-set", "filename:name", "%t", Path.join(temp_dir, "%[filename:name]-thumb.png")])
 
             Path.join(temp_dir, Path.basename(image_path, Path.extname(image_path)) <> "-thumb.png")
         end)
         |> Enum.map(fn image_path -> 
-            {_res, 0} = System.cmd("convert", [image_path, "-liquid-rescale", "#{thumbnail_size}x#{thumbnail_size}!", "-quality", "40%", "-blur", "1x1", "-set", "filename:name", "%t", Path.join(temp_dir, "%[filename:name].jpg")])
+            {_res, 0} = System.cmd("convert", [image_path, "-liquid-rescale", "#{@thumbnail_size}x#{@thumbnail_size}!", "-quality", "40%", "-blur", "1x1", "-set", "filename:name", "%t", Path.join(temp_dir, "%[filename:name].jpg")])
 
             # remove png since now no longer needed
             File.rm!(image_path)
