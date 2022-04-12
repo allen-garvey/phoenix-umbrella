@@ -94,7 +94,7 @@ defmodule Artour.Guggenheim.Image do
             Path.join(temp_dir, Path.basename(image_path, Path.extname(image_path)) <> "-thumb.png")
         end)
         |> Enum.map(fn image_path -> 
-            {_res, 0} = System.cmd("convert", [image_path, "-liquid-rescale", "#{@thumbnail_size}x#{@thumbnail_size}!", "-quality", "40%", "-blur", "1x1", "-set", "filename:name", "%t", Path.join(temp_dir, "%[filename:name].jpg")])
+            {_res, 0} = System.cmd("convert", [image_path, "-liquid-rescale", "#{@thumbnail_size}x#{@thumbnail_size}!", "-quality", "40%", "-blur", "1x1", "-set", "filename:name", "%t", Path.join(temp_dir, "%[filename:name]-a.jpg")])
 
             # remove png since now no longer needed
             File.rm!(image_path)
