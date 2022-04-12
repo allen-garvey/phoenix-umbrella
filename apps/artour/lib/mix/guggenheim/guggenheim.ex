@@ -11,10 +11,6 @@ defmodule Mix.Tasks.Guggenheim do
       import_images(source_directory_name, image_description)
     end
 
-    def run([source_directory_name, image_description]) do
-      import_images(source_directory_name, image_description)
-    end
-
     def run([source_directory_name]) do
       import_images(source_directory_name)
     end
