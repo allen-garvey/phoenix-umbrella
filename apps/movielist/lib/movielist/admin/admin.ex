@@ -433,12 +433,16 @@ defmodule Movielist.Admin do
 
   """
   def get_streamer!(id) do
+    movie_query = from(
+      movie in Movie,
+      where: movie.is_active == true,
+      order_by: [movie.sort_title]
+    )
+
     from(
       streamer in Streamer,
-      left_join: movie in assoc(streamer, :movies),
-      where: streamer.id == ^id and movie.is_active == true,
-      preload: [movies: movie],
-      order_by: [movie.sort_title]
+      where: streamer.id == ^id,
+      preload: [movies: ^movie_query]
     )
     |> Repo.one!
   end
