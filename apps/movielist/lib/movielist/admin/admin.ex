@@ -12,7 +12,7 @@ defmodule Movielist.Admin do
   alias Movielist.Admin.Streamer
 
   #Estimated time in days between movies theater release and home release
-  @movie_home_release_estimated_lead_time 110
+  @movie_home_release_estimated_lead_time 90
 
   @doc """
   Returns the list of genres.
