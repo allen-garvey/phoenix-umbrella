@@ -3,7 +3,7 @@ defmodule Umbrella.Common.Deps do
   def shared_phoenix_deps do
     ecto() ++
     [
-      {:phoenix, "~> 1.6.6"},
+      {:phoenix, "~> 1.6.10"},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_html, "~> 3.2.0"},
       {:phoenix_live_reload, "~> 1.3.3", only: :dev},
@@ -25,21 +25,21 @@ defmodule Umbrella.Common.Deps do
   def ecto do
     [
       {:phoenix_ecto, "~> 4.4.0"},
-      {:ecto_sql, "~> 3.7.2"},
-      {:postgrex, "~> 0.16.2"},
+      {:ecto_sql, "~> 3.8.3"},
+      {:postgrex, "~> 0.16.3"},
     ]
   end
 
   def http_poison do
-    {:httpoison, "~> 1.8.0"}
+    {:httpoison, "~> 1.8.1"}
   end
 
   def floki do
-    {:floki, "~> 0.32.0"}
+    {:floki, "~> 0.33.1"}
   end
 
   def earmark do
-    {:earmark, "~> 1.4.20"}
+    {:earmark, "~> 1.4.26"}
   end
 
   def argon2 do
