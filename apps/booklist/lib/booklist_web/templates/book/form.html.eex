@@ -10,6 +10,8 @@
   <%= BooklistWeb.SharedView.form_group :subtitle, f, &text_input/3 %>
 
   <%= BooklistWeb.SharedView.form_group :author_id, f, @authors, &select/4 %>
+
+  <%= BooklistWeb.SharedView.form_group :genre_id, f, @genres, &select/4 %>
   
   <div class="form-group">
     <%= label f, :is_fiction_true, "Fiction" %>
@@ -19,7 +21,28 @@
     <%= error_tag f, :is_fiction %>
   </div>
 
-  <%= BooklistWeb.SharedView.form_group :genre_id, f, @genres, &select/4 %>
-
   <%= BooklistWeb.SharedView.submit_button "Book" %>
 <% end %>
+
+<script>
+(function(){
+  const genresIsFictionMap = <%= raw(Jason.encode!(@genres_is_fiction_map)) %>;
+  const isFictionFalse = document.getElementById('book_is_fiction_false');
+  const isFictionTrue = document.getElementById('book_is_fiction_true');
+
+  document.getElementById('book_genre_id').onchange = (e) => {
+    const genreId = `${e.target.value}`;
+    const defaultIsFiction = genresIsFictionMap[genreId];
+
+    if(defaultIsFiction){
+      isFictionTrue.checked = true;
+      isFictionFalse.checked = false;
+    }
+    else {
+      isFictionTrue.checked = false;
+      isFictionFalse.checked = true;
+    }
+
+  };
+})();
+</script>

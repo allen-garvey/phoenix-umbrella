@@ -5,10 +5,13 @@ defmodule BooklistWeb.BookController do
   alias Booklist.Admin.Book
 
   def related_fields() do
+    genres = Admin.list_genres()
+
     [
       #add empty item at start of authors since it is optional
       authors: Admin.list_authors() |> BooklistWeb.AuthorView.map_for_form |> List.insert_at(0, {"", nil}),
-      genres: Admin.list_genres() |> BooklistWeb.GenreView.map_for_form,
+      genres: genres |> BooklistWeb.GenreView.map_for_form,
+      genres_is_fiction_map: genres |> BooklistWeb.GenreView.to_is_fiction_map,
     ]
   end
 
