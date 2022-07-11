@@ -12,6 +12,10 @@
     <%= @genre.name %>
   </li>
   <li>
+    <strong>Default is fiction:</strong>
+    <%= @genre.is_fiction %>
+  </li>
+  <li>
     <strong>Average Rating:</strong>
     <%= @average_rating %>
   </li>

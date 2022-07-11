@@ -5,6 +5,7 @@ defmodule Booklist.Admin.Genre do
 
   schema "genres" do
     field :name, :string
+    field :is_fiction, :boolean, default: false
 
     has_many :books, Booklist.Admin.Book
 
@@ -14,8 +15,8 @@ defmodule Booklist.Admin.Genre do
   @doc false
   def changeset(genre, attrs) do
     genre
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :is_fiction])
+    |> validate_required([:name, :is_fiction])
     |> unique_constraint(:name)
   end
 end

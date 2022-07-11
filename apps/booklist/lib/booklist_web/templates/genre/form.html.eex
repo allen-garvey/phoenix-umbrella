@@ -7,5 +7,7 @@
 
   <%= BooklistWeb.SharedView.form_group :name, f, &text_input/3 %>
 
+  <%= BooklistWeb.SharedView.form_group :is_fiction, f, &checkbox/3 %>
+
   <%= BooklistWeb.SharedView.submit_button "Genre" %>
 <% end %>
