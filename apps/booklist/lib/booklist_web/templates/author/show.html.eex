@@ -8,7 +8,6 @@
 
 <%= link "Add Book", to: Routes.book_path(@conn, :new, author: @author.id), class: "btn btn-success" %>
 
-
 <ul>
 
   <li>
