@@ -40,6 +40,11 @@ defmodule BooklistWeb.BookController do
     render(conn, "index.html", books: books)
   end
 
+  def new(conn, %{"author" => author_id}) do
+    changeset = Admin.change_book(%Book{author_id: author_id})
+    render(conn, "new.html", [changeset: changeset] ++ related_fields())
+  end
+
   def new(conn, _params) do
     changeset = Admin.change_book(%Book{})
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
