@@ -4,7 +4,6 @@ defmodule Photog.Repo.Migrations.PopulateAlbumYearFromCoverImage do
   
   alias Photog.Repo
   alias Photog.Api.Album
-  alias Photog.Api.Image
 
   def up do
     from(
