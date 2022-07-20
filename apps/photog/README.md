@@ -9,9 +9,9 @@ Single page web app for your photo library. Originally designed to export Apple 
 
 ## Getting Started
 
-* Run the command `mkdir -p priv/static/media/images && mkdir -p priv/static/media/thumbnails` to create the folders for images
-* Create a system link from your Apple Photos library `Masters` folder to the `images` folder you just created, and a system link from your Apple Photos library `Thumbnails` folder to the `thumbnails` folder you just created 
-
+* Create symbolic links for image directories by running:
+* `ln -s <masters_directory> priv/static/media/images`
+* `ln -s <thumbnails_directory> priv/static/media/thumbnails`
 ## Importing new images using the shutterbug mix task
 
 JPEG, PNG, WebP and SVG image types are supported. This mix task both adds the images in a given source folder to the Photog database, and also generates thumbnail images and copies the original image source files to the your masters folder. Generated/copied files are placed inside folders based on the current date and time, using the same convention as Apple Photos.
