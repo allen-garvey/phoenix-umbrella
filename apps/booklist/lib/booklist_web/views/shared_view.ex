@@ -8,6 +8,10 @@ defmodule BooklistWeb.SharedView do
 		content_tag(:div, [label(form, field), fun.(form, field, class: "form-control"), error_tag(form, field)], class: "form-group")
 	end
 
+	def form_group(field, form, fun, true) when is_atom(field) and is_function(fun, 3) do
+		content_tag(:div, [label(form, field), fun.(form, field, class: "form-control", autofocus: true), error_tag(form, field)], class: "form-group")
+	end
+
 	@doc """
   	Creates a form group container with a label, input, and errors (used for select boxes)
   	"""

@@ -5,7 +5,7 @@
     </div>
   <% end %>
   
-  <%= BooklistWeb.SharedView.form_group :first_name, f, &text_input/3 %>
+  <%= BooklistWeb.SharedView.form_group :first_name, f, &text_input/3, true %>
 
   <%= BooklistWeb.SharedView.form_group :middle_name, f, &text_input/3 %>
 

@@ -9,7 +9,7 @@
   
   <%= BooklistWeb.SharedView.form_group :date_scored, f, &date_input/3 %>
 
-  <%= BooklistWeb.SharedView.form_group :score, f, &number_input/3 %>
+  <%= BooklistWeb.SharedView.form_group :score, f, &number_input/3, true %>
 
   <%= if !is_nil(assigns[:referrer]) do
   		hidden_input(f, :referrer, name: :referrer, value: assigns[:referrer])
