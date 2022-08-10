@@ -1,4 +1,4 @@
-import Chartist from 'chartist';
+import { LineChart } from 'chartist';
 import ctAxisTitle from 'chartist-plugin-axistitle';
 
 function formatChartData(rawData){
@@ -20,7 +20,7 @@ export function initializeMoviesPerMonthChart(){
         return;
     }
     const data = formatChartData(window.MOVIELIST_CHART_DATA);
-    new Chartist.Line(`#${chartId}`, data, {
+    new LineChart(`#${chartId}`, data, {
         axisY: {
             onlyInteger: true,
             low: 0,
