@@ -26,12 +26,12 @@ defmodule Umbrella.Common.Deps do
     [
       {:phoenix_ecto, "~> 4.4.0"},
       {:ecto_sql, "~> 3.8.3"},
-      {:postgrex, "~> 0.16.3"},
+      {:postgrex, "~> 0.16.4"},
     ]
   end
 
   def http_poison do
-    {:httpoison, "~> 1.8.1"}
+    {:httpoison, "~> 1.8.2"}
   end
 
   def floki do
@@ -39,7 +39,7 @@ defmodule Umbrella.Common.Deps do
   end
 
   def earmark do
-    {:earmark, "~> 1.4.26"}
+    {:earmark, "~> 1.4.27"}
   end
 
   def argon2 do
