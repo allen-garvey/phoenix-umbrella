@@ -37,7 +37,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "chartist": "^1.0.0",
+    "chartist": "^1.1.2",
     "chartist-plugin-axistitle": "0.0.7",
     "vue": "3.2.37",
     "vue-router": "^4.1.3"
