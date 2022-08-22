@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 

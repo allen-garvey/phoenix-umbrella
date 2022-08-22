@@ -5,7 +5,7 @@
 # is restricted to this project.
 
 # General application configuration
-use Mix.Config
+import Config
 
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
