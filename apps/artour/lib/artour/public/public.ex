@@ -50,7 +50,7 @@ defmodule Artour.Public do
           join: cover_image in assoc(p, :cover_image),
           where: p.is_published == true,
           preload: [cover_image: cover_image],
-          order_by: [desc: :publication_date, desc: :id],
+          order_by: [desc: :publication_date, desc: :id]
         )
     |> Repo.all
   end
