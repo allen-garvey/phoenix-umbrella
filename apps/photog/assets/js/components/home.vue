@@ -10,7 +10,15 @@
             :class="$style.section"
             v-if="recentAlbums.length > 0"
         >
-            <h2 :class="$style.sectionHeading">Recent Albums</h2>
+            <div :class="$style.flexHeader">
+                <h2 :class="$style.sectionHeading">Recent Albums</h2>
+                <router-link 
+                    :to="{ name: 'albumsForYear', params: { year: currentYear } }"
+                    :class="$style.headerSupplement"
+                >
+                    {{ currentYear }}
+                </router-link>
+            </div>
             <thumbnail-items-list
                 :items="recentAlbums"
                 :showRouteFor="showRouteForAlbum"
@@ -49,6 +57,15 @@
     }
     .sectionHeading {
         margin: 0 0 0.5rem;
+    }
+
+    .flexHeader {
+        display: flex;
+    }
+
+    .headerSupplement {
+        align-self: center;
+        margin-left: 0.5em;
     }
 </style>
 
@@ -107,6 +124,9 @@ export default {
         };
     },
     computed: {
+        currentYear(){
+            return new Date().getFullYear();
+        },
     },
     methods: {
         showRouteForAlbum(item, _model) {
