@@ -1,5 +1,5 @@
 import { getCurrentYear } from './date-helpers';
-import { getOptionalParams, buildImagesIndexVariant, buildImportsShowVariant, buildAlbumVariant } from './router-helpers.js';
+import { buildImagesIndexVariant, buildImportsShowVariant, buildAlbumVariant } from './router-helpers.js';
 import { albumRelatedFields, sortImagesCallback, sortAlbumsCallback } from './routes-helpers';
 
 import ThumbnailList from './components/thumbnail-list.vue';
@@ -274,9 +274,6 @@ export default {
             path: '/albums/new',
             name: 'albumsNew', 
             component: AlbumForm,
-            props: (route) => {
-                return getOptionalParams(route.params, ['images', 'successRedirect']);
-            },
         },
         { 
             path: '/albums/:id/edit',
@@ -335,9 +332,6 @@ export default {
             path: '/persons/new',
             name: 'personsNew', 
             component: PersonForm,
-            props: (route) => {
-                return getOptionalParams(route.params, ['images', 'successRedirect']);
-            },
         },
         { 
             path: '/persons/:id/edit',

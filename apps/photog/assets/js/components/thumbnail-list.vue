@@ -621,11 +621,11 @@ export default {
         createResourceWithImages(pathName){
             const selectedImages = this.thumbnailListSelectedItems.map(image => ({id: image.id, mini_thumbnail_path: image.mini_thumbnail_path}));
             this.$router.push({
-                name: pathName, 
-                params: {
-                    images: JSON.stringify(selectedImages), 
+                name: pathName,
+                state: {
+                    images: JSON.stringify(selectedImages),
                     successRedirect: '1'
-                    }
+                }
             });
         },
         triggerDelete(){

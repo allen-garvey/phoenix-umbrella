@@ -2,15 +2,6 @@ import { importRelatedFields } from './routes-helpers';
 
 import ThumbnailList from './components/thumbnail-list.vue';
 
-export function getOptionalParams(routeParams, optionalParams, props={}){
-    for(const param of optionalParams){
-        if(param in routeParams){
-            props[param] = routeParams[param];
-        }
-    }
-    return props;
-}
-
 export function buildImagesIndexVariant(path, name, props={}){
     return { 
         path,
