@@ -91,7 +91,9 @@ export default {
                 name: 'tagsShow', 
                 params: {
                     id: tag.id,
-                    flashMessage: flashMessage
+                },
+                state: {
+                    flashMessage,
                 }
             });
         },

@@ -82,7 +82,9 @@ export default {
                 name: 'importsShow', 
                 params: {
                     id: importModel.id,
-                    flashMessage: flashMessage
+                },
+                state: {
+                    flashMessage,
                 }
             });
         },

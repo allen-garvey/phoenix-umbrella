@@ -47,7 +47,7 @@ export default {
     watch: {
         '$route'(to, from){
             const flashAlert = this.$refs.flashAlert;
-            const flashMessage = to.params.flashMessage;
+            const flashMessage = history.state.flashMessage;
             //show flash message if any
             if(flashMessage){
                 this.putFlash(...flashMessage);
