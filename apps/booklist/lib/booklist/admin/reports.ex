@@ -148,11 +148,11 @@ defmodule Booklist.Reports do
 
         {author, ratings_count, ratings_average}
     end)
-    |> Enum.sort(fn ({_author_1, _ratings_count_1, ratings_average_1}, {_author_2, _ratings_count_2, ratings_average_2}) -> 
-      if ratings_average_1 >= ratings_average_2 do
-        true
-      else
-        false
+    |> Enum.sort(fn ({_author_1, ratings_count_1, ratings_average_1}, {_author_2, ratings_count_2, ratings_average_2}) -> 
+      cond do
+        ratings_count_1 == ratings_count_2 -> ratings_average_1 >= ratings_average_2
+        ratings_count_1 >= ratings_count_2 -> true
+        true -> false
       end
     end)
   end

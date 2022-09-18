@@ -63,7 +63,7 @@
   </div>
   <div class="home_section">
     <h2 class="home_section_heading">
-      <%= link "Reports", to: Routes.reports_path(@conn, :index) %>
+      <%= link "Authors Report", to: Routes.reports_path(@conn, :authors_index) %>
     </h2>
   </div>
 </div>
