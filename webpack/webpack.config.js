@@ -31,7 +31,7 @@ module.exports = {
         alias: {
             'umbrella-common-js': path.resolve(__dirname, '../apps/common/assets/js/'),
             bootstrap: path.resolve(__dirname, '../node_modules/bootstrap/scss'),
-            'chartist-styles': path.resolve(__dirname, '../node_modules/chartist/dist/index.css'),
+            'chartist-styles': path.resolve(__dirname, '../node_modules/chartist/dist/index.scss'),
             'photog-styles': path.resolve(__dirname, '../apps/photog/assets/sass/'),
             'artour-styles': path.resolve(__dirname, '../apps/artour/assets/css/'),
             'seren-styles': path.resolve(__dirname, '../apps/seren/assets/sass/'),
