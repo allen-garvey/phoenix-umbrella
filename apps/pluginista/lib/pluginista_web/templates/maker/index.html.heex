@@ -1,0 +1,26 @@
+<h1>Listing Makers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for maker <- @makers do %>
+    <tr>
+      <td><%= maker.name %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.maker_path(@conn, :show, maker) %></span>
+        <span><%= link "Edit", to: Routes.maker_path(@conn, :edit, maker) %></span>
+        <span><%= link "Delete", to: Routes.maker_path(@conn, :delete, maker), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Maker", to: Routes.maker_path(@conn, :new) %></span>

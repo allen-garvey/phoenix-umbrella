@@ -23,6 +23,8 @@ defmodule PluginistaWeb.Router do
     pipe_through :authenticate
 
     get "/", PageController, :index
+    resources "/groups", GroupController
+    resources "/makers", MakerController
   end
 
   # Other scopes may use custom stacks.

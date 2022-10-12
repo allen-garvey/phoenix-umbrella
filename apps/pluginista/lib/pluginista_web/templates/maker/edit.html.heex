@@ -1,0 +1,5 @@
+<h1>Edit Maker</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.maker_path(@conn, :update, @maker)) %>
+
+<span><%= link "Back", to: Routes.maker_path(@conn, :index) %></span>

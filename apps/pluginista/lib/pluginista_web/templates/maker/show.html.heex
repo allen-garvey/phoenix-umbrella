@@ -1,0 +1,13 @@
+<h1>Show Maker</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @maker.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.maker_path(@conn, :edit, @maker) %></span> |
+<span><%= link "Back", to: Routes.maker_path(@conn, :index) %></span>
