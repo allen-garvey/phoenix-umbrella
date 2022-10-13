@@ -1,0 +1,24 @@
+<h1>Listing Plugin categories</h1>
+
+<table>
+  <thead>
+    <tr>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for plugin_category <- @plugin_categories do %>
+    <tr>
+
+      <td>
+        <span><%= link "Show", to: Routes.plugin_category_path(@conn, :show, plugin_category) %></span>
+        <span><%= link "Edit", to: Routes.plugin_category_path(@conn, :edit, plugin_category) %></span>
+        <span><%= link "Delete", to: Routes.plugin_category_path(@conn, :delete, plugin_category), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Plugin category", to: Routes.plugin_category_path(@conn, :new) %></span>

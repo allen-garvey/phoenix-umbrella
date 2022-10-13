@@ -61,4 +61,18 @@ defmodule Pluginista.AdminFixtures do
 
     plugin
   end
+
+  @doc """
+  Generate a plugin_category.
+  """
+  def plugin_category_fixture(attrs \\ %{}) do
+    {:ok, plugin_category} =
+      attrs
+      |> Enum.into(%{
+
+      })
+      |> Pluginista.Admin.create_plugin_category()
+
+    plugin_category
+  end
 end

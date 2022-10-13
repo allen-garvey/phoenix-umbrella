@@ -29,6 +29,7 @@ defmodule PluginistaWeb.Router do
     resources "/groups", GroupController
     resources "/makers", MakerController
     resources "/plugins", PluginController
+    resources "/plugin_categories", PluginCategoryController
   end
 
   # Other scopes may use custom stacks.

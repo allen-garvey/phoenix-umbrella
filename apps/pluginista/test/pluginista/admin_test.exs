@@ -222,4 +222,56 @@ defmodule Pluginista.AdminTest do
       assert %Ecto.Changeset{} = Admin.change_plugin(plugin)
     end
   end
+
+  describe "plugin_categories" do
+    alias Pluginista.Admin.PluginCategory
+
+    import Pluginista.AdminFixtures
+
+    @invalid_attrs %{}
+
+    test "list_plugin_categories/0 returns all plugin_categories" do
+      plugin_category = plugin_category_fixture()
+      assert Admin.list_plugin_categories() == [plugin_category]
+    end
+
+    test "get_plugin_category!/1 returns the plugin_category with given id" do
+      plugin_category = plugin_category_fixture()
+      assert Admin.get_plugin_category!(plugin_category.id) == plugin_category
+    end
+
+    test "create_plugin_category/1 with valid data creates a plugin_category" do
+      valid_attrs = %{}
+
+      assert {:ok, %PluginCategory{} = plugin_category} = Admin.create_plugin_category(valid_attrs)
+    end
+
+    test "create_plugin_category/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Admin.create_plugin_category(@invalid_attrs)
+    end
+
+    test "update_plugin_category/2 with valid data updates the plugin_category" do
+      plugin_category = plugin_category_fixture()
+      update_attrs = %{}
+
+      assert {:ok, %PluginCategory{} = plugin_category} = Admin.update_plugin_category(plugin_category, update_attrs)
+    end
+
+    test "update_plugin_category/2 with invalid data returns error changeset" do
+      plugin_category = plugin_category_fixture()
+      assert {:error, %Ecto.Changeset{}} = Admin.update_plugin_category(plugin_category, @invalid_attrs)
+      assert plugin_category == Admin.get_plugin_category!(plugin_category.id)
+    end
+
+    test "delete_plugin_category/1 deletes the plugin_category" do
+      plugin_category = plugin_category_fixture()
+      assert {:ok, %PluginCategory{}} = Admin.delete_plugin_category(plugin_category)
+      assert_raise Ecto.NoResultsError, fn -> Admin.get_plugin_category!(plugin_category.id) end
+    end
+
+    test "change_plugin_category/1 returns a plugin_category changeset" do
+      plugin_category = plugin_category_fixture()
+      assert %Ecto.Changeset{} = Admin.change_plugin_category(plugin_category)
+    end
+  end
 end

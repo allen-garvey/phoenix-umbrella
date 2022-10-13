@@ -7,6 +7,9 @@ defmodule Pluginista.Admin.Category do
 
     belongs_to :group, Pluginista.Admin.Group
 
+    has_many :plugin_categories, Pluginista.Admin.PluginCategory
+    many_to_many :plugins, Pluginista.Admin.Plugin, join_through: Pluginista.Admin.PluginCategory
+
     timestamps()
   end
 

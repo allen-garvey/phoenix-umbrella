@@ -389,4 +389,100 @@ defmodule Pluginista.Admin do
   def change_plugin(%Plugin{} = plugin, attrs \\ %{}) do
     Plugin.changeset(plugin, attrs)
   end
+
+  alias Pluginista.Admin.PluginCategory
+
+  @doc """
+  Returns the list of plugin_categories.
+
+  ## Examples
+
+      iex> list_plugin_categories()
+      [%PluginCategory{}, ...]
+
+  """
+  def list_plugin_categories do
+    Repo.all(PluginCategory)
+  end
+
+  @doc """
+  Gets a single plugin_category.
+
+  Raises `Ecto.NoResultsError` if the Plugin category does not exist.
+
+  ## Examples
+
+      iex> get_plugin_category!(123)
+      %PluginCategory{}
+
+      iex> get_plugin_category!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_plugin_category!(id), do: Repo.get!(PluginCategory, id)
+
+  @doc """
+  Creates a plugin_category.
+
+  ## Examples
+
+      iex> create_plugin_category(%{field: value})
+      {:ok, %PluginCategory{}}
+
+      iex> create_plugin_category(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_plugin_category(attrs \\ %{}) do
+    %PluginCategory{}
+    |> PluginCategory.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a plugin_category.
+
+  ## Examples
+
+      iex> update_plugin_category(plugin_category, %{field: new_value})
+      {:ok, %PluginCategory{}}
+
+      iex> update_plugin_category(plugin_category, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_plugin_category(%PluginCategory{} = plugin_category, attrs) do
+    plugin_category
+    |> PluginCategory.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a plugin_category.
+
+  ## Examples
+
+      iex> delete_plugin_category(plugin_category)
+      {:ok, %PluginCategory{}}
+
+      iex> delete_plugin_category(plugin_category)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_plugin_category(%PluginCategory{} = plugin_category) do
+    Repo.delete(plugin_category)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking plugin_category changes.
+
+  ## Examples
+
+      iex> change_plugin_category(plugin_category)
+      %Ecto.Changeset{data: %PluginCategory{}}
+
+  """
+  def change_plugin_category(%PluginCategory{} = plugin_category, attrs \\ %{}) do
+    PluginCategory.changeset(plugin_category, attrs)
+  end
 end

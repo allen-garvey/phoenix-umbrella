@@ -1,0 +1,5 @@
+<h1>Edit Plugin category</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.plugin_category_path(@conn, :update, @plugin_category)) %>
+
+<span><%= link "Back", to: Routes.plugin_category_path(@conn, :index) %></span>
