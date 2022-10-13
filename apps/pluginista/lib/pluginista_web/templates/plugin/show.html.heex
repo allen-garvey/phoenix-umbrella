@@ -1,0 +1,23 @@
+<h1>Show Plugin</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @plugin.name %>
+  </li>
+
+  <li>
+    <strong>Acquisition date:</strong>
+    <%= @plugin.acquisition_date %>
+  </li>
+
+  <li>
+    <strong>Cost:</strong>
+    <%= @plugin.cost %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.plugin_path(@conn, :edit, @plugin) %></span> |
+<span><%= link "Back", to: Routes.plugin_path(@conn, :index) %></span>

@@ -6,6 +6,7 @@ defmodule Pluginista.Admin.Group do
     field :name, :string
 
     has_many :categories, Pluginista.Admin.Category
+    has_many :plugins, Pluginista.Admin.Plugin
 
     timestamps()
   end

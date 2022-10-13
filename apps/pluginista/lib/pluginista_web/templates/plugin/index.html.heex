@@ -1,0 +1,30 @@
+<h1>Listing Plugins</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Acquisition date</th>
+      <th>Cost</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for plugin <- @plugins do %>
+    <tr>
+      <td><%= plugin.name %></td>
+      <td><%= plugin.acquisition_date %></td>
+      <td><%= plugin.cost %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.plugin_path(@conn, :show, plugin) %></span>
+        <span><%= link "Edit", to: Routes.plugin_path(@conn, :edit, plugin) %></span>
+        <span><%= link "Delete", to: Routes.plugin_path(@conn, :delete, plugin), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Plugin", to: Routes.plugin_path(@conn, :new) %></span>

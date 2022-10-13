@@ -45,4 +45,20 @@ defmodule Pluginista.AdminFixtures do
 
     category
   end
+
+  @doc """
+  Generate a plugin.
+  """
+  def plugin_fixture(attrs \\ %{}) do
+    {:ok, plugin} =
+      attrs
+      |> Enum.into(%{
+        acquisition_date: ~D[2022-10-12],
+        cost: "120.5",
+        name: "some name"
+      })
+      |> Pluginista.Admin.create_plugin()
+
+    plugin
+  end
 end

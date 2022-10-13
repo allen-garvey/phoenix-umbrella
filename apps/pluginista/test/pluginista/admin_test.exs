@@ -164,4 +164,62 @@ defmodule Pluginista.AdminTest do
       assert %Ecto.Changeset{} = Admin.change_category(category)
     end
   end
+
+  describe "plugins" do
+    alias Pluginista.Admin.Plugin
+
+    import Pluginista.AdminFixtures
+
+    @invalid_attrs %{acquisition_date: nil, cost: nil, name: nil}
+
+    test "list_plugins/0 returns all plugins" do
+      plugin = plugin_fixture()
+      assert Admin.list_plugins() == [plugin]
+    end
+
+    test "get_plugin!/1 returns the plugin with given id" do
+      plugin = plugin_fixture()
+      assert Admin.get_plugin!(plugin.id) == plugin
+    end
+
+    test "create_plugin/1 with valid data creates a plugin" do
+      valid_attrs = %{acquisition_date: ~D[2022-10-12], cost: "120.5", name: "some name"}
+
+      assert {:ok, %Plugin{} = plugin} = Admin.create_plugin(valid_attrs)
+      assert plugin.acquisition_date == ~D[2022-10-12]
+      assert plugin.cost == Decimal.new("120.5")
+      assert plugin.name == "some name"
+    end
+
+    test "create_plugin/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Admin.create_plugin(@invalid_attrs)
+    end
+
+    test "update_plugin/2 with valid data updates the plugin" do
+      plugin = plugin_fixture()
+      update_attrs = %{acquisition_date: ~D[2022-10-13], cost: "456.7", name: "some updated name"}
+
+      assert {:ok, %Plugin{} = plugin} = Admin.update_plugin(plugin, update_attrs)
+      assert plugin.acquisition_date == ~D[2022-10-13]
+      assert plugin.cost == Decimal.new("456.7")
+      assert plugin.name == "some updated name"
+    end
+
+    test "update_plugin/2 with invalid data returns error changeset" do
+      plugin = plugin_fixture()
+      assert {:error, %Ecto.Changeset{}} = Admin.update_plugin(plugin, @invalid_attrs)
+      assert plugin == Admin.get_plugin!(plugin.id)
+    end
+
+    test "delete_plugin/1 deletes the plugin" do
+      plugin = plugin_fixture()
+      assert {:ok, %Plugin{}} = Admin.delete_plugin(plugin)
+      assert_raise Ecto.NoResultsError, fn -> Admin.get_plugin!(plugin.id) end
+    end
+
+    test "change_plugin/1 returns a plugin changeset" do
+      plugin = plugin_fixture()
+      assert %Ecto.Changeset{} = Admin.change_plugin(plugin)
+    end
+  end
 end
