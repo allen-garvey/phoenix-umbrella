@@ -5,6 +5,8 @@ defmodule Pluginista.Admin.Group do
   schema "groups" do
     field :name, :string
 
+    has_many :categories, Pluginista.Admin.Category
+
     timestamps()
   end
 
