@@ -1,0 +1,51 @@
+.jumbotron{
+	background-color: #eee;
+	padding: 8px 15px 30px;
+}
+
+header{
+	margin-bottom: 30px;
+}
+
+h1.main_title{
+	font-family: $title_font_family;
+	font-size: 2.441em;
+	font-weight: normal;
+	margin: 0 10px 20px;
+	a{
+		color: black;
+	}
+}
+
+nav {
+	ul {
+		display: flex;
+		flex-wrap: wrap;
+		list-style-type: none;
+		margin: 0;
+		padding-left: 0;
+	}
+	li {
+		font-family: $display_font_family;
+		font-size: 1.414em;
+
+		li + li {
+			margin-left: 10px;
+		}
+
+		//nav-pills styles
+		a{
+			border-radius: 4px;
+			padding: 12px 15px;
+			color: #337ab7; //don't change color for visited links
+		}
+	}
+}
+
+//Active nav styles
+.nav a.active,
+.nav > li:hover > a:not(.btn) {
+	background-color: #223;
+	color: white;
+	text-decoration: none;
+}

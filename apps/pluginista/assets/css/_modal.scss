@@ -1,0 +1,61 @@
+/*
+* Styles for modal
+*/
+.modal_container{
+	display: flex;
+	z-index: 2;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left:0;
+	right: 0;
+	justify-content: center;
+}
+.modal_overlay{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left:0;
+	right: 0;
+	background-color: black;
+	opacity: 0.8;
+	z-index: 1;
+}
+.modal{
+	position: fixed;
+	top: 1em;
+	margin-top: auto;
+	margin-bottom: auto;
+	z-index: 2;
+	background-color: white;
+	padding: 4em 2em 2em;
+	border-radius: 6px;
+	box-shadow: 0 5px 15px rgba(0,0,0,.5);
+	max-height: 95vh;
+	overflow: scroll;
+}
+.modal_buttons{
+	display: none;
+	margin-top: 4em;
+}
+.modal_confirm_buttons{
+	text-align: right;
+	button:first-of-type{
+		margin-right: 0.8em;
+	}
+	.confirm &{
+		display: block;
+	}
+}
+.modal_alert_buttons{
+	text-align: center;
+	.alert &{
+		display: block;
+	}
+}
+
+.modal_body{
+	img{
+		margin-top: 1em;
+	}
+}

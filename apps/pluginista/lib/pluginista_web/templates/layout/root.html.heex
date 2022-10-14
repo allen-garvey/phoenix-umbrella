@@ -9,17 +9,21 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
   </head>
   <body>
-    <header>
-      <section class="container">
+    <header class="jumbotron">
+      <div class="container">
+        <h1 class="main_title"><%= link "Pluginista", to: Routes.page_path(@conn, :index) %></h1>
         <nav>
-          <ul>
+          <ul class="nav">
+            <li><%= link "Resources", to: Routes.page_path(@conn, :resources) %></li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
             <% end %>
           </ul>
         </nav>
-      </section>
+      </div>
     </header>
-    <%= @inner_content %>
+    <div class="container">
+      <%= @inner_content %>
+    </div>
   </body>
 </html>
