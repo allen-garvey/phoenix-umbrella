@@ -18,7 +18,7 @@ defmodule Pluginista.Admin do
 
   """
   def list_groups do
-    Repo.all(Group)
+    Repo.all(from(Group, order_by: :name))
   end
 
   @doc """

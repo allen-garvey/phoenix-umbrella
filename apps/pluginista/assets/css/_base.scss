@@ -18,6 +18,10 @@ main{
 	padding-bottom: 15em;
 }
 
+h1,h2,h3,h4 {
+	margin-top: 0;
+}
+
 h1,h2,h3,h4,button{
 	font-family: $sans_serif_font_family;
 }
