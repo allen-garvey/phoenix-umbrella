@@ -16,9 +16,9 @@ defmodule PluginistaWeb.MakerController do
 
   def create(conn, %{"maker" => maker_params}) do
     case Admin.create_maker(maker_params) do
-      {:ok, _maker} ->
+      {:ok, maker} ->
         conn
-        |> put_flash(:info, "Maker created successfully.")
+        |> put_flash(:info, "#{maker.name} created successfully.")
         |> redirect(to: Routes.maker_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -43,7 +43,7 @@ defmodule PluginistaWeb.MakerController do
     case Admin.update_maker(maker, maker_params) do
       {:ok, maker} ->
         conn
-        |> put_flash(:info, "Maker updated successfully.")
+        |> put_flash(:info, "#{maker.name} updated successfully.")
         |> redirect(to: Routes.maker_path(conn, :index, maker))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -56,7 +56,7 @@ defmodule PluginistaWeb.MakerController do
     {:ok, _maker} = Admin.delete_maker(maker)
 
     conn
-    |> put_flash(:info, "Maker deleted successfully.")
+    |> put_flash(:info, "#{maker.name} deleted successfully.")
     |> redirect(to: Routes.maker_path(conn, :index))
   end
 end

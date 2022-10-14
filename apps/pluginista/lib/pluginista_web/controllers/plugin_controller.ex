@@ -18,7 +18,7 @@ defmodule PluginistaWeb.PluginController do
     case Admin.create_plugin(plugin_params) do
       {:ok, plugin} ->
         conn
-        |> put_flash(:info, "Plugin created successfully.")
+        |> put_flash(:info, "#{plugin.name} created successfully.")
         |> redirect(to: Routes.plugin_path(conn, :show, plugin))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -43,7 +43,7 @@ defmodule PluginistaWeb.PluginController do
     case Admin.update_plugin(plugin, plugin_params) do
       {:ok, plugin} ->
         conn
-        |> put_flash(:info, "Plugin updated successfully.")
+        |> put_flash(:info, "#{plugin.name} updated successfully.")
         |> redirect(to: Routes.plugin_path(conn, :show, plugin))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -56,7 +56,7 @@ defmodule PluginistaWeb.PluginController do
     {:ok, _plugin} = Admin.delete_plugin(plugin)
 
     conn
-    |> put_flash(:info, "Plugin deleted successfully.")
+    |> put_flash(:info, "#{plugin.name} deleted successfully.")
     |> redirect(to: Routes.plugin_path(conn, :index))
   end
 end

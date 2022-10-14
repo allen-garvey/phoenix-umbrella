@@ -18,8 +18,8 @@ defmodule PluginistaWeb.CategoryController do
     case Admin.create_category(category_params) do
       {:ok, category} ->
         conn
-        |> put_flash(:info, "Category created successfully.")
-        |> redirect(to: Routes.category_path(conn, :show, category))
+        |> put_flash(:info, "#{category.name} created successfully.")
+        |> redirect(to: Routes.category_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -43,7 +43,7 @@ defmodule PluginistaWeb.CategoryController do
     case Admin.update_category(category, category_params) do
       {:ok, category} ->
         conn
-        |> put_flash(:info, "Category updated successfully.")
+        |> put_flash(:info, "#{category.name} updated successfully.")
         |> redirect(to: Routes.category_path(conn, :show, category))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -56,7 +56,7 @@ defmodule PluginistaWeb.CategoryController do
     {:ok, _category} = Admin.delete_category(category)
 
     conn
-    |> put_flash(:info, "Category deleted successfully.")
+    |> put_flash(:info, "#{category.name} deleted successfully.")
     |> redirect(to: Routes.category_path(conn, :index))
   end
 end

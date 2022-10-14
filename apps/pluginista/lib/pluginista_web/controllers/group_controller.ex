@@ -16,9 +16,9 @@ defmodule PluginistaWeb.GroupController do
 
   def create(conn, %{"group" => group_params}) do
     case Admin.create_group(group_params) do
-      {:ok, _group} ->
+      {:ok, group} ->
         conn
-        |> put_flash(:info, "Group created successfully.")
+        |> put_flash(:info, "#{group.name} created successfully.")
         |> redirect(to: Routes.group_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -43,7 +43,7 @@ defmodule PluginistaWeb.GroupController do
     case Admin.update_group(group, group_params) do
       {:ok, group} ->
         conn
-        |> put_flash(:info, "Group updated successfully.")
+        |> put_flash(:info, "#{group.name} updated successfully.")
         |> redirect(to: Routes.group_path(conn, :show, group))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -56,7 +56,7 @@ defmodule PluginistaWeb.GroupController do
     {:ok, _group} = Admin.delete_group(group)
 
     conn
-    |> put_flash(:info, "Group deleted successfully.")
+    |> put_flash(:info, "#{group.name} deleted successfully.")
     |> redirect(to: Routes.group_path(conn, :index))
   end
 end
