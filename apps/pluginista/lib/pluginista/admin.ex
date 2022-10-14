@@ -114,7 +114,7 @@ defmodule Pluginista.Admin do
 
   """
   def list_makers do
-    Repo.all(Maker)
+    Repo.all(from(Maker, order_by: :name))
   end
 
   @doc """

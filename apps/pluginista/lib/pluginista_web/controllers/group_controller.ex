@@ -16,10 +16,10 @@ defmodule PluginistaWeb.GroupController do
 
   def create(conn, %{"group" => group_params}) do
     case Admin.create_group(group_params) do
-      {:ok, group} ->
+      {:ok, _group} ->
         conn
         |> put_flash(:info, "Group created successfully.")
-        |> redirect(to: Routes.group_path(conn, :show, group))
+        |> redirect(to: Routes.group_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
