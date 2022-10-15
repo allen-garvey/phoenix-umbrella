@@ -15,6 +15,12 @@
     }
 }
 
-.btn:hover {
-    text-decoration: none;
+.btn {
+    &:hover {
+        text-decoration: none;
+    }
+
+    & + & {
+        margin-left: 1rem;
+    }
 }

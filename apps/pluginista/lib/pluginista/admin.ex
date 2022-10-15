@@ -214,7 +214,7 @@ defmodule Pluginista.Admin do
       category in Category,
       join: group in assoc(category, :group),
       preload: [group: group],
-      order_by: [category.name, group.name]
+      order_by: [group.name, category.name]
     )
     |> Repo.all
   end

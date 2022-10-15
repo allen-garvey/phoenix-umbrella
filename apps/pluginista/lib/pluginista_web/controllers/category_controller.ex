@@ -20,15 +20,24 @@ defmodule PluginistaWeb.CategoryController do
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
-  def create(conn, %{"category" => category_params}) do
+  def create_succeeded(conn, category, "true") do
+    changeset = Admin.change_category(%Category{ group_id: category.group_id })
+    render(conn, "new.html", [changeset: changeset] ++ related_fields())
+  end
+
+  def create_succeeded(conn, category, _save_another) do
+    redirect(conn, to: Routes.category_path(conn, :show, category))
+  end
+
+  def create(conn, %{"category" => category_params, "save_another" => save_another}) do
     case Admin.create_category(category_params) do
       {:ok, category} ->
         conn
         |> put_flash(:info, "#{category.name} created successfully.")
-        |> redirect(to: Routes.category_path(conn, :index))
+        |> create_succeeded(category, save_another)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", [changeset: changeset] ++ related_fields())
     end
   end
 
@@ -53,7 +62,7 @@ defmodule PluginistaWeb.CategoryController do
         |> redirect(to: Routes.category_path(conn, :show, category))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", category: category, changeset: changeset)
+        render(conn, "edit.html", [category: category, changeset: changeset] ++ related_fields())
     end
   end
 
