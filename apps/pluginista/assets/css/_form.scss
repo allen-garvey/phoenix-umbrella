@@ -5,6 +5,11 @@
 .form-group {
     margin-bottom: 1rem;
 
+    &.right {
+        display: flex;
+        justify-content: flex-end;
+    }
+
     select.form-control {
         background-color: #fff;
     }

@@ -210,7 +210,13 @@ defmodule Pluginista.Admin do
 
   """
   def list_categories do
-    Repo.all(Category)
+    from(
+      category in Category,
+      join: group in assoc(category, :group),
+      preload: [group: group],
+      order_by: [category.name, group.name]
+    )
+    |> Repo.all
   end
 
   @doc """
@@ -227,7 +233,15 @@ defmodule Pluginista.Admin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_category!(id), do: Repo.get!(Category, id)
+  def get_category!(id) do
+    from(
+      category in Category,
+      join: group in assoc(category, :group),
+      where: category.id == ^id,
+      preload: [group: group]
+    )
+    |> Repo.one!
+  end
 
   @doc """
   Creates a category.

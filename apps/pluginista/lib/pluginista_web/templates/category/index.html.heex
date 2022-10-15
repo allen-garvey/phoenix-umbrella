@@ -1,26 +1,27 @@
-<h1>Listing Categories</h1>
+<h1>Categories</h1>
+
+<div class="form-group"><%= link "New Category", to: Routes.category_path(@conn, :new), class: "btn btn-success" %></div>
 
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>Name</th>
-
+      <th>Group</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for category <- @categories do %>
     <tr>
+      <td></td>
       <td><%= category.name %></td>
+      <td><%= category.group.name %></td>
 
       <td>
-        <span><%= link "Show", to: Routes.category_path(@conn, :show, category) %></span>
-        <span><%= link "Edit", to: Routes.category_path(@conn, :edit, category) %></span>
-        <span><%= link "Delete", to: Routes.category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <span><%= link "Edit", to: Routes.category_path(@conn, :edit, category), class: "btn btn-primary" %></span>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
-
-<span><%= link "New Category", to: Routes.category_path(@conn, :new) %></span>

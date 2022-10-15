@@ -5,11 +5,11 @@
     </div>
   <% end %>
 
-  <%= label f, :name %>
-  <%= text_input f, :name, autofocus: true %>
-  <%= error_tag f, :name %>
+  <%= PluginistaWeb.SharedView.input_group :name, f, &text_input/3, [autofocus: true] %>
 
-  <div>
-    <%= submit "Save" %>
+  <%= PluginistaWeb.SharedView.select_group :group_id, f, @groups %>
+
+  <div class="form-group right">
+    <%= submit "Save", class: "btn btn-success" %>
   </div>
 </.form>
