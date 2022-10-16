@@ -14,12 +14,21 @@ defmodule PluginistaWeb.MakerController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"maker" => maker_params}) do
+  def create_succeeded(conn, "true") do
+    changeset = Admin.change_maker(%Maker{})
+    render(conn, "new.html", changeset: changeset)
+  end
+
+  def create_succeeded(conn, _save_another) do
+    redirect(conn, to: Routes.maker_path(conn, :index))
+  end
+
+  def create(conn, %{"maker" => maker_params, "save_another" => save_another}) do
     case Admin.create_maker(maker_params) do
       {:ok, maker} ->
         conn
         |> put_flash(:info, "#{maker.name} created successfully.")
-        |> redirect(to: Routes.maker_path(conn, :index))
+        |> create_succeeded(save_another)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
