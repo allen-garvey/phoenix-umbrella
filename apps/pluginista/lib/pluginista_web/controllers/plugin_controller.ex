@@ -30,12 +30,12 @@ defmodule PluginistaWeb.PluginController do
     redirect(conn, to: Routes.plugin_path(conn, :show, plugin))
   end
 
-  def create(conn, %{"plugin" => plugin_params, "save_another" => save_another}) do
+  def create(conn, %{"plugin" => plugin_params} = params) do
     case Admin.create_plugin(plugin_params) do
       {:ok, plugin} ->
         conn
         |> put_flash(:info, "#{plugin.name} created successfully.")
-        |> create_succeeded(plugin, save_another)
+        |> create_succeeded(plugin, params["save_another"])
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset] ++ related_fields())

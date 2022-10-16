@@ -29,12 +29,12 @@ defmodule PluginistaWeb.CategoryController do
     redirect(conn, to: Routes.category_path(conn, :show, category))
   end
 
-  def create(conn, %{"category" => category_params, "save_another" => save_another}) do
+  def create(conn, %{"category" => category_params} = params) do
     case Admin.create_category(category_params) do
       {:ok, category} ->
         conn
         |> put_flash(:info, "#{category.name} created successfully.")
-        |> create_succeeded(category, save_another)
+        |> create_succeeded(category, params["save_another"])
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset] ++ related_fields())

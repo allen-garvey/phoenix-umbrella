@@ -23,12 +23,12 @@ defmodule PluginistaWeb.MakerController do
     redirect(conn, to: Routes.maker_path(conn, :index))
   end
 
-  def create(conn, %{"maker" => maker_params, "save_another" => save_another}) do
+  def create(conn, %{"maker" => maker_params} = params) do
     case Admin.create_maker(maker_params) do
       {:ok, maker} ->
         conn
         |> put_flash(:info, "#{maker.name} created successfully.")
-        |> create_succeeded(save_another)
+        |> create_succeeded(params["save_another"])
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
