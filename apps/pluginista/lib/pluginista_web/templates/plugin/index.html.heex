@@ -22,7 +22,14 @@
       <td><%= link plugin.maker.name, to: Routes.maker_path(@conn, :show, plugin.maker) %></td>
       <td><%= link plugin.name, to: Routes.plugin_path(@conn, :show, plugin) %></td>
       <td><%= link plugin.group.name, to: Routes.group_path(@conn, :show, plugin.group) %></td>
-      <td></td>
+      <td>
+        <%= 
+          case Enum.at(plugin.categories, 0) do
+            nil -> ""
+            category -> category.name
+          end
+        %>
+      </td>
       <td><%= plugin.acquisition_date %></td>
       <td>$<%= plugin.cost %></td>
 

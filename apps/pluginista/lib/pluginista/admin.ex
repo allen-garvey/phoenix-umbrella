@@ -336,7 +336,8 @@ defmodule Pluginista.Admin do
       plugin in Plugin,
       join: group in assoc(plugin, :group),
       join: maker in assoc(plugin, :maker),
-      preload: [group: group, maker: maker],
+      left_join: categories in assoc(plugin, :categories),
+      preload: [group: group, maker: maker, categories: categories],
       order_by: [group.name, maker.name, plugin.name]
     )
     |> Repo.all
