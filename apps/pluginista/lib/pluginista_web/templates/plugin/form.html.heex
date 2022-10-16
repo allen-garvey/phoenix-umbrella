@@ -7,13 +7,16 @@
 
   <%= PluginistaWeb.SharedView.input_group :name, f, &text_input/3, [autofocus: true] %>
 
-  <%= label f, :acquisition_date %>
-  <%= date_select f, :acquisition_date %>
-  <%= error_tag f, :acquisition_date %>
+  <%= PluginistaWeb.SharedView.select_group :maker_id, f, @makers %>
+
+  <%= PluginistaWeb.SharedView.select_group :group_id, f, @groups %>
+
+  <%= PluginistaWeb.SharedView.input_group :acquisition_date, f, &date_input/3 %>
 
   <%= PluginistaWeb.SharedView.input_group :cost, f, &number_input/3, [step: "any"] %>
 
   <div class="form-group right">
+    <%= submit "Save and add another", class: "btn btn-light", name: "save_another", value: "true" %>
     <%= submit "Save", class: "btn btn-success" %>
   </div>
 </.form>

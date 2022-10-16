@@ -4,7 +4,7 @@ defmodule Pluginista.Admin.Plugin do
 
   schema "plugins" do
     field :acquisition_date, :date
-    field :cost, :decimal
+    field :cost, :decimal, default: 0
     field :name, :string
 
     belongs_to :group, Pluginista.Admin.Group
@@ -20,7 +20,7 @@ defmodule Pluginista.Admin.Plugin do
   def changeset(plugin, attrs) do
     plugin
     |> cast(attrs, [:name, :acquisition_date, :cost, :maker_id, :group_id])
-    |> validate_required([:name, :acquisition_date, :cost, :maker_id, :group_id])
+    |> validate_required([:name, :cost, :maker_id, :group_id])
     |> assoc_constraint(:group)
     |> assoc_constraint(:maker)
   end

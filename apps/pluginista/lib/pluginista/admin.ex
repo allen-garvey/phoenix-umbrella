@@ -320,7 +320,14 @@ defmodule Pluginista.Admin do
 
   """
   def list_plugins do
-    Repo.all(Plugin)
+    from(
+      plugin in Plugin,
+      join: group in assoc(plugin, :group),
+      join: maker in assoc(plugin, :maker),
+      preload: [group: group, maker: maker],
+      order_by: [group.name, maker.name, plugin.name]
+    )
+    |> Repo.all
   end
 
   @doc """
@@ -337,7 +344,16 @@ defmodule Pluginista.Admin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_plugin!(id), do: Repo.get!(Plugin, id)
+  def get_plugin!(id) do
+    from(
+      plugin in Plugin,
+      join: group in assoc(plugin, :group),
+      join: maker in assoc(plugin, :maker),
+      where: plugin.id == ^id,
+      preload: [group: group, maker: maker]
+    )
+    |> Repo.one!
+  end
 
   @doc """
   Creates a plugin.
