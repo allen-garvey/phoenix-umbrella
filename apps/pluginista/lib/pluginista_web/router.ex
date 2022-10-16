@@ -30,6 +30,8 @@ defmodule PluginistaWeb.Router do
     resources "/makers", MakerController
     resources "/plugins", PluginController
     resources "/plugin_categories", PluginCategoryController
+
+    post "/plugins/:id/update_categories", PluginController, :update_categories
   end
 
   # Other scopes may use custom stacks.

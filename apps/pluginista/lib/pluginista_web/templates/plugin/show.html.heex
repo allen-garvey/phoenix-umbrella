@@ -1,10 +1,17 @@
-<h1>Show Plugin</h1>
+<span><%= link "Back", to: Routes.plugin_path(@conn, :index) %></span> | <span><%= link "Edit", to: Routes.plugin_path(@conn, :edit, @plugin), class: "btn btn-primary" %></span>
+
+<h1><%= @plugin.name %></h1>
 
 <ul>
 
   <li>
-    <strong>Name:</strong>
-    <%= @plugin.name %>
+    <strong>Group:</strong>
+    <%= @plugin.group.name %>
+  </li>
+
+  <li>
+    <strong>Maker:</strong>
+    <%= @plugin.maker.name %>
   </li>
 
   <li>
@@ -19,5 +26,10 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.plugin_path(@conn, :edit, @plugin) %></span> |
-<span><%= link "Back", to: Routes.plugin_path(@conn, :index) %></span>
+<%= form_for @conn, Routes.plugin_path(@conn, :update_categories, @plugin), fn f -> %>
+  <%= PluginistaWeb.SharedView.multiselect_checkboxes(f, :categories, PluginistaWeb.CategoryView.map_for_form(@categories), Map.new(@plugin.plugin_categories, &{&1.category_id, true})) %>
+
+  <div class="form-group right">
+    <%= submit "Update Categories", class: "btn btn-success" %>
+  </div>
+<% end %>

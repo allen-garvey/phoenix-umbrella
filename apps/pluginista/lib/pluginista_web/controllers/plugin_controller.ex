@@ -44,7 +44,8 @@ defmodule PluginistaWeb.PluginController do
 
   def show(conn, %{"id" => id}) do
     plugin = Admin.get_plugin!(id)
-    render(conn, "show.html", plugin: plugin)
+    categories = Admin.list_categories_for_group(plugin.group_id)
+    render(conn, "show.html", plugin: plugin, categories: categories)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -74,5 +75,17 @@ defmodule PluginistaWeb.PluginController do
     conn
     |> put_flash(:info, "#{plugin.name} deleted successfully.")
     |> redirect(to: Routes.plugin_path(conn, :index))
+  end
+
+  def update_categories(conn, %{"id" => plugin_id, "categories" => category_ids}) do
+    Admin.delete_plugin_categories_for_plugin(plugin_id)
+    
+    for category_id <- category_ids do
+      Admin.create_plugin_category(%{plugin_id: plugin_id, category_id: category_id})
+    end
+
+    conn
+      |> put_flash(:info, "Categories updated.")
+      |> redirect(to: Routes.plugin_path(conn, :show, plugin_id))
   end
 end

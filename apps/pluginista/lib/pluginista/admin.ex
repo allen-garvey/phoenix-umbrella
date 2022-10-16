@@ -220,6 +220,18 @@ defmodule Pluginista.Admin do
   end
 
   @doc """
+  Returns the list of categories for a given group.
+  """
+  def list_categories_for_group(group_id) do
+    from(
+      category in Category,
+      where: category.group_id == ^group_id,
+      order_by: [category.name]
+    )
+    |> Repo.all
+  end
+
+  @doc """
   Gets a single category.
 
   Raises `Ecto.NoResultsError` if the Category does not exist.
@@ -349,8 +361,9 @@ defmodule Pluginista.Admin do
       plugin in Plugin,
       join: group in assoc(plugin, :group),
       join: maker in assoc(plugin, :maker),
+      left_join: plugin_categories in assoc(plugin, :plugin_categories),
       where: plugin.id == ^id,
-      preload: [group: group, maker: maker]
+      preload: [group: group, maker: maker, plugin_categories: plugin_categories]
     )
     |> Repo.one!
   end
@@ -501,6 +514,17 @@ defmodule Pluginista.Admin do
   """
   def delete_plugin_category(%PluginCategory{} = plugin_category) do
     Repo.delete(plugin_category)
+  end
+
+  @doc """
+  Deletes plugin_categories for a plugin.
+  """
+  def delete_plugin_categories_for_plugin(plugin_id) do
+    from(
+      plugin_category in PluginCategory,
+      where: plugin_category.plugin_id == ^plugin_id
+    )
+    |> Repo.delete_all
   end
 
   @doc """
