@@ -15,6 +15,13 @@
 
   <%= PluginistaWeb.SharedView.input_group :cost, f, &number_input/3, [step: "any"] %>
 
+  <%= if assigns[:show_categories] do %>
+    <fieldset>
+    <legend>Categories</legend>
+      <%= content_tag(:div, "", id: "plugin-categories", data_categories: PluginistaWeb.CategoryView.to_json(@categories)) %>
+  </fieldset>
+  <% end %>
+
   <div class="form-group right">
     <%= submit "Save and add another", class: "btn btn-light", name: "save_another", value: "true" %>
     <%= submit "Save", class: "btn btn-success" %>

@@ -18,6 +18,7 @@
             <li><%= link "Makers", to: Routes.maker_path(@conn, :index) %></li>
             <li><%= link "Plugins", to: Routes.plugin_path(@conn, :index) %></li>
             <li><%= link "Resources", to: Routes.page_path(@conn, :resources) %></li>
+            <li><%= link "Reports", to: Routes.report_path(@conn, :index) %></li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
             <% end %>
@@ -28,5 +29,6 @@
     <div class="container">
       <%= @inner_content %>
     </div>
+    <script src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </body>
 </html>

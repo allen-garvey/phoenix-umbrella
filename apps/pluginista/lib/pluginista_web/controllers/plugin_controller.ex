@@ -8,6 +8,7 @@ defmodule PluginistaWeb.PluginController do
     [
       groups: Admin.list_groups() |> PluginistaWeb.GroupView.map_for_form,
       makers: Admin.list_makers() |> PluginistaWeb.MakerView.map_for_form,
+      categories: Admin.list_categories(),
     ]
   end
 
@@ -31,9 +32,12 @@ defmodule PluginistaWeb.PluginController do
   end
 
   def create(conn, %{"plugin" => plugin_params} = params) do
+    category_ids = Map.get(params, "categories", [])
+    
     case Admin.create_plugin(plugin_params) do
       {:ok, plugin} ->
         conn
+        |> create_categories_for_plugin(plugin.id, category_ids)
         |> put_flash(:info, "#{plugin.name} created successfully.")
         |> create_succeeded(plugin, params["save_another"])
 
@@ -79,13 +83,17 @@ defmodule PluginistaWeb.PluginController do
 
   def update_categories(conn, %{"id" => plugin_id, "categories" => category_ids}) do
     Admin.delete_plugin_categories_for_plugin(plugin_id)
-    
+
+    create_categories_for_plugin(conn, plugin_id, category_ids)
+      |> put_flash(:info, "Categories updated.")
+      |> redirect(to: Routes.plugin_path(conn, :show, plugin_id))
+  end
+
+  def create_categories_for_plugin(conn, plugin_id, category_ids) when is_list(category_ids) do
     for category_id <- category_ids do
       Admin.create_plugin_category(%{plugin_id: plugin_id, category_id: category_id})
     end
 
     conn
-      |> put_flash(:info, "Categories updated.")
-      |> redirect(to: Routes.plugin_path(conn, :show, plugin_id))
   end
 end
