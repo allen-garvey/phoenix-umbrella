@@ -25,6 +25,8 @@ defmodule PluginistaWeb.Router do
     get "/", PageController, :index
     get "/resources", PageController, :resources
 
+    get "/reports", ReportController, :index
+
     resources "/categories", CategoryController
     resources "/groups", GroupController
     resources "/makers", MakerController

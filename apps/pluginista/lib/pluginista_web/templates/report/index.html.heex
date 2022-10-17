@@ -1,0 +1,24 @@
+<h2>Reports</h2>
+
+<h3>Plugins Per Year</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Year</th>
+      <th>Count</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for year <- @years do %>
+    <tr>
+      <td></td>
+      <td><%= year[:year] %></td>
+      <td><%= year[:count] %></td>
+      <td>$<%= year[:total] %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
