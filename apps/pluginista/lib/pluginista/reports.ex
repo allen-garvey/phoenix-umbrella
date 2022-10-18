@@ -18,4 +18,9 @@ defmodule Pluginista.Reports do
         |> Repo.all
     end
 
+    def sum_plugins_cost(plugins) do
+        plugins 
+        |> Enum.reduce(Decimal.new(0), fn plugin, total -> Decimal.add(total, plugin.cost) end)
+    end
+
 end

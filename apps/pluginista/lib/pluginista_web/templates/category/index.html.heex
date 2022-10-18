@@ -15,7 +15,7 @@
 <%= for category <- @categories do %>
     <tr>
       <td></td>
-      <td><%= category.name %></td>
+      <td><%= link category.name, to: Routes.category_path(@conn, :show, category) %></td>
       <td><%= category.group.name %></td>
 
       <td>

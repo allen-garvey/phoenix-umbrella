@@ -1,13 +1,21 @@
 <h1>Show Category</h1>
 
-<ul>
+<span><%= link "Edit", to: Routes.category_path(@conn, :edit, @category) %></span> |
+<span><%= link "Back", to: Routes.category_path(@conn, :index) %></span>
 
+<ul>
   <li>
     <strong>Name:</strong>
     <%= @category.name %>
   </li>
-
+  <li>
+    <strong>Total Spent:</strong>
+    $<%= @total_spent %>
+  </li>
 </ul>
 
-<span><%= link "Edit", to: Routes.category_path(@conn, :edit, @category) %></span> |
-<span><%= link "Back", to: Routes.category_path(@conn, :index) %></span>
+<%= if Enum.count(@plugins) > 0 do %>
+  <h3>Plugins</h3>
+
+  <%= render PluginistaWeb.PluginView, "plugin_table.html", conn: @conn, plugins: @plugins %>
+<% end %>

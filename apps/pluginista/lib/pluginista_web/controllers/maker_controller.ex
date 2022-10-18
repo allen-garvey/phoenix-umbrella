@@ -1,6 +1,7 @@
 defmodule PluginistaWeb.MakerController do
   use PluginistaWeb, :controller
 
+  alias Pluginista.Reports
   alias Pluginista.Admin
   alias Pluginista.Admin.Maker
 
@@ -38,7 +39,7 @@ defmodule PluginistaWeb.MakerController do
   def show(conn, %{"id" => id}) do
     maker = Admin.get_maker!(id)
     plugins = Admin.list_plugins_for_maker(id)
-    total_spent = plugins |> Enum.reduce(Decimal.new(0), fn plugin, total -> Decimal.add(total, plugin.cost) end)
+    total_spent = Reports.sum_plugins_cost(plugins)
     
     render(conn, "show.html", maker: maker, plugins: plugins, total_spent: total_spent)
   end
