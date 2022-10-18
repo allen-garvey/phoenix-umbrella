@@ -12,6 +12,11 @@ defmodule PluginistaWeb.PluginController do
     ]
   end
 
+  def index(conn, %{"sort" => sort}) do
+    plugins = Admin.list_plugins(sort)
+    render(conn, "index.html", plugins: plugins)
+  end
+
   def index(conn, _params) do
     plugins = Admin.list_plugins()
     render(conn, "index.html", plugins: plugins)

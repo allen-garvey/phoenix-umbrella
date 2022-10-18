@@ -2,12 +2,12 @@
   <thead>
     <tr>
       <th></th>
-      <th>Maker</th>
-      <th>Name</th>
-      <th>Group</th>
-      <th>Category</th>
-      <th>Acquisition date</th>
-      <th>Cost</th>
+      <th><%= link "Maker", to: Routes.plugin_path(@conn, :index, sort: "maker") %></th>
+      <th><%= link "Name", to: Routes.plugin_path(@conn, :index, sort: "name") %></th>
+      <th><%= link "Group", to: Routes.plugin_path(@conn, :index, sort: "categories") %></th>
+      <th><%= link "Category", to: Routes.plugin_path(@conn, :index, sort: "categories") %></th>
+      <th><%= link "Acquisition date", to: Routes.plugin_path(@conn, :index, sort: "date") %></th>
+      <th><%= link "Cost", to: Routes.plugin_path(@conn, :index, sort: "cost") %></th>
       <th></th>
     </tr>
   </thead>

@@ -16,7 +16,7 @@
           <ul class="nav">
             <li><%= link "Categories", to: Routes.category_path(@conn, :index) %></li>
             <li><%= link "Makers", to: Routes.maker_path(@conn, :index) %></li>
-            <li><%= link "Plugins", to: Routes.plugin_path(@conn, :index) %></li>
+            <li><%= link "Plugins", to: Routes.plugin_path(@conn, :index, sort: "categories") %></li>
             <li><%= link "Resources", to: Routes.page_path(@conn, :resources) %></li>
             <li><%= link "Reports", to: Routes.report_path(@conn, :index) %></li>
             <li><%= link "New Plugin", to: Routes.plugin_path(@conn, :new), class: "btn btn-success" %></li>

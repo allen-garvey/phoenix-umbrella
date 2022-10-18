@@ -322,6 +322,20 @@ defmodule Pluginista.Admin do
 
   alias Pluginista.Admin.Plugin
 
+  defp list_plugins_query do
+    from(
+      plugin in Plugin,
+      join: group in assoc(plugin, :group),
+      as: :group,
+      join: maker in assoc(plugin, :maker),
+      as: :maker,
+      left_join: categories in assoc(plugin, :categories),
+      as: :categories,
+      preload: [group: group, maker: maker, categories: categories],
+      order_by: [group.name, maker.name, plugin.name]
+    )
+  end
+
   @doc """
   Returns the list of plugins.
 
@@ -332,16 +346,52 @@ defmodule Pluginista.Admin do
 
   """
   def list_plugins do
-    from(
-      plugin in Plugin,
-      join: group in assoc(plugin, :group),
-      join: maker in assoc(plugin, :maker),
-      left_join: categories in assoc(plugin, :categories),
-      preload: [group: group, maker: maker, categories: categories],
-      order_by: [group.name, maker.name, plugin.name]
-    )
+    list_plugins_query()
     |> Repo.all
   end
+
+  @doc """
+  Returns the list of plugins by given sort.
+  """
+  def list_plugins("categories") do
+    list_plugins_query()
+    |> exclude(:order_by)
+    |> order_by([plugin, maker: maker, categories: categories, group: group], [group.name, categories.name, plugin.name, maker.name])
+    |> Repo.all
+  end
+
+  def list_plugins("name") do
+    list_plugins_query()
+    |> exclude(:order_by)
+    |> order_by([plugin, maker: maker], [plugin.name, maker.name])
+    |> Repo.all
+  end
+
+  def list_plugins("maker") do
+    list_plugins_query()
+    |> exclude(:order_by)
+    |> order_by([plugin, maker: maker, group: group], [maker.name, plugin.name, group.name])
+    |> Repo.all
+  end
+
+  def list_plugins("cost") do
+    list_plugins_query()
+    |> exclude(:order_by)
+    |> order_by([plugin, maker: maker], [desc: plugin.cost, asc: maker.name, asc: plugin.name])
+    |> Repo.all
+  end
+
+  def list_plugins("date") do
+    list_plugins_query()
+    |> exclude(:order_by)
+    |> order_by([plugin, maker: maker], [desc: plugin.acquisition_date, asc: maker.name, asc: plugin.name])
+    |> Repo.all
+  end
+
+  def list_plugins(_sort) do
+    list_plugins()
+  end
+
 
   @doc """
   Returns the list of plugins for a given maker.
