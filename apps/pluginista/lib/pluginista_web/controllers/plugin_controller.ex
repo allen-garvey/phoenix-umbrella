@@ -23,7 +23,7 @@ defmodule PluginistaWeb.PluginController do
   end
 
   def create_succeeded(conn, plugin, "true") do
-    changeset = Admin.change_plugin(%Plugin{ group_id: plugin.group_id, maker_id: plugin.maker_id })
+    changeset = Admin.change_plugin(%Plugin{ group_id: plugin.group_id, maker_id: plugin.maker_id, acquisition_date: plugin.acquisition_date, })
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
