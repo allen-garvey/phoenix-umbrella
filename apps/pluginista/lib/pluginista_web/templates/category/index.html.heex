@@ -1,4 +1,4 @@
-<h1>Categories</h1>
+<h1>Categories (<%= Enum.count(@categories) %>)</h1>
 
 <div class="form-group"><%= link "New Category", to: Routes.category_path(@conn, :new), class: "btn btn-success" %></div>
 

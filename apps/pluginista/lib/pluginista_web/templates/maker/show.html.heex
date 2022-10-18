@@ -9,6 +9,10 @@
     <%= @maker.name %>
   </li>
   <li>
+    <strong>Plugin Count:</strong>
+    <%= Enum.count(@plugins) %>
+  </li>
+  <li>
     <strong>Total Spent:</strong>
     $<%= @total_spent %>
   </li>
