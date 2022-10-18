@@ -89,11 +89,18 @@ defmodule PluginistaWeb.PluginController do
       |> redirect(to: Routes.plugin_path(conn, :show, plugin_id))
   end
 
+  def update_categories(conn, %{"id" => plugin_id}) do
+    Admin.delete_plugin_categories_for_plugin(plugin_id)
+
+    conn
+      |> put_flash(:info, "Categories updated.")
+      |> redirect(to: Routes.plugin_path(conn, :show, plugin_id))
+  end
+
   def create_categories_for_plugin(conn, plugin_id, category_ids) when is_list(category_ids) do
     for category_id <- category_ids do
       Admin.create_plugin_category(%{plugin_id: plugin_id, category_id: category_id})
     end
-
     conn
   end
 end
