@@ -392,6 +392,16 @@ defmodule Pluginista.Admin do
     list_plugins()
   end
 
+  @doc """
+  Returns the list of plugins for a given group.
+  """
+  def list_plugins_for_group(group_id) do
+    list_plugins_query()
+    |> exclude(:order_by)
+    |> order_by([plugin, maker: maker, categories: categories], [categories.name, plugin.name, maker.name])
+    |> where([plugin], plugin.group_id == ^group_id)
+    |> Repo.all
+  end
 
   @doc """
   Returns the list of plugins for a given maker.

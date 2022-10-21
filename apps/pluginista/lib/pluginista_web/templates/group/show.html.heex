@@ -1,13 +1,5 @@
-<h1>Show Group</h1>
+<span><%= link "Back", to: Routes.group_path(@conn, :index) %></span> | <span><%= link "Edit", to: Routes.group_path(@conn, :edit, @group), class: "btn btn-primary" %></span>
 
-<ul>
+<h1><%= @group.name %></h1>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @group.name %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.group_path(@conn, :edit, @group) %></span> |
-<span><%= link "Back", to: Routes.group_path(@conn, :index) %></span>
+<%= render PluginistaWeb.PluginView, "plugin_table.html", conn: @conn, plugins: @plugins %>

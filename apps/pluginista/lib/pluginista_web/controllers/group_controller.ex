@@ -28,7 +28,9 @@ defmodule PluginistaWeb.GroupController do
 
   def show(conn, %{"id" => id}) do
     group = Admin.get_group!(id)
-    render(conn, "show.html", group: group)
+    plugins = Admin.list_plugins_for_group(id)
+    
+    render(conn, "show.html", group: group, plugins: plugins)
   end
 
   def edit(conn, %{"id" => id}) do
