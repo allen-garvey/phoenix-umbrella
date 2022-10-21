@@ -14,8 +14,9 @@
         <h1 class="main_title"><%= link "Pluginista", to: Routes.page_path(@conn, :index) %></h1>
         <nav>
           <ul class="nav">
-            <li><%= link "Categories", to: Routes.category_path(@conn, :index) %></li>
-            <li><%= link "Makers", to: Routes.maker_path(@conn, :index) %></li>
+            <%= for group <- assigns[:nav_groups] do %>
+              <li><%= link group.name, to: Routes.group_path(@conn, :show, group) %></li>
+            <% end %>
             <li><%= link "Plugins", to: Routes.plugin_path(@conn, :index, sort: "categories") %></li>
             <li><%= link "Resources", to: Routes.page_path(@conn, :resources) %></li>
             <li><%= link "Reports", to: Routes.report_path(@conn, :index) %></li>

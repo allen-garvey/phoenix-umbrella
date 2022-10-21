@@ -22,6 +22,19 @@ defmodule Pluginista.Admin do
   end
 
   @doc """
+  Returns the list of groups that have plugins
+  """
+  def list_groups_with_plugins do
+    from(
+      group in Group,
+      join: plugins in assoc(group, :plugins),
+      order_by: group.name,
+      distinct: true
+    )
+    |> Repo.all()
+  end
+
+  @doc """
   Gets a single group.
 
   Raises `Ecto.NoResultsError` if the Group does not exist.
