@@ -1,4 +1,4 @@
-<table>
+<table class="plugin-table">
   <thead>
     <tr>
       <th></th>
@@ -13,14 +13,15 @@
   </thead>
   <tbody>
 <%= for plugin <- @plugins do %>
-    <tr>
+  <% first_category = Enum.at(plugin.categories, 0) %>
+    <tr class={PluginistaWeb.CategoryView.category_class(first_category)}>
       <td></td>
       <td><%= link plugin.maker.name, to: Routes.maker_path(@conn, :show, plugin.maker) %></td>
       <td><%= link plugin.name, to: Routes.plugin_path(@conn, :show, plugin) %></td>
       <td><%= link plugin.group.name, to: Routes.group_path(@conn, :show, plugin.group) %></td>
       <td>
         <%= 
-          case Enum.at(plugin.categories, 0) do
+          case first_category do
             nil -> ""
             category -> category.name
           end
