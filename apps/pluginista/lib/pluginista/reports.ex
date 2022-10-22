@@ -18,6 +18,15 @@ defmodule Pluginista.Reports do
         |> Repo.all
     end
 
+    def year_summary(year) when is_integer(year) do
+        from(
+            plugin in Plugin,
+            where: fragment("EXTRACT(year FROM ?)", plugin.acquisition_date) == ^year,
+            select: %{total: sum(plugin.cost), count: count(plugin.id)}
+        )
+        |> Repo.one!
+    end
+
     def sum_plugins_cost(plugins) do
         plugins 
         |> Enum.reduce(Decimal.new(0), fn plugin, total -> Decimal.add(total, plugin.cost) end)

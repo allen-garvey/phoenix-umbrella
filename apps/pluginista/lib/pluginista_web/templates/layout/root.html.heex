@@ -18,9 +18,8 @@
               <li><%= link group.name, to: Routes.group_path(@conn, :show, group) %></li>
             <% end %>
             <li><%= link "Plugins", to: Routes.plugin_path(@conn, :index, sort: "categories") %></li>
-            <li><%= link "Resources", to: Routes.page_path(@conn, :resources) %></li>
             <li><%= link "Reports", to: Routes.report_path(@conn, :index) %></li>
-            <li><%= link "New Plugin", to: Routes.plugin_path(@conn, :new), class: "btn btn-success" %></li>
+            <li><%= link "Add Plugin", to: Routes.plugin_path(@conn, :new), class: "btn btn-success" %></li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
             <% end %>

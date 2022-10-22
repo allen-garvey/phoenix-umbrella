@@ -24,7 +24,6 @@ defmodule PluginistaWeb.Router do
     pipe_through :authenticate
 
     get "/", PageController, :index
-    get "/resources", PageController, :resources
 
     get "/reports", ReportController, :index
 

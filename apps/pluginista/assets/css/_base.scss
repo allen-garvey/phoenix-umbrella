@@ -18,8 +18,16 @@ main{
 	padding-bottom: 15em;
 }
 
-h1,h2,h3,h4 {
-	margin-top: 0;
+ul,p,h1,h2,h3,h4 {
+	margin: 0 0 0.5rem;
+}
+
+ul {
+	padding-left: 1em;
+}
+
+section {
+	margin-bottom: 1.5rem;
 }
 
 h1,h2,h3,h4,button{

@@ -1,8 +1,0 @@
-<h1>Resources</h1>
-<ul class="fields_list">
-    <%= for {resource_title, resource_path_atom} <- @resources do %>
-        <li>
-        	<%= link resource_title, to: apply(Routes, resource_path_atom, [@conn, :index]), class: "field-title" %>
-        </li>
-    <% end %>
-</ul>

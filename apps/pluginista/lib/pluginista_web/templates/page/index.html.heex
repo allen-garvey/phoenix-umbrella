@@ -1,3 +1,16 @@
-<section class="home">
-  
+<section>
+    <h2>Welcome to Pluginista!</h2>
+
+    <p>The home for all you audio plugins. So far this year you have spent $<%= @current_year_summary[:total] %> on <%= @current_year_summary[:count] %> plugins.</p>
+</section>
+
+<section>
+<h3>Resources</h3>
+<ul>
+    <%= for {resource_title, resource_path_atom} <- @resources do %>
+        <li>
+        	<%= link resource_title, to: apply(Routes, resource_path_atom, [@conn, :index]), class: "field-title" %>
+        </li>
+    <% end %>
+</ul>
 </section>
