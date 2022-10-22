@@ -1,6 +1,6 @@
 .jumbotron{
 	background-color: #eee;
-	padding: 8px 15px 30px;
+	padding: 8px 15px 1.5rem;
 }
 
 header{
@@ -11,7 +11,8 @@ h1.main_title{
 	font-family: $title_font_family;
 	font-size: 2.441em;
 	font-weight: normal;
-	margin: 0 10px 20px;
+	margin: 0 10px 0.5rem;
+	
 	a{
 		color: black;
 	}
