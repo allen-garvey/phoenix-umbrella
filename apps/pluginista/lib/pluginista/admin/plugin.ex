@@ -20,7 +20,8 @@ defmodule Pluginista.Admin.Plugin do
   def changeset(plugin, attrs) do
     plugin
     |> cast(attrs, [:name, :acquisition_date, :cost, :maker_id, :group_id])
-    |> validate_required([:name, :cost, :maker_id, :group_id])
+    |> Common.ModelHelpers.Date.default_date_today(:acquisition_date)
+    |> validate_required([:name, :cost, :maker_id, :group_id, :acquisition_date])
     |> assoc_constraint(:group)
     |> assoc_constraint(:maker)
   end
