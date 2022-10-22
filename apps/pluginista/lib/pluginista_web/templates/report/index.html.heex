@@ -9,7 +9,7 @@
   </li>
   <li>
     <strong>Total cost:</strong>
-    $<%= @total_cost %>
+    <%= Common.ModelHelpers.Number.format_currency(@total_cost) %>
   </li>
 </ul>
 
@@ -28,7 +28,7 @@
       <td></td>
       <td><%= year[:year] %></td>
       <td><%= year[:count] %></td>
-      <td>$<%= year[:total] %></td>
+      <td><%= Common.ModelHelpers.Number.format_currency(year[:total]) %></td>
     </tr>
 <% end %>
   </tbody>

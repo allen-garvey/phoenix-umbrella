@@ -21,7 +21,7 @@
 
   <li>
     <strong>Cost:</strong>
-    <%= @plugin.cost %>
+    <%= Common.ModelHelpers.Number.format_currency(@plugin.cost) %>
   </li>
 
 </ul>

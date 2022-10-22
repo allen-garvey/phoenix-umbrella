@@ -1,7 +1,7 @@
 <section>
     <h2>Welcome to Pluginista!</h2>
 
-    <p>The home for all you audio plugins. So far this year you have spent $<%= @current_year_summary[:total] %> on <%= @current_year_summary[:count] %> plugins.</p>
+    <p>The home for all you audio plugins. So far this year you have spent <%= Common.ModelHelpers.Number.format_currency(@current_year_summary[:total]) %> on <%= @current_year_summary[:count] %> plugins.</p>
 </section>
 
 <section>

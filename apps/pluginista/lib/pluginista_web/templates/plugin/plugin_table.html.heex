@@ -28,7 +28,7 @@
         %>
       </td>
       <td><%= plugin.acquisition_date %></td>
-      <td>$<%= plugin.cost %></td>
+      <td><%= Common.ModelHelpers.Number.format_currency(plugin.cost) %></td>
 
       <td>
         <span><%= link "Edit", to: Routes.plugin_path(@conn, :edit, plugin), class: "btn btn-primary" %></span>
