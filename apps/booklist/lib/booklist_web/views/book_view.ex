@@ -20,12 +20,7 @@ defmodule BooklistWeb.BookView do
     book.title
   end
 
-  @doc """
-  Maps a list of books into tuples, used for forms
-  """
-  def map_for_form(books) do
-    Enum.map(books, &{to_s(&1), &1.id})
-  end
+  Common.ViewHelpers.Form.define_map_for_form()
 
   @doc """
   Path for active books 

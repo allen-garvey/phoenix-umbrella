@@ -34,12 +34,7 @@ defmodule BlockquoteWeb.SourceView do
     title <> ": " <> subtitle
   end
   
-  @doc """
-  Maps a list of sources into tuples, used for forms
-  """
-  def map_for_form(sources) do
-    Enum.map(sources, &{to_s(&1), &1.id})
-  end
+  Common.ViewHelpers.Form.define_map_for_form()
   
   def item_columns(conn, source) do
     parent_source_link = case is_nil(source.parent_source) do

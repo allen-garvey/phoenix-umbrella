@@ -42,6 +42,8 @@ defmodule MovielistWeb do
       import MovielistWeb.ErrorHelpers
       import MovielistWeb.Gettext
       alias MovielistWeb.Router.Helpers, as: Routes
+
+      import Common.ViewHelpers.Form
     end
   end
 

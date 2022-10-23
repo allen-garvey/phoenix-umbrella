@@ -35,12 +35,7 @@ defmodule BlockquoteWeb.ParentSourceView do
   end
   
   
-  @doc """
-  Maps a list of parent sources into tuples, used for forms
-  """
-  def map_for_form(parent_sources) do
-    Enum.map(parent_sources, &{to_s(&1), &1.id})
-  end
+  Common.ViewHelpers.Form.define_map_for_form()
   
   def item_columns(conn, parent_source) do
     [

@@ -27,12 +27,7 @@ defmodule BlockquoteWeb.CategoryView do
     category.name
   end
   
-  @doc """
-  Maps a list of categories into tuples, used for forms
-  """
-  def map_for_form(categories) do
-    Enum.map(categories, &{to_s(&1), &1.id})
-  end
+  Common.ViewHelpers.Form.define_map_for_form()
   
   def item_columns(_conn, category) do
     [

@@ -27,12 +27,7 @@ defmodule BlockquoteWeb.SourceTypeView do
     source_type.name
   end
   
-  @doc """
-  Maps a list of source types into tuples, used for forms
-  """
-  def map_for_form(source_types) do
-    Enum.map(source_types, &{to_s(&1), &1.id})
-  end
+  Common.ViewHelpers.Form.define_map_for_form()
   
   def item_columns(_conn, source_type) do
     [

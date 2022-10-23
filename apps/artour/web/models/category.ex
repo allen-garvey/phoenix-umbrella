@@ -45,12 +45,7 @@ defmodule Artour.Category do
     |> unique_constraint(:slug)
   end
 
-  @doc """
-  Maps a list of categories into tuples, used for forms
-  """
-  def map_for_form(categories) do
-    Enum.map(categories, &{&1.name, &1.id})
-  end
+  Common.ViewHelpers.Form.define_map_for_form_default()
 
   @doc """
   Returns list of categories with name and id

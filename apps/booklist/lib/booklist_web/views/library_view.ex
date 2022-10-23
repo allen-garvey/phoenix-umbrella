@@ -5,10 +5,5 @@ defmodule BooklistWeb.LibraryView do
   	library.name
   end
 
-  @doc """
-  Maps a list of libraries into tuples, used for forms
-  """
-  def map_for_form(libraries) do
-    Enum.map(libraries, &{to_s(&1), &1.id})
-  end
+  Common.ViewHelpers.Form.define_map_for_form()
 end

@@ -40,6 +40,8 @@ defmodule BlockquoteWeb do
       import BlockquoteWeb.Router.Helpers
       import BlockquoteWeb.ErrorHelpers
       import BlockquoteWeb.Gettext
+
+      import Common.ViewHelpers.Form
     end
   end
 

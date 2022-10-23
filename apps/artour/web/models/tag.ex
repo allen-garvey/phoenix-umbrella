@@ -30,12 +30,7 @@ defmodule Artour.Tag do
     |> unique_constraint(:slug)
   end
 
-  @doc """
-  Maps a list of tags into tuples, used for forms
-  """
-  def map_for_form(tags) do
-    Enum.map(tags, &{&1.name, &1.id})
-  end
+  Common.ViewHelpers.Form.define_map_for_form_default()
 
   @doc """
   Returns list of tags with name and id

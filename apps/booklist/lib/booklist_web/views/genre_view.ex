@@ -5,12 +5,7 @@ defmodule BooklistWeb.GenreView do
   	genre.name
   end
 
-  @doc """
-  Maps a list of genres into tuples, used for forms
-  """
-  def map_for_form(genres) do
-    Enum.map(genres, &{to_s(&1), &1.id})
-  end
+  Common.ViewHelpers.Form.define_map_for_form()
 
   @doc """
   Maps a list of genres into hashmap, used for adding book form
