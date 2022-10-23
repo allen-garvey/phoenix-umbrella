@@ -11,7 +11,7 @@
   </li>
   <li>
     <strong>Total Spent:</strong>
-    $<%= @total_spent %>
+    <%=  Common.ModelHelpers.Number.format_currency(@total_spent) %>
   </li>
 </ul>
 
