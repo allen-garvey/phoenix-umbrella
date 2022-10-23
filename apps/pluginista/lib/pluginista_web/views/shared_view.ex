@@ -16,9 +16,9 @@ defmodule PluginistaWeb.SharedView do
 	end
 
 	@doc """
-  	Creates list of checkboxes for shared field
+	Creates list of checkboxes for shared field
 	based on: https://elixirforum.com/t/checkboxes-as-lists-of-ids-common-case/29293/2
-  	"""
+	"""
 	def multiselect_checkboxes(form, field, options, selected_options, opts \\ []) 
 		when is_atom(field) and is_list(options) and is_map(selected_options) do
 	
