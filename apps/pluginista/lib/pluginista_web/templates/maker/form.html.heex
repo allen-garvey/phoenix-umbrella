@@ -5,7 +5,7 @@
     </div>
   <% end %>
 
-  <%= PluginistaWeb.SharedView.input_group :name, f, &text_input/3, [autofocus: true] %>
+  <%= Common.ViewHelpers.Form.input_group :name, f, &text_input/3, [autofocus: true] %>
 
   <div class="form-group right">
     <%= submit "Save and add another", class: "btn btn-light", name: "save_another", value: "true" %>

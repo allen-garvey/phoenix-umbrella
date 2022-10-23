@@ -5,15 +5,15 @@
     </div>
   <% end %>
 
-  <%= PluginistaWeb.SharedView.input_group :name, f, &text_input/3, [autofocus: true] %>
+  <%= Common.ViewHelpers.Form.input_group :name, f, &text_input/3, [autofocus: true] %>
 
-  <%= PluginistaWeb.SharedView.select_group :maker_id, f, @makers %>
+  <%= Common.ViewHelpers.Form.select_group :maker_id, f, @makers %>
 
-  <%= PluginistaWeb.SharedView.select_group :group_id, f, @groups %>
+  <%= Common.ViewHelpers.Form.select_group :group_id, f, @groups %>
 
-  <%= PluginistaWeb.SharedView.input_group :acquisition_date, f, &date_input/3 %>
+  <%= Common.ViewHelpers.Form.input_group :acquisition_date, f, &date_input/3 %>
 
-  <%= PluginistaWeb.SharedView.input_group :cost, f, &number_input/3, [step: "any"] %>
+  <%= Common.ViewHelpers.Form.input_group :cost, f, &number_input/3, [step: "any"] %>
 
   <%= if assigns[:show_categories] do %>
     <fieldset>

@@ -36,7 +36,8 @@ defmodule Common.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
-    Umbrella.Common.Deps.ecto()
+    Umbrella.Common.Deps.ecto() ++
+    Umbrella.Common.Deps.phoenix_html()
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
