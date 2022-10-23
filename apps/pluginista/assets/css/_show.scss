@@ -2,11 +2,16 @@
 
 .show_header{
 	display: flex;
+	margin-bottom: 1rem;
 
 	.btn_group{
 		text-align: right;
 		flex-basis: 150px;
 		align-self: center;
+
+		a + a {
+			margin-left: 1rem;
+		}
 	}
 }
 

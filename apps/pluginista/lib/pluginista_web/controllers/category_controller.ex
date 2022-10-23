@@ -1,7 +1,6 @@
 defmodule PluginistaWeb.CategoryController do
   use PluginistaWeb, :controller
 
-  alias Pluginista.Reports
   alias Pluginista.Admin
   alias Pluginista.Admin.Category
 
@@ -45,7 +44,7 @@ defmodule PluginistaWeb.CategoryController do
   def show(conn, %{"id" => id}) do
     category = Admin.get_category!(id)
     plugins = Admin.list_plugins_for_category(id)
-    total_spent = Reports.sum_plugins_cost(plugins)
+    total_spent = Pluginista.Reports.sum_plugins_cost(plugins)
     
     render(conn, "show.html", category: category, plugins: plugins, total_spent: total_spent)
   end

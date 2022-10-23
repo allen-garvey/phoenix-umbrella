@@ -1,6 +1,4 @@
-<span><%= link "Back", to: Routes.plugin_path(@conn, :index) %></span> | <span><%= link "Edit", to: Routes.plugin_path(@conn, :edit, @plugin), class: "btn btn-primary" %></span>
-
-<h1><%= @plugin.name %></h1>
+<%= render PluginistaWeb.SharedView, "show_header.html", title: @plugin.name, index_path: Routes.plugin_path(@conn, :index), edit_path: Routes.plugin_path(@conn, :edit, @plugin) %>
 
 <ul>
 

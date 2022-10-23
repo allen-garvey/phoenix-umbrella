@@ -1,20 +1,13 @@
-<h1>Show Category</h1>
-
-<span><%= link "Edit", to: Routes.category_path(@conn, :edit, @category) %></span> |
-<span><%= link "Back", to: Routes.category_path(@conn, :index) %></span>
+<%= render PluginistaWeb.SharedView, "show_header.html", title: @category.name, index_path: Routes.category_path(@conn, :index), edit_path: Routes.category_path(@conn, :edit, @category) %>
 
 <ul>
-  <li>
-    <strong>Name:</strong>
-    <%= @category.name %>
-  </li>
   <li>
     <strong>Plugin Count:</strong>
     <%= Enum.count(@plugins) %>
   </li>
   <li>
     <strong>Total Spent:</strong>
-    $<%= @total_spent %>
+    <%= Common.ModelHelpers.Number.format_currency(@total_spent) %>
   </li>
 </ul>
 

@@ -1,7 +1,4 @@
-<h1>Show Maker</h1>
-
-<span><%= link "Edit", to: Routes.maker_path(@conn, :edit, @maker) %></span> |
-<span><%= link "Back", to: Routes.maker_path(@conn, :index) %></span>
+<%= render PluginistaWeb.SharedView, "show_header.html", title: @maker.name, index_path: Routes.maker_path(@conn, :index), edit_path: Routes.maker_path(@conn, :edit, @maker) %>
 
 <ul>
   <li>

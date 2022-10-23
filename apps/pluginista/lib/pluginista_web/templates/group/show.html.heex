@@ -1,5 +1,14 @@
-<span><%= link "Back", to: Routes.group_path(@conn, :index) %></span> | <span><%= link "Edit", to: Routes.group_path(@conn, :edit, @group), class: "btn btn-primary" %></span>
+<%= render PluginistaWeb.SharedView, "show_header.html", title: @group.name, index_path: Routes.group_path(@conn, :index), edit_path: Routes.group_path(@conn, :edit, @group) %>
 
-<h1><%= @group.name %></h1>
+<ul>
+  <li>
+    <strong>Plugin Count:</strong>
+    <%= Enum.count(@plugins) %>
+  </li>
+  <li>
+    <strong>Total Spent:</strong>
+    <%= Common.ModelHelpers.Number.format_currency(@total_spent) %>
+  </li>
+</ul>
 
 <%= render PluginistaWeb.PluginView, "plugin_table.html", conn: @conn, plugins: @plugins %>
