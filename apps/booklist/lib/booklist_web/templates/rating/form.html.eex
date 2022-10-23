@@ -5,11 +5,11 @@
     </div>
   <% end %>
 
-  <%= BooklistWeb.SharedView.form_group :book_id, f, @books, &select/4 %>
+  <%= Common.ViewHelpers.Form.select_group :book_id, f, @books %>
   
-  <%= BooklistWeb.SharedView.form_group :date_scored, f, &date_input/3 %>
+  <%= Common.ViewHelpers.Form.input_group :date_scored, f, &date_input/3 %>
 
-  <%= BooklistWeb.SharedView.form_group :score, f, &number_input/3, true %>
+  <%= Common.ViewHelpers.Form.input_group :score, f, &number_input/3, [autofocus: true] %>
 
   <%= if !is_nil(assigns[:referrer]) do
   		hidden_input(f, :referrer, name: :referrer, value: assigns[:referrer])

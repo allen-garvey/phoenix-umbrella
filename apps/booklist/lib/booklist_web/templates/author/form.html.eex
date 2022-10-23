@@ -5,11 +5,11 @@
     </div>
   <% end %>
   
-  <%= BooklistWeb.SharedView.form_group :first_name, f, &text_input/3, true %>
+  <%= Common.ViewHelpers.Form.input_group :first_name, f, &text_input/3, [autofocus: true] %>
 
-  <%= BooklistWeb.SharedView.form_group :middle_name, f, &text_input/3 %>
+  <%= Common.ViewHelpers.Form.input_group :middle_name, f, &text_input/3 %>
 
-  <%= BooklistWeb.SharedView.form_group :last_name, f, &text_input/3 %>
+  <%= Common.ViewHelpers.Form.input_group :last_name, f, &text_input/3 %>
 
   <%= BooklistWeb.SharedView.submit_button "Author" %>
 <% end %>

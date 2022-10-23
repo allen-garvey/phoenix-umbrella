@@ -5,13 +5,13 @@
     </div>
   <% end %>
 
-  <%= BooklistWeb.SharedView.form_group :title, f, &text_input/3, true %>
+  <%= Common.ViewHelpers.Form.input_group :title, f, &text_input/3, [autofocus: true] %>
 
-  <%= BooklistWeb.SharedView.form_group :subtitle, f, &text_input/3 %>
+  <%= Common.ViewHelpers.Form.input_group :subtitle, f, &text_input/3 %>
 
-  <%= BooklistWeb.SharedView.form_group :author_id, f, @authors, &select/4 %>
+  <%= Common.ViewHelpers.Form.select_group :author_id, f, @authors %>
 
-  <%= BooklistWeb.SharedView.form_group :genre_id, f, @genres, &select/4 %>
+  <%= Common.ViewHelpers.Form.select_group :genre_id, f, @genres %>
   
   <div class="form-group">
     <%= label f, :is_fiction_true, "Fiction" %>

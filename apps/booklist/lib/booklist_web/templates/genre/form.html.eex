@@ -5,9 +5,9 @@
     </div>
   <% end %>
 
-  <%= BooklistWeb.SharedView.form_group :name, f, &text_input/3, true %>
+  <%= Common.ViewHelpers.Form.input_group :name, f, &text_input/3, [autofocus: true] %>
 
-  <%= BooklistWeb.SharedView.form_group :is_fiction, f, &checkbox/3 %>
+  <%= Common.ViewHelpers.Form.input_group :is_fiction, f, &checkbox/3 %>
 
   <%= BooklistWeb.SharedView.submit_button "Genre" %>
 <% end %>
