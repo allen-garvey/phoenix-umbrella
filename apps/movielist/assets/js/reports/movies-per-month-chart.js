@@ -2,15 +2,15 @@ import { LineChart } from 'chartist';
 import ctAxisTitle from 'chartist-plugin-axistitle';
 
 function formatChartData(rawData){
-    const data = {
+    const totalData = {
         labels: [],
         series: [[]],
     };
-    return rawData.reduce((data, entry)=>{
-        data.labels.push(entry[0]);
-        data.series[0].push(entry[1]);
-        return data;
-    }, data);
+    return rawData.reduce((totalData, [label, value])=>{
+        totalData.labels.push(label);
+        totalData.series[0].push(value);
+        return totalData;
+    }, totalData);
 }
 
 export function initializeMoviesPerMonthChart(){
@@ -20,18 +20,20 @@ export function initializeMoviesPerMonthChart(){
         return;
     }
     const data = formatChartData(window.MOVIELIST_CHART_DATA);
+    console.log(data);
     new LineChart(`#${chartId}`, data, {
         axisY: {
             onlyInteger: true,
             low: 0,
         },
+        showArea: true,
         plugins: [
             ctAxisTitle({
                 axisX: {
                     axisTitle: 'Month of the year',
                     offset: {
                         x: 0,
-                        y: 35
+                        y: 50
                     },
                     textAnchor: 'middle'
                 },
@@ -39,7 +41,7 @@ export function initializeMoviesPerMonthChart(){
                     axisTitle: 'Movies watched',
                     offset: {
                         x: 0,
-                        y: 10
+                        y: -5
                     },
                     flipTitle: true
                 } 
