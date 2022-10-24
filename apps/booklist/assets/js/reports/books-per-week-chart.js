@@ -25,13 +25,14 @@ export function initializeBooksPerWeekChart(){
             onlyInteger: true,
             low: 0,
         },
+        showArea: true,
         plugins: [
             ctAxisTitle({
                 axisX: {
                     axisTitle: 'Week of the year',
                     offset: {
                         x: 0,
-                        y: 35
+                        y: 40,
                     },
                     textAnchor: 'middle'
                 },
@@ -39,7 +40,7 @@ export function initializeBooksPerWeekChart(){
                     axisTitle: 'Books read',
                     offset: {
                         x: 0,
-                        y: 20
+                        y: -5,
                     },
                     flipTitle: true
                 } 
