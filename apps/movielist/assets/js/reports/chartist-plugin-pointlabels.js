@@ -1,4 +1,4 @@
-import { LineChart, BarChart, noop, extend } from "chartist";
+import { LineChart, BarChart, noop, extend } from 'chartist';
 
 /**
  * Chartist.js plugin to display a data label on top of the points in a line chart.
