@@ -43,5 +43,10 @@ svg.ct-chart-line {
 			stroke-width: 6px;
 			stroke-linecap: round;
 		}
+
+		.ct-label {
+			font-size: 1rem;
+			fill-opacity: 0.25;
+		}
 	}
 }
