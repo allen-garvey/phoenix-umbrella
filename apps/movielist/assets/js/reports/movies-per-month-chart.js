@@ -20,7 +20,6 @@ export function initializeMoviesPerMonthChart(){
         return;
     }
     const data = formatChartData(window.MOVIELIST_CHART_DATA);
-    console.log(data);
     new LineChart(`#${chartId}`, data, {
         axisY: {
             onlyInteger: true,
