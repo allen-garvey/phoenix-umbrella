@@ -17,26 +17,26 @@ const defaultOptions = {
 };
 
 const labelPositionCalculation = {
-    point: function(data) {
+    point(data) {
         return {
-        x: data.x,
-        y: data.y
+            x: data.x,
+            y: data.y
         };
     },
     bar: {
-        left: function(data) {
+        left(data) {
             return {
                 x: data.x1,
                 y: data.y1
             };
         },
-        center: function(data) {
+        center(data) {
             return {
                 x: data.x1 + (data.x2 - data.x1) / 2,
                 y: data.y1
             };
         },
-        right: function(data) {
+        right(data) {
             return {
                 x: data.x2,
                 y: data.y1
@@ -45,28 +45,35 @@ const labelPositionCalculation = {
     }
 };
 
-export default function(options) {
+export default (options) => {
     options = extend({}, defaultOptions, options);
 
-    function addLabel(position, data) {
+    const addLabel = (position, data) => {
         // if x and y exist concat them otherwise output only the existing value
-        const value = data.value.x !== undefined && data.value.y ? (data.value.x + ', ' + data.value.y) : data.value.y || data.value.x;
+        let value = data.value.x;
+        if(data.value.x !== undefined && data.value.y){
+            value = `${data.value.x}, ${data.value.y}`;
+        }
+        else if(data.value.y !== undefined){
+            value = data.value.y;
+        }
 
         data.group.elem('text', {
             x: position.x + options.labelOffset.x,
             y: position.y + options.labelOffset.y,
-            style: 'text-anchor: ' + options.textAnchor
+            style: `text-anchor: ${options.textAnchor}`,
         }, options.labelClass).text(options.labelInterpolationFnc(value));
     }
 
-    return function ctPointLabels(chart) {
+    return (chart) => {
         if (chart instanceof LineChart || chart instanceof BarChart) {
-            chart.on('draw', function(data) {
+            chart.on('draw', (data) => {
                 const positonCalculator = labelPositionCalculation[data.type] && labelPositionCalculation[data.type][options.align] || labelPositionCalculation[data.type];
+                
                 if (positonCalculator) {
                     addLabel(positonCalculator(data), data);
                 }
-        });
+            });
         }
     };
 };
