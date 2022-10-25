@@ -1,5 +1,6 @@
 import { LineChart } from 'chartist';
 import ctAxisTitle from 'chartist-plugin-axistitle';
+import ctPointLabels from './chartist-plugin-pointlabels';
 
 function formatChartData(rawData){
     const totalData = {
@@ -44,7 +45,8 @@ export function initializeMoviesPerMonthChart(){
                     },
                     flipTitle: true
                 } 
-            })
+            }),
+            ctPointLabels({}),
         ],
     });
 }
