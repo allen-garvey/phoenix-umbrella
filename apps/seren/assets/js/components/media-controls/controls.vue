@@ -115,6 +115,10 @@ export default {
             type: Function,
             required: true,
         },
+        hasActiveTrack: {
+            type: Boolean,
+            required: true,
+        },
     },
     computed: {
         playButtonTitle(){
