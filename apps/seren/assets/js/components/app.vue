@@ -45,7 +45,6 @@ import { fetchJson } from 'umbrella-common-js/ajax.js';
 import { API_URL_BASE } from '../api-helpers';
 
 let audio = null;
-let elapsedTimeTimer = null;
 
 export default {
 	name: 'Seren-App',
@@ -64,6 +63,9 @@ export default {
 			else{
 				this.displayTrackStopped();
 			}
+		});
+		audio.addEventListener('timeupdate', (e) => {
+			this.elapsedTime = Math.floor(e.target.currentTime * 1000);
 		});
 
 		Promise.all([
@@ -190,12 +192,6 @@ export default {
 				this.isPlaying = true;
 				audio.play();
 			}
-			//only start timer if not already going
-			if(elapsedTimeTimer === null){
-				elapsedTimeTimer = setInterval(()=>{ 
-					this.elapsedTime = audio.currentTime * 1000;
-				}, 1000);
-			}
 		},
 		stop(){
 			this.displayTrackStopped();
@@ -203,8 +199,6 @@ export default {
 		},
 		displayTrackStopped(){
 			this.isPlaying = false;
-			clearInterval(elapsedTimeTimer);
-			elapsedTimeTimer = null;
 		},
 		playButtonAction(){
 			if(this.isPlaying){
