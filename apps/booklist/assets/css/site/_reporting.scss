@@ -26,12 +26,32 @@
 	margin: 3em 0 1em;
 }
 
-.reporting_top_rated_books_list{
-	li{
-		margin-bottom: 1em;
-		& > *{
-			margin-right: 0.5em;
-		}
+.reporting_top_rated_books_table{
+	font-size: 1.67rem;
+	margin-top: 1rem;
+
+	th {
+		font-weight: normal;
+		text-align: left;
+		color: #cacaca;
+	}
+
+	th, td {
+		padding: 0.5rem 0;
+	}
+
+	.reporting_top_rated_books_table__index {
+		color: #cacaca;
+		padding-right: 1rem;
+		text-align: right;
+	}
+
+	.reporting_top_rated_books_table__author {
+		width: 14em;
+	}
+
+	.reporting_top_rated_books_table__count {
+		width: 4em;
 	}
 }
 
