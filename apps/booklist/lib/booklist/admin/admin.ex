@@ -138,8 +138,9 @@ defmodule Booklist.Admin do
   def get_author!(id) do
     from(
       author in Author,
-      left_join: book in assoc(author, :books),
-      preload: [books: book],
+      left_join: book  in assoc(author, :books),
+      left_join: genre in assoc(author, :genre),
+      preload: [books: book, genre: genre],
       where: author.id == ^id,
       order_by: [book.sort_title, book.id]
     )

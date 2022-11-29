@@ -11,5 +11,7 @@
 
   <%= Common.ViewHelpers.Form.input_group :last_name, f, &text_input/3 %>
 
+  <%= Common.ViewHelpers.Form.select_group :genre_id, f, @genres %>
+
   <%= BooklistWeb.SharedView.submit_button "Author" %>
 <% end %>

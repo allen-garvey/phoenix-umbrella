@@ -7,7 +7,8 @@ defmodule Booklist.Admin.Genre do
     field :name, :string
     field :is_fiction, :boolean, default: false
 
-    has_many :books, Booklist.Admin.Book
+    has_many :books,   Booklist.Admin.Book
+    has_many :authors, Booklist.Admin.Author
 
     timestamps()
   end

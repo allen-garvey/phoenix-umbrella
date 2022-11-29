@@ -24,6 +24,13 @@
     <strong>Last name:</strong>
     <%= @author.last_name %>
   </li>
+  
+  <%= if !is_nil(@author.genre) do %>
+    <li>
+      <strong>Genre:</strong>
+      <%= link BooklistWeb.GenreView.to_s(@author.genre), to: Routes.genre_path(@conn, :show, @author.genre) %>
+    </li>
+  <% end %>
 
 </ul>
 

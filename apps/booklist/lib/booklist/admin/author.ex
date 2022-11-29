@@ -8,6 +8,7 @@ defmodule Booklist.Admin.Author do
     field :last_name, :string
     field :middle_name, :string
 
+    belongs_to :genre, Booklist.Admin.Genre
     has_many :books, Booklist.Admin.Book
 
     timestamps()
@@ -16,7 +17,8 @@ defmodule Booklist.Admin.Author do
   @doc false
   def changeset(author, attrs) do
     author
-    |> cast(attrs, [:first_name, :middle_name, :last_name])
+    |> cast(attrs, [:first_name, :middle_name, :last_name, :genre_id])
     |> validate_required([:first_name])
+    |> assoc_constraint(:genre)
   end
 end

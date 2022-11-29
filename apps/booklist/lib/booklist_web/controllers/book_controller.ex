@@ -41,7 +41,19 @@ defmodule BooklistWeb.BookController do
   end
 
   def new(conn, %{"author" => author_id}) do
-    changeset = Admin.change_book(%Book{author_id: author_id})
+    author = Admin.get_author!(author_id)
+
+    is_fiction = case author.genre do
+      nil -> false
+      %Ecto.Association.NotLoaded{} -> false
+      _ -> author.genre.is_fiction
+    end
+    
+    changeset = Admin.change_book(%Book{
+      author_id: author_id,
+      genre_id: author.genre_id,
+      is_fiction: is_fiction,
+    })
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
