@@ -6,10 +6,12 @@ defmodule BooklistWeb.BookController do
 
   def related_fields() do
     genres = Admin.list_genres()
+    authors = Admin.list_authors()
 
     [
+      authors_raw: authors,
       #add empty item at start of authors since it is optional
-      authors: Admin.list_authors() |> BooklistWeb.AuthorView.map_for_form |> List.insert_at(0, {"", nil}),
+      authors: authors |> BooklistWeb.AuthorView.map_for_form |> List.insert_at(0, {"", nil}),
       genres: genres |> BooklistWeb.GenreView.map_for_form,
       genres_is_fiction_map: genres |> BooklistWeb.GenreView.to_is_fiction_map,
     ]
@@ -41,12 +43,15 @@ defmodule BooklistWeb.BookController do
   end
 
   def new(conn, %{"author" => author_id}) do
-    author = Admin.get_author!(author_id)
+    fields = related_fields()
+    # Extract author and genre from related fields instead of doing fresh queries
+    author_id_int = String.to_integer(author_id)
+    author = Keyword.get(fields, :authors_raw) |> Enum.find(fn author -> author.id == author_id_int end)
+    genre_is_fiction_tuple = Keyword.get(fields, :genres_is_fiction_map) |> Enum.find(fn {genre_id, _} -> genre_id == author.genre_id end)
 
-    is_fiction = case author.genre do
-      nil -> false
-      %Ecto.Association.NotLoaded{} -> false
-      _ -> author.genre.is_fiction
+    is_fiction = case genre_is_fiction_tuple do
+      {_, genre_is_fiction} -> genre_is_fiction
+      _ -> false
     end
     
     changeset = Admin.change_book(%Book{
@@ -54,7 +59,7 @@ defmodule BooklistWeb.BookController do
       genre_id: author.genre_id,
       is_fiction: is_fiction,
     })
-    render(conn, "new.html", [changeset: changeset] ++ related_fields())
+    render(conn, "new.html", [changeset: changeset] ++ fields)
   end
 
   def new(conn, _params) do
