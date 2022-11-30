@@ -138,6 +138,21 @@ defmodule Booklist.Admin do
   def get_author!(id) do
     from(
       author in Author,
+      left_join: genre in assoc(author, :genre),
+      preload: [genre: genre],
+      where: author.id == ^id
+    )
+    |> Repo.one!
+  end
+
+  @doc """
+  Gets a single author with books.
+
+  Raises `Ecto.NoResultsError` if the Author does not exist.
+  """
+  def get_author_with_books!(id) do
+    from(
+      author in Author,
       left_join: book  in assoc(author, :books),
       left_join: genre in assoc(author, :genre),
       preload: [books: book, genre: genre],
