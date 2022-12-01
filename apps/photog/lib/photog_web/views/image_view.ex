@@ -119,15 +119,8 @@ defmodule PhotogWeb.ImageView do
       _ -> nil
     end
 
-    albums = case image.albums do
-      %Ecto.Association.NotLoaded{} -> []
-      _ -> image.albums
-    end
-
-    persons = case image.persons do
-      %Ecto.Association.NotLoaded{} -> []
-      _ -> image.persons
-    end
+    albums = Common.ViewHelpers.Resource.get_maybe_loaded_or_default(image.albums, [])
+    persons = Common.ViewHelpers.Resource.get_maybe_loaded_or_default(image.persons, [])
     
     image_map = %{
       id: image.id,
