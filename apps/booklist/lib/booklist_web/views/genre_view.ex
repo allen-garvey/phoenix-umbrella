@@ -1,11 +1,7 @@
 defmodule BooklistWeb.GenreView do
   use BooklistWeb, :view
 
-  def to_s(genre) do
-  	genre.name
-  end
-
-  Common.ViewHelpers.Form.define_map_for_form()
+  Common.ViewHelpers.Form.define_map_for_form(true)
 
   @doc """
   Maps a list of genres into hashmap, used for adding book form

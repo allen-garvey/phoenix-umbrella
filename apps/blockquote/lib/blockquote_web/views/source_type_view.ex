@@ -23,11 +23,7 @@ defmodule BlockquoteWeb.SourceTypeView do
       }
   end
   
-  def to_s(source_type) do
-    source_type.name
-  end
-  
-  Common.ViewHelpers.Form.define_map_for_form()
+  Common.ViewHelpers.Form.define_map_for_form(true)
   
   def item_columns(_conn, source_type) do
     [

@@ -23,11 +23,7 @@ defmodule BlockquoteWeb.CategoryView do
       }
   end
   
-  def to_s(category) do
-    category.name
-  end
-  
-  Common.ViewHelpers.Form.define_map_for_form()
+  Common.ViewHelpers.Form.define_map_for_form(true)
   
   def item_columns(_conn, category) do
     [

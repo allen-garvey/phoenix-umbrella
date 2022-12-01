@@ -11,6 +11,8 @@ defmodule Artour.Tag do
     timestamps()
   end
 
+  Common.ViewHelpers.Form.define_map_for_form(true)
+
   @doc """
   Query used for default order
   """
@@ -29,8 +31,6 @@ defmodule Artour.Tag do
     |> unique_constraint(:name)
     |> unique_constraint(:slug)
   end
-
-  Common.ViewHelpers.Form.define_map_for_form_default()
 
   @doc """
   Returns list of tags with name and id
