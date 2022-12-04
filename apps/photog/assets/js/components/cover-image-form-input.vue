@@ -5,14 +5,19 @@
         <!-- thumbnail radio buttons based on: https://stackoverflow.com/questions/17541614/use-images-instead-of-radio-buttons -->
         <fieldset 
             class="form-group" 
-            :class="$style['thumbnail-radio-container']"
+            :class="$style.thumbnailRadioContainer"
             v-if="!shouldShowCoverImageInput"
         >
             <legend>Cover Image</legend>
-            <label v-for="image in images" :key="image.id">
-                <input type="radio" v-model="coverImageId" :value="image.id">
-                <img :src="thumbnailUrlFor(image)" />
-            </label>
+            <div :class="$style.selectedImageContainer">
+                <img :src="thumbnailUrlFor(selectedImage)" />
+            </div>
+            <div :class="$style.imagesList">
+                <label v-for="image in images" :key="image.id">
+                    <input type="radio" v-model="coverImageId" :value="image.id">
+                    <img :src="thumbnailUrlFor(image)" loading="lazy" />
+                </label>
+            </div>
             <Form-Field-Errors :errors="errors" />
         </fieldset>
     </div>
@@ -22,13 +27,14 @@
     @import '~photog-styles/site/variables';
 
     //thumbnail radio buttons based on: https://stackoverflow.com/questions/17541614/use-images-instead-of-radio-buttons
-    .thumbnail-radio-container{
+    .thumbnailRadioContainer{
         //hide radio
         [type=radio] { 
             position: absolute;
             opacity: 0;
             width: 0;
             height: 0;
+            visibility: hidden;
         }
 
         img{
@@ -45,6 +51,20 @@
         [type=radio]:checked + img {
             border: 5px solid $photog_cover_image_color;
             border-radius: 4px;
+        }
+    }
+
+    .imagesList {
+        overflow-y: scroll;
+        max-height: 500px;
+    }
+
+    .selectedImageContainer {
+        text-align: center;
+
+        img {
+            width: 400px;
+            height: 400px;
         }
     }
 </style>
@@ -89,6 +109,9 @@ export default {
     computed: {
         shouldShowCoverImageInput(){
             return this.images.length === 0;
+        },
+        selectedImage(){
+            return this.images.find(image => image.id == this.modelValue);
         },
     },
     watch: {
