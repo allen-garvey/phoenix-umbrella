@@ -9,12 +9,12 @@
                 input-type="textarea" 
                 :textarea-rows="4" 
             />
-            <Form-Input 
+            <Cover-Image-Form-Input 
                 :id="idForField('cover_image_id')" 
-                label="Cover Image ID" 
+                label="Cover Image ID"
+                :errors="[errors.cover_image, errors.cover_image_id]" 
+                :images="items" 
                 v-model="importModel.cover_image_id" 
-                :errors="errors.cover_image_id" 
-                input-type="number"
             />
         </template>
     </Form-Section>
@@ -23,6 +23,7 @@
 <script>
 import { formMixinBuilder } from './mixins/form-mixin.js';
 import { toApiResource } from '../form-helpers.js';
+import CoverImageFormInput from './cover-image-form-input.vue';
 
 export default {
     props: {
@@ -31,6 +32,9 @@ export default {
         },
     },
     mixins: [formMixinBuilder()],
+    components: {
+        'Cover-Image-Form-Input': CoverImageFormInput,
+    },
     data() {
         return {
             //importModel is for our edits, model is the immutable album response from the api
@@ -57,6 +61,7 @@ export default {
         setupModel(importModel=null){
             //edit form
             if(importModel){
+                console.log(importModel);
                 this.importModel = importModel;
             }
             //new form
