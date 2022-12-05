@@ -23,6 +23,8 @@ defmodule HabitsWeb.Router do
     pipe_through :authenticate
 
     get "/", PageController, :index
+
+    resources "/categories", CategoryController
   end
 
   # Other scopes may use custom stacks.
