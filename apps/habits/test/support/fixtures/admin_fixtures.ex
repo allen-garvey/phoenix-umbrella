@@ -18,4 +18,20 @@ defmodule Habits.AdminFixtures do
 
     category
   end
+
+  @doc """
+  Generate a activity.
+  """
+  def activity_fixture(attrs \\ %{}) do
+    {:ok, activity} =
+      attrs
+      |> Enum.into(%{
+        date: ~D[2022-12-04],
+        description: "some description",
+        title: "some title"
+      })
+      |> Habits.Admin.create_activity()
+
+    activity
+  end
 end

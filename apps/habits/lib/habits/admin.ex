@@ -101,4 +101,108 @@ defmodule Habits.Admin do
   def change_category(%Category{} = category, attrs \\ %{}) do
     Category.changeset(category, attrs)
   end
+
+  alias Habits.Admin.Activity
+
+  @doc """
+  Returns the list of activities.
+
+  ## Examples
+
+      iex> list_activities()
+      [%Activity{}, ...]
+
+  """
+  def list_activities do
+    Repo.all(Activity)
+  end
+
+  @doc """
+  Gets a single activity.
+
+  Raises `Ecto.NoResultsError` if the Activity does not exist.
+
+  ## Examples
+
+      iex> get_activity!(123)
+      %Activity{}
+
+      iex> get_activity!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_activity!(id) do
+    from(
+      activity in Activity,
+      join: category in assoc(activity, :category),
+      preload: [category: category],
+      where: activity.id == ^id
+    )
+    |> Repo.one!
+  end
+
+  @doc """
+  Creates a activity.
+
+  ## Examples
+
+      iex> create_activity(%{field: value})
+      {:ok, %Activity{}}
+
+      iex> create_activity(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_activity(attrs \\ %{}) do
+    %Activity{}
+    |> Activity.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a activity.
+
+  ## Examples
+
+      iex> update_activity(activity, %{field: new_value})
+      {:ok, %Activity{}}
+
+      iex> update_activity(activity, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_activity(%Activity{} = activity, attrs) do
+    activity
+    |> Activity.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a activity.
+
+  ## Examples
+
+      iex> delete_activity(activity)
+      {:ok, %Activity{}}
+
+      iex> delete_activity(activity)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_activity(%Activity{} = activity) do
+    Repo.delete(activity)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking activity changes.
+
+  ## Examples
+
+      iex> change_activity(activity)
+      %Ecto.Changeset{data: %Activity{}}
+
+  """
+  def change_activity(%Activity{} = activity, attrs \\ %{}) do
+    Activity.changeset(activity, attrs)
+  end
 end

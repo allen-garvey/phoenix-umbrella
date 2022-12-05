@@ -1,0 +1,30 @@
+<h1>Listing Activities</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Date</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for activity <- @activities do %>
+    <tr>
+      <td><%= activity.title %></td>
+      <td><%= activity.description %></td>
+      <td><%= activity.date %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.activity_path(@conn, :show, activity) %></span>
+        <span><%= link "Edit", to: Routes.activity_path(@conn, :edit, activity) %></span>
+        <span><%= link "Delete", to: Routes.activity_path(@conn, :delete, activity), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Activity", to: Routes.activity_path(@conn, :new) %></span>

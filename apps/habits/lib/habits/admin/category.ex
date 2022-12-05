@@ -6,6 +6,8 @@ defmodule Habits.Admin.Category do
     field :name, :string
     field :color, :string
 
+    has_many :activities, Habits.Admin.Activity
+
     timestamps()
   end
 

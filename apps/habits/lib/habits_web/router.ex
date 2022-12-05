@@ -24,6 +24,7 @@ defmodule HabitsWeb.Router do
 
     get "/", PageController, :index
 
+    resources "/activities", ActivityController
     resources "/categories", CategoryController
   end
 

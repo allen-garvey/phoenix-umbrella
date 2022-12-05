@@ -58,4 +58,62 @@ defmodule Habits.AdminTest do
       assert %Ecto.Changeset{} = Admin.change_category(category)
     end
   end
+
+  describe "activities" do
+    alias Habits.Admin.Activity
+
+    import Habits.AdminFixtures
+
+    @invalid_attrs %{date: nil, description: nil, title: nil}
+
+    test "list_activities/0 returns all activities" do
+      activity = activity_fixture()
+      assert Admin.list_activities() == [activity]
+    end
+
+    test "get_activity!/1 returns the activity with given id" do
+      activity = activity_fixture()
+      assert Admin.get_activity!(activity.id) == activity
+    end
+
+    test "create_activity/1 with valid data creates a activity" do
+      valid_attrs = %{date: ~D[2022-12-04], description: "some description", title: "some title"}
+
+      assert {:ok, %Activity{} = activity} = Admin.create_activity(valid_attrs)
+      assert activity.date == ~D[2022-12-04]
+      assert activity.description == "some description"
+      assert activity.title == "some title"
+    end
+
+    test "create_activity/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Admin.create_activity(@invalid_attrs)
+    end
+
+    test "update_activity/2 with valid data updates the activity" do
+      activity = activity_fixture()
+      update_attrs = %{date: ~D[2022-12-05], description: "some updated description", title: "some updated title"}
+
+      assert {:ok, %Activity{} = activity} = Admin.update_activity(activity, update_attrs)
+      assert activity.date == ~D[2022-12-05]
+      assert activity.description == "some updated description"
+      assert activity.title == "some updated title"
+    end
+
+    test "update_activity/2 with invalid data returns error changeset" do
+      activity = activity_fixture()
+      assert {:error, %Ecto.Changeset{}} = Admin.update_activity(activity, @invalid_attrs)
+      assert activity == Admin.get_activity!(activity.id)
+    end
+
+    test "delete_activity/1 deletes the activity" do
+      activity = activity_fixture()
+      assert {:ok, %Activity{}} = Admin.delete_activity(activity)
+      assert_raise Ecto.NoResultsError, fn -> Admin.get_activity!(activity.id) end
+    end
+
+    test "change_activity/1 returns a activity changeset" do
+      activity = activity_fixture()
+      assert %Ecto.Changeset{} = Admin.change_activity(activity)
+    end
+  end
 end
