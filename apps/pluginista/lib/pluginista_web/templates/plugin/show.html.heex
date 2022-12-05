@@ -1,4 +1,4 @@
-<%= render PluginistaWeb.SharedView, "show_header.html", title: @plugin.name, index_path: Routes.plugin_path(@conn, :index), edit_path: Routes.plugin_path(@conn, :edit, @plugin) %>
+<%= render PluginistaWeb.SharedView, "show_header.html", conn: @conn, title: @plugin.name, index_path: Routes.plugin_path(@conn, :index), edit_path: Routes.plugin_path(@conn, :edit, @plugin), delete_path: Routes.plugin_path(@conn, :delete, @plugin) %>
 
 <ul>
 

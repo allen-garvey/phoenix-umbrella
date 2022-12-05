@@ -1,4 +1,4 @@
-<%= render PluginistaWeb.SharedView, "show_header.html", title: @maker.name, index_path: Routes.maker_path(@conn, :index), edit_path: Routes.maker_path(@conn, :edit, @maker) %>
+<%= render PluginistaWeb.SharedView, "show_header.html", conn: @conn, title: @maker.name, index_path: Routes.maker_path(@conn, :index), edit_path: Routes.maker_path(@conn, :edit, @maker), delete_path: Routes.maker_path(@conn, :delete, @maker) %>
 
 <ul>
   <li>

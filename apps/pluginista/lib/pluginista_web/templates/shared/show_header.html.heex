@@ -2,6 +2,9 @@
     <h1><%= @title %></h1>
     <div class="btn_group">
         <%= link "Back", to: @index_path %>
+        <%= form_for @conn, @delete_path, [method: "delete", data_form: "delete"], fn _f -> %>
+            <input type="submit" value="Delete" class="btn btn-danger" data-button="delete" />
+        <% end %>
         <%= link "Edit", to: @edit_path, class: "btn btn-primary" %>
     </div>
 </div>
