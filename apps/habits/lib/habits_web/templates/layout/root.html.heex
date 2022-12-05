@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="csrf-token" content={csrf_token_value()}>
+    <%= live_title_tag "Habits", suffix: " #{assigns[:page_title]}" %>
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
+        </ul>
+      </nav>
+    </header>
+    <%= @inner_content %>
+    <script src={Routes.static_path(@conn, "/assets/app.js")}></script>
+  </body>
+</html>

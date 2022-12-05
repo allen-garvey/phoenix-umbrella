@@ -9,6 +9,7 @@ const generateFaviconsPlugin = require('./generate-favicons-plugin');
 module.exports = {
     mode: 'development',
     entry: {
+        habits: pathHelpers.defaultEntrypointForApp('habits'),
         pluginista: pathHelpers.defaultEntrypointForApp('pluginista'),
         photog: pathHelpers.defaultEntrypointForApp('photog'),
         seren: pathHelpers.defaultEntrypointForApp('seren'),
