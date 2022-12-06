@@ -9,15 +9,21 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
   </head>
   <body>
-    <header>
-      <nav>
-        <ul>
-          <li><%= link "Categories", to: Routes.category_path(@conn, :index) %></li>
-          <li><%= link "Activities", to: Routes.activity_path(@conn, :index) %></li>
-        </ul>
-      </nav>
+    <header class="jumbotron">
+      <div class="container">
+        <h1 class="main_title"><%= link "Habits", to: Routes.page_path(@conn, :index) %></h1>
+        <nav>
+          <ul class="nav">
+            <li><%= link "Categories", to: Routes.category_path(@conn, :index) %></li>
+            <li><%= link "Activities", to: Routes.activity_path(@conn, :index) %></li>
+            <li><%= link "Add Activity", to: Routes.activity_path(@conn, :new), class: "btn btn-success" %></li>
+          </ul>
+        </nav>
+      </div>
     </header>
-    <%= @inner_content %>
+    <div class="container">
+      <%= @inner_content %>
+    </div>
     <script src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </body>
 </html>
