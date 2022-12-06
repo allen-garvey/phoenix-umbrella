@@ -16,7 +16,7 @@
 <%= for activity <- @activities do %>
     <tr>
       <td></td>
-      <td><%= HabitsWeb.CategoryView.to_s(activity.category) %></td>
+      <td class={CategoryView.color_style(activity.category)}><%= CategoryView.to_s(activity.category) %></td>
       <td><%= activity.title %></td>
       <td><%= activity.description %></td>
       <td><%= activity.date %></td>
