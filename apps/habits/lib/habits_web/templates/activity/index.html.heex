@@ -1,8 +1,10 @@
-<h1>Listing Activities</h1>
+<h1>Activities</h1>
 
 <table>
   <thead>
     <tr>
+      <th></th>
+      <th>Category</th>
       <th>Title</th>
       <th>Description</th>
       <th>Date</th>
@@ -13,18 +15,16 @@
   <tbody>
 <%= for activity <- @activities do %>
     <tr>
+      <td></td>
+      <td><%= HabitsWeb.CategoryView.to_s(activity.category) %></td>
       <td><%= activity.title %></td>
       <td><%= activity.description %></td>
       <td><%= activity.date %></td>
 
       <td>
-        <span><%= link "Show", to: Routes.activity_path(@conn, :show, activity) %></span>
-        <span><%= link "Edit", to: Routes.activity_path(@conn, :edit, activity) %></span>
-        <span><%= link "Delete", to: Routes.activity_path(@conn, :delete, activity), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <span><%= link "Edit", to: Routes.activity_path(@conn, :edit, activity), class: "btn btn-primary" %></span>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
-
-<span><%= link "New Activity", to: Routes.activity_path(@conn, :new) %></span>

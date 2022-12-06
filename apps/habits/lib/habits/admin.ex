@@ -18,7 +18,11 @@ defmodule Habits.Admin do
 
   """
   def list_categories do
-    Repo.all(Category)
+    from(
+      category in Category,
+      order_by: category.id
+    )
+    |> Repo.all
   end
 
   @doc """
@@ -114,7 +118,13 @@ defmodule Habits.Admin do
 
   """
   def list_activities do
-    Repo.all(Activity)
+    from(
+      activity in Activity,
+      join: category in assoc(activity, :category),
+      preload: [category: category],
+      order_by: [desc: activity.id]
+    )
+    |> Repo.all
   end
 
   @doc """
