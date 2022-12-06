@@ -17,7 +17,7 @@
     <tr>
       <td></td>
       <td><%= category.name %></td>
-      <td class={color_style(category)}><%= category.color %></td>
+      <td class={color_style(category)}><%= String.capitalize(category.color || "") %></td>
 
       <td>
         <span><%= link "Edit", to: Routes.category_path(@conn, :edit, category), class: "btn btn-primary" %></span>

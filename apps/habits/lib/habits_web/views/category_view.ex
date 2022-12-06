@@ -4,14 +4,40 @@ defmodule HabitsWeb.CategoryView do
 
   Common.ViewHelpers.Form.define_map_for_form(true)
 
+  def colors do
+    [
+      "beige",
+      "black",
+      "blue",
+      "brown",
+      "cyan",
+      "gold",
+      "green",
+      "hot-pink",
+      "lime",
+      "maroon",
+      "olive",
+      "orange",
+      "pink",
+      "purple",
+      "red",
+      "salmon",
+      "sandy",
+      "sky",
+      "yellow",
+    ]
+  end
+
+  def colors_for_form do
+    colors |> Enum.map(fn color -> {String.capitalize(color), color} end)
+  end
+
   def color_style(%Category{} = category) do
     prefix = "category-color category-color--"
 
-    case category.color do
-      "green" -> "#{prefix}green"
-      "black" -> "#{prefix}black"
-      "red" -> "#{prefix}red"
-      _ -> ""
+    case Enum.find_value(colors(), false, fn color -> color == category.color end) do
+      true -> "#{prefix}#{category.color}"
+      false -> ""
     end
   end
 end

@@ -20,7 +20,7 @@ defmodule Habits.Admin do
   def list_categories do
     from(
       category in Category,
-      order_by: category.id
+      order_by: category.name
     )
     |> Repo.all
   end
