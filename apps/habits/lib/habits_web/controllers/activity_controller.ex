@@ -22,10 +22,10 @@ defmodule HabitsWeb.ActivityController do
 
   def create(conn, %{"activity" => activity_params}) do
     case Admin.create_activity(activity_params) do
-      {:ok, activity} ->
+      {:ok, _activity} ->
         conn
         |> put_flash(:info, "Activity created successfully.")
-        |> redirect(to: Routes.activity_path(conn, :show, activity))
+        |> redirect(to: Routes.activity_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset] ++ related_fields())
@@ -47,10 +47,10 @@ defmodule HabitsWeb.ActivityController do
     activity = Admin.get_activity!(id)
 
     case Admin.update_activity(activity, activity_params) do
-      {:ok, activity} ->
+      {:ok, _activity} ->
         conn
         |> put_flash(:info, "Activity updated successfully.")
-        |> redirect(to: Routes.activity_path(conn, :show, activity))
+        |> redirect(to: Routes.activity_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", [activity: activity, changeset: changeset] ++ related_fields())

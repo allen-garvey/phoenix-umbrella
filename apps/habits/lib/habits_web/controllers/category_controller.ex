@@ -3,6 +3,7 @@ defmodule HabitsWeb.CategoryController do
 
   alias Habits.Admin
   alias Habits.Admin.Category
+  alias HabitsWeb.CategoryView
 
   def index(conn, _params) do
     categories = Admin.list_categories()
@@ -18,8 +19,8 @@ defmodule HabitsWeb.CategoryController do
     case Admin.create_category(category_params) do
       {:ok, category} ->
         conn
-        |> put_flash(:info, "Category created successfully.")
-        |> redirect(to: Routes.category_path(conn, :show, category))
+        |> put_flash(:info, "#{CategoryView.to_s(category)} created successfully.")
+        |> redirect(to: Routes.category_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -43,8 +44,8 @@ defmodule HabitsWeb.CategoryController do
     case Admin.update_category(category, category_params) do
       {:ok, category} ->
         conn
-        |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: Routes.category_path(conn, :show, category))
+        |> put_flash(:info, "#{CategoryView.to_s(category)} updated successfully.")
+        |> redirect(to: Routes.category_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", category: category, changeset: changeset)
