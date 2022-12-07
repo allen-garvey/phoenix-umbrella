@@ -1,7 +1,11 @@
 defmodule MovielistWeb.MovieView do
   use MovielistWeb, :view
 
-  Common.ViewHelpers.Form.define_map_for_form(true)
+  def to_s(movie) do
+  	movie.title
+  end
+
+  Common.ViewHelpers.Form.define_map_for_form()
 
   @doc """
   String representation of active status
