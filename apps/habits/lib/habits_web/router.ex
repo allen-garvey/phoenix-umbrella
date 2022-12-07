@@ -16,6 +16,7 @@ defmodule HabitsWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
   end
 
   scope "/", HabitsWeb do
@@ -26,6 +27,13 @@ defmodule HabitsWeb.Router do
 
     resources "/activities", ActivityController
     resources "/categories", CategoryController
+  end
+
+  scope "/api", HabitsWeb do
+    pipe_through :api
+    pipe_through :authenticate
+
+    get "/categories", ApiCategoryController, :index
   end
 
   # Other scopes may use custom stacks.
