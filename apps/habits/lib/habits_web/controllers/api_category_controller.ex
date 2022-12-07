@@ -7,5 +7,5 @@ defmodule HabitsWeb.ApiCategoryController do
       categories = Admin.list_categories()
       render(conn, "index.json", categories: categories)
     end
-  end
+end
   

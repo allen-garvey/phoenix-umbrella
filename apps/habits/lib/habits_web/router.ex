@@ -33,6 +33,7 @@ defmodule HabitsWeb.Router do
     pipe_through :api
     pipe_through :authenticate
 
+    get "/activities", ApiActivityController, :index
     get "/categories", ApiCategoryController, :index
   end
 
