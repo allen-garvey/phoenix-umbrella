@@ -13,7 +13,8 @@
 
   <%= Common.ViewHelpers.Form.input_group :date, f, &date_input/3 %>
 
-  <div>
+  <div class="form-group right">
+    <%= submit "Save and add another", class: "btn btn-light", name: "save_another", value: "true" %>
     <%= submit "Save", class: "btn btn-success" %>
   </div>
 </.form>

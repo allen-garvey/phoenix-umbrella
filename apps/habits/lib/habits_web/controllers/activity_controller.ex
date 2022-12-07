@@ -20,12 +20,25 @@ defmodule HabitsWeb.ActivityController do
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
-  def create(conn, %{"activity" => activity_params}) do
+  def create_succeeded(conn, activity, "true") do
+    changeset = Admin.change_activity(%Activity{ 
+      category_id: activity.category_id,
+      date: activity.date,
+      title: activity.title, 
+    })
+    render(conn, "new.html", [changeset: changeset] ++ related_fields())
+  end
+
+  def create_succeeded(conn, _activity, _save_another) do
+    redirect(conn, to: Routes.activity_path(conn, :index))
+  end
+
+  def create(conn, %{"activity" => activity_params} = params) do
     case Admin.create_activity(activity_params) do
-      {:ok, _activity} ->
+      {:ok, activity} ->
         conn
         |> put_flash(:info, "Activity created successfully.")
-        |> redirect(to: Routes.activity_path(conn, :index))
+        |> create_succeeded(activity, params["save_another"])
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset] ++ related_fields())

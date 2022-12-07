@@ -3,11 +3,13 @@ defmodule HabitsWeb.ApiActivityView do
     
     def render("index_from_to.json", %{from: from, to: to, activities: activities}) do
         %{
-            meta: %{
-                from: from,
-                to: to,
+            data: %{
+                meta: %{
+                    from: from,
+                    to: to,
+                },
+                activities: render_many(activities, __MODULE__, "activity.json"),
             },
-            data: render_many(activities, __MODULE__, "activity.json"),
         }
     end
 
