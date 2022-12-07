@@ -5,16 +5,14 @@ export const getTodaysDate = () => {
     return new Date(now.getTime() - (timezoneOffset*60*1000));
 };
 
-// returns the date n weeks ago from given date
-// the returned date is always the sunday 
-export const getPastSundayFromDate = (date, weeksAgo) => {
-    const dayOfWeek = date.getDay();
-    const daysAgo = weeksAgo * 7 + dayOfWeek;
-
-    const pastDate = new Date();
-    pastDate.setDate(date.getDate() - daysAgo);
+// get the sunday before the first of the month
+export const getMonthSunday = (date) => {
+    const firstDay = new Date(date.getTime());
+    firstDay.setDate(1);
+    const dayOfWeek = firstDay.getDay();
+    firstDay.setDate(firstDay.getDate() - dayOfWeek);
     
-    return pastDate;
+    return firstDay;
 };
 
 // takes Javascript date and returns string in yyyy-mm-dd format

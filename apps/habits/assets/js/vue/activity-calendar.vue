@@ -12,7 +12,7 @@
 
 <script>
 import { fetchJson } from 'umbrella-common-js/ajax.js';
-import {getTodaysDate, formatDate, getPastSundayFromDate} from '../date';
+import {getTodaysDate, formatDate, getMonthSunday} from '../date';
 
 export default {
     components: {
@@ -20,10 +20,16 @@ export default {
     created(){
         const todaysDate = getTodaysDate();
         const todaysDateString = formatDate(todaysDate);
-        const startDateString = formatDate(getPastSundayFromDate(todaysDate, 1));
+        const startDateString = formatDate(getMonthSunday(todaysDate));
 
         const activitiesPromise = fetchJson(`/api/activities?from=${startDateString}&to=${todaysDateString}`)
-            .then(data => this.activities = data.activities);
+            .then(data => { 
+                this.activities.push({
+                    meta: data.meta,
+                    month: `${todaysDate.getFullYear()}-${todaysDate.getMonth()}`,
+                    activities: data,
+                });
+            });
         const categoriesPromise = fetchJson('/api/categories')
             .then(data => this.categories = data);
         
