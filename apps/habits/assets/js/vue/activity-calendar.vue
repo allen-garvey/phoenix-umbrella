@@ -2,6 +2,7 @@
     <div :class="$style.container">
         <Activity-Month
             :activities="activities[0].activities"
+            :categories="categories"
             :month="activities[0].month"
             :year="activities[0].year"
             :start-date="activities[0].meta.from"

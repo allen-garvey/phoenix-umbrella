@@ -1,10 +1,22 @@
 <template>
     <div :class="$style.container">
-        <h3 :class="$style.title">{{ month }} / {{ year }}</h3>
-        <div v-for="week in weeks" :class="$style.week">
-            <div v-for="day in week" :class="$style.day">
-                <h4>{{ day.date }}</h4>
-                <div v-for="activity in day.activities">
+        <h3 :class="$style.title">{{ monthName(month) }} {{ year }}</h3>
+        <div 
+            v-for="(week, weekNum) in weeks" 
+            :class="$style.week"
+            :key="`${year}-${month}-${weekNum}`"
+        >
+            <div 
+                v-for="(day, dayNum) in week" 
+                :class="$style.day"
+                :key="`${year}-${month}-${weekNum}-${dayNum}`"
+            >
+                <h4>{{ formatDayDate(day.date) }}</h4>
+                <div 
+                    v-for="activity in day.activities"
+                    :key="activity.id"
+                    :class="getCategoryClass(activity.category_id)"
+                >
                     <div>{{ activity.title }}</div>
                 </div>
             </div>
@@ -28,14 +40,21 @@
         padding: 0 1em 1em;
         width: 300px;
     }
+    .dayContents {
+        padding: 1em;
+    }
 </style>
 
 <script>
-import { formatDate } from '../date';
+import { formatDate, monthName } from '../date';
 
 export default {
     props: {
         activities: {
+            type: Array,
+            required: true,
+        },
+        categories: {
             type: Array,
             required: true,
         },
@@ -66,9 +85,11 @@ export default {
             }
         });
 
+        this.categories.forEach(category => this.categoriesColorMap.set(category.id, category.color));
+
         let currentDate = this.startDate;
         const endDate = new Date(this.endDate);
-        while(true){
+        while(new Date(currentDate) < endDate){
             const week = [];
             for(let i=0;i<7;i++){
                 week.push({
@@ -80,24 +101,29 @@ export default {
                 currentDate = formatDate(tomorrow);
             }
             this.weeks.push(week);
-
-            if(new Date(currentDate) >= endDate){
-                break;
-            }
         }
-        console.log(this.weeks);
     },
     data(){
         return {
             daysMap: new Map(),
+            categoriesColorMap: new Map(),
             weeks: [],
         };
     },
     computed: {
     },
-    watch: {
-    },
     methods: {
+        monthName,
+        formatDayDate(dayDate){
+            return dayDate.split('-').slice(1,3).join('/');
+        },
+        getCategoryClass(categoryId){
+            return [
+                this.$style.dayContents,
+                'category-color', 
+                `category-color--${this.categoriesColorMap.get(categoryId)}`
+            ];
+        },
     }
 };
 </script>

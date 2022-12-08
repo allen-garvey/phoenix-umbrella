@@ -33,7 +33,7 @@ defmodule HabitsWeb.CategoryView do
   end
 
   def color_style(%Category{} = category) do
-    prefix = "category-color category-color--"
+    prefix = "center category-color category-color--"
 
     case Enum.find_value(colors(), false, fn color -> color == category.color end) do
       true -> "#{prefix}#{category.color}"

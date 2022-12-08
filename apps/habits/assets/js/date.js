@@ -18,3 +18,8 @@ export const getMonthSunday = (date) => {
 // takes Javascript date and returns string in yyyy-mm-dd format
 // based on: https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
 export const formatDate = (date) => date.toISOString().split('T')[0];
+
+export const monthName = (monthNum) => 
+    ['January', 'February', 'March', 'April', 'May', 'June',
+'July', 'August', 'September', 'October', 'November', 'December'
+][monthNum];

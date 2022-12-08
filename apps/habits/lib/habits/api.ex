@@ -14,8 +14,9 @@ defmodule Habits.Api do
   def list_activities(from_date, to_date) do
     from(
       activity in Activity,
+      join: category in assoc(activity, :category),
       where: activity.date >= ^from_date and activity.date <= ^to_date,
-      order_by: [asc: activity.date]
+      order_by: [activity.date, category.name]
     )
     |> Repo.all
   end
