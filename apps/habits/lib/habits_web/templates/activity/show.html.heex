@@ -1,10 +1,17 @@
 <h1>Show Activity</h1>
 
+<span><%= link "Edit", to: Routes.activity_path(@conn, :edit, @activity), class: "btn btn-primary" %></span>
+
 <ul>
 
   <li>
     <strong>Title:</strong>
     <%= @activity.title %>
+  </li>
+
+  <li>
+    <strong>Category:</strong>
+    <%= link CategoryView.to_s(@activity.category), to: Routes.category_path(@conn, :show, @activity.category), class: CategoryView.color_style(@activity.category) %>
   </li>
 
   <li>
@@ -18,6 +25,3 @@
   </li>
 
 </ul>
-
-<span><%= link "Edit", to: Routes.activity_path(@conn, :edit, @activity) %></span> |
-<span><%= link "Back", to: Routes.activity_path(@conn, :index) %></span>

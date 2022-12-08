@@ -17,7 +17,11 @@
                     :key="activity.id"
                     :class="getCategoryClass(activity.category_id)"
                 >
-                    <div>{{ activity.title }}</div>
+                    <div>
+                        <a :href="`/activities/${activity.id}`" target="_blank">
+                            {{ activity.title }}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,6 +46,10 @@
     }
     .dayContents {
         padding: 1em;
+
+        a {
+            color: inherit;
+        }
     }
 </style>
 

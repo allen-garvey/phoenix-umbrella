@@ -1,5 +1,7 @@
 <h1>Show Category</h1>
 
+<span><%= link "Edit", to: Routes.category_path(@conn, :edit, @category), class: "btn btn-primary" %></span>
+
 <ul>
 
   <li>
@@ -9,10 +11,7 @@
 
   <li>
     <strong>Color:</strong>
-    <%= @category.color %>
+    <span class={color_style(@category)}><%= @category.color %></span>
   </li>
 
 </ul>
-
-<span><%= link "Edit", to: Routes.category_path(@conn, :edit, @category) %></span> |
-<span><%= link "Back", to: Routes.category_path(@conn, :index) %></span>
