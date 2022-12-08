@@ -14,7 +14,7 @@ defmodule Habits.Api do
   def list_activities(from_date, to_date) do
     from(
       activity in Activity,
-      where: activity.date >= ^from_date and activity.date < ^to_date,
+      where: activity.date >= ^from_date and activity.date <= ^to_date,
       order_by: [asc: activity.date]
     )
     |> Repo.all
