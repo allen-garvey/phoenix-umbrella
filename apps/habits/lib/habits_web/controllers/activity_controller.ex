@@ -15,6 +15,17 @@ defmodule HabitsWeb.ActivityController do
     render(conn, "index.html", activities: activities)
   end
 
+  def new(conn, %{"duplicate" => id}) do
+    activity = Admin.get_activity!(id)
+    changeset = Admin.change_activity(%Activity{
+      category_id: activity.category_id,
+      title: activity.title,
+      description: activity.description,
+      date: Common.ModelHelpers.Date.today(),
+    })
+    render(conn, "new.html", [changeset: changeset] ++ related_fields())
+  end
+
   def new(conn, _params) do
     changeset = Admin.change_activity(%Activity{})
     render(conn, "new.html", [changeset: changeset] ++ related_fields())

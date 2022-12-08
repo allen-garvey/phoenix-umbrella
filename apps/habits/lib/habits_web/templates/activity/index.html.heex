@@ -7,9 +7,9 @@
       <th>Category</th>
       <th>Title</th>
       <th>Description</th>
-      <th class="category-index-date-heading">Date</th>
+      <th class="activity-index-date-heading">Date</th>
 
-      <th></th>
+      <th class="activity-index-button-heading"></th>
     </tr>
   </thead>
   <tbody>
@@ -22,7 +22,12 @@
       <td><%= activity.date %></td>
 
       <td>
-        <span><%= link "Edit", to: Routes.activity_path(@conn, :edit, activity), class: "btn btn-primary" %></span>
+        <span>
+          <%= link "Duplicate", to: Routes.activity_path(@conn, :new, duplicate: activity.id), class: "btn btn-light" %>
+        </span>
+        <span>
+          <%= link "Edit", to: Routes.activity_path(@conn, :edit, activity), class: "btn btn-primary" %>
+        </span>
       </td>
     </tr>
 <% end %>
