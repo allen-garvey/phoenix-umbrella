@@ -1,18 +1,38 @@
 <template>
     <div :class="$style.container">
-        <Activity-Month
-            :activities="activities[0].activities"
-            :categories="categories"
-            :month="activities[0].month"
-            :year="activities[0].year"
-            :start-date="activities[0].meta.from"
-            :end-date="activities[0].meta.to"
-            v-if="isInitialLoadComplete"
-        />
+        <div v-if="currentMonthActivities">
+            <div :class="{[$style.hidden]: isLoading}">
+                <button 
+                    @click="goOneMonthBack" 
+                    class="btn btn-light"
+                >
+                    Previous Month
+                </button>
+                <button 
+                    @click="goOneMonthForward" 
+                    class="btn btn-light" 
+                    v-if="(currentMonthIndex > 0)"
+                >
+                    Next Month
+                </button>
+            </div>
+            <Activity-Month
+                :activities="currentMonthActivities.activities"
+                :categories="categories"
+                :month="currentMonthActivities.month"
+                :year="currentMonthActivities.year"
+                :start-date="currentMonthActivities.meta.from"
+                :end-date="currentMonthActivities.meta.to"
+                :todays-date="formatDate(todaysDate)"
+            />
+        </div>
     </div>
 </template>
 
 <style lang="scss" module>
+    .hidden {
+        visibility: hidden;
+    }
     .container {
 
     }
@@ -29,34 +49,72 @@ export default {
         ActivityMonth,
     },
     created(){
-        const todaysDate = getTodaysDate();
-        const todaysDateString = formatDate(todaysDate);
-        const startDateString = formatDate(getMonthSunday(todaysDate));
+        const todaysDateString = formatDate(this.todaysDate);
+        const startDateString = formatDate(getMonthSunday(this.todaysDate));
 
-        const activitiesPromise = fetchJson(`/api/activities?from=${startDateString}&to=${todaysDateString}`)
-            .then(data => { 
-                this.activities.push({
-                    meta: data.meta,
-                    month: todaysDate.getMonth(),
-                    year: todaysDate.getFullYear(),
-                    activities: data.activities,
-                });
-            });
+        const activitiesPromise = this.fetchActivities(
+            startDateString, 
+            todaysDateString, 
+            this.todaysDate.getMonth(), 
+            this.todaysDate.getFullYear()
+        );
         const categoriesPromise = fetchJson('/api/categories')
             .then(data => this.categories = data);
         
-        Promise.all([activitiesPromise, categoriesPromise]).then(() => this.isInitialLoadComplete = true);
+        Promise.all([activitiesPromise, categoriesPromise]).then(() => this.isLoading = false);
     },
     data(){
         return {
-            isInitialLoadComplete: false,
+            todaysDate: getTodaysDate(),
+            isLoading: true,
             activities: [],
             categories: [],
+            currentMonthIndex: 0,
         };
     },
     computed: {
+        currentMonthActivities(){
+            return this.activities[this.currentMonthIndex];
+        },
     },
     methods: {
+        formatDate,
+        fetchActivities(startDateString, endDateString, month, year){
+            return fetchJson(`/api/activities?from=${startDateString}&to=${endDateString}`)
+                .then(data => { 
+                    this.activities.push({
+                        meta: data.meta,
+                        month: month,
+                        year: year,
+                        activities: data.activities,
+                    });
+                });
+        },
+        goOneMonthForward(){
+            this.currentMonthIndex = this.currentMonthIndex - 1;
+        },
+        goOneMonthBack(){
+            const previousMonthIndex = this.currentMonthIndex + 1;
+            
+            if(!this.activities[previousMonthIndex]){
+                this.isLoading = true;
+                const currentData = this.activities[this.currentMonthIndex];
+                let month = currentData.month - 1;
+                let year = currentData.year;
+                if(month < 0){
+                    month = 11;
+                    year = year - 1;
+                }
+                const endDate = new Date(currentData.meta.from);
+                endDate.setDate(endDate.getDate() - 1);
+                const startDateString = formatDate(getMonthSunday(endDate));
+
+                this.fetchActivities(startDateString, formatDate(endDate), month, year)
+                    .then(() => this.isLoading = false);
+            }
+
+            this.currentMonthIndex = previousMonthIndex;
+        },
     }
 };
 </script>

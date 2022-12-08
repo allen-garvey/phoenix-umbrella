@@ -11,7 +11,9 @@
                 :class="$style.day"
                 :key="`${year}-${month}-${weekNum}-${dayNum}`"
             >
-                <h4>{{ formatDayDate(day.date) }}</h4>
+                <h4 :class="{[$style.today]: todaysDate === day.date}">
+                    {{ formatDayDate(day.date) }}
+                </h4>
                 <div 
                     v-for="activity in day.activities"
                     :key="activity.id"
@@ -39,6 +41,9 @@
     .week {
         display: flex;
         padding: 0 0 3em;
+    }
+    .today {
+        color: magenta;
     }
     .day {
         padding: 0 1em 1em;
@@ -82,34 +87,14 @@ export default {
             type: String,
             required: true,
         },
+        todaysDate: {
+            type: String,
+            required: true,
+        },
     },
     created(){
-        this.activities.forEach(activity => {
-            if(this.daysMap.has(activity.date)){
-                this.daysMap.get(activity.date).push(activity);
-            }
-            else {
-                this.daysMap.set(activity.date, [activity]);
-            }
-        });
-
         this.categories.forEach(category => this.categoriesColorMap.set(category.id, category.color));
-
-        let currentDate = this.startDate;
-        const endDate = new Date(this.endDate);
-        while(new Date(currentDate) < endDate){
-            const week = [];
-            for(let i=0;i<7;i++){
-                week.push({
-                    date: currentDate,
-                    activities: this.daysMap.get(currentDate),
-                });
-                const tomorrow = new Date(currentDate);
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                currentDate = formatDate(tomorrow);
-            }
-            this.weeks.push(week);
-        }
+        this.setupActivities();
     },
     data(){
         return {
@@ -119,6 +104,11 @@ export default {
         };
     },
     computed: {
+    },
+    watch: {
+        activities(){
+            this.setupActivities();
+        },
     },
     methods: {
         monthName,
@@ -131,6 +121,36 @@ export default {
                 'category-color', 
                 `category-color--${this.categoriesColorMap.get(categoryId)}`
             ];
+        },
+        setupActivities(){
+            this.weeks = [];
+            this.daysMap = new Map();
+
+            this.activities.forEach(activity => {
+                if(this.daysMap.has(activity.date)){
+                    this.daysMap.get(activity.date).push(activity);
+                }
+                else {
+                    this.daysMap.set(activity.date, [activity]);
+                }
+            });
+
+
+            let currentDate = this.startDate;
+            const endDate = new Date(this.endDate);
+            while(new Date(currentDate) < endDate){
+                const week = [];
+                for(let i=0;i<7;i++){
+                    week.push({
+                        date: currentDate,
+                        activities: this.daysMap.get(currentDate),
+                    });
+                    const tomorrow = new Date(currentDate);
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    currentDate = formatDate(tomorrow);
+                }
+                this.weeks.push(week);
+            }
         },
     }
 };
