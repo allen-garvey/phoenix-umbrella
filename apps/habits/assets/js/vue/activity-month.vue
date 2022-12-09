@@ -59,7 +59,7 @@
 </style>
 
 <script>
-import { formatDate, monthName } from '../date';
+import { formatDate, monthName, dateFromIso } from '../date';
 
 export default {
     props: {
@@ -67,8 +67,8 @@ export default {
             type: Array,
             required: true,
         },
-        categories: {
-            type: Array,
+        categoriesColorMap: {
+            type: Map,
             required: true,
         },
         month: {
@@ -93,13 +93,11 @@ export default {
         },
     },
     created(){
-        this.categories.forEach(category => this.categoriesColorMap.set(category.id, category.color));
         this.setupActivities();
     },
     data(){
         return {
             daysMap: new Map(),
-            categoriesColorMap: new Map(),
             weeks: [],
         };
     },
@@ -137,15 +135,15 @@ export default {
 
 
             let currentDate = this.startDate;
-            const endDate = new Date(this.endDate);
-            while(new Date(currentDate) < endDate){
+            const endDate = dateFromIso(this.endDate);
+            while(dateFromIso(currentDate) < endDate){
                 const week = [];
                 for(let i=0;i<7;i++){
                     week.push({
                         date: currentDate,
                         activities: this.daysMap.get(currentDate),
                     });
-                    const tomorrow = new Date(currentDate);
+                    const tomorrow = dateFromIso(currentDate);
                     tomorrow.setDate(tomorrow.getDate() + 1);
                     currentDate = formatDate(tomorrow);
                 }

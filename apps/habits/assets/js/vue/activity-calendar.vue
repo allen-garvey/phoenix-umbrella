@@ -18,7 +18,7 @@
             </div>
             <Activity-Month
                 :activities="currentMonthActivities.activities"
-                :categories="categories"
+                :categories-color-map="categoriesColorMap"
                 :month="currentMonthActivities.month"
                 :year="currentMonthActivities.year"
                 :start-date="currentMonthActivities.meta.from"
@@ -40,7 +40,7 @@
 
 <script>
 import { fetchJson } from 'umbrella-common-js/ajax.js';
-import {getTodaysDate, formatDate, getMonthSunday} from '../date';
+import { getTodaysDate, formatDate, getMonthSunday, dateFromIso } from '../date';
 
 import ActivityMonth from './activity-month.vue';
 
@@ -76,6 +76,11 @@ export default {
         currentMonthActivities(){
             return this.activities[this.currentMonthIndex];
         },
+        categoriesColorMap(){
+            const categoriesColorMap = new Map();
+            this.categories.forEach(category => categoriesColorMap.set(category.id, category.color));
+            return categoriesColorMap;
+        },
     },
     methods: {
         formatDate,
@@ -105,7 +110,7 @@ export default {
                     month = 11;
                     year = year - 1;
                 }
-                const endDate = new Date(currentData.meta.from);
+                const endDate = dateFromIso(currentData.meta.from);
                 endDate.setDate(endDate.getDate() - 1);
                 const startDateString = formatDate(getMonthSunday(endDate));
 
