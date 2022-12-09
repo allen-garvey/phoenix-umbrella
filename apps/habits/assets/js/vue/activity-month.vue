@@ -18,6 +18,8 @@
                     v-for="activity in day.activities"
                     :key="activity.id"
                     :class="getCategoryClass(activity.category_id)"
+                    @click="selectActivity(activity)"
+                    @mouseover="selectActivity(activity)"
                 >
                     <div>
                         <a :href="`/activities/${activity.id}`" target="_blank">
@@ -26,6 +28,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div v-if="selectedActivity">
+            <div :class="getCategoryClass(selectedActivity.category_id)">
+                <a :href="`/activities/${selectedActivity.id}`" target="_blank">
+                    {{ selectedActivity.title }} - {{ selectedActivity.date }}
+                </a>
+            </div>
+            <div>{{ categoriesMap.get(selectedActivity.category_id).name }}</div>
+            <div>{{ selectedActivity.description }}</div>
         </div>
     </div>
 </template>
@@ -67,7 +78,7 @@ export default {
             type: Array,
             required: true,
         },
-        categoriesColorMap: {
+        categoriesMap: {
             type: Map,
             required: true,
         },
@@ -99,6 +110,7 @@ export default {
         return {
             daysMap: new Map(),
             weeks: [],
+            selectedActivity: null,
         };
     },
     computed: {
@@ -117,10 +129,14 @@ export default {
             return [
                 this.$style.dayContents,
                 'category-color', 
-                `category-color--${this.categoriesColorMap.get(categoryId)}`
+                `category-color--${this.categoriesMap.get(categoryId).color}`
             ];
         },
+        selectActivity(activity){
+            this.selectedActivity = activity;
+        },
         setupActivities(){
+            this.selectedActivity = null;
             this.weeks = [];
             this.daysMap = new Map();
 

@@ -18,7 +18,7 @@
             </div>
             <Activity-Month
                 :activities="currentMonthActivities.activities"
-                :categories-color-map="categoriesColorMap"
+                :categories-map="categoriesMap"
                 :month="currentMonthActivities.month"
                 :year="currentMonthActivities.year"
                 :start-date="currentMonthActivities.meta.from"
@@ -76,10 +76,10 @@ export default {
         currentMonthActivities(){
             return this.activities[this.currentMonthIndex];
         },
-        categoriesColorMap(){
-            const categoriesColorMap = new Map();
-            this.categories.forEach(category => categoriesColorMap.set(category.id, category.color));
-            return categoriesColorMap;
+        categoriesMap(){
+            const categoriesMap = new Map();
+            this.categories.forEach(category => categoriesMap.set(category.id, category));
+            return categoriesMap;
         },
     },
     methods: {
