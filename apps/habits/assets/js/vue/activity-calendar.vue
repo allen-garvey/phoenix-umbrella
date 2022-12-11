@@ -24,6 +24,7 @@
                 :start-date="currentMonthActivities.meta.from"
                 :end-date="currentMonthActivities.meta.to"
                 :todays-date="formatDate(todaysDate)"
+                v-if="categoriesMap"
             />
         </div>
     </div>
