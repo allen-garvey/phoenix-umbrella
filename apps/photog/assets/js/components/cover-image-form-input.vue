@@ -9,7 +9,7 @@
             v-if="!shouldShowCoverImageInput"
         >
             <legend>Cover Image</legend>
-            <div :class="$style.selectedImageContainer">
+            <div :class="$style.selectedImageContainer" v-if="selectedImage">
                 <img :src="thumbnailUrlFor(selectedImage)" />
             </div>
             <div :class="$style.imagesList">
