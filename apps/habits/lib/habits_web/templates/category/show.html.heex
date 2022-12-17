@@ -1,5 +1,8 @@
 <h1>Show Category</h1>
 
+<%= form_for @conn, Routes.category_path(@conn, :delete, @category), [method: "delete", data_form: "delete", class: "inline"], fn _f -> %>
+    <input type="submit" value="Delete" class="btn btn-danger" data-button="delete" />
+<% end %>
 <span><%= link "Edit", to: Routes.category_path(@conn, :edit, @category), class: "btn btn-primary" %></span>
 
 <ul>

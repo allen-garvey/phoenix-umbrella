@@ -1,5 +1,8 @@
 <h1>Show Activity</h1>
 
+<%= form_for @conn, Routes.activity_path(@conn, :delete, @activity), [method: "delete", data_form: "delete", class: "inline"], fn _f -> %>
+    <input type="submit" value="Delete" class="btn btn-danger" data-button="delete" />
+<% end %>
 <span><%= link "Duplicate", to: Routes.activity_path(@conn, :new, duplicate: @activity.id), class: "btn btn-light" %></span>
 <span><%= link "Edit", to: Routes.activity_path(@conn, :edit, @activity), class: "btn btn-primary" %></span>
 
