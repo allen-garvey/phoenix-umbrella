@@ -29,7 +29,7 @@ defmodule HabitsWeb.CategoryView do
   end
 
   def colors_for_form do
-    colors |> Enum.map(fn color -> {String.capitalize(color), color} end)
+    colors() |> Enum.map(fn color -> {String.capitalize(color), color} end)
   end
 
   def color_style(%Category{} = category) do
