@@ -7,7 +7,7 @@ defmodule Umbrella.Common.Deps do
       {:phoenix, "~> 1.6.11"},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_live_reload, "~> 1.3.3", only: :dev},
-      {:jason, "~> 1.3.0"},
+      {:jason, "~> 1.4.0"},
       {:plug_cowboy, "~> 2.5.1"},
       {:common, in_umbrella: true},
       {:assertions, "~> 0.18.1", only: :test},
