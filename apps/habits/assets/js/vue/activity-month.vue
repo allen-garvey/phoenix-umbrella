@@ -152,7 +152,7 @@ export default {
 
             let currentDate = this.startDate;
             const endDate = dateFromIso(this.endDate);
-            while(dateFromIso(currentDate) < endDate){
+            while(dateFromIso(currentDate) <= endDate){
                 const week = [];
                 for(let i=0;i<7;i++){
                     week.push({
