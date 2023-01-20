@@ -13,6 +13,10 @@ defmodule Common.ModelHelpers.Number do
     end
   end
 
+  def format_currency(nil) do
+    format_currency("0", "00")
+  end
+
   def format_currency(%Decimal{} = decimal) do
     case Decimal.to_string(decimal) |> String.split(".") do
       [integer_string] -> format_currency(integer_string, "")
