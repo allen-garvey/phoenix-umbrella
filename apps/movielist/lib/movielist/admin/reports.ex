@@ -69,11 +69,10 @@ defmodule Movielist.Reports do
       true -> Common.ModelHelpers.Date.today.month
       false -> 12
     end
-    month_range = 1..end_month
-    initial_month_map = month_range |> Enum.map(fn (i) -> {i, 0} end) |> Map.new
     month_map = ratings
-      |> Enum.reduce(initial_month_map, fn (rating, month_map) -> Map.update!(month_map, rating.date_scored.month, &increment/1) end)
-    month_range
+      |> Enum.reduce(Map.new, fn (rating, month_map) ->  
+        Map.update(month_map, rating.date_scored.month, 0, &increment/1) end)
+    1..end_month
       |> Enum.map(fn (month_number) -> %{month_number: month_number, count: month_map[month_number]} end)
   end
 
