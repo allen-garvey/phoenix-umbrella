@@ -71,7 +71,7 @@ defmodule Movielist.Reports do
     end
     month_map = ratings
       |> Enum.reduce(Map.new, fn (rating, month_map) ->  
-        Map.update(month_map, rating.date_scored.month, 0, &increment/1) end)
+        Map.update(month_map, rating.date_scored.month, 1, &increment/1) end)
     1..end_month
       |> Enum.map(fn (month_number) -> %{month_number: month_number, count: month_map[month_number]} end)
   end
