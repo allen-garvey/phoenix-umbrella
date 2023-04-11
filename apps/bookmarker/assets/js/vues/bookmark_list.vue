@@ -38,7 +38,7 @@
                         </div>
                 </div>
                 <div :class="$style['bookmark-thumbnail-container']">
-                    <img :src="bookmark.thumbnail_url" v-if="bookmark.thumbnail_url" />
+                    <img :src="bookmark.thumbnail_url" loading="lazy" v-if="bookmark.thumbnail_url" />
                 </div>
             </li>
 		</ul>

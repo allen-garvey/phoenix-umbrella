@@ -18,7 +18,7 @@
 					</div>
 					<div class="bookmark-thumbnail-container">
 						<%= if bookmark.thumbnail_url != nil do
-						    img_tag(bookmark.thumbnail_url) 
+						    img_tag(bookmark.thumbnail_url, loading: "lazy") 
 						end %>
 					</div>
 				</li>
