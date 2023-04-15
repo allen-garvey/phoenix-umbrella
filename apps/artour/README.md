@@ -17,6 +17,6 @@ Now you can visit [`localhost:3000`](http://localhost:3000) from your browser.
   * Test image urls for 404s `mix distill.test.image_urls https://site_url.com/media/images/`
 
 ### Guggenheim
-  * Create image sizes and import images to database `mix guggenhiem <folder_path>`
+  * Create image sizes and import images to database `mix guggenheim <folder_path>`
   * If there is a four digit year in the folder name, separated from other words by spaces, underscores or hypens it will be used as the year for the imported images
   * Optionally you can pass a second argument that will be used as the description for all imported images
