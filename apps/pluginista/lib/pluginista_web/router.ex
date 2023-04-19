@@ -36,10 +36,15 @@ defmodule PluginistaWeb.Router do
     post "/plugins/:id/update_categories", PluginController, :update_categories
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", PluginistaWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", PluginistaWeb do
+    pipe_through :api
+
+    get "/categories", ApiCategoryController, :index
+    get "/groups", ApiGroupController, :index
+    get "/makers", ApiMakerController, :index
+    get "/makers", ApiMakerController, :index
+    get "/plugins", ApiPluginController, :index
+  end
 
   # Enables LiveDashboard only for development
   #
