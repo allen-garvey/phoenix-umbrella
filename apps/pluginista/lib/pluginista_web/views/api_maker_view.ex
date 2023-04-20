@@ -3,11 +3,12 @@ defmodule PluginistaWeb.ApiMakerView do
 
     def render("index.json", %{conn: conn, makers: makers}) do
         %{
-            data: Map.new(makers, fn maker -> 
+            data: Map.new(Stream.with_index(makers), fn {maker, index} -> 
                 {
                     maker.id,
                     %{
                         id: maker.id,
+                        sort: index,
                         name: maker.name,
                         url: Routes.maker_path(conn, :show, maker),
                     }

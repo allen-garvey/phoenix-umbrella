@@ -3,11 +3,12 @@ defmodule PluginistaWeb.ApiCategoryView do
 
     def render("index.json", %{conn: conn, categories: categories}) do
         %{
-            data: Map.new(categories, fn category -> 
+            data: Map.new(Stream.with_index(categories), fn {category, index} -> 
                 {
                     category.id,
                     %{
                         id: category.id,
+                        sort: index,
                         name: category.name,
                         group_id: category.group_id,
                         color: category_color(category),

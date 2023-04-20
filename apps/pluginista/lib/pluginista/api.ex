@@ -18,7 +18,7 @@ defmodule Pluginista.Api do
   
     """
     def list_categories do
-      from(Category)
+      from(Category, order_by: :name)
       |> Repo.all
     end
   
