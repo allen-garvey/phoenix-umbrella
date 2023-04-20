@@ -1,10 +1,13 @@
 import { instantiateVue } from 'umbrella-common-js/vue/instantiate-vue.js'
 
-import PlugCategories from './vue/plugin-categories.vue';
+import PluginCategories from './vue/plugin-categories.vue';
+import PluginTable from './vue/plugin-table.vue';
 
 import css from '../css/app.scss';
 
-instantiateVue('plugin-categories', PlugCategories, ['categories']);
+instantiateVue('plugin-categories', PluginCategories, ['categories']);
+
+instantiateVue('plugin-table', PluginTable, ['pluginsApiRoute']);
 
 document.querySelectorAll('[data-button="delete"]').forEach(button => {
     button.onclick = (e) => {
