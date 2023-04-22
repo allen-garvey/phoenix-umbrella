@@ -11,8 +11,5 @@
   </li>
 </ul>
 
-<%= if Enum.count(@plugins) > 0 do %>
-  <h3>Plugins</h3>
-
-  <%= render PluginistaWeb.PluginView, "plugin_table.html", conn: @conn, plugins: @plugins %>
-<% end %>
+<h3>Plugins</h3>
+<%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: Routes.api_plugin_path(@conn, :plugins_for_category, @category.id)) %>

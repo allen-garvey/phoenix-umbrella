@@ -42,8 +42,11 @@ defmodule PluginistaWeb.Router do
     get "/categories", ApiCategoryController, :index
     get "/groups", ApiGroupController, :index
     get "/makers", ApiMakerController, :index
-    get "/makers", ApiMakerController, :index
     get "/plugins", ApiPluginController, :index
+
+    get "/categories/:id/plugins", ApiPluginController, :plugins_for_category
+    get "/groups/:id/plugins", ApiPluginController, :plugins_for_group
+    get "/makers/:id/plugins", ApiPluginController, :plugins_for_maker
   end
 
   # Enables LiveDashboard only for development

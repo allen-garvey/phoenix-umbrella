@@ -24,6 +24,14 @@ defmodule Pluginista.Api do
   
     alias Pluginista.Admin.Plugin
 
+    defp list_plugins_query do
+      from(
+        plugin in Plugin,
+        left_join: plugin_categories in assoc(plugin, :plugin_categories),
+        preload: [plugin_categories: plugin_categories]
+      )
+    end
+
   
     @doc """
     Returns the list of plugins.
@@ -35,10 +43,28 @@ defmodule Pluginista.Api do
   
     """
     def list_plugins do
+      list_plugins_query()
+      |> Repo.all
+    end
+
+    def list_plugins_for_maker(maker_id) do
+      list_plugins_query()
+      |> where([plugin], plugin.maker_id == ^maker_id)
+      |> Repo.all
+    end
+
+    def list_plugins_for_group(group_id) do
+      list_plugins_query()
+      |> where([plugin], plugin.group_id == ^group_id)
+      |> Repo.all
+    end
+
+    def list_plugins_for_category(category_id) do
       from(
         plugin in Plugin,
-        left_join: plugin_categories in assoc(plugin, :plugin_categories),
+        join: plugin_categories in assoc(plugin, :plugin_categories),
         preload: [plugin_categories: plugin_categories],
+        where: plugin_categories.category_id == ^category_id
       )
       |> Repo.all
     end

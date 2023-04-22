@@ -11,4 +11,5 @@
   </li>
 </ul>
 
-<%= render PluginistaWeb.PluginView, "plugin_table.html", conn: @conn, plugins: @plugins %>
+<h3>Plugins</h3>
+<%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: Routes.api_plugin_path(@conn, :plugins_for_group, @group.id)) %>
