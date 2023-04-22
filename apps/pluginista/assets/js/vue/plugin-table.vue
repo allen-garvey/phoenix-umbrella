@@ -5,12 +5,12 @@
         <thead>
             <tr>
                 <th></th>
-                <th><a href="" @click="updateSort($event, sortColumns.maker)">Maker</a></th>
-                <th><a href="" @click="updateSort($event, sortColumns.name)">Name</a></th>
-                <th><a href="" @click="updateSort($event, sortColumns.group)">Group</a></th>
-                <th><a href="" @click="updateSort($event, sortColumns.category)">Category</a></th>
-                <th><a href="" @click="updateSort($event, sortColumns.date)">Acquisition date</a></th>
-                <th><a href="" @click="updateSort($event, sortColumns.cost)">Cost</a></th>
+                <th><a :href="sortUrlForColumn(sortColumns.maker)" @click="updateSort($event, sortColumns.maker)">Maker</a></th>
+                <th><a :href="sortUrlForColumn(sortColumns.name)" @click="updateSort($event, sortColumns.name)">Name</a></th>
+                <th><a :href="sortUrlForColumn(sortColumns.group)" @click="updateSort($event, sortColumns.group)">Group</a></th>
+                <th><a :href="sortUrlForColumn(sortColumns.category)" @click="updateSort($event, sortColumns.category)">Category</a></th>
+                <th><a :href="sortUrlForColumn(sortColumns.date)" @click="updateSort($event, sortColumns.date)">Acquisition date</a></th>
+                <th><a :href="sortUrlForColumn(sortColumns.cost)" @click="updateSort($event, sortColumns.cost)">Cost</a></th>
                 <th></th>
             </tr>
         </thead>
@@ -213,6 +213,9 @@ export default {
             searchParams.set(QUERY_PARAM_SORT_DIRICTION, this.sortDirection);
             const newRelativePathQuery = `${window.location.pathname}?${searchParams.toString()}`;
             history.replaceState(null, '', newRelativePathQuery);
+        },
+        sortUrlForColumn(column){
+            return `?${QUERY_PARAM_SORT_COLUMN}=${column}`;
         },
     }
 };
