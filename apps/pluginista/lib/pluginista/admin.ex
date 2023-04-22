@@ -364,49 +364,6 @@ defmodule Pluginista.Admin do
   end
 
   @doc """
-  Returns the list of plugins for a given group.
-  """
-  def list_plugins_for_group(group_id) do
-    list_plugins_query()
-    |> exclude(:order_by)
-    |> order_by([plugin, maker: maker, categories: categories], [categories.name, plugin.name, maker.name])
-    |> where([plugin], plugin.group_id == ^group_id)
-    |> Repo.all
-  end
-
-  @doc """
-  Returns the list of plugins for a given maker.
-  """
-  def list_plugins_for_maker(maker_id) do
-    from(
-      plugin in Plugin,
-      join: group in assoc(plugin, :group),
-      join: maker in assoc(plugin, :maker),
-      left_join: categories in assoc(plugin, :categories),
-      preload: [group: group, maker: maker, categories: categories],
-      where: plugin.maker_id == ^maker_id,
-      order_by: [group.name, maker.name, plugin.name]
-    )
-    |> Repo.all
-  end
-
-  @doc """
-  Returns the list of plugins for a given category.
-  """
-  def list_plugins_for_category(category_id) do
-    from(
-      plugin in Plugin,
-      join: group in assoc(plugin, :group),
-      join: maker in assoc(plugin, :maker),
-      join: categories in assoc(plugin, :categories),
-      preload: [group: group, maker: maker, categories: categories],
-      where: categories.id == ^category_id,
-      order_by: [group.name, maker.name, plugin.name]
-    )
-    |> Repo.all
-  end
-
-  @doc """
   Gets a single plugin.
 
   Raises `Ecto.NoResultsError` if the Plugin does not exist.

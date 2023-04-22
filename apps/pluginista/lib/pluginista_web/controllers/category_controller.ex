@@ -43,10 +43,9 @@ defmodule PluginistaWeb.CategoryController do
 
   def show(conn, %{"id" => id}) do
     category = Admin.get_category!(id)
-    plugins = Admin.list_plugins_for_category(id)
-    total_spent = Pluginista.Reports.sum_plugins_cost(plugins)
+    plugin_stats = Pluginista.Reports.plugin_stats_for_category(id)
     
-    render(conn, "show.html", category: category, plugins: plugins, total_spent: total_spent)
+    render(conn, "show.html", category: category, plugin_stats: plugin_stats)
   end
 
   def edit(conn, %{"id" => id}) do

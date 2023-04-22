@@ -7,11 +7,11 @@
   </li>
   <li>
     <strong>Plugin Count:</strong>
-    <%= Enum.count(@plugins) %>
+    <%= @plugin_stats[:count] %>
   </li>
   <li>
     <strong>Total Spent:</strong>
-    <%=  Common.ModelHelpers.Number.format_currency(@total_spent) %>
+    <%=  Common.ModelHelpers.Number.format_currency(@plugin_stats[:total_spent]) %>
   </li>
 </ul>
 

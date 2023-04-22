@@ -32,4 +32,32 @@ defmodule Pluginista.Reports do
         |> Enum.reduce(Decimal.new(0), fn plugin, total -> Decimal.add(total, plugin.cost) end)
     end
 
+    def plugin_stats_for_maker(maker_id) do
+        from(
+            plugin in Plugin,
+            where: plugin.maker_id == ^maker_id,
+            select: %{total_spent: sum(plugin.cost), count: count(plugin.id)}
+        )
+        |> Repo.one!
+    end
+
+    def plugin_stats_for_group(group_id) do
+        from(
+            plugin in Plugin,
+            where: plugin.group_id == ^group_id,
+            select: %{total_spent: sum(plugin.cost), count: count(plugin.id)}
+        )
+        |> Repo.one!
+    end
+
+    def plugin_stats_for_category(category_id) do
+        from(
+            plugin in Plugin,
+            join: plugin_categories in assoc(plugin, :plugin_categories),
+            where: plugin_categories.category_id == ^category_id,
+            select: %{total_spent: sum(plugin.cost), count: count(plugin.id)}
+        )
+        |> Repo.one!
+    end
+
 end

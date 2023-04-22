@@ -38,10 +38,9 @@ defmodule PluginistaWeb.MakerController do
 
   def show(conn, %{"id" => id}) do
     maker = Admin.get_maker!(id)
-    plugins = Admin.list_plugins_for_maker(id)
-    total_spent = Reports.sum_plugins_cost(plugins)
+    plugin_stats = Reports.plugin_stats_for_maker(id)
     
-    render(conn, "show.html", maker: maker, plugins: plugins, total_spent: total_spent)
+    render(conn, "show.html", maker: maker, plugin_stats: plugin_stats)
   end
 
   def edit(conn, %{"id" => id}) do
