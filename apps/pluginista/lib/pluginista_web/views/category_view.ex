@@ -12,29 +12,4 @@ defmodule PluginistaWeb.CategoryView do
     |> Jason.encode!
   end
 
-  @doc """
-  Gets CSS class for category for plugin table
-  """
-  def category_class(nil) do
-    ""
-  end
-  
-  def category_class(category) do
-    colors = [
-      "blue",
-      "teal",
-      "magenta",
-      "yellow",
-      "orange",
-      "green",
-      "red",
-      "cyan",
-      "lime",
-      "bordeaux",
-      "violet",
-      "black",
-    ]
-    
-    "row-#{Enum.at(colors, rem(category.id, Enum.count(colors)))}"
-  end
 end
