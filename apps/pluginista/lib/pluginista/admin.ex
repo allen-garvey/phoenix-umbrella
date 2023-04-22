@@ -364,48 +364,6 @@ defmodule Pluginista.Admin do
   end
 
   @doc """
-  Returns the list of plugins by given sort.
-  """
-  def list_plugins("categories") do
-    list_plugins_query()
-    |> exclude(:order_by)
-    |> order_by([plugin, maker: maker, categories: categories, group: group], [group.name, categories.name, plugin.name, maker.name])
-    |> Repo.all
-  end
-
-  def list_plugins("name") do
-    list_plugins_query()
-    |> exclude(:order_by)
-    |> order_by([plugin, maker: maker], [plugin.name, maker.name])
-    |> Repo.all
-  end
-
-  def list_plugins("maker") do
-    list_plugins_query()
-    |> exclude(:order_by)
-    |> order_by([plugin, maker: maker, group: group], [maker.name, plugin.name, group.name])
-    |> Repo.all
-  end
-
-  def list_plugins("cost") do
-    list_plugins_query()
-    |> exclude(:order_by)
-    |> order_by([plugin, maker: maker], [desc: plugin.cost, asc: maker.name, asc: plugin.name])
-    |> Repo.all
-  end
-
-  def list_plugins("date") do
-    list_plugins_query()
-    |> exclude(:order_by)
-    |> order_by([plugin, maker: maker], [desc: plugin.acquisition_date, asc: maker.name, asc: plugin.name])
-    |> Repo.all
-  end
-
-  def list_plugins(_sort) do
-    list_plugins()
-  end
-
-  @doc """
   Returns the list of plugins for a given group.
   """
   def list_plugins_for_group(group_id) do
