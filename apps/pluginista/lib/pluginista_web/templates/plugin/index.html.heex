@@ -2,6 +2,4 @@
 
 <div class="form-group"><%= link "New Plugin", to: Routes.plugin_path(@conn, :new), class: "btn btn-success" %></div>
 
-<%= render "plugin_table.html", conn: @conn, plugins: @plugins %>
-
 <%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: Routes.api_plugin_path(@conn, :index)) %>
