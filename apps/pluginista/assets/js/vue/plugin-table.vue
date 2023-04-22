@@ -18,7 +18,7 @@
             <tr 
                 v-for="plugin in pluginsSorted" 
                 :key="plugin.id"
-                :class="{[`row-${plugin.category?.color}`]: plugin.category}"
+                :class="{[this.$style[`row-${plugin.category?.color}`]]: plugin.category}"
             >
                 <td></td>
                 <td><a :href="plugin.maker.url">{{plugin.maker.name}}</a></td>
@@ -35,6 +35,73 @@
 </template>
 
 <style lang="scss" module>
+    .row-red {
+        background-color: #ff2929;
+    }
+
+    .row-bordeaux {
+        background-color: #ad0057;
+        
+        &, & a {
+            color: rgba(255, 255, 255, 0.9);
+        }
+    }
+
+    .row-magenta {
+        background-color: #ff61ff;
+    }
+
+    .row-orange {
+        background-color: orange;
+    }
+
+    .row-yellow {
+        background-color: yellow;
+    }
+
+    .row-green {
+        background-color: green;
+        
+        &, & a {
+            color: rgba(255, 255, 255, 0.9);
+        }
+    }
+
+    .row-lime {
+        background-color: #47ff47;
+    }
+
+    .row-blue {
+        background-color: #0a7cff;
+        
+        &, & a {
+            color: rgba(255, 255, 255, 0.9);
+        }
+    }
+
+    .row-teal {
+        background-color: teal;
+        
+        &, & a {
+            color: rgba(255, 255, 255, 0.9);
+        }
+    }
+
+    .row-cyan {
+        background-color: #6ff;
+    }
+
+    .row-violet {
+        background-color: #ba61ff;
+    }
+
+    .row-black {
+        background-color: #333;
+
+        &, & a {
+            color: rgba(255, 255, 255, 0.9);
+        }
+    }
 </style>
 
 <script>
