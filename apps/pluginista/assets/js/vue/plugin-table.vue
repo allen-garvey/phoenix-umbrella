@@ -1,7 +1,7 @@
 <template>
 <div>
     <loading-animation v-if="!isInitialLoadComplete" />
-    <table v-if="isInitialLoadComplete" class="plugin-table">
+    <table v-if="isInitialLoadComplete">
         <thead>
             <tr>
                 <th></th>
