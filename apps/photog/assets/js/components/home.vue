@@ -2,16 +2,10 @@
     <div class="main container">
         <div 
             :class="$style.section"
-            v-if="lastImport">
-            <h2 :class="$style.sectionHeading">Last Import</h2>
-            <import-item :item="lastImport" />
-        </div>
-        <div 
-            :class="$style.section"
             v-if="recentAlbums.length > 0"
         >
             <div :class="$style.flexHeader">
-                <h2 :class="$style.sectionHeading">Recent Albums</h2>
+                <h3 :class="$style.sectionHeading">Recent Albums</h3>
                 <router-link 
                     :to="{ name: 'albumsForYear', params: { year: currentYear } }"
                     :class="$style.headerSupplement"
@@ -29,7 +23,7 @@
             :class="$style.section"
             v-if="favoriteTags.length > 0"
         >
-            <h2 :class="$style.sectionHeading">Favorite Tags</h2>
+            <h3 :class="$style.sectionHeading">Favorite Tags</h3>
             <thumbnail-items-list
                 :items="favoriteTags"
                 :showRouteFor="showRouteForTag"
@@ -40,7 +34,7 @@
             :class="$style.section"
         >
             <router-link :to="{name: 'albumFavoritesIndex'}">
-                 <h2 :class="$style.sectionHeading">Favorite Albums</h2>
+                 <h3 :class="$style.sectionHeading">Favorite Albums</h3>
             </router-link>
             <thumbnail-items-list
                 :items="favoriteAlbums"
@@ -53,7 +47,6 @@
 
 <style lang="scss" module>
     .section {
-        margin-bottom: 2rem;
     }
     .sectionHeading {
         margin: 0 0 0.5rem;
@@ -70,7 +63,6 @@
 </style>
 
 <script>
-import ImportItem from './import-item.vue';
 import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list.vue';
 
 export default {
@@ -85,20 +77,10 @@ export default {
         },
     },
     components: {
-        ImportItem,
         ThumbnailItemsList,
     },
     created(){
         this.setWindowTitle('');
-        this.getModel('/imports', {
-            isPaginated: true,
-            offset: 0,
-            limit: 1,
-        }).then((imports) => {
-            if(imports && imports.length > 0){
-                this.lastImport = imports[0];
-            }
-        });
 
         this.getModel('/albums', {
             isPaginated: true,
@@ -122,7 +104,6 @@ export default {
     },
     data(){
         return {
-            lastImport: null,
             recentAlbums: [],
             favoriteTags: [],
             favoriteAlbums: [],
