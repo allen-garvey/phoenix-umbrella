@@ -75,6 +75,10 @@ import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list
 
 export default {
     props: {
+        setWindowTitle: {
+            type: Function,
+            required: true,
+        },
         getModel: {
             type: Function,
             required: true,
@@ -85,6 +89,7 @@ export default {
         ThumbnailItemsList,
     },
     created(){
+        this.setWindowTitle('');
         this.getModel('/imports', {
             isPaginated: true,
             offset: 0,

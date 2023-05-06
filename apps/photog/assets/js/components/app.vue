@@ -69,7 +69,7 @@ export default {
     },
     methods: {
         setWindowTitle(title){
-            document.title = `Photog | ${title}`;
+            document.title = ['Photog', title].filter(s => s).join(' | ');
         },
         get(modelPath, options){
             const apiUrl = API_URL_BASE + modelPath;
