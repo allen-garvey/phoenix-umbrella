@@ -75,7 +75,6 @@
 
         li{
             flex-basis: $thumbnail_dimensions;
-            margin-bottom: 25px;
         }
 
         &.batch-select li{
