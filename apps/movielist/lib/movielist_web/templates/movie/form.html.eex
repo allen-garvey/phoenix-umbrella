@@ -7,6 +7,8 @@
   
   <%= Common.ViewHelpers.Form.input_group :title, f, &text_input/3, [autofocus: true] %>
 
+  <%= Common.ViewHelpers.Form.input_group :subtitle, f, &text_input/3 %>
+
   <%= Common.ViewHelpers.Form.select_group :genre_id, f, @genres %>
 
   <%= Common.ViewHelpers.Form.input_group :theater_release_date, f, &date_input/3 %>

@@ -2,7 +2,15 @@ defmodule MovielistWeb.MovieView do
   use MovielistWeb, :view
 
   def to_s(movie) do
-  	movie.title
+  	to_s(movie.title, movie.subtitle)
+  end
+
+  def to_s(title, nil) do
+    title
+  end
+
+  def to_s(title, subtitle) do
+    title <> ": " <> subtitle
   end
 
   Common.ViewHelpers.Form.define_map_for_form()

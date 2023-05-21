@@ -10,6 +10,7 @@ defmodule Movielist.Admin.Movie do
     field :theater_release_date, :date
     field :title, :string
     field :sort_title, :string
+    field :subtitle, :string
     field :length, :integer
 
     field :release_date, :date, virtual: true
@@ -41,7 +42,7 @@ defmodule Movielist.Admin.Movie do
   @doc false
   def changeset(movie, attrs) do
     movie
-    |> cast(attrs, [:title, :sort_title, :genre_id, :streamer_id, :theater_release_date, :home_release_date, :pre_rating, :is_active, :length])
+    |> cast(attrs, [:title, :sort_title, :subtitle, :genre_id, :streamer_id, :theater_release_date, :home_release_date, :pre_rating, :is_active, :length])
     # sort_title is required, but we are not validating it here since it generated from the title
     |> validate_required([:title, :genre_id, :pre_rating, :is_active])
     |> generate_sort_title

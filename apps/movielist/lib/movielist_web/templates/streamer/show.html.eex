@@ -27,7 +27,7 @@
       <%= for movie <- @streamer.movies do %>
         <tr>
           <td>
-            <%= link movie.title, to: Routes.movie_path(@conn, :show, movie) %>
+            <%= link MovielistWeb.MovieView.to_s(movie), to: Routes.movie_path(@conn, :show, movie) %>
           </td>
         </tr>
       <% end %>

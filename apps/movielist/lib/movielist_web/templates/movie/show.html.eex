@@ -20,7 +20,7 @@
 
   <li>
     <strong>Title:</strong>
-    <%= @movie.title %>
+    <%= to_s(@movie) %>
   </li>
 
   <li>
