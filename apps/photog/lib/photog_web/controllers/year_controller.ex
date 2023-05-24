@@ -5,6 +5,16 @@ defmodule PhotogWeb.YearController do
     alias Photog.Api.Year
   
     action_fallback PhotogWeb.FallbackController
+
+    @doc """
+    Returns distinct years that exist for albums
+    """
+    def albums_years_list(conn, _params) do
+      years = Api.distinct_album_years()
+      conn
+      |> put_view(PhotogWeb.GenericView)
+      |> render("data.json", data: years)
+    end
     
     def delete(conn, %{"year" => year}) do
         Api.delete_year(year)
