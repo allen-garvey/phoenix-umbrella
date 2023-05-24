@@ -396,9 +396,9 @@ defmodule Photog.Api do
   def distinct_album_years do
     from(
       album in Album,
-      distinct: [desc: :year],
+      group_by: [:year],
       order_by: [desc: :year],
-      select: album.year
+      select: %{year: album.year, count: count()}
     )
     |> Repo.all
   end

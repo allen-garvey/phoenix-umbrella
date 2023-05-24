@@ -12,6 +12,7 @@ import ImportForm from './components/import-form.vue';
 import Home from './components/home.vue';
 import Slideshow from './components/slideshow.vue';
 import ListPage from './components/list-page.vue';
+import YearsListPage from './components/years-list-page.vue';
 import ImagesSearch from './components/images-search.vue';
 
 export default {
@@ -173,7 +174,7 @@ export default {
         {
             path: '/albums/years',
             name: 'albumsForYearIndex',
-            component: ListPage,
+            component: YearsListPage,
             props(route){
                 const getItems = (getModel) => getModel('/albums/years/index').then(years => 
                     Promise.resolve(years.map(year => ({
