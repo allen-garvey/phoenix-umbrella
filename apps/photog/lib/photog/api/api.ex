@@ -1476,10 +1476,10 @@ defmodule Photog.Api do
   @doc """
   Updates a year or creates it if it doesn't exist.
   """
-  def upsert_year(attrs \\ %{}) do
+  def upsert_year(%{"id" => _id, "description" => description} = attrs) do
     %Year{}
     |> Year.changeset(attrs)
-    |> Repo.insert(on_conflict: :nothing)
+    |> Repo.insert(on_conflict: [set: [description: description]], conflict_target: :id)
   end
 
   @doc """
