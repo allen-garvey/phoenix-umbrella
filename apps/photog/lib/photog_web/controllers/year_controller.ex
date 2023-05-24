@@ -28,7 +28,7 @@ defmodule PhotogWeb.YearController do
         conn
         |> put_status(:created)
         |> put_view(PhotogWeb.GenericView)
-        |> render("data.json", data: Map.from_struct(year) |> Map.take([:year, :description]))
+        |> render("data.json", data: Map.from_struct(year) |> Map.take([:id, :description]))
       end
     end
 end
