@@ -101,10 +101,15 @@
 import { nextTick } from 'vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import focus from 'umbrella-common-js/vue/directives/focus.js';
+import { API_URL_BASE } from '../request-helpers.js';
 
 export default {
     props: {
         getModel: {
+            type: Function,
+            required: true,
+        },
+        sendJson: {
             type: Function,
             required: true,
         },
@@ -156,6 +161,17 @@ export default {
             this.yearBeingEdited = null;
         },
         save(){
+            if(!this.yearBeingEditedDescription){
+                this.sendJson(`${API_URL_BASE}/years/${this.yearBeingEdited.year}`, 'DELETE');
+            }
+            else {
+                this.sendJson(
+                    `${API_URL_BASE}/years/${this.yearBeingEdited.year}`, 
+                    'PUT', 
+                    { description: this.yearBeingEditedDescription }
+                );
+            }
+
             this.yearBeingEdited.description = this.yearBeingEditedDescription;
             this.yearBeingEdited = null;
         },

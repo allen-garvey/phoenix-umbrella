@@ -14,6 +14,7 @@ defmodule Photog.Api do
   alias Photog.Api.Import
   alias Photog.Api.Tag
   alias Photog.Api.AlbumTag
+  alias Photog.Api.Year
 
   @doc """
   Preloads image import
@@ -396,9 +397,11 @@ defmodule Photog.Api do
   def distinct_album_years do
     from(
       album in Album,
-      group_by: [:year],
+      left_join: year in Year,
+      on: album.year == year.id,
+      group_by: [album.year, year.description],
       order_by: [desc: :year],
-      select: %{year: album.year, count: count()}
+      select: %{year: album.year, count: count(), description: year.description}
     )
     |> Repo.all
   end
@@ -1468,6 +1471,23 @@ defmodule Photog.Api do
   """
   def change_album_tag(%AlbumTag{} = album_tag) do
     AlbumTag.changeset(album_tag, %{})
+  end
+
+  @doc """
+  Updates a year or creates it if it doesn't exist.
+  """
+  def upsert_year(attrs \\ %{}) do
+    %Year{}
+    |> Year.changeset(attrs)
+    |> Repo.insert(on_conflict: :nothing)
+  end
+
+  @doc """
+  Deletes a given year.
+  """
+  def delete_year(year) do
+    from(year in Year, where: year.id == ^year)
+    |> Repo.delete_all
   end
 
 end

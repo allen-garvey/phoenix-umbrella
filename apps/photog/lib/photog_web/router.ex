@@ -73,6 +73,10 @@ defmodule PhotogWeb.Router do
     # Edit person images
     post "/images/:id/persons",               ImageController, :add_persons
     delete "/persons/:id/images",             PersonController, :remove_images_from_person
+
+    # Album years
+    delete "/years/:year",                    YearController, :delete
+    put "/years/:id",                        YearController, :put
   end
 
   scope "/", PhotogWeb do
