@@ -175,21 +175,6 @@ export default {
             path: '/albums/years',
             name: 'albumsForYearIndex',
             component: YearsListPage,
-            props(route){
-                const getItems = (getModel) => getModel('/albums/years/index').then(years => 
-                    Promise.resolve(years.map(year => ({
-                        title: year,
-                        route: {
-                            name: 'albumsForYear',
-                            params: { year }
-                        },
-                    }))));
-
-                return {
-                    title: 'Albums for Year',
-                    getItems,
-                };
-            },
         },
         buildAlbumVariant('/albums/favorites', 'albumFavoritesIndex', (route) => {
             const props = {
