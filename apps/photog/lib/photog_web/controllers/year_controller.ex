@@ -23,7 +23,7 @@ defmodule PhotogWeb.YearController do
         |> render("ok.json", message: "ok")
     end
 
-    def put(conn, %{"id" => _year, "description" => _description} = params) do
+    def put(conn, params) do
       with {:ok, %Year{} = year} <- Api.upsert_year(params) do
         conn
         |> put_status(:created)

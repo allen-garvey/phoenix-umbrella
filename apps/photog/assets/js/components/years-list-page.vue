@@ -16,25 +16,20 @@
                     [$style.edit]: year.year == yearBeingEdited?.year,
                 }"
             >
-                <router-link 
-                    :to="{
-                        name: 'albumsForYear',
-                        params: { year: year.year }
-                    }"
-                >
+                <router-link :to="pathForYear(year)">
                     {{ year.year }}
                     <span :class="$style.count">({{ year.count }})</span>
                 </router-link>
-                <router-link 
-                    :to="{
-                        name: 'albumsForYear',
-                        params: { year: year.year }
-                    }"
-                    v-if="year.mini_thumbnail_path"
-                >
+                <router-link :to="pathForYear(year)" v-if="year.mini_thumbnail_path">
                     <img :src="thumbnailUrlFor(year.mini_thumbnail_path)" :class="$style.coverImage" />
                 </router-link>
-                <span :class="$style.description" v-if="year.year !== yearBeingEdited?.year">{{ year.description }}</span>
+                <router-link 
+                    :to="pathForYear(year)" 
+                    :class="$style.description"
+                    v-if="year.year !== yearBeingEdited?.year"
+                >
+                    {{ year.description }}
+                </router-link>
                 <button 
                     class="btn btn-primary" 
                     @click="editYear(year)" 
@@ -47,8 +42,26 @@
                     v-if="year.year == yearBeingEdited?.year"
                     @submit.prevent="save()"
                 >
-                    <input class="form-control" :class="$style.descriptionInput" v-model="yearBeingEditedDescription" v-focus />
-                    <button class="btn btn-outline-dark" :class="$style.cancelButton" @click="cancelEdit()" type="button">Cancel</button>
+                    <input 
+                        class="form-control" 
+                        :class="$style.descriptionInput" 
+                        v-model="yearBeingEditedTemp.description" 
+                        v-focus 
+                    />
+                    <input 
+                        class="form-control" 
+                        :class="$style.numberInput" 
+                        v-model="yearBeingEditedTemp.cover_image_id" 
+                        type="number"
+                    />
+                    <button 
+                        class="btn btn-outline-dark" 
+                        :class="$style.cancelButton" 
+                        @click="cancelEdit()" 
+                        type="button"
+                    >
+                        Cancel
+                    </button>
                     <button class="btn btn-success" type="submit">Save</button>
                 </form>
             </li>
@@ -90,10 +103,12 @@
     }
 
     .count {
+        display: inline-block;
         color: #aaa;
         font-size: 1.2rem;
         margin-left: 0.2em;
         margin: 0 1rem 0 -4px;
+        min-width: 2em;
     }
 
     .coverImage {
@@ -112,7 +127,13 @@
     }
 
     .descriptionInput {
+        margin-left: 1rem;
         width: 350px;
+    }
+
+    .numberInput {
+        width: 7em;
+        margin-left: 1rem;
     }
 </style>
 
@@ -145,7 +166,7 @@ export default {
             isInitialLoadComplete: false,
             years: [],
             yearBeingEdited: null,
-            yearBeingEditedDescription: '',
+            yearBeingEditedTemp: null,
         }
     },
     created(){
@@ -164,39 +185,58 @@ export default {
         },
     },
     methods: {
-        setup(){
+        setup(forceRefresh=false){
             this.isInitialLoadComplete = false;
             this.years = [];
 
-            this.getModel('/albums/years/index').then(years => {
+            this.getModel('/albums/years/index', { forceRefresh }).then(years => {
                 this.years = years;
                 this.isInitialLoadComplete = true;
             });
         },
         editYear(year){
             this.yearBeingEdited = year;
-            this.yearBeingEditedDescription = year.description;
+            this.yearBeingEditedTemp = { ...year };
         },
         cancelEdit(){
             this.yearBeingEdited = null;
         },
         save(){
-            if(!this.yearBeingEditedDescription){
+            const params = {
+                description: this.yearBeingEditedTemp.description || null,
+                cover_image_id: this.yearBeingEditedTemp.cover_image_id || null,
+            };
+            if(!params.description && !params.cover_image_id){
                 this.sendJson(`${API_URL_BASE}/years/${this.yearBeingEdited.year}`, 'DELETE');
             }
             else {
+                const forceRefresh = params.cover_image_id !== this.yearBeingEdited.cover_image_id;
                 this.sendJson(
                     `${API_URL_BASE}/years/${this.yearBeingEdited.year}`, 
                     'PUT', 
-                    { description: this.yearBeingEditedDescription }
-                );
+                    {
+                        description: this.yearBeingEditedTemp.description || null,
+                        cover_image_id: this.yearBeingEditedTemp.cover_image_id || null,
+                    }
+                ).then(() => { 
+                    if(forceRefresh){
+                        this.setup(true);
+                    }
+                });
             }
 
-            this.yearBeingEdited.description = this.yearBeingEditedDescription;
+            this.yearBeingEdited.description = params.description;
+            this.yearBeingEdited.cover_image_id = params.cover_image_id;
             this.yearBeingEdited = null;
         },
         thumbnailUrlFor(mini_thumbnail_path){
             return thumbnailUrlFor(mini_thumbnail_path);
+        },
+        pathForYear(year){
+            return {
+                name: 'albumsForYear',
+                params: { year: year.year }
+            };
         },
     },
 };
