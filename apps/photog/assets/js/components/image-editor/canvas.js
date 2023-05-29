@@ -1,10 +1,10 @@
 import m4 from './webgl-m4.js';
 
-export const createAndLoadTexture = (gl, pixels) => {
+export const createAndLoadTexture = (gl, canvas) => {
     const texture = gl.createTexture();
     
     gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
 
     // let's assume all images are not a power of 2
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -70,6 +70,7 @@ export const createAdaptiveThresholdDrawFunc = (gl, vertexShader, pixelShader) =
     const matrixLocation = gl.getUniformLocation(program, 'u_matrix');
     const textureLocation = gl.getUniformLocation(program, 'u_texture');
     const thresholdLocation = gl.getUniformLocation(program, 'u_threshold');
+    const imageDimensionsLocation = gl.getUniformLocation(program, 'u_image_dimensions');
     
     // Create a buffer.
     const positionBuffer = gl.createBuffer();
@@ -130,6 +131,7 @@ export const createAdaptiveThresholdDrawFunc = (gl, vertexShader, pixelShader) =
         gl.bindTexture(gl.TEXTURE_2D, tex);
 
         gl.uniform1f(thresholdLocation, threshold);
+        gl.uniform2f(imageDimensionsLocation, texWidth, texHeight);
         
         // draw the quad (2 triangles, 6 vertices)
         gl.drawArrays(gl.TRIANGLES, 0, 6);
