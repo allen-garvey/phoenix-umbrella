@@ -1,4 +1,4 @@
-import { fetchJson } from 'umbrella-common-js/ajax.js';
+import { fetchJson, fetchText } from 'umbrella-common-js/ajax.js';
 
 /**
  * 
@@ -8,10 +8,12 @@ import { fetchJson } from 'umbrella-common-js/ajax.js';
  *      isPaginated: boolean; if api route is paginated; the way pagination works is that the total number of items in the cache are returned up to the total number of items requested determined by offset and limit
  *      offset: number; number to start at for api pagination, zero indexed
  *      limit: number; maximum number of items to return starting at pagination
+ *      contentType: 'text' | 'json' - default 'json'
  * }
  */
 function fetchIntoCache(apiUrl, cacheMap, mapId, options={}){
     const isCached = !options.forceRefresh && cacheMap.has(mapId);
+    const fetchFunc = options.contentType === 'text' ? fetchText : fetchJson;
 
     if(options.isPaginated){
         const cachedLength = isCached ? cacheMap.get(mapId).offset + cacheMap.get(mapId).limit : 0;
@@ -32,7 +34,7 @@ function fetchIntoCache(apiUrl, cacheMap, mapId, options={}){
         const url = new URL(apiUrl, window.location);
         const query = url.search ? url.search + '&' : '?';
         const paginatedUrl = `${url.pathname}${query}offset=${adjustedOffset}&limit=${adjustedLimit}`;
-        return fetchJson(paginatedUrl).then((data)=>{
+        return fetchFunc(paginatedUrl).then((data)=>{
             const oldData = cacheMap.has(mapId) ? cacheMap.get(mapId).data : [];
             const combinedData = oldData.concat(data);
             cacheMap.set(mapId, {data: combinedData, offset: options.offset, limit: options.limit});
@@ -48,7 +50,7 @@ function fetchIntoCache(apiUrl, cacheMap, mapId, options={}){
         return Promise.resolve(null);
     }
 
-    return fetchJson(apiUrl).then((data)=>{
+    return fetchFunc(apiUrl).then((data)=>{
         cacheMap.set(mapId, {data});
         return data;
     });

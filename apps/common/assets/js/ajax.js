@@ -20,3 +20,5 @@ export function sendJson(url, csrfToken='', method='POST', data={}){
 
         }).then(data=>data.json());
 }
+
+export const fetchText = (url) => fetch(url).then(res => res.text());
