@@ -57,3 +57,5 @@ Thumbs.db
 
 #Elixir phoenix dialyzer
 .elixir_ls/*
+
+apps/assets/*

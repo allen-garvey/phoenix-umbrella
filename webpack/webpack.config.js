@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const FileManagerPlugin = require('filemanager-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -25,8 +26,12 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, '..', 'apps'),
+        // for dynamic imports
+        chunkFilename: ({ chunk }) => {
+            return `assets/${chunk.name}.js`;
+        },
         filename: ({ chunk }) => {
-            return pathHelpers.outputPathForApp(chunk.name, 'js');
+            return pathHelpers.outputPathForApp(chunk.name, 'js', chunk.hash);
         },
     },
     resolve: {
@@ -112,6 +117,18 @@ module.exports = {
         new webpack.DefinePlugin({
             __VUE_OPTIONS_API__: true,
             __VUE_PROD_DEVTOOLS__: false,
+        }),
+        new FileManagerPlugin({
+            events: {
+                onEnd: {
+                  copy: [
+                    { 
+                        source: path.join(__dirname, '..', 'apps', 'assets', 'image-editor.js'), 
+                        destination: path.join(__dirname, '..', 'apps', 'photog', 'priv', 'static', 'assets', 'image-editor.js') 
+                    },
+                  ],
+                },
+            },
         }),
     ],
 };

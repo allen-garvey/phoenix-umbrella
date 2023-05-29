@@ -38,6 +38,9 @@
             :shouldShowRequestButton="!imageExif && !hasExifBeenRequested"
             @exif-requested="loadExif"
         />
+        <div :class="$style.editorLink">
+            <router-link :to="{name: 'imagesEditor', params: {id: imageId}}">Editor</router-link>
+        </div>
         <Image-Items-List 
             :imageId="image.id"
             :getModel="getModel"
@@ -97,6 +100,10 @@
     }
     .infiniteObserver{
         padding-top: 20em;
+    }
+    .editorLink {
+        margin-top: 1rem;
+        font-size: 1.8rem;
     }
 </style>
 
