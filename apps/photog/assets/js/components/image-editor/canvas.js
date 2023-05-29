@@ -1,4 +1,5 @@
 import m4 from './webgl-m4.js';
+import webgl from './webgl.js';
 
 export const createAndLoadTexture = (gl, canvas) => {
     const texture = gl.createTexture();
@@ -135,5 +136,16 @@ export const createAdaptiveThresholdDrawFunc = (gl, vertexShader, pixelShader) =
         
         // draw the quad (2 triangles, 6 vertices)
         gl.drawArrays(gl.TRIANGLES, 0, 6);
+    };
+};
+
+export const createAdaptiveThresholdDrawFunc2 = (gl, vertexShader, pixelShader) => {
+    const drawFunc = webgl.createDrawImageFunc(gl, vertexShader, pixelShader, ['u_threshold', 'u_image_dimensions']);
+
+    return (gl, tex, texWidth, texHeight, threshold) => {
+        drawFunc(gl, tex, texWidth, texHeight, (gl, customUniformLocations)=>{
+            gl.uniform1f(customUniformLocations['u_threshold'], threshold);
+            gl.uniform2f(customUniformLocations['u_image_dimensions'], texWidth, texHeight);
+        });
     };
 };

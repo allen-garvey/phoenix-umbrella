@@ -38,7 +38,8 @@ import { nextTick } from 'vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import ImageTitle from './image-title.vue';
 import { getMasterUrl } from '../../../image.js';
-import { createAndLoadTexture, createAdaptiveThresholdDrawFunc } from '../canvas.js';
+import { createAndLoadTexture, createAdaptiveThresholdDrawFunc2 } from '../canvas.js';
+import { renderCanvas2 } from '../canvas2';
 
 export default {
     props: {
@@ -119,18 +120,19 @@ export default {
             this.imageHeight = image.width;
             this.imageHeight = image.height;
             
+            this.$refs.outputCanvas.width = image.width;
+            this.$refs.outputCanvas.height = image.height;
             this.outputCanvasContext = this.$refs.outputCanvas.getContext('2d');
-            this.outputCanvasContext.canvas.width = image.width;
-            this.outputCanvasContext.canvas.height = image.height;
             this.outputCanvasContext.drawImage(image, 0, 0);
             
             this.offscreen2dContext = new OffscreenCanvas(image.width, image.height).getContext('2d');
-            this.offscreenWebglContext = this.$refs.webglCanvas.getContext('webgl');
-            this.offscreenWebglContext.canvas.width = image.width;
-            this.offscreenWebglContext.canvas.height = image.height;
+            this.$refs.webglCanvas.width = image.width;
+            this.$refs.webglCanvas.height = image.height;
+            // this.offscreenWebglContext = this.$refs.webglCanvas.getContext('webgl');
+            renderCanvas2(this.$refs.webglCanvas, image);
             
-            this.sourceTexture = createAndLoadTexture(this.offscreenWebglContext, this.outputCanvasContext.canvas);
-            this.adaptiveThresholdDrawFunc = createAdaptiveThresholdDrawFunc(this.offscreenWebglContext, this.shaders.vertexShader, this.shaders.pixelShader);
+            // this.sourceTexture = createAndLoadTexture(this.offscreenWebglContext, this.outputCanvasContext.canvas);
+            // this.adaptiveThresholdDrawFunc = createAdaptiveThresholdDrawFunc2(this.offscreenWebglContext, this.shaders.vertexShader, this.shaders.pixelShader);
         }
     }
 };

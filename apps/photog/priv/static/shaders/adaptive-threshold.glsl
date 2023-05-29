@@ -13,7 +13,7 @@ float lightness(vec3 pixel){
 }
 
 void main(){
-    // vec4 pixel = texture2D(u_texture, v_texcoord);
+    vec4 pixel = texture2D(u_texture, v_texcoord);
     // float pixelLightness = lightness(pixel.rgb);
     
     // vec2 dx = vec2(1.0 / u_image_dimensions.x, 0.0);
@@ -38,5 +38,6 @@ void main(){
     // else{
     //     gl_FragColor = vec4(1.0, 1.0, 1.0, pixel.a);
     // }
-    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    // gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    gl_FragColor = pixel;
 }
