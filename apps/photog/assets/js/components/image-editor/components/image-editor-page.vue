@@ -5,11 +5,12 @@
     <div>
         <image-title :image-id="imageId" :image-model="imageModel" />
         <div>
-            <img :src="masterImageUrl" @load="imageLoaded" ref="image" />
+            <img :class="$style.image" :src="masterImageUrl" @load="imageLoaded" ref="image" v-show="shouldShowSourceImage" />
             <canvas ref="outputCanvas"></canvas>
         </div>
     </div>
     <div :class="$style.controls">
+        <label>Show source image<input type="checkbox" v-model="shouldShowSourceImage"></label>
         <label>
             Threshold
             <input type="range" min="0" :max="maxThreshold" v-model.number="threshold" />
@@ -21,6 +22,9 @@
 </template>
 
 <style lang="scss" module>
+.image {
+    max-width: unset;
+}
 .controls {
     position: fixed;
     top: 0;
@@ -62,6 +66,7 @@ export default {
             isInitialLoadComplete: false,
             imageModel: null,
             threshold: 0,
+            shouldShowSourceImage: true,
             outputCanvasContext: null,
             offscreen2dContext: null,
             offscreenWebglContext: null,
