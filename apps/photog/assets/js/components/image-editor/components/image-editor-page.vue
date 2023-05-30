@@ -103,9 +103,9 @@ export default {
             });
 
             // TODO: change shaders to be loaded on create, instead of each time
-            const adaptiveThresholdPixelShaderPromise = this.getModel(`/shaders/adaptive-threshold.glsl`, {contentType: 'text'}, false);
+            const adaptiveThresholdPixelShaderPromise = this.getModel(`/shaders/adaptive-threshold-2.glsl`, {contentType: 'text'}, false);
 
-            const vertextShaderPromise = this.getModel(`/shaders/vertex.glsl`, {contentType: 'text'}, false);
+            const vertextShaderPromise = this.getModel(`/shaders/vertex-2.glsl`, {contentType: 'text'}, false);
 
             Promise.all([imagePromise, adaptiveThresholdPixelShaderPromise, vertextShaderPromise]).then(([_, pixelShader, vertexShader]) => {
                 this.isInitialLoadComplete = true;
@@ -117,19 +117,19 @@ export default {
         },
         imageLoaded() {
             const image = this.$refs.image;
-            this.imageHeight = image.width;
-            this.imageHeight = image.height;
+            this.imagWidth = image.naturalWidth;
+            this.imageHeight = image.naturalHeight;
             
-            this.$refs.outputCanvas.width = image.width;
-            this.$refs.outputCanvas.height = image.height;
+            this.$refs.outputCanvas.width = this.imagWidth;
+            this.$refs.outputCanvas.height = this.imageHeight;
             this.outputCanvasContext = this.$refs.outputCanvas.getContext('2d');
-            this.outputCanvasContext.drawImage(image, 0, 0);
+            this.outputCanvasContext.drawImage(image, 0, 0, this.imagWidth, this.imageHeight);
             
-            this.offscreen2dContext = new OffscreenCanvas(image.width, image.height).getContext('2d');
-            this.$refs.webglCanvas.width = image.width;
-            this.$refs.webglCanvas.height = image.height;
-            // this.offscreenWebglContext = this.$refs.webglCanvas.getContext('webgl');
-            renderCanvas2(this.$refs.webglCanvas, image);
+            this.offscreen2dContext = new OffscreenCanvas(this.imagWidth, this.imageHeight).getContext('2d');
+            this.$refs.webglCanvas.width = this.imagWidth;
+            this.$refs.webglCanvas.height = this.imageHeight;
+            this.offscreenWebglContext = this.$refs.webglCanvas.getContext('webgl2');
+            renderCanvas2(this.offscreenWebglContext, image, this.shaders.vertexShader, this.shaders.pixelShader);
             
             // this.sourceTexture = createAndLoadTexture(this.offscreenWebglContext, this.outputCanvasContext.canvas);
             // this.adaptiveThresholdDrawFunc = createAdaptiveThresholdDrawFunc2(this.offscreenWebglContext, this.shaders.vertexShader, this.shaders.pixelShader);
