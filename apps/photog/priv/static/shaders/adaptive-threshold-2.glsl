@@ -30,8 +30,8 @@ void main() {
   float sum = 0.0;
   float total = 0.0;
 
-  for (float x = -4.0; x <= 4.0; x += 1.0) {
-      for (float y = -4.0; y <= 4.0; y += 1.0) {
+  for (float x = -8.0; x <= 8.0; x += 1.0) {
+      for (float y = -8.0; y <= 8.0; y += 1.0) {
           vec3 pixelSample = texture(u_image, v_texCoord + dx * x + dy * y).rgb;
           sum += lightness(pixelSample);
           total++;
