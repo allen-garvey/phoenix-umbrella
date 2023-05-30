@@ -4,6 +4,20 @@ defmodule Umbrella.MixProject do
   def project do
     [
       apps_path: "apps",
+      apps: [
+        :artour,
+        :blockquote,
+        :booklist,
+        :bookmarker,
+        :common,
+        :grenadier,
+        :habits,
+        :movielist,
+        :photog,
+        :pluginista,
+        :seren,
+        :startpage
+      ],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
