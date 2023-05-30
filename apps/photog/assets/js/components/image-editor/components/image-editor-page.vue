@@ -7,7 +7,6 @@
         <div>
             <img :src="masterImageUrl" @load="imageLoaded" ref="image" />
             <canvas ref="outputCanvas"></canvas>
-            <canvas ref="webglCanvas"></canvas>
         </div>
     </div>
     <div :class="$style.controls">
@@ -128,9 +127,9 @@ export default {
             
             this.offscreen2dContext = new OffscreenCanvas(this.imagWidth, this.imageHeight).getContext('2d');
             
-            this.$refs.webglCanvas.width = this.imagWidth;
-            this.$refs.webglCanvas.height = this.imageHeight;
-            this.offscreenWebglContext = this.$refs.webglCanvas.getContext('webgl2');
+            this.offscreenWebglContext = document.createElement('canvas').getContext('webgl2');
+            this.offscreenWebglContext.canvas.width = this.imagWidth;
+            this.offscreenWebglContext.canvas.height = this.imageHeight;
             loadTexture(this.offscreenWebglContext, image);
             this.adaptiveThresholdDrawFunc = renderCanvas2(this.offscreenWebglContext, this.shaders.vertexShader, this.shaders.pixelShader, image.width, image.height);
         }
