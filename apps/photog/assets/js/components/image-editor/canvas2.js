@@ -37,7 +37,6 @@ function createProgram(gl, shaders) {
   const linked = gl.getProgramParameter(program, gl.LINK_STATUS);
   if (!linked) {
       console.log(`Error in program linking: ${gl.getProgramInfoLog(program)}`);
-
       gl.deleteProgram(program);
       return null;
   }
@@ -47,10 +46,40 @@ function createProgram(gl, shaders) {
 /**
  * @param {WebGLRenderingContext} gl The WebGLRenderingContext to use.
  * @param {HTMLImageElement} image
+ */
+export function loadTexture(gl, image) {
+  var texture = gl.createTexture();
+
+  // make unit 0 the active texture uint
+  // (ie, the unit all other texture commands will affect
+  gl.activeTexture(gl.TEXTURE0 + 0);
+
+  // Bind it to texture unit 0' 2D bind point
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  // Set the parameters so we don't need mips and so we're not filtering
+  // and we don't repeat at the edges
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
+  // Upload the image into the texture.
+  var mipLevel = 0;               // the largest mip
+  var internalFormat = gl.RGBA;   // format we want in the texture
+  var srcFormat = gl.RGBA;        // format of data we are supplying
+  var srcType = gl.UNSIGNED_BYTE; // type of data we are supplying
+  gl.texImage2D(gl.TEXTURE_2D, mipLevel, internalFormat, srcFormat, srcType, image);
+}
+
+/**
+ * @param {WebGLRenderingContext} gl The WebGLRenderingContext to use.
  * @param {String} vertexShaderSource
  * @param {String} fragmentShaderSource
+ * @param {Number} imageWidth
+ * @param {Number} imageHeight
  */
-export function renderCanvas2(gl, image, vertexShaderSource, fragmentShaderSource) {
+export function renderCanvas2(gl, vertexShaderSource, fragmentShaderSource, imageWidth, imageHeight) {
   var program = createProgram(gl, 
     [loadShader(gl, vertexShaderSource, gl.VERTEX_SHADER), 
     loadShader(gl, fragmentShaderSource, gl.FRAGMENT_SHADER), 
@@ -63,6 +92,7 @@ export function renderCanvas2(gl, image, vertexShaderSource, fragmentShaderSourc
   // lookup uniforms
   var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
   var imageLocation = gl.getUniformLocation(program, "u_image");
+  const thresholdLocation = gl.getUniformLocation(program, 'u_threshold');
 
   // Create a vertex array object (attribute state)
   var vao = gl.createVertexArray();
@@ -86,8 +116,7 @@ export function renderCanvas2(gl, image, vertexShaderSource, fragmentShaderSourc
   var normalize = false; // don't normalize the data
   var stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
   var offset = 0;        // start at the beginning of the buffer
-  gl.vertexAttribPointer(
-      positionAttributeLocation, size, type, normalize, stride, offset);
+  gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
 
   // provide texture coordinates for the rectangle.
   var texCoordBuffer = gl.createBuffer();
@@ -110,32 +139,7 @@ export function renderCanvas2(gl, image, vertexShaderSource, fragmentShaderSourc
   var normalize = false; // don't normalize the data
   var stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
   var offset = 0;        // start at the beginning of the buffer
-  gl.vertexAttribPointer(
-      texCoordAttributeLocation, size, type, normalize, stride, offset);
-
-  // Create a texture.
-  var texture = gl.createTexture();
-
-  // make unit 0 the active texture uint
-  // (ie, the unit all other texture commands will affect
-  gl.activeTexture(gl.TEXTURE0 + 0);
-
-  // Bind it to texture unit 0' 2D bind point
-  gl.bindTexture(gl.TEXTURE_2D, texture);
-
-  // Set the parameters so we don't need mips and so we're not filtering
-  // and we don't repeat at the edges
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-
-  // Upload the image into the texture.
-  var mipLevel = 0;               // the largest mip
-  var internalFormat = gl.RGBA;   // format we want in the texture
-  var srcFormat = gl.RGBA;        // format of data we are supplying
-  var srcType = gl.UNSIGNED_BYTE; // type of data we are supplying
-  gl.texImage2D(gl.TEXTURE_2D, mipLevel, internalFormat, srcFormat, srcType, image);
+  gl.vertexAttribPointer(texCoordAttributeLocation, size, type, normalize, stride, offset);
 
   // Tell WebGL how to convert from clip space to pixels
   gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -159,13 +163,17 @@ export function renderCanvas2(gl, image, vertexShaderSource, fragmentShaderSourc
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
   // Set a rectangle the same size as the image.
-  setRectangle(gl, 0, 0, image.width, image.height);
+  setRectangle(gl, 0, 0, imageWidth, imageHeight);
 
-  // Draw the rectangle.
-  const primitiveType = gl.TRIANGLES;
-  var offset = 0;
-  const count = 6;
-  gl.drawArrays(primitiveType, offset, count);
+  return (threshold) => {
+    gl.uniform1f(thresholdLocation, threshold);
+    
+    // Draw the rectangle.
+    const primitiveType = gl.TRIANGLES;
+    var offset = 0;
+    const count = 6;
+    gl.drawArrays(primitiveType, offset, count);
+  };
 }
 
 function setRectangle(gl, x, y, width, height) {

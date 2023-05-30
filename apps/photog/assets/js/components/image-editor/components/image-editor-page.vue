@@ -38,8 +38,7 @@ import { nextTick } from 'vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import ImageTitle from './image-title.vue';
 import { getMasterUrl } from '../../../image.js';
-import { createAndLoadTexture, createAdaptiveThresholdDrawFunc2 } from '../canvas.js';
-import { renderCanvas2 } from '../canvas2';
+import { renderCanvas2, loadTexture } from '../canvas2';
 
 export default {
     props: {
@@ -70,7 +69,6 @@ export default {
             imageWidth: 0,
             imageHeight: 0,
             adaptiveThresholdDrawFunc: null,
-            sourceTexture: null,
             shaders: null,
         };
     },
@@ -91,7 +89,7 @@ export default {
             }
             console.log('threshold');
             const thresholdPercent = (100 - to) / 100;
-            this.adaptiveThresholdDrawFunc(this.offscreenWebglContext, this.sourceTexture, this.imageWidth, this.imageHeight, thresholdPercent);
+            this.adaptiveThresholdDrawFunc(thresholdPercent);
             this.outputCanvasContext.drawImage(this.offscreenWebglContext.canvas, 0, 0);
         },
     },
@@ -126,13 +124,12 @@ export default {
             this.outputCanvasContext.drawImage(image, 0, 0, this.imagWidth, this.imageHeight);
             
             this.offscreen2dContext = new OffscreenCanvas(this.imagWidth, this.imageHeight).getContext('2d');
+            
             this.$refs.webglCanvas.width = this.imagWidth;
             this.$refs.webglCanvas.height = this.imageHeight;
             this.offscreenWebglContext = this.$refs.webglCanvas.getContext('webgl2');
-            renderCanvas2(this.offscreenWebglContext, image, this.shaders.vertexShader, this.shaders.pixelShader);
-            
-            // this.sourceTexture = createAndLoadTexture(this.offscreenWebglContext, this.outputCanvasContext.canvas);
-            // this.adaptiveThresholdDrawFunc = createAdaptiveThresholdDrawFunc2(this.offscreenWebglContext, this.shaders.vertexShader, this.shaders.pixelShader);
+            loadTexture(this.offscreenWebglContext, image);
+            this.adaptiveThresholdDrawFunc = renderCanvas2(this.offscreenWebglContext, this.shaders.vertexShader, this.shaders.pixelShader, image.width, image.height);
         }
     }
 };
