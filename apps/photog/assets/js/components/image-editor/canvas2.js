@@ -93,6 +93,7 @@ export function renderCanvas2(gl, vertexShaderSource, fragmentShaderSource, imag
   var resolutionLocation = gl.getUniformLocation(program, "u_resolution");
   var imageLocation = gl.getUniformLocation(program, "u_image");
   const thresholdLocation = gl.getUniformLocation(program, 'u_threshold');
+  const imageDimensionsLocation = gl.getUniformLocation(program, 'u_image_dimensions');
 
   // Create a vertex array object (attribute state)
   var vao = gl.createVertexArray();
@@ -157,6 +158,8 @@ export function renderCanvas2(gl, vertexShaderSource, fragmentShaderSource, imag
 
   // Tell the shader to get the texture from texture unit 0
   gl.uniform1i(imageLocation, 0);
+
+  gl.uniform2f(imageDimensionsLocation, imageWidth, imageHeight);
 
   // Bind the position buffer so gl.bufferData that will be called
   // in setRectangle puts data in the position buffer

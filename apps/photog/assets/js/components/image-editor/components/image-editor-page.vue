@@ -13,8 +13,8 @@
     <div :class="$style.controls">
         <label>
             Threshold
-            <input type="range" min="0" max="35" v-model.number="threshold" />
-            <input type="number" min="0" max="35" v-model.number="threshold" />
+            <input type="range" min="0" :max="maxThreshold" v-model.number="threshold" />
+            <input type="number" min="0" :max="maxThreshold" v-model.number="threshold" />
         </label>
     </div>
 </div>
@@ -76,6 +76,9 @@ export default {
         masterImageUrl(){
             return getMasterUrl(this.imageModel);
         },
+        maxThreshold(){
+            return 25;
+        },
     },
     watch: {
         '$route'(to, from){
@@ -88,7 +91,7 @@ export default {
                 return;
             }
             console.log('threshold');
-            const thresholdPercent = (100 - to) / 100;
+            const thresholdPercent = (100 - Math.abs(to - this.maxThreshold)) / 100;
             this.adaptiveThresholdDrawFunc(thresholdPercent);
             this.outputCanvasContext.drawImage(this.offscreenWebglContext.canvas, 0, 0);
         },
