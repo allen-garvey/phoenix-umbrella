@@ -6,8 +6,8 @@
         <image-title :image-id="imageId" :image-model="imageModel" />
         <div>
             <img :class="$style.image" :src="masterImageUrl" @load="imageLoaded" ref="image" v-show="shouldShowSourceImage" />
-            <div :class="$style.canvasSuperContainer">
-                <canvas ref="outputCanvas"></canvas>
+            <div :class="$style.canvasSuperContainer" :style="{width: `${imageWidth + polygonCropBorderSize}px`, height: `${imageHeight + polygonCropBorderSize}px`}">
+                <canvas ref="outputCanvas" :class="$style.outputCanvas" :style="{top: `${polygonCropBorderSize / 2}px`, left: `${polygonCropBorderSize / 2}px`}"></canvas>
                 <canvas ref="polygonCropCanvas" :class="$style.polygonCropCanvas" @click="polygonCropCanvasClicked"></canvas>
             </div>
         </div>
@@ -25,6 +25,8 @@
 </template>
 
 <style lang="scss" module>
+$controlsWidth: 454px;
+
 .image {
     max-width: unset;
 }
@@ -34,19 +36,20 @@
     right: 0;
     height: 100%;
     background-color: #fff;
-    width: 454px;
+    width: $controlsWidth;
     border-left: 1px solid rgba(0,0,0,0.1);
     padding: 1rem;
 }
 .canvasSuperContainer {
     position: relative;
+    box-sizing: content-box;
+    padding-right: $controlsWidth + 100px;
 }
 .polygonCropCanvas {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+}
+.outputCanvas {
+    position: absolute;
 }
 </style>
 <script>
@@ -99,6 +102,9 @@ export default {
         maxThreshold(){
             return 25;
         },
+        polygonCropBorderSize(){
+            return 200;
+        },
     },
     watch: {
         '$route'(to, from){
@@ -147,22 +153,22 @@ export default {
         },
         imageLoaded() {
             const image = this.$refs.image;
-            this.imagWidth = image.naturalWidth;
+            this.imageWidth = image.naturalWidth;
             this.imageHeight = image.naturalHeight;
             
-            this.$refs.outputCanvas.width = this.imagWidth;
+            this.$refs.outputCanvas.width = this.imageWidth;
             this.$refs.outputCanvas.height = this.imageHeight;
             this.outputCanvasContext = this.$refs.outputCanvas.getContext('2d');
-            this.outputCanvasContext.drawImage(image, 0, 0, this.imagWidth, this.imageHeight);
+            this.outputCanvasContext.drawImage(image, 0, 0, this.imageWidth, this.imageHeight);
             
-            this.offscreen2dContext = new OffscreenCanvas(this.imagWidth, this.imageHeight).getContext('2d');
+            this.offscreen2dContext = new OffscreenCanvas(this.imageWidth, this.imageHeight).getContext('2d');
 
-            this.$refs.polygonCropCanvas.width = this.imagWidth;
-            this.$refs.polygonCropCanvas.height = this.imageHeight;
+            this.$refs.polygonCropCanvas.width = this.imageWidth + this.polygonCropBorderSize;
+            this.$refs.polygonCropCanvas.height = this.imageHeight + this.polygonCropBorderSize;
             this.polygonCrop2dContext = this.$refs.polygonCropCanvas.getContext('2d');
             
             this.offscreenWebglContext = document.createElement('canvas').getContext('webgl2');
-            this.offscreenWebglContext.canvas.width = this.imagWidth;
+            this.offscreenWebglContext.canvas.width = this.imageWidth;
             this.offscreenWebglContext.canvas.height = this.imageHeight;
             loadTexture(this.offscreenWebglContext, image);
             this.adaptiveThresholdDrawFunc = renderCanvas2(this.offscreenWebglContext, this.shaders.vertexShader, this.shaders.pixelShader, image.width, image.height);
