@@ -13,12 +13,19 @@
         </div>
     </div>
     <div :class="$style.controls">
-        <label>Show source image<input type="checkbox" v-model="shouldShowSourceImage"></label>
-        <label>
-            Threshold
-            <input type="range" min="0" :max="maxThreshold" v-model.number="threshold" />
-            <input type="number" min="0" :max="maxThreshold" v-model.number="threshold" />
-        </label>
+        <fieldset>
+            <legend>Display</legend>
+            <label>Show source image<input type="checkbox" v-model="shouldShowSourceImage"></label>
+        </fieldset>
+        <fieldset>
+            <legend>Adaptive Threshold</legend>
+            <label>Enable<input type="checkbox" v-model="isAdaptiveThresholdEnabled"></label>
+            <label>
+                Threshold
+                <input type="range" min="0" :max="maxAdaptiveThreshold" v-model.number="adaptiveThreshold" />
+                <input type="number" min="0" :max="maxAdaptiveThreshold" v-model.number="adaptiveThreshold" />
+            </label>
+        </fieldset>
     </div>
 </div>
 </div>
@@ -82,7 +89,8 @@ export default {
         return {
             isInitialLoadComplete: false,
             imageModel: null,
-            threshold: 0,
+            adaptiveThreshold: 15,
+            isAdaptiveThresholdEnabled: false,
             shouldShowSourceImage: true,
             outputCanvasContext: null,
             offscreen2dContext: null,
@@ -99,7 +107,7 @@ export default {
         masterImageUrl(){
             return getMasterUrl(this.imageModel);
         },
-        maxThreshold(){
+        maxAdaptiveThreshold(){
             return 25;
         },
         polygonCropBorderSize(){
@@ -112,14 +120,13 @@ export default {
                 this.setup();
             });
         },
-        threshold(to){
-            if(!this.adaptiveThresholdDrawFunc){
-                return;
+        adaptiveThreshold(){
+            if(this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled){
+                this.renderOutput();
             }
-            console.log('threshold');
-            const thresholdPercent = (100 - Math.abs(to - this.maxThreshold)) / 100;
-            this.adaptiveThresholdDrawFunc(thresholdPercent);
-            this.outputCanvasContext.drawImage(this.offscreenWebglContext.canvas, 0, 0);
+        },
+        isAdaptiveThresholdEnabled(){
+            this.renderOutput();
         },
         polygonCropPoints(to){
             if(to.length === 0){
@@ -159,7 +166,6 @@ export default {
             this.$refs.outputCanvas.width = this.imageWidth;
             this.$refs.outputCanvas.height = this.imageHeight;
             this.outputCanvasContext = this.$refs.outputCanvas.getContext('2d');
-            this.outputCanvasContext.drawImage(image, 0, 0, this.imageWidth, this.imageHeight);
             
             this.offscreen2dContext = new OffscreenCanvas(this.imageWidth, this.imageHeight).getContext('2d');
 
@@ -172,6 +178,8 @@ export default {
             this.offscreenWebglContext.canvas.height = this.imageHeight;
             loadTexture(this.offscreenWebglContext, image);
             this.adaptiveThresholdDrawFunc = renderCanvas2(this.offscreenWebglContext, this.shaders.vertexShader, this.shaders.pixelShader, image.width, image.height);
+
+            this.renderOutput();
         },
         polygonCropCanvasClicked(e){
             let x = e.offsetX;
@@ -193,6 +201,16 @@ export default {
             }
 
             this.polygonCropPoints = this.polygonCropPoints.concat([x, y]);
+        },
+        renderOutput(){
+            if(this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled){
+                const thresholdPercent = (100 - Math.abs(this.adaptiveThreshold - this.maxAdaptiveThreshold)) / 100;
+                this.adaptiveThresholdDrawFunc(thresholdPercent);
+                this.outputCanvasContext.drawImage(this.offscreenWebglContext.canvas, 0, 0);
+            }
+            else {
+                this.outputCanvasContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
+            }
         },
     }
 };
