@@ -319,6 +319,7 @@ export default {
                 drawFilters(this.outputCanvasContext, `blur(${this.blur}px)`);
             }
             if(this.thresholdDrawFunc && this.isThresholdEnabled){
+                // TODO: optimize so don't reload texture if just threshold has been changed
                 loadTexture(this.thresholdContext, this.outputCanvasContext.canvas);
                 const threshold = this.threshold / 255;
                 this.thresholdDrawFunc(threshold);
