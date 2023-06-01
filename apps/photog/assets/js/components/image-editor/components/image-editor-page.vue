@@ -65,7 +65,7 @@ import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animatio
 import ImageTitle from './image-title.vue';
 import { getMasterUrl } from '../../../image.js';
 import { renderCanvas2, loadTexture } from '../canvas2';
-import { clearCanvas, drawLines } from '../canvas';
+import { clearCanvas, drawLines, drawFill } from '../canvas';
 
 export default {
     props: {
@@ -82,6 +82,10 @@ export default {
         LoadingAnimation,
         ImageTitle,
     },
+    created(){
+        this.worker = new Worker(/* webpackChunkName: "photog-editor-worker" */ new URL('../worker/worker.js', import.meta.url));
+        this.worker.onmessage = this.onWorkerMessageReceived;
+    },
     mounted(){
         this.setup();
     },
@@ -91,7 +95,7 @@ export default {
             imageModel: null,
             adaptiveThreshold: 15,
             isAdaptiveThresholdEnabled: false,
-            shouldShowSourceImage: true,
+            shouldShowSourceImage: false,
             outputCanvasContext: null,
             offscreen2dContext: null,
             offscreenWebglContext: null,
@@ -101,6 +105,8 @@ export default {
             adaptiveThresholdDrawFunc: null,
             shaders: null,
             polygonCropPoints: [],
+            fillPoints: [],
+            worker: null,
         };
     },
     computed: {
@@ -135,7 +141,19 @@ export default {
             }
             if(to.length >= 4){
                 drawLines(this.polygonCrop2dContext, to);
+                //check if shape is closed
+                if(to[0] === to[to.length - 2] && to[1]=== to[to.length - 1]){
+                    this.worker.postMessage({
+                        imageWidth: this.imageWidth,
+                        imageHeight: this.imageHeight,
+                        polygonCropPoints: new Float32Array(to),
+                        cropCanvasBorderSize: this.polygonCropBorderSize,
+                    });
+                }
             }
+        },
+        fillPoints(){
+            this.renderOutput();
         },
     },
     methods: {
@@ -194,13 +212,16 @@ export default {
                 const yDistance = y - firstY;
                 const distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 
-                if(distance < 10) {
+                if(distance < 30) {
                     x = firstX;
                     y = firstY;
                 }
             }
 
             this.polygonCropPoints = this.polygonCropPoints.concat([x, y]);
+        },
+        onWorkerMessageReceived(e){
+            this.fillPoints = e.data.fillPoints;
         },
         renderOutput(){
             if(this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled){
@@ -210,6 +231,9 @@ export default {
             }
             else {
                 this.outputCanvasContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
+            }
+            if(this.fillPoints.length > 0){
+                drawFill(this.outputCanvasContext, this.fillPoints);
             }
         },
     }

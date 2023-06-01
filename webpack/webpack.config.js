@@ -126,6 +126,10 @@ module.exports = {
                         source: path.join(__dirname, '..', 'apps', 'assets', 'image-editor.js'), 
                         destination: path.join(__dirname, '..', 'apps', 'photog', 'priv', 'static', 'assets', 'image-editor.js') 
                     },
+                    { 
+                        source: path.join(__dirname, '..', 'apps', 'assets', 'photog-editor-worker.js'), 
+                        destination: path.join(__dirname, '..', 'apps', 'photog', 'priv', 'static', 'assets', 'photog-editor-worker.js') 
+                    },
                   ],
                 },
             },
