@@ -18,6 +18,19 @@
             <label>Show source image<input type="checkbox" v-model="shouldShowSourceImage"></label>
         </fieldset>
         <fieldset class="form-group">
+            <legend>Filters</legend>
+            <label>
+                Brightness
+                <input type="range" min="0" :max="200" v-model.number="brightness" class="form-range" />
+                <input type="number" min="0" :max="200" v-model.number="brightness" class="form-control" />
+            </label>
+            <label>
+                Contrast
+                <input type="range" min="0" :max="200" v-model.number="contrast" class="form-range" />
+                <input type="number" min="0" :max="200" v-model.number="contrast" class="form-control" />
+            </label>
+        </fieldset>
+        <fieldset class="form-group">
             <legend>Adaptive Threshold</legend>
             <label>Enable<input type="checkbox" v-model="isAdaptiveThresholdEnabled"></label>
             <label>
@@ -142,6 +155,8 @@ export default {
             adaptiveThresholdDrawFunc: null,
             thresholdDrawFunc: null,
             shaders: null,
+            brightness: 100,
+            contrast: 100,
             blur: 0,
             polygonCropPoints: [],
             polygonCropState: PolygonCropState.NOT_STARTED,
@@ -222,6 +237,12 @@ export default {
                 this.renderOutput();
             }
         },
+        brightness(){
+            this.renderOutput();
+        },
+        contrast(){
+            this.renderOutput();
+        },
     },
     methods: {
         setup(){
@@ -264,7 +285,6 @@ export default {
             this.polygonCrop2dContext = this.$refs.polygonCropCanvas.getContext('2d');
             
             this.adaptiveThresholdContext = createWebgl2Context(this.imageWidth, this.imageHeight);
-            loadTexture(this.adaptiveThresholdContext, image);
             this.adaptiveThresholdDrawFunc = createDrawFunc(this.adaptiveThresholdContext, this.shaders.vertexShader, this.shaders.pixelShader, image.width, image.height);
 
             this.thresholdContext = createWebgl2Context(this.imageWidth, this.imageHeight);
@@ -307,13 +327,17 @@ export default {
             this.fillPoints = e.data.fillPoints;
         },
         renderOutput(){
+            this.outputCanvasContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
+            
+            if(this.contrast !== 100 || this.brightness !== 100){
+                drawFilters(this.outputCanvasContext, `contrast(${this.contrast}%) brightness(${this.brightness}%)`);
+            }
             if(this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled){
+                // TODO: optimize so don't reload texture unless contrast or brightness changed
+                loadTexture(this.adaptiveThresholdContext, this.outputCanvasContext.canvas);
                 const thresholdPercent = (100 - Math.abs(this.adaptiveThreshold - this.maxAdaptiveThreshold)) / 100;
                 this.adaptiveThresholdDrawFunc(thresholdPercent);
                 this.outputCanvasContext.drawImage(this.adaptiveThresholdContext.canvas, 0, 0);
-            }
-            else {
-                this.outputCanvasContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
             }
             if(this.blur !== 0){
                 drawFilters(this.outputCanvasContext, `blur(${this.blur}px)`);
