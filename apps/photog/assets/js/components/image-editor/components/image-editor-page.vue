@@ -26,6 +26,11 @@
                 <input type="number" min="0" :max="maxAdaptiveThreshold" v-model.number="adaptiveThreshold" />
             </label>
         </fieldset>
+        <fieldset>
+            <legend>Polygon Crop</legend>
+            <label>Enable<input type="checkbox" v-model="isPolygonCropEnabled"></label>
+            <button :disabled="!isPolygonCropInProgress" @click="clearPolygonCrop">Clear polygon crop</button>
+        </fieldset>
     </div>
 </div>
 </div>
@@ -67,6 +72,12 @@ import { getMasterUrl } from '../../../image.js';
 import { renderCanvas2, loadTexture } from '../canvas2';
 import { clearCanvas, drawLines, drawFill } from '../canvas';
 
+const PolygonCropState = {
+    NOT_STARTED: 1,
+    IN_PROGRESS: 2,
+    COMPLETE: 3,
+};
+
 export default {
     props: {
         getModel: {
@@ -105,6 +116,8 @@ export default {
             adaptiveThresholdDrawFunc: null,
             shaders: null,
             polygonCropPoints: [],
+            polygonCropState: PolygonCropState.NOT_STARTED,
+            isPolygonCropEnabled: true,
             fillPoints: [],
             worker: null,
         };
@@ -118,6 +131,13 @@ export default {
         },
         polygonCropBorderSize(){
             return 200;
+        },
+        minDistanceToCompletePolygonCrop(){
+            const smallestDimension = Math.min(this.imageHeight, this.imageWidth);
+            return Math.min(Math.floor((smallestDimension - 500) / 10) + 10, 50);
+        },
+        isPolygonCropInProgress(){
+            return this.polygonCropState !== PolygonCropState.NOT_STARTED;
         },
     },
     watch: {
@@ -153,7 +173,14 @@ export default {
             }
         },
         fillPoints(){
-            this.renderOutput();
+            if(this.isPolygonCropEnabled){
+                this.renderOutput();
+            }
+        },
+        isPolygonCropEnabled(){
+            if(this.polygonCropState === PolygonCropState.COMPLETE){
+                this.renderOutput();
+            }
         },
     },
     methods: {
@@ -200,8 +227,13 @@ export default {
             this.renderOutput();
         },
         polygonCropCanvasClicked(e){
+            if(this.polygonCropState === PolygonCropState.COMPLETE){
+                return;
+            }
             let x = e.offsetX;
             let y = e.offsetY;
+            
+            this.polygonCropState = PolygonCropState.IN_PROGRESS;
 
             // if polygon has at least 2 sides already, and so can be closed,
             // and point clicked is close enough, close the polygon
@@ -212,15 +244,20 @@ export default {
                 const yDistance = y - firstY;
                 const distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 
-                if(distance < 30) {
+                if(distance < this.minDistanceToCompletePolygonCrop) {
                     x = firstX;
                     y = firstY;
+                    this.polygonCropState = PolygonCropState.COMPLETE;
+                    this.isPolygonCropEnabled = true;
                 }
             }
 
             this.polygonCropPoints = this.polygonCropPoints.concat([x, y]);
         },
         onWorkerMessageReceived(e){
+            if(this.polygonCropState !== PolygonCropState.COMPLETE){
+                return;
+            }
             this.fillPoints = e.data.fillPoints;
         },
         renderOutput(){
@@ -232,9 +269,15 @@ export default {
             else {
                 this.outputCanvasContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
             }
-            if(this.fillPoints.length > 0){
+            if(this.isPolygonCropEnabled && this.fillPoints.length > 0){
                 drawFill(this.outputCanvasContext, this.fillPoints);
             }
+        },
+        clearPolygonCrop(){
+            this.fillPoints = [];
+            this.polygonCropPoints = [];
+            this.polygonCropState = PolygonCropState.NOT_STARTED;
+            this.renderOutput();
         },
     }
 };
