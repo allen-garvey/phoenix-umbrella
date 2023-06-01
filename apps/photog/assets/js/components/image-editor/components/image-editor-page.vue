@@ -13,23 +13,23 @@
         </div>
     </div>
     <div :class="$style.controls">
-        <fieldset>
+        <fieldset class="form-group">
             <legend>Display</legend>
             <label>Show source image<input type="checkbox" v-model="shouldShowSourceImage"></label>
         </fieldset>
-        <fieldset>
+        <fieldset class="form-group">
             <legend>Adaptive Threshold</legend>
             <label>Enable<input type="checkbox" v-model="isAdaptiveThresholdEnabled"></label>
             <label>
                 Threshold
-                <input type="range" min="0" :max="maxAdaptiveThreshold" v-model.number="adaptiveThreshold" />
-                <input type="number" min="0" :max="maxAdaptiveThreshold" v-model.number="adaptiveThreshold" />
+                <input type="range" min="0" :max="maxAdaptiveThreshold" v-model.number="adaptiveThreshold" class="form-range" />
+                <input type="number" min="0" :max="maxAdaptiveThreshold" v-model.number="adaptiveThreshold" class="form-control" />
             </label>
         </fieldset>
-        <fieldset>
+        <fieldset class="form-group">
             <legend>Polygon Crop</legend>
             <label>Enable<input type="checkbox" v-model="isPolygonCropEnabled"></label>
-            <button :disabled="!isPolygonCropInProgress" @click="clearPolygonCrop">Clear polygon crop</button>
+            <button :disabled="!isPolygonCropInProgress" @click="clearPolygonCrop" class="btn btn-outline-dark">Clear polygon crop</button>
         </fieldset>
     </div>
 </div>
