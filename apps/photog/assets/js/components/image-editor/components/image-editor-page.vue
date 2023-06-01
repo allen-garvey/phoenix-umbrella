@@ -35,6 +35,15 @@
             </label>
         </fieldset>
         <fieldset class="form-group">
+            <legend>Threshold</legend>
+            <label>Enable<input type="checkbox" v-model="isThresholdEnabled"></label>
+            <label>
+                Threshold
+                <input type="range" min="0" :max="255" v-model.number="threshold" class="form-range" />
+                <input type="number" min="0" :max="255" v-model.number="threshold" class="form-control" />
+            </label>
+        </fieldset>
+        <fieldset class="form-group">
             <legend>Polygon Crop</legend>
             <label>Enable<input type="checkbox" v-model="isPolygonCropEnabled"></label>
             <button :disabled="!isPolygonCropInProgress" @click="clearPolygonCrop" class="btn btn-outline-dark">Clear polygon crop</button>
@@ -82,7 +91,7 @@ import { nextTick } from 'vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import ImageTitle from './image-title.vue';
 import { getMasterUrl } from '../../../image.js';
-import { renderCanvas2, loadTexture } from '../canvas2';
+import { createDrawFunc, loadTexture, createWebgl2Context } from '../canvas2';
 import { clearCanvas, drawLines, drawFill, saveCanvas, drawFilters } from '../canvas';
 import { extractFileName } from '../path';
 
@@ -120,14 +129,18 @@ export default {
             imageModel: null,
             adaptiveThreshold: 15,
             isAdaptiveThresholdEnabled: false,
+            threshold: 127,
+            isThresholdEnabled: false,
             shouldShowSourceImage: false,
             outputCanvasContext: null,
             offscreen2dContext: null,
-            offscreenWebglContext: null,
+            adaptiveThresholdContext: null,
+            thresholdContext: null,
             polygonCrop2dContext: null,
             imageWidth: 0,
             imageHeight: 0,
             adaptiveThresholdDrawFunc: null,
+            thresholdDrawFunc: null,
             shaders: null,
             blur: 0,
             polygonCropPoints: [],
@@ -201,6 +214,14 @@ export default {
         blur(){
             this.renderOutput();
         },
+        isThresholdEnabled(){
+            this.renderOutput();
+        },
+        threshold(){
+            if(this.isThresholdEnabled){
+                this.renderOutput();
+            }
+        },
     },
     methods: {
         setup(){
@@ -212,13 +233,16 @@ export default {
             // TODO: change shaders to be loaded on create, instead of each time
             const adaptiveThresholdPixelShaderPromise = this.getModel(`/shaders/adaptive-threshold-2.glsl`, {contentType: 'text'}, false);
 
+            const thresholdPixelShaderPromise = this.getModel(`/shaders/threshold-2.glsl`, {contentType: 'text'}, false);
+
             const vertextShaderPromise = this.getModel(`/shaders/vertex-2.glsl`, {contentType: 'text'}, false);
 
-            Promise.all([imagePromise, adaptiveThresholdPixelShaderPromise, vertextShaderPromise]).then(([_, pixelShader, vertexShader]) => {
+            Promise.all([imagePromise, adaptiveThresholdPixelShaderPromise, vertextShaderPromise, thresholdPixelShaderPromise]).then(([_, pixelShader, vertexShader, thresholdPixelShader]) => {
                 this.isInitialLoadComplete = true;
                 this.shaders = {
                     pixelShader,
                     vertexShader,
+                    thresholdPixelShader,
                 };
             });
         },
@@ -239,11 +263,12 @@ export default {
             this.$refs.polygonCropCanvas.height = this.imageHeight + this.polygonCropBorderSize;
             this.polygonCrop2dContext = this.$refs.polygonCropCanvas.getContext('2d');
             
-            this.offscreenWebglContext = document.createElement('canvas').getContext('webgl2');
-            this.offscreenWebglContext.canvas.width = this.imageWidth;
-            this.offscreenWebglContext.canvas.height = this.imageHeight;
-            loadTexture(this.offscreenWebglContext, image);
-            this.adaptiveThresholdDrawFunc = renderCanvas2(this.offscreenWebglContext, this.shaders.vertexShader, this.shaders.pixelShader, image.width, image.height);
+            this.adaptiveThresholdContext = createWebgl2Context(this.imageWidth, this.imageHeight);
+            loadTexture(this.adaptiveThresholdContext, image);
+            this.adaptiveThresholdDrawFunc = createDrawFunc(this.adaptiveThresholdContext, this.shaders.vertexShader, this.shaders.pixelShader, image.width, image.height);
+
+            this.thresholdContext = createWebgl2Context(this.imageWidth, this.imageHeight);
+            this.thresholdDrawFunc = createDrawFunc(this.thresholdContext, this.shaders.vertexShader, this.shaders.thresholdPixelShader, image.width, image.height);
 
             this.renderOutput();
         },
@@ -285,13 +310,19 @@ export default {
             if(this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled){
                 const thresholdPercent = (100 - Math.abs(this.adaptiveThreshold - this.maxAdaptiveThreshold)) / 100;
                 this.adaptiveThresholdDrawFunc(thresholdPercent);
-                this.outputCanvasContext.drawImage(this.offscreenWebglContext.canvas, 0, 0);
+                this.outputCanvasContext.drawImage(this.adaptiveThresholdContext.canvas, 0, 0);
             }
             else {
                 this.outputCanvasContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
             }
             if(this.blur !== 0){
                 drawFilters(this.outputCanvasContext, `blur(${this.blur}px)`);
+            }
+            if(this.thresholdDrawFunc && this.isThresholdEnabled){
+                loadTexture(this.thresholdContext, this.outputCanvasContext.canvas);
+                const threshold = this.threshold / 255;
+                this.thresholdDrawFunc(threshold);
+                this.outputCanvasContext.drawImage(this.thresholdContext.canvas, 0, 0);
             }
             if(this.isPolygonCropEnabled && this.fillPoints.length > 0){
                 drawFill(this.outputCanvasContext, this.fillPoints);

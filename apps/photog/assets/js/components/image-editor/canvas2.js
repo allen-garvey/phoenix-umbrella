@@ -1,5 +1,12 @@
 // adapted from: https://webgl2fundamentals.org/webgl/lessons/webgl-image-processing.html
 
+export const createWebgl2Context = (imageWidth, imageHeight) => {
+  const context = document.createElement('canvas').getContext('webgl2');
+  context.canvas.width = imageWidth;
+  context.canvas.height = imageHeight;
+  return context;
+};
+
 /**
  * @param {WebGLRenderingContext} gl The WebGLRenderingContext to use.
  * @param {string} shaderSource The shader source.
@@ -79,7 +86,7 @@ export function loadTexture(gl, image) {
  * @param {Number} imageWidth
  * @param {Number} imageHeight
  */
-export function renderCanvas2(gl, vertexShaderSource, fragmentShaderSource, imageWidth, imageHeight) {
+export function createDrawFunc(gl, vertexShaderSource, fragmentShaderSource, imageWidth, imageHeight) {
   var program = createProgram(gl, 
     [loadShader(gl, vertexShaderSource, gl.VERTEX_SHADER), 
     loadShader(gl, fragmentShaderSource, gl.FRAGMENT_SHADER), 

@@ -39,7 +39,7 @@ export const drawFill = (context, points) => {
  */
 export const drawFilters = (context, filterString) => {
     context.filter = filterString;
-    context.drawImage(context.canvas, 0, 0, context.canvas.width, context.canvas.height);
+    context.drawImage(context.canvas, 0, 0);
     context.filter = '';
 };
 
