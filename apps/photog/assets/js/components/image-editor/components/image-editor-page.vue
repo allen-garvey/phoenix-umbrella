@@ -21,13 +21,13 @@
             <legend>Filters</legend>
             <label>
                 Brightness
-                <input type="range" min="0" :max="200" v-model.number="brightness" class="form-range" />
-                <input type="number" min="0" :max="200" v-model.number="brightness" class="form-control" />
+                <input type="range" min="0" max="200" v-model.number="brightness" class="form-range" />
+                <input type="number" min="0" max="200" v-model.number="brightness" class="form-control" />
             </label>
             <label>
                 Contrast
-                <input type="range" min="0" :max="200" v-model.number="contrast" class="form-range" />
-                <input type="number" min="0" :max="200" v-model.number="contrast" class="form-control" />
+                <input type="range" min="0" max="200" v-model.number="contrast" class="form-range" />
+                <input type="number" min="0" max="200" v-model.number="contrast" class="form-control" />
             </label>
         </fieldset>
         <fieldset class="form-group">
@@ -43,8 +43,8 @@
             <legend>Filters 2</legend>
             <label>
                 Blur
-                <input type="range" min="0" :max="15" v-model.number="blur" class="form-range" />
-                <input type="number" min="0" :max="15" v-model.number="blur" class="form-control" />
+                <input type="range" min="0" max="15" v-model.number="blur" class="form-range" />
+                <input type="number" min="0" max="15" v-model.number="blur" class="form-control" />
             </label>
         </fieldset>
         <fieldset class="form-group">
@@ -52,14 +52,23 @@
             <label>Enable<input type="checkbox" v-model="isThresholdEnabled"></label>
             <label>
                 Threshold
-                <input type="range" min="0" :max="255" v-model.number="threshold" class="form-range" />
-                <input type="number" min="0" :max="255" v-model.number="threshold" class="form-control" />
+                <input type="range" min="0" max="255" v-model.number="threshold" class="form-range" />
+                <input type="number" min="0" max="255" v-model.number="threshold" class="form-control" />
             </label>
         </fieldset>
         <fieldset class="form-group">
             <legend>Polygon Crop</legend>
             <label>Enable<input type="checkbox" v-model="isPolygonCropEnabled"></label>
             <button :disabled="!isPolygonCropInProgress" @click="clearPolygonCrop" class="btn btn-outline-dark">Clear polygon crop</button>
+        </fieldset>
+        <fieldset class="form-group">
+            <legend>Zoom</legend>
+            <label>
+                Zoom
+                <input type="range" min="10" max="400" v-model.number="zoom" class="form-range" />
+                <input type="number" min="10" max="400" v-model.number="zoom" class="form-control" />
+            </label>
+            <button v-if="zoom !== 100" @click="zoomToFull" class="btn btn-outline-dark">Full</button>
         </fieldset>
         <fieldset class="form-group">
             <legend>Export</legend>
@@ -72,12 +81,16 @@
 </template>
 
 <style lang="scss" module>
+canvas {
+    image-rendering: pixelated;
+}
 $controlsWidth: 454px;
 
 .image {
     max-width: unset;
 }
 .controls {
+    overflow-y: scroll;
     position: fixed;
     top: 0;
     right: 0;
@@ -145,8 +158,8 @@ export default {
             threshold: 127,
             isThresholdEnabled: false,
             shouldShowSourceImage: false,
-            outputCanvasContext: null,
-            offscreen2dContext: null,
+            outputSourceContext: null,
+            displayContext: null,
             adaptiveThresholdContext: null,
             thresholdContext: null,
             polygonCrop2dContext: null,
@@ -162,6 +175,7 @@ export default {
             polygonCropState: PolygonCropState.NOT_STARTED,
             isPolygonCropEnabled: true,
             fillPoints: [],
+            zoom: 100,
             worker: null,
             exportImageName: '',
         };
@@ -243,6 +257,9 @@ export default {
         contrast(){
             this.renderOutput();
         },
+        zoom(){
+            this.displayOutput();
+        },
     },
     methods: {
         setup(){
@@ -276,9 +293,11 @@ export default {
             
             this.$refs.outputCanvas.width = this.imageWidth;
             this.$refs.outputCanvas.height = this.imageHeight;
-            this.outputCanvasContext = this.$refs.outputCanvas.getContext('2d');
+            this.displayContext = this.$refs.outputCanvas.getContext('2d');
             
-            this.offscreen2dContext = new OffscreenCanvas(this.imageWidth, this.imageHeight).getContext('2d');
+            this.outputSourceContext = document.createElement('canvas').getContext('2d');
+            this.outputSourceContext.canvas.width = this.imageWidth;
+            this.outputSourceContext.canvas.height = this.imageHeight;
 
             this.$refs.polygonCropCanvas.width = this.imageWidth + this.polygonCropBorderSize;
             this.$refs.polygonCropCanvas.height = this.imageHeight + this.polygonCropBorderSize;
@@ -327,31 +346,44 @@ export default {
             this.fillPoints = e.data.fillPoints;
         },
         renderOutput(){
-            this.outputCanvasContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
+            this.outputSourceContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
             
             if(this.contrast !== 100 || this.brightness !== 100){
-                drawFilters(this.outputCanvasContext, `contrast(${this.contrast}%) brightness(${this.brightness}%)`);
+                drawFilters(this.outputSourceContext, `contrast(${this.contrast}%) brightness(${this.brightness}%)`);
             }
             if(this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled){
                 // TODO: optimize so don't reload texture unless contrast or brightness changed
-                loadTexture(this.adaptiveThresholdContext, this.outputCanvasContext.canvas);
+                loadTexture(this.adaptiveThresholdContext, this.outputSourceContext.canvas);
                 const thresholdPercent = (100 - Math.abs(this.adaptiveThreshold - this.maxAdaptiveThreshold)) / 100;
                 this.adaptiveThresholdDrawFunc(thresholdPercent);
-                this.outputCanvasContext.drawImage(this.adaptiveThresholdContext.canvas, 0, 0);
+                this.outputSourceContext.drawImage(this.adaptiveThresholdContext.canvas, 0, 0);
             }
             if(this.blur !== 0){
-                drawFilters(this.outputCanvasContext, `blur(${this.blur}px)`);
+                drawFilters(this.outputSourceContext, `blur(${this.blur}px)`);
             }
             if(this.thresholdDrawFunc && this.isThresholdEnabled){
                 // TODO: optimize so don't reload texture if just threshold has been changed
-                loadTexture(this.thresholdContext, this.outputCanvasContext.canvas);
+                loadTexture(this.thresholdContext, this.outputSourceContext.canvas);
                 const threshold = this.threshold / 255;
                 this.thresholdDrawFunc(threshold);
-                this.outputCanvasContext.drawImage(this.thresholdContext.canvas, 0, 0);
+                this.outputSourceContext.drawImage(this.thresholdContext.canvas, 0, 0);
             }
             if(this.isPolygonCropEnabled && this.fillPoints.length > 0){
-                drawFill(this.outputCanvasContext, this.fillPoints);
+                drawFill(this.outputSourceContext, this.fillPoints);
             }
+            this.displayOutput();
+        },
+        displayOutput(){
+            const zoomPercentage = this.zoom / 100;
+            const outputWidth = this.imageWidth * zoomPercentage;
+            const outputHeight = this.imageHeight * zoomPercentage;
+            this.displayContext.canvas.width = outputWidth;
+            this.displayContext.canvas.height = outputHeight;
+
+            this.displayContext.drawImage(this.outputSourceContext.canvas, 0, 0, this.imageWidth, this.imageHeight, 0, 0, outputWidth, outputHeight);
+        },
+        zoomToFull(){
+            this.zoom = 100;
         },
         clearPolygonCrop(){
             this.fillPoints = [];
@@ -360,7 +392,7 @@ export default {
             this.renderOutput();
         },
         exportImage(){
-            saveCanvas(this.outputCanvasContext.canvas, this.exportImageName);
+            saveCanvas(this.outputSourceContext.canvas, this.exportImageName);
         },
     }
 };
