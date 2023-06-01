@@ -163,6 +163,7 @@ export default {
             adaptiveThresholdContext: null,
             thresholdContext: null,
             polygonCrop2dContext: null,
+            exportContext: null,
             imageWidth: 0,
             imageHeight: 0,
             adaptiveThresholdDrawFunc: null,
@@ -175,6 +176,7 @@ export default {
             polygonCropState: PolygonCropState.NOT_STARTED,
             isPolygonCropEnabled: true,
             fillPoints: [],
+            fillPointsCrop: null,
             zoom: 100,
             worker: null,
             exportImageName: '',
@@ -283,6 +285,8 @@ export default {
                     thresholdPixelShader,
                 };
             });
+
+            this.exportContext = document.createElement('canvas').getContext('2d');
         },
         imageLoaded() {
             const image = this.$refs.image;
@@ -343,6 +347,7 @@ export default {
             if(this.polygonCropState !== PolygonCropState.COMPLETE){
                 return;
             }
+            this.fillPointsCrop = e.data.crop;
             this.fillPoints = e.data.fillPoints;
         },
         renderOutput(){
@@ -392,7 +397,16 @@ export default {
             this.renderOutput();
         },
         exportImage(){
-            saveCanvas(this.outputSourceContext.canvas, this.exportImageName);
+            let canvas = this.outputSourceContext.canvas;
+
+            if(this.fillPointsCrop){
+                canvas = this.exportContext.canvas;
+                canvas.width = this.fillPointsCrop.width;
+                canvas.height = this.fillPointsCrop.height;
+                this.exportContext.drawImage(this.outputSourceContext.canvas, this.fillPointsCrop.x, this.fillPointsCrop.y, this.fillPointsCrop.width, this.fillPointsCrop.height, 0, 0, this.fillPointsCrop.width, this.fillPointsCrop.height)
+            }
+
+            saveCanvas(canvas, this.exportImageName);
         },
     }
 };
