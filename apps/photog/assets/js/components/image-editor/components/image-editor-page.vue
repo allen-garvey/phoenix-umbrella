@@ -27,6 +27,14 @@
             </label>
         </fieldset>
         <fieldset class="form-group">
+            <legend>Filters 2</legend>
+            <label>
+                Blur
+                <input type="range" min="0" :max="15" v-model.number="blur" class="form-range" />
+                <input type="number" min="0" :max="15" v-model.number="blur" class="form-control" />
+            </label>
+        </fieldset>
+        <fieldset class="form-group">
             <legend>Polygon Crop</legend>
             <label>Enable<input type="checkbox" v-model="isPolygonCropEnabled"></label>
             <button :disabled="!isPolygonCropInProgress" @click="clearPolygonCrop" class="btn btn-outline-dark">Clear polygon crop</button>
@@ -75,7 +83,7 @@ import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animatio
 import ImageTitle from './image-title.vue';
 import { getMasterUrl } from '../../../image.js';
 import { renderCanvas2, loadTexture } from '../canvas2';
-import { clearCanvas, drawLines, drawFill, saveCanvas } from '../canvas';
+import { clearCanvas, drawLines, drawFill, saveCanvas, drawFilters } from '../canvas';
 import { extractFileName } from '../path';
 
 const PolygonCropState = {
@@ -121,6 +129,7 @@ export default {
             imageHeight: 0,
             adaptiveThresholdDrawFunc: null,
             shaders: null,
+            blur: 0,
             polygonCropPoints: [],
             polygonCropState: PolygonCropState.NOT_STARTED,
             isPolygonCropEnabled: true,
@@ -188,6 +197,9 @@ export default {
             if(this.polygonCropState === PolygonCropState.COMPLETE){
                 this.renderOutput();
             }
+        },
+        blur(){
+            this.renderOutput();
         },
     },
     methods: {
@@ -277,6 +289,9 @@ export default {
             }
             else {
                 this.outputCanvasContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
+            }
+            if(this.blur !== 0){
+                drawFilters(this.outputCanvasContext, `blur(${this.blur}px)`);
             }
             if(this.isPolygonCropEnabled && this.fillPoints.length > 0){
                 drawFill(this.outputCanvasContext, this.fillPoints);

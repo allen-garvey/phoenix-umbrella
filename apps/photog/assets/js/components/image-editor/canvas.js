@@ -34,6 +34,16 @@ export const drawFill = (context, points) => {
 };
 
 /**
+ * @param {CanvasRenderingContext2D} context
+ * @param {String} filterString - matches filter values from https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
+ */
+export const drawFilters = (context, filterString) => {
+    context.filter = filterString;
+    context.drawImage(context.canvas, 0, 0, context.canvas.width, context.canvas.height);
+    context.filter = '';
+};
+
+/**
  * @returns {HTMLAnchorElement}
  */
 function createSaveImageLink(){
