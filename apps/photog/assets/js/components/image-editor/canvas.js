@@ -29,9 +29,41 @@ export const drawFill = (context, points) => {
     context.fillStyle = '#fff';
 
     for(let i=0;i<points.length;i+=4){
-        // context.rect(points[i], points[i+1], points[i+2]-points[i+1], 1);
         context.fillRect(points[i], points[i+1], points[i+2]-points[i], 1);
     }
+};
 
-    // context.fill();
+/**
+ * @returns {HTMLAnchorElement}
+ */
+function createSaveImageLink(){
+    const link = document.createElement('a');
+    //firefox needs the link attached to the body in order for downloads to work
+    //so display none in order to hide it
+    //https://stackoverflow.com/questions/38869328/unable-to-download-a-blob-file-with-firefox-but-it-works-in-chrome
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    return link;
+}
+
+/**
+ * @param {HTMLCanvasElement} canvas
+ * @param {String} fileName
+ */
+export const saveCanvas = (canvas, fileName) => {
+    canvas.toBlob((blob)=>{
+        const objectUrl = URL.createObjectURL(blob);
+
+        const saveImageLink = createSaveImageLink();
+        saveImageLink.href = objectUrl;
+        saveImageLink.download = `${fileName}.webp`;
+        saveImageLink.click();
+
+        //add timeout before revoking for iOS
+        //https://stackoverflow.com/questions/30694453/blob-createobjecturl-download-not-working-in-firefox-but-works-when-debugging
+        setTimeout(()=>{
+            URL.revokeObjectURL(objectUrl);
+            saveImageLink.remove();
+        }, 0);
+    }, 'image/webp', 1);
 };

@@ -31,6 +31,11 @@
             <label>Enable<input type="checkbox" v-model="isPolygonCropEnabled"></label>
             <button :disabled="!isPolygonCropInProgress" @click="clearPolygonCrop" class="btn btn-outline-dark">Clear polygon crop</button>
         </fieldset>
+        <fieldset class="form-group">
+            <legend>Export</legend>
+            <input v-model="exportImageName" class="form-control" />.webp
+            <button @click="exportImage" class="btn btn-success">Save</button>
+        </fieldset>
     </div>
 </div>
 </div>
@@ -70,7 +75,8 @@ import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animatio
 import ImageTitle from './image-title.vue';
 import { getMasterUrl } from '../../../image.js';
 import { renderCanvas2, loadTexture } from '../canvas2';
-import { clearCanvas, drawLines, drawFill } from '../canvas';
+import { clearCanvas, drawLines, drawFill, saveCanvas } from '../canvas';
+import { extractFileName } from '../path';
 
 const PolygonCropState = {
     NOT_STARTED: 1,
@@ -120,6 +126,7 @@ export default {
             isPolygonCropEnabled: true,
             fillPoints: [],
             worker: null,
+            exportImageName: '',
         };
     },
     computed: {
@@ -207,6 +214,8 @@ export default {
             const image = this.$refs.image;
             this.imageWidth = image.naturalWidth;
             this.imageHeight = image.naturalHeight;
+
+            this.exportImageName = extractFileName(this.imageModel.master_path).replace(/\.[^.]+$/, '') + '-adjusted';
             
             this.$refs.outputCanvas.width = this.imageWidth;
             this.$refs.outputCanvas.height = this.imageHeight;
@@ -278,6 +287,9 @@ export default {
             this.polygonCropPoints = [];
             this.polygonCropState = PolygonCropState.NOT_STARTED;
             this.renderOutput();
+        },
+        exportImage(){
+            saveCanvas(this.outputCanvasContext.canvas, this.exportImageName);
         },
     }
 };

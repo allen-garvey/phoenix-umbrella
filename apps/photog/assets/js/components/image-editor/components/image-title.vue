@@ -9,6 +9,8 @@
 </style>
 
 <script>
+import { extractFileName } from '../path';
+
 export default {
     props: {
         imageModel: {
@@ -22,8 +24,7 @@ export default {
     },
     computed: {
         imageFileName(){
-            const fileSplit = this.imageModel.master_path.split('/');
-            return fileSplit[fileSplit.length - 1];
+            return extractFileName(this.imageModel.master_path);
         },
     },
 };
