@@ -328,8 +328,9 @@ export default {
             if(this.polygonCropState === PolygonCropState.COMPLETE){
                 return;
             }
-            let x = e.offsetX;
-            let y = e.offsetY;
+            const scale = 100 / this.zoom;
+            let x = e.offsetX * scale;
+            let y = e.offsetY * scale;
             
             this.polygonCropState = PolygonCropState.IN_PROGRESS;
 
