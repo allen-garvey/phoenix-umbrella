@@ -311,7 +311,7 @@ export default {
             this.imageWidth = image.naturalWidth;
             this.imageHeight = image.naturalHeight;
 
-            this.exportImageName = extractFileName(this.imageModel.master_path).replace(/\.[^.]+$/, '') + '-adjusted';
+            this.exportImageName = extractFileName(this.imageModel.master_path).replace(/\.[^.]+$/, '') + '-bw';
             
             this.$refs.outputCanvas.width = this.imageWidth;
             this.$refs.outputCanvas.height = this.imageHeight;
