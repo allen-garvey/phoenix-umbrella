@@ -127,6 +127,15 @@ const PolygonCropState = {
     COMPLETE: 3,
 };
 
+const OutputDrawLevel = {
+    INITIAL: 0,
+    FILTER_1: 1,
+    ADAPTIVE_THRESHOLD: 2,
+    BLUR: 3,
+    THRESHOLD: 4,
+    CROP: 5,
+};
+
 export default {
     props: {
         getModel: {
@@ -214,11 +223,11 @@ export default {
         },
         adaptiveThreshold(){
             if(this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled){
-                this.renderOutput();
+                this.renderOutput(OutputDrawLevel.ADAPTIVE_THRESHOLD);
             }
         },
         isAdaptiveThresholdEnabled(){
-            this.renderOutput();
+            this.renderOutput(OutputDrawLevel.INITIAL);
         },
         polygonCropPoints(to){
             if(to.length === 0){
@@ -240,30 +249,30 @@ export default {
         },
         fillPoints(){
             if(this.isPolygonCropEnabled){
-                this.renderOutput();
+                this.renderOutput(OutputDrawLevel.CROP);
             }
         },
         isPolygonCropEnabled(){
             if(this.polygonCropState === PolygonCropState.COMPLETE){
-                this.renderOutput();
+                this.renderOutput(OutputDrawLevel.INITIAL);
             }
         },
         blur(){
-            this.renderOutput();
+            this.renderOutput(OutputDrawLevel.BLUR);
         },
         isThresholdEnabled(){
-            this.renderOutput();
+            this.renderOutput(OutputDrawLevel.INITIAL);
         },
         threshold(){
             if(this.isThresholdEnabled){
-                this.renderOutput();
+                this.renderOutput(OutputDrawLevel.THRESHOLD);
             }
         },
         brightness(){
-            this.renderOutput();
+            this.renderOutput(OutputDrawLevel.FILTER_1);
         },
         contrast(){
-            this.renderOutput();
+            this.renderOutput(OutputDrawLevel.FILTER_1);
         },
         zoom(){
             this.displayOutput();
@@ -322,7 +331,7 @@ export default {
             this.thresholdContext = createWebgl2Context(this.imageWidth, this.imageHeight);
             this.thresholdDrawFunc = createDrawFunc(this.thresholdContext, this.shaders.vertexShader, this.shaders.thresholdPixelShader, image.width, image.height);
 
-            this.renderOutput();
+            this.renderOutput(OutputDrawLevel.INITIAL);
         },
         polygonCropCanvasClicked(e){
             if(this.polygonCropState === PolygonCropState.COMPLETE){
@@ -360,31 +369,59 @@ export default {
             this.fillPointsCrop = e.data.crop;
             this.fillPoints = e.data.fillPoints;
         },
-        renderOutput(){
-            this.outputSourceContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
+        renderOutput(outputDrawLevel=OutputDrawLevel.INITIAL){
+            const drawOriginal = () => {
+                this.outputSourceContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
+            };
+            let hasDrawn = false;
             
-            if(this.contrast !== 100 || this.brightness !== 100){
+            if(outputDrawLevel < OutputDrawLevel.ADAPTIVE_THRESHOLD && (this.contrast !== 100 || this.brightness !== 100)){
+                if(!hasDrawn){
+                    drawOriginal();
+                    hasDrawn = true;
+                }
                 drawFilters(this.outputSourceContext, `contrast(${this.contrast}%) brightness(${this.brightness}%)`);
             }
-            if(this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled){
-                // TODO: optimize so don't reload texture unless contrast or brightness changed
-                loadTexture(this.adaptiveThresholdContext, this.outputSourceContext.canvas);
+            if(outputDrawLevel <= OutputDrawLevel.BLUR && this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled){
+                if(outputDrawLevel < OutputDrawLevel.ADAPTIVE_THRESHOLD){
+                    if(!hasDrawn){
+                        drawOriginal();
+                        hasDrawn = true;
+                    }
+                    loadTexture(this.adaptiveThresholdContext, this.outputSourceContext.canvas);
+                }
                 const thresholdPercent = (100 - Math.abs(this.adaptiveThreshold - this.maxAdaptiveThreshold)) / 100;
                 this.adaptiveThresholdDrawFunc(thresholdPercent);
                 this.outputSourceContext.drawImage(this.adaptiveThresholdContext.canvas, 0, 0);
+                hasDrawn = true;
             }
-            if(this.blur !== 0){
+            if(outputDrawLevel < OutputDrawLevel.THRESHOLD && this.blur !== 0){
+                if(!hasDrawn){
+                    drawOriginal();
+                    hasDrawn = true;
+                }
                 drawFilters(this.outputSourceContext, `blur(${this.blur}px)`);
             }
-            if(this.thresholdDrawFunc && this.isThresholdEnabled){
-                // TODO: optimize so don't reload texture if just threshold has been changed
-                loadTexture(this.thresholdContext, this.outputSourceContext.canvas);
+            if(outputDrawLevel <= OutputDrawLevel.THRESHOLD && this.thresholdDrawFunc && this.isThresholdEnabled){
+                if(outputDrawLevel < OutputDrawLevel.THRESHOLD){
+                    if(!hasDrawn){
+                        drawOriginal();
+                        hasDrawn = true;
+                    }
+                    loadTexture(this.thresholdContext, this.outputSourceContext.canvas);
+                }
                 const threshold = this.threshold / 255;
                 this.thresholdDrawFunc(threshold);
                 this.outputSourceContext.drawImage(this.thresholdContext.canvas, 0, 0);
+                hasDrawn = true;
             }
-            if(this.isPolygonCropEnabled && this.fillPoints.length > 0){
+            if(outputDrawLevel <= OutputDrawLevel.CROP && this.isPolygonCropEnabled && this.fillPoints.length > 0){
                 drawFill(this.outputSourceContext, this.fillPoints);
+                hasDrawn = true;
+            }
+            if(!hasDrawn){
+                drawOriginal();
+                hasDrawn = true;
             }
             this.displayOutput();
         },
@@ -409,7 +446,7 @@ export default {
             this.fillPoints = [];
             this.polygonCropPoints = [];
             this.polygonCropState = PolygonCropState.NOT_STARTED;
-            this.renderOutput();
+            this.renderOutput(OutputDrawLevel.INITIAL);
         },
         exportImage(){
             let canvas = this.outputSourceContext.canvas;
