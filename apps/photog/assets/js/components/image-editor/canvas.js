@@ -8,13 +8,14 @@ export const clearCanvas = (context) => {
 /**
  * @param {CanvasRenderingContext2D} context
  * @param {Array.<Number>} points - x,y points to draw lines between
+ * @param {Number} scale
  */
-export const drawLines = (context, points) => {
+export const drawLines = (context, points, scale=1) => {
     context.beginPath();
-    context.moveTo(points[0], points[1]);
+    context.moveTo(points[0] * scale, points[1] * scale);
 
     for(let i=2;i<points.length;i+=2){
-        context.lineTo(points[i], points[i+1]);
+        context.lineTo(points[i] * scale, points[i+1] * scale);
     }
     context.lineWidth = 1;
     context.strokeStyle = '#000';

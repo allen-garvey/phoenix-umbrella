@@ -6,8 +6,8 @@
         <image-title :image-id="imageId" :image-model="imageModel" />
         <div>
             <img :class="$style.image" :src="masterImageUrl" @load="imageLoaded" ref="image" v-show="shouldShowSourceImage" />
-            <div :class="$style.canvasSuperContainer" :style="{width: `${imageWidth + polygonCropBorderSize}px`, height: `${imageHeight + polygonCropBorderSize}px`}">
-                <canvas ref="outputCanvas" :class="$style.outputCanvas" :style="{top: `${polygonCropBorderSize / 2}px`, left: `${polygonCropBorderSize / 2}px`}"></canvas>
+            <div :class="$style.canvasSuperContainer" :style="{width: `${polygonCropCanvasWidth}px`, height: `${polygonCropCanvasHeight}px`}">
+                <canvas ref="outputCanvas" :class="$style.outputCanvas" :style="{top: `${polygonCropBorderSize * zoom / 200}px`, left: `${polygonCropBorderSize * zoom / 200}px`}"></canvas>
                 <canvas ref="polygonCropCanvas" :class="$style.polygonCropCanvas" @click="polygonCropCanvasClicked"></canvas>
             </div>
         </div>
@@ -199,6 +199,12 @@ export default {
         isPolygonCropInProgress(){
             return this.polygonCropState !== PolygonCropState.NOT_STARTED;
         },
+        polygonCropCanvasHeight(){
+            return (this.imageHeight + this.polygonCropBorderSize) * (this.zoom / 100);
+        },
+        polygonCropCanvasWidth(){
+            return (this.imageWidth + this.polygonCropBorderSize) * (this.zoom / 100);
+        },
     },
     watch: {
         '$route'(to, from){
@@ -219,8 +225,8 @@ export default {
                 clearCanvas(this.polygonCrop2dContext);
                 return;
             }
-            if(to.length >= 4){
-                drawLines(this.polygonCrop2dContext, to);
+            this.renderPolygonCropPoints();
+            if(to.length >= 6){
                 //check if shape is closed
                 if(to[0] === to[to.length - 2] && to[1]=== to[to.length - 1]){
                     this.worker.postMessage({
@@ -261,6 +267,9 @@ export default {
         },
         zoom(){
             this.displayOutput();
+            this.$refs.polygonCropCanvas.width = this.polygonCropCanvasWidth;
+            this.$refs.polygonCropCanvas.height = this.polygonCropCanvasHeight;
+            this.renderPolygonCropPoints();
         },
     },
     methods: {
@@ -303,8 +312,8 @@ export default {
             this.outputSourceContext.canvas.width = this.imageWidth;
             this.outputSourceContext.canvas.height = this.imageHeight;
 
-            this.$refs.polygonCropCanvas.width = this.imageWidth + this.polygonCropBorderSize;
-            this.$refs.polygonCropCanvas.height = this.imageHeight + this.polygonCropBorderSize;
+            this.$refs.polygonCropCanvas.width = this.polygonCropCanvasWidth;
+            this.$refs.polygonCropCanvas.height = this.polygonCropCanvasHeight;
             this.polygonCrop2dContext = this.$refs.polygonCropCanvas.getContext('2d');
             
             this.adaptiveThresholdContext = createWebgl2Context(this.imageWidth, this.imageHeight);
@@ -386,6 +395,11 @@ export default {
             this.displayContext.canvas.height = outputHeight;
 
             this.displayContext.drawImage(this.outputSourceContext.canvas, 0, 0, this.imageWidth, this.imageHeight, 0, 0, outputWidth, outputHeight);
+        },
+        renderPolygonCropPoints(){
+            if(this.polygonCropPoints.length >= 4){
+                drawLines(this.polygonCrop2dContext, this.polygonCropPoints, this.zoom / 100);
+            }
         },
         zoomToFull(){
             this.zoom = 100;
