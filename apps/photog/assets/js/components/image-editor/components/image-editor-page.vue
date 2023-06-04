@@ -118,7 +118,7 @@ import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animatio
 import ImageTitle from './image-title.vue';
 import { getMasterUrl } from '../../../image.js';
 import { createDrawFunc, loadTexture, createWebgl2Context } from '../canvas2';
-import { clearCanvas, drawLines, drawFill, saveCanvas, drawFilters } from '../canvas';
+import { clearCanvas, drawLines, drawFill, saveCanvas, drawFilters, drawPolygonCropOrigin } from '../canvas';
 import { extractFileName } from '../path';
 
 const PolygonCropState = {
@@ -187,8 +187,10 @@ export default {
             fillPoints: [],
             fillPointsCrop: null,
             zoom: 100,
+            zoomThrottle: false,
             worker: null,
             exportImageName: '',
+            resizePolygonCropCanvasTimeout: null,
         };
     },
     computed: {
@@ -235,17 +237,6 @@ export default {
                 return;
             }
             this.renderPolygonCropPoints();
-            if(to.length >= 6){
-                //check if shape is closed
-                if(to[0] === to[to.length - 2] && to[1]=== to[to.length - 1]){
-                    this.worker.postMessage({
-                        imageWidth: this.imageWidth,
-                        imageHeight: this.imageHeight,
-                        polygonCropPoints: new Float32Array(to),
-                        cropCanvasBorderSize: this.polygonCropBorderSize,
-                    });
-                }
-            }
         },
         fillPoints(){
             if(this.isPolygonCropEnabled){
@@ -275,10 +266,25 @@ export default {
             this.renderOutput(OutputDrawLevel.FILTER_1);
         },
         zoom(){
-            this.displayOutput();
-            this.$refs.polygonCropCanvas.width = this.polygonCropCanvasWidth;
-            this.$refs.polygonCropCanvas.height = this.polygonCropCanvasHeight;
-            this.renderPolygonCropPoints();
+            if(!this.zoomThrottle){
+                this.zoomThrottle = true;
+                setTimeout(() => {
+                    this.displayOutput();
+                    this.zoomThrottle = false;
+                }, 150);
+            }
+
+            if(this.resizePolygonCropCanvasTimeout === null){
+                clearCanvas(this.polygonCrop2dContext);
+            }
+
+            clearTimeout(this.resizePolygonCropCanvasTimeout);
+            this.resizePolygonCropCanvasTimeout = setTimeout(() => {
+                this.$refs.polygonCropCanvas.width = this.polygonCropCanvasWidth;
+                this.$refs.polygonCropCanvas.height = this.polygonCropCanvasHeight;
+                this.renderPolygonCropPoints();
+                this.resizePolygonCropCanvasTimeout = null;
+            }, 400);
         },
     },
     methods: {
@@ -357,10 +363,21 @@ export default {
                     y = firstY;
                     this.polygonCropState = PolygonCropState.COMPLETE;
                     this.isPolygonCropEnabled = true;
+                    // clear origin point indicator
+                    clearCanvas(this.polygonCrop2dContext);
                 }
             }
 
             this.polygonCropPoints = this.polygonCropPoints.concat([x, y]);
+
+            if(this.polygonCropState === PolygonCropState.COMPLETE){
+                this.worker.postMessage({
+                    imageWidth: this.imageWidth,
+                    imageHeight: this.imageHeight,
+                    polygonCropPoints: new Float32Array(this.polygonCropPoints),
+                    cropCanvasBorderSize: this.polygonCropBorderSize,
+                });
+            }
         },
         onWorkerMessageReceived(e){
             if(this.polygonCropState !== PolygonCropState.COMPLETE){
@@ -435,8 +452,12 @@ export default {
             this.displayContext.drawImage(this.outputSourceContext.canvas, 0, 0, this.imageWidth, this.imageHeight, 0, 0, outputWidth, outputHeight);
         },
         renderPolygonCropPoints(){
+            const scale = this.zoom / 100;
+            if(this.polygonCropState !== PolygonCropState.COMPLETE && this.polygonCropPoints.length >= 2){
+                drawPolygonCropOrigin(this.polygonCrop2dContext, this.polygonCropPoints[0], this.polygonCropPoints[1], scale);
+            }
             if(this.polygonCropPoints.length >= 4){
-                drawLines(this.polygonCrop2dContext, this.polygonCropPoints, this.zoom / 100);
+                drawLines(this.polygonCrop2dContext, this.polygonCropPoints, scale);
             }
         },
         zoomToFull(){

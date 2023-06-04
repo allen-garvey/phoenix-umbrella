@@ -24,6 +24,26 @@ export const drawLines = (context, points, scale=1) => {
 
 /**
  * @param {CanvasRenderingContext2D} context
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} scale
+ */
+export const drawPolygonCropOrigin = (context, x, y, scale=1) => {
+    context.fillStyle = '#000';
+    context.fillRect((x-9) * scale, (y-9) * scale,  19*scale, 19*scale);
+
+    context.fillStyle = 'red';
+    context.fillRect((x-7) * scale, (y-7) * scale,  15*scale, 15*scale);
+
+    context.fillStyle = '#000';
+    context.fillRect((x-5) * scale, (y-5) * scale,  11*scale, 11*scale);
+    
+    context.fillStyle = 'red';
+    context.fillRect((x-3) * scale, (y-3) * scale,  7*scale, 7*scale);
+};
+
+/**
+ * @param {CanvasRenderingContext2D} context
  * @param {Float32Array} points - x,y points to draw lines between
  */
 export const drawFill = (context, points) => {
