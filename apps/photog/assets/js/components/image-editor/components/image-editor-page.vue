@@ -69,6 +69,7 @@
                 <input type="number" min="10" max="400" v-model.number="zoom" class="form-control" />
             </label>
             <button v-if="zoom !== 100" @click="zoomToFull" class="btn btn-outline-dark">Full</button>
+            <button @click="zoomToFit" class="btn btn-outline-dark">Fit</button>
         </fieldset>
         <fieldset class="form-group">
             <legend>Export</legend>
@@ -463,8 +464,17 @@ export default {
         zoomToFull(){
             this.zoom = 100;
         },
+        zoomToFit(){
+            const clientHeight = window.innerHeight;
+            const clientWidth = window.innerWidth - 455; // controls width + border
+            const imageHeight = this.fillPointsCrop?.height || this.imageHeight;
+            const imageWidth = this.fillPointsCrop?.width || this.imageWidth
+
+            this.zoom = Math.floor(Math.min(clientHeight / imageHeight, clientWidth / imageWidth) * 100);
+        },
         clearPolygonCrop(){
             this.fillPoints = [];
+            this.fillPointsCrop = null;
             this.polygonCropPoints = [];
             this.polygonCropState = PolygonCropState.NOT_STARTED;
             this.renderOutput(OutputDrawLevel.INITIAL);
