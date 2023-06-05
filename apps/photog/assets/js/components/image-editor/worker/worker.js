@@ -1,4 +1,5 @@
 import { drawLines } from '../canvas';
+import { calculateCrop } from './crop';
 
 onmessage = (e) => {
     console.log('Message received from main script');
@@ -17,11 +18,9 @@ onmessage = (e) => {
     const halfBorder = cropCanvasBorderSize / 2;
     const negativeHalfBorder = -1 * halfBorder;
 
+    const crop = calculateCrop(polygonCropPoints, imageWidth, imageHeight, halfBorder);
+
     const fillPoints = [];
-    let cropImageStartY = Infinity;
-    let cropImageStartX = Infinity;
-    let cropImageEndY = 0;
-    let cropImageEndX = 0;
 
     for(let i=halfBorder*cropRowLength,y=0;y<imageHeight+1;i+=cropRowLength,y++){
         const endXIndex = i + cropRowLength;
@@ -33,9 +32,6 @@ onmessage = (e) => {
             if(alpha > 0){
                 alphaFound = true;
                 foundX = x;
-                cropImageStartY = Math.min(cropImageStartY, y);
-                cropImageEndY = Math.max(cropImageEndY, y);
-                cropImageStartX = Math.min(cropImageStartX, x);
 
                 if(x >= 0 && x <= imageWidth){
                     fillPoints.push(0);
@@ -58,7 +54,6 @@ onmessage = (e) => {
         for(let j=endXIndex-4,x=imageWidth+halfBorder;x>foundX;j-=4,x--){
             const alpha = cropImageData.data[j+3];
             if(alpha > 0){
-                cropImageEndX = Math.max(cropImageEndX, x);
                 if(x > foundX && x <= imageWidth){
                     fillPoints.push(x);
                     fillPoints.push(y);
@@ -75,11 +70,6 @@ onmessage = (e) => {
 
     self.postMessage({
         fillPoints: new Float32Array(fillPoints),
-        crop: {
-            x: cropImageStartX,
-            y: cropImageStartY,
-            width: cropImageEndX - cropImageStartX,
-            height: cropImageEndY - cropImageStartY,
-        },
+        crop,
     });
 };
