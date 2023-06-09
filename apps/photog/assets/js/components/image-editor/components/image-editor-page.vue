@@ -392,15 +392,20 @@ export default {
                 this.outputSourceContext.drawImage(this.$refs.image, 0, 0, this.imageWidth, this.imageHeight);
             };
             let hasDrawn = false;
+            const isAdaptiveThresholdUsed = this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled;
+            const areFiltersUsed = this.contrast !== 100 || this.brightness !== 100;
+            const isPreAdaptiveThresholdRequested = outputDrawLevel < OutputDrawLevel.ADAPTIVE_THRESHOLD;
+            const isBlurRendering = !isAdaptiveThresholdUsed && outputDrawLevel === OutputDrawLevel.BLUR;
+
             
-            if(outputDrawLevel < OutputDrawLevel.ADAPTIVE_THRESHOLD && (this.contrast !== 100 || this.brightness !== 100)){
+            if((isPreAdaptiveThresholdRequested || isBlurRendering) && areFiltersUsed){
                 if(!hasDrawn){
                     drawOriginal();
                     hasDrawn = true;
                 }
                 drawFilters(this.outputSourceContext, `contrast(${this.contrast}%) brightness(${this.brightness}%)`);
             }
-            if(outputDrawLevel <= OutputDrawLevel.BLUR && this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled){
+            if(outputDrawLevel <= OutputDrawLevel.BLUR && isAdaptiveThresholdUsed){
                 if(outputDrawLevel < OutputDrawLevel.ADAPTIVE_THRESHOLD){
                     if(!hasDrawn){
                         drawOriginal();
