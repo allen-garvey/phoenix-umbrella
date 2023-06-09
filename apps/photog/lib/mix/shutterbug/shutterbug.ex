@@ -137,7 +137,7 @@ defmodule Mix.Tasks.Shutterbug do
   end
 
   @doc """
-  Either converts png image to webp lossless, or for other image types copies to masters foldel
+  Either converts png image to webp lossless, or for other image types copies to masters folder
   """
   def create_image_master(image_source_path, image_master_path) do
     case Path.extname(image_source_path) do
