@@ -24,6 +24,8 @@
       button_class: changeset_button_css_class(@book.on_bookshelf))
 %>
 
+<%= link "Duplicate", to: Routes.book_path(@conn, :duplicate, @book), class: "btn btn-primary" %>
+
 <ul>
 
   <li>

@@ -416,6 +416,15 @@ defmodule Booklist.Admin do
     Book.changeset(book, %{})
   end
 
+  def duplicate_book(book_changeset, %Book{} = book) do
+    book_changeset
+      |> Ecto.Changeset.put_change(:title, book.title)
+      |> Ecto.Changeset.put_change(:subtitle, book.subtitle)
+      |> Ecto.Changeset.put_change(:author_id, book.author_id)
+      |> Ecto.Changeset.put_change(:genre_id, book.genre_id)
+      |> Ecto.Changeset.put_change(:is_fiction, book.is_fiction)
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` with is_active property changed
   Second param is what is_active should be changed to

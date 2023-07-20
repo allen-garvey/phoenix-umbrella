@@ -92,6 +92,12 @@ defmodule BooklistWeb.BookController do
     render(conn, "edit.html", [book: book, changeset: changeset] ++ related_fields())
   end
 
+  def duplicate(conn, %{"id" => id}) do
+    book = Admin.get_book!(id)
+    changeset = Admin.change_book(%Book{}) |> Admin.duplicate_book(book)
+    render(conn, "new.html", [book: book, changeset: changeset] ++ related_fields())
+  end
+
   def update(conn, %{"id" => id, "book" => book_params}) do
     book = Admin.get_book!(id)
 
