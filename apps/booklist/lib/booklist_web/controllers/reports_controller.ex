@@ -63,4 +63,9 @@ defmodule BooklistWeb.ReportsController do
     render(conn, "authors.html", authors: authors)
   end
 
+  def reread_books_index(conn, _params) do
+    books = Reports.list_reread_books()
+    render(conn, "reread_books.html", books: books)
+  end
+
 end

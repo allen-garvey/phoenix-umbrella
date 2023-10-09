@@ -156,4 +156,19 @@ defmodule Booklist.Reports do
       end
     end)
   end
+
+  @doc """
+  Returns the list of books that have been read more than once.
+  """
+  def list_reread_books do
+    from(
+      rating in Rating,
+      join: book in assoc(rating, :book),
+      group_by: [book.id, book.title, book.sort_title],
+      order_by: [fragment("ratings_count"), book.sort_title],
+      having: count() > 1,
+      select: %{ratings_count: fragment("count(*) as ratings_count"), book: %{id: book.id, title: book.title, sort_title: book.sort_title}}
+    )
+    |> Repo.all()
+  end
 end

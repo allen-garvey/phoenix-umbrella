@@ -1,0 +1,20 @@
+<h2>Re-read Books Report</h2>
+
+<table class="reporting_top_rated_books_table">
+    <tr>
+        <th></th>
+        <th class="reporting_top_rated_books_table__author">Book</th>
+        <th class="reporting_top_rated_books_table__count">Count</th>
+    </tr>
+    <%= for {%{book: book, ratings_count: ratings_count}, index} <- @books |> Enum.with_index(1) do %>
+        <tr>
+            <td class="reporting_top_rated_books_table__index"><%= index %></td>
+            <td>
+                <%= link(book[:title], to: Routes.book_path(@conn, :show, book[:id])) %>
+            </td>
+            <td>
+                <%= ratings_count %>
+            </td>
+        </tr>
+    <% end %>
+</table>

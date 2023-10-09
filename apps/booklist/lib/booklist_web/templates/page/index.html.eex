@@ -66,4 +66,9 @@
       <%= link "Authors Report", to: Routes.reports_path(@conn, :authors_index) %>
     </h2>
   </div>
+  <div class="home_section">
+    <h2 class="home_section_heading">
+      <%= link "Re-read books", to: Routes.reports_path(@conn, :reread_books_index) %>
+    </h2>
+  </div>
 </div>
