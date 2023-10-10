@@ -118,44 +118,20 @@ defmodule Booklist.Reports do
   """
   def list_authors do
     from(
-      author in Author,
-      join: book in assoc(author, :books),
-      join: rating in assoc(book, :ratings),
-      preload: [books: {book, [ratings: rating]}],
-      order_by: [author.last_name, author.first_name, author.middle_name]
+      rating in Rating,
+      join: book in assoc(rating, :book),
+      join: author in assoc(book, :author),
+      group_by: [author.id, author.first_name, author.middle_name, author.last_name],
+      order_by: [desc: fragment("ratings_count"), desc: fragment("ratings_average")],
+      select: 
+        %{
+          ratings_count: fragment("count(*) as ratings_count"),
+          ratings_average: fragment("round(avg(?), 2) as ratings_average", rating.score),
+          author: 
+            %Author{id: author.id, first_name: author.first_name, middle_name: author.middle_name, last_name: author.last_name}
+      }
     )
     |> Repo.all()
-  end
-
-  @doc """
-  Returns the list of authors with calculated sum of ratings
-
-  ## Examples
-
-      iex> calculate_authors_average_score()
-      [{ %Author{}, ratings_count, average_score }]
-
-  """
-  def calculate_authors_average_score(authors) do
-    authors
-    |> Enum.map(fn (author) -> 
-        ratings = Enum.flat_map(author.books, fn (book) -> book.ratings end)
-        ratings_count = Enum.count(ratings)
-        
-        ratings_sum = ratings
-        |> Enum.reduce(0, fn (rating, sum) -> rating.score + sum end)
-
-        ratings_average = ratings_sum / ratings_count
-
-        {author, ratings_count, ratings_average}
-    end)
-    |> Enum.sort(fn ({_author_1, ratings_count_1, ratings_average_1}, {_author_2, ratings_count_2, ratings_average_2}) -> 
-      cond do
-        ratings_count_1 == ratings_count_2 -> ratings_average_1 >= ratings_average_2
-        ratings_count_1 >= ratings_count_2 -> true
-        true -> false
-      end
-    end)
   end
 
   @doc """

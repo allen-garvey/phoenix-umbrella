@@ -7,7 +7,7 @@
         <th class="reporting_top_rated_books_table__count">Count</th>
         <th>Average</th>
     </tr>
-    <%= for {{author, ratings_count, average_rating}, index} <- @authors |> Enum.with_index(1) do %>
+    <%= for {%{author: author, ratings_count: ratings_count, ratings_average: ratings_average}, index} <- @authors |> Enum.with_index(1) do %>
         <tr>
             <td class="reporting_top_rated_books_table__index"><%= index %></td>
             <td>
@@ -17,7 +17,7 @@
                 <%= ratings_count %>
             </td>
             <td>
-                <%= Float.round(average_rating, 2) %>
+                <%= ratings_average %>
             </td>
         </tr>
     <% end %>
