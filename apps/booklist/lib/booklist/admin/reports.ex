@@ -9,6 +9,7 @@ defmodule Booklist.Reports do
   alias Booklist.Admin.Rating
   alias Booklist.Admin.Genre
   alias Booklist.Admin.Author
+  alias Booklist.Admin.Book
 
   def increment(num) do
     num + 1
@@ -164,10 +165,10 @@ defmodule Booklist.Reports do
     from(
       rating in Rating,
       join: book in assoc(rating, :book),
-      group_by: [book.id, book.title, book.sort_title],
+      group_by: [book.id, book.title, book.sort_title, book.subtitle],
       order_by: [fragment("ratings_count"), book.sort_title],
       having: count() > 1,
-      select: %{ratings_count: fragment("count(*) as ratings_count"), book: %{id: book.id, title: book.title, sort_title: book.sort_title}}
+      select: %{ratings_count: fragment("count(*) as ratings_count"), book: %Book{id: book.id, title: book.title, sort_title: book.sort_title, subtitle: book.subtitle}}
     )
     |> Repo.all()
   end
