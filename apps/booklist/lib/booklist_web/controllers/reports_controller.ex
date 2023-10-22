@@ -68,4 +68,11 @@ defmodule BooklistWeb.ReportsController do
     render(conn, "reread_books.html", books: books)
   end
 
+  def genres_index(conn, _params) do
+    genres = Reports.list_genres_with_ratings_count()
+    total_ratings_count = Enum.reduce(genres, 0, fn (%{ratings_count: ratings_count}, total) -> total + ratings_count end)
+    
+    render(conn, "genres.html", genres: genres, total_ratings_count: total_ratings_count)
+  end
+
 end

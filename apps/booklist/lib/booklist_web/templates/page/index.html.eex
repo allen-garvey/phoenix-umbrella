@@ -71,4 +71,9 @@
       <%= link "Re-read books", to: Routes.reports_path(@conn, :reread_books_index) %>
     </h2>
   </div>
+  <div class="home_section">
+    <h2 class="home_section_heading">
+      <%= link "Genres Report", to: Routes.reports_path(@conn, :genres_index) %>
+    </h2>
+  </div>
 </div>

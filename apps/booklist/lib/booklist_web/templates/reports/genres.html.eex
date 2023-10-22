@@ -1,0 +1,26 @@
+<h2>Genres Report</h2>
+
+<p>Total books read: <%= @total_ratings_count %></p>
+
+<table class="reporting_top_rated_books_table">
+    <tr>
+        <th></th>
+        <th class="reporting_top_rated_books_table__author">Genre</th>
+        <th class="reporting_top_rated_books_table__count">Count</th>
+        <th>Percentage</th>
+    </tr>
+    <%= for {%{genre: genre, ratings_count: ratings_count}, index} <- @genres |> Enum.with_index(1) do %>
+        <tr>
+            <td class="reporting_top_rated_books_table__index"><%= index %></td>
+            <td>
+                <%= link(BooklistWeb.GenreView.to_s(genre), to: Routes.genre_path(@conn, :show, genre)) %>
+            </td>
+            <td>
+                <%= ratings_count %>
+            </td>
+            <td>
+                <%= ratings_count / @total_ratings_count * 100 |> Decimal.from_float() |> Decimal.round(2) %>%
+            </td>
+        </tr>
+    <% end %>
+</table>

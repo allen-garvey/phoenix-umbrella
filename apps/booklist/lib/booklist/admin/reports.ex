@@ -148,4 +148,19 @@ defmodule Booklist.Reports do
     )
     |> Repo.all()
   end
+
+  @doc """
+  Returns the list of genres with the list of ratings
+  """
+  def list_genres_with_ratings_count do
+    from(
+      rating in Rating,
+      join: book in assoc(rating, :book),
+      join: genre in assoc(book, :genre),
+      group_by: [genre.id, genre.name],
+      order_by: [genre.name],
+      select: %{ratings_count: fragment("count(*) as ratings_count"), genre: %Genre{id: genre.id, name: genre.name}}
+    )
+    |> Repo.all()
+  end
 end
