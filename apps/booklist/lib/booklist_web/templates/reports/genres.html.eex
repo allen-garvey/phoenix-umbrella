@@ -9,18 +9,20 @@
         <th class="reporting_top_rated_books_table__count">Count</th>
         <th>Percentage</th>
     </tr>
-    <%= for {%{genre: genre, ratings_count: ratings_count}, index} <- @genres |> Enum.with_index(1) do %>
-        <tr>
-            <td class="reporting_top_rated_books_table__index"><%= index %></td>
-            <td>
-                <%= link(BooklistWeb.GenreView.to_s(genre), to: Routes.genre_path(@conn, :show, genre)) %>
-            </td>
-            <td>
-                <%= ratings_count %>
-            </td>
-            <td>
-                <%= ratings_count / @total_ratings_count * 100 |> Decimal.from_float() |> Decimal.round(2) %>%
-            </td>
-        </tr>
-    <% end %>
+    <tbody>
+        <%= for %{genre: genre, ratings_count: ratings_count} <- @genres do %>
+            <tr>
+                <td class="reporting_top_rated_books_table__index"></td>
+                <td>
+                    <%= link(BooklistWeb.GenreView.to_s(genre), to: Routes.genre_path(@conn, :show, genre)) %>
+                </td>
+                <td>
+                    <%= ratings_count %>
+                </td>
+                <td>
+                    <%= ratings_count / @total_ratings_count * 100 |> Decimal.from_float() |> Decimal.round(2) %>%
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
 </table>

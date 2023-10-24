@@ -37,13 +37,23 @@
 	}
 
 	th, td {
-		padding: 0.5rem 0;
+		padding: 0.5rem 2rem 0.5rem 0;
+	}
+
+	tbody {
+		counter-reset: rowNumber;
+		tr {
+			counter-increment: rowNumber;
+		}
 	}
 
 	.reporting_top_rated_books_table__index {
-		color: #cacaca;
 		padding-right: 1rem;
-		text-align: right;
+		
+		&::before {
+			content: counter(rowNumber);
+			color: #cacaca;
+		}
 	}
 
 	.reporting_top_rated_books_table__author {

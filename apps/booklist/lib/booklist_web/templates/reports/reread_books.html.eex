@@ -6,15 +6,17 @@
         <th class="reporting_top_rated_books_table__author">Book</th>
         <th class="reporting_top_rated_books_table__count">Count</th>
     </tr>
-    <%= for {%{book: book, ratings_count: ratings_count}, index} <- @books |> Enum.with_index(1) do %>
-        <tr>
-            <td class="reporting_top_rated_books_table__index"><%= index %></td>
-            <td>
-                <%= link(BooklistWeb.BookView.to_s(book), to: Routes.book_path(@conn, :show, book)) %>
-            </td>
-            <td>
-                <%= ratings_count %>
-            </td>
-        </tr>
-    <% end %>
+    <tbody>
+        <%= for %{book: book, ratings_count: ratings_count} <- @books do %>
+            <tr>
+                <td class="reporting_top_rated_books_table__index"></td>
+                <td>
+                    <%= link(BooklistWeb.BookView.to_s(book), to: Routes.book_path(@conn, :show, book)) %>
+                </td>
+                <td>
+                    <%= ratings_count %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
 </table>
