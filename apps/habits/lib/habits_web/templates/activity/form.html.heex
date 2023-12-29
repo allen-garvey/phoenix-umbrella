@@ -11,7 +11,7 @@
 
   <%= Common.ViewHelpers.Form.input_group :description, f, &textarea/3, [cols: 80, rows: 8] %>
 
-  <%= Common.ViewHelpers.Form.input_group :date, f, &date_input/3 %>
+  <%= Common.ViewHelpers.Form.date_input_group :date, f %>
 
   <div class="form-group right">
     <%= submit "Save and add another", class: "btn btn-light", name: "save_another", value: "true" %>

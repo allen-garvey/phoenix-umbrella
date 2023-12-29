@@ -34,6 +34,19 @@ defmodule Common.ViewHelpers.Form do
 	def input_group(field, form, input_fun, input_opts \\ []) when is_atom(field) and is_function(input_fun, 3) and is_list(input_opts) do
 	  content_tag(:div, [label(form, field), input_fun.(form, field, [class: "form-control"] ++ input_opts), error_tag(form, field)], class: "form-group")
 	end
+
+  @doc """
+  Creates a form group container for a date input with a label, input and yesterday button
+  """
+	def date_input_group(field, form) when is_atom(field) do
+	  content_tag(:div, [
+        label(form, field), 
+        date_input(form, field, [class: "form-control"]), 
+        content_tag(:button, "Yesterday", [class: "btn btn-light btn-lg", data_button: "yesterday", type: "button"]), 
+        error_tag(form, field)
+      ], 
+      class: "form-group form-group-inline")
+	end
   
   @doc """
   Creates a form group container with a label, select input, and errors

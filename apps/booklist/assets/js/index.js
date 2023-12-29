@@ -1,7 +1,7 @@
 // We need to import the CSS so that webpack will load it.
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
-import css from "../css/app.scss"
+import css from '../css/app.scss';
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -19,7 +19,9 @@ import css from "../css/app.scss"
 import { initializeDeleteModals } from './delete-modals.js';
 import { initializeQRCodeButtons } from './qr-code-modal.js';
 import { initializeBooksPerWeekChart } from './reports/books-per-week-chart';
+import { initializeYesterdayButton } from 'umbrella-common-js/date-input.js';
 
 initializeDeleteModals();
 initializeQRCodeButtons();
 initializeBooksPerWeekChart();
+initializeYesterdayButton();
