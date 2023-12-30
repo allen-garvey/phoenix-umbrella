@@ -27,7 +27,9 @@ defmodule HabitsWeb.ActivityController do
   end
 
   def new(conn, _params) do
-    changeset = Admin.change_activity(%Activity{})
+    changeset = Admin.change_activity(%Activity{
+      category_id: Admin.get_recent_popular_category_id()
+    })
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 

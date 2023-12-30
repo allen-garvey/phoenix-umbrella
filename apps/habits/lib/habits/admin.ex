@@ -105,8 +105,28 @@ defmodule Habits.Admin do
   def change_category(%Category{} = category, attrs \\ %{}) do
     Category.changeset(category, attrs)
   end
-
+  
   alias Habits.Admin.Activity
+
+  @doc """
+  Gets a single category id or nil.
+
+  Looks at the activities from the past few months
+  and finds the most popular category id.
+
+  Note that CURRENT_DATE is postgresql only
+  """
+  def get_recent_popular_category_id() do
+    from(
+      activity in Activity,
+      where: activity.date > fragment("CURRENT_DATE - 60"),
+      group_by: [activity.category_id],
+      order_by: [desc: count(activity.category_id)],
+      select: activity.category_id,
+      limit: 1
+    )
+    |> Repo.one
+  end
 
   @doc """
   Returns the list of activities.
