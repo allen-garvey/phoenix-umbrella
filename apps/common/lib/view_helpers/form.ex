@@ -45,7 +45,8 @@ defmodule Common.ViewHelpers.Form do
         content_tag(:button, "Yesterday", [class: "btn btn-light btn-lg", data_button: "yesterday", type: "button"]), 
         error_tag(form, field)
       ], 
-      class: "form-group form-group-inline")
+      class: "form-group form-group-inline",
+      data_date_input_group: true)
 	end
   
   @doc """

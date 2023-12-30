@@ -4,13 +4,12 @@ export const initializeYesterdayButton = () => {
         return;
     }
     const dateInput = yesterdayButton
-        .closest('form')
+        .closest('[data-date-input-group]')
         .querySelector('input[type="date"]');
 
-    const dateYesterday = new Date();
-    dateYesterday.setDate(dateYesterday.getDate() - 1);
-
     yesterdayButton.onclick = () => {
+        const dateYesterday = new Date();
+        dateYesterday.setDate(dateYesterday.getDate() - 1);
         dateInput.value = dateYesterday.toISOString().split('T')[0];
     };
 };
