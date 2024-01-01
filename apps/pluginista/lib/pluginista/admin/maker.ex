@@ -5,6 +5,8 @@ defmodule Pluginista.Admin.Maker do
   schema "makers" do
     field :name, :string
 
+    has_many :plugins, Pluginista.Admin.Plugin
+
     timestamps()
   end
 

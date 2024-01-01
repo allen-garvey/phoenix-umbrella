@@ -3,6 +3,7 @@ import { initializeYesterdayButton } from 'umbrella-common-js/date-input.js';
 
 import PluginCategories from './vue/plugin-categories.vue';
 import PluginTable from './vue/plugin-table.vue';
+import MakersReportTable from './vue/makers-report-table.vue';
 
 import css from '../css/app.scss';
 
@@ -10,6 +11,7 @@ initializeYesterdayButton();
 
 instantiateVue('plugin-categories', PluginCategories, ['categories']);
 instantiateVue('plugin-table', PluginTable, ['pluginsApiRoute']);
+instantiateVue('makers-report-table', MakersReportTable, ['itemsApiRoute']);
 
 document.querySelectorAll('[data-button="delete"]').forEach((button) => {
     button.onclick = (e) => {

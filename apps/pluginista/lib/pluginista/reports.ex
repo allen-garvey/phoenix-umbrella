@@ -7,6 +7,7 @@ defmodule Pluginista.Reports do
     alias Pluginista.Repo
 
     alias Pluginista.Admin.Plugin
+    alias Pluginista.Admin.Maker
 
     def years_summary() do
         from(
@@ -58,6 +59,22 @@ defmodule Pluginista.Reports do
             select: %{total_spent: sum(plugin.cost), count: count(plugin.id)}
         )
         |> Repo.one!
+    end
+
+    def makers_stats() do
+        from(
+            maker in Maker,
+            join: plugin in assoc(maker, :plugins),
+            group_by: [maker.id, maker.name],
+            order_by: [maker.name],
+            select: %{
+                id: maker.id, 
+                name: maker.name, 
+                count: count(plugin.id),
+                total: sum(plugin.cost)
+            }
+        )
+        |> Repo.all
     end
 
 end
