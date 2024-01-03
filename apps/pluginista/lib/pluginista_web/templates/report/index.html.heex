@@ -1,5 +1,7 @@
 <h2>Reports</h2>
 
+<h3><%= link "Makers Report", to: Routes.report_path(@conn, :makers_index) %></h3>
+
 <h3>Plugins Per Year</h3>
 
 <ul>
@@ -8,7 +10,7 @@
     <%= @plugins_count %>
   </li>
   <li>
-    <strong>Total cost:</strong>
+    <strong>Total spent:</strong>
     <%= Common.ModelHelpers.Number.format_currency(@total_cost) %>
   </li>
 </ul>
