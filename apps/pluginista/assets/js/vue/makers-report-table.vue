@@ -8,6 +8,7 @@
                     <th><a :href="sortUrlForColumn(sortColumns.maker)" @click="updateSort($event, sortColumns.maker)">Maker</a></th>
                     <th><a :href="sortUrlForColumn(sortColumns.count)" @click="updateSort($event, sortColumns.count)">Count</a></th>
                     <th><a :href="sortUrlForColumn(sortColumns.total)" @click="updateSort($event, sortColumns.total)">Total</a></th>
+                    <th>Percentage</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
                     <td><a :href="item.url">{{item.name}}</a></td>
                     <td>{{ item.count }}</td>
                     <td>${{ item.total }}</td>
+                    <td>{{ calculatePercentage(item.total) }}%</td>
                 </tr>
             </tbody>
         </table>
@@ -51,9 +53,20 @@ export default {
         LoadingAnimation,
     },
     created(){
+        let totalSpent = 0;
         fetchJson(this.itemsApiRoute)
-            .then(items => this.items = items)
-            .then(() => this.isInitialLoadComplete = true);
+            .then(items => this.items = items.map(item => {
+                const total = parseFloat(item.total);
+                totalSpent += total;
+                return {
+                    ...item,
+                    total,
+                };
+            }))
+            .then(() => {
+                this.totalSpent = totalSpent;
+                this.isInitialLoadComplete = true;
+            });
 
         const params = new URLSearchParams(window.location.search);
         const paramSortDirection = params.get(QUERY_PARAM_SORT_DIRICTION);
@@ -67,6 +80,7 @@ export default {
             items: [],
             sortColumn: '',
             sortDirection: '',
+            totalSpent: 0,
         };
     },
     computed: {
@@ -110,6 +124,12 @@ export default {
         },
         sortUrlForColumn(column){
             return `?${QUERY_PARAM_SORT_COLUMN}=${column}`;
+        },
+        calculatePercentage(itemTotal){
+            if(this.totalSpent === 0 || itemTotal === 0){
+                return 0;
+            }
+            return Math.round(itemTotal / this.totalSpent * 100);
         },
     }
 };
