@@ -22,6 +22,7 @@
       <th>Year</th>
       <th>Count</th>
       <th>Total</th>
+      <th>Percentage</th>
     </tr>
   </thead>
   <tbody>
@@ -31,6 +32,7 @@
       <td><%= year[:year] %></td>
       <td><%= year[:count] %></td>
       <td><%= Common.ModelHelpers.Number.format_currency(year[:total]) %></td>
+      <td><%= Decimal.round(Decimal.mult(Decimal.div(year[:total], @total_cost), 100), 2) %>%</td>
     </tr>
 <% end %>
   </tbody>
