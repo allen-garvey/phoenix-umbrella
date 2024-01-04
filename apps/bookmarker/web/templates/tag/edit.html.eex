@@ -4,4 +4,4 @@
                         action: tag_path(@conn, :update, @tag),
                         form_type: :edit %>
 
-<%= render Bookmarker.SharedView, "hidden_delete_form.html", delete_path: tag_path(@conn, :delete, @tag), changeset: @changeset %>
+<%= CommonWeb.FormView.hidden_delete_form(@conn, tag_path(@conn, :delete, @tag)) %>

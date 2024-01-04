@@ -16,7 +16,5 @@ end %>
 %>
 
 <%= if assigns[:show_delete] do
-  render Artour.SharedView, "hidden_delete_form.html",
-  						changeset: @changeset,
-  						delete_path: image_path(@conn, :delete, @image)
+  CommonWeb.FormView.hidden_delete_form(@conn, image_path(@conn, :delete, @image))
 end %>

@@ -13,4 +13,4 @@
         </li>
     <% end %>
 </ul>
-<%= render "hidden_delete_form.html", conn: @conn, delete_path: path_for_item(@conn, @item_name_singular, :delete, @item) %>
+<%= CommonWeb.FormView.hidden_delete_form(@conn, path_for_item(@conn, @item_name_singular, :delete, @item)) %>

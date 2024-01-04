@@ -10,7 +10,5 @@
                         save_another: assigns[:save_another] %>
 
 <%= if assigns[:show_delete] do
-  render Artour.SharedView, "hidden_delete_form.html",
-  						changeset: @changeset,
-  						delete_path: category_path(@conn, :delete, @tag)
+  CommonWeb.FormView.hidden_delete_form(@conn, category_path(@conn, :delete, @tag))
 end %>
