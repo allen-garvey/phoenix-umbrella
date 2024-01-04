@@ -32,5 +32,6 @@
       <%= @inner_content %>
     </main>
 
+    <script type="text/javascript" src="<%= static_path(@conn, "/assets/app.js") %>"></script>
   </body>
 </html>
