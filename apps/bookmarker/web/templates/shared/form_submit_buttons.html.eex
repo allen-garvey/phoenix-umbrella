@@ -1,9 +1,9 @@
 <div class="form-group">
 	<div class="submit_buttons_container">
 		<div>
-			<%= if @form_type == :edit do %>
-			  <button type="button" class="btn btn-danger" data-button="delete">Delete</button>
-			<% end %>
+			<%= if @form_type == :edit do 
+				CommonWeb.FormView.delete_button()
+			end %>
 		</div>
 		<div>
 			<%= if @save_another do %>
