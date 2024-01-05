@@ -1,10 +1,11 @@
 /* FORM DEFAULTS */
 
 input, textarea, select, .form-row p, form .button, button {
-    padding: 2px 3px;
-    vertical-align: middle;
     font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
-    font-weight: normal;
+}
+
+input, textarea, select, .form-row p {
+    padding: 2px 3px;
 }
 
 textarea {

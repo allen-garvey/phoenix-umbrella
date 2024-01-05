@@ -1,7 +1,7 @@
 <div class="show-header-title-container">
 	<h2 class="page-title"><%= @title %></h2>
 	<div class="show-header-buttons">
-        <button class="button delete" data-button="delete">Delete</button>
+        <%= CommonWeb.FormView.delete_button_with_form(@conn, path_for_item(@conn, @item_name_singular, :delete, @item), class: "button delete") %>
 		<%= link "Edit", to: path_for_item(@conn, @item_name_singular, :edit, @item), class: "button" %>
 	</div>
 </div>
@@ -13,4 +13,3 @@
         </li>
     <% end %>
 </ul>
-<%= CommonWeb.FormView.hidden_delete_form(@conn, path_for_item(@conn, @item_name_singular, :delete, @item)) %>
