@@ -3,12 +3,9 @@
 A CMS and blog static site generator specifically designed for photography and artwork.
 
 ## Getting Started
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `npm install`
-  * Start Phoenix endpoint with `mix phoenix.server`
-
-Now you can visit [`localhost:3000`](http://localhost:3000) from your browser.
+  * Create symbolic links for image directories by running:
+  * `ln -s <images_of_artwork_directory> priv/static/media/images`
+  * If the directory changes, run `ln -sfn <new_artwork_directory> priv/static/media/images`
 
 ## Custom Mix Tasks
   * Render site to static HTML files `mix distill.html`
