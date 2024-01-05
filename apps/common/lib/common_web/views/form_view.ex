@@ -11,13 +11,12 @@ defmodule CommonWeb.FormView do
     def delete_button_with_form(conn, delete_path, opts \\ []) do
         hidden_delete_form(conn, delete_path, fn _f -> delete_button(opts) end)
     end
-
     
     @doc """
     Creates a hidden form to enable item deletion
     """
     def hidden_delete_form(conn, delete_path) do
-        hidden_delete_form(conn, delete_path, fn _f -> nil end)
+        hidden_delete_form(conn, delete_path, fn _f -> "" end)
     end
 
     def hidden_delete_form(conn, delete_path, form_func) when is_function(form_func, 1) do
