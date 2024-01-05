@@ -1,9 +1,9 @@
 <div class="form-group">
 	<div class="submit_buttons_container">
 		<div>
-			<%= if @show_delete do %>
-			  <button type="button" class="btn btn-danger" data-button="delete">Delete</button>
-			<% end %>
+			<%= if @show_delete do 
+				CommonWeb.FormView.delete_button()
+			end %>
 		</div>
 		<div>
 			<%= if @save_another do %>
