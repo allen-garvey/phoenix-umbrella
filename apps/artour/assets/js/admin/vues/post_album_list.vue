@@ -2,6 +2,13 @@
     <div>
         <div :class="controlsClasses">
             <button 
+                class="btn btn-light" 
+                @click="resetImageOrder()" 
+                :style="{visibility: haveImagesBeenReordered ? 'visible' : 'hidden'}"
+            >
+                Reset Image Order
+            </button>
+            <button 
                 class="btn btn-primary" 
                 @click="saveImageOrder()" 
                 :style="{visibility: haveImagesBeenReordered ? 'visible' : 'hidden'}"
@@ -29,7 +36,7 @@
                     <p v-if="postImage.caption">{{postImage.caption}}</p>
                 </div>
                 <div :class="$style['image-buttons']">
-                    <a :href="postImage.url.edit" class="btn btn-primary btn-sm" target="_blank">Edit</a>
+                    <a :href="postImage.url.edit" class="btn btn-light btn-sm" target="_blank">Edit</a>
                     <button class=" btn btn-primary btn-sm" v-show="postImage.image.id != coverImageIdModel" @click="setCoverImage(postImage.image.id)">Make cover image</button>
                 </div>
                 <div :class="$style['list-item-dragger']">&#9776;</div>
@@ -47,6 +54,10 @@
         padding: 1em;
         border-radius: 3px;
         margin-top: 3em;
+
+        button + button {
+            margin-left: 1em;
+        }
     }
 
     .post-album-image-list{
@@ -124,6 +135,7 @@ export default {
     data(){
         return {
             postImages: [],
+            postImagesOriginal: [],
             haveImagesBeenReordered: false,
             currentDragIndex: null,
             coverImageIdModel: '',
@@ -141,6 +153,7 @@ export default {
         fetchImages(){
             return fetchJson(this.postImagesApiUrl).then((postImages)=>{
                 this.postImages = postImages;
+                this.postImagesOriginal = postImages;
             });
         },
         setCoverImage(imageId){
@@ -148,10 +161,15 @@ export default {
                 this.coverImageIdModel = imageId;
             });
         },
+        resetImageOrder(){
+            this.postImages = this.postImagesOriginal;
+            this.haveImagesBeenReordered = false;
+        },
         saveImageOrder(){
             const postImageIds = this.postImages.map(postImage=>postImage.id);
             sendJson(this.reorderImagesApiUrl, this.csrfToken, 'PATCH', {post_images: postImageIds}).then((_response)=>{
                 this.haveImagesBeenReordered = false;
+                this.postImagesOriginal = this.postImages;
             });
         },
         imageDragStart(e, index){
