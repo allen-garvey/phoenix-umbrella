@@ -10,6 +10,9 @@ export const initializeYesterdayButton = () => {
     yesterdayButton.onclick = () => {
         const dateYesterday = new Date();
         dateYesterday.setDate(dateYesterday.getDate() - 1);
-        dateInput.value = dateYesterday.toISOString().split('T')[0];
+        const offset = dateYesterday.getTimezoneOffset();
+        dateInput.value = new Date(dateYesterday.getTime() - offset * 60 * 1000)
+            .toISOString()
+            .split('T')[0];
     };
 };
