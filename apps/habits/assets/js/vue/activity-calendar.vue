@@ -111,8 +111,7 @@ export default {
                     month = 11;
                     year = year - 1;
                 }
-                const endDate = dateFromIso(currentData.meta.from);
-                endDate.setDate(endDate.getDate() - 1);
+                const endDate = new Date(currentData.year, currentData.month, 0);
                 const startDateString = formatDate(getMonthSunday(endDate));
 
                 this.fetchActivities(startDateString, formatDate(endDate), month, year)
