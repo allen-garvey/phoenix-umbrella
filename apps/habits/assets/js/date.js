@@ -2,7 +2,7 @@ export const getTodaysDate = () => {
     // based on: https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
     const now = new Date();
     const timezoneOffset = now.getTimezoneOffset();
-    return new Date(now.getTime() - (timezoneOffset*60*1000));
+    return new Date(now.getTime() - timezoneOffset * 60 * 1000);
 };
 
 // get the sunday before the first of the month
@@ -11,8 +11,17 @@ export const getMonthSunday = (date) => {
     firstDay.setDate(1);
     const dayOfWeek = firstDay.getDay();
     firstDay.setDate(firstDay.getDate() - dayOfWeek);
-    
+
     return firstDay;
+};
+
+export const getSaturdayAfter = (date) => {
+    const saturdayAfter = new Date(date.getTime());
+    saturdayAfter.setDate(
+        saturdayAfter.getDate() + (6 - saturdayAfter.getDay())
+    );
+
+    return saturdayAfter;
 };
 
 // takes date string in format yyyy-mm-dd and returns date object
@@ -24,7 +33,18 @@ export const dateFromIso = (dateString) => new Date(`${dateString}T00:00:00`);
 // based on: https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
 export const formatDate = (date) => date.toISOString().split('T')[0];
 
-export const monthName = (monthNum) => 
-    ['January', 'February', 'March', 'April', 'May', 'June',
-'July', 'August', 'September', 'October', 'November', 'December'
-][monthNum];
+export const monthName = (monthNum) =>
+    [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ][monthNum];

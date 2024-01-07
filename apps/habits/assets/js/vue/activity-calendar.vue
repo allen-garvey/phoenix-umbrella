@@ -41,7 +41,7 @@
 
 <script>
 import { fetchJson } from 'umbrella-common-js/ajax.js';
-import { getTodaysDate, formatDate, getMonthSunday, dateFromIso } from '../date';
+import { getTodaysDate, formatDate, getMonthSunday, getSaturdayAfter } from '../date';
 
 import ActivityMonth from './activity-month.vue';
 
@@ -111,10 +111,11 @@ export default {
                     month = 11;
                     year = year - 1;
                 }
-                const endDate = new Date(currentData.year, currentData.month, 0);
+                let endDate = new Date(currentData.year, currentData.month, 0);
                 const startDateString = formatDate(getMonthSunday(endDate));
+                endDate = formatDate(getSaturdayAfter(endDate));
 
-                this.fetchActivities(startDateString, formatDate(endDate), month, year)
+                this.fetchActivities(startDateString, endDate, month, year)
                     .then(() => this.isLoading = false);
             }
 
