@@ -1,22 +1,22 @@
 import { LineChart } from 'chartist';
 import ctAxisTitle from 'chartist-plugin-axistitle';
 
-function formatChartData(rawData){
+function formatChartData(rawData) {
     const data = {
         labels: [],
         series: [[]],
     };
-    return rawData.reduce((data, entry)=>{
+    return rawData.reduce((data, entry) => {
         data.labels.push(entry[0]);
         data.series[0].push(entry[1]);
         return data;
     }, data);
 }
 
-export function initializeBooksPerWeekChart(){
+export function initializeBooksPerWeekChart() {
     const chartId = 'books_per_week_chart';
     const chartContainer = document.getElementById(chartId);
-    if(!chartContainer){
+    if (!chartContainer) {
         return;
     }
     const data = formatChartData(window.BOOKLIST_CHART_DATA);
@@ -24,6 +24,7 @@ export function initializeBooksPerWeekChart(){
         axisY: {
             onlyInteger: true,
             low: 0,
+            stretch: true,
         },
         showArea: true,
         plugins: [
@@ -34,7 +35,7 @@ export function initializeBooksPerWeekChart(){
                         x: 0,
                         y: 40,
                     },
-                    textAnchor: 'middle'
+                    textAnchor: 'middle',
                 },
                 axisY: {
                     axisTitle: 'Books read',
@@ -42,9 +43,9 @@ export function initializeBooksPerWeekChart(){
                         x: 0,
                         y: -5,
                     },
-                    flipTitle: true
-                } 
-            })
+                    flipTitle: true,
+                },
+            }),
         ],
     });
 }
