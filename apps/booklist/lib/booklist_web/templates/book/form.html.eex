@@ -7,10 +7,6 @@
 
   <%= Common.ViewHelpers.Form.input_group :title, f, &text_input/3, [autofocus: true] %>
 
-  <div class="form-group">
-    <button class="btn btn-light" type="button" data-button="split-title">Split Title</button>
-  </div>
-
   <%= Common.ViewHelpers.Form.input_group :subtitle, f, &text_input/3 %>
 
   <%= Common.ViewHelpers.Form.select_group :author_id, f, @authors %>
