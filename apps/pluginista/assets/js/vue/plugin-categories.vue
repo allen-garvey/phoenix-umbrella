@@ -41,8 +41,6 @@ export default {
             return this.categoriesList.filter(category => category.group_id === this.selectedGroupId);
         },
     },
-    watch: {
-    },
     methods: {
         getId(category){
             return `categories_${category.id}`;
