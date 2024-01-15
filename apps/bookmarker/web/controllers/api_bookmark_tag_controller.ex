@@ -17,14 +17,14 @@ defmodule Bookmarker.ApiBookmarkTagController do
         render(conn, "show.json", bookmark_tag: bookmark_tag)
       {:error, changeset} ->
         conn
-        |> put_status(400)
+        |> put_status(:bad_request)
         |> render("create_error.json", errors: changeset.errors)
     end
   end
 
   def create_bookmark_tag(conn, _params) do
     conn
-    |> put_status(400)
+    |> put_status(:bad_request)
     |> render("error.json", error: %{title: "Invalid params", detail: "Missing bookmark_id or tag_id"})
   end
 
@@ -53,7 +53,7 @@ defmodule Bookmarker.ApiBookmarkTagController do
 
   def delete_bookmark_tag(conn, _params) do
     conn
-    |> put_status(400)
+    |> put_status(:bad_request)
     |> render("error.json", error: %{title: "Invalid params", detail: "No id or (bookmark_id, tag_id) composite given for bookmark_tag to delete"})
   end
 
