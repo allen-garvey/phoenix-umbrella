@@ -67,7 +67,7 @@ defmodule PhotogWeb.ImageController do
     count = String.to_integer(year) |> Api.images_count_for_year!
     
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
   end
 
@@ -78,7 +78,7 @@ defmodule PhotogWeb.ImageController do
     count = Api.images_favorite_count!(is_favorite_param == "true")
     
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
   end
 
@@ -86,7 +86,7 @@ defmodule PhotogWeb.ImageController do
     count = Api.images_not_in_album_count!
     
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
   end
 
@@ -94,7 +94,7 @@ defmodule PhotogWeb.ImageController do
     count = Api.images_count!
     
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
   end
 
@@ -131,7 +131,7 @@ defmodule PhotogWeb.ImageController do
       end)
 
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> (&(
       if Enum.empty?(errors) do
         render(&1, "ok.json", message: albums_added)
@@ -157,7 +157,7 @@ defmodule PhotogWeb.ImageController do
       end)
 
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> (&(
       if Enum.empty?(errors) do
         render(&1, "ok.json", message: persons_added)
@@ -172,7 +172,7 @@ defmodule PhotogWeb.ImageController do
 
     with {:ok, %Image{} = image} <- Api.update_image(image, image_params) do
       conn
-      |> put_view(PhotogWeb.GenericView)
+      |> put_view(CommonWeb.ApiGenericView)
       |> render("ok.json", message: "Image #{image.id} updated")
     end
   end

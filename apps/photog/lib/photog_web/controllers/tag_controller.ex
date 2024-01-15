@@ -43,7 +43,7 @@ defmodule PhotogWeb.TagController do
   def reorder_albums(conn, %{"id" => id, "album_ids" => album_ids}) when is_list(album_ids) do
     Api.reorder_albums_for_tag(id, album_ids)
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> render("ok.json", message: "ok")
   end
 
@@ -89,7 +89,7 @@ defmodule PhotogWeb.TagController do
 
     with {:ok, %Tag{}} <- Api.delete_tag(tag) do
       conn
-      |> put_view(PhotogWeb.GenericView)
+      |> put_view(CommonWeb.ApiGenericView)
       |> render("ok.json", message: "ok")
     end
   end

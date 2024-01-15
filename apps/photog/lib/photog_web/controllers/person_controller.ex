@@ -56,7 +56,7 @@ defmodule PhotogWeb.PersonController do
     end
 
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> render("ok.json", message: "Images removed from person")
   end
 

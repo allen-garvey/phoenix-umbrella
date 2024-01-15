@@ -95,7 +95,7 @@ defmodule PhotogWeb.AlbumController do
     end
 
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> render("ok.json", message: "Images removed from album")
   end
 
@@ -103,7 +103,7 @@ defmodule PhotogWeb.AlbumController do
   Reorders images in album
   """
   def reorder_images(conn, %{"id" => id, "image_ids" => image_ids}) when is_list(image_ids) do
-    view = conn |> put_view(PhotogWeb.GenericView)
+    view = conn |> put_view(CommonWeb.ApiGenericView)
     
     case Api.reorder_images_for_album(id, image_ids) do
       {:ok, _} -> view |> render("ok.json", message: "ok")
@@ -115,7 +115,7 @@ defmodule PhotogWeb.AlbumController do
   Replaces an album's tags with given list of tags
   """
   def replace_tags(conn,  %{"id" => id, "tag_ids" => tag_ids}) when is_list(tag_ids) do
-    view = conn |> put_view(PhotogWeb.GenericView)
+    view = conn |> put_view(CommonWeb.ApiGenericView)
 
     case Api.replace_tags_for_album(id, tag_ids) do
       {:ok, _} -> view |> render("ok.json", message: "ok")
@@ -130,7 +130,7 @@ defmodule PhotogWeb.AlbumController do
     count = Api.albums_favorite_count!(is_favorite_param == "true")
     
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
   end
 
@@ -138,7 +138,7 @@ defmodule PhotogWeb.AlbumController do
     count = Api.albums_count!
     
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
   end
 
@@ -173,7 +173,7 @@ defmodule PhotogWeb.AlbumController do
     count = String.to_integer(year) |> Api.albums_count_for_year!
     
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
   end
 
@@ -194,7 +194,7 @@ defmodule PhotogWeb.AlbumController do
     album = Api.get_album!(id)
     with {:ok, %Album{}} <- Api.delete_album(album) do
       conn
-      |> put_view(PhotogWeb.GenericView)
+      |> put_view(CommonWeb.ApiGenericView)
       |> render("ok.json", message: "ok")
     end
   end

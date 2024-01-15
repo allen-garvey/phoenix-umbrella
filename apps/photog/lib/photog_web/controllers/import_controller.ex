@@ -55,7 +55,7 @@ defmodule PhotogWeb.ImportController do
     count = Api.imports_count!()
     
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
   end
 

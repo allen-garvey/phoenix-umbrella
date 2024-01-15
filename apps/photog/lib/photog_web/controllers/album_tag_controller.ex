@@ -30,7 +30,7 @@ defmodule PhotogWeb.AlbumTagController do
       end)
 
     conn
-    |> put_view(PhotogWeb.GenericView)
+    |> put_view(CommonWeb.ApiGenericView)
     |> (&(
       if Enum.empty?(total_errors) do
         render(&1, "ok.json", message: total_added)
