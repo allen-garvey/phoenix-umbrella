@@ -23,7 +23,9 @@ defmodule Artour.ApiPostController do
   """
   def add_tags(conn, %{"post_id" => post_id, "tags" => tags}) do
     Api.create_post_tags(post_id, tags)
-    render(conn, "ok.json", message: "Tags added to post")
+    conn 
+    |> put_view(CommonWeb.ApiGenericView)
+    |> render("ok.json", message: "Tags added to post")
   end
 
   @doc """
@@ -31,7 +33,9 @@ defmodule Artour.ApiPostController do
   """
   def remove_tag(conn, %{"post_id" => post_id, "tag_id" => tag_id}) do
     Admin.delete_post_tag(post_id, tag_id)
-    render(conn, "ok.json", message: "Post tag deleted")
+    conn 
+    |> put_view(CommonWeb.ApiGenericView)
+    |> render("ok.json", message: "Post tag deleted")
   end
 
   @doc """
@@ -39,10 +43,18 @@ defmodule Artour.ApiPostController do
   right now only used for cover_image_id
   """
   def update(conn, %{"post_id" => post_id, "cover_image_id" => cover_image_id}) do
-    case Api.update_post_cover_image(post_id, cover_image_id) do
-      :ok    -> render(conn, "ok.json", message: "Post cover_image_id updated")
-      :error -> render(conn, "error.json", message: "Error changing post cover_image_id")
-    end
+    Api.update_post_cover_image(post_id, cover_image_id)
+    |> post_updated(put_view(conn, CommonWeb.ApiGenericView))
+  end
+
+  defp post_updated(:ok, conn) do
+    render(conn, "ok.json", message: "Post cover_image_id updated")
+  end
+
+  defp post_updated(:error, conn) do
+    conn
+    |> put_status(:internal_server_error)
+    |> render("error.json", message: "Error changing post cover_image_id")
   end
 
   @doc """
@@ -58,7 +70,9 @@ defmodule Artour.ApiPostController do
   """
   def reorder_images(conn, %{"post_id" => _post_id, "post_images" => post_images}) do
     Api.reorder_post_images(post_images)
-    render(conn, "ok.json", message: "Post image order updated")
+    conn 
+    |> put_view(CommonWeb.ApiGenericView)
+    |> render("ok.json", message: "Post image order updated")
    end
 
   @doc """
