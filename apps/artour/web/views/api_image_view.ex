@@ -2,7 +2,6 @@ defmodule Artour.ApiImageView do
   use Artour.Web, :view
 
   alias Artour.ImageView
-  alias Artour.ChangesetView
 
   @doc """
   Renders individual image instance to json
@@ -23,6 +22,6 @@ defmodule Artour.ApiImageView do
   end
 
   def render("errors.json", %{errors: errors}) do
-    %{errors: render_many(errors, ChangesetView, "error.json")}
+    %{errors: render_many(errors, CommonWeb.ChangesetView, "error.json")}
   end
 end

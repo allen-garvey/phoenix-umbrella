@@ -9,7 +9,7 @@ defmodule SerenWeb.FallbackController do
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)
-    |> render(SerenWeb.ChangesetView, "error.json", changeset: changeset)
+    |> render(CommonWeb.ChangesetView, "error.json", changeset: changeset)
   end
 
   def call(conn, {:error, :not_found}) do
