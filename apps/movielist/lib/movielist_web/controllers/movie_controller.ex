@@ -27,7 +27,9 @@ defmodule MovielistWeb.MovieController do
   end
 
   def new(conn, _params) do
-    changeset = Admin.change_movie(%Movie{})
+    changeset = Admin.change_movie(%Movie{
+      genre_id: Admin.get_recent_popular_genre_id()
+    })
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
