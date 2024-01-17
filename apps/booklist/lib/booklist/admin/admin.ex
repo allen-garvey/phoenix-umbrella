@@ -106,6 +106,27 @@ defmodule Booklist.Admin do
     Genre.changeset(genre, %{})
   end
 
+  @doc """
+  Gets a single genre or nil.
+
+  Looks at the books from the past few months
+  and finds the most popular genre id.
+
+  Note that CURRENT_DATE is postgresql only
+  """
+  def get_recent_popular_genre() do
+    from(
+      book in Book,
+      join: genre in assoc(book, :genre),
+      where: book.inserted_at > fragment("CURRENT_DATE - 30"),
+      group_by: [book.genre_id, genre.is_fiction],
+      order_by: [desc: count(book.genre_id)],
+      select: %Genre{ id: book.genre_id, is_fiction: genre.is_fiction},
+      limit: 1
+    )
+    |> Repo.one
+  end
+
   alias Booklist.Admin.Author
 
   @doc """

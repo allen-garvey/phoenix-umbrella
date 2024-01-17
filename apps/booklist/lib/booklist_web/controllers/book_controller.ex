@@ -63,7 +63,14 @@ defmodule BooklistWeb.BookController do
   end
 
   def new(conn, _params) do
-    changeset = Admin.change_book(%Book{})
+    genre = case Admin.get_recent_popular_genre() do
+      nil -> %Admin.Genre{id: nil, is_fiction: nil}
+      genre -> genre
+    end
+    changeset = Admin.change_book(%Book{
+      genre_id: genre.id,
+      is_fiction: genre.is_fiction
+    })
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
