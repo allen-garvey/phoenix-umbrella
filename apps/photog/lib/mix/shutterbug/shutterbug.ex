@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Shutterbug do
   Given a directory of images, will copy image files to masters directory, create thumbnails, and add image resources to database
   """
   @doc """
-  Imports images from source directory to (optional) destination directory. If no directory given, will default to ./priv/static/media, or separate masters and thumbnail destination directories can be given
+  Imports images from source directory to ./priv/static/media. Will create image resources in the database and group the images in an import resources.
   """
   def run([source_directory_name]) do
     masters_destination_path = Photog.Image.masters_directory()
@@ -23,20 +23,8 @@ defmodule Mix.Tasks.Shutterbug do
     end
   end
 
-  def run([source_directory_name, target_directory_name]) do
-    if validate_args([source_directory_name, target_directory_name]) do
-      import_images_from_directory(source_directory_name, Path.join(target_directory_name, "Masters"), Path.join(target_directory_name, "Thumbnails"))
-    end
-  end
-
-  def run([source_directory_name, target_masters_directory_name, target_thumbnails_directory_name]) do
-    if validate_args([source_directory_name, target_masters_directory_name, target_thumbnails_directory_name]) do
-      import_images_from_directory(source_directory_name, target_masters_directory_name, target_thumbnails_directory_name)
-    end
-  end
-
   def run(_args) do
-  	Error.exit_with_error("usage: mix shutterbug <image_source_directory> <image_library_destination_directory>")
+  	Error.exit_with_error("usage: mix shutterbug <image_source_directory>")
   end
 
   def validate_args(directories) do

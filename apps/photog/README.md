@@ -19,10 +19,6 @@ JPEG, PNG, WebP and SVG image types are supported. This mix task both adds the i
 
 * `mix shutterbug <source_folder>` takes the images in the source folder and copies the images and generated thumbnails to `./priv/static/media/images` and `./priv/static/media/thumbnails` respectively
 
-* `mix shutterbug <source_folder> <destination_folder>` takes the images in the source folder and copies the images and generated thumbnails to `destination_folder/Masters` and `destination_folder/Thumnails` respectively
-
-* `mix shutterbug <source_folder> <masters_destination_folder> <thumbnails_destination_folder>` takes the images in the source folder and copies the images and generated thumbnails to `masters_destination_folder` and `thumbnails_destination_folder` respectivly
-
 ## Adding Amazon Photos Ids to images
 
 By adding Amazon Photos Ids to images, you can see an Amazon photos link on the image details page
