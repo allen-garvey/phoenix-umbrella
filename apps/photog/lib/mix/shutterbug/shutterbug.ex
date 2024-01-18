@@ -15,12 +15,12 @@ defmodule Mix.Tasks.Shutterbug do
   Imports images from source directory to ./priv/static/media. Will create image resources in the database and group the images in an import resources.
   """
   def run([source_directory_name]) do
-    masters_destination_path = Photog.Image.masters_directory()
-    thumbnails_destination_path = Photog.Image.thumbnails_directory()
-    
-    if validate_args([source_directory_name, masters_destination_path, thumbnails_destination_path]) do
-      import_images_from_directory(source_directory_name, masters_destination_path, thumbnails_destination_path)
-    end
+    import_images_from_directory(source_directory_name, false)
+  end
+
+  def run([source_directory_name, "--webp"]) do
+    IO.puts "Importing images with convert masters to webp option"
+    import_images_from_directory(source_directory_name, true)
   end
 
   def run(_args) do
@@ -37,7 +37,16 @@ defmodule Mix.Tasks.Shutterbug do
   @doc """
   Imports image files from directory
   """
-  def import_images_from_directory(source_directory_name, masters_target_directory_name, thumbnails_target_directory_name) do
+  def import_images_from_directory(source_directory_name, convert_to_webp) when is_boolean(convert_to_webp) do
+    masters_destination_path = Photog.Image.masters_directory()
+    thumbnails_destination_path = Photog.Image.thumbnails_directory()
+    
+    if validate_args([source_directory_name, masters_destination_path, thumbnails_destination_path]) do
+      import_images_from_directory(source_directory_name, masters_destination_path, thumbnails_destination_path, convert_to_webp)
+    end
+  end
+  
+  def import_images_from_directory(source_directory_name, masters_target_directory_name, thumbnails_target_directory_name, convert_to_webp) when is_boolean(convert_to_webp) do
   	image_files = get_image_files(source_directory_name)
 
     #create directories for masters and thumbnails
@@ -63,7 +72,7 @@ defmodule Mix.Tasks.Shutterbug do
         
         # create image master
         image_master_path = Path.join(masters_path, image_file)
-        master_name = create_image_master(image_source_path, image_master_path)
+        master_name = create_image_master(image_source_path, image_master_path, convert_to_webp)
 
         #create thumbnails
         {thumbnail_name, mini_thumbnail_name} = create_image_thumbnails(image_file, image_source_path, thumbnails_path)
@@ -127,10 +136,18 @@ defmodule Mix.Tasks.Shutterbug do
   @doc """
   Either converts png image to webp lossless, or for other image types copies to masters folder
   """
-  def create_image_master(image_source_path, image_master_path) do
-    case Path.extname(image_source_path) do
-      ".png" -> Photog.Shutterbug.File.convert_to_webp_lossless(image_source_path, image_master_path)
-      _ -> Photog.Shutterbug.File.safe_copy(image_source_path, image_master_path)
+  def create_image_master(image_source_path, image_master_path, convert_to_webp) when is_boolean(convert_to_webp) do
+    
+    extension = Path.extname(image_source_path)
+    
+    cond do
+      Enum.member?([".svg", ".webp"], extension) -> Photog.Shutterbug.File.safe_copy(image_source_path, image_master_path)
+      
+      extension == ".png" -> Photog.Shutterbug.File.convert_to_webp_lossless(image_source_path, image_master_path)
+      
+      convert_to_webp -> Photog.Shutterbug.File.convert_to_webp_lossy(image_source_path, image_master_path)
+      
+      true -> Photog.Shutterbug.File.safe_copy(image_source_path, image_master_path)
     end
   end
 

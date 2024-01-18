@@ -59,6 +59,22 @@ defmodule Photog.Shutterbug.File do
   end
 
   @doc """
+  Takes image at source path and converts to webp lossy at destination path
+  """
+  def convert_to_webp_lossy(image_source_path, image_destination_path) do
+    webp_destination_path = Photog.Shutterbug.Image.webp_name(image_destination_path)
+
+    with {_, 0} <- System.cmd("convert", [image_source_path, "-quality", "85%", "-auto-orient", webp_destination_path]) do
+      # file permissions should be correct (tested with convert command and permissions are +r) but set permissions just in case
+      File.chmod!(webp_destination_path, 0o644)
+    else
+      _ -> Error.exit_with_error("Error converting #{image_source_path} to #{webp_destination_path} using convert", :error_converting_to_webp_lossless)
+    end
+
+    Path.basename(webp_destination_path)
+  end
+
+  @doc """
   Resizes image to given dimension on shortest side using imagemagick
   Resize on largest side from: https://www.imagemagick.org/discourse-server/viewtopic.php?t=13175
   """

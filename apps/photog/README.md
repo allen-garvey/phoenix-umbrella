@@ -17,7 +17,9 @@ Single page web app for your photo library. Originally designed to export Apple 
 
 JPEG, PNG, WebP and SVG image types are supported. This mix task both adds the images in a given source folder to the Photog database, and also generates thumbnail images and copies the original image source files to the your masters folder. Generated/copied files are placed inside folders based on the current date and time, using the same convention as Apple Photos.
 
-* `mix shutterbug <source_folder>` takes the images in the source folder and copies the images and generated thumbnails to `./priv/static/media/images` and `./priv/static/media/thumbnails` respectively
+* `mix shutterbug <source_folder>` takes the images in the source folder and copies the images and generated thumbnails to `./priv/static/media/images` and `./priv/static/media/thumbnails` respectively.
+
+* To automatically convert jpg file masters to webp files on import to save space, use the `--webp` option after the source folder.
 
 ## Adding Amazon Photos Ids to images
 
