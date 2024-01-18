@@ -141,7 +141,7 @@ defmodule Mix.Tasks.Shutterbug do
     extension = Path.extname(image_source_path)
     
     cond do
-      Enum.member?([".svg", ".webp"], extension) -> Photog.Shutterbug.File.safe_copy(image_source_path, image_master_path)
+      Enum.member?([".webp", ".svg"], extension) -> Photog.Shutterbug.File.safe_copy(image_source_path, image_master_path)
       
       extension == ".png" -> Photog.Shutterbug.File.convert_to_webp_lossless(image_source_path, image_master_path)
       
