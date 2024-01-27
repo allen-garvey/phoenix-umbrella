@@ -108,6 +108,7 @@
         position: relative; //for image hearts
 
         img{
+            background-color: #fff;
             height: $thumbnail_dimensions;
             width: $thumbnail_dimensions;
             border-radius: 10px;
