@@ -89,16 +89,20 @@ defmodule PhotogWeb.ImageView do
     }}
   end
 
+  defp get_creation_time(image) do
+    %{
+      raw: image.creation_time,
+      formatted: %{
+        us_date: DateHelpers.us_formatted_date(image.creation_time),
+        time: DateHelpers.formatted_time(image.creation_time),
+      }
+    }
+  end
+
   def image_to_map(image) do
     %{
       id: image.id,
-      creation_time: %{
-        raw: image.creation_time,
-        formatted: %{
-          us_date: DateHelpers.us_formatted_date(image.creation_time),
-          time: DateHelpers.formatted_time(image.creation_time),
-        }
-      },
+      creation_time: get_creation_time(image),
       master_path: image.master_path,
       thumbnail_path: image.thumbnail_path,
       mini_thumbnail_path: image.mini_thumbnail_path,
@@ -124,13 +128,7 @@ defmodule PhotogWeb.ImageView do
     
     image_map = %{
       id: image.id,
-      creation_time: %{
-        raw: image.creation_time,
-        formatted: %{
-          us_date: DateHelpers.us_formatted_date(image.creation_time),
-          time: DateHelpers.formatted_time(image.creation_time),
-        }
-      },
+      creation_time: get_creation_time(image),
       completion_date: DateHelpers.iso_formatted_date(image.completion_date),
       amazon_photos_id: image.amazon_photos_id,
       master_path: image.master_path,
