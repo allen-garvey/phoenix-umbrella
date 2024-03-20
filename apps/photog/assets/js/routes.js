@@ -95,7 +95,6 @@ export default {
                             name: 'imagesShow',
                             params: {
                                 id: item.id,
-                                image_id: item.id,
                             },
                         };
                     },
@@ -166,7 +165,6 @@ export default {
                             name: 'imagesShow',
                             params: {
                                 id: item.id,
-                                image_id: item.id,
                             },
                         };
                     },
