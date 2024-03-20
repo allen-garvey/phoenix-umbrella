@@ -6,7 +6,6 @@
             :parent="parent"
             :images="images"
             :image="image"
-            :thumbnailUrlFor="thumbnailUrlFor"
             :previousImage="previousImage"
             :nextImage="nextImage" 
             :imageIndex="modelIndex"
@@ -14,12 +13,12 @@
         >
         </Parent-Thumbnails>
         <div :class="$style.imageShowThumbnailContainer">
-            <a :href="masterUrl" target="_blank" rel="noreferrer">
-                <img :class="$style.image" :src="thumbnailUrlFor(image.thumbnail_path)" />
+            <a :href="masterUrlFor(image)" target="_blank" rel="noreferrer">
+                <img :class="$style.image" :src="thumbnailUrlFor(image)" />
             </a>
         </div>
         <div :class="$style.imageShowLinkContainer">
-            <a :href="masterUrl" target="_blank" rel="noreferrer">View full-size</a>
+            <a :href="masterUrlFor(image)" target="_blank" rel="noreferrer">View full-size</a>
             <a :href="amazonUrl" v-if="amazonUrl" target="_blank" rel="noreferrer">View in Amazon Photos</a>
         </div>
         <div>
@@ -116,7 +115,6 @@ import ImageInfo from './image-detail/image-info.vue';
 import ImageVersions from './image-detail/image-versions.vue';
 import ImageItemsList from './image-detail/image-items-list.vue';
 import ExifInfo from './image-detail/exif-info.vue';
-import { thumbnailUrlFor, getMasterUrl } from '../image';
 import { API_URL_BASE } from '../request-helpers';
 
 export default {
@@ -141,6 +139,14 @@ export default {
         parent: {
             type: Object,
         },
+        thumbnailUrlFor: {
+            type: Function,
+            required: true,
+        },
+        masterUrlFor: {
+            type: Function,
+            required: true,
+        },
     },
     components: {
         LoadingAnimation,
@@ -163,9 +169,6 @@ export default {
         }
     },
     computed: {
-        masterUrl(){
-            return getMasterUrl(this.image);
-        },
         amazonUrl(){
             if(!this.image.amazon_photos_id){
                 return '';
@@ -234,9 +237,6 @@ export default {
                     this.imageExif = imageExif.exif;
                 }
             });
-        },
-        thumbnailUrlFor(thumbnailPath){
-            return thumbnailUrlFor(thumbnailPath);
         },
         onKeyPressed(key){
             switch(key){

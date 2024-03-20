@@ -1,39 +1,38 @@
-import { thumbnailUrlFor } from '../../image.js';
 import CoverImageFormInput from '../cover-image-form-input.vue';
 
-export function albumAndPersonFormMixinBuilder(){
+export function albumAndPersonFormMixinBuilder() {
     return {
+        props: {
+            miniThumbnailUrlFor: {
+                type: Function,
+                required: true,
+            },
+        },
         components: {
             'Cover-Image-Form-Input': CoverImageFormInput,
         },
-        data(){
+        data() {
             return {
                 previousRoute: null,
             };
         },
         computed: {
-            shouldShowCoverImageInput(){
+            shouldShowCoverImageInput() {
                 return this.imagesInModel.length === 0;
             },
-            imagesInModel(){
-                if(this.isEditForm){
+            imagesInModel() {
+                if (this.isEditForm) {
                     return this.items;
-                }
-                else if(this.isCreateForm){
+                } else if (this.isCreateForm) {
                     return JSON.parse(history.state.images || '[]');
                 }
                 return [];
             },
-            hasImages(){
+            hasImages() {
                 return this.imagesInModel.length > 0;
             },
-            successRedirect(){
+            successRedirect() {
                 return history.state.successRedirect;
-            },
-        },
-        methods: {
-            thumbnailUrlFor(image){
-                return thumbnailUrlFor(image.mini_thumbnail_path);
             },
         },
     };

@@ -11,6 +11,7 @@
                 <thumbnail-items-list
                     :items="images"
                     :showRouteFor="showRouteForImage"
+                    :miniThumbnailUrlFor="miniThumbnailUrlFor"
                 />
             </template>
             <p v-else>No results found for {{ lastQuery }}</p>
@@ -48,6 +49,10 @@ import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list
 
 export default {
     props: {
+        miniThumbnailUrlFor: {
+            type: Function,
+            required: true,
+        },
     },
     components: {
         ResourceHeader,

@@ -146,7 +146,6 @@
 </style>
 
 <script>
-import { thumbnailUrlFor } from '../../../image.js';
 import heart from './heart.vue';
 import itemTitle from './item-title.vue';
 
@@ -196,6 +195,10 @@ export default {
         isCurrentlyBatchSelect: {
             type: Boolean,
             default: false,
+        },
+        miniThumbnailUrlFor: {
+            type: Function,
+            required: true,
         },
     },
     components: {
@@ -248,7 +251,7 @@ export default {
         thumbnailUrlFor(item){
             const image = this.imageFor(item);
             if(image){
-                return thumbnailUrlFor(image.mini_thumbnail_path);
+                return this.miniThumbnailUrlFor(image);
             }
             return '';
         },

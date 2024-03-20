@@ -3,7 +3,11 @@
         <template v-slot:inputs>
             <Form-Input :id="idForField('name')" label="Name" v-model="person.name" :errors="errors.name" />
 
-            <Cover-Image-Form-Input :id="idForField('cover_image_id')" :errors="[errors.cover_image, errors.cover_image_id]" :images="imagesInModel" v-model="person.cover_image_id" />
+            <Cover-Image-Form-Input 
+                :id="idForField('cover_image_id')" 
+                :errors="[errors.cover_image, errors.cover_image_id]" :images="imagesInModel" v-model="person.cover_image_id" 
+                :miniThumbnailUrlFor="miniThumbnailUrlFor"
+            />
         </template>
     </Form-Section>
 </template>

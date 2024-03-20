@@ -5,7 +5,7 @@
     <div>
         <image-title :image-id="imageId" :image-model="imageModel" />
         <div>
-            <img :class="$style.image" :src="masterImageUrl" @load="imageLoaded" ref="image" v-show="shouldShowSourceImage" />
+            <img :class="$style.image" :src="masterUrlFor(imageModel)" @load="imageLoaded" ref="image" v-show="shouldShowSourceImage" />
             <div :class="$style.canvasSuperContainer" :style="{width: `${polygonCropCanvasWidth}px`, height: `${polygonCropCanvasHeight}px`}">
                 <canvas ref="outputCanvas" :class="$style.outputCanvas" :style="{top: `${polygonCropBorderSize * zoom / 200}px`, left: `${polygonCropBorderSize * zoom / 200}px`}"></canvas>
                 <canvas ref="polygonCropCanvas" :class="$style.polygonCropCanvas" @click="polygonCropCanvasClicked"></canvas>
@@ -117,7 +117,6 @@ $controlsWidth: 454px;
 import { nextTick } from 'vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import ImageTitle from './image-title.vue';
-import { getMasterUrl } from '../../../image.js';
 import { createDrawFunc, loadTexture, createWebgl2Context } from '../canvas2';
 import { clearCanvas, drawLines, drawFill, saveCanvas, drawFilters, drawPolygonCropOrigin } from '../canvas';
 import { extractFileName } from '../path';
@@ -145,6 +144,10 @@ export default {
         },
         imageId: {
             type: Number,
+            required: true,
+        },
+        masterUrlFor: {
+            type: Function,
             required: true,
         },
     },
@@ -195,9 +198,6 @@ export default {
         };
     },
     computed: {
-        masterImageUrl(){
-            return getMasterUrl(this.imageModel);
-        },
         maxAdaptiveThreshold(){
             return 25;
         },

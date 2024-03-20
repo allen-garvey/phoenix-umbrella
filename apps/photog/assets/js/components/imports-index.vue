@@ -8,7 +8,10 @@
         :loadMoreItemsCallback="loadMoreItems"
     >
         <template v-slot:item="{item, index}">
-            <import-item :item="item" />
+            <import-item 
+                :item="item" 
+                :miniThumbnailUrlFor="miniThumbnailUrlFor"
+            />
         </template>
     </Text-List>
 </template>
@@ -29,6 +32,10 @@ export default {
                 required: true,
             },
             getModel: {
+                type: Function,
+                required: true,
+            },
+            miniThumbnailUrlFor: {
                 type: Function,
                 required: true,
             },

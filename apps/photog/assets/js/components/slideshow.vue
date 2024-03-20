@@ -3,7 +3,7 @@
         <loading-animation v-if="!areImagesLoaded" />
         <template v-else>
             <div :class="$style.imageContainer" ref="imageContainer">
-                <img :src="thumbnailUrl" @click="goFullScreen" />
+                <img :src="thumbnailUrlFor(image)" @click="goFullScreen" />
             </div>
             <div :class="$style.linksContainer">
                 <router-link :to="parentRoute">Go to {{ parentName }}</router-link>
@@ -52,9 +52,6 @@ import { nextTick } from 'vue';
 
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 
-import { thumbnailUrlFor, getMasterUrl } from '../image';
-import { API_URL_BASE } from '../request-helpers';
-
 export default {
     props: {
         getModel: {
@@ -76,7 +73,11 @@ export default {
         parentName: {
             type: String,
             required: true,
-        }
+        },
+        thumbnailUrlFor: {
+            type: Function,
+            required: true,
+        },
     },
     components: {
         LoadingAnimation,
@@ -94,12 +95,6 @@ export default {
     computed: {
         image(){
             return this.images[this.currentImageIndex];
-        },
-        thumbnailUrl(){
-            return thumbnailUrlFor(this.image.thumbnail_path);
-        },
-        masterUrl(){
-            return getMasterUrl(this.image);
         },
     },
     watch: {

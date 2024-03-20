@@ -1,5 +1,7 @@
-export function thumbnailUrlFor(path){
-    return `/media/thumbnails/${encodeURI(path)}`;
-}
+const joinUrlParts = (urlParts) => urlParts.filter((part) => !!part).join('/');
 
-export const getMasterUrl = (image) => `/media/images/${encodeURI(image.master_path)}`;
+export const thumbnailUrlFor = (path, prefix = '') =>
+    joinUrlParts(['/media/thumbnails', prefix, encodeURI(path)]);
+
+export const getMasterUrl = (image, prefix = '') =>
+    joinUrlParts(['/media/images', prefix, encodeURI(image.master_path)]);

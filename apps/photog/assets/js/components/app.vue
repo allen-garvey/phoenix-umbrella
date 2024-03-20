@@ -11,6 +11,9 @@
                 :getExif="getExif" 
                 :sendJson="sendJson" 
                 :setWindowTitle="setWindowTitle" 
+                :thumbnailUrlFor="thumbnailUrlFor"
+                :miniThumbnailUrlFor="miniThumbnailUrlFor"
+                :masterUrlFor="masterUrlFor"
             />
         </router-view>
     </div>
@@ -21,7 +24,8 @@ import PhotogHeader from './header.vue'
 import FlashAlert from './flash-alert.vue';
 import CacheUtil from '../cache-util.js'
 import { API_URL_BASE } from '../request-helpers.js';
-import { sendJson } from 'umbrella-common-js/ajax.js';
+import { thumbnailUrlFor, getMasterUrl } from '../image.js';
+import { sendJson, fetchJson } from 'umbrella-common-js/ajax.js';
 
 export default {
     name: 'Photog-App',
@@ -39,6 +43,7 @@ export default {
         return {
             cache: new Map(),
             exifCache: new Map(),
+            imageUrlPrefix: '',
         }
     },
     computed: {
@@ -60,6 +65,9 @@ export default {
         },
     },
     created() {
+        fetchJson(`${API_URL_BASE}/settings`).then(data => {
+            this.imageUrlPrefix = data.image_url_prefix;
+        });
         window.addEventListener('keyup', (e)=>{
             const routerView = this.$refs.routerView;
             if(routerView.onKeyPressed){
@@ -93,7 +101,16 @@ export default {
                 this.cache.clear();
                 return response;
             });
-        }
+        },
+        thumbnailUrlFor(image){
+            return thumbnailUrlFor(image.thumbnail_path, this.imageUrlPrefix);
+        },
+        miniThumbnailUrlFor(image){
+            return thumbnailUrlFor(image.mini_thumbnail_path, this.imageUrlPrefix);
+        },
+        masterUrlFor(image){
+            return getMasterUrl(image, this.imageUrlPrefix);
+        },
     }
 }
 </script>

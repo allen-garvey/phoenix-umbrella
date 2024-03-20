@@ -87,6 +87,7 @@
             :item="hoveredItem"
             :mousePosition="hoveredItemEvent"
             :contentCallback="itemPreviewContentCallback"
+            :miniThumbnailUrlFor="miniThumbnailUrlFor"
             v-if="hoveredItem"
         />
         
@@ -104,6 +105,7 @@
             :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
             @itemHover="onItemHovered"
             @itemHoverEnd="onItemHoveredEnd"
+            :miniThumbnailUrlFor="miniThumbnailUrlFor"
         />
         <infinite-observer
             :onTrigger="loadMoreThumbnails" 
@@ -256,6 +258,10 @@ export default {
         },
         slideshowRoute: {
             type: Object,
+        },
+        miniThumbnailUrlFor: {
+            type: Function,
+            required: true,
         },
     },
     components: {

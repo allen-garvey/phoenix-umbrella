@@ -5,7 +5,7 @@
         <p :class="$style.itemNotes" v-if="item.notes">{{ item.notes }}</p>
         <ul :class="$style.thumbnailList">
             <li v-for="image in item.images" :key="image.id">
-                <img :src="thumbnailUrlFor(image)" loading="lazy"/>
+                <img :src="miniThumbnailUrlFor(image)" loading="lazy"/>
             </li>
         </ul>
     </router-link>
@@ -37,12 +37,14 @@
 </style>
 
 <script>
-import { thumbnailUrlFor } from '../image.js';
-
 export default {
         props: {
             item: {
                 type: Object,
+                required: true,
+            },
+            miniThumbnailUrlFor: {
+                type: Function,
                 required: true,
             },
         },
@@ -60,9 +62,6 @@ export default {
             },
             titleFor(item){
                 return `${item.name} (${item.images_count})`;
-            },
-            thumbnailUrlFor(image){
-                return thumbnailUrlFor(image.mini_thumbnail_path);
             },
         }
     };

@@ -9,7 +9,8 @@ Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
 # General application configuration
 config :photog,
-  ecto_repos: [Photog.Repo]
+  ecto_repos: [Photog.Repo],
+  image_url_prefix: System.get_env("UMBRELLA_PHOTOG_IMAGE_URL_PREFIX", "")
 
 # Configures the endpoint
 config :photog, PhotogWeb.Endpoint,

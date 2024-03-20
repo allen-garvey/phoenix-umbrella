@@ -29,6 +29,11 @@ By adding Amazon Photos Ids to images, you can see an Amazon photos link on the 
 
 * Run `mix shutterbug.load_amazon_photos <json_file_path> <folder_name>` to load the Amazon Photo Ids for those images, where `folder_name` is the folder containing the images
 
+## Image url setup
+
+* You can optionally set the environment variable `UMBRELLA_PHOTOG_IMAGE_URL_PREFIX` as a random string, which is used as a prefix for image urls
+* If you do that, add aliases in your server configuration for image paths 
+
 
 ## License
 

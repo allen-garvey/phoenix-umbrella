@@ -10,7 +10,11 @@
 
             <Form-Input :id="idForField('description')" label="Description" v-model="album.description" :errors="errors.description" input-type="textarea" :textarea-rows="4" />
 
-            <Cover-Image-Form-Input :id="idForField('cover_image_id')" :errors="[errors.cover_image, errors.cover_image_id]" :images="imagesInModel" v-model="album.cover_image_id" />
+            <Cover-Image-Form-Input 
+                :id="idForField('cover_image_id')" 
+                :errors="[errors.cover_image, errors.cover_image_id]" :images="imagesInModel" v-model="album.cover_image_id" 
+                :miniThumbnailUrlFor="miniThumbnailUrlFor"
+            />
         </template>
     </Form-Section>
     <div 

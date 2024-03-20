@@ -16,6 +16,7 @@
             <thumbnail-items-list
                 :items="recentAlbums"
                 :showRouteFor="showRouteForAlbum"
+                :miniThumbnailUrlFor="miniThumbnailUrlFor"
             />
         </div>
 
@@ -27,6 +28,7 @@
             <thumbnail-items-list
                 :items="favoriteTags"
                 :showRouteFor="showRouteForTag"
+                :miniThumbnailUrlFor="miniThumbnailUrlFor"
             />
         </div>
 
@@ -39,6 +41,7 @@
             <thumbnail-items-list
                 :items="favoriteAlbums"
                 :showRouteFor="showRouteForAlbum"
+                :miniThumbnailUrlFor="miniThumbnailUrlFor"
                 v-if="favoriteAlbums"
             />
         </div>
@@ -72,6 +75,10 @@ export default {
             required: true,
         },
         getModel: {
+            type: Function,
+            required: true,
+        },
+        miniThumbnailUrlFor: {
             type: Function,
             required: true,
         },

@@ -57,10 +57,6 @@ export default {
             type: Object,
             required: true,
         },
-        thumbnailUrlFor: {
-            type: Function,
-            required: true,
-        },
         previousImage: {
             type: Object,
         },

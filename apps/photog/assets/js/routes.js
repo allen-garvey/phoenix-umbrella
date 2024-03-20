@@ -1,10 +1,18 @@
 import { getCurrentYear } from './date-helpers';
-import { buildImagesIndexVariant, buildImportsShowVariant, buildAlbumVariant } from './router-helpers.js';
-import { albumRelatedFields, sortImagesCallback, sortAlbumsCallback } from './routes-helpers';
+import {
+    buildImagesIndexVariant,
+    buildImportsShowVariant,
+    buildAlbumVariant,
+} from './router-helpers.js';
+import {
+    albumRelatedFields,
+    sortImagesCallback,
+    sortAlbumsCallback,
+} from './routes-helpers';
 
 import ThumbnailList from './components/thumbnail-list.vue';
 import ImportsIndex from './components/imports-index.vue';
-import ImageDetail from './components/image-detail.vue'
+import ImageDetail from './components/image-detail.vue';
 import AlbumForm from './components/album-form.vue';
 import PersonForm from './components/person-form.vue';
 import TagForm from './components/tag-form.vue';
@@ -17,21 +25,21 @@ import ImagesSearch from './components/images-search.vue';
 
 export default {
     routes: [
-        { 
-            path: '/', 
+        {
+            path: '/',
             name: 'home',
             component: Home,
         },
-        { 
+        {
             path: '/tags',
-            name: 'tagsIndex', 
+            name: 'tagsIndex',
             component: ThumbnailList,
             props: (route) => {
                 const props = {
                     apiPath: route.path,
-                    newItemLink: {name: 'tagsNew'},
+                    newItemLink: { name: 'tagsNew' },
                     pageTitle: 'Tags',
-                    showRouteFor: (item, _model)=>{
+                    showRouteFor: (item, _model) => {
                         return {
                             name: 'tagsShow',
                             params: {
@@ -44,22 +52,22 @@ export default {
                 return props;
             },
         },
-        { 
+        {
             path: '/imports',
-            name: 'importsIndex', 
+            name: 'importsIndex',
             component: ImportsIndex,
         },
         buildAlbumVariant('/albums', 'albumsIndex'),
-        { 
+        {
             path: '/persons',
-            name: 'personsIndex', 
+            name: 'personsIndex',
             component: ThumbnailList,
             props: (route) => {
                 const props = {
                     apiPath: route.path,
-                    newItemLink: {name: 'personsNew'},
+                    newItemLink: { name: 'personsNew' },
                     pageTitle: 'Persons',
-                    showRouteFor: (item, _model)=>{
+                    showRouteFor: (item, _model) => {
                         return {
                             name: 'personsShow',
                             params: {
@@ -67,13 +75,13 @@ export default {
                             },
                         };
                     },
-                }; 
+                };
                 return props;
             },
         },
-        { 
+        {
             path: '/images',
-            name: 'imagesIndex', 
+            name: 'imagesIndex',
             component: ThumbnailList,
             props: (route) => {
                 const props = {
@@ -82,7 +90,7 @@ export default {
                     enableBatchSelectImages: true,
                     isPaginated: true,
                     pageTitle: 'Images',
-                    showRouteFor: (item, _model)=>{
+                    showRouteFor: (item, _model) => {
                         return {
                             name: 'imagesShow',
                             params: {
@@ -91,7 +99,7 @@ export default {
                             },
                         };
                     },
-                }; 
+                };
                 return props;
             },
         },
@@ -99,37 +107,41 @@ export default {
             path: '/images-menu',
             name: 'imagesMenu',
             component: ListPage,
-            props(route){
+            props(route) {
                 return {
                     title: 'Images',
-                    getItems: () => Promise.resolve([
-                        {
-                            title: 'All Images',
-                            route: {name: 'imagesIndex'},
-                        },
-                        {
-                            title: 'Yearly Images',
-                            route: {name: 'imagesForYear', params: {year: getCurrentYear()}},
-                        },
-                        {
-                            title: 'Favorite Images',
-                            route: {name: 'imageFavoritesIndex'},
-                        },
-                        {
-                            title: 'Uncategorized Images',
-                            route: {name: 'imagesNotInAlbumIndex'},
-                        },
-                        {
-                            title: 'Search Images',
-                            route: {name: 'imagesSearch'},
-                        },
-                    ]),
+                    getItems: () =>
+                        Promise.resolve([
+                            {
+                                title: 'All Images',
+                                route: { name: 'imagesIndex' },
+                            },
+                            {
+                                title: 'Yearly Images',
+                                route: {
+                                    name: 'imagesForYear',
+                                    params: { year: getCurrentYear() },
+                                },
+                            },
+                            {
+                                title: 'Favorite Images',
+                                route: { name: 'imageFavoritesIndex' },
+                            },
+                            {
+                                title: 'Uncategorized Images',
+                                route: { name: 'imagesNotInAlbumIndex' },
+                            },
+                            {
+                                title: 'Search Images',
+                                route: { name: 'imagesSearch' },
+                            },
+                        ]),
                 };
             },
         },
-        { 
+        {
             path: '/images/years/:year',
-            name: 'imagesForYear', 
+            name: 'imagesForYear',
             component: ThumbnailList,
             props: (route) => {
                 const year = parseInt(route.params.year);
@@ -144,9 +156,12 @@ export default {
                     pageTitle: `Images from ${route.params.year}`,
                     previousPageLink: {
                         text: `Images from ${previousYear}`,
-                        link: {name: 'imagesForYear', params: {year: previousYear}},
+                        link: {
+                            name: 'imagesForYear',
+                            params: { year: previousYear },
+                        },
                     },
-                    showRouteFor: (item, _model)=>{
+                    showRouteFor: (item, _model) => {
                         return {
                             name: 'imagesShow',
                             params: {
@@ -156,15 +171,18 @@ export default {
                         };
                     },
                     slideshowRoute: {
-                        name: 'imageYearSlideshow', 
-                        params: { year: route.params.year }
+                        name: 'imageYearSlideshow',
+                        params: { year: route.params.year },
                     },
                 };
 
-                if(year < (new Date).getFullYear()){
+                if (year < new Date().getFullYear()) {
                     props.nextPageLink = {
                         text: `Images from ${nextYear}`,
-                        link: {name: 'imagesForYear', params: {year: nextYear}},
+                        link: {
+                            name: 'imagesForYear',
+                            params: { year: nextYear },
+                        },
                     };
                 }
 
@@ -176,15 +194,19 @@ export default {
             name: 'albumsForYearIndex',
             component: YearsListPage,
         },
-        buildAlbumVariant('/albums/favorites', 'albumFavoritesIndex', (route) => {
-            const props = {
-                apiPath: '/albums/?favorites=true',
-                apiItemsCountPath: '/albums/count?favorites=true',
-                pageTitle: 'Favorite Albums',
-            };
+        buildAlbumVariant(
+            '/albums/favorites',
+            'albumFavoritesIndex',
+            (route) => {
+                const props = {
+                    apiPath: '/albums/?favorites=true',
+                    apiItemsCountPath: '/albums/count?favorites=true',
+                    pageTitle: 'Favorite Albums',
+                };
 
-            return props;
-        }),
+                return props;
+            }
+        ),
         buildAlbumVariant('/albums/years/:year', 'albumsForYear', (route) => {
             const year = parseInt(route.params.year);
             const previousYear = year - 1;
@@ -194,46 +216,49 @@ export default {
                 pageTitle: `Albums from ${route.params.year}`,
                 previousPageLink: {
                     text: `Albums from ${previousYear}`,
-                    link: {name: 'albumsForYear', params: {year: previousYear}},
+                    link: {
+                        name: 'albumsForYear',
+                        params: { year: previousYear },
+                    },
                 },
                 slideshowRoute: {
-                    name: 'imageYearSlideshow', 
-                    params: { year: route.params.year }
+                    name: 'imageYearSlideshow',
+                    params: { year: route.params.year },
                 },
             };
 
-            if(year < (new Date).getFullYear()){
+            if (year < new Date().getFullYear()) {
                 props.nextPageLink = {
                     text: `Albums from ${nextYear}`,
-                    link: {name: 'albumsForYear', params: {year: nextYear}},
+                    link: { name: 'albumsForYear', params: { year: nextYear } },
                 };
             }
 
             return props;
         }),
-        buildImagesIndexVariant(
-            '/images/favorites',
-            'imageFavoritesIndex',
-            {
-                apiPath: '/images/?favorites=true',
-                apiItemsCountPath: '/images/count/?favorites=true',
-                isPaginated: true,
-                enableBatchSelectImages: true,
-                pageTitle: 'Favorite images',
-                itemPreviewContentCallback: (image) => {
-                    const albums = image.albums.map(album => album.name).join(', ');
-                    const persons = image.persons.map(person => person.name).join(', ');
-                    const messages = [];
-                    if(albums){
-                        messages.push(`Albums: ${albums}`);
-                    }
-                    if(persons){
-                        messages.push(`Persons: ${persons}`);
-                    }
-                    return messages.join('\n');
-                },
-            }
-        ),
+        buildImagesIndexVariant('/images/favorites', 'imageFavoritesIndex', {
+            apiPath: '/images/?favorites=true',
+            apiItemsCountPath: '/images/count/?favorites=true',
+            isPaginated: true,
+            enableBatchSelectImages: true,
+            pageTitle: 'Favorite images',
+            itemPreviewContentCallback: (image) => {
+                const albums = image.albums
+                    .map((album) => album.name)
+                    .join(', ');
+                const persons = image.persons
+                    .map((person) => person.name)
+                    .join(', ');
+                const messages = [];
+                if (albums) {
+                    messages.push(`Albums: ${albums}`);
+                }
+                if (persons) {
+                    messages.push(`Persons: ${persons}`);
+                }
+                return messages.join('\n');
+            },
+        }),
         buildImagesIndexVariant(
             '/images/uncategorized',
             'imagesNotInAlbumIndex',
@@ -245,42 +270,42 @@ export default {
                 pageTitle: 'Images not in an album',
             }
         ),
-        buildImagesIndexVariant(
-            '/images/no-amazon',
-            'imageNoAmazonIndex',
-            {
-                apiPath: '/images/?amazon_photos_id=false',
-                isPaginated: true,
-                enableBatchSelectImages: true,
-                pageTitle: 'Images with no Amazon Photos Id',
-            }
-        ),
+        buildImagesIndexVariant('/images/no-amazon', 'imageNoAmazonIndex', {
+            apiPath: '/images/?amazon_photos_id=false',
+            isPaginated: true,
+            enableBatchSelectImages: true,
+            pageTitle: 'Images with no Amazon Photos Id',
+        }),
         //new route has to be before show route
-        { 
+        {
             path: '/albums/new',
-            name: 'albumsNew', 
+            name: 'albumsNew',
             component: AlbumForm,
         },
-        { 
+        {
             path: '/albums/:id/edit',
-            name: 'albumsEdit', 
+            name: 'albumsEdit',
             component: AlbumForm,
             props: (route) => {
                 return {
                     modelId: parseInt(route.params.id),
                     itemsUrl: `/albums/${route.params.id}/images?excerpt=true`,
-                }; 
+                };
             },
         },
-        { 
+        {
             path: '/albums/:id',
-            name: 'albumsShow', 
+            name: 'albumsShow',
             component: ThumbnailList,
             props: (route) => {
                 const props = {
-                    batchRemoveItemsCallback(image_ids, sendJSON){
+                    batchRemoveItemsCallback(image_ids, sendJSON) {
                         const albumId = route.params.id;
-                        return sendJSON(`/api/albums/${albumId}/images`, 'DELETE', {image_ids});
+                        return sendJSON(
+                            `/api/albums/${albumId}/images`,
+                            'DELETE',
+                            { image_ids }
+                        );
                     },
                     apiPath: route.path,
                     buildItemsApiUrl: () => `${route.path}/images`,
@@ -288,15 +313,19 @@ export default {
                     isPaginated: true,
                     enableHasPersonFilter: true,
                     enableBatchSelectImages: true,
-                    editItemLinkFor: () => ({name: 'albumsEdit', params: {id: route.params.id}}),
+                    editItemLinkFor: () => ({
+                        name: 'albumsEdit',
+                        params: { id: route.params.id },
+                    }),
                     isDeleteEnabled: true,
                     reorderPathSuffix: '/images/reorder',
                     reorderItemsKey: 'image_ids',
                     reorderBySortCallback: sortImagesCallback,
                     relatedFields: albumRelatedFields,
                     getDescription: (album) => album.description,
-                    itemPreviewContentCallback: (image) => image.persons.map(person => person.name).join(', '),
-                    showRouteFor: (item, _model)=>{
+                    itemPreviewContentCallback: (image) =>
+                        image.persons.map((person) => person.name).join(', '),
+                    showRouteFor: (item, _model) => {
                         return {
                             name: 'albumImagesShow',
                             params: {
@@ -306,33 +335,33 @@ export default {
                         };
                     },
                     slideshowRoute: {
-                        name: 'albumSlideshow', 
-                        params: { album_id: route.params.id }
+                        name: 'albumSlideshow',
+                        params: { album_id: route.params.id },
                     },
-                }; 
+                };
                 return props;
             },
         },
         //new route has to be before show route
-        { 
+        {
             path: '/persons/new',
-            name: 'personsNew', 
+            name: 'personsNew',
             component: PersonForm,
         },
-        { 
+        {
             path: '/persons/:id/edit',
-            name: 'personsEdit', 
+            name: 'personsEdit',
             component: PersonForm,
             props: (route) => {
                 return {
                     modelId: parseInt(route.params.id),
                     itemsUrl: `/persons/${route.params.id}/images?excerpt=true`,
-                }; 
+                };
             },
         },
-        { 
+        {
             path: '/persons/:id',
-            name: 'personsShow', 
+            name: 'personsShow',
             component: ThumbnailList,
             props: (route) => {
                 const props = {
@@ -342,10 +371,14 @@ export default {
                     isPaginated: true,
                     enableHasAlbumFilter: true,
                     enableBatchSelectImages: true,
-                    editItemLinkFor: () => ({name: 'personsEdit', params: {id: route.params.id}}),
+                    editItemLinkFor: () => ({
+                        name: 'personsEdit',
+                        params: { id: route.params.id },
+                    }),
                     isDeleteEnabled: true,
-                    itemPreviewContentCallback: (image) => image.albums.map(album => album.name).join(', '),
-                    showRouteFor: (item, _model)=>{
+                    itemPreviewContentCallback: (image) =>
+                        image.albums.map((album) => album.name).join(', '),
+                    showRouteFor: (item, _model) => {
                         return {
                             name: 'personImagesShow',
                             params: {
@@ -354,34 +387,33 @@ export default {
                             },
                         };
                     },
-                }; 
+                };
                 return props;
             },
         },
         //new route has to be before show route
-        { 
+        {
             path: '/tags/new',
-            name: 'tagsNew', 
+            name: 'tagsNew',
             component: TagForm,
             props: (route) => {
-                return {
-                }; 
+                return {};
             },
         },
-        { 
+        {
             path: '/tags/:id/edit',
-            name: 'tagsEdit', 
+            name: 'tagsEdit',
             component: TagForm,
             props: (route) => {
                 return {
                     modelId: parseInt(route.params.id),
                     itemsUrl: `/tags/${route.params.id}/albums?excerpt=true`,
-                }; 
+                };
             },
         },
-        { 
+        {
             path: '/tags/:id',
-            name: 'tagsShow', 
+            name: 'tagsShow',
             component: ThumbnailList,
             props: (route) => {
                 const props = {
@@ -390,12 +422,15 @@ export default {
                     itemsCountKey: 'albums_count',
                     isPaginated: true,
                     enableBatchSelectAlbums: true,
-                    editItemLinkFor: () => ({name: 'tagsEdit', params: {id: route.params.id}}),
+                    editItemLinkFor: () => ({
+                        name: 'tagsEdit',
+                        params: { id: route.params.id },
+                    }),
                     isDeleteEnabled: true,
                     reorderPathSuffix: '/albums/reorder',
                     reorderItemsKey: 'album_ids',
                     reorderBySortCallback: sortAlbumsCallback,
-                    showRouteFor: (item)=>{
+                    showRouteFor: (item) => {
                         return {
                             name: 'albumsShow',
                             params: {
@@ -404,74 +439,77 @@ export default {
                         };
                     },
                     slideshowRoute: {
-                        name: 'tagSlideshow', 
-                        params: { tag_id: route.params.id }
+                        name: 'tagSlideshow',
+                        params: { tag_id: route.params.id },
                     },
-                }; 
+                };
                 return props;
             },
         },
         //has to be before importsShow route
-        { 
+        {
             path: '/images/search',
-            name: 'imagesSearch', 
+            name: 'imagesSearch',
             component: ImagesSearch,
         },
         buildImportsShowVariant('/imports/last', 'importsShowLast', {
             buildItemsApiUrl: (model) => `/imports/${model.id}/images`,
         }),
         buildImportsShowVariant('/imports/:id', 'importsShow'),
-        { 
+        {
             path: '/imports/:id/edit',
-            name: 'importsEdit', 
+            name: 'importsEdit',
             component: ImportForm,
             props: (route) => {
                 return {
                     modelId: parseInt(route.params.id),
                     itemsUrl: `/imports/${route.params.id}/images?excerpt=true`,
-                }; 
+                };
             },
         },
-        { 
+        {
+            path: '/images/:id/editor',
+            name: 'imagesEditor',
+            component: () =>
+                import(
+                    /* webpackChunkName: "image-editor" */ './components/image-editor/components/image-editor-page.vue'
+                ),
+            props: (route) => {
+                return {
+                    imageId: parseInt(route.params.id),
+                };
+            },
+        },
+        {
             path: '/images/:id',
-            name: 'imagesShow', 
+            name: 'imagesShow',
             component: ImageDetail,
             props: (route) => {
                 return {
                     imageId: parseInt(route.params.id),
-                }; 
+                };
             },
         },
-        { 
-            path: '/images/:id/editor',
-            name: 'imagesEditor', 
-            component: () => import( /* webpackChunkName: "image-editor" */ './components/image-editor/components/image-editor-page.vue'),
-            props: (route) => {
-                return {
-                    imageId: parseInt(route.params.id),
-                }; 
-            },
-        },
-        { 
+        {
             path: '/albums/:album_id/images/:image_id',
-            name: 'albumImagesShow', 
+            name: 'albumImagesShow',
             component: ImageDetail,
             props: (route) => {
                 return {
                     imageId: parseInt(route.params.image_id),
                     parent: {
                         id: route.params.album_id,
-                        getName(image){
-                            for(let i=0;i<image.albums.length;i++){
+                        getName(image) {
+                            for (let i = 0; i < image.albums.length; i++) {
                                 const album = image.albums[i];
-                                if(album.id == route.params.album_id){
+                                if (album.id == route.params.album_id) {
                                     return album.name;
                                 }
                             }
                         },
                         parentRouteName: 'albumsShow',
                         imagesApiPath: `/albums/${route.params.album_id}/images?excerpt=true`,
-                        showRouteFor: (item)=>{
+                        showRouteFor: (item) => {
                             return {
                                 name: 'albumImagesShow',
                                 params: {
@@ -482,35 +520,35 @@ export default {
                         },
                         getSlideshowRoute(imageIndex) {
                             return {
-                                name: 'albumSlideshow', 
+                                name: 'albumSlideshow',
                                 hash: `#${imageIndex}`,
-                                params: { album_id: route.params.album_id }
-                            }
-                        }
+                                params: { album_id: route.params.album_id },
+                            };
+                        },
                     },
-                }; 
+                };
             },
         },
-        { 
+        {
             path: '/persons/:person_id/images/:image_id',
-            name: 'personImagesShow', 
+            name: 'personImagesShow',
             component: ImageDetail,
             props: (route) => {
                 return {
                     imageId: parseInt(route.params.image_id),
                     parent: {
                         id: route.params.person_id,
-                        getName(image){
-                            for(let i=0;i<image.persons.length;i++){
+                        getName(image) {
+                            for (let i = 0; i < image.persons.length; i++) {
                                 const person = image.persons[i];
-                                if(person.id == route.params.person_id){
+                                if (person.id == route.params.person_id) {
                                     return person.name;
                                 }
                             }
                         },
                         imagesApiPath: `/persons/${route.params.person_id}/images?excerpt=true`,
                         parentRouteName: 'personsShow',
-                        showRouteFor: (item)=>{
+                        showRouteFor: (item) => {
                             return {
                                 name: 'personImagesShow',
                                 params: {
@@ -520,12 +558,12 @@ export default {
                             };
                         },
                     },
-                }; 
+                };
             },
         },
-        { 
+        {
             path: '/imports/:import_id/images/:image_id',
-            name: 'importImagesShow', 
+            name: 'importImagesShow',
             component: ImageDetail,
             props: (route) => {
                 return {
@@ -535,7 +573,7 @@ export default {
                         name: 'Import',
                         imagesApiPath: `/imports/${route.params.import_id}/images?excerpt=true`,
                         parentRouteName: 'importsShow',
-                        showRouteFor: (item)=>{
+                        showRouteFor: (item) => {
                             return {
                                 name: 'importImagesShow',
                                 params: {
@@ -545,68 +583,77 @@ export default {
                             };
                         },
                     },
-                }; 
+                };
             },
         },
-        { 
+        {
             path: '/slideshows/albums/:album_id',
-            name: 'albumSlideshow', 
+            name: 'albumSlideshow',
             component: Slideshow,
             props: (route) => {
                 return {
                     apiPath: `/albums/${route.params.album_id}/images?excerpt=true`,
-                    getImageShowRoute(image){
+                    getImageShowRoute(image) {
                         return {
                             name: 'albumImagesShow',
-                                params: {
-                                    album_id: route.params.album_id,
-                                    image_id: image.id,
-                                },
+                            params: {
+                                album_id: route.params.album_id,
+                                image_id: image.id,
+                            },
                         };
                     },
-                    parentRoute: {name: 'albumsShow', params: {id: route.params.album_id}},
+                    parentRoute: {
+                        name: 'albumsShow',
+                        params: { id: route.params.album_id },
+                    },
                     parentName: 'Album',
-                }; 
+                };
             },
         },
-        { 
+        {
             path: '/slideshows/tags/:tag_id',
-            name: 'tagSlideshow', 
+            name: 'tagSlideshow',
             component: Slideshow,
             props: (route) => {
                 return {
                     apiPath: `/tags/${route.params.tag_id}/images?excerpt=true`,
-                    getImageShowRoute(image){
+                    getImageShowRoute(image) {
                         return {
                             name: 'imagesShow',
-                                params: {
-                                    id: image.id,
-                                },
+                            params: {
+                                id: image.id,
+                            },
                         };
                     },
-                    parentRoute: {name: 'tagsShow', params: {id: route.params.tag_id}},
+                    parentRoute: {
+                        name: 'tagsShow',
+                        params: { id: route.params.tag_id },
+                    },
                     parentName: 'Tag',
-                }; 
+                };
             },
         },
-        { 
+        {
             path: '/slideshows/images/years/:year',
-            name: 'imageYearSlideshow', 
+            name: 'imageYearSlideshow',
             component: Slideshow,
             props: (route) => {
                 return {
                     apiPath: `/images/years/${route.params.year}/?excerpt=true`,
-                    getImageShowRoute(image){
+                    getImageShowRoute(image) {
                         return {
                             name: 'imagesShow',
-                                params: {
-                                    id: image.id,
-                                },
+                            params: {
+                                id: image.id,
+                            },
                         };
                     },
-                    parentRoute: {name: 'albumsForYear', params: {year: route.params.year}},
+                    parentRoute: {
+                        name: 'albumsForYear',
+                        params: { year: route.params.year },
+                    },
                     parentName: 'Albums',
-                }; 
+                };
             },
         },
     ],

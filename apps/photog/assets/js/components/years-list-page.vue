@@ -21,7 +21,7 @@
                     <span :class="$style.count">({{ year.count }})</span>
                 </router-link>
                 <router-link :to="pathForYear(year)" v-if="year.mini_thumbnail_path">
-                    <img :src="thumbnailUrlFor(year.mini_thumbnail_path)" :class="$style.coverImage" />
+                    <img :src="miniThumbnailUrlFor(year)" :class="$style.coverImage" />
                 </router-link>
                 <router-link 
                     :to="pathForYear(year)" 
@@ -142,7 +142,6 @@ import { nextTick } from 'vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import focus from 'umbrella-common-js/vue/directives/focus.js';
 import { API_URL_BASE } from '../request-helpers.js';
-import { thumbnailUrlFor } from '../image.js';
 
 export default {
     props: {
@@ -151,6 +150,10 @@ export default {
             required: true,
         },
         sendJson: {
+            type: Function,
+            required: true,
+        },
+        miniThumbnailUrlFor: {
             type: Function,
             required: true,
         },
@@ -228,9 +231,6 @@ export default {
             this.yearBeingEdited.description = params.description;
             this.yearBeingEdited.cover_image_id = params.cover_image_id;
             this.yearBeingEdited = null;
-        },
-        thumbnailUrlFor(mini_thumbnail_path){
-            return thumbnailUrlFor(mini_thumbnail_path);
         },
         pathForYear(year){
             return {

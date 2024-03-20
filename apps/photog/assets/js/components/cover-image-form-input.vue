@@ -10,12 +10,12 @@
         >
             <legend>Cover Image</legend>
             <div :class="$style.selectedImageContainer" v-if="selectedImage">
-                <img :src="thumbnailUrlFor(selectedImage)" />
+                <img :src="miniThumbnailUrlFor(selectedImage)" />
             </div>
             <div :class="$style.imagesList">
                 <label v-for="image in images" :key="image.id">
                     <input type="radio" v-model="coverImageId" :value="image.id">
-                    <img :src="thumbnailUrlFor(image)" loading="lazy" />
+                    <img :src="miniThumbnailUrlFor(image)" loading="lazy" />
                 </label>
             </div>
             <Form-Field-Errors :errors="errors" />
@@ -70,7 +70,6 @@
 </style>
 
 <script>
-import { thumbnailUrlFor } from '../image.js';
 import FormInput from './form-input.vue';
 import FormFieldErrors from './form-field-errors.vue';
 
@@ -91,6 +90,10 @@ export default {
         },
         images: {
             type: Array,
+            required: true,
+        },
+        miniThumbnailUrlFor: {
+            type: Function,
             required: true,
         },
     },
@@ -117,11 +120,6 @@ export default {
     watch: {
         coverImageId(newValue){
             this.$emit('update:modelValue', newValue);
-        },
-    },
-    methods: {
-        thumbnailUrlFor(image){
-            return thumbnailUrlFor(image.mini_thumbnail_path);
         },
     },
 }

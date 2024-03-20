@@ -52,8 +52,6 @@
 </style>
 
 <script>
-import { thumbnailUrlFor } from '../../../image';
-
 export default {
     props: {
         item: {
@@ -66,6 +64,10 @@ export default {
         },
         contentCallback: {
             type: Function,
+        },
+        miniThumbnailUrlFor: {
+            type: Function,
+            required: true,
         },
     },
     computed: {
@@ -83,7 +85,7 @@ export default {
         imageSrc(){
             const item = this.item;
             const image = item.cover_image ? item.cover_image : item;
-            return thumbnailUrlFor(image.mini_thumbnail_path);
+            return this.miniThumbnailUrlFor(image);
         },
         content(){
             try {
