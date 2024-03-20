@@ -47,7 +47,7 @@
                 :updateImage="updateImage"
             >
                 <router-link
-                    :to="{ name: 'imagesShow', params: { id: image.source_image_id, image_id: image.source_image_id } }"
+                    :to="{ name: 'imagesShow', params: { id: image.source_image_id } }"
                     v-if="image.source_image_id"
                 >
                     View source image

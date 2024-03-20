@@ -8,7 +8,7 @@
                 :key="image_id"
             >
                  <router-link
-                    :to="{ name: 'imagesShow', params: { id: image_id, image_id: image_id } }"
+                    :to="{ name: 'imagesShow', params: { id: image_id } }"
                 >
                     Image {{ image_id }}
                 </router-link>
