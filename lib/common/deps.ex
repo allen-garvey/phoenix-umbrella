@@ -4,7 +4,6 @@ defmodule Umbrella.Common.Deps do
     ecto() ++
     phoenix_html() ++
     [
-      {:phoenix, "~> 1.6.11"},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_live_reload, "~> 1.3.3", only: :dev},
       {:jason, "~> 1.4.0"},
@@ -23,6 +22,7 @@ defmodule Umbrella.Common.Deps do
 
   def phoenix_html do
     [
+      {:phoenix, "~> 1.6.11"},
       {:phoenix_html, "~> 3.2.0"},
       {:gettext, "~> 0.17.1"},
     ]
