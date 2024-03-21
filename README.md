@@ -18,6 +18,8 @@ Elixir umbrella project containing several custom CMSs made with Elixir/Phoenix.
 
 * Set environment variable `UMBRELLA_SUPER_SEARCH_URL` for super search url (e.g. `export UMBRELLA_SUPER_SEARCH_URL="http://search.alaska.test"`)
 
+* Make sure environment variables are set before compilation, as the values are set at compile time
+
 * Clone or download this repo
 
 * Run `mix deps.get`
