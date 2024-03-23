@@ -15,6 +15,7 @@ config :photog,
 # Configures the endpoint
 config :photog, PhotogWeb.Endpoint,
   url: [host: "localhost"],
+  http: [port: 6014],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: PhotogWeb.ErrorView, accepts: ~w(html json)],
   pubsub_server: Photog.PubSub
@@ -27,6 +28,9 @@ config :logger, :console,
 config :phoenix, :format_encoders, json: Jason
 config :photog, Photog.Repo,
   types: Common.PostgrexTypes
+
+# Configure your database
+config :photog, Photog.Repo, Umbrella.Common.Config.postgres_config("photog_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

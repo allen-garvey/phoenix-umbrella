@@ -15,6 +15,7 @@ config :grenadier,
 # Configures the endpoint
 config :grenadier, GrenadierWeb.Endpoint,
   url: [host: "localhost"],
+  http: [port: Umbrella.Common.Config.grenadier_port()],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: GrenadierWeb.ErrorView, accepts: ~w(html json)],
   pubsub_server: Grenadier.PubSub
@@ -29,6 +30,9 @@ config :phoenix, :json_library, Jason
 config :phoenix, :format_encoders, json: Jason
 config :grenadier, Grenadier.Repo,
   types: Common.PostgrexTypes
+
+# Configure your database
+config :grenadier, Grenadier.Repo, Umbrella.Common.Config.postgres_config("grenadier_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

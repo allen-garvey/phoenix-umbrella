@@ -9,7 +9,6 @@ Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :artour, Artour.Endpoint,
-  http: [port: 6010],
   debug_errors: true,
   code_reloader: true,
   check_origin: false #,
@@ -35,4 +34,4 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :artour, Artour.Repo, Umbrella.Common.Config.postgres_config("artour_dev")
+# config :artour, Artour.Repo, Umbrella.Common.Config.postgres_config("artour_dev")

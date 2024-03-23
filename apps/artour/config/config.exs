@@ -14,6 +14,7 @@ config :artour,
 # Configures the endpoint
 config :artour, Artour.Endpoint,
   url: [host: "localhost"],
+  http: [port: 6010],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: Artour.ErrorView, accepts: ~w(html json)],
   pubsub_server: Artour.PubSub
@@ -26,6 +27,9 @@ config :logger, :console,
 config :phoenix, :format_encoders, json: Jason
 config :artour, Artour.Repo,
   types: Common.PostgrexTypes
+
+# Configure your database
+config :artour, Artour.Repo, Umbrella.Common.Config.postgres_config("artour_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

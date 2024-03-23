@@ -14,6 +14,7 @@ config :seren,
 # Configures the endpoint
 config :seren, SerenWeb.Endpoint,
   url: [host: "localhost"],
+  http: [port: 6013],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: SerenWeb.ErrorView, accepts: ~w(html json)],
   pubsub_server: Seren.PubSub
@@ -26,6 +27,9 @@ config :logger, :console,
 config :phoenix, :format_encoders, json: Jason
 config :seren, Seren.Repo,
   types: Common.PostgrexTypes
+
+# Configure your database
+config :seren, Seren.Repo, Umbrella.Common.Config.postgres_config("seren_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

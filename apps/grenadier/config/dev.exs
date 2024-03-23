@@ -3,7 +3,7 @@ import Config
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
 # Configure your database
-config :grenadier, Grenadier.Repo, Umbrella.Common.Config.postgres_config("grenadier_dev")
+# config :grenadier, Grenadier.Repo, Umbrella.Common.Config.postgres_config("grenadier_dev")
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -12,7 +12,6 @@ config :grenadier, Grenadier.Repo, Umbrella.Common.Config.postgres_config("grena
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :grenadier, GrenadierWeb.Endpoint,
-  http: [port: Umbrella.Common.Config.grenadier_port()],
   debug_errors: true,
   code_reloader: true,
   check_origin: false

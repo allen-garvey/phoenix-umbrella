@@ -14,6 +14,7 @@ config :bookmarker,
 # Configures the endpoint
 config :bookmarker, Bookmarker.Endpoint,
   url: [host: "localhost"],
+  http: [port: 6016],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: Bookmarker.ErrorView, accepts: ~w(html json)],
   pubsub_server: Bookmarker.PubSub
@@ -26,6 +27,9 @@ config :logger, :console,
 config :phoenix, :format_encoders, json: Jason
 config :bookmarker, Bookmarker.Repo,
   types: Common.PostgrexTypes
+
+# Configure your database
+config :bookmarker, Bookmarker.Repo, Umbrella.Common.Config.postgres_config("bookmarker_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

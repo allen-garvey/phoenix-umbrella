@@ -15,6 +15,7 @@ config :pluginista,
 # Configures the endpoint
 config :pluginista, PluginistaWeb.Endpoint,
   url: [host: "localhost"],
+  http: [port: 6018],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: PluginistaWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Pluginista.PubSub
@@ -26,6 +27,9 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+# Configure your database
+config :pluginista, Pluginista.Repo, Umbrella.Common.Config.postgres_config("pluginista_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

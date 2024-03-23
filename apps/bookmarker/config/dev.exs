@@ -9,7 +9,6 @@ Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :bookmarker, Bookmarker.Endpoint,
-  http: [port: 6016],
   debug_errors: true,
   code_reloader: true,
   check_origin: false
@@ -36,4 +35,4 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :bookmarker, Bookmarker.Repo, Umbrella.Common.Config.postgres_config("bookmarker_dev")
+# config :bookmarker, Bookmarker.Repo, Umbrella.Common.Config.postgres_config("bookmarker_dev")

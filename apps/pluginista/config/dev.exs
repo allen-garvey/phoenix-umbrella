@@ -3,7 +3,7 @@ import Config
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
 # Configure your database
-config :pluginista, Pluginista.Repo, Umbrella.Common.Config.postgres_config("pluginista_dev")
+# config :pluginista, Pluginista.Repo, Umbrella.Common.Config.postgres_config("pluginista_dev")
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -14,7 +14,6 @@ config :pluginista, Pluginista.Repo, Umbrella.Common.Config.postgres_config("plu
 config :pluginista, PluginistaWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [port: 6018],
   check_origin: false,
   code_reloader: true,
   debug_errors: true

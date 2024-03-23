@@ -14,6 +14,7 @@ config :blockquote,
 # Configures the endpoint
 config :blockquote, BlockquoteWeb.Endpoint,
   url: [host: "localhost"],
+  http: [port: 6011],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: BlockquoteWeb.ErrorView, accepts: ~w(html json)]
 
@@ -25,6 +26,9 @@ config :logger, :console,
 config :phoenix, :format_encoders, json: Jason
 config :blockquote, Blockquote.Repo,
   types: Common.PostgrexTypes
+
+# Configure your database
+config :blockquote, Blockquote.Repo, Umbrella.Common.Config.postgres_config("blockquote_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

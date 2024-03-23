@@ -15,6 +15,7 @@ config :startpage,
 # Configures the endpoint
 config :startpage, StartpageWeb.Endpoint,
   url: [host: "localhost"],
+  http: [port: 6017],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: StartpageWeb.ErrorView, accepts: ~w(html json)],
   pubsub_server: Startpage.PubSub
@@ -29,6 +30,9 @@ config :phoenix, :json_library, Jason
 config :phoenix, :format_encoders, json: Jason
 config :booklist, Booklist.Repo,
   types: Common.PostgrexTypes
+
+# Configure your database
+config :startpage, Startpage.Repo, Umbrella.Common.Config.postgres_config("startpage_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -9,7 +9,6 @@ Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :booklist, BooklistWeb.Endpoint,
-  http: [port: 6015],
   debug_errors: true,
   code_reloader: true,
   check_origin: false
@@ -69,4 +68,4 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 # Configure your database
-config :booklist, Booklist.Repo, Umbrella.Common.Config.postgres_config("booklist_dev")
+# config :booklist, Booklist.Repo, Umbrella.Common.Config.postgres_config("booklist_dev")

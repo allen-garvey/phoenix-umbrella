@@ -15,6 +15,7 @@ config :booklist,
 # Configures the endpoint
 config :booklist, BooklistWeb.Endpoint,
   url: [host: "localhost"],
+  http: [port: 6015],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: BooklistWeb.ErrorView, accepts: ~w(html json)],
   pubsub_server: Booklist.PubSub
@@ -29,6 +30,9 @@ config :phoenix, :json_library, Jason
 config :phoenix, :format_encoders, json: Jason
 config :booklist, Booklist.Repo,
   types: Common.PostgrexTypes
+
+# Configure your database
+config :booklist, Booklist.Repo, Umbrella.Common.Config.postgres_config("booklist_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

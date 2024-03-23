@@ -9,7 +9,6 @@ Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :photog, PhotogWeb.Endpoint,
-  http: [port: 6014],
   debug_errors: true,
   code_reloader: true,
   check_origin: false
@@ -54,4 +53,4 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :photog, Photog.Repo, Umbrella.Common.Config.postgres_config("photog_dev")
+# config :photog, Photog.Repo, Umbrella.Common.Config.postgres_config("photog_dev")
