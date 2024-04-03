@@ -81,10 +81,13 @@ defmodule GrenadierWeb.PageController do
     remote_ip = conn.remote_ip
                   |> Tuple.to_list
                   |> Enum.join(".")
+    ip = conn
+      |> Plug.Conn.get_req_header("x-forwarded-for")
+      |> List.first(remote_ip)
     login_params = %{
       username: username,
       was_successful: was_successful,
-      ip: remote_ip,
+      ip: ip,
       user_agent: user_agent,
     }
     # don't check if creation fails or not, since we don't want errors
