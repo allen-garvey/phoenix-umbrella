@@ -34,6 +34,10 @@ export default {
             type: String,
             required: true,
         },
+        imageUrlPrefix: {
+            type: String,
+            required: true,
+        },
     },
     components: {
         'Photog-Header': PhotogHeader,
@@ -43,7 +47,6 @@ export default {
         return {
             cache: new Map(),
             exifCache: new Map(),
-            imageUrlPrefix: '',
         }
     },
     computed: {
@@ -65,9 +68,6 @@ export default {
         },
     },
     created() {
-        fetchJson(`${API_URL_BASE}/settings`).then(data => {
-            this.imageUrlPrefix = data.image_url_prefix;
-        });
         window.addEventListener('keyup', (e)=>{
             const routerView = this.$refs.routerView;
             if(routerView.onKeyPressed){

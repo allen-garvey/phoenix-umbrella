@@ -77,8 +77,6 @@ defmodule PhotogWeb.Router do
     # Album years
     delete "/years/:year",                    YearController, :delete
     put "/years/:id",                         YearController, :put
-
-    get "/settings",                          SettingsController, :index
   end
 
   scope "/", PhotogWeb do
