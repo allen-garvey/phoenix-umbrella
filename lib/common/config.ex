@@ -10,6 +10,7 @@ defmodule Umbrella.Common.Config do
       database: database_name,
       hostname: "localhost",
       show_sensitive_data_on_connection_error: true,
+      port: 5432,
       pool_size: 5
     ]
   end
