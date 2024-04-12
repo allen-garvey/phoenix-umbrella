@@ -38,6 +38,12 @@
         justify-content: space-between;
         margin: 0.5em 0;
     }
+
+    @media (any-pointer: coarse) {
+        .albumImageNav {
+            margin: 2em 0;
+        }
+    }
 </style>
 
 <script>
