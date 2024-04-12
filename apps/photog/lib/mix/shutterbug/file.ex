@@ -28,7 +28,7 @@ defmodule Photog.Shutterbug.File do
   Could potentially add .gif in future, but no need for it now
   """
   def is_image_filename(filename) do
-  	!File.dir?(filename) and Regex.match?(~r/^\.(jpg|jpeg|png|svg|webp)$/i, Path.extname(filename))
+  	!File.dir?(filename) and Regex.match?(~r/^\.(heic|jpg|jpeg|png|svg|webp)$/i, Path.extname(filename))
   end
 
   @doc """
