@@ -14,7 +14,11 @@
         </Parent-Thumbnails>
         <div :class="$style.imageShowThumbnailContainer">
             <a :href="masterUrlFor(image)" target="_blank" rel="noreferrer">
-                <img :class="$style.image" :src="thumbnailUrlFor(image)" />
+                <Swipe-Image
+                    :src="thumbnailUrlFor(image)"
+                    :images-class="$style.image"
+                    :on-swiped="onKeyPressed"
+                />
             </a>
         </div>
         <div :class="$style.imageShowLinkContainer">
@@ -115,6 +119,7 @@ import ImageInfo from './image-detail/image-info.vue';
 import ImageVersions from './image-detail/image-versions.vue';
 import ImageItemsList from './image-detail/image-items-list.vue';
 import ExifInfo from './image-detail/exif-info.vue';
+import SwipeImage from './shared/swipe-image.vue';
 import { API_URL_BASE } from '../request-helpers';
 
 export default {
@@ -155,6 +160,7 @@ export default {
         ImageVersions,
         ImageItemsList,
         ExifInfo,
+        SwipeImage,
     },
     created(){
         this.setup();

@@ -3,7 +3,11 @@
         <loading-animation v-if="!areImagesLoaded" />
         <template v-else>
             <div :class="$style.imageContainer" ref="imageContainer">
-                <img :src="thumbnailUrlFor(image)" @click="goFullScreen" />
+                <Swipe-Image
+                    :src="thumbnailUrlFor(image)"
+                    :on-swiped="onKeyPressed"
+                    @click="goFullScreen"
+                />
             </div>
             <div :class="$style.linksContainer">
                 <router-link :to="parentRoute">Go to {{ parentName }}</router-link>
@@ -51,6 +55,7 @@
 import { nextTick } from 'vue';
 
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
+import SwipeImage from './shared/swipe-image.vue';
 
 export default {
     props: {
@@ -81,6 +86,7 @@ export default {
     },
     components: {
         LoadingAnimation,
+        SwipeImage,
     },
     created(){
         this.setup();
