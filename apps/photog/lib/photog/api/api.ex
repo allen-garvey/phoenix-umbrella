@@ -15,6 +15,7 @@ defmodule Photog.Api do
   alias Photog.Api.Tag
   alias Photog.Api.AlbumTag
   alias Photog.Api.Year
+  alias Photog.Api.YearImage
 
   @doc """
   Preloads image import
@@ -1497,6 +1498,108 @@ defmodule Photog.Api do
   def delete_year(year) do
     from(year in Year, where: year.id == ^year)
     |> Repo.delete_all
+  end
+
+  @doc """
+  Returns the list of year_images.
+
+  ## Examples
+
+      iex> list_year_images()
+      [%YearImage{}, ...]
+
+  """
+  def list_year_images do
+    Repo.all(YearImage)
+  end
+
+  @doc """
+  Gets a single year_image.
+
+  Raises `Ecto.NoResultsError` if the Year image does not exist.
+
+  ## Examples
+
+      iex> get_year_image!(123)
+      %YearImage{}
+
+      iex> get_year_image!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_year_image!(id), do: Repo.get!(YearImage, id)
+
+  @doc """
+  Creates a year_image.
+
+  ## Examples
+
+      iex> create_year_image(%{field: value})
+      {:ok, %YearImage{}}
+
+      iex> create_year_image(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_year_image(attrs \\ %{}) do
+    %YearImage{}
+    |> YearImage.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a year_image.
+
+  ## Examples
+
+      iex> update_year_image(year_image, %{field: new_value})
+      {:ok, %YearImage{}}
+
+      iex> update_year_image(year_image, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_year_image(%YearImage{} = year_image, attrs) do
+    year_image
+    |> YearImage.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a year_image.
+
+  ## Examples
+
+      iex> delete_year_image(year_image)
+      {:ok, %YearImage{}}
+
+      iex> delete_year_image(year_image)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_year_image(%YearImage{} = year_image) do
+    Repo.delete(year_image)
+  end
+
+  def delete_year_image(year, image_id) do
+    from(
+      year_image in YearImage, 
+      where: year_image.year == ^year and year_image.image_id == ^image_id
+    )
+    |> Repo.delete_all
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking year_image changes.
+
+  ## Examples
+
+      iex> change_year_image(year_image)
+      %Ecto.Changeset{data: %YearImage{}}
+
+  """
+  def change_year_image(%YearImage{} = year_image, attrs \\ %{}) do
+    YearImage.changeset(year_image, attrs)
   end
 
 end
