@@ -406,11 +406,13 @@ defmodule Photog.Api do
     )
 
     year_images = from(
-      year_image in YearImage,
-      join: image in assoc(year_image, :image),
-      order_by: [desc: :id],
+      image in Image,
+      join: album_image in assoc(image, :album_images),
+      join: album in assoc(album_image, :album),
+      join: year in assoc(album, :years),
+      order_by: [desc: album_image.image_order, desc: album_image.id],
       select: %{
-        year: year_image.year,
+        year: year.id,
         image: %{
           id: image.id,
           mini_thumbnail_path: image.mini_thumbnail_path,
@@ -435,14 +437,12 @@ defmodule Photog.Api do
       year in Year,
       right_join: year_aggregate in subquery(years_query),
       on: year.id == year_aggregate.year,
-      left_join: cover_image in assoc(year, :cover_image),
       order_by: [desc: year_aggregate.year],
       select: %{
         year: year_aggregate.year, 
         count: year_aggregate.count, 
-        description: year.description, 
-        mini_thumbnail_path: cover_image.mini_thumbnail_path, 
-        cover_image_id: year.cover_image_id
+        description: year.description,
+        album_id: year.album_id,
       }
     )
     |> Repo.all
@@ -1519,10 +1519,10 @@ defmodule Photog.Api do
   @doc """
   Updates a year or creates it if it doesn't exist.
   """
-  def upsert_year(%{"id" => _id, "description" => description, "cover_image_id" => cover_image_id} = attrs) do
+  def upsert_year(%{"id" => _id, "description" => description, "album_id" => album_id} = attrs) do
     %Year{}
     |> Year.changeset(attrs)
-    |> Repo.insert(on_conflict: [set: [description: description, cover_image_id: cover_image_id]], conflict_target: :id)
+    |> Repo.insert(on_conflict: [set: [description: description, album_id: album_id]], conflict_target: :id)
   end
 
   @doc """

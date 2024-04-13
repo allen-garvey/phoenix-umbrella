@@ -6,15 +6,15 @@ defmodule Photog.Api.Year do
     schema "years" do
       field :description, :string
       
-      belongs_to :cover_image, Photog.Api.Image
+      belongs_to :album, Photog.Api.Album
     end
   
     @doc false
     def changeset(year, attrs) do
       year
-      |> cast(attrs, [:id, :description, :cover_image_id])
+      |> cast(attrs, [:id, :description, :album_id])
       |> validate_required([:id])
-      |> assoc_constraint(:cover_image)
+      |> assoc_constraint(:album)
     end
   end
   

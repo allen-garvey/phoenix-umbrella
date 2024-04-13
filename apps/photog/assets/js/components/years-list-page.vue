@@ -58,7 +58,7 @@
                     <input 
                         class="form-control" 
                         :class="$style.numberInput" 
-                        v-model="yearBeingEditedTemp.cover_image_id" 
+                        v-model="yearBeingEditedTemp.album_id" 
                         type="number"
                     />
                     <button 
@@ -224,19 +224,19 @@ export default {
         save(){
             const params = {
                 description: this.yearBeingEditedTemp.description || null,
-                cover_image_id: this.yearBeingEditedTemp.cover_image_id || null,
+                album_id: this.yearBeingEditedTemp.album_id || null,
             };
-            if(!params.description && !params.cover_image_id){
+            if(!params.description && !params.album_id){
                 this.sendJson(`${API_URL_BASE}/years/${this.yearBeingEdited.year}`, 'DELETE');
             }
             else {
-                const forceRefresh = params.cover_image_id !== this.yearBeingEdited.cover_image_id;
+                const forceRefresh = params.album_id !== this.yearBeingEdited.album_id;
                 this.sendJson(
                     `${API_URL_BASE}/years/${this.yearBeingEdited.year}`, 
                     'PUT', 
                     {
                         description: this.yearBeingEditedTemp.description || null,
-                        cover_image_id: this.yearBeingEditedTemp.cover_image_id || null,
+                        album_id: this.yearBeingEditedTemp.album_id || null,
                     }
                 ).then(() => { 
                     if(forceRefresh){
@@ -246,7 +246,7 @@ export default {
             }
 
             this.yearBeingEdited.description = params.description;
-            this.yearBeingEdited.cover_image_id = params.cover_image_id;
+            this.yearBeingEdited.album_id = params.album_id;
             this.yearBeingEdited = null;
         },
         pathForYear(year){

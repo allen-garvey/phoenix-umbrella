@@ -73,11 +73,6 @@
             removeItemApiUrlBase="/persons" 
             :itemsUpdatedCallback="imageItemsUpdatedBuilder('persons')" 
         />
-        <Years-List 
-            :imageId="image.id"
-            :getModel="getModel"
-            :sendJson="sendJson"
-        />
     </main>
 </div>
 </template>
@@ -125,7 +120,6 @@ import ImageVersions from './image-detail/image-versions.vue';
 import ImageItemsList from './image-detail/image-items-list.vue';
 import ExifInfo from './image-detail/exif-info.vue';
 import SwipeImage from './shared/swipe-image.vue';
-import YearsList from './image-detail/years-list.vue';
 import { API_URL_BASE } from '../request-helpers';
 
 export default {
@@ -167,7 +161,6 @@ export default {
         ImageItemsList,
         ExifInfo,
         SwipeImage,
-        YearsList,
     },
     created(){
         this.setup();

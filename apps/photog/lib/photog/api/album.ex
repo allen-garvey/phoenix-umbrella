@@ -19,6 +19,8 @@ defmodule Photog.Api.Album do
 
     has_many :album_tags, Photog.Api.AlbumTag
     many_to_many :tags, Photog.Api.Tag, join_through: "album_tags"
+
+    has_many :years, Photog.Api.Year
   end
 
   @doc false
