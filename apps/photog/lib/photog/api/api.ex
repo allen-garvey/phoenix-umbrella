@@ -405,15 +405,48 @@ defmodule Photog.Api do
       select: %{year: album.year, count: count()}
     )
 
+    year_images = from(
+      year_image in YearImage,
+      join: image in assoc(year_image, :image),
+      order_by: [desc: :id],
+      select: %{
+        year: year_image.year,
+        image: %{
+          id: image.id,
+          mini_thumbnail_path: image.mini_thumbnail_path,
+        }
+      }
+    )
+    |> Repo.all
+    |> Enum.reduce(%{}, fn year_image, map -> 
+      year = year_image[:year]
+      image = year_image[:image]
+      current_images = map[year]
+
+      images = case current_images do
+        nil -> [image]
+        _ -> [image] ++ current_images
+      end
+
+      Map.put(map, year, images)
+    end)
+
     from(
       year in Year,
       right_join: year_aggregate in subquery(years_query),
       on: year.id == year_aggregate.year,
-      left_join: image in assoc(year, :cover_image),
+      left_join: cover_image in assoc(year, :cover_image),
       order_by: [desc: year_aggregate.year],
-      select: %{year: year_aggregate.year, count: year_aggregate.count, description: year.description, mini_thumbnail_path: image.mini_thumbnail_path, cover_image_id: year.cover_image_id}
+      select: %{
+        year: year_aggregate.year, 
+        count: year_aggregate.count, 
+        description: year.description, 
+        mini_thumbnail_path: cover_image.mini_thumbnail_path, 
+        cover_image_id: year.cover_image_id
+      }
     )
     |> Repo.all
+    |> Enum.map(fn year -> Map.put(year, :images, year_images[year[:year]]) end)
   end
 
 
