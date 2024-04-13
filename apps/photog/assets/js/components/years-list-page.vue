@@ -16,12 +16,16 @@
                     [$style.edit]: year.year == yearBeingEdited?.year,
                 }"
             >
-                <router-link :to="pathForYear(year)">
+                <router-link 
+                    :to="pathForYear(year)"
+                    :class="$style.yearNameContainer"
+                >
                     {{ year.year }}
                     <span :class="$style.count">({{ year.count }})</span>
                 </router-link>
                 <router-link 
-                    :to="pathForYear(year)" v-for="image in year.images"
+                    :to="pathForYear(year)" 
+                    v-for="image in year.images"
                     :class="$style.coverImageContainer"
                 >
                     <img :src="miniThumbnailUrlFor(image)" :class="$style.coverImage" />
@@ -98,6 +102,10 @@
         .editMode & .editButton {
             display: none;
         }
+    }
+
+    .yearNameContainer {
+        min-width: 4em;
     }
 
     .description {
