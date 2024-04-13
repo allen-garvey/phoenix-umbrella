@@ -1636,7 +1636,7 @@ defmodule Photog.Api do
   end
 
   def years_for_image(image_id) do
-    year_images = from(
+    from(
       year_image in YearImage,
       where: year_image.image_id == ^image_id,
       order_by: [:year],
