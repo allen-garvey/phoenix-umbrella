@@ -20,8 +20,11 @@
                     {{ year.year }}
                     <span :class="$style.count">({{ year.count }})</span>
                 </router-link>
-                <router-link :to="pathForYear(year)" v-if="year.mini_thumbnail_path">
-                    <img :src="miniThumbnailUrlFor(year)" :class="$style.coverImage" />
+                <router-link 
+                    :to="pathForYear(year)" v-for="image in year.images"
+                    :class="$style.coverImageContainer"
+                >
+                    <img :src="miniThumbnailUrlFor(image)" :class="$style.coverImage" />
                 </router-link>
                 <router-link 
                     :to="pathForYear(year)" 
@@ -109,6 +112,12 @@
         margin-left: 0.2em;
         margin: 0 1rem 0 -4px;
         min-width: 2em;
+    }
+
+    .coverImageContainer {
+        & + & {
+            margin-left: 0.25em;
+        }
     }
 
     .coverImage {

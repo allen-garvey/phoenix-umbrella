@@ -44,6 +44,7 @@ defmodule PhotogWeb.Router do
     get "/images/:id/exif",                   ImageController, :exif_for
     get "/images/years/:year",                ImageController, :images_for_year
     get "/images/years/:year/count",          ImageController, :images_for_year_count
+    get "/images/:id/years",                  YearImageController, :years_for_image
 
     # Albums
     get "/albums/years/index",                YearController, :albums_years_list

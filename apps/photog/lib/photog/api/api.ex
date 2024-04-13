@@ -1635,4 +1635,13 @@ defmodule Photog.Api do
     YearImage.changeset(year_image, attrs)
   end
 
+  def years_for_image(image_id) do
+    year_images = from(
+      year_image in YearImage,
+      where: year_image.image_id == ^image_id,
+      order_by: [:year],
+      select: year_image.year
+    )
+    |> Repo.all
+  end
 end

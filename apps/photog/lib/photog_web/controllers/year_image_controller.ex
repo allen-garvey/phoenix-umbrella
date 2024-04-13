@@ -6,8 +6,15 @@ defmodule PhotogWeb.YearImageController do
 
   action_fallback PhotogWeb.FallbackController
 
-  def create(conn, %{"year_image" => year_image_params}) do
-    with {:ok, %YearImage{} = _year_image} <- Api.create_year_image(year_image_params) do
+  def years_for_image(conn, %{"id" => image_id}) do
+    years = Api.years_for_image(image_id)
+    conn
+    |> put_view(CommonWeb.ApiGenericView)
+    |> render("data.json", data: years)
+  end
+
+  def create(conn, params) do
+    with {:ok, %YearImage{} = _year_image} <- Api.create_year_image(params) do
       conn
       |> put_status(:created)
       |> put_view(CommonWeb.ApiGenericView)
