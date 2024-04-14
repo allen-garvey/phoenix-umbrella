@@ -23,20 +23,27 @@
                     {{ year.year }}
                     <span :class="$style.count">({{ year.count }})</span>
                 </router-link>
-                <router-link 
-                    :to="pathForYear(year)" 
-                    v-for="image in year.images"
-                    :class="$style.coverImageContainer"
-                >
-                    <img :src="miniThumbnailUrlFor(image)" :class="$style.coverImage" />
-                </router-link>
-                <router-link 
-                    :to="pathForYear(year)" 
-                    :class="$style.description"
+                <div 
+                    :class="$style.yearContentContainer"
                     v-if="year.year !== yearBeingEdited?.year"
                 >
-                    {{ year.description }}
-                </router-link>
+                    <div :class="$style.coverImageGrid">
+                        <router-link 
+                            :to="pathForYear(year)" 
+                            :class="$style.coverImageContainer"
+                            v-for="image in year.images"
+                        >
+                            <img :src="miniThumbnailUrlFor(image)" :class="$style.coverImage" />
+                        </router-link>
+                    </div>
+                    <router-link 
+                        :to="pathForYear(year)" 
+                        :class="$style.description"
+                        v-if="year.description"
+                    >
+                        {{ year.description }}
+                    </router-link>
+                </div>
                 <button 
                     class="btn btn-primary" 
                     @click="editYear(year)" 
@@ -87,6 +94,7 @@
         display: flex;
         align-items: center;
         min-height: 4rem;
+        margin-bottom: 0.5rem;
 
         &:hover {
             .editButton {
@@ -108,9 +116,14 @@
         min-width: 4em;
     }
 
+    .yearContentContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
     .description {
-        font-size: 1.2rem;
-        margin-left: 1em;
+        font-size: 1rem;
+        margin-top: 0.5rem;
     }
 
     .count {
@@ -122,15 +135,20 @@
         min-width: 2em;
     }
 
+    .coverImageGrid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
     .coverImageContainer {
-        & + & {
-            margin-left: 0.25em;
-        }
+        width: 175px;
+        height: 175px;
     }
 
     .coverImage {
-        width: 175px;
-        height: 175px;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         border-radius: 4px;
     }
@@ -144,7 +162,6 @@
     }
 
     .descriptionInput {
-        margin-left: 1rem;
         width: 350px;
     }
 
