@@ -56,21 +56,28 @@
                     v-if="year.year == yearBeingEdited?.year"
                     @submit.prevent="save()"
                 >
-                    <input 
-                        class="form-control" 
-                        :class="$style.descriptionInput" 
-                        v-model="yearBeingEditedTemp.description" 
-                        v-focus 
-                    />
-                    <input 
-                        class="form-control" 
-                        :class="$style.numberInput" 
-                        v-model="yearBeingEditedTemp.album_id" 
-                        type="number"
-                    />
+                    <div>
+                        <label for="descriptionInputId" :class="$style.label">Description</label>
+                        <input 
+                            id="descriptionInputId"
+                            class="form-control" 
+                            :class="$style.descriptionInput" 
+                            v-model="yearBeingEditedTemp.description" 
+                            v-focus 
+                        />
+                    </div>
+                    <div>
+                        <label for="albumIdInputId" :class="$style.label">Album ID</label>
+                        <input 
+                            id="albumIdInputId"
+                            class="form-control" 
+                            :class="$style.numberInput" 
+                            v-model="yearBeingEditedTemp.album_id" 
+                            type="number"
+                        />
+                    </div>
                     <button 
                         class="btn btn-outline-dark" 
-                        :class="$style.cancelButton" 
                         @click="cancelEdit()" 
                         type="button"
                     >
@@ -155,19 +162,22 @@
 
     .editContainer {
         display: inline-flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 1rem;
+        margin: 2rem 0;
     }
 
-    .cancelButton {
-        margin: 0 0.5rem 0;
+    .label {
+        font-size: 0.8rem;
     }
 
     .descriptionInput {
-        width: 350px;
+        width: 20em;
     }
 
     .numberInput {
-        width: 7em;
-        margin-left: 1rem;
+        width: 6em;
     }
 </style>
 
