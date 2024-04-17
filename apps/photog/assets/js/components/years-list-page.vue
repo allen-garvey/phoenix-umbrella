@@ -33,7 +33,11 @@
                             :class="$style.coverImageContainer"
                             v-for="image in year.images"
                         >
-                            <img :src="miniThumbnailUrlFor(image)" :class="$style.coverImage" />
+                            <img 
+                                :src="miniThumbnailUrlFor(image)"  
+                                :class="$style.coverImage"
+                                loading="lazy"
+                            />
                         </router-link>
                     </div>
                     <router-link 
