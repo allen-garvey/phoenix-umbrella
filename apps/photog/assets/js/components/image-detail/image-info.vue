@@ -70,6 +70,17 @@
                 <dt>Import notes</dt>
                 <dd>{{ image.import.notes }}</dd>
             </template>
+
+            <!-- Notes -->
+            <image-info-form
+                label="Notes"
+                modelKey="notes"
+                inputType="text"
+                :image="image"
+                :updateImage="updateImage"
+            >
+                <span v-if="image.notes">{{ image.notes }}</span>
+            </image-info-form>
         </dl>
     </image-info-section>
 </template>

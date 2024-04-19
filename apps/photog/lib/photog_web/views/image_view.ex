@@ -138,7 +138,8 @@ defmodule PhotogWeb.ImageView do
       import: import_data,
       albums: Enum.map(albums, &PhotogWeb.AlbumView.album_excerpt_mini_to_map/1),
       persons: Enum.map(persons, &PhotogWeb.PersonView.person_excerpt_mini_to_map/1),
-      source_image_id: image.source_image_id
+      source_image_id: image.source_image_id,
+      notes: image.notes,
     }
 
     case Enumerable.impl_for(image.versions) do
