@@ -3,30 +3,32 @@
         {{ label }}
     </dt>
     <dd>
-        <slot v-if="!isEditing">
-        </slot>
         <div 
-            v-if="isEditing" 
-            :class="$style.editContainer"
+            :class="$style.flexContainer"
+            v-if="!isEditing"
         >
-            <form @submit.prevent="update()">
-                <div class="form-group">
-                    <input 
-                        :type="inputType" 
-                        :class="inputClass" 
-                        v-model="model"
-                        ref="input"
-                    />
-                </div>
-                <div>
-                    <button @click="cancelEdit()" type="button" class="btn btn-outline-secondary btn">Cancel</button>
-                    <button type="submit" class="btn btn-success btn">Save</button>
-                </div>
-            </form>
+            <slot>
+            </slot>
+            <button 
+                @click="edit()" 
+                class="btn btn-outline-primary btn-xs">Edit</button>
         </div>
-        <span v-show="!isEditing">
-            <button @click="edit()" class="btn btn-outline-primary btn-xs">Edit</button>
-        </span>
+        <form 
+            @submit.prevent="update()"
+            :class="[$style.editContainer, $style.flexContainer]"
+            v-if="isEditing" 
+        >
+            <div class="form-group">
+                <input 
+                    :type="inputType" 
+                    :class="inputClass" 
+                    v-model="model"
+                    ref="input"
+                />
+            </div>
+            <button @click="cancelEdit()" type="button" class="btn btn-outline-secondary btn">Cancel</button>
+            <button type="submit" class="btn btn-success btn">Save</button>
+        </form>
     </dd>
 </template>
 
@@ -34,8 +36,14 @@
 .label{
     margin-bottom: 1.5em;
 }
-.editContainer{
+.flexContainer {
     display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    align-items: flex-start;
+}
+
+.editContainer{
     .form-control{
         max-width: 14em;
     }
@@ -97,10 +105,11 @@ export default {
     },
     methods: {
         update(){
+            const value = this.model === '' ? null : this.model;
             const data = {
                 image: {
                     id: this.image.id,
-                    [this.modelKey]: this.model,
+                    [this.modelKey]: value,
                 },
             };
             this.updateImage(data).then((response)=>{

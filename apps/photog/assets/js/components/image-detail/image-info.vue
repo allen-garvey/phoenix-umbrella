@@ -35,7 +35,7 @@
                 :image="image"
                 :updateImage="updateImage"
             >
-                <span>{{formatIsoDate(image.completion_date)}}</span>
+                <span v-if="image.completion_date">{{formatIsoDate(image.completion_date)}}</span>
             </image-info-form>
             
             <!-- Source Image -->
