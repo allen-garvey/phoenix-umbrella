@@ -54,17 +54,6 @@
                 </router-link>
             </image-info-form>
             
-            <!-- Favorite -->
-            <image-info-form
-                label="Favorite"
-                modelKey="is_favorite"
-                inputType="checkbox"
-                :image="image"
-                :updateImage="updateImage"
-            >
-                <span>{{image.is_favorite ? 'true' : 'false'}}</span>
-            </image-info-form>
-            
             <!-- Import -->
             <dt>Import</dt>
             <dd>
