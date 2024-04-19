@@ -2,7 +2,7 @@
     <div :class="$style.textListContainer">
         <div :class="$style.textListHeading">
             <h3 :class="$style.textListTitle">{{ heading }}</h3>
-            <div :class="$style['button-container']">
+            <div :class="$style.buttonContainer">
                 <button 
                     :disabled="isAddMode" 
                     @click="editItemsButtonAction" 
@@ -78,10 +78,12 @@
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 0.5em;
-
-        .button-container{
-            margin-left: 2em;
-        }
+    }
+    .buttonContainer{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+        margin-left: 2em;
     }
     .textList{
         padding-left: 1em;
