@@ -63,7 +63,9 @@ defmodule Common.DB.SharedConnectionPool do
       Keyword.take(opts, [:name, :spawn_opt])
     end
 
-    def checkout(pool, callers, opts) do
-        ConnectionPool.checkout(pool, callers, opts)
-    end
+    defdelegate checkout(pool, callers, opts), to: ConnectionPool
+
+    defdelegate disconnect_all(pool, interval, opts), to: ConnectionPool
+
+    defdelegate handle_info(arg1, arg2), to: ConnectionPool
 end
