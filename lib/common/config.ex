@@ -11,7 +11,9 @@ defmodule Umbrella.Common.Config do
       hostname: "localhost",
       show_sensitive_data_on_connection_error: true,
       port: 5432,
-      pool_size: 5
+      pool_size: 10,
+      pool: Common.DB.SharedConnectionPool,
+      name: :umbrella_shared_db_pool,
     ]
   end
 

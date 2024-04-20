@@ -36,6 +36,12 @@ defmodule Umbrella.Common.Deps do
     ]
   end
 
+  def db_connection do
+    [
+      {:db_connection, "~> 2.6.0"},
+    ]
+  end
+
   def http_poison do
     {:httpoison, "~> 1.8.2"}
   end
