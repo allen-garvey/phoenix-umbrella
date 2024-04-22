@@ -31,7 +31,7 @@ defmodule Artour.Web do
     quote do
       use Phoenix.Controller
 
-      alias Artour.Repo
+      alias Grenadier.Repo
       import Ecto
       import Ecto.Query
 
@@ -68,7 +68,7 @@ defmodule Artour.Web do
     quote do
       use Phoenix.Channel
 
-      alias Artour.Repo
+      alias Grenadier.Repo
       import Ecto
       import Ecto.Query
       import Artour.Gettext

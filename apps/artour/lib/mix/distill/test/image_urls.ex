@@ -14,7 +14,7 @@ defmodule Mix.Tasks.Distill.Test.ImageUrls do
 
         #parallel map based on:
         #http://elixir-recipes.github.io/concurrency/parallel-map/
-    	Artour.Repo.all(Artour.Image)
+    	Grenadier.Repo.all(Artour.Image)
     		|> Enum.flat_map(fn image -> all_urls_for_image(image, base_url) end)
             |> Task.async_stream(&HTTPoison.head/1, max_concurrency: System.schedulers_online * 8, timeout: :infinity)
             |> Enum.each(&print_image_response/1)

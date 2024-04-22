@@ -1,6 +1,7 @@
 defmodule Artour.PostImage do
   use Artour.Web, :model
 
+  @schema_prefix Grenadier.RepoPrefix.artour()
   schema "post_images" do
     field :order, :integer
     field :caption, :string

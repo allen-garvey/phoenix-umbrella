@@ -1,6 +1,7 @@
 defmodule Artour.PostTag do
   use Artour.Web, :model
 
+  @schema_prefix Grenadier.RepoPrefix.artour()
   schema "post_tags" do
     belongs_to :post, Artour.Post
     belongs_to :tag, Artour.Tag

@@ -10,10 +10,10 @@ config :artour, Artour.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :artour, Artour.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "artour_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+# config :artour, Artour.Repo,
+#   adapter: Ecto.Adapters.Postgres,
+#   username: "postgres",
+#   password: "postgres",
+#   database: "artour_test",
+#   hostname: "localhost",
+#   pool: Ecto.Adapters.SQL.Sandbox

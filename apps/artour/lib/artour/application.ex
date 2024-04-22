@@ -7,7 +7,7 @@ defmodule Artour.Application do
     # Define workers and child supervisors to be supervised
     children = [
       # Start the Ecto repository
-      Artour.Repo,
+      # Artour.Repo,
       # Start the endpoint when the application starts
       Artour.Endpoint,
       # Start your own worker by calling: Artour.Worker.start_link(arg1, arg2, arg3)

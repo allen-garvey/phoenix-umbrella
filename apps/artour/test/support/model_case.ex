@@ -16,7 +16,7 @@ defmodule Artour.ModelCase do
 
   using do
     quote do
-      alias Artour.Repo
+      alias Grenadier.Repo
 
       import Ecto
       import Ecto.Changeset
@@ -26,11 +26,11 @@ defmodule Artour.ModelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Artour.Repo)
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(Artour.Repo)
 
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Artour.Repo, {:shared, self()})
-    end
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(Artour.Repo, {:shared, self()})
+    # end
 
     :ok
   end

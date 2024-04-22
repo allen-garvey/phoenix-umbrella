@@ -4,7 +4,7 @@ defmodule Artour.Api do
   """
 
   import Ecto.Query, warn: false
-  alias Artour.Repo
+  alias Grenadier.Repo
   alias Artour.Admin
 
   alias Artour.Post

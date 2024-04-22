@@ -48,7 +48,7 @@ defmodule Mix.Tasks.Guggenheim do
       # Start Artour app so db is available
       Mix.Task.run "app.start", []
 
-      Artour.Repo.transaction(fn ->
+      Grenadier.Repo.transaction(fn ->
         # Create image resource for each image path
         for {image_path, image_orientation} <- source_image_models do
           IO.puts "Converting and importing #{image_path}"

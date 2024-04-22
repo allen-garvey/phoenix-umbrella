@@ -2,6 +2,7 @@ defmodule Artour.Tag do
   use Artour.Web, :model
   import Artour.ModelHelpers.SlugValidator, only: [validate_slug: 2]
 
+  @schema_prefix Grenadier.RepoPrefix.artour()
   schema "tags" do
     field :name, :string
     field :slug, :string

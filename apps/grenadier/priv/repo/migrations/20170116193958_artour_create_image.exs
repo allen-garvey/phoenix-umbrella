@@ -1,8 +1,8 @@
-defmodule Artour.Repo.Migrations.CreateImage do
+defmodule Grenadier.Repo.Migrations.ArtourCreateImage do
   use Ecto.Migration
 
   def change do
-    create table(:images) do
+    create table(:images, prefix: Grenadier.RepoPrefix.artour()) do
       add :title, :string
       add :description, :string
       add :filename_large, :string
@@ -10,11 +10,10 @@ defmodule Artour.Repo.Migrations.CreateImage do
       add :filename_small, :string
       add :filename_thumbnail, :string
       add :completion_date, :date
-      add :format_id, references(:formats, on_delete: :nothing)
+      add :year, :integer
 
       timestamps()
     end
-    create index(:images, [:format_id])
-    create unique_index(:images, [:title])
+    create unique_index(:images, [:title], prefix: Grenadier.RepoPrefix.artour())
   end
 end

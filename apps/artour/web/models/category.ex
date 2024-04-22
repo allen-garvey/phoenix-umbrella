@@ -2,6 +2,7 @@ defmodule Artour.Category do
   use Artour.Web, :model
   import Artour.ModelHelpers.SlugValidator, only: [validate_slug: 2]
 
+  @schema_prefix Grenadier.RepoPrefix.artour()
   schema "categories" do
     field :name, :string
     field :slug, :string

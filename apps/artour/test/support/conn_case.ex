@@ -20,7 +20,7 @@ defmodule Artour.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      alias Artour.Repo
+      alias Grenadier.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
@@ -33,11 +33,11 @@ defmodule Artour.ConnCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Artour.Repo)
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(Artour.Repo)
 
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Artour.Repo, {:shared, self()})
-    end
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(Artour.Repo, {:shared, self()})
+    # end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end

@@ -2,6 +2,7 @@ defmodule Artour.Image do
   use Artour.Web, :model
   import Artour.ModelHelpers.FilenameValidator, only: [validate_image_filename: 2]
 
+  @schema_prefix Grenadier.RepoPrefix.artour()
   schema "images" do
     field :title, :string
     field :description, :string

@@ -2,6 +2,7 @@ defmodule Artour.Post do
   use Artour.Web, :model
   import Artour.ModelHelpers.SlugValidator, only: [validate_slug: 2]
 
+  @schema_prefix Grenadier.RepoPrefix.artour()
   schema "posts" do
     field :title, :string
     field :slug, :string
