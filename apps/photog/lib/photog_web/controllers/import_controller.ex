@@ -31,8 +31,17 @@ defmodule PhotogWeb.ImportController do
   end
 
   def show_last(conn, _params) do
-    import = Api.get_last_import!()
-    render(conn, "show.json", import: import)
+    try do
+      import = Api.get_last_import!()
+      render(conn, "show.json", import: import)
+    rescue
+      Ecto.NoResultsError -> 
+        conn 
+        |> put_status(:not_found)
+        |> put_view(CommonWeb.ApiGenericView)
+        |> render("error.json", message: "No imports found.")
+    end
+    
   end
 
   def images_for(conn, %{"id" => id, "excerpt" => "true"}) do
