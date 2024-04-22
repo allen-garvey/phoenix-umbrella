@@ -1,4 +1,4 @@
-defmodule Grenadier.Repo.Migrations.CreatePrefix do
+defmodule Grenadier.Repo.Migrations.GrenadierCreatePrefix do
     use Ecto.Migration
   
     def change do

@@ -1,4 +1,4 @@
-defmodule Grenadier.Repo.Migrations.CreateUsers do
+defmodule Grenadier.Repo.Migrations.GrenadierCreateUsers do
   use Ecto.Migration
 
   def change do

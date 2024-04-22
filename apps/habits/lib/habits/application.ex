@@ -9,7 +9,7 @@ defmodule Habits.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      Habits.Repo,
+      # Habits.Repo,
       # Start the Telemetry supervisor
       HabitsWeb.Telemetry,
       # Start the PubSub system

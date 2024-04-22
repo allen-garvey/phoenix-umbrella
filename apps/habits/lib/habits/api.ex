@@ -4,7 +4,7 @@ defmodule Habits.Api do
   """
 
   import Ecto.Query, warn: false
-  alias Habits.Repo
+  alias Grenadier.Repo
 
   alias Habits.Admin.Activity
 

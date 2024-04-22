@@ -2,6 +2,7 @@ defmodule Habits.Admin.Category do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @schema_prefix Grenadier.RepoPrefix.habits()
   schema "categories" do
     field :name, :string
     field :color, :string

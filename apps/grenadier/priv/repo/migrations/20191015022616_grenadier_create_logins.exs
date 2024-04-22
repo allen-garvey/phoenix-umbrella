@@ -1,4 +1,4 @@
-defmodule Grenadier.Repo.Migrations.CreateLogins do
+defmodule Grenadier.Repo.Migrations.GrenadierCreateLogins do
   use Ecto.Migration
 
   def change do

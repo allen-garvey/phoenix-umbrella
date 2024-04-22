@@ -2,6 +2,7 @@ defmodule Habits.Admin.Activity do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @schema_prefix Grenadier.RepoPrefix.habits()
   schema "activities" do
     field :date, :date
     field :description, :string
