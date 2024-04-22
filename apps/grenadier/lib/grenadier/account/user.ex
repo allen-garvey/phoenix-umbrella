@@ -2,6 +2,7 @@ defmodule Grenadier.Account.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @schema_prefix Grenadier.RepoPrefix.grenadier()
   schema "users" do
     field :name, :string
     field :password_hash, :string, redact: true

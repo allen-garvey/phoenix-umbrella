@@ -2,6 +2,7 @@ defmodule Grenadier.Account.Login do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @schema_prefix Grenadier.RepoPrefix.grenadier()
   schema "logins" do
     field :attempt_time, :utc_datetime
     field :ip, :string

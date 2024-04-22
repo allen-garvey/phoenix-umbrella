@@ -32,7 +32,7 @@ config :grenadier, Grenadier.Repo,
   types: Common.PostgrexTypes
 
 # Configure your database
-config :grenadier, Grenadier.Repo, Umbrella.Common.Config.postgres_config("grenadier_dev")
+config :grenadier, Grenadier.Repo, Umbrella.Common.Config.postgres_config("umbrella")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
