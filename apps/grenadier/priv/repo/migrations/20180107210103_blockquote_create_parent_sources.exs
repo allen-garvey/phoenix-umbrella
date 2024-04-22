@@ -1,8 +1,8 @@
-defmodule Blockquote.Repo.Migrations.CreateParentSources do
+defmodule Grenadier.Repo.Migrations.BlockquoteCreateParentSources do
   use Ecto.Migration
 
   def change do
-    create table(:parent_sources) do
+    create table(:parent_sources, prefix: Grenadier.RepoPrefix.blockquote()) do
       add :title, :string, null: false
       add :subtitle, :string
       add :url, :string
@@ -11,6 +11,6 @@ defmodule Blockquote.Repo.Migrations.CreateParentSources do
       timestamps()
     end
 
-    create index(:parent_sources, [:source_type_id])
+    create index(:parent_sources, [:source_type_id], prefix: Grenadier.RepoPrefix.blockquote())
   end
 end

@@ -27,11 +27,11 @@ defmodule BlockquoteWeb.ChannelCase do
 
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Blockquote.Repo)
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Blockquote.Repo, {:shared, self()})
-    end
-    :ok
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(Blockquote.Repo)
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(Blockquote.Repo, {:shared, self()})
+    # end
+    # :ok
   end
 
 end

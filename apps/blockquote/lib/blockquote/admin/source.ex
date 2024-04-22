@@ -4,7 +4,7 @@ defmodule Blockquote.Admin.Source do
   alias Blockquote.Admin.Source
   alias Blockquote.Admin.ModelHelpers.SortTitle
 
-
+  @schema_prefix Grenadier.RepoPrefix.blockquote()
   schema "sources" do
     field :subtitle, :string
     field :title, :string

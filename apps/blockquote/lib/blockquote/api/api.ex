@@ -4,7 +4,7 @@ defmodule Blockquote.Api do
   """
 
   import Ecto.Query, warn: false
-  alias Blockquote.Repo
+  alias Grenadier.Repo
 
   alias Blockquote.Admin.Quote
   alias Blockquote.Admin.DailyQuote

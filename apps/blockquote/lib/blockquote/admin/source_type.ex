@@ -3,7 +3,7 @@ defmodule Blockquote.Admin.SourceType do
   import Ecto.Changeset
   alias Blockquote.Admin.SourceType
 
-
+  @schema_prefix Grenadier.RepoPrefix.blockquote()
   schema "source_types" do
     field :name, :string
 

@@ -3,7 +3,7 @@ defmodule Blockquote.Admin.Quote do
   import Ecto.Changeset
   alias Blockquote.Admin.Quote
 
-
+  @schema_prefix Grenadier.RepoPrefix.blockquote()
   schema "quotes" do
     field :body, :string
 

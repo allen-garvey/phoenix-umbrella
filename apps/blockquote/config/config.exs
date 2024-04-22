@@ -8,8 +8,8 @@ import Config
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
 # General application configuration
-config :blockquote,
-  ecto_repos: [Blockquote.Repo]
+# config :blockquote,
+#   ecto_repos: [Blockquote.Repo]
 
 # Configures the endpoint
 config :blockquote, BlockquoteWeb.Endpoint,
@@ -24,11 +24,11 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :phoenix, :format_encoders, json: Jason
-config :blockquote, Blockquote.Repo,
-  types: Common.PostgrexTypes
+# config :blockquote, Blockquote.Repo,
+#   types: Common.PostgrexTypes
 
 # Configure your database
-config :blockquote, Blockquote.Repo, Umbrella.Common.Config.postgres_config("blockquote_dev")
+# config :blockquote, Blockquote.Repo, Umbrella.Common.Config.postgres_config("blockquote_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

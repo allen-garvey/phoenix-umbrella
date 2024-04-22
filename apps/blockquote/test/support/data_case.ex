@@ -16,7 +16,7 @@ defmodule Blockquote.DataCase do
 
   using do
     quote do
-      alias Blockquote.Repo
+      alias Grenadier.Repo
 
       import Ecto
       import Ecto.Changeset
@@ -26,11 +26,11 @@ defmodule Blockquote.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Blockquote.Repo)
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(Blockquote.Repo)
 
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Blockquote.Repo, {:shared, self()})
-    end
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(Blockquote.Repo, {:shared, self()})
+    # end
 
     :ok
   end

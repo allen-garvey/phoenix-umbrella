@@ -3,7 +3,7 @@ defmodule BlockquoteWeb.QuoteController do
 
   alias Blockquote.Admin
   alias Blockquote.Admin.Quote
-  alias Blockquote.Repo
+  alias Grenadier.Repo
 
   def custom_render(conn, template, assigns) do
     custom_render(conn, view_module(conn), template, assigns)

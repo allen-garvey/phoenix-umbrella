@@ -3,7 +3,7 @@ defmodule Blockquote.Admin.DailyQuote do
   import Ecto.Changeset
   alias Blockquote.Admin.DailyQuote
 
-
+  @schema_prefix Grenadier.RepoPrefix.blockquote()
   schema "daily_quotes" do
     field :date_used, :date
 

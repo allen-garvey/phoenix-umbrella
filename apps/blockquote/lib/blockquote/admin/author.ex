@@ -3,7 +3,7 @@ defmodule Blockquote.Admin.Author do
   import Ecto.Changeset
   alias Blockquote.Admin.Author
 
-
+  @schema_prefix Grenadier.RepoPrefix.blockquote()
   schema "authors" do
     field :first_name, :string
     field :last_name, :string

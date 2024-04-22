@@ -10,10 +10,10 @@ config :blockquote, BlockquoteWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :blockquote, Blockquote.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "blockquote_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+# config :blockquote, Blockquote.Repo,
+#   adapter: Ecto.Adapters.Postgres,
+#   username: "postgres",
+#   password: "postgres",
+#   database: "blockquote_test",
+#   hostname: "localhost",
+#   pool: Ecto.Adapters.SQL.Sandbox

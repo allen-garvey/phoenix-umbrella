@@ -3,7 +3,7 @@ defmodule Blockquote.Admin.Category do
   import Ecto.Changeset
   alias Blockquote.Admin.Category
 
-
+  @schema_prefix Grenadier.RepoPrefix.blockquote()
   schema "categories" do
     field :name, :string
 
