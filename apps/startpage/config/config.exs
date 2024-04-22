@@ -28,8 +28,8 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 config :phoenix, :format_encoders, json: Jason
-config :booklist, Booklist.Repo,
-  types: Common.PostgrexTypes
+# config :startpage, Startpage.Repo,
+#   types: Common.PostgrexTypes
 
 # Configure your database
 # config :startpage, Startpage.Repo, Umbrella.Common.Config.postgres_config("startpage_dev")
