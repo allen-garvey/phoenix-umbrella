@@ -2,6 +2,7 @@ defmodule Movielist.Admin.Streamer do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @schema_prefix Grenadier.RepoPrefix.movielist()
   schema "streamers" do
     field :name, :string
 

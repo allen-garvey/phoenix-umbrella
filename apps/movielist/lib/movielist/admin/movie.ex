@@ -2,7 +2,7 @@ defmodule Movielist.Admin.Movie do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.movielist()
   schema "movies" do
     field :home_release_date, :date
     field :is_active, :boolean, default: true

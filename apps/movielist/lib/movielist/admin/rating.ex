@@ -2,7 +2,7 @@ defmodule Movielist.Admin.Rating do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.movielist()
   schema "ratings" do
     field :date_scored, :date
     field :score, :integer

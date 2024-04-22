@@ -1,8 +1,8 @@
-defmodule Movielist.Repo.Migrations.CreateMovies do
+defmodule Grenadier.Repo.Migrations.MovielistCreateMovies do
   use Ecto.Migration
 
   def change do
-    create table(:movies) do
+    create table(:movies, prefix: Grenadier.RepoPrefix.movielist()) do
       add :title, :text, null: false
       add :sort_title, :text, null: false
       add :theater_release_date, :date
@@ -14,6 +14,6 @@ defmodule Movielist.Repo.Migrations.CreateMovies do
       timestamps()
     end
 
-    create index(:movies, [:genre_id])
+    create index(:movies, [:genre_id], prefix: Grenadier.RepoPrefix.movielist())
   end
 end

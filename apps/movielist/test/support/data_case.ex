@@ -16,7 +16,7 @@ defmodule Movielist.DataCase do
 
   using do
     quote do
-      alias Movielist.Repo
+      alias Grenadier.Repo
 
       import Ecto
       import Ecto.Changeset
@@ -26,11 +26,11 @@ defmodule Movielist.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Movielist.Repo)
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(Movielist.Repo)
 
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Movielist.Repo, {:shared, self()})
-    end
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(Movielist.Repo, {:shared, self()})
+    # end
 
     :ok
   end

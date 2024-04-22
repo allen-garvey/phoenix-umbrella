@@ -9,7 +9,7 @@ defmodule Movielist.Application do
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
-      Movielist.Repo,
+      # Movielist.Repo,
       # Start the endpoint when the application starts
       MovielistWeb.Endpoint,
       # Starts a worker by calling: Movielist.Worker.start_link(arg)

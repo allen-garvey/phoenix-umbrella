@@ -9,8 +9,8 @@ import Config
 
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
-config :movielist,
-  ecto_repos: [Movielist.Repo]
+# config :movielist,
+#   ecto_repos: [Movielist.Repo]
 
 # Configures the endpoint
 config :movielist, MovielistWeb.Endpoint,
@@ -28,11 +28,11 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 config :phoenix, :format_encoders, json: Jason
-config :movielist, Movielist.Repo,
-  types: Common.PostgrexTypes
+# config :movielist, Movielist.Repo,
+#   types: Common.PostgrexTypes
 
 # Configure your database
-config :movielist, Movielist.Repo, Umbrella.Common.Config.postgres_config("movielist_dev")
+# config :movielist, Movielist.Repo, Umbrella.Common.Config.postgres_config("movielist_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

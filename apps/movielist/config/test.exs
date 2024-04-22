@@ -10,9 +10,9 @@ config :movielist, MovielistWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :movielist, Movielist.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "movielist_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+# config :movielist, Movielist.Repo,
+#   username: "postgres",
+#   password: "postgres",
+#   database: "movielist_test",
+#   hostname: "localhost",
+#   pool: Ecto.Adapters.SQL.Sandbox

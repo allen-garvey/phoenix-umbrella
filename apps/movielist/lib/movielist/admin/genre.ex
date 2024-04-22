@@ -2,7 +2,7 @@ defmodule Movielist.Admin.Genre do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.movielist()
   schema "genres" do
     field :name, :string
 

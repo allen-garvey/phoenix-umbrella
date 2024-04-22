@@ -1,8 +1,8 @@
-defmodule Movielist.Repo.Migrations.CreateRatings do
+defmodule Grenadier.Repo.Migrations.MovielistCreateRatings do
   use Ecto.Migration
 
   def change do
-    create table(:ratings) do
+    create table(:ratings, prefix: Grenadier.RepoPrefix.movielist()) do
       add :date_scored, :date, null: false
       add :score, :integer, null: false
       add :movie_id, references(:movies, on_delete: :nothing), null: false
@@ -10,6 +10,6 @@ defmodule Movielist.Repo.Migrations.CreateRatings do
       timestamps()
     end
 
-    create index(:ratings, [:movie_id])
+    create index(:ratings, [:movie_id], prefix: Grenadier.RepoPrefix.movielist())
   end
 end

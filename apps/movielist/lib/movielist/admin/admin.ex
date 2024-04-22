@@ -4,7 +4,7 @@ defmodule Movielist.Admin do
   """
 
   import Ecto.Query, warn: false
-  alias Movielist.Repo
+  alias Grenadier.Repo
 
   alias Movielist.Admin.Genre
   alias Movielist.Admin.Movie
