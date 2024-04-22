@@ -9,8 +9,8 @@ import Config
 
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
-config :startpage,
-  ecto_repos: [Startpage.Repo]
+# config :startpage,
+#   ecto_repos: [Startpage.Repo]
 
 # Configures the endpoint
 config :startpage, StartpageWeb.Endpoint,
@@ -32,7 +32,7 @@ config :booklist, Booklist.Repo,
   types: Common.PostgrexTypes
 
 # Configure your database
-config :startpage, Startpage.Repo, Umbrella.Common.Config.postgres_config("startpage_dev")
+# config :startpage, Startpage.Repo, Umbrella.Common.Config.postgres_config("startpage_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

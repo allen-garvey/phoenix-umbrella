@@ -2,6 +2,7 @@ defmodule Startpage.Admin.Folder do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @schema_prefix Grenadier.RepoPrefix.startpage()
   schema "folders" do
     field :content, :string
     field :name, :string

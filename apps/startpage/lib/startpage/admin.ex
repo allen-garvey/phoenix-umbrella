@@ -4,7 +4,7 @@ defmodule Startpage.Admin do
   """
 
   import Ecto.Query, warn: false
-  alias Startpage.Repo
+  alias Grenadier.Repo
 
   alias Startpage.Admin.Folder
 
