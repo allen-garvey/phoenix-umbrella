@@ -10,9 +10,9 @@ config :booklist, BooklistWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :booklist, Booklist.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "booklist_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+# config :booklist, Booklist.Repo,
+#   username: "postgres",
+#   password: "postgres",
+#   database: "booklist_test",
+#   hostname: "localhost",
+#   pool: Ecto.Adapters.SQL.Sandbox

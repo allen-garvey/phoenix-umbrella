@@ -2,7 +2,7 @@ defmodule Booklist.Admin.Author do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.booklist()
   schema "authors" do
     field :first_name, :string
     field :last_name, :string

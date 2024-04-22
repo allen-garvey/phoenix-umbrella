@@ -4,7 +4,7 @@ defmodule Booklist.Admin do
   """
 
   import Ecto.Query, warn: false
-  alias Booklist.Repo
+  alias Grenadier.Repo
 
   alias Booklist.Admin.Rating
   alias Booklist.Admin.Genre

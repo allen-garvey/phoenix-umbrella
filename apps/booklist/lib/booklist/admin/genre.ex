@@ -2,7 +2,7 @@ defmodule Booklist.Admin.Genre do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.booklist()
   schema "genres" do
     field :name, :string
     field :is_fiction, :boolean, default: false

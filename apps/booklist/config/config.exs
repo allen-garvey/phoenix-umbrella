@@ -9,8 +9,8 @@ import Config
 
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
-config :booklist,
-  ecto_repos: [Booklist.Repo]
+# config :booklist,
+#   ecto_repos: [Booklist.Repo]
 
 # Configures the endpoint
 config :booklist, BooklistWeb.Endpoint,
@@ -28,11 +28,11 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 config :phoenix, :format_encoders, json: Jason
-config :booklist, Booklist.Repo,
-  types: Common.PostgrexTypes
+# config :booklist, Booklist.Repo,
+#   types: Common.PostgrexTypes
 
 # Configure your database
-config :booklist, Booklist.Repo, Umbrella.Common.Config.postgres_config("booklist_dev")
+# config :booklist, Booklist.Repo, Umbrella.Common.Config.postgres_config("booklist_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

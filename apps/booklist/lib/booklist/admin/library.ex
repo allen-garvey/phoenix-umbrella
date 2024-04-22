@@ -2,7 +2,7 @@ defmodule Booklist.Admin.Library do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.booklist()
   schema "libraries" do
     field :name, :string
     field :super_search_key, :string

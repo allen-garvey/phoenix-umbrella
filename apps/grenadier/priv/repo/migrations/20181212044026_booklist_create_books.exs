@@ -1,8 +1,8 @@
-defmodule Booklist.Repo.Migrations.CreateBooks do
+defmodule Grenadier.Repo.Migrations.BooklistCreateBooks do
   use Ecto.Migration
 
   def change do
-    create table(:books) do
+    create table(:books, prefix: Grenadier.RepoPrefix.booklist()) do
       add :title, :text, null: false
       add :sort_title, :text, null: false
       add :subtitle, :text
@@ -15,7 +15,7 @@ defmodule Booklist.Repo.Migrations.CreateBooks do
       timestamps()
     end
 
-    create index(:books, [:author_id])
-    create index(:books, [:genre_id])
+    create index(:books, [:author_id], prefix: Grenadier.RepoPrefix.booklist())
+    create index(:books, [:genre_id], prefix: Grenadier.RepoPrefix.booklist())
   end
 end

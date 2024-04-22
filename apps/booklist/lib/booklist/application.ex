@@ -9,7 +9,7 @@ defmodule Booklist.Application do
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
-      Booklist.Repo,
+      # Booklist.Repo,
       # Start the endpoint when the application starts
       BooklistWeb.Endpoint,
       # Starts a worker by calling: Booklist.Worker.start_link(arg)

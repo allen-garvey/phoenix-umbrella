@@ -2,7 +2,7 @@ defmodule Booklist.Admin.Book do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.booklist()
   schema "books" do
     field :is_fiction, :boolean, default: false
     field :is_active, :boolean, default: true

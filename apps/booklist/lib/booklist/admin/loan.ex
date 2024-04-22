@@ -2,7 +2,7 @@ defmodule Booklist.Admin.Loan do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.booklist()
   schema "loans" do
     field :due_date, :date
     field :item_count, :integer, default: 1

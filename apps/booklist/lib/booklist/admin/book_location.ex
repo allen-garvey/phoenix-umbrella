@@ -2,7 +2,7 @@ defmodule Booklist.Admin.BookLocation do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.booklist()
   schema "book_locations" do
     field :call_number, :string
 

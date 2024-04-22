@@ -16,7 +16,7 @@ defmodule Booklist.DataCase do
 
   using do
     quote do
-      alias Booklist.Repo
+      alias Grenadier.Repo
 
       import Ecto
       import Ecto.Changeset
@@ -26,11 +26,11 @@ defmodule Booklist.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Booklist.Repo)
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(Booklist.Repo)
 
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Booklist.Repo, {:shared, self()})
-    end
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(Booklist.Repo, {:shared, self()})
+    # end
 
     :ok
   end
