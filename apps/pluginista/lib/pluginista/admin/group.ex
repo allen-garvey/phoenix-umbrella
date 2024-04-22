@@ -2,6 +2,7 @@ defmodule Pluginista.Admin.Group do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @schema_prefix Grenadier.RepoPrefix.pluginista()
   schema "groups" do
     field :name, :string
 

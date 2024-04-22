@@ -2,6 +2,7 @@ defmodule Pluginista.Admin.PluginCategory do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @schema_prefix Grenadier.RepoPrefix.pluginista()
   schema "plugin_categories" do
     belongs_to :category, Pluginista.Admin.Category
     belongs_to :plugin, Pluginista.Admin.Plugin

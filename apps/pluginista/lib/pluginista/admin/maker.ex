@@ -2,6 +2,7 @@ defmodule Pluginista.Admin.Maker do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @schema_prefix Grenadier.RepoPrefix.pluginista()
   schema "makers" do
     field :name, :string
 

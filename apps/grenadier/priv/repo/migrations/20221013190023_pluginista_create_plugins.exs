@@ -1,8 +1,8 @@
-defmodule Pluginista.Repo.Migrations.CreatePlugins do
+defmodule Grenadier.Repo.Migrations.PluginistaCreatePlugins do
   use Ecto.Migration
 
   def change do
-    create table(:plugins) do
+    create table(:plugins, prefix: Grenadier.RepoPrefix.pluginista()) do
       add :name, :text
       add :acquisition_date, :date
       add :cost, :decimal

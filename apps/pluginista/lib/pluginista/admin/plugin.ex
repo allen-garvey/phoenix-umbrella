@@ -2,6 +2,7 @@ defmodule Pluginista.Admin.Plugin do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @schema_prefix Grenadier.RepoPrefix.pluginista()
   schema "plugins" do
     field :acquisition_date, :date
     field :cost, :decimal, default: 0

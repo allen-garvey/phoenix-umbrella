@@ -4,7 +4,7 @@ defmodule Pluginista.Api do
     """
   
     import Ecto.Query, warn: false
-    alias Pluginista.Repo
+    alias Grenadier.Repo
   
     alias Pluginista.Admin.Category
   

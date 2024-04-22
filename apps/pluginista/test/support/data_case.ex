@@ -18,7 +18,7 @@ defmodule Pluginista.DataCase do
 
   using do
     quote do
-      alias Pluginista.Repo
+      alias Grenadier.Repo
 
       import Ecto
       import Ecto.Changeset

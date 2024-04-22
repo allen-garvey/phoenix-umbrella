@@ -9,7 +9,7 @@ defmodule Pluginista.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      Pluginista.Repo,
+      # Pluginista.Repo,
       # Start the Telemetry supervisor
       PluginistaWeb.Telemetry,
       # Start the PubSub system

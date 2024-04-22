@@ -2,6 +2,7 @@ defmodule Pluginista.Admin.Category do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @schema_prefix Grenadier.RepoPrefix.pluginista()
   schema "categories" do
     field :name, :string
 
