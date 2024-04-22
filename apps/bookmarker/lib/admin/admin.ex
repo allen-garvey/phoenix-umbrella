@@ -1,6 +1,6 @@
 defmodule Bookmarker.Admin do
   import Ecto.Query, warn: false
-  alias Bookmarker.Repo
+  alias Grenadier.Repo
   alias Bookmarker.Folder
   alias Bookmarker.Bookmark
 

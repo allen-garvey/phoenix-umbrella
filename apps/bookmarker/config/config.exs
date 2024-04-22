@@ -8,8 +8,8 @@ import Config
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
 # General application configuration
-config :bookmarker,
-  ecto_repos: [Bookmarker.Repo]
+# config :bookmarker,
+#   ecto_repos: [Bookmarker.Repo]
 
 # Configures the endpoint
 config :bookmarker, Bookmarker.Endpoint,
@@ -25,11 +25,11 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :phoenix, :format_encoders, json: Jason
-config :bookmarker, Bookmarker.Repo,
-  types: Common.PostgrexTypes
+# config :bookmarker, Bookmarker.Repo,
+#   types: Common.PostgrexTypes
 
 # Configure your database
-config :bookmarker, Bookmarker.Repo, Umbrella.Common.Config.postgres_config("bookmarker_dev")
+# config :bookmarker, Bookmarker.Repo, Umbrella.Common.Config.postgres_config("bookmarker_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

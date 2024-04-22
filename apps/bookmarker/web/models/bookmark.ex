@@ -1,6 +1,7 @@
 defmodule Bookmarker.Bookmark do
   use Bookmarker.Web, :model
 
+  @schema_prefix Grenadier.RepoPrefix.bookmarker()
   schema "bookmarks" do
     field :title, :string
     field :url, :string

@@ -16,7 +16,7 @@ defmodule Bookmarker.ModelCase do
 
   using do
     quote do
-      alias Bookmarker.Repo
+      alias Grenadier.Repo
 
       import Ecto
       import Ecto.Changeset
@@ -26,11 +26,11 @@ defmodule Bookmarker.ModelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Bookmarker.Repo)
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(Bookmarker.Repo)
 
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Bookmarker.Repo, {:shared, self()})
-    end
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(Bookmarker.Repo, {:shared, self()})
+    # end
 
     :ok
   end

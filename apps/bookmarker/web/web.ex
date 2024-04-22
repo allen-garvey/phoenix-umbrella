@@ -30,7 +30,7 @@ defmodule Bookmarker.Web do
     quote do
       use Phoenix.Controller
 
-      alias Bookmarker.Repo
+      alias Grenadier.Repo
       import Ecto
       import Ecto.Query
 
@@ -65,7 +65,7 @@ defmodule Bookmarker.Web do
     quote do
       use Phoenix.Channel
 
-      alias Bookmarker.Repo
+      alias Grenadier.Repo
       import Ecto
       import Ecto.Query
       import Bookmarker.Gettext

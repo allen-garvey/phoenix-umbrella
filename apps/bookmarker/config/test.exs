@@ -10,10 +10,10 @@ config :bookmarker, Bookmarker.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :bookmarker, Bookmarker.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "bookmarker_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+# config :bookmarker, Bookmarker.Repo,
+#   adapter: Ecto.Adapters.Postgres,
+#   username: "postgres",
+#   password: "postgres",
+#   database: "bookmarker_test",
+#   hostname: "localhost",
+#   pool: Ecto.Adapters.SQL.Sandbox

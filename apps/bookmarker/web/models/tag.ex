@@ -1,6 +1,7 @@
 defmodule Bookmarker.Tag do
   use Bookmarker.Web, :model
 
+  @schema_prefix Grenadier.RepoPrefix.bookmarker()
   schema "tags" do
     field :name, :string
     many_to_many :bookmarks, Bookmarker.Bookmark, join_through: "bookmarks_tags", on_delete: :delete_all

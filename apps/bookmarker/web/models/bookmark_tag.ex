@@ -1,6 +1,7 @@
 defmodule Bookmarker.BookmarkTag do
   use Bookmarker.Web, :model
 
+  @schema_prefix Grenadier.RepoPrefix.bookmarker()
   schema "bookmarks_tags" do
     belongs_to :bookmark, Bookmarker.Bookmark
     belongs_to :tag, Bookmarker.Tag
