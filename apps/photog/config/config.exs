@@ -9,7 +9,7 @@ Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
 # General application configuration
 config :photog,
-  ecto_repos: [Photog.Repo],
+  # ecto_repos: [Photog.Repo],
   image_url_prefix: System.get_env("UMBRELLA_PHOTOG_IMAGE_URL_PREFIX", "")
 
 # Configures the endpoint
@@ -26,11 +26,11 @@ config :logger, :console,
   metadata: [:user_id]
 
 config :phoenix, :format_encoders, json: Jason
-config :photog, Photog.Repo,
-  types: Common.PostgrexTypes
+# config :photog, Photog.Repo,
+#   types: Common.PostgrexTypes
 
 # Configure your database
-config :photog, Photog.Repo, Umbrella.Common.Config.postgres_config("photog_dev")
+# config :photog, Photog.Repo, Umbrella.Common.Config.postgres_config("photog_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

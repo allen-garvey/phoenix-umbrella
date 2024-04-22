@@ -2,7 +2,7 @@ defmodule Mix.Tasks.Shutterbug.LoadExif do
   use Mix.Task
 
   import Ecto.Query, warn: false
-  alias Photog.Repo
+  alias Grenadier.Repo
   alias Photog.Image.Exif
   alias Photog.Api.Image
   alias Photog.Api

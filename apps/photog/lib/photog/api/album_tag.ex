@@ -2,7 +2,7 @@ defmodule Photog.Api.AlbumTag do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.photog()
   schema "album_tags" do
     field :album_order, :integer, default: -1
 

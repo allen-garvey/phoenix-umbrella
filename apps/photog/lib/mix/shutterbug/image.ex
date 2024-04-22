@@ -1,6 +1,6 @@
 defmodule Photog.Shutterbug.Image do
 
-  alias Photog.Repo
+  alias Grenadier.Repo
   alias Photog.Api.Image
 
   def webp_name(image_name) do

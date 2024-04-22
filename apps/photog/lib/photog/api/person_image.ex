@@ -2,7 +2,7 @@ defmodule Photog.Api.PersonImage do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.photog()
   schema "person_images" do
     belongs_to :image, Photog.Api.Image
     belongs_to :person, Photog.Api.Person

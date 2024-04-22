@@ -2,7 +2,7 @@ defmodule Photog.Api.Import do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.photog()
   schema "imports" do
     field :apple_photos_uuid, :string, load_in_query: false
     field :import_time, :utc_datetime

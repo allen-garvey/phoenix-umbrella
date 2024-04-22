@@ -2,7 +2,7 @@ defmodule Photog.Api.Person do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.photog()
   schema "persons" do
     field :name, :string
     field :images_count, :integer, default: -1, virtual: true
@@ -11,7 +11,7 @@ defmodule Photog.Api.Person do
 
     belongs_to :cover_image, Photog.Api.Image
     has_many :person_images, Photog.Api.PersonImage
-    many_to_many :images, Photog.Api.Image, join_through: "person_images"
+    many_to_many :images, Photog.Api.Image, join_through: Photog.Api.PersonImage
   end
 
   @doc false

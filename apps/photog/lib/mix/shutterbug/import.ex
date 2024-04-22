@@ -1,7 +1,7 @@
 defmodule Photog.Shutterbug.Import do
   import Ecto.Query, warn: false
   alias Photog.Api.Import
-  alias Photog.Repo
+  alias Grenadier.Repo
 
   def create_import do
     import = %Import{}

@@ -10,10 +10,10 @@ config :photog, PhotogWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :photog, Photog.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "photog_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+# config :photog, Photog.Repo,
+#   adapter: Ecto.Adapters.Postgres,
+#   username: "postgres",
+#   password: "postgres",
+#   database: "photog_test",
+#   hostname: "localhost",
+#   pool: Ecto.Adapters.SQL.Sandbox

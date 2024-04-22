@@ -2,7 +2,7 @@ defmodule Photog.Api.AlbumImage do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.photog()
   schema "album_images" do
     field :image_order, :integer
 

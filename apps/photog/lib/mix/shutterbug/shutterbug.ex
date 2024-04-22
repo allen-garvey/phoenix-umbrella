@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Shutterbug do
   use Mix.Task
 
-  alias Photog.Repo
+  alias Grenadier.Repo
   alias Common.MixHelpers.Error
   alias Photog.Shutterbug.Directory
   alias Photog.Shutterbug.FileValidator

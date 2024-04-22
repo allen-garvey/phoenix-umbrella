@@ -16,7 +16,7 @@ defmodule Photog.DataCase do
 
   using do
     quote do
-      alias Photog.Repo
+      alias Grenadier.Repo
 
       import Ecto
       import Ecto.Changeset
@@ -26,11 +26,11 @@ defmodule Photog.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Photog.Repo)
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(Photog.Repo)
 
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Photog.Repo, {:shared, self()})
-    end
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(Photog.Repo, {:shared, self()})
+    # end
 
     :ok
   end

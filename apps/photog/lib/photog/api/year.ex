@@ -1,7 +1,8 @@
 defmodule Photog.Api.Year do
     use Ecto.Schema
     import Ecto.Changeset
-  
+
+    @schema_prefix Grenadier.RepoPrefix.photog()
     @primary_key {:id, :integer, []}
     schema "years" do
       field :description, :string

@@ -4,7 +4,7 @@ defmodule Photog.Api do
   """
 
   import Ecto.Query, warn: false
-  alias Photog.Repo
+  alias Grenadier.Repo
 
   alias Photog.Api.Album
   alias Photog.Api.AlbumImage
@@ -1237,9 +1237,19 @@ defmodule Photog.Api do
   Returns the list of maps with tag and cover image with the cover image of the last album added as the cover image
   """
   def list_tags do
+    # based on: https://justinappears.com/posts/lateral-joins-ecto
+    album_tag_subquery = from(
+      album_tag in AlbumTag,
+      where: album_tag.tag_id == parent_as(:tag).id,
+      order_by: [desc: :id],
+      limit: 1,
+      select: %{album_id: album_tag.album_id}
+    )
+
     from(
         tag in Tag,
-        left_lateral_join: album_tag in fragment("SELECT album_id FROM album_tags WHERE tag_id = ? ORDER BY id DESC LIMIT 1", tag.id),
+        as: :tag,
+        left_lateral_join: album_tag in subquery(album_tag_subquery),
         on: true,
         left_join: album in Album,
         on: album.id == album_tag.album_id,

@@ -4,7 +4,7 @@ defmodule Photog.Shutterbug do
   """
 
   import Ecto.Query, warn: false
-  alias Photog.Repo
+  alias Grenadier.Repo
 
   alias Photog.Api.Image
 

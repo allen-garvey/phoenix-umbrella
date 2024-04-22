@@ -2,7 +2,7 @@ defmodule Photog.Api.Tag do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.photog()
   schema "tags" do
     field :apple_photos_uuid, :string, load_in_query: false
     field :name, :string
@@ -15,7 +15,7 @@ defmodule Photog.Api.Tag do
     belongs_to :cover_album, Photog.Api.Album
 
     has_many :album_tags, Photog.Api.AlbumTag
-    many_to_many :albums, Photog.Api.Album, join_through: "album_tags"
+    many_to_many :albums, Photog.Api.Album, join_through: Photog.Api.AlbumTag
   end
 
   @doc false

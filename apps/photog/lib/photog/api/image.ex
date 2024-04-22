@@ -2,7 +2,7 @@ defmodule Photog.Api.Image do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.photog()
   schema "images" do
     field :creation_time, :utc_datetime
     field :is_favorite, :boolean, default: false
@@ -23,8 +23,8 @@ defmodule Photog.Api.Image do
     has_many :person_images, Photog.Api.PersonImage
     has_many :versions, Photog.Api.Image, foreign_key: :source_image_id
 
-    many_to_many :albums, Photog.Api.Album, join_through: "album_images"
-    many_to_many :persons, Photog.Api.Person, join_through: "person_images"
+    many_to_many :albums, Photog.Api.Album, join_through: Photog.Api.AlbumImage
+    many_to_many :persons, Photog.Api.Person, join_through: Photog.Api.PersonImage
   end
 
   @doc false

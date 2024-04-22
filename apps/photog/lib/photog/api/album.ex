@@ -2,7 +2,7 @@ defmodule Photog.Api.Album do
   use Ecto.Schema
   import Ecto.Changeset
 
-
+  @schema_prefix Grenadier.RepoPrefix.photog()
   schema "albums" do
     field :name, :string
     field :description, :string
@@ -15,10 +15,10 @@ defmodule Photog.Api.Album do
     belongs_to :cover_image, Photog.Api.Image
 
     has_many :album_images, Photog.Api.AlbumImage
-    many_to_many :images, Photog.Api.Image, join_through: "album_images"
+    many_to_many :images, Photog.Api.Image, join_through: Photog.Api.AlbumImage
 
     has_many :album_tags, Photog.Api.AlbumTag
-    many_to_many :tags, Photog.Api.Tag, join_through: "album_tags"
+    many_to_many :tags, Photog.Api.Tag, join_through: Photog.Api.AlbumTag
 
     has_many :years, Photog.Api.Year
   end
