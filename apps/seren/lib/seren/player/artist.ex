@@ -3,7 +3,7 @@ defmodule Seren.Player.Artist do
   import Ecto.Changeset
   alias Seren.Player.Artist
 
-
+  @schema_prefix Grenadier.RepoPrefix.seren()
   schema "artists" do
     field :name, :string
 

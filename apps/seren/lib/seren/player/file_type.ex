@@ -3,7 +3,7 @@ defmodule Seren.Player.FileType do
   import Ecto.Changeset
   alias Seren.Player.FileType
 
-
+  @schema_prefix Grenadier.RepoPrefix.seren()
   schema "file_types" do
     field :name, :string
 

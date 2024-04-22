@@ -3,7 +3,7 @@ defmodule Seren.Player.Track do
   import Ecto.Changeset
   alias Seren.Player.Track
 
-
+  @schema_prefix Grenadier.RepoPrefix.seren()
   schema "tracks" do
     field :album_disc_count, :integer
     field :album_disc_number, :integer

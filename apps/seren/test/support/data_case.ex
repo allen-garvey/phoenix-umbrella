@@ -16,7 +16,7 @@ defmodule Seren.DataCase do
 
   using do
     quote do
-      alias Seren.Repo
+      alias Grenadier.Repo
 
       import Ecto
       import Ecto.Changeset
@@ -26,11 +26,11 @@ defmodule Seren.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Seren.Repo)
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(Seren.Repo)
 
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Seren.Repo, {:shared, self()})
-    end
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(Seren.Repo, {:shared, self()})
+    # end
 
     :ok
   end

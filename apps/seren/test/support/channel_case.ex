@@ -27,10 +27,10 @@ defmodule SerenWeb.ChannelCase do
 
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Seren.Repo)
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Seren.Repo, {:shared, self()})
-    end
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(Seren.Repo)
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(Seren.Repo, {:shared, self()})
+    # end
     :ok
   end
 

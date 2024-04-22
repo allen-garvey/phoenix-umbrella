@@ -3,7 +3,7 @@ defmodule Seren.Player.Composer do
   import Ecto.Changeset
   alias Seren.Player.Composer
 
-
+  @schema_prefix Grenadier.RepoPrefix.seren()
   schema "composers" do
     field :name, :string
 

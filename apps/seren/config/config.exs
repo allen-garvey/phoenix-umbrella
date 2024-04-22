@@ -8,8 +8,8 @@ import Config
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
 # General application configuration
-config :seren,
-  ecto_repos: [Seren.Repo]
+# config :seren,
+#   ecto_repos: [Seren.Repo]
 
 # Configures the endpoint
 config :seren, SerenWeb.Endpoint,
@@ -25,11 +25,11 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :phoenix, :format_encoders, json: Jason
-config :seren, Seren.Repo,
-  types: Common.PostgrexTypes
+# config :seren, Seren.Repo,
+#   types: Common.PostgrexTypes
 
 # Configure your database
-config :seren, Seren.Repo, Umbrella.Common.Config.postgres_config("seren_dev")
+# config :seren, Seren.Repo, Umbrella.Common.Config.postgres_config("seren_dev")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

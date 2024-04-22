@@ -3,7 +3,7 @@ defmodule Seren.Player.Genre do
   import Ecto.Changeset
   alias Seren.Player.Genre
 
-
+  @schema_prefix Grenadier.RepoPrefix.seren()
   schema "genres" do
     field :name, :string
 

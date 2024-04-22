@@ -4,7 +4,7 @@ defmodule Seren.Player do
   """
 
   import Ecto.Query, warn: false
-  alias Seren.Repo
+  alias Grenadier.Repo
 
   alias Seren.Player.Track
 

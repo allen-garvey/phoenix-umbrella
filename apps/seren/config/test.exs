@@ -10,10 +10,10 @@ config :seren, SerenWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :seren, Seren.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "seren_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+# config :seren, Seren.Repo,
+#   adapter: Ecto.Adapters.Postgres,
+#   username: "postgres",
+#   password: "postgres",
+#   database: "seren_test",
+#   hostname: "localhost",
+#   pool: Ecto.Adapters.SQL.Sandbox
