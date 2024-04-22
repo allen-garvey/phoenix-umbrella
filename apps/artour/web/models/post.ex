@@ -17,8 +17,8 @@ defmodule Artour.Post do
 
     has_many :post_images, Artour.PostImage
 
-    many_to_many :images, Artour.Image, join_through: "post_images", on_delete: :delete_all
-    many_to_many :tags, Artour.Tag, join_through: "post_tags", on_delete: :delete_all
+    many_to_many :images, Artour.Image, join_through: Artour.PostImage, on_delete: :delete_all
+    many_to_many :tags, Artour.Tag, join_through: Artour.PostTag, on_delete: :delete_all
     timestamps()
   end
 
