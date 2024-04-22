@@ -10,7 +10,7 @@ defmodule Bookmarker.Bookmark do
     field :preview_image_selector, :string
     field :thumbnail_url, :string
     belongs_to :folder, Bookmarker.Folder
-    many_to_many :tags, Bookmarker.Tag, join_through: "bookmarks_tags", on_delete: :delete_all
+    many_to_many :tags, Bookmarker.Tag, join_through: Bookmarker.BookmarkTag, on_delete: :delete_all
 
     timestamps()
   end
