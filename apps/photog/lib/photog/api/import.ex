@@ -4,7 +4,6 @@ defmodule Photog.Api.Import do
 
   @schema_prefix Grenadier.RepoPrefix.photog()
   schema "imports" do
-    field :apple_photos_uuid, :string, load_in_query: false
     field :import_time, :utc_datetime
     field :notes, :string
     field :images_count, :integer, default: -1, virtual: true
@@ -19,10 +18,9 @@ defmodule Photog.Api.Import do
   @doc false
   def changeset(import, attrs) do
     import
-    |> cast(attrs, [:import_time, :apple_photos_uuid, :notes, :cover_image_id])
+    |> cast(attrs, [:import_time, :notes, :cover_image_id])
     |> Common.ModelHelpers.Date.default_datetime_now(:import_time)
     |> validate_required([:import_time])
-    |> unique_constraint(:apple_photos_uuid)
     |> assoc_constraint(:cover_image)
   end
 

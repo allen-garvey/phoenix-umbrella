@@ -4,7 +4,6 @@ defmodule Photog.Api.Tag do
 
   @schema_prefix Grenadier.RepoPrefix.photog()
   schema "tags" do
-    field :apple_photos_uuid, :string, load_in_query: false
     field :name, :string
     field :is_favorite, :boolean, default: false
     field :cover_image, :string, default: nil, virtual: true
@@ -21,10 +20,9 @@ defmodule Photog.Api.Tag do
   @doc false
   def changeset(tag, attrs) do
     tag
-    |> cast(attrs, [:name, :apple_photos_uuid, :cover_album_id, :is_favorite])
+    |> cast(attrs, [:name, :cover_album_id, :is_favorite])
     |> validate_required([:name, :is_favorite])
     |> unique_constraint(:name)
-    |> unique_constraint(:apple_photos_uuid)
     |> assoc_constraint(:cover_album)
   end
 end
