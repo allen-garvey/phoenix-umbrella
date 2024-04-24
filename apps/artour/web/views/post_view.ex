@@ -41,7 +41,7 @@ defmodule Artour.PostView do
   same order as the attribute_values function
   """
   def attribute_names_short() do
-    ["Title", "Thumbnail", "Slug", "NSFW", "Category", "Publication Date"]
+    ["Title", "Thumbnail", "Slug", "NSFW", "Publication Date"]
   end
 
   @doc """
@@ -53,8 +53,7 @@ defmodule Artour.PostView do
       post.title, 
       img_tag(Artour.ImageView.url_for(conn, post.cover_image, :thumbnail, :local), class: "thumbnail-sm", loading: "lazy"),
       link(post.slug, to: Artour.PublicPostView.show_path(conn, post), class: publication_date_index_cell_class(post.is_published)), 
-      content_tag(:div, is_nsfw_index_cell_content(post.is_nsfw), class: is_nsfw_index_cell_class(post.is_nsfw)), 
-      Artour.CategoryView.display_name(post.category), 
+      content_tag(:div, is_nsfw_index_cell_content(post.is_nsfw), class: is_nsfw_index_cell_class(post.is_nsfw)),
       content_tag(:div, datetime_to_us_date(post.publication_date), class: publication_date_index_cell_class(post.is_published)), 
     ]
   end
@@ -94,7 +93,7 @@ defmodule Artour.PostView do
   same order as the attribute_values function
   """
   def attribute_names() do
-    ["Title", "Public Url", "Publication Date", "Category", "NSFW", "Markdown", "Published", "Body"]
+    ["Title", "Public Url", "Publication Date", "NSFW", "Markdown", "Published", "Body"]
   end
 
   @doc """
@@ -102,6 +101,6 @@ defmodule Artour.PostView do
   formatted values
   """
   def attribute_values(conn, post) do
-    [post.title, link(Artour.PublicPostView.show_path(conn, post), to: Artour.PublicPostView.show_path(conn, post)), datetime_to_us_date(post.publication_date), Artour.CategoryView.display_name(post.category), post.is_nsfw, post.is_markdown, post.is_published, to_paragraphs(post.body)]
+    [post.title, link(Artour.PublicPostView.show_path(conn, post), to: Artour.PublicPostView.show_path(conn, post)), datetime_to_us_date(post.publication_date), post.is_nsfw, post.is_markdown, post.is_published, to_paragraphs(post.body)]
   end
 end

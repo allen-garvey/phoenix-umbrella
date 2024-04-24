@@ -16,8 +16,7 @@ defmodule Artour.PostController do
     #set new posts to use last added image by default
     default_cover_image_id = Repo.one!(from i in Artour.Image, select: i.id, order_by: [desc: :id], limit: 1)
     changeset = Post.changeset(%Post{cover_image_id: default_cover_image_id})
-    categories = Artour.Category.form_list(Repo)
-    render(conn, "new.html", changeset: changeset, categories: categories)
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"post" => post_params}) do
@@ -29,8 +28,7 @@ defmodule Artour.PostController do
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: post_path(conn, :show, post))
       {:error, changeset} ->
-        categories = Artour.Category.form_list(Repo)
-        render(conn, "new.html", changeset: changeset, categories: categories)
+        render(conn, "new.html", changeset: changeset)
     end
   end
 
@@ -43,8 +41,7 @@ defmodule Artour.PostController do
   def edit(conn, %{"id" => id}) do
     post = Repo.get!(Post, id)
     changeset = Post.changeset(post)
-    categories = Artour.Category.form_list(Repo)
-    render(conn, "edit.html", post: post, changeset: changeset, categories: categories)
+    render(conn, "edit.html", post: post, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
@@ -57,8 +54,7 @@ defmodule Artour.PostController do
         |> put_flash(:info, "Post updated successfully.")
         |> redirect(to: post_path(conn, :show, post))
       {:error, changeset} ->
-        categories = Artour.Category.form_list(Repo)
-        render(conn, "edit.html", post: post, changeset: changeset, categories: categories)
+        render(conn, "edit.html", post: post, changeset: changeset)
     end
   end
 

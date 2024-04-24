@@ -38,11 +38,7 @@ defmodule Artour.Router do
 
     get "/", PageController, :index
 
-    get "/browse", PageController, :browse
     get "/404.html", PageController, :error_404
-
-    get "/categories", PublicCategoryController, :index
-    get "/categories/:slug", PublicCategoryController, :show
 
     get "/tags", PublicTagController, :index
     get "/tags/:slug", PublicTagController, :show
@@ -62,7 +58,6 @@ defmodule Artour.Router do
     get "/posts/:post/images/add", PostController, :add_images
     post "/posts/:post/images", PostController, :save_images
 
-    resources "/categories", CategoryController
     resources "/posts", PostController
     resources "/images", ImageController
     resources "/post_images", PostImageController

@@ -18,17 +18,6 @@ defmodule Artour.PageController do
   end
 
   @doc """
-  Shows list of categories that contain 1 or more related posts
-  """
-  def browse(conn, _params) do
-
-  	categories = Public.categories_with_posts()
-    tags = Public.tags_with_posts()
-
-    render conn, "browse.html", page_title: "Browse", categories: categories, tags: tags
-  end
-
-  @doc """
   Displays 404 page
   """
   def error_404(conn, _params) do

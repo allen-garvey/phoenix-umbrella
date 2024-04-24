@@ -7,8 +7,7 @@
 <%= render "form.html", changeset: @changeset,
                         action: @action,
                         show_delete: assigns[:show_delete],
-                        save_another: assigns[:save_another],
-                        categories: @categories %>
+                        save_another: assigns[:save_another] %>
 
 <%= if assigns[:show_delete] do
 CommonWeb.FormView.hidden_delete_form(@conn, post_path(@conn, :delete, @post))

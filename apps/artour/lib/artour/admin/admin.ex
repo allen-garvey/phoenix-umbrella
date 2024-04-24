@@ -8,7 +8,6 @@ defmodule Artour.Admin do
 
   alias Artour.Post
   alias Artour.PostTag
-  # alias Artour.Category
   alias Artour.Image
   # alias Artour.PostImage
 
@@ -18,9 +17,8 @@ defmodule Artour.Admin do
   def list_posts do
     from(
           p in Post,
-          join: category in assoc(p, :category),
           join: cover_image in assoc(p, :cover_image),
-          preload: [category: category, cover_image: cover_image],
+          preload: [cover_image: cover_image],
           order_by: [desc: :id]
         )
     |> Repo.all
@@ -35,10 +33,9 @@ defmodule Artour.Admin do
   def get_post_for_show!(id) do
     from(
           post in Post,
-          join: category in assoc(post, :category),
           left_join: tag in assoc(post, :tags),
           where: post.id == ^id,
-          preload: [category: category, tags: tag],
+          preload: [tags: tag],
           order_by: [tag.name]
         )
     |> Repo.one!

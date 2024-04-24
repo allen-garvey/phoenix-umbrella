@@ -12,7 +12,6 @@ defmodule Artour.Post do
     field :is_published, :boolean, default: true
     field :publication_date, :date
 
-    belongs_to :category, Artour.Category
     belongs_to :cover_image, Artour.Image
 
     has_many :post_images, Artour.PostImage
@@ -27,10 +26,9 @@ defmodule Artour.Post do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :slug, :body, :category_id, :cover_image_id, :is_nsfw, :is_markdown, :is_published, :publication_date])
+    |> cast(params, [:title, :slug, :body, :cover_image_id, :is_nsfw, :is_markdown, :is_published, :publication_date])
     |> Common.ModelHelpers.Date.default_date_today(:publication_date)
-    |> validate_required([:title, :slug, :category_id, :cover_image_id, :is_nsfw, :is_markdown, :is_published, :publication_date])
-    |> assoc_constraint(:category)
+    |> validate_required([:title, :slug, :cover_image_id, :is_nsfw, :is_markdown, :is_published, :publication_date])
     |> assoc_constraint(:cover_image)
     |> validate_slug(:slug)
     |> unique_constraint(:title)

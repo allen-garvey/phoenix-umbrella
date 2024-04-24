@@ -9,7 +9,6 @@ defmodule Artour.Api do
 
   alias Artour.Post
   alias Artour.Tag
-  # alias Artour.Category
   alias Artour.Image
   alias Artour.PostImage
   alias Artour.PostTag
