@@ -28,12 +28,9 @@ defmodule HabitsWeb.ActivityController do
   end
 
   def new(conn, params) do
-    date = cond do
-      is_binary(params["date"]) -> case Date.from_iso8601(params["date"]) do
-        {:ok, date} -> date
-        {:error, _} -> Common.ModelHelpers.Date.today()
-      end
-      true ->  Common.ModelHelpers.Date.today()
+    date = case Date.from_iso8601(params["date"] || "") do
+      {:ok, date} -> date
+      {:error, _} -> Common.ModelHelpers.Date.today()
     end
 
     Admin.change_activity(%Activity{
