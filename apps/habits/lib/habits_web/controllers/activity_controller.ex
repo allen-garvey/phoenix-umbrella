@@ -17,19 +17,33 @@ defmodule HabitsWeb.ActivityController do
 
   def new(conn, %{"duplicate" => id}) do
     activity = Admin.get_activity!(id)
-    changeset = Admin.change_activity(%Activity{
+    
+    Admin.change_activity(%Activity{
       category_id: activity.category_id,
       title: activity.title,
       description: activity.description,
       date: Common.ModelHelpers.Date.today(),
     })
-    render(conn, "new.html", [changeset: changeset] ++ related_fields())
+    |> new_route(conn)
   end
 
-  def new(conn, _params) do
-    changeset = Admin.change_activity(%Activity{
-      category_id: Admin.get_recent_popular_category_id()
+  def new(conn, params) do
+    date = cond do
+      is_binary(params["date"]) -> case Date.from_iso8601(params["date"]) do
+        {:ok, date} -> date
+        {:error, _} -> Common.ModelHelpers.Date.today()
+      end
+      true ->  Common.ModelHelpers.Date.today()
+    end
+
+    Admin.change_activity(%Activity{
+      category_id: Admin.get_recent_popular_category_id(),
+      date: date,
     })
+    |> new_route(conn)
+  end
+
+  defp new_route(changeset, conn) do
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 

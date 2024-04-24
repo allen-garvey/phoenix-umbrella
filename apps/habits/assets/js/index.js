@@ -6,7 +6,7 @@ import ActivityCalendar from './vue/activity-calendar.vue';
 import css from '../css/app.scss';
 
 initializeYesterdayButton();
-instantiateVue('activity-calendar', ActivityCalendar);
+instantiateVue('activity-calendar', ActivityCalendar, ['newActivityUrl']);
 
 document.querySelectorAll('[data-button="delete"]').forEach((button) => {
     button.onclick = (e) => {

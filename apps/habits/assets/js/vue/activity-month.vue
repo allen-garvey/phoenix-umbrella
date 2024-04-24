@@ -12,7 +12,12 @@
                 :key="`${year}-${month}-${weekNum}-${dayNum}`"
             >
                 <h4 :class="{[$style.today]: todaysDate === day.date}">
-                    {{ formatDayDate(day.date) }}
+                    <a 
+                        :href="generateNewActivityUrl(day.date)" 
+                        :class="$style.newActivityLink"
+                    >
+                        {{ formatDayDate(day.date) }}
+                    </a>
                 </h4>
                 <div 
                     v-for="activity in day.activities"
@@ -22,7 +27,7 @@
                     @mouseover="selectActivity(activity)"
                 >
                     <div>
-                        <a :href="`/activities/${activity.id}`" target="_blank">
+                        <a :href="`/activities/${activity.id}`">
                             {{ activity.title }}
                         </a>
                     </div>
@@ -31,7 +36,7 @@
         </div>
         <div v-if="selectedActivity">
             <div :class="getCategoryClass(selectedActivity.category_id)">
-                <a :href="`/activities/${selectedActivity.id}`" target="_blank">
+                <a :href="`/activities/${selectedActivity.id}`">
                     {{ selectedActivity.title }} - {{ selectedActivity.date }}
                 </a>
             </div>
@@ -59,6 +64,9 @@
     .day {
         padding: 0 1em 1em;
         width: 300px;
+    }
+    .newActivityLink {
+        color: #000;
     }
     .dayContents {
         padding: 1em;
@@ -99,6 +107,10 @@ export default {
             required: true,
         },
         todaysDate: {
+            type: String,
+            required: true,
+        },
+        newActivityUrl: {
             type: String,
             required: true,
         },
@@ -165,6 +177,9 @@ export default {
                 }
                 this.weeks.push(week);
             }
+        },
+        generateNewActivityUrl(date){
+            return `${this.newActivityUrl}?date=${date}`;
         },
     }
 };

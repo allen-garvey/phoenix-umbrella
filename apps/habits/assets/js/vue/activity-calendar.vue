@@ -24,6 +24,7 @@
                 :start-date="currentMonthActivities.meta.from"
                 :end-date="currentMonthActivities.meta.to"
                 :todays-date="formatDate(todaysDate)"
+                :new-activity-url="newActivityUrl"
                 v-if="categoriesMap.size > 0"
             />
         </div>
@@ -46,6 +47,12 @@ import { getTodaysDate, formatDate, getMonthSunday, getSaturdayAfter } from '../
 import ActivityMonth from './activity-month.vue';
 
 export default {
+    props: {
+        newActivityUrl: {
+            type: String,
+            required: true,
+        },
+    },
     components: {
         ActivityMonth,
     },
