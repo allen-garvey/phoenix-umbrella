@@ -4,6 +4,9 @@
     }
     &[disabled]{
         cursor: not-allowed;
+        // required due to bootstrap bug
+        // https://stackoverflow.com/questions/50349017/how-can-i-change-cursor-for-disabled-button-or-a-in-bootstrap-4
+        pointer-events: all !important;
     }
 }
 
