@@ -1,5 +1,5 @@
 <template>
-    <div :class="{invisible: isReordering, [$style['thumbnail-batch-select-container']]: true}">
+    <div :class="{invisible: isReordering, [$style.thumbnailBatchSelectContainer]: true}">
         <button
             :class="toggleBatchEditButtonClass" 
             @click="toggleBatchSelect"
@@ -16,18 +16,18 @@
         * Batch edit controls when in batch edit mode
         -->
         <div 
-            :class="$style['resource-buttons-container']" 
+            :class="$style.resourceButtonsContainer" 
             v-if="isCurrentlyBatchSelect"
         >
             <div v-if="enableBatchSelectImages" class="btn-group">
                 <button class="btn btn-primary" 
-                    @click="setBatchResourceMode(batchEditResourceMode.ALBUMS)" 
+                    @click="setBatchResourceModeWrapper(batchEditResourceMode.ALBUMS)" 
                     :class="buttonClassForResourceMode(batchEditResourceMode.ALBUMS)">
                     Add Albums
                 </button>
                 <button 
                     class="btn btn-primary" 
-                    @click="setBatchResourceMode(batchEditResourceMode.PERSONS)" 
+                    @click="setBatchResourceModeWrapper(batchEditResourceMode.PERSONS)" 
                     :class="buttonClassForResourceMode(batchEditResourceMode.PERSONS)"
                 >
                     Add Persons
@@ -57,7 +57,7 @@
             </button>
             <button 
                 class="btn btn-primary" 
-                @click="setBatchResourceMode(batchEditResourceMode.TAGS)" 
+                @click="setBatchResourceModeWrapper(batchEditResourceMode.TAGS)" 
                 :class="buttonClassForResourceMode(batchEditResourceMode.TAGS)" 
                 v-if="enableBatchSelectAlbums"
             >
@@ -68,8 +68,8 @@
             * List of batch edit resources that can be added to selected items
         -->
         <div v-if="shouldShowBatchResources">
-            <label>Search <input class="form-control" v-model="searchValue" v-focus /></label>
-            <ul :class="$style['batch-resources-list']">
+            <label>Search <input class="form-control" v-model="searchValue" v-focus ref="searchInput" /></label>
+            <ul :class="$style.batchResourcesList">
                 <li 
                     v-for="(resource, index) in batchResourcesDisplayed" 
                     :key="resource.id"
@@ -108,7 +108,7 @@
 <style lang="scss" module>
     @import '~photog-styles/site/variables';
 
-    .batch-resources-list{
+    .batchResourcesList{
         display: flex;
         flex-wrap: wrap;
         margin-top: 1em;
@@ -118,12 +118,12 @@
             margin-bottom: 0.5em;
         }
     }
-    .thumbnail-batch-select-container{
+    .thumbnailBatchSelectContainer{
         display: inline-block;
         margin-bottom: 1em;
         width: 100%;
         
-        .resource-buttons-container{
+        .resourceButtonsContainer{
             width: 100%;
             display: flex;
             justify-content: space-between;
@@ -137,6 +137,7 @@
 </style>
 
 <script>
+import { nextTick } from 'vue';
 import focus from 'umbrella-common-js/vue/directives/focus.js';
 import { BATCH_EDIT_RESOURCE_MODE } from '../constants/batch-edit.js';
 
@@ -263,6 +264,13 @@ export default {
         },
         onBatchItemCheckboxChanged(id){
             this.selectedItemsMap[id] = !this.selectedItemsMap[id];
+        },
+        setBatchResourceModeWrapper(mode){
+            this.searchValue = '';
+            this.setBatchResourceMode(mode);
+            nextTick().then(() => {
+                this.$refs.searchInput.focus();
+            });
         },
     }
 };
