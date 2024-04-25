@@ -19,12 +19,12 @@
 		<div class="info"><%= @books_per_week_average %></div>
 	</div>
 	<div class="stat_box">
-		<%= if !is_nil(@lowest_rating) do  %>
-			<div class="heading">Lowest Rating</div>
-			<div class="info">
-				<%= link BooklistWeb.RatingView.to_reports_heading(@lowest_rating), to: Routes.rating_path(@conn, :show, @lowest_rating.id) %>
-			</div>
-		<% end %>
+		<div class="heading">Average Rating</div>
+		<div class="info"><%= @average_rating %></div>
+	</div>
+	<div class="stat_box">
+		<div class="heading">Non-fiction</div>
+		<div class="info"><%= @nonfiction_percent %>%</div>
 	</div>
 	<div class="stat_box">
 		<%= if !is_nil(@highest_rating) do %>
@@ -35,12 +35,12 @@
 		<% end %>
 	</div>
 	<div class="stat_box">
-		<div class="heading">Average Rating</div>
-		<div class="info"><%= @average_rating %></div>
-	</div>
-	<div class="stat_box">
-		<div class="heading">Non-fiction</div>
-		<div class="info"><%= @nonfiction_percent %>%</div>
+		<%= if !is_nil(@lowest_rating) do  %>
+			<div class="heading">Lowest Rating</div>
+			<div class="info">
+				<%= link BooklistWeb.RatingView.to_reports_heading(@lowest_rating), to: Routes.rating_path(@conn, :show, @lowest_rating.id) %>
+			</div>
+		<% end %>
 	</div>
 </div>
 
@@ -63,8 +63,10 @@
 	<ol class="reporting_top_rated_books_list">
 		<%= for rating <- @ratings do %>
 			<li>
-				<%= link BooklistWeb.BookView.to_s(rating.book), to: Routes.book_path(@conn, :show, rating.book.id) %>
-				<%= link BooklistWeb.RatingView.to_s_short(rating), to: Routes.rating_path(@conn, :show, rating.id) %>
+				<div>
+					<%= link BooklistWeb.BookView.to_s(rating.book), to: Routes.book_path(@conn, :show, rating.book.id) %>
+					<%= link BooklistWeb.RatingView.to_s_short(rating), to: Routes.rating_path(@conn, :show, rating.id) %>
+				</div>
 			</li>
 		<% end %>
 	</ol>

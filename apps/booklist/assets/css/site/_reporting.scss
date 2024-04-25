@@ -7,28 +7,54 @@
 	flex-wrap: wrap;
 	justify-content: space-between;
 	margin-top: 1em;
+	font-size: 1.4rem;
 
 	& + & {
-		margin-top: 2rem;
+		margin-top: 3rem;
 	}
-}
-
-.genre_stat_box {
-	flex-basis: 25%;
-	margin-bottom: 0.5rem;
-
+	
 	.heading {
 		font-weight: bold;
 	}
 }
 
+.stat_box {
+	margin-bottom: 0.5rem;
+}
+
+.genre_stat_box {
+	flex-basis: 25%;
+	padding: 0.25em;
+}
+
 .reporting_books_by_week{
-	margin: 3em 0 1em;
+	margin: 1.5em 0 1em;
+}
+
+.reporting_top_rated_books_list{
+	list-style: none;
+	counter-reset: item;
+	font-size: 1.67rem;
+	padding-bottom: 4em;
+
+	li {
+		counter-increment: item;
+		margin: 0 0 0.5em -0.3em;
+		display: flex;
+	}
+	li:before {
+		margin-right: 10px;
+		content: counter(item);
+		color: #cacaca;
+		min-width: 1.2em;
+		text-align: center;
+		display: inline-block;
+	}
 }
 
 .reporting_top_rated_books_table{
 	font-size: 1.67rem;
-	margin: 1rem 0 2rem;
+	margin: 1rem 0 8rem;
 
 	th {
 		font-weight: normal;
