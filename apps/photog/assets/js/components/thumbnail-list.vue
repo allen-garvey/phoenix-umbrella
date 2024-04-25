@@ -299,7 +299,8 @@ export default {
             currentDragIndex: -1,
             hoveredItem: null,
             hoveredItemEvent: null,
-            hoveredEventTimout: null,
+            hoveredEventStartTimeout: null,
+            hoveredEventEndTimeout: null,
         }
     },
     computed: {
@@ -402,7 +403,8 @@ export default {
             this.shouldShowAllBatchResources = false;
             this.hoveredItem = null;
             this.hoveredItemEvent = null;
-            clearTimeout(this.hoveredEventTimout);
+            clearTimeout(this.hoveredEventStartTimeout);
+            clearTimeout(this.hoveredEventEndTimeout);
             
             this.loadModel().then(()=>{
                 this.isInitialLoadComplete = true;
@@ -741,16 +743,20 @@ export default {
             if(this.isCurrentlyBatchSelect){
                 return;
             }
-            clearTimeout(this.hoveredEventTimout);
-            this.hoveredEventTimout = setTimeout(() => {
+            clearTimeout(this.hoveredEventStartTimeout);
+            clearTimeout(this.hoveredEventEndTimeout);
+            this.hoveredEventStartTimeout = setTimeout(() => {
                 this.hoveredItem = item;
                 this.hoveredItemEvent = $event;
             }, 300);
         },
         onItemHoveredEnd(){
-            this.hoveredItem = null;
-            this.hoveredItemEvent = null;
-            clearTimeout(this.hoveredEventTimout);
+            clearTimeout(this.hoveredEventStartTimeout);
+            clearTimeout(this.hoveredEventEndTimeout);
+            this.hoveredEventEndTimeout = setTimeout(() => {
+                this.hoveredItem = null;
+                this.hoveredItemEvent = null;
+            }, 200);
         },
         /**
          * Keyboard shortcuts
