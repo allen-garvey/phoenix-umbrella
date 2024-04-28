@@ -1101,13 +1101,14 @@ defmodule Photog.Api do
 
   """
   def get_import!(id) do
-    import_task = Task.async(fn -> Repo.get!(Import, id) end)
-    images_count_task = Task.async(fn -> import_images_count!(id) end)
-
-    import = Task.await(import_task)
-    images_count = Task.await(images_count_task)
-
-    %Import{import | images_count: images_count}
+    from(
+        import in Import,
+        where: import.id == ^id,
+        left_join: image in assoc(import, :images),
+        group_by: [import.id],
+        select: %Import{import | images_count: count(import.id)}
+    )
+    |> Repo.one!
   end
 
   @doc """
@@ -1116,21 +1117,13 @@ defmodule Photog.Api do
   Raises `Ecto.NoResultsError` if there are no imports.
   """
   def get_last_import!() do
-    import = from(
-      import in Import, 
-      order_by: [desc: :import_time, desc: :id],
-      limit: 1
-    )
-    |> Repo.one!
-
-    %Import{import | images_count: import_images_count!(import.id)}
-  end
-
-  def import_images_count!(import_id) do
     from(
-      image in Image,
-      where: image.import_id == ^import_id,
-      select: count(image.id)
+        import in Import,
+        left_join: image in assoc(import, :images),
+        group_by: [import.id],
+        order_by: [desc: :import_time, desc: :id],
+        limit: 1,
+        select: %Import{import | images_count: count(import.id)}
     )
     |> Repo.one!
   end
