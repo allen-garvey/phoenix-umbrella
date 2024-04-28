@@ -13,7 +13,7 @@ defmodule PhotogWeb.ImportView do
     %{data: render_many(imports, ImportView, "import_excerpt.json")}
   end
 
-  def render("index_with_count_and_images.json", %{imports: imports}) do
+  def render("index_with_count_and_images.json", %{imports: imports, albums_map: albums_map}) do
     %{data: Enum.map(imports, fn import ->
       %{
         id: import.id,
@@ -23,6 +23,7 @@ defmodule PhotogWeb.ImportView do
         camera_model: import.camera_model,
         images_count: import.images_count,
         images: Enum.map(import.images, &PhotogWeb.ImageView.image_thumbnail_to_map/1),
+        albums: albums_map[import.id],
       }
     end)
     }

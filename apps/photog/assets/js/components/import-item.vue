@@ -3,6 +3,15 @@
         <div>{{ titleFor(item) }}</div>
         <p :class="$style.itemNotes" v-if="item.camera_model">{{ item.camera_model }}</p>
         <p :class="$style.itemNotes" v-if="item.notes">{{ item.notes }}</p>
+        <ul :class="$style.albumsList">
+            <li 
+                v-for="album in item.albums" 
+                :key="album.id"
+                :class="$style.itemNotes"
+            >
+                {{ album.name }}
+            </li>
+        </ul>
         <ul :class="$style.thumbnailList">
             <li v-for="image in item.images" :key="image.id">
                 <img :src="miniThumbnailUrlFor(image)" loading="lazy"/>
@@ -29,6 +38,12 @@
                 width: 600px;
             }
         }
+    }
+    .albumsList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0 0.75em;
+        margin: 0.25em 0;
     }
     .itemNotes{
         color: #777;

@@ -8,12 +8,16 @@ defmodule PhotogWeb.ImportController do
 
   def index(conn, %{"limit" => limit, "offset" => offset}) do
     imports = Api.list_imports_with_count_and_limited_images(limit, offset)
-    render(conn, "index_with_count_and_images.json", imports: imports)
+    albums_map = Api.albums_map_for_imports_list(limit, offset)
+    
+    render(conn, "index_with_count_and_images.json", imports: imports, albums_map: albums_map)
   end
 
   def index(conn, _params) do
     imports = Api.list_imports_with_count_and_limited_images()
-    render(conn, "index_with_count_and_images.json", imports: imports)
+    albums_map = Api.albums_map_for_imports_list()
+    
+    render(conn, "index_with_count_and_images.json", imports: imports, albums_map: albums_map)
   end
 
   def create(conn, %{"import" => import_params}) do

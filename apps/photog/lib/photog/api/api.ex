@@ -1056,7 +1056,7 @@ defmodule Photog.Api do
     |> Repo.one!
   end
 
-  def list_imports_with_count_and_limited_images_query do
+  defp list_imports_with_count_and_limited_images_query do
     from(
         import in Import,
         join: cover_image in assoc(import, :cover_image),
@@ -1084,6 +1084,49 @@ defmodule Photog.Api do
     |> offset(^offset)
     |> Repo.all
     |> manually_preload_camera_model
+  end
+
+  @doc """
+  Returns a map of albums for imports
+  """
+  def albums_map_for_imports_list do
+    from(
+      import in Import,
+      join: image in assoc(import, :images),
+      join: album in assoc(image, :albums),
+      group_by: [import.id, album.id],
+      order_by: [desc: album.name, desc: album.id],
+      select: {import.id, %{id: album.id, name: album.name}}
+    )
+    |> Repo.all
+    |> generate_import_albums_map
+  end
+
+  def albums_map_for_imports_list(limit, offset) do
+    import_subquery = from(
+      import in Import,
+      limit: ^limit,
+      offset: ^offset,
+      order_by: [desc: import.import_time, desc: import.id],
+    )
+
+    from(
+      import in subquery(import_subquery),
+      join: image in assoc(import, :images),
+      join: album in assoc(image, :albums),
+      group_by: [import.id, album.id],
+      order_by: [desc: album.name, desc: album.id],
+      select: {import.id, %{id: album.id, name: album.name}}
+    )
+    |> Repo.all
+    |> generate_import_albums_map
+  end
+
+  defp generate_import_albums_map(results) do
+    results
+    |> Enum.reduce(%{}, fn ({import_id, album}, map) -> 
+      Map.update(map, import_id, [album], fn albums_list -> [album | albums_list] end)
+    end)
   end
 
   @doc """
