@@ -422,14 +422,8 @@ defmodule Photog.Api do
     |> Enum.reduce(%{}, fn year_image, map -> 
       year = year_image[:year]
       image = year_image[:image]
-      current_images = map[year]
 
-      images = case current_images do
-        nil -> [image]
-        _ -> [image] ++ current_images
-      end
-
-      Map.put(map, year, images)
+      Map.update(map, year, [image], fn images -> [image | images] end)
     end)
 
     from(
