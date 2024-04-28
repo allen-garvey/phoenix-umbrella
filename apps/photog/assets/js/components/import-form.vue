@@ -14,6 +14,7 @@
                 label="Cover Image ID"
                 :errors="[errors.cover_image, errors.cover_image_id]" 
                 :images="items" 
+                :miniThumbnailUrlFor="miniThumbnailUrlFor"
                 v-model="importModel.cover_image_id" 
             />
         </template>
@@ -29,6 +30,10 @@ export default {
     props: {
         modelId: {
             type: Number,
+        },
+        miniThumbnailUrlFor: {
+            type: Function,
+            required: true,
         },
     },
     mixins: [formMixinBuilder()],
@@ -61,7 +66,6 @@ export default {
         setupModel(importModel=null){
             //edit form
             if(importModel){
-                console.log(importModel);
                 this.importModel = importModel;
             }
             //new form
