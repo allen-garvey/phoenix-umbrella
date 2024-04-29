@@ -20,15 +20,6 @@ defmodule PhotogWeb.ImportController do
     render(conn, "index_with_count_and_images.json", imports: imports, albums_map: albums_map)
   end
 
-  def create(conn, %{"import" => import_params}) do
-    with {:ok, %Import{} = import} <- Api.create_import(import_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", import_path(conn, :show, import))
-      |> render("show.json", import: import)
-    end
-  end
-
   def show(conn, %{"id" => id}) do
     import = Api.get_import!(id)
     render(conn, "show.json", import: import)
@@ -45,7 +36,6 @@ defmodule PhotogWeb.ImportController do
         |> put_view(CommonWeb.ApiGenericView)
         |> render("error.json", message: "No imports found.")
     end
-    
   end
 
   def images_for(conn, %{"id" => id, "excerpt" => "true"}) do
@@ -77,14 +67,6 @@ defmodule PhotogWeb.ImportController do
 
     with {:ok, %Import{} = import} <- Api.update_import(import, import_params) do
       render(conn, "show.json", import: import)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    import = Api.get_import!(id)
-
-    with {:ok, %Import{}} <- Api.delete_import(import) do
-      send_resp(conn, :no_content, "")
     end
   end
 end
