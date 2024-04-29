@@ -93,4 +93,15 @@ defmodule PhotogWeb.TagController do
       |> render("ok.json", message: "ok")
     end
   end
+
+  @doc """
+  Removes albums from an tag
+  """
+  def remove_albums_from_tag(conn, %{"id" => tag_id, "album_ids" => album_ids}) when is_list(album_ids) do
+    Api.delete_album_tags(tag_id, album_ids)
+
+    conn
+    |> put_view(CommonWeb.ApiGenericView)
+    |> render("ok.json", message: "Albums removed from tag")
+  end
 end

@@ -66,6 +66,9 @@ defmodule PhotogWeb.Router do
     # Reorder album tags
     patch "/tags/:id/albums/reorder",         TagController, :reorder_albums
 
+    # Remove album tags
+    delete "/tags/:id/albums",                TagController, :remove_albums_from_tag
+
     # Edit album images
     post "/images/:id/albums",                ImageController, :add_albums
     delete "/albums/:id/images",              AlbumController, :remove_images_from_album

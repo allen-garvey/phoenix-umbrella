@@ -1623,6 +1623,14 @@ defmodule Photog.Api do
     Repo.delete(album_tag)
   end
 
+  def delete_album_tags(tag_id, album_ids) when is_list(album_ids) do
+    from(
+      album_tag in AlbumTag,
+      where: album_tag.tag_id == ^tag_id and album_tag.album_id in ^album_ids
+    )
+    |> Repo.delete_all
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking album_tag changes.
 
