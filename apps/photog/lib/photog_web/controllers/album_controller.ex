@@ -91,9 +91,7 @@ defmodule PhotogWeb.AlbumController do
   Removes images from an album
   """
   def remove_images_from_album(conn, %{"id" => album_id, "image_ids" => image_ids}) when is_list(image_ids) do
-    for image_id <- image_ids do
-      Api.delete_album_image(album_id, image_id)
-    end
+    Api.delete_album_images(album_id, image_ids)
 
     conn
     |> put_view(CommonWeb.ApiGenericView)

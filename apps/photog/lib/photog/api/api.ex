@@ -923,10 +923,10 @@ defmodule Photog.Api do
     Repo.delete(person_image)
   end
 
-  def delete_person_image(person_id, image_id) do
+  def delete_person_images(person_id, image_ids) when is_list(image_ids) do
     from(
       person_image in PersonImage,
-      where: person_image.person_id == ^person_id and person_image.image_id == ^image_id
+      where: person_image.person_id == ^person_id and person_image.image_id in ^image_ids
     )
     |> Repo.delete_all
   end
@@ -1025,10 +1025,10 @@ defmodule Photog.Api do
     Repo.delete(album_image)
   end
 
-  def delete_album_image(album_id, image_id) do
+  def delete_album_images(album_id, image_ids) when is_list(image_ids) do
     from(
       album_image in AlbumImage,
-      where: album_image.album_id == ^album_id and album_image.image_id == ^image_id
+      where: album_image.album_id == ^album_id and album_image.image_id in ^image_ids
     )
     |> Repo.delete_all
   end

@@ -51,9 +51,7 @@ defmodule PhotogWeb.PersonController do
   Removes images from an person
   """
   def remove_images_from_person(conn, %{"id" => person_id, "image_ids" => image_ids}) when is_list(image_ids) do
-    for image_id <- image_ids do
-      Api.delete_person_image(person_id, image_id)
-    end
+    Api.delete_person_images(person_id, image_ids)
 
     conn
     |> put_view(CommonWeb.ApiGenericView)
