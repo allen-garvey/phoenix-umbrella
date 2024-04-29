@@ -22,13 +22,17 @@ defmodule PhotogWeb.ImportController do
 
   def show(conn, %{"id" => id}) do
     import = Api.get_import!(id)
-    render(conn, "show.json", import: import)
+    albums = Api.get_albums_for_import(id)
+    persons = Api.get_persons_for_import(id)
+    render(conn, "show.json", import: import, albums: albums, persons: persons)
   end
 
   def show_last(conn, _params) do
     try do
       import = Api.get_last_import!()
-      render(conn, "show.json", import: import)
+      albums = Api.get_albums_for_import(import.id)
+      persons = Api.get_persons_for_import(import.id)
+      render(conn, "show.json", import: import, albums: albums, persons: persons)
     rescue
       Ecto.NoResultsError -> 
         conn 

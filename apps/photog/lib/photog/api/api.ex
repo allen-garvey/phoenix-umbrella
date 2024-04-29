@@ -1165,6 +1165,32 @@ defmodule Photog.Api do
     |> Repo.one!
   end
 
+  def get_albums_for_import(id) do
+    from(
+      import in Import,
+      join: image in assoc(import, :images),
+      join: album in assoc(image, :albums),
+      group_by: [album.id],
+      order_by: [album.name],
+      where: import.id == ^id,
+      select: %{id: album.id, name: album.name}
+    )
+    |> Repo.all
+  end
+
+  def get_persons_for_import(id) do
+    from(
+      import in Import,
+      join: image in assoc(import, :images),
+      join: person in assoc(image, :persons),
+      group_by: [person.id],
+      order_by: [person.name],
+      where: import.id == ^id,
+      select: %{id: person.id, name: person.name}
+    )
+    |> Repo.all
+  end
+
   def get_images_for_import(id) do
     # for some reason, if you put subquery directly in preload, it causes an error
     image_albums_query = from(Album, order_by: :name)
