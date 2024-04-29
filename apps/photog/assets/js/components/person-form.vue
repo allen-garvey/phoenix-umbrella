@@ -58,6 +58,7 @@ export default {
                     id: person.id,
                     name: person.name,
                     is_favorite: person.is_favorite,
+                    cover_image_id: person.cover_image.id,
                 };
             }
             //new form

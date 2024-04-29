@@ -131,6 +131,7 @@ export default {
                     year: album.year,
                     description: album.description,
                     is_favorite: album.is_favorite,
+                    cover_image_id: album.cover_image.id,
                 };
 
                 this.tagsActive = album.tags.reduce((tagsActive, tag)=>{

@@ -56,6 +56,7 @@ export default {
             if(importModel){
                 this.importModel = {
                     notes: importModel.notes,
+                    cover_image_id: importModel.cover_image.id,
                 };
             }
             //new form
