@@ -1101,7 +1101,7 @@ defmodule Photog.Api do
       import in Import,
       limit: ^limit,
       offset: ^offset,
-      order_by: [desc: import.import_time, desc: import.id],
+      order_by: [desc: import.import_time, desc: import.id]
     )
 
     from(
