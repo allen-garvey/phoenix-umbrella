@@ -21,9 +21,7 @@ export function albumAndPersonFormMixinBuilder() {
                 return this.imagesInModel.length === 0;
             },
             imagesInModel() {
-                if (this.isEditForm) {
-                    return this.items;
-                } else if (this.isCreateForm) {
+                if (this.isCreateForm) {
                     return JSON.parse(history.state.images || '[]');
                 }
                 return [];

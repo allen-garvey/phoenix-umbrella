@@ -360,7 +360,6 @@ export default {
             props: (route) => {
                 return {
                     modelId: parseInt(route.params.id),
-                    itemsUrl: `/persons/${route.params.id}/images?excerpt=true`,
                 };
             },
         },
@@ -377,6 +376,14 @@ export default {
                             'DELETE',
                             { image_ids }
                         );
+                    },
+                    setCoverImageCallback(cover_image_id, sendJSON) {
+                        const personId = route.params.id;
+                        return sendJSON(`/api/persons/${personId}`, 'PATCH', {
+                            person: {
+                                cover_image_id,
+                            },
+                        });
                     },
                     apiPath: route.path,
                     buildItemsApiUrl: () => `${route.path}/images`,

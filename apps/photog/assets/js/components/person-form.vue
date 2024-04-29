@@ -4,12 +4,6 @@
             <Form-Input :id="idForField('name')" label="Name" v-model="person.name" :errors="errors.name" />
 
             <Form-Input :id="idForField('is_favorite')" label="Is Favorite" v-model="person.is_favorite" :errors="errors.is_favorite" input-type="checkbox" />
-
-            <Cover-Image-Form-Input 
-                :id="idForField('cover_image_id')" 
-                :errors="[errors.cover_image, errors.cover_image_id]" :images="imagesInModel" v-model="person.cover_image_id" 
-                :miniThumbnailUrlFor="miniThumbnailUrlFor"
-            />
         </template>
     </Form-Section>
 </template>
@@ -63,7 +57,6 @@ export default {
                 this.person = {
                     id: person.id,
                     name: person.name,
-                    cover_image_id: person.cover_image.id,
                     is_favorite: person.is_favorite,
                 };
             }
