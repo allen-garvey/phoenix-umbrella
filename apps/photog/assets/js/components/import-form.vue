@@ -66,7 +66,10 @@ export default {
         setupModel(importModel=null){
             //edit form
             if(importModel){
-                this.importModel = importModel;
+                this.importModel = {
+                    notes: importModel.notes,
+                    cover_image_id: importModel.cover_image.id,
+                };
             }
             //new form
             else{

@@ -35,7 +35,9 @@ defmodule PhotogWeb.ImportView do
         id: import.id,
         import_time: import.import_time,
         name: import_name(import),
-        cover_image_id: import.cover_image_id,
+        cover_image: %{
+          id: import.cover_image_id,
+        },
         notes: import.notes,
         images_count: import.images_count,
         albums: albums,
