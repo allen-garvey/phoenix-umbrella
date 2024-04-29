@@ -2,14 +2,14 @@ import { importRelatedFields } from './routes-helpers';
 
 import ThumbnailList from './components/thumbnail-list.vue';
 
-export function buildImagesIndexVariant(path, name, props={}){
-    return { 
+export function buildImagesIndexVariant(path, name, props = {}) {
+    return {
         path,
-        name, 
+        name,
         component: ThumbnailList,
         props: (route) => {
             const defaultProps = {
-                showRouteFor: (item, _model)=>{
+                showRouteFor: (item, _model) => {
                     return {
                         name: 'imagesShow',
                         params: {
@@ -18,19 +18,27 @@ export function buildImagesIndexVariant(path, name, props={}){
                         },
                     };
                 },
-            }; 
+            };
             return Object.assign(defaultProps, props);
         },
     };
 }
 
-export function buildImportsShowVariant(path, name, props={}){
-    return { 
+export function buildImportsShowVariant(path, name, props = {}) {
+    return {
         path,
-        name, 
+        name,
         component: ThumbnailList,
         props: (route) => {
             const defaultProps = {
+                setCoverImageCallback(cover_image_id, sendJSON) {
+                    const importId = route.params.id;
+                    return sendJSON(`/api/imports/${importId}`, 'PATCH', {
+                        import: {
+                            cover_image_id,
+                        },
+                    });
+                },
                 apiPath: route.path,
                 buildItemsApiUrl: () => `${route.path}/images`,
                 itemsCountKey: 'images_count',
@@ -40,8 +48,11 @@ export function buildImportsShowVariant(path, name, props={}){
                 enableBatchSelectImages: true,
                 getDescription: (importModel) => importModel.notes,
                 relatedFields: importRelatedFields,
-                editItemLinkFor: (model) => ({name: 'importsEdit', params: {id: model.id}}),
-                showRouteFor: (item, model)=>{
+                editItemLinkFor: (model) => ({
+                    name: 'importsEdit',
+                    params: { id: model.id },
+                }),
+                showRouteFor: (item, model) => {
                     return {
                         name: 'importImagesShow',
                         params: {
@@ -54,12 +65,12 @@ export function buildImportsShowVariant(path, name, props={}){
             return Object.assign(defaultProps, props);
         },
     };
-};
+}
 
-export function buildAlbumVariant(path, name, propsBuilder=null){
-    return { 
+export function buildAlbumVariant(path, name, propsBuilder = null) {
+    return {
         path,
-        name, 
+        name,
         component: ThumbnailList,
         props: (route) => {
             const defaultProps = {
@@ -67,10 +78,11 @@ export function buildAlbumVariant(path, name, propsBuilder=null){
                 apiItemsCountPath: `${route.path}/count`,
                 enableBatchSelectAlbums: true,
                 isPaginated: true,
-                newItemLink: {name: 'albumsNew'},
+                newItemLink: { name: 'albumsNew' },
                 pageTitle: 'Albums',
-                itemPreviewContentCallback: (album) => album.tags.map(tag => tag.name).join(', '),
-                showRouteFor: (item, _model)=>{
+                itemPreviewContentCallback: (album) =>
+                    album.tags.map((tag) => tag.name).join(', '),
+                showRouteFor: (item, _model) => {
                     return {
                         name: 'albumsShow',
                         params: {
@@ -84,4 +96,3 @@ export function buildAlbumVariant(path, name, propsBuilder=null){
         },
     };
 }
-

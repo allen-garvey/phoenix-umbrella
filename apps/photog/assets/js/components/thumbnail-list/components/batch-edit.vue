@@ -48,6 +48,13 @@
                 </button>
             </div>
             <button 
+                class="btn btn-outline-success" 
+                @click="$emit('set-cover-image')"
+                v-if="enableSetCoverImage"
+            >
+                Set cover image
+            </button>
+            <button 
                 class="btn btn-danger" 
                 @click="$emit('remove-items')"
                 :disabled="!anyItemsBatchSelected"
@@ -192,6 +199,10 @@ export default {
             required: true,
         },
         enableRemoveItems: {
+            type: Boolean,
+            default: false,
+        },
+        enableSetCoverImage: {
             type: Boolean,
             default: false,
         },

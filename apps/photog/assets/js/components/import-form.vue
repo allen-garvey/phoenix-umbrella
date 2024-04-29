@@ -9,14 +9,6 @@
                 input-type="textarea" 
                 :textarea-rows="4" 
             />
-            <Cover-Image-Form-Input 
-                :id="idForField('cover_image_id')" 
-                label="Cover Image ID"
-                :errors="[errors.cover_image, errors.cover_image_id]" 
-                :images="items" 
-                :miniThumbnailUrlFor="miniThumbnailUrlFor"
-                v-model="importModel.cover_image_id" 
-            />
         </template>
     </Form-Section>
 </template>
@@ -68,7 +60,6 @@ export default {
             if(importModel){
                 this.importModel = {
                     notes: importModel.notes,
-                    cover_image_id: importModel.cover_image.id,
                 };
             }
             //new form

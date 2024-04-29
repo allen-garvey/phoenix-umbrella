@@ -60,6 +60,8 @@
                 :anyItemsBatchSelected="anyItemsBatchSelected"
                 :enableRemoveItems="!!batchRemoveItemsCallback"
                 @remove-items="batchRemoveItems"
+                :enableSetCoverImage="!!setCoverImageCallback && thumbnailListSelectedItems.length === 1"
+                @set-cover-image="updateCoverImage"
                 v-if="supportsBatchSelect"
             />
             <!-- 
@@ -224,6 +226,9 @@ export default {
             default: false,
         },
         batchRemoveItemsCallback: {
+            type: Function,
+        },
+        setCoverImageCallback: {
             type: Function,
         },
         reorderPathSuffix: {
@@ -626,6 +631,12 @@ export default {
                     window.location.reload();
                 });
             }
+        },
+        updateCoverImage(){
+            this.setCoverImageCallback(this.thumbnailListSelectedItems[0].id, this.sendJson).then(() => {
+                // just reloading page for now to avoid caching problems
+                window.location.reload();
+            });
         },
         createResourceWithImages(pathName){
             const selectedImages = this.thumbnailListSelectedItems.map(image => ({id: image.id, mini_thumbnail_path: image.mini_thumbnail_path}));
