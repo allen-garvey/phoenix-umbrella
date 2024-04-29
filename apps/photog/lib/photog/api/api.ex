@@ -1217,23 +1217,42 @@ defmodule Photog.Api do
     |> Repo.all
   end
 
-  def get_images_for_import(id) do
-    # for some reason, if you put subquery directly in preload, it causes an error
-    image_albums_query = from(Album, order_by: :name)
-    image_persons_query = from(Person, order_by: :name)
-    
+  defp get_images_for_import_query(id) do
+    person_image_subquery = from(
+      person_image in PersonImage,
+      where: person_image.image_id == parent_as(:image).id,
+      limit: 1,
+      select: %{id: person_image.id}
+    )
+
+    album_image_subquery = from(
+      album_image in AlbumImage,
+      where: album_image.image_id == parent_as(:image).id,
+      limit: 1,
+      select: %{id: album_image.id}
+    )
+
     from(
       image in Image,
+      as: :image,
+      left_lateral_join: person_image in subquery(person_image_subquery),
+      left_lateral_join: album_image in subquery(album_image_subquery),
       where: image.import_id == ^id,
-      preload: [albums: ^image_albums_query, persons: ^image_persons_query],
-      order_by: [image.creation_time, image.id]
+      order_by: [image.creation_time, image.id],
+      select: %Image{image | has_persons: not is_nil(person_image.id), has_albums: not is_nil(album_image.id)}
     )
+  end
+
+  def get_images_for_import(id) do
+    get_images_for_import_query(id)
     |> Repo.all
   end
 
   def get_images_for_import(id, limit, offset) do
-    get_images_for_import(id)
-    |> Enum.slice(offset, limit)
+    get_images_for_import_query(id)
+    |> offset(^offset)
+    |> limit(^limit)
+    |> Repo.all
   end
 
   @doc """

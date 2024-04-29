@@ -55,7 +55,7 @@ defmodule PhotogWeb.ImportController do
     
     conn
     |> put_view(PhotogWeb.ImageView)
-    |> render("index.json", images: images)
+    |> render("index_thumbnail_list.json", images: images)
   end
 
   def count(conn, _params) do
