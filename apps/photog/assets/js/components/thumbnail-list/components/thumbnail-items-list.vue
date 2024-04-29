@@ -70,12 +70,8 @@
 
     .thumbnail-list{
         display: grid;
-        grid-template-columns: repeat(auto-fill, 205px);
+        grid-template-columns: repeat(auto-fill, $thumbnail_dimensions);
         grid-gap: 20px;
-
-        li{
-            flex-basis: $thumbnail_dimensions;
-        }
 
         &.batch-select li{
             opacity: 0.65;
