@@ -33,6 +33,15 @@ defmodule PhotogWeb.ImportView do
     %{data: render_one(import, ImportView, "import.json")}
   end
 
+  def render("update.json", %{import: import}) do
+    %{ data: 
+      %{
+        id: import.id,
+        name: import_name(import),
+      }
+    }
+  end
+
   def render("import_excerpt.json", %{import: import}) do
     import_excerpt_to_map(import)
   end

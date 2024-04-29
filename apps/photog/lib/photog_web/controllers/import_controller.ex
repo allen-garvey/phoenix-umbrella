@@ -66,7 +66,7 @@ defmodule PhotogWeb.ImportController do
     import = Api.get_import!(id)
 
     with {:ok, %Import{} = import} <- Api.update_import(import, import_params) do
-      render(conn, "show.json", import: import)
+      render(conn, "update.json", import: import)
     end
   end
 end
