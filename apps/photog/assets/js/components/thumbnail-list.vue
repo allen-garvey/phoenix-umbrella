@@ -601,7 +601,9 @@ export default {
                 if(hasAtLeastOneThingSucceeded){
                     this.toggleBatchSelect();
                     //model has to be refreshed or image details pages will show old data
-                    this.refreshModel();
+                    if(this.enableHasAlbumFilter || this.enableHasPersonFilter){
+                        this.refreshModel();
+                    }
                 }
                 //show flash message based on results
                 if(hasAtLeastOneThingSucceeded && hasErrors){
