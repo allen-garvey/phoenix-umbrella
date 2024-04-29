@@ -73,7 +73,7 @@ defmodule PhotogWeb.PersonController do
     
     conn
     |> put_view(PhotogWeb.ImageView)
-    |> render("index.json", images: images)
+    |> render("index_thumbnail_list.json", images: images)
   end
 
   def show(conn, %{"id" => id}) do

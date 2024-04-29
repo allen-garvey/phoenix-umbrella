@@ -744,27 +744,38 @@ defmodule Photog.Api do
     %Person{person | images_count: images_count}
   end
 
+  defp get_images_for_person_query(id) do
+    album_image_subquery = from(
+      album_image in AlbumImage,
+      where: album_image.image_id == parent_as(:image).id,
+      limit: 1,
+      select: %{id: album_image.id}
+    )
+
+    from(
+      image in Image,
+      as: :image,
+      left_lateral_join: album_image in subquery(album_image_subquery),
+      join: person_image in assoc(image, :person_images),
+      where: person_image.person_id == ^id,
+      order_by: [desc: image.creation_time, desc: image.id],
+      select: %Image{image | has_persons: true, has_albums: not is_nil(album_image.id)}
+    )
+  end
+
   @doc """
   Gets images for a person
   """
   def get_images_for_person(id) do
-    # for some reason, if you put subquery directly in preload, it causes an error
-    image_albums_query = from(Album, order_by: :name)
-    image_persons_query = from(Person, order_by: :name)
-
-    from(
-      image in Image,
-      join: person_image in assoc(image, :person_images),
-      where: person_image.person_id == ^id,
-      preload: [albums: ^image_albums_query, persons: ^image_persons_query],
-      order_by: [desc: image.creation_time]
-    )
+    get_images_for_person_query(id)
     |> Repo.all
   end
 
   def get_images_for_person(id, limit, offset) do
-    get_images_for_person(id)
-    |> Enum.slice(offset, limit)
+    get_images_for_person_query(id)
+    |> limit(^limit)
+    |> offset(^offset)
+    |> Repo.all
   end
 
   @doc """
