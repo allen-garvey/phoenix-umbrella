@@ -363,6 +363,14 @@ export default {
             component: ThumbnailList,
             props: (route) => {
                 const props = {
+                    batchRemoveItemsCallback(image_ids, sendJSON) {
+                        const personId = route.params.id;
+                        return sendJSON(
+                            `/api/persons/${personId}/images`,
+                            'DELETE',
+                            { image_ids }
+                        );
+                    },
                     apiPath: route.path,
                     buildItemsApiUrl: () => `${route.path}/images`,
                     itemsCountKey: 'images_count',
