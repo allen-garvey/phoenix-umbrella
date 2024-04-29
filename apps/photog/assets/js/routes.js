@@ -287,7 +287,6 @@ export default {
             props: (route) => {
                 return {
                     modelId: parseInt(route.params.id),
-                    itemsUrl: `/albums/${route.params.id}/images?excerpt=true`,
                 };
             },
         },
@@ -304,6 +303,14 @@ export default {
                             'DELETE',
                             { image_ids }
                         );
+                    },
+                    setCoverImageCallback(cover_image_id, sendJSON) {
+                        const albumId = route.params.id;
+                        return sendJSON(`/api/albums/${albumId}`, 'PATCH', {
+                            album: {
+                                cover_image_id,
+                            },
+                        });
                     },
                     apiPath: route.path,
                     buildItemsApiUrl: () => `${route.path}/images`,

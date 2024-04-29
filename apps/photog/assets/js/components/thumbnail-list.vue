@@ -42,9 +42,9 @@
             v-model:personFilterMode="personFilterMode"
         />
         <div :class="$style.flex">
-        <!-- 
-            * Batch edit controls 
-        -->
+            <!-- 
+                * Batch edit controls 
+            -->
             <batch-edit
                 :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
                 :isReordering="isReordering"
@@ -76,6 +76,7 @@
                 :enableReorderBySort="!!reorderBySortCallback"
                 @reorder-by-sort="reorderBySort"
                 v-if="supportsReorder"
+                v-show="!isCurrentlyBatchSelect"
             />
             <router-link 
                 :to="slideshowRoute" 
