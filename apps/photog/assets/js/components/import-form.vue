@@ -16,7 +16,6 @@
 <script>
 import { formMixinBuilder } from './mixins/form-mixin.js';
 import { toApiResource } from '../form-helpers.js';
-import CoverImageFormInput from './cover-image-form-input.vue';
 
 export default {
     props: {
@@ -29,9 +28,6 @@ export default {
         },
     },
     mixins: [formMixinBuilder()],
-    components: {
-        'Cover-Image-Form-Input': CoverImageFormInput,
-    },
     data() {
         return {
             //importModel is for our edits, model is the immutable album response from the api

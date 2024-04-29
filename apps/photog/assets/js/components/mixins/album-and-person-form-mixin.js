@@ -1,5 +1,3 @@
-import CoverImageFormInput from '../cover-image-form-input.vue';
-
 export function albumAndPersonFormMixinBuilder() {
     return {
         props: {
@@ -7,9 +5,6 @@ export function albumAndPersonFormMixinBuilder() {
                 type: Function,
                 required: true,
             },
-        },
-        components: {
-            'Cover-Image-Form-Input': CoverImageFormInput,
         },
         data() {
             return {
