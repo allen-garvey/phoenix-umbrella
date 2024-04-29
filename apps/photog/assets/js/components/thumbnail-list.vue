@@ -35,7 +35,8 @@
             * Filtering controls 
         -->
         <Thumbnail-Filter-Controls 
-            :class="{invisible: isCurrentlyBatchSelect || isReordering}" :enableAlbumFilter="enableHasAlbumFilter" 
+            :class="{invisible: isCurrentlyBatchSelect || isReordering}" 
+            :enableAlbumFilter="enableHasAlbumFilter" 
             :enablePersonFilter="enableHasPersonFilter" 
             v-model:albumFilterMode="albumFilterMode" 
             v-model:personFilterMode="personFilterMode"
@@ -495,18 +496,18 @@ export default {
         shouldShowItem(item){
             let albumValidation = true;
             if(this.albumFilterMode == ALBUM_FILTER_MODE_NO_ALBUMS){
-                albumValidation = !item.albums || item.albums.length === 0;
+                albumValidation = !item.has_albums;
             }
             else if(this.albumFilterMode == ALBUM_FILTER_MODE_HAS_ALBUMS){
-                albumValidation = item.albums && item.albums.length > 0;
+                albumValidation = item.has_albums;
             }
 
             let personValidation = true;
             if(this.personFilterMode == PERSON_FILTER_MODE_NO_PERSONS){
-                personValidation = !item.persons || item.persons.length === 0;
+                personValidation = !item.has_persons;
             }
             else if(this.personFilterMode == PERSON_FILTER_MODE_HAS_PERSONS){
-                personValidation = item.persons && item.persons.length > 0;
+                personValidation = item.has_persons;
             }
 
             return albumValidation && personValidation;
