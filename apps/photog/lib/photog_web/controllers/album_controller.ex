@@ -179,7 +179,9 @@ defmodule PhotogWeb.AlbumController do
 
   def show(conn, %{"id" => id}) do
     album = Api.get_album!(id)
-    render(conn, "show.json", album: album)
+    persons = Api.get_persons_for_album(id)
+    
+    render(conn, "show.json", album: album, persons: persons)
   end
 
   def update(conn, %{"id" => id, "album" => album_params}) do

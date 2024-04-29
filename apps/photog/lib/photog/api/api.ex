@@ -554,6 +554,19 @@ defmodule Photog.Api do
     %Album{album | images_count: images_count}
   end
 
+  def get_persons_for_album(id) do
+    from(
+      album in Album,
+      join: image in assoc(album, :images),
+      join: person in assoc(image, :persons),
+      group_by: [person.id],
+      order_by: [person.name],
+      where: album.id == ^id,
+      select: %{id: person.id, name: person.name}
+    )
+    |> Repo.all
+  end
+
   @doc """
   Creates a album.
 

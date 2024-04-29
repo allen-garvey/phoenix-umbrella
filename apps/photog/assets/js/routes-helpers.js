@@ -2,20 +2,6 @@ export const ALBUM_FILTER_QUERY_PARAM_NAME = 'item-filter-mode';
 
 export const PERSON_FILTER_QUERY_PARAM_NAME = 'person-filter-mode';
 
-export const getPersonsInAlbum = (item, images) => {
-    const personsMap = new Map();
-
-    images.forEach((image) => {
-        image.persons.forEach((person) => {
-            personsMap.set(person.name, person);
-        });
-    });
-
-    return [...personsMap.keys()]
-        .sort((a, b) => a.localeCompare(b))
-        .map((name) => personsMap.get(name));
-};
-
 export const albumRelatedFields = [
     {
         name: 'tags',
@@ -44,7 +30,7 @@ export const albumRelatedFields = [
     {
         name: 'persons',
         getItems(item, images) {
-            return getPersonsInAlbum(item, images).map((person) => ({
+            return item.persons.map((person) => ({
                 name: person.name,
                 to: {
                     name: 'personsShow',
