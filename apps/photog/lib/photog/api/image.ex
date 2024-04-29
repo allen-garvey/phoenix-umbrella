@@ -14,6 +14,9 @@ defmodule Photog.Api.Image do
     field :amazon_photos_id, :string
     field :notes, :string
 
+    field :has_albums, :boolean, default: false, virtual: true
+    field :has_persons, :boolean, default: false, virtual: true
+
     timestamps()
 
     belongs_to :import, Photog.Api.Import

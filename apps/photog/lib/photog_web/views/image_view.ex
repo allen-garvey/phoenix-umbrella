@@ -9,6 +9,10 @@ defmodule PhotogWeb.ImageView do
     %{data: render_many(images, ImageView, "image.json")}
   end
 
+  def render("index_thumbnail_list.json", %{images: images}) do
+    %{data: Enum.map(images, &image_to_map_for_thumbnail_list/1)}
+  end
+
   def render("index_thumbnails.json", %{images: images}) do
     %{data: render_many(images, ImageView, "image_thumbnail.json")}
   end
@@ -96,6 +100,17 @@ defmodule PhotogWeb.ImageView do
         us_date: DateHelpers.us_formatted_date(image.creation_time),
         time: DateHelpers.formatted_time(image.creation_time),
       }
+    }
+  end
+
+  def image_to_map_for_thumbnail_list(image) do
+    %{
+      id: image.id,
+      creation_time: get_creation_time(image),
+      mini_thumbnail_path: image.mini_thumbnail_path,
+      is_favorite: image.is_favorite,
+      has_albums: image.has_albums,
+      has_persons: image.has_persons,
     }
   end
 

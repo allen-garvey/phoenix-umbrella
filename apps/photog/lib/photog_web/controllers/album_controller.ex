@@ -155,7 +155,7 @@ defmodule PhotogWeb.AlbumController do
     
     conn
     |> put_view(PhotogWeb.ImageView)
-    |> render("index.json", images: images)
+    |> render("index_thumbnail_list.json", images: images)
   end
 
   @doc """

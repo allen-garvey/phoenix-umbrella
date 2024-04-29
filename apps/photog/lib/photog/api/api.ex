@@ -482,26 +482,39 @@ defmodule Photog.Api do
     |> Repo.one!
   end
 
+  defp get_images_for_album_query(id) do
+    person_image_subquery = from(
+      person_image in PersonImage,
+      where: person_image.image_id == parent_as(:image).id,
+      limit: 1,
+      select: %{id: person_image.id}
+    )
+
+    from(
+      image in Image,
+      as: :image,
+      join: album_image in assoc(image, :album_images),
+      join: album in assoc(album_image, :album),
+      left_lateral_join: person_image in subquery(person_image_subquery),
+      where: album_image.album_id == ^id,
+      order_by: [album_image.image_order, album_image.id],
+      select: %Image{image | has_persons: not is_nil(person_image.id), has_albums: true}
+    )
+  end
+
   @doc """
   Gets images for an album
   """
   def get_images_for_album(id) do
-    image_albums_query = from(Album, order_by: :name)
-    image_persons_query = from(Person, order_by: :name)
-
-    from(
-      image in Image,
-      join: album_image in assoc(image, :album_images),
-      where: album_image.album_id == ^id,
-      preload: [albums: ^image_albums_query, persons: ^image_persons_query],
-      order_by: [album_image.image_order, album_image.id]
-    )
+    get_images_for_album_query(id)
     |> Repo.all
   end
 
   def get_images_for_album(id, limit, offset) do
-    get_images_for_album(id)
-    |> Enum.slice(offset, limit)
+    get_images_for_album_query(id)
+    |> limit(^limit)
+    |> offset(^offset)
+    |> Repo.all
   end
 
   def get_images_for_album(id, :excerpt) do
