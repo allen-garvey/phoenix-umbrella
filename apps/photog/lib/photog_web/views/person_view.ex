@@ -3,11 +3,11 @@ defmodule PhotogWeb.PersonView do
   alias PhotogWeb.PersonView
 
   def render("index.json", %{persons: persons}) do
-    %{data: render_many(persons, PersonView, "person_excerpt.json")}
+    %{data: Enum.map(persons, &person_excerpt_to_map/1)}
   end
 
   def render("index_excerpt.json", %{persons: persons}) do
-    %{data: render_many(persons, PersonView, "person_excerpt_mini.json")}
+    %{data: Enum.map(persons, &person_excerpt_mini_to_map/1)}
   end
 
   def render("show.json", %{person: person}) do
@@ -15,37 +15,42 @@ defmodule PhotogWeb.PersonView do
   end
 
   def render("show_excerpt_mini.json", %{person: person}) do
-    %{data: render_one(person, PersonView, "person_excerpt_mini.json")}
+    %{data: 
+      %{
+        id: person.id,
+        name: person.name,
+        is_favorite: person.is_favorite,
+      }
+    }
   end
 
   def render("person.json", %{person: person}) do
     %{
       id: person.id,
       name: person.name,
+      is_favorite: person.is_favorite,
       cover_image: PhotogWeb.ImageView.image_to_map(person.cover_image),
       images_count: person.images_count,
     }
   end
 
-  def render("person_excerpt.json", %{person: person}) do
+  def person_excerpt_to_map(person) do
     %{
       id: person.id,
       name: person.name,
       items_count: person.images_count,
+      is_favorite: person.is_favorite,
       cover_image: %{
         mini_thumbnail_path: person.cover_image.mini_thumbnail_path
       },
     }
   end
 
-  def render("person_excerpt_mini.json", %{person: person}) do
-    person_excerpt_mini_to_map(person)
-  end
-
   def person_excerpt_mini_to_map(person) do
     %{
       id: person.id,
       name: person.name,
+      is_favorite: person.is_favorite,
     }
   end
 end

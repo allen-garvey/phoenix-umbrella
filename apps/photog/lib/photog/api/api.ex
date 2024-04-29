@@ -704,8 +704,8 @@ defmodule Photog.Api do
   def list_persons_excerpt do
     from(
       Person,
-      order_by: :name,
-      select: [:id, :name]
+      order_by: [desc: :is_favorite, asc: :name],
+      select: [:id, :name, :is_favorite]
     )
     |> Repo.all
   end

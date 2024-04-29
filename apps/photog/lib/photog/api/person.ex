@@ -5,6 +5,7 @@ defmodule Photog.Api.Person do
   @schema_prefix Grenadier.RepoPrefix.photog()
   schema "persons" do
     field :name, :string
+    field :is_favorite, :boolean, default: false
     field :images_count, :integer, default: -1, virtual: true
 
     timestamps()
@@ -17,7 +18,7 @@ defmodule Photog.Api.Person do
   @doc false
   def changeset(person, attrs) do
     person
-    |> cast(attrs, [:name, :cover_image_id])
+    |> cast(attrs, [:name, :cover_image_id, :is_favorite])
     |> validate_required([:name, :cover_image_id])
     |> unique_constraint(:name)
     |> assoc_constraint(:cover_image)
