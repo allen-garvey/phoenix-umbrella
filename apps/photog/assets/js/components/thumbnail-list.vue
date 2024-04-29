@@ -412,6 +412,15 @@ export default {
                 this.setWindowTitle(this.titleForPage);
             });
         },
+        refreshModel(){
+            const albumFilterMode = this.albumFilterMode;
+            const personFilterMode = this.personFilterMode;
+            
+            this.setup();
+
+            this.albumFilterMode = albumFilterMode;
+            this.personFilterMode = personFilterMode;
+        },
         loadModel(){
             this.thumbnailList = [];
 
@@ -453,17 +462,6 @@ export default {
                 this.itemsModel = items;
             }
             this.thumbnailList = this.thumbnailListSource.slice(0, this.thumbnailListSource.length);
-        },
-        refreshModel(){
-            return this.getModel(this.apiPath, 
-                {
-                    offset: this.pageOffset, 
-                    limit: THUMBNAIL_CHUNK_LENGTH, 
-                    isPaginated: this.isPaginated && !this.buildItemsApiUrl,
-                    forceRefresh: true,
-                }).then((items)=>{
-                this.modelLoaded(items);
-            });
         },
         loadMoreThumbnails($state){
             const path = this.itemsApiPath ? this.itemsApiPath : this.apiPath;
