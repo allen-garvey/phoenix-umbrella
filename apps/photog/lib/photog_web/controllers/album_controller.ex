@@ -8,6 +8,7 @@ defmodule PhotogWeb.AlbumController do
 
   action_fallback PhotogWeb.FallbackController
 
+  # used for forms when we only need name and id
   def index(conn, %{"excerpt" => "true"}) do
     albums = Api.list_albums_excerpt()
     render(conn, "index_excerpt.json", albums: albums)
@@ -162,7 +163,7 @@ defmodule PhotogWeb.AlbumController do
   Returns all albums taken in given year
   """
   def albums_for_year(conn, %{"year" => year, "limit" => limit, "offset" => offset}) do
-    albums = String.to_integer(year) |> Api.list_albums_for_year(String.to_integer(limit), String.to_integer(offset))
+    albums = Api.list_albums_for_year(String.to_integer(year), String.to_integer(limit), String.to_integer(offset))
     render(conn, "index.json", albums: albums)
   end
 
