@@ -21,7 +21,9 @@ defmodule PhotogWeb.AlbumView do
         year: album.year,
         is_favorite: album.is_favorite,
         images_count: album.images_count,
-        cover_image: ImageView.image_to_map(album.cover_image),
+        cover_image: %{
+          id: album.cover_image.id,
+        },
         tags: Enum.map(album.tags, &TagView.tag_excerpt/1),
         persons: persons,
       }

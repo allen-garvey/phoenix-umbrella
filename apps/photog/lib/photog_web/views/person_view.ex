@@ -11,7 +11,7 @@ defmodule PhotogWeb.PersonView do
   end
 
   def render("show.json", %{person: person}) do
-    %{data: render_one(person, PersonView, "person.json")}
+    %{data: person_to_map(person)}
   end
 
   def render("show_excerpt_mini.json", %{person: person}) do
@@ -24,12 +24,14 @@ defmodule PhotogWeb.PersonView do
     }
   end
 
-  def render("person.json", %{person: person}) do
+  def person_to_map(person) do
     %{
       id: person.id,
       name: person.name,
       is_favorite: person.is_favorite,
-      cover_image: PhotogWeb.ImageView.image_to_map(person.cover_image),
+      cover_image: %{
+        id: person.cover_image.id,
+      },
       images_count: person.images_count,
     }
   end
