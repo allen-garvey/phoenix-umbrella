@@ -86,7 +86,7 @@ export default {
             return {tag: toApiResource(tag)};
         },
         saveSuccessful(tag){
-            const flashMessage = [`${tag.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info'];
+            const flashMessage = JSON.stringify([`${tag.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info']);
             this.$router.push({
                 name: 'tagsShow', 
                 params: {

@@ -58,7 +58,14 @@ export default {
             const flashMessage = history.state.flashMessage;
             //show flash message if any
             if(flashMessage){
-                this.putFlash(...flashMessage);
+                let parsedFlashMessage;
+                try {
+                    parsedFlashMessage = JSON.parse(flashMessage);
+                } catch {
+                    console.error('Could not parse flashMessage.');
+                    return;
+                }
+                this.putFlash(...parsedFlashMessage);
             }
             else{
                 //have to manually clear flash alert here, because this is called first

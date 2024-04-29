@@ -177,7 +177,7 @@ export default {
             const modelId = album.id;
             const redirectPath = this.successRedirect === '1' ? this.previousRoute : {name: 'albumsShow', params: {id: modelId}};
             redirectPath.state = {
-                flashMessage: [`${album.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info']
+                flashMessage: JSON.stringify([`${album.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info'])
             };
             this.$router.push(redirectPath);
         },

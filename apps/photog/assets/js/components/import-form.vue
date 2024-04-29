@@ -86,7 +86,7 @@ export default {
             return {import: toApiResource(importModel)};
         },
         saveSuccessful(importModel){
-            const flashMessage = [`${importModel.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info'];
+            const flashMessage = JSON.stringify([`${importModel.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info']);
             this.$router.push({
                 name: 'importsShow', 
                 params: {
