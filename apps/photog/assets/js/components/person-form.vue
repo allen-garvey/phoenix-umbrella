@@ -69,7 +69,9 @@ export default {
             }
             //new form
             else{
-                const person = {};
+                const person = {
+                    is_favorite: false,
+                };
                 if(this.hasImages){
                     person['cover_image_id'] = this.imagesInModel[0].id;
                 }
