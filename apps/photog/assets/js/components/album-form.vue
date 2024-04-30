@@ -8,6 +8,15 @@
 
             <Form-Input :id="idForField('year')" label="Year" v-model="album.year" :errors="errors.year" input-type="number" />
 
+            <Form-Input 
+                :id="idForField('cover_image_id')" 
+                label="Cover image id" 
+                v-model="album.cover_image_id" 
+                :errors="(errors.cover_image_id||[]).concat(errors.cover_image||[])" 
+                input-type="number" 
+                v-if="isCreateForm" 
+            />
+
             <Form-Input :id="idForField('description')" label="Description" v-model="album.description" :errors="errors.description" input-type="textarea" :textarea-rows="4" />
         </template>
     </Form-Section>
@@ -144,9 +153,10 @@ export default {
                 const album = {
                     year: getCurrentYear(),
                     is_favorite: false,
+                    cover_image_id: 0,
                 };
                 if(this.hasImages){
-                    album['cover_image_id'] = this.imagesInModel[0].id;
+                    album.cover_image_id = this.imagesInModel[0].id;
                 }
                 this.album = album;
             }

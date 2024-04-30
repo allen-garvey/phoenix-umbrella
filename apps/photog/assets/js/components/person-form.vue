@@ -4,6 +4,15 @@
             <Form-Input :id="idForField('name')" label="Name" v-model="person.name" :errors="errors.name" />
 
             <Form-Input :id="idForField('is_favorite')" label="Is Favorite" v-model="person.is_favorite" :errors="errors.is_favorite" input-type="checkbox" />
+
+            <Form-Input 
+                :id="idForField('cover_image_id')" 
+                label="Cover image id" 
+                v-model="person.cover_image_id" 
+                :errors="(errors.cover_image_id||[]).concat(errors.cover_image||[])" 
+                input-type="number" 
+                v-if="isCreateForm" 
+            />
         </template>
     </Form-Section>
 </template>
@@ -65,9 +74,10 @@ export default {
             else{
                 const person = {
                     is_favorite: false,
+                    cover_image_id: 0,
                 };
                 if(this.hasImages){
-                    person['cover_image_id'] = this.imagesInModel[0].id;
+                    person.cover_image_id = this.imagesInModel[0].id;
                 }
                 this.person = person;
             }
