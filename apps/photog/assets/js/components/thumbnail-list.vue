@@ -633,15 +633,13 @@ export default {
             if(confirm('Sure you want to remove selected items?')){
                 const items = this.thumbnailListSelectedItems.map((item)=>item.id);
                 this.batchRemoveItemsCallback(items, this.sendJson).then(() => {
-                    // just reloading page for now to avoid caching problems
-                    window.location.reload();
+                    this.refreshModel();
                 });
             }
         },
         updateCoverImage(){
             this.setCoverImageCallback(this.thumbnailListSelectedItems[0].id, this.sendJson, this.model).then(() => {
-                // just reloading page for now to avoid caching problems
-                window.location.reload();
+                this.refreshModel();
             });
         },
         createResourceWithImages(pathName){
