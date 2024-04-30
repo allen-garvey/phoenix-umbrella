@@ -110,6 +110,7 @@
             @itemHover="onItemHovered"
             @itemHoverEnd="onItemHoveredEnd"
             :miniThumbnailUrlFor="miniThumbnailUrlFor"
+            :useBigThumbnails="useBigThumbnails"
         />
         <infinite-observer
             :onTrigger="loadMoreThumbnails" 
@@ -269,6 +270,10 @@ export default {
         miniThumbnailUrlFor: {
             type: Function,
             required: true,
+        },
+        useBigThumbnails: {
+            type: Boolean,
+            default: false,
         },
     },
     components: {

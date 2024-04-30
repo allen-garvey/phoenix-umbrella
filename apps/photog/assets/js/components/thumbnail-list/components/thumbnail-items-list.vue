@@ -67,6 +67,7 @@
 <style lang="scss" module>
     @import '~photog-styles/site/variables';
     $thumbnail_dimensions: 205px;
+    $thumbnail_dimensions_big: 287px;
 
     .thumbnail-list{
         display: grid;
@@ -139,6 +140,17 @@
             font-size: 0.98rem;
         }
     }
+
+    .big.thumbnail-list {
+        grid-template-columns: repeat(auto-fill, $thumbnail_dimensions_big);
+        
+        .thumbnail-image-container{
+            img{
+                height: $thumbnail_dimensions_big;
+                width: $thumbnail_dimensions_big;
+            }
+        }
+    }
 </style>
 
 <script>
@@ -196,6 +208,10 @@ export default {
             type: Function,
             required: true,
         },
+        useBigThumbnails: {
+            type: Boolean,
+            default: false,
+        },
     },
     components: {
         heart,
@@ -206,7 +222,8 @@ export default {
             return {
                 [this.$style['thumbnail-list']]: true,
                 [this.$style['batch-select']]: this.isCurrentlyBatchSelect, 
-                [this.$style['reordering']]: this.isReordering,
+                [this.$style.reordering]: this.isReordering,
+                [this.$style.big]: this.useBigThumbnails,
             };
         },
         isLinkDisabled(){

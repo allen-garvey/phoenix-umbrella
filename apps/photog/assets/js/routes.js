@@ -85,6 +85,7 @@ export default {
             component: ThumbnailList,
             props: (route) => {
                 const props = {
+                    useBigThumbnails: true,
                     apiPath: route.path,
                     apiItemsCountPath: `${route.path}/count`,
                     enableBatchSelectImages: true,
@@ -148,6 +149,7 @@ export default {
                 const nextYear = year + 1;
 
                 const props = {
+                    useBigThumbnails: true,
                     apiPath: route.path,
                     apiItemsCountPath: `${route.path}/count`,
                     enableBatchSelectImages: true,
@@ -296,6 +298,7 @@ export default {
             component: ThumbnailList,
             props: (route) => {
                 const props = {
+                    useBigThumbnails: true,
                     batchRemoveItemsCallback(image_ids, sendJSON) {
                         const albumId = route.params.id;
                         return sendJSON(
@@ -369,6 +372,7 @@ export default {
             component: ThumbnailList,
             props: (route) => {
                 const props = {
+                    useBigThumbnails: true,
                     batchRemoveItemsCallback(image_ids, sendJSON) {
                         const personId = route.params.id;
                         return sendJSON(
