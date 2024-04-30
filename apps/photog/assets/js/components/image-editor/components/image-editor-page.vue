@@ -29,6 +29,11 @@
                 <input type="range" min="0" max="200" v-model.number="contrast" class="form-range" />
                 <input type="number" min="0" max="200" v-model.number="contrast" class="form-control" />
             </label>
+            <label>
+                Blur
+                <input type="range" min="0" max="15" v-model.number="blur" class="form-range" />
+                <input type="number" min="0" max="15" v-model.number="blur" class="form-control" />
+            </label>
         </fieldset>
         <fieldset class="form-group">
             <legend>Adaptive Threshold</legend>
@@ -37,14 +42,6 @@
                 Threshold
                 <input type="range" min="0" :max="maxAdaptiveThreshold" v-model.number="adaptiveThreshold" class="form-range" />
                 <input type="number" min="0" :max="maxAdaptiveThreshold" v-model.number="adaptiveThreshold" class="form-control" />
-            </label>
-        </fieldset>
-        <fieldset class="form-group">
-            <legend>Filters 2</legend>
-            <label>
-                Blur
-                <input type="range" min="0" max="15" v-model.number="blur" class="form-range" />
-                <input type="number" min="0" max="15" v-model.number="blur" class="form-control" />
             </label>
         </fieldset>
         <fieldset class="form-group">
@@ -131,9 +128,8 @@ const OutputDrawLevel = {
     INITIAL: 0,
     FILTER_1: 1,
     ADAPTIVE_THRESHOLD: 2,
-    BLUR: 3,
-    THRESHOLD: 4,
-    CROP: 5,
+    THRESHOLD: 3,
+    CROP: 4,
 };
 
 export default {
@@ -393,19 +389,14 @@ export default {
             };
             let hasDrawn = false;
             const isAdaptiveThresholdUsed = this.adaptiveThresholdDrawFunc && this.isAdaptiveThresholdEnabled;
-            const areFiltersUsed = this.contrast !== 100 || this.brightness !== 100;
-            const isPreAdaptiveThresholdRequested = outputDrawLevel < OutputDrawLevel.ADAPTIVE_THRESHOLD;
-            const isBlurRendering = !isAdaptiveThresholdUsed && outputDrawLevel === OutputDrawLevel.BLUR;
-
+            const areFiltersUsed = this.contrast !== 100 || this.brightness !== 100 || this.blur !== 0;
             
-            if((isPreAdaptiveThresholdRequested || isBlurRendering) && areFiltersUsed){
-                if(!hasDrawn){
-                    drawOriginal();
-                    hasDrawn = true;
-                }
-                drawFilters(this.outputSourceContext, `contrast(${this.contrast}%) brightness(${this.brightness}%)`);
+            if(outputDrawLevel <= OutputDrawLevel.FILTER_1 && areFiltersUsed){
+                drawOriginal();
+                drawFilters(this.outputSourceContext, `contrast(${this.contrast}%) brightness(${this.brightness}%) blur(${this.blur}px)`);
+                hasDrawn = true;
             }
-            if(outputDrawLevel <= OutputDrawLevel.BLUR && isAdaptiveThresholdUsed){
+            if(outputDrawLevel <= OutputDrawLevel.ADAPTIVE_THRESHOLD && isAdaptiveThresholdUsed){
                 if(outputDrawLevel < OutputDrawLevel.ADAPTIVE_THRESHOLD){
                     if(!hasDrawn){
                         drawOriginal();
@@ -417,13 +408,6 @@ export default {
                 this.adaptiveThresholdDrawFunc(thresholdPercent);
                 this.outputSourceContext.drawImage(this.adaptiveThresholdContext.canvas, 0, 0);
                 hasDrawn = true;
-            }
-            if(outputDrawLevel < OutputDrawLevel.THRESHOLD && this.blur !== 0){
-                if(!hasDrawn){
-                    drawOriginal();
-                    hasDrawn = true;
-                }
-                drawFilters(this.outputSourceContext, `blur(${this.blur}px)`);
             }
             if(outputDrawLevel <= OutputDrawLevel.THRESHOLD && this.thresholdDrawFunc && this.isThresholdEnabled){
                 if(outputDrawLevel < OutputDrawLevel.THRESHOLD){
