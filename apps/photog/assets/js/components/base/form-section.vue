@@ -1,5 +1,5 @@
 <template>
-    <main class="main container">
+    <main class="main container inner-container">
         <div>
             <h1>{{heading}}</h1>
         </div>

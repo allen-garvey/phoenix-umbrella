@@ -1,12 +1,12 @@
 <template>
-    <div class="main container">
+    <main class="main container">
         <h2>{{ title }}</h2>
         <ul :class="$style.list" v-if="isInitialLoadComplete">
             <li v-for="(item, index) in items" :key="index">
                 <router-link :to="item.route">{{ item.title }}</router-link>
             </li>
         </ul>
-    </div>
+    </main>
 </template>
 
 <style lang="scss" module>
