@@ -3,7 +3,7 @@
         <template v-slot:inputs>
             <Form-Input :id="idForField('name')" label="Name" v-model="tag.name" :errors="errors.name" />
             <Form-Input :id="idForField('is_favorite')" label="Is Favorite" v-model="tag.is_favorite" :errors="errors.is_favorite" input-type="checkbox" />
-            <div class="form-group">
+            <div class="form-group" v-if="albums.length > 0">
                 <label for="cover_album_id_input">Cover Album</label>
                 <select 
                     class="form-control" 
