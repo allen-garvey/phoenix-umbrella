@@ -32,8 +32,8 @@ export function buildImportsShowVariant(path, name, props = {}) {
         props: (route) => {
             const defaultProps = {
                 useBigThumbnails: true,
-                setCoverImageCallback(cover_image_id, sendJSON) {
-                    const importId = route.params.id;
+                setCoverImageCallback(cover_image_id, sendJSON, model) {
+                    const importId = model.id;
                     return sendJSON(`/api/imports/${importId}`, 'PATCH', {
                         import: {
                             cover_image_id,

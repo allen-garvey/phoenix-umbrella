@@ -639,7 +639,7 @@ export default {
             }
         },
         updateCoverImage(){
-            this.setCoverImageCallback(this.thumbnailListSelectedItems[0].id, this.sendJson).then(() => {
+            this.setCoverImageCallback(this.thumbnailListSelectedItems[0].id, this.sendJson, this.model).then(() => {
                 // just reloading page for now to avoid caching problems
                 window.location.reload();
             });
