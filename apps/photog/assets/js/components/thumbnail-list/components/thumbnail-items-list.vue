@@ -256,6 +256,9 @@ export default {
             return !!item.is_favorite;
         },
         isThumbnailCoverImage(item){
+            if('cover_album_id' in this.model){
+                return item.id === this.model.cover_album_id;
+            }
             if(!('cover_image' in this.model)){
                 return false;
             }

@@ -12,21 +12,19 @@ defmodule PhotogWeb.TagView do
   end
 
   def render("show.json", %{tag: tag}) do
-    %{data: render_one(tag, TagView, "tag.json")}
+    %{data: 
+      %{
+        id: tag.id,
+        name: tag.name,
+        is_favorite: tag.is_favorite,
+        albums_count: tag.albums_count,
+        cover_album_id: tag.cover_album_id,
+      }
+    }
   end
 
   def render("show_excerpt.json", %{tag: tag}) do
     %{data: render_one(tag, TagView, "tag_excerpt.json")}
-  end
-
-  def render("tag.json", %{tag: tag}) do
-    %{
-      id: tag.id,
-      name: tag.name,
-      is_favorite: tag.is_favorite,
-      cover_album_id: tag.cover_album_id,
-      albums_count: tag.albums_count,
-    }
   end
 
   def render("tag_excerpt.json", %{tag: tag}) do
