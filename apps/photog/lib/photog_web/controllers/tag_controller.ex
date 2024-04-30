@@ -85,12 +85,10 @@ defmodule PhotogWeb.TagController do
   end
 
   def delete(conn, %{"id" => id}) do
-    tag = Api.get_tag!(id)
-
-    with {:ok, %Tag{}} <- Api.delete_tag(tag) do
+    with {1, _} <- Api.delete_tag_by_id(id) do
       conn
       |> put_view(CommonWeb.ApiGenericView)
-      |> render("ok.json", message: "ok")
+      |> render("ok.json", message: "Tag deleted.")
     end
   end
 

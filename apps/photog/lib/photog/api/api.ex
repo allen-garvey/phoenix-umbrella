@@ -631,6 +631,14 @@ defmodule Photog.Api do
     Repo.delete(album)
   end
 
+  def delete_album_by_id(album_id) when is_binary(album_id) do
+    from(
+      album in Album,
+      where: album.id == ^album_id
+    )
+    |> Repo.delete_all
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking album changes.
 
@@ -827,6 +835,14 @@ defmodule Photog.Api do
   """
   def delete_person(%Person{} = person) do
     Repo.delete(person)
+  end
+
+  def delete_person_by_id(person_id) when is_binary(person_id) do
+    from(
+      person in Person,
+      where: person.id == ^person_id
+    )
+    |> Repo.delete_all
   end
 
   @doc """
@@ -1502,6 +1518,14 @@ defmodule Photog.Api do
   """
   def delete_tag(%Tag{} = tag) do
     Repo.delete(tag)
+  end
+
+  def delete_tag_by_id(tag_id) when is_binary(tag_id) do
+    from(
+      tag in Tag,
+      where: tag.id == ^tag_id
+    )
+    |> Repo.delete_all
   end
 
   @doc """

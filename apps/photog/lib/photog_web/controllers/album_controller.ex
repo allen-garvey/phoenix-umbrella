@@ -192,11 +192,10 @@ defmodule PhotogWeb.AlbumController do
   end
 
   def delete(conn, %{"id" => id}) do
-    album = Api.get_album!(id)
-    with {:ok, %Album{}} <- Api.delete_album(album) do
+    with {1, _} <- Api.delete_album_by_id(id) do
       conn
       |> put_view(CommonWeb.ApiGenericView)
-      |> render("ok.json", message: "ok")
+      |> render("ok.json", message: "Album deleted.")
     end
   end
 end

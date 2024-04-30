@@ -88,9 +88,10 @@ defmodule PhotogWeb.PersonController do
   end
 
   def delete(conn, %{"id" => id}) do
-    person = Api.get_person!(id)
-    with {:ok, %Person{}} <- Api.delete_person(person) do
-      send_resp(conn, 200, "{\"data\": \"ok\"}")
+    with {1, _} <- Api.delete_person_by_id(id) do
+      conn
+      |> put_view(CommonWeb.ApiGenericView)
+      |> render("ok.json", message: "Person deleted.")
     end
   end
 end
