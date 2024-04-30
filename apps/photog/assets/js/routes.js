@@ -441,6 +441,14 @@ export default {
             component: ThumbnailList,
             props: (route) => {
                 const props = {
+                    setCoverImageCallback(cover_album_id, sendJSON, tag) {
+                        const tagId = tag.id;
+                        return sendJSON(`/api/tags/${tagId}`, 'PATCH', {
+                            tag: {
+                                cover_album_id,
+                            },
+                        });
+                    },
                     batchRemoveItemsCallback(album_ids, sendJSON) {
                         const tagId = route.params.id;
                         return sendJSON(`/api/tags/${tagId}/albums`, 'DELETE', {
