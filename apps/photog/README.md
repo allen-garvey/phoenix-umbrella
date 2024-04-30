@@ -34,6 +34,8 @@ By adding Amazon Photos Ids to images, you can see an Amazon photos link on the 
 * You can optionally set the environment variable `UMBRELLA_PHOTOG_IMAGE_URL_PREFIX` as a random string, which is used as a prefix for image urls
 * If you do that, add aliases in your server configuration for image paths 
 
+* You can also optionally set environment variable `UMBRELLA_PHOTOG_IMAGE_THUMBNAILS_ONLY`. Set it to `1` to only use thumbnail images in the Vue client, and not the master images
+
 
 ## License
 

@@ -7,4 +7,9 @@ import css from '../sass/style.scss';
 
 const router = createRouter({ ...routes, history: createWebHistory() });
 
-instantiateVue('app', App, ['csrfToken', 'imageUrlPrefix'], router);
+instantiateVue(
+    'app',
+    App,
+    ['csrfToken', 'imageUrlPrefix', 'imageThumbnailsOnly'],
+    router
+);

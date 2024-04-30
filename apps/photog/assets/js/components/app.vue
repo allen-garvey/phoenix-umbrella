@@ -38,6 +38,10 @@ export default {
             type: String,
             required: true,
         },
+        imageThumbnailsOnly: {
+            type: String,
+            required: true,
+        },
     },
     components: {
         'Photog-Header': PhotogHeader,
@@ -116,6 +120,9 @@ export default {
             return thumbnailUrlFor(image.mini_thumbnail_path, this.imageUrlPrefix);
         },
         masterUrlFor(image){
+            if(this.imageThumbnailsOnly === '1'){
+                return this.thumbnailUrlFor(image);
+            }
             return getMasterUrl(image, this.imageUrlPrefix);
         },
     }

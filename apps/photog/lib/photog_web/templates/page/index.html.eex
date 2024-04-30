@@ -1,1 +1,1 @@
-<div id="app" data-csrf-token="<%= @csrf_token %>" data-image-url-prefix="<%= @image_url_prefix %>"></div>
+<div id="app" data-csrf-token="<%= @csrf_token %>" data-image-url-prefix="<%= @image_url_prefix %>" data-image-thumbnails-only="<%= @image_thumbnails_only %>"></div>
