@@ -46,8 +46,7 @@
         </div>
         
         <div :class="$style.actionButtonContainer" v-if="isB2Enabled">
-            <a :href="b2Url" v-if="b2Url" target="_blank" rel="noopener noreferrer nofollow">B2 url</a>
-            <button @click="openInB2" class="btn btn-sm btn-outline-dark" v-if="!b2Url && !isLoadingB2Url">Get B2 image url</button>
+            <B2-Link :image="image" :onB2UrlRequested="onB2UrlRequested" />
         </div>
 
         <Image-Items-List 
@@ -126,6 +125,7 @@ import ImageVersions from './image-detail/image-versions.vue';
 import ImageItemsList from './image-detail/image-items-list.vue';
 import ExifInfo from './image-detail/exif-info.vue';
 import SwipeImage from './shared/swipe-image.vue';
+import B2Link from './image-detail/b2-link.vue';
 import { API_URL_BASE } from '../request-helpers';
 
 export default {
@@ -175,6 +175,7 @@ export default {
         ImageItemsList,
         ExifInfo,
         SwipeImage,
+        B2Link,
     },
     created(){
         this.setup();
@@ -186,8 +187,6 @@ export default {
             images: null, // for when is image in parent
             hasExifBeenRequested: false,
             imageExif: null,
-            b2Url: null,
-            isLoadingB2Url: false,
         }
     },
     computed: {
@@ -237,8 +236,6 @@ export default {
             this.isModelLoaded = false;
             this.hasExifBeenRequested = false;
             this.imageExif = null;
-            this.b2Url = null;
-            this.isLoadingB2Url = false;
             this.loadModel(`/images/${this.imageId}`);
             this.loadExif(true);
         },
@@ -312,13 +309,6 @@ export default {
                 set.add(item.id);
                 return set;
             }, new Set());
-        },
-        openInB2(){
-            this.isLoadingB2Url = true;
-            this.onB2UrlRequested(this.image).then(url => {
-                this.isLoadingB2Url = false;
-                this.b2Url = url;
-            });
         },
     }
 }

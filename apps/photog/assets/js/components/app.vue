@@ -28,6 +28,7 @@ import CacheUtil from '../cache-util.js'
 import { API_URL_BASE } from '../request-helpers.js';
 import { thumbnailUrlFor, getMasterUrl } from '../image.js';
 import { sendJson, fetchJson } from 'umbrella-common-js/ajax.js';
+import { getCachedValue, updateCachedValue, constructB2UrlResponse } from '../b2';
 
 export default {
     name: 'Photog-App',
@@ -130,8 +131,17 @@ export default {
             }
             return getMasterUrl(image, this.imageUrlPrefix);
         },
-        onB2UrlRequested(image){
-            return fetchJson(`${API_URL_BASE}/b2/download_token`).then(res => `${res.download_url}/file/${this.b2BucketPrefix}/${image.master_path}?Authorization=${res.download_token}`);
+        onB2UrlRequested(image, cacheOnly=false){
+            const cachedValue = getCachedValue();
+            if(cacheOnly || cachedValue){
+                return Promise.resolve(constructB2UrlResponse(image, cachedValue, this.b2BucketPrefix));
+            }
+
+            return fetchJson(`${API_URL_BASE}/b2/download_token`)
+            .then(res => {
+                updateCachedValue(res);
+                return constructB2UrlResponse(image, res, this.b2BucketPrefix);
+            });
         },
     }
 }
