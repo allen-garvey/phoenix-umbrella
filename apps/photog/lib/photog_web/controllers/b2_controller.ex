@@ -6,10 +6,9 @@ defmodule PhotogWeb.B2Controller do
     action_fallback PhotogWeb.FallbackController
 
     def download_token(conn, _params) do
-        b2_application_key = Application.fetch_env!(:photog, :b2_application_key)
         HTTPoison.start
 
-        result = b2_application_key
+        result = Application.fetch_env!(:photog, :b2_application_key)
         |> validate_application_key
         |> passthrough_error(&b2_authorize_account/1)
         |> passthrough_error(&to_download_token_response/1)
@@ -22,7 +21,7 @@ defmodule PhotogWeb.B2Controller do
     end
 
     # if there is an error, return the error, otherwise run the transform value
-    # state should be either {:error, message} or {:ok, value}\
+    # state should be either {:error, message} or {:ok, value}
     # transform function should take the value and return a state
     defp passthrough_error(state, transform) when is_tuple(state) and is_function(transform, 1) do
         case state do
@@ -31,26 +30,45 @@ defmodule PhotogWeb.B2Controller do
         end
     end
 
-    defp b2_authorize_account(b2_application_key) do
-        case HTTPoison.get("https://api.backblazeb2.com/b2api/v3/b2_authorize_account", ["Authorization": "Basic #{b2_application_key}", "Content-Type": "application/json"], []) do
+    # http_result is result from HTTPoison.get or HTTPoison.post
+    # caller is string with calling function name
+    # json_consumer is a function/1 that uses result of jason decode call
+    defp process_http_result_json(http_result, caller, json_consumer \\ &Function.identity/1) when is_tuple(http_result) and is_binary(caller) and is_function(json_consumer, 1) do
+        case http_result do
             {:ok, resp} -> case resp.status_code do
-                200 -> decode_json(resp.body)
-                error_code -> {:error, "Authorize account failed with #{error_code}"}
+                200 -> decode_json(resp.body, caller) |> json_consumer.()
+                error_code -> {:error, "HTTP request for #{caller} failed with #{error_code}"}
             end
-            {:error, _error} -> {:error, "Could not authorize b2 account."}
+            {:error, _error} -> {:error, "There was an error when performing HTTP request for #{caller}."}
         end
     end
 
+    defp b2_authorize_account(b2_application_key) do
+        HTTPoison.get(
+            "https://api.backblazeb2.com/b2api/v3/b2_authorize_account", 
+            ["Authorization": "Basic #{b2_application_key}", "Content-Type": "application/json"], 
+            []
+        ) 
+        |> process_http_result_json("b2_authorize_account")
+    end
+
     defp b2_get_download_authorization(download_token_response) do
-        body = Jason.encode!(%{validDurationInSeconds: 600, fileNamePrefix: download_token_response.file_name_prefix, bucketId: download_token_response.bucket_id})
+        body = Jason.encode!(%{validDurationInSeconds: 900, fileNamePrefix: download_token_response.file_name_prefix, bucketId: download_token_response.bucket_id})
         
-        case HTTPoison.post("#{download_token_response.api_url}/b2api/v3/b2_get_download_authorization", body, ["Authorization": download_token_response.authorization_token, "Content-Type": "application/json"], []) do
-            {:ok, resp} -> case resp.status_code do
-                200 -> passthrough_error(decode_json(resp.body), fn json -> add_download_token(json, download_token_response) end)
-                error_code -> {:error, "Get download authorization failed with #{error_code}"}
-            end
-            {:error, _error} -> {:error, "Could not get download authorization."}
-        end
+        HTTPoison.post(
+            "#{download_token_response.api_url}/b2api/v3/b2_get_download_authorization", 
+            body, 
+            ["Authorization": download_token_response.authorization_token, "Content-Type": "application/json"], 
+            []
+        )
+        |> process_http_result_json(
+            "b2_get_download_authorization", 
+            fn json_result -> 
+                passthrough_error(
+                    json_result, 
+                    fn json -> add_download_token(json, download_token_response) end
+                ) 
+            end)
     end
 
     defp to_download_token_response(json) do
@@ -73,11 +91,10 @@ defmodule PhotogWeb.B2Controller do
         {:ok, updated_download_token_response}
     end
 
-    defp decode_json(json_string) do
-        IO.inspect json_string
+    defp decode_json(json_string, caller) do
         case Jason.decode(json_string) do
             {:ok, _} = success -> success
-            {:error, _} -> {:error, "Could not decode JSON."}
+            {:error, _} -> {:error, "Could not decode JSON for #{caller}."}
         end
     end
 
