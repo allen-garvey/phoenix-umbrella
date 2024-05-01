@@ -10,6 +10,6 @@ const router = createRouter({ ...routes, history: createWebHistory() });
 instantiateVue(
     'app',
     App,
-    ['csrfToken', 'imageUrlPrefix', 'imageThumbnailsOnly'],
+    ['csrfToken', 'imageUrlPrefix', 'imageThumbnailsOnly', 'b2BucketPrefix'],
     router
 );

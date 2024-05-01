@@ -80,6 +80,9 @@ defmodule PhotogWeb.Router do
     # Album years
     delete "/years/:year",                    YearController, :delete
     put "/years/:id",                         YearController, :put
+
+    # B2
+    get "/b2/download_token",                 B2Controller, :download_token
   end
 
   scope "/", PhotogWeb do

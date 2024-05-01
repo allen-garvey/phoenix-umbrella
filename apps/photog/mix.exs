@@ -37,7 +37,10 @@ defmodule Photog.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
-    Umbrella.Common.Deps.shared_authenticated_phoenix_deps()
+    Umbrella.Common.Deps.shared_authenticated_phoenix_deps() ++
+    [
+      Umbrella.Common.Deps.http_poison(), #for b2
+    ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

@@ -36,6 +36,14 @@ By adding Amazon Photos Ids to images, you can see an Amazon photos link on the 
 
 * You can also optionally set environment variable `UMBRELLA_PHOTOG_IMAGE_THUMBNAILS_ONLY`. Set it to `1` to only use thumbnail images in the Vue client, and not the master images
 
+## Backblaze B2 Setup
+
+* To enable Backblaze B2 downloads for image masters
+
+* Set environment variable `UMBRELLA_PHOTOG_B2_APPLICATION_KEY` with a Backblaze B2 application key. The value should be base64 value of `keyId:applicationKey`
+
+* Set environment variable `UMBRELLA_PHOTOG_B2_BUCKET_PREFIX` . The value should be the B2 bucket name and then the path to the masters directory (e.g. `bucket-name/path/to/masters-dir` note no forward slash at the end)
+
 
 ## License
 

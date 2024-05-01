@@ -14,6 +14,8 @@
                 :thumbnailUrlFor="thumbnailUrlFor"
                 :miniThumbnailUrlFor="miniThumbnailUrlFor"
                 :masterUrlFor="masterUrlFor"
+                :isB2Enabled="!!b2BucketPrefix"
+                :onB2UrlRequested="onB2UrlRequested"
             />
         </router-view>
     </div>
@@ -41,6 +43,9 @@ export default {
         imageThumbnailsOnly: {
             type: String,
             required: true,
+        },
+        b2BucketPrefix: {
+            type: String,
         },
     },
     components: {
@@ -124,6 +129,9 @@ export default {
                 return this.thumbnailUrlFor(image);
             }
             return getMasterUrl(image, this.imageUrlPrefix);
+        },
+        onB2UrlRequested(image){
+            return fetchJson(`${API_URL_BASE}/b2/download_token`).then(res => `${res.download_url}/file/${this.b2BucketPrefix}/${image.master_path}?Authorization=${res.download_token}`);
         },
     }
 }
