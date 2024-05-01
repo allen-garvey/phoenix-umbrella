@@ -1,6 +1,5 @@
 defmodule PhotogWeb.PersonView do
   use PhotogWeb, :view
-  alias PhotogWeb.PersonView
 
   def render("index.json", %{persons: persons}) do
     %{data: Enum.map(persons, &person_excerpt_to_map/1)}
