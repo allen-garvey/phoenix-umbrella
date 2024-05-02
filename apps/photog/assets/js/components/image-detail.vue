@@ -34,7 +34,7 @@
         />
         <Image-Versions
             :versions="image.versions"
-            v-if="image.versions"
+            v-if="image.versions && image.versions.length > 0"
         />
         <Exif-Info 
             :imageExif="imageExif" 
