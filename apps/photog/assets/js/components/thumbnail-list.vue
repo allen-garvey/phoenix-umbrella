@@ -132,7 +132,7 @@
 <script>
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
-import ResourceHeader from './resource-header.vue';
+import ResourceHeader from './shared/resource-header.vue';
 import ThumbnailFilterControls from './thumbnail-list/components/thumbnail-filter-controls.vue';
 import RelatedFieldsList from './related-fields-list.vue';
 import BatchEdit from './thumbnail-list/components/batch-edit.vue';

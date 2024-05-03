@@ -30,7 +30,7 @@
 <script>
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
-import ResourceHeader from '../resource-header.vue';
+import ResourceHeader from '../shared/resource-header.vue';
 
 export default {
         name: 'Text-List',

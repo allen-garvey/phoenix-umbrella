@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import PhotogHeader from './header.vue'
-import FlashAlert from './flash-alert.vue';
+import PhotogHeader from './app/header.vue'
+import FlashAlert from './app/flash-alert.vue';
 import CacheUtil from '../cache-util.js'
 import { API_URL_BASE } from '../request-helpers.js';
 import { thumbnailUrlFor, getMasterUrl } from '../image.js';

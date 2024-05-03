@@ -44,7 +44,7 @@
 import { API_URL_BASE } from '../request-helpers.js';
 import { fetchJson } from 'umbrella-common-js/ajax.js';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
-import ResourceHeader from './resource-header.vue';
+import ResourceHeader from './shared/resource-header.vue';
 import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list.vue';
 
 export default {

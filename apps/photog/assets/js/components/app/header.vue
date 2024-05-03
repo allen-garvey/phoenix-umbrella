@@ -69,7 +69,7 @@
 </style>
 
 <script>
-import { getCurrentYear } from '../date-helpers';
+import { getCurrentYear } from '../../date-helpers';
 
 export default {
     computed: {

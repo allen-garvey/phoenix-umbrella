@@ -20,7 +20,7 @@
 </style>
 
 <script>
-import TextList from './base/text-list.vue';
+import TextList from './imports-index/text-list.vue';
 import ImportItem from './import-item.vue';
 
 const ITEMS_CHUNK_SIZE = 10;
