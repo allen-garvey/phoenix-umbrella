@@ -31,7 +31,6 @@ import { sendJson, fetchJson } from 'umbrella-common-js/ajax.js';
 import { getCachedValue, updateCachedValue, constructB2UrlResponse } from '../b2';
 
 export default {
-    name: 'Photog-App',
     props: {
         csrfToken: {
             type: String,
@@ -50,8 +49,8 @@ export default {
         },
     },
     components: {
-        'Photog-Header': PhotogHeader,
-        'Flash-Alert': FlashAlert,
+        PhotogHeader,
+        FlashAlert,
     },
     data() {
         return {

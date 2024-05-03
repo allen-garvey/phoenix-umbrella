@@ -23,7 +23,6 @@ import { albumAndPersonFormMixinBuilder } from './mixins/album-and-person-form-m
 import { toApiResource } from '../form-helpers.js';
 
 export default {
-    name: 'Person-Form',
     props: {
         modelId: {
             type: Number,

@@ -62,7 +62,6 @@ import { API_URL_BASE } from '../request-helpers.js';
 import { getCurrentYear } from '../date-helpers';
 
 export default {
-    name: 'Album-Form',
     props: {
         modelId: {
             type: Number,

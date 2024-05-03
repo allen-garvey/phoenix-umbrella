@@ -129,7 +129,6 @@ import B2Link from './image-detail/b2-link.vue';
 import { API_URL_BASE } from '../request-helpers';
 
 export default {
-    name: 'Image-Detail',
     props: {
         sendJson: {
             type: Function,

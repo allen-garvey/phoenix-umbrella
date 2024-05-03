@@ -29,7 +29,6 @@ import { toApiResource } from '../form-helpers.js';
 import { API_URL_BASE } from '../request-helpers.js';
 
 export default {
-    name: 'Tag-Form',
     props: {
         modelId: {
             type: Number,

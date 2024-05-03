@@ -127,7 +127,6 @@ const MODE_DEFAULT = 2;
 const MODE_EDIT = 3;
 
 export default {
-    name: 'Image-Items-List',
     props: {
         imageId: {
             type: Number,

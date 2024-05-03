@@ -78,7 +78,6 @@
 
 <script>
 export default {
-    name: 'Reasource-Header',
     props: {
         title: {
             type: String,

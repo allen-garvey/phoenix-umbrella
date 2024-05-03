@@ -160,7 +160,6 @@ import { BATCH_EDIT_RESOURCE_MODE } from './thumbnail-list/constants/batch-edit.
 import { ALBUM_FILTER_QUERY_PARAM_NAME, PERSON_FILTER_QUERY_PARAM_NAME } from '../routes-helpers.js';
 
 export default {
-    name: 'Thumbnail-List',
     props: {
         setWindowTitle: {
             type: Function,

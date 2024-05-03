@@ -16,7 +16,6 @@
 
 <script>
 export default {
-    name: 'Form-Section',
     props: {
         heading: {
             type: String,

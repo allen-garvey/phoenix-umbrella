@@ -11,7 +11,6 @@
 import FormFieldErrors from './form-field-errors.vue';
 
 export default {
-    name: 'Form-Input',
     props: {
         id: {
             type: String,
@@ -37,7 +36,7 @@ export default {
         },
     },
     components: {
-        'Form-Field-Errors': FormFieldErrors,
+        FormFieldErrors,
     },
     created(){
         //have to create copy, otherwise have problem with mutating

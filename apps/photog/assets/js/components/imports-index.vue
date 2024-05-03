@@ -41,7 +41,7 @@ export default {
             },
         },
         components: {
-            'Text-List': TextList,
+            TextList,
             ImportItem,
         },
         created(){

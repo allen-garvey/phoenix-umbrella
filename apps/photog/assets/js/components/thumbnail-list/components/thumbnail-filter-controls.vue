@@ -49,7 +49,6 @@
 import {ALBUM_FILTER_QUERY_PARAM_NAME, PERSON_FILTER_QUERY_PARAM_NAME} from '../../../routes-helpers.js';
 
 export default {
-    name: 'Thumbnail-Filter-Controls',
     props: {
         albumFilterMode: {
             type: Number,

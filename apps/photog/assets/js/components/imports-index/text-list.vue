@@ -33,7 +33,6 @@ import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animatio
 import ResourceHeader from '../shared/resource-header.vue';
 
 export default {
-        name: 'Text-List',
         props: {
             title: {
                 type: String,

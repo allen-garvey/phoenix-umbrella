@@ -17,9 +17,7 @@
 </style>
 
 <script>
-
 export default {
-    name: 'Form-Field-Errors',
     props: {
         errors: {
             type: Array,

@@ -8,7 +8,6 @@
 //note that you can't use v-if when not alertText or scrollIntoView won't work
 
 export default {
-    name: 'Flash-Alert',
     props: {
     },
     data() {
