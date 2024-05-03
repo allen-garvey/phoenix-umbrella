@@ -126,6 +126,10 @@
     }
     .flex {
         display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1em;
+        margin-bottom: 1em;
     }
 </style>
 

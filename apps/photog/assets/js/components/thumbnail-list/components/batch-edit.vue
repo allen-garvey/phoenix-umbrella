@@ -8,6 +8,7 @@
         </button>
         <button 
             class="btn btn-outline-primary" 
+            :class="$style.lastButton"
             @click="batchSelectAll" 
             v-if="isCurrentlyBatchSelect">
             {{anyItemsBatchSelected ? 'Deselect all' : 'Select all'}}
@@ -74,7 +75,7 @@
         <!-- 
             * List of batch edit resources that can be added to selected items
         -->
-        <div v-if="shouldShowBatchResources">
+        <div v-if="shouldShowBatchResources" :class="$style.batchResourcesContainer">
             <label>Search <input class="form-control" v-model="searchValue" v-focus ref="searchInput" /></label>
             <ul :class="$style.batchResourcesList">
                 <li 
@@ -103,6 +104,7 @@
             </button>
             <button 
                 class="btn btn-success" 
+                :class="$style.lastButton"
                 :disabled="!anyBatchResourcesSelected || !anyItemsBatchSelected"
                 @click="saveBatchSelected(batchResourcesSelected)"
             >
@@ -115,6 +117,12 @@
 <style lang="scss" module>
     @import '~photog-styles/site/variables';
 
+    .thumbnailBatchSelectContainer{
+        display: inline-block;
+    }
+    .batchResourcesContainer {
+        margin-top: 1em;
+    }
     .batchResourcesList{
         display: flex;
         flex-wrap: wrap;
@@ -125,19 +133,17 @@
             margin-bottom: 0.5em;
         }
     }
-    .thumbnailBatchSelectContainer{
-        display: inline-block;
-        margin-bottom: 1em;
-        width: 100%;
-        
-        .resourceButtonsContainer{
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            margin-top: 1em;
-        }
+    .lastButton {
+        margin-left: 1em;
     }
-
+    .resourceButtonsContainer{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1em;
+        gap: 1em 0.5em;
+        flex-wrap: wrap;
+    }
     .favoritedItem {
         color: $photog_favorited_color;
     }

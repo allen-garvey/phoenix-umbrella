@@ -1,6 +1,6 @@
 <template>
     <div :class="$style.container">
-        <div>
+        <div :class="{[$style.actionButtonContainer]: isReordering}">
             <button 
                 class="btn" 
                 :class="reorderButtonCssClass" 
@@ -23,7 +23,6 @@
             v-if="enableReorderBySort && isReordering"
         >
             <div 
-                class="form-group"
                 :class="$style.selectContainer"
             >
                 <select 
@@ -57,13 +56,14 @@
     .container{
         display: flex;
         justify-content: space-between;
-        flex-grow: 1;
-        margin-left: 1.5em;
-        min-width: 400px;
     }
 
     .saveButton {
         margin-left: 1em;
+    }
+
+    .actionButtonContainer {
+        margin-right: 1em;
     }
     
     .sortContainer {
