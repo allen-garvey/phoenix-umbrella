@@ -580,7 +580,7 @@ export default {
             }
             else if(newResourceMode === BATCH_EDIT_RESOURCE_MODE.TAGS){
                 //no need for tags excerpt, since tags already only returns name and id
-                apiUrl = '/tags?sort=newest';
+                apiUrl = '/tags?excerpt=true';
             }
 
             this.getModel(apiUrl).then((data)=>{

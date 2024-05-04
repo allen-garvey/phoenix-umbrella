@@ -1346,24 +1346,7 @@ defmodule Photog.Api do
     Import.changeset(import, %{})
   end
 
-  @doc """
-  Returns the list of tags.
-
-  ## Examples
-
-      iex> list_tags([desc: :id])
-      [%Tag{}, ...]
-
-  """
-  def list_tags(order_by_list) do
-    from(Tag, order_by: ^order_by_list)
-    |> Repo.all
-  end
-
-  @doc """
-  Returns the list of maps with tag and cover image with the cover image of the last album added as the cover image
-  """
-  def list_tags do
+  defp list_tags_query() do
     # based on: https://justinappears.com/posts/lateral-joins-ecto
     album_tag_subquery = from(
       album_tag in AlbumTag,
@@ -1386,21 +1369,49 @@ defmodule Photog.Api do
         left_join: cover_album_image in assoc(cover_album, :cover_image),
         group_by: [tag.id, image.id, album.id, cover_album.id, cover_album_image.id],
         order_by: tag.name,
-        select: {tag, image, cover_album_image, count(tag.id)}
+        select: {%Tag{tag | albums_count: count(tag.id)}, image, cover_album_image}
     )
-    |> Repo.all
-    |> Enum.map(fn {tag, image, cover_album_image, albums_count} -> 
+  end
+
+  defp preload_tags_cover_images(tags_results) do
+    tags_results
+    |> Enum.map(fn {tag, image, cover_album_image} -> 
       cover_image = case cover_album_image do
         nil -> image
         _   -> cover_album_image
       end
-      %Tag{tag | cover_image: cover_image, albums_count: albums_count} 
-    end)
+      %Tag{tag | cover_image: cover_image} 
+    end) 
+  end
+
+  @doc """
+  Returns the list of tags.
+
+  ## Examples
+
+      iex> list_tags([desc: :id])
+      [%Tag{}, ...]
+
+  """
+  def list_tags(order_by_list) do
+    from(Tag, order_by: ^order_by_list)
+    |> Repo.all
+  end
+
+  @doc """
+  Returns the list of maps with tag and cover image with the cover image of the last album added as the cover image
+  """
+  def list_tags do
+    list_tags_query()
+    |> Repo.all
+    |> preload_tags_cover_images()
   end
 
   def list_tags_by_favorite(is_favorite) when is_boolean(is_favorite) do
-    list_tags()
-    |> Enum.filter(fn tag -> tag.is_favorite == is_favorite end)
+    list_tags_query()
+    |> where([tag], tag.is_favorite == ^is_favorite)
+    |> Repo.all
+    |> preload_tags_cover_images()
   end
 
   @doc """
