@@ -1385,16 +1385,14 @@ defmodule Photog.Api do
   end
 
   @doc """
-  Returns the list of tags.
-
-  ## Examples
-
-      iex> list_tags([desc: :id])
-      [%Tag{}, ...]
-
+  Returns the list of tags for forms.
   """
-  def list_tags(order_by_list) do
-    from(Tag, order_by: ^order_by_list)
+  def list_tags_excerpt() do
+    from(
+      Tag, 
+      order_by: [desc: :is_favorite, asc: :name, asc: :id], 
+      select: [:id, :name, :is_favorite]
+    )
     |> Repo.all
   end
 

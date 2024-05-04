@@ -303,7 +303,7 @@ export default {
             isCurrentlyBatchSelect: false,
             batchSelectedItems: [], //thumbnails selected in batch select mode
             previouslySelectedBatchItemIndex: 0, //last thumbnail selected in batch select mode
-            batchResources: [], //the resources (albums, persons) that can be added to thumbnails in batch select mode
+            batchResources: [], //the resources (albums, persons, tags) that can be added to thumbnails in batch select mode
             batchSelectResourceMode: BATCH_EDIT_RESOURCE_MODE.NONE,
             //following for reordering resources
             isReordering: false,
