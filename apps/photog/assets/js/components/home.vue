@@ -105,7 +105,7 @@ export default {
             this.favoriteAlbums = albums;
         });
 
-        this.getModel('/tags?is_favorite=1').then((tags) => {
+        this.getModel('/tags?is_favorite=true').then((tags) => {
             this.favoriteTags = tags;
         });
     },

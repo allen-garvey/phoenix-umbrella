@@ -12,15 +12,7 @@ defmodule PhotogWeb.TagController do
   end
 
   def index(conn, %{"is_favorite" => is_favorite_param}) do
-    is_favorite = case is_favorite_param do
-      "true" -> true
-      "false" -> false
-      "1" -> true
-      "0" -> false
-      _ -> false
-    end
-
-    tags = Api.list_tags_by_favorite(is_favorite)
+    tags = Api.list_tags_by_favorite(is_favorite_param === "true")
     render(conn, "index_with_cover_image.json", tags: tags)
   end
 
