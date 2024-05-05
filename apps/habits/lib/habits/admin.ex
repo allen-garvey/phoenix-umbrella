@@ -111,15 +111,18 @@ defmodule Habits.Admin do
   @doc """
   Gets a single category id or nil.
 
-  Looks at the activities from the past few months
+  Looks at the last 10 activities
   and finds the most popular category id.
-
-  Note that CURRENT_DATE is postgresql only
   """
   def get_recent_popular_category_id() do
+    activities_query = from(
+      Activity,
+      order_by: [desc: :inserted_at, desc: :id],
+      limit: 10
+    )
+
     from(
-      activity in Activity,
-      where: activity.date > fragment("CURRENT_DATE - 60"),
+      activity in subquery(activities_query),
       group_by: [activity.category_id],
       order_by: [desc: count(activity.category_id)],
       select: activity.category_id,
