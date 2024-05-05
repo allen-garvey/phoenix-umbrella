@@ -3,6 +3,7 @@ defmodule PluginistaWeb.PluginController do
 
   alias Pluginista.Admin
   alias Pluginista.Admin.Plugin
+  alias Pluginista.Admin.Maker
 
   def related_fields() do
     [
@@ -17,17 +18,27 @@ defmodule PluginistaWeb.PluginController do
     render(conn, "index.html", plugins: plugins)
   end
 
+  defp get_optional_id(result) do
+    case result do
+      nil -> nil
+      result -> result.id
+    end
+  end
+
   def new(conn, _params) do
-    changeset = Admin.change_plugin(%Plugin{})
+    maker_id = Admin.get_recent_popular_maker() |> get_optional_id()
+    group_id = Admin.get_recent_popular_group() |> get_optional_id()
+
+    changeset = Admin.change_plugin(%Plugin{maker_id: maker_id, group_id: group_id})
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
-  def create_succeeded(conn, plugin, "true") do
+  defp create_succeeded(conn, plugin, "true") do
     changeset = Admin.change_plugin(%Plugin{ group_id: plugin.group_id, maker_id: plugin.maker_id, acquisition_date: plugin.acquisition_date, })
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
-  def create_succeeded(conn, plugin, _save_another) do
+  defp create_succeeded(conn, plugin, _save_another) do
     redirect(conn, to: Routes.plugin_path(conn, :show, plugin))
   end
 
@@ -97,7 +108,7 @@ defmodule PluginistaWeb.PluginController do
       |> redirect(to: Routes.plugin_path(conn, :show, plugin_id))
   end
 
-  def create_categories_for_plugin(conn, plugin_id, category_ids) when is_list(category_ids) do
+  defp create_categories_for_plugin(conn, plugin_id, category_ids) when is_list(category_ids) do
     for category_id <- category_ids do
       Admin.create_plugin_category(%{plugin_id: plugin_id, category_id: category_id})
     end

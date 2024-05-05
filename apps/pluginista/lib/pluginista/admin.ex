@@ -7,6 +7,7 @@ defmodule Pluginista.Admin do
   alias Grenadier.Repo
 
   alias Pluginista.Admin.Group
+  alias Pluginista.Admin.Plugin
 
   @doc """
   Returns the list of groups.
@@ -49,6 +50,24 @@ defmodule Pluginista.Admin do
 
   """
   def get_group!(id), do: Repo.get!(Group, id)
+
+  @doc """
+  Gets a single group or nil.
+
+  Looks at the last 10 plugins
+  and finds the most popular group id.
+  """
+  def get_recent_popular_group do    
+    from(
+      plugin in subquery(list_recent_plugins_query()),
+      join: group in assoc(plugin, :group),
+      group_by: [plugin.group_id],
+      order_by: [desc: count(plugin.group_id)],
+      select: %Group{ id: plugin.group_id},
+      limit: 1
+    )
+    |> Repo.one
+  end
 
   @doc """
   Creates a group.
@@ -211,6 +230,24 @@ defmodule Pluginista.Admin do
     Maker.changeset(maker, attrs)
   end
 
+  @doc """
+  Gets a single maker or nil.
+
+  Looks at the last 10 plugins
+  and finds the most popular maker id.
+  """
+  def get_recent_popular_maker do
+    from(
+      plugin in subquery(list_recent_plugins_query()),
+      join: maker in assoc(plugin, :maker),
+      group_by: [plugin.maker_id],
+      order_by: [desc: count(plugin.maker_id)],
+      select: %Maker{ id: plugin.maker_id},
+      limit: 1
+    )
+    |> Repo.one
+  end
+
   alias Pluginista.Admin.Category
 
   @doc """
@@ -333,7 +370,13 @@ defmodule Pluginista.Admin do
     Category.changeset(category, attrs)
   end
 
-  alias Pluginista.Admin.Plugin
+  defp list_recent_plugins_query do
+    from(
+      Plugin,
+      order_by: [desc: :inserted_at, desc: :id],
+      limit: 10
+    )
+  end
 
   defp list_plugins_query do
     from(
