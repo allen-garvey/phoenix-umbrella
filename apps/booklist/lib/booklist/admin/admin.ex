@@ -115,10 +115,15 @@ defmodule Booklist.Admin do
   Note that CURRENT_DATE is postgresql only
   """
   def get_recent_popular_genre() do
+    books_query = from(
+      Book,
+      order_by: [desc: :inserted_at, desc: :id],
+      limit: 10
+    )
+    
     from(
-      book in Book,
+      book in subquery(books_query),
       join: genre in assoc(book, :genre),
-      where: book.inserted_at > fragment("CURRENT_DATE - 30"),
       group_by: [book.genre_id, genre.is_fiction],
       order_by: [desc: count(book.genre_id)],
       select: %Genre{ id: book.genre_id, is_fiction: genre.is_fiction},
