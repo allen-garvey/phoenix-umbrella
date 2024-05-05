@@ -111,15 +111,18 @@ defmodule Movielist.Admin do
   @doc """
   Gets a single genre id or nil.
 
-  Looks at the movies from the past few months
+  Looks at last 10 movies
   and finds the most popular genre id.
-
-  Note that CURRENT_DATE is postgresql only
   """
   def get_recent_popular_genre_id() do
+    movie_query = from(
+      Movie,
+      order_by: [desc: :inserted_at, desc: :id],
+      limit: 10
+    )
+    
     from(
-      movie in Movie,
-      where: movie.inserted_at > fragment("CURRENT_DATE - 180"),
+      movie in subquery(movie_query),
       group_by: [movie.genre_id],
       order_by: [desc: count(movie.genre_id)],
       select: movie.genre_id,
