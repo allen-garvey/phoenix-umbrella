@@ -109,10 +109,8 @@ defmodule Booklist.Admin do
   @doc """
   Gets a single genre or nil.
 
-  Looks at the books from the past few months
+  Looks at the last 10 books
   and finds the most popular genre id.
-
-  Note that CURRENT_DATE is postgresql only
   """
   def get_recent_popular_genre() do
     books_query = from(
