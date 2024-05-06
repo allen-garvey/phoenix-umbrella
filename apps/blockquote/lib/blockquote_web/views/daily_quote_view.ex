@@ -24,13 +24,13 @@ defmodule BlockquoteWeb.DailyQuoteView do
   end
   
   def to_s(daily_quote) do
-    "#{SharedView.date_to_iso_string(daily_quote.date_used)} — #{BlockquoteWeb.QuoteView.to_short_excerpt(daily_quote.quote)}"
+    "#{Date.to_iso8601(daily_quote.date_used)} — #{BlockquoteWeb.QuoteView.to_short_excerpt(daily_quote.quote)}"
   end
   
   def item_columns(conn, daily_quote) do
     quote_link = link(BlockquoteWeb.QuoteView.to_short_excerpt(daily_quote.quote), to: quote_path(conn, :show, daily_quote.quote))
     [
-        {"date used", SharedView.date_to_iso_string(daily_quote.date_used)}, 
+        {"date used", Date.to_iso8601(daily_quote.date_used)}, 
         {"quote", quote_link},
         {"added", SharedView.item_date_created(daily_quote)},
     ]
