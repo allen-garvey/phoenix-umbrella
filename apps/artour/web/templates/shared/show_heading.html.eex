@@ -1,4 +1,4 @@
-<%= link "All " <> naive_pluralize(@item_name_singular), to: path_for_item(@conn, @item_name_singular, :index), class: "back-link" %>
+<%= link "All " <> Common.StringHelpers.naive_pluralize(@item_name_singular), to: path_for_item(@conn, @item_name_singular, :index), class: "back-link" %>
 
 <div class="show-heading">
   <h1 class="show-title"><%= @title %></h1>

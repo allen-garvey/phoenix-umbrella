@@ -2,17 +2,6 @@ defmodule Artour.SharedView do
 	use Artour.Web, :view
 
 	@doc """
-  	Naive implementation of function to pluralize string
-  	"""
-	def naive_pluralize(singular) do
-		if String.ends_with? singular, "y" do
-		  String.replace_trailing(singular, "y", "ies")
-		else
-			singular <> "s"
-		end
-	end
-
-	@doc """
   	Used to generate name for path helper function
   	"""
 	def item_path_func_name(item_name_singular) do
