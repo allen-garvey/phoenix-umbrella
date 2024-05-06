@@ -11,5 +11,5 @@
   
   <%= Common.ViewHelpers.Form.input_group :item_count, f, &number_input/3, [autofocus: true] %>
 
-  <%= BooklistWeb.SharedView.submit_button "Loan" %>
+  <%= CommonWeb.FormView.submit_button "Loan" %>
 <% end %>

@@ -16,6 +16,6 @@
     end
   %>
 
-  <%= MovielistWeb.SharedView.submit_button "Rating" %>
+  <%= CommonWeb.FormView.submit_button "Rating" %>
 
 <% end %>

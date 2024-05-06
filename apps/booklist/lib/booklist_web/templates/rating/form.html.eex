@@ -16,5 +16,5 @@
   	end
   %>
 
-  <%= BooklistWeb.SharedView.submit_button "Rating" %>
+  <%= CommonWeb.FormView.submit_button "Rating" %>
 <% end %>

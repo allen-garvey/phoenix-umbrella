@@ -21,5 +21,5 @@
 
   <%= Common.ViewHelpers.Form.select_group :streamer_id, f, @streamers %>
 
-  <%= MovielistWeb.SharedView.submit_button "Movie" %>
+  <%= CommonWeb.FormView.submit_button "Movie" %>
 <% end %>

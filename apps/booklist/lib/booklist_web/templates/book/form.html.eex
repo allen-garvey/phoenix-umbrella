@@ -21,7 +21,7 @@
     <%= error_tag f, :is_fiction %>
   </div>
 
-  <%= BooklistWeb.SharedView.submit_button "Book" %>
+  <%= CommonWeb.FormView.submit_button "Book" %>
 <% end %>
 
 <script>

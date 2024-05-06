@@ -14,5 +14,5 @@
   	end
   %>
 
-  <%= BooklistWeb.SharedView.submit_button "Location" %>
+  <%= CommonWeb.FormView.submit_button "Location" %>
 <% end %>

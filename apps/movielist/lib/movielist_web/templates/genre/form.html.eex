@@ -7,5 +7,5 @@
 
   <%= Common.ViewHelpers.Form.input_group :name, f, &text_input/3, [autofocus: true] %>
 
-  <%= MovielistWeb.SharedView.submit_button "Genre" %>
+  <%= CommonWeb.FormView.submit_button "Genre" %>
 <% end %>

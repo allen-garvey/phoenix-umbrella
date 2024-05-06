@@ -9,5 +9,5 @@
 
   <%= Common.ViewHelpers.Form.input_group :is_fiction, f, &checkbox/3 %>
 
-  <%= BooklistWeb.SharedView.submit_button "Genre" %>
+  <%= CommonWeb.FormView.submit_button "Genre" %>
 <% end %>

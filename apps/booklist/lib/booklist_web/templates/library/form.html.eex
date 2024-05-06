@@ -11,5 +11,5 @@
 
   <%= Common.ViewHelpers.Form.input_group :super_search_key, f, &text_input/3 %>
 
-  <%= BooklistWeb.SharedView.submit_button "Library" %>
+  <%= CommonWeb.FormView.submit_button "Library" %>
 <% end %>
