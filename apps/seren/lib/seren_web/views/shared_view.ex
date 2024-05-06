@@ -6,6 +6,7 @@ defmodule SerenWeb.SharedView do
   end
 
   def datetime_to_utc_date(datetime) do
-  	"#{datetime.year}-#{datetime.month}-#{datetime.day}"
+    NaiveDateTime.to_date(datetime)
+    |> Date.to_iso8601()
   end
 end
