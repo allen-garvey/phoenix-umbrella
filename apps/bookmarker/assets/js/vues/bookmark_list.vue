@@ -5,7 +5,7 @@
 		<h4>Bookmarks</h4>
 		<ul 
             class="list-group"
-            :class="$style['folder-bookmark-list']"
+            :class="$style.folderBookmarkList"
         >
 			<li 
                 class="list-group-item" 
@@ -48,7 +48,8 @@
 </template>
 
 <style lang="scss" module>
-    .folder-bookmark-list{
+    .folderBookmarkList{
+        min-height: 100vh;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
@@ -102,7 +103,7 @@
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 import { fetchJson } from 'umbrella-common-js/ajax.js';
 
-const BOOKMARK_PAGE_SIZE = 6;
+const BOOKMARK_PAGE_SIZE = 16;
 
 export default {
     props: {
