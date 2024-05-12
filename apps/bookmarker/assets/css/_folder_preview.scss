@@ -2,7 +2,19 @@
 	list-style-type: none;
 	padding-left: 0;
 
-	.folder-preview-image {
-		min-height: 200px;
+	li {
+		margin-bottom: 3em;
+	}
+
+	.folder-preview-bookmark-title-container {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		margin-bottom: 0.5rem;
+		gap: 1em;
+	}
+
+	.folder-preview-bookmark-title {
+		margin: 0;
 	}
 }

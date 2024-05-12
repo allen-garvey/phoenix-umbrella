@@ -5,10 +5,13 @@
 <ul class="folder-preview-list">
 	<%= for {img_element, bookmark} <- @preview_results do %>
 		<li>
-			<h2>
-				<%= link(Bookmarker.Bookmark.to_s(bookmark), to: bookmark.url) %>
-			</h2>
-			<%= link tag(:img, src: img_element.url, title: img_element.title, alt: img_element.alt, loading: "lazy", class: "folder-preview-image"), to: bookmark.url %>
+			<div class="folder-preview-bookmark-title-container">
+				<h2 class="folder-preview-bookmark-title">
+					<%= link(Bookmarker.Bookmark.to_s(bookmark), to: bookmark.url) %>
+				</h2>
+				<%= link "Edit", to: bookmark_path(@conn, :edit, bookmark), class: "btn btn-default btn-sm" %>
+			</div>
+			<%= link tag(:img, src: img_element.url, title: img_element.title, alt: img_element.alt, loading: "lazy"), to: bookmark.url %>
 		</li>
 	<% end %>
 </ul>
