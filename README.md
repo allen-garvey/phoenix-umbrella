@@ -40,6 +40,11 @@ Individual app documentation along with instructions for app specific mix tasks 
 
 * Set environment variable `UMBRELLA_SECRET_KEY_BASE` using the result from `mix phx.gen.secret`
 
+## Running npm tests
+
+* Add `"type": "module"` to `package.json`
+* Run `npm test`
+
 ## License
 
 Phoenix Umbrella is released under the MIT License. See license.txt for more details.

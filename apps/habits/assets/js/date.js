@@ -7,7 +7,7 @@ export const getTodaysDate = () => {
 
 // get the sunday before the first of the month
 export const getMonthSunday = (date) => {
-    const firstDay = new Date(date.getTime());
+    const firstDay = new Date(date.valueOf());
     firstDay.setDate(1);
     const dayOfWeek = firstDay.getDay();
     firstDay.setDate(firstDay.getDate() - dayOfWeek);
@@ -30,8 +30,11 @@ export const getSaturdayAfter = (date) => {
 export const dateFromIso = (dateString) => new Date(`${dateString}T00:00:00`);
 
 // takes Javascript date and returns string in yyyy-mm-dd format
-// based on: https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
-export const formatDate = (date) => date.toISOString().split('T')[0];
+// can't use toISOString since returns wrong values around midnight due to time zones
+export const formatDate = (date) =>
+    `${date.getFullYear()}-${(date.getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
 export const monthName = (monthNum) =>
     [

@@ -8,10 +8,15 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ava",
     "build": "webpack --config webpack/webpack.config.js",
     "deploy": "webpack --config webpack/webpack.production.config.js",
     "watch": "webpack --config webpack/webpack.watch.config.js"
+  },
+  "ava": {
+    "files": [
+      "apps/habits/assets/js/*.test.js"
+    ]
   },
   "repository": {
     "type": "git",
@@ -26,6 +31,7 @@
   "devDependencies": {
     "@vue/compiler-sfc": "3.4.21",
     "ajv": "^8.12.0",
+    "ava": "^6.1.3",
     "bootstrap": "^5.3.3",
     "css-loader": "^6.10.0",
     "filemanager-webpack-plugin": "^8.0.0",
