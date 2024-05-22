@@ -445,14 +445,23 @@ defmodule Photog.Api do
   @doc """
   Returns the list of albums.
   Used for forms when we only need name and id
+  Ordering is a few of the most recent albums first, then the favorite albums
+  and then the rest of the albums, in the order they were created
   """
   def list_albums_excerpt do
-    from(
+    %{true => favorite_albums, false => non_favorite_albums} = from(
       Album,
-      order_by: [desc: :id],
+      order_by: [desc: :is_favorite, desc: :id],
       select: [:id, :name, :is_favorite]
     )
     |> Repo.all
+    |> Enum.group_by(fn album -> album.is_favorite end)
+
+    sorted_favorite_albums = Enum.sort(favorite_albums, fn (album1, album2) -> album1.name <= album2.name end)
+
+    recent_albums_first_offset = 3
+
+    Enum.concat([Enum.slice(non_favorite_albums, 0..(recent_albums_first_offset-1)), sorted_favorite_albums, Enum.slice(non_favorite_albums, recent_albums_first_offset..-1)])
   end
 
   def albums_count! do
