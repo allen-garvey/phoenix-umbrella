@@ -264,7 +264,7 @@ export default {
     data(){
         return {
             shouldShowAllBatchResources: false,
-            batchResourcesMoreLimit: 8,
+            batchResourcesMoreLimit: 16,
             selectedItemsMap: {},
             searchValue: '',
         };
