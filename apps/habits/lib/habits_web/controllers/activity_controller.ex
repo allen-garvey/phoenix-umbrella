@@ -54,7 +54,7 @@ defmodule HabitsWeb.ActivityController do
   end
 
   def create_succeeded(conn, _activity, _save_another) do
-    redirect(conn, to: Routes.activity_path(conn, :index))
+    redirect(conn, to: Routes.page_path(conn, :index))
   end
 
   def create(conn, %{"activity" => activity_params} = params) do
