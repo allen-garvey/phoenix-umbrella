@@ -759,7 +759,7 @@ export default {
             this.currentDragIndex = index;
         },
         onItemHovered({item, $event}){
-            if(this.isCurrentlyBatchSelect){
+            if(this.isCurrentlyBatchSelect || this.isReordering){
                 return;
             }
             clearTimeout(this.hoveredEventStartTimeout);
