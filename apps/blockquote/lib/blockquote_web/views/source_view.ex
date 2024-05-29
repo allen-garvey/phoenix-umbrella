@@ -1,5 +1,7 @@
 defmodule BlockquoteWeb.SourceView do
   use BlockquoteWeb, :view
+
+  alias BlockquoteWeb.Link
   
   def render("new.html", assigns) do
     assigns = Map.merge(assigns, shared_form_assigns(assigns))
@@ -65,6 +67,12 @@ defmodule BlockquoteWeb.SourceView do
       {:parent_source_id, :select, related_fields[:parent_sources]},
       {:url, :string, nil},
       {:release_date, :date, nil},
+    ]
+  end
+
+  def show_buttons(conn, source) do
+    [
+      %Link{title: "Add quote", path: quote_path(conn, :new, source: source.id)}
     ]
   end
 end

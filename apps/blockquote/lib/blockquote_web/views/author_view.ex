@@ -1,6 +1,8 @@
 defmodule BlockquoteWeb.AuthorView do
   use BlockquoteWeb, :view
 
+  alias BlockquoteWeb.Link
+
   def render("new.html", assigns) do
     assigns = Map.merge(assigns, shared_form_assigns())
     render BlockquoteWeb.SharedView, "new.html", assigns
@@ -88,7 +90,11 @@ defmodule BlockquoteWeb.AuthorView do
     ]
   end
   
-  
+  def show_buttons(conn, author) do
+    [
+      %Link{title: "Add quote", path: quote_path(conn, :new, author: author.id)}
+    ]
+  end
   
   
 end

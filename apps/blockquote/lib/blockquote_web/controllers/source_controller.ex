@@ -28,7 +28,7 @@ defmodule BlockquoteWeb.SourceController do
     custom_render(conn, BlockquoteWeb.SharedView, "index.html", items: sources, item_view: view_module(conn), item_display_func: :to_s)
   end
 
-  def new_page(conn, changeset, _params) do
+  def new_page(conn, changeset) do
     custom_render(conn, "new.html", changeset: changeset, related_fields: related_fields())
   end
 
@@ -36,9 +36,14 @@ defmodule BlockquoteWeb.SourceController do
     custom_render(conn, "edit.html", changeset: changeset, related_fields: related_fields(), item: source)
   end
 
-  def new(conn, params) do
+  def new(conn, %{"parent_source" => parent_source_id}) do
+    changeset = Admin.change_source(%Source{parent_source_id: parent_source_id})
+    new_page(conn, changeset)
+  end
+
+  def new(conn, _params) do
     changeset = Admin.change_source(%Source{})
-    new_page(conn, changeset, params)
+    new_page(conn, changeset)
   end
 
   def create(conn, %{"source" => source_params}) do
@@ -48,7 +53,7 @@ defmodule BlockquoteWeb.SourceController do
         |> put_flash(:info, "Source created successfully.")
         |> redirect(to: source_path(conn, :show, source))
       {:error, %Ecto.Changeset{} = changeset} ->
-        new_page(conn, changeset, nil)
+        new_page(conn, changeset)
     end
   end
 

@@ -3,6 +3,11 @@
 	<div class="show-header-buttons">
         <%= CommonWeb.FormView.delete_button_with_form(@conn, path_for_item(@conn, @item_name_singular, :delete, @item), class: "button delete") %>
 		<%= link "Edit", to: path_for_item(@conn, @item_name_singular, :edit, @item), class: "button" %>
+
+         <%= for link_button <- assigns[:extra_buttons] || [] do
+            link link_button.title, to: link_button.path, class: "button default"
+        end %>
+
 	</div>
 </div>
 <ul>

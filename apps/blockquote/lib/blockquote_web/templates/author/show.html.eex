@@ -3,7 +3,8 @@
                                 title: to_s(@author),
                                 item_name_singular: @item_name_singular,
                                 item: @author,
-                                item_columns: item_columns(@conn, @author)
+                                item_columns: item_columns(@conn, @author),
+                                extra_buttons: show_buttons(@conn, @author)
 %>
 
 <%= render BlockquoteWeb.SharedView, "related_fields_list.html",
