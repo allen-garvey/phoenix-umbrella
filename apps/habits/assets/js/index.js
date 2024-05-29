@@ -14,5 +14,6 @@ document.querySelectorAll('[data-button="delete"]').forEach((button) => {
             e.preventDefault();
             return false;
         }
+        button.closest('form').submit();
     };
 });

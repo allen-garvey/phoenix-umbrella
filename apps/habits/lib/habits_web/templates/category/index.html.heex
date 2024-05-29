@@ -10,6 +10,7 @@
       <th>Color</th>
 
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -20,7 +21,11 @@
       <td class={color_style(category)}><%= String.capitalize(category.color || "") %></td>
 
       <td>
-        <span><%= link "Edit", to: Routes.category_path(@conn, :edit, category), class: "btn btn-primary" %></span>
+        <%= link "Edit", to: Routes.category_path(@conn, :edit, category), class: "btn btn-primary" %>
+      </td>
+
+      <td>
+        <%= CommonWeb.FormView.delete_button_with_form(@conn, Routes.category_path(@conn, :delete, category), class: "btn btn-danger") %>
       </td>
     </tr>
 <% end %>
