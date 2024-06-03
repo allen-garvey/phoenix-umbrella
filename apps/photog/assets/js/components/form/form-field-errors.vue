@@ -2,7 +2,7 @@
     <div 
         v-if="errorsFlattened.length > 0" 
         class="alert alert-danger"
-        :class="$style['form-field-errors']"
+        :class="$style.formFieldErrors"
     >
         <ul>
             <li v-for="(error, i) in errorsFlattened" :key="i">{{error}}</li>
@@ -11,7 +11,7 @@
 </template>
 
 <style lang="scss" module>
-    .form-field-errors{
+    .formFieldErrors{
         margin-bottom: 2em;
     }
 </style>

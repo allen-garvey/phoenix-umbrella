@@ -2,7 +2,7 @@
     <header :class="[$style.header, 'container']">
         <h1 :class="$style.brand"><router-link :to="{name: 'home'}">Photog</router-link></h1>
         <nav>
-            <ul :class="$style['nav-list']">
+            <ul :class="$style.navList">
                 <li>
                     <router-link :to="{name: 'albumsForYearIndex'}">Yearly Albums</router-link>
                 </li>
@@ -39,7 +39,7 @@
             color: black;
         }
     }
-    .nav-list{
+    .navList{
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
