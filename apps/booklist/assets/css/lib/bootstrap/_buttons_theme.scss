@@ -6,6 +6,10 @@ a.btn:hover {
 }
 .btn-success { 
   background-color: #5cb85c;
+
+  &:hover {
+    background-color: #419641;
+  }
 }
 .btn-default:hover {
   background-color: #e0e0e0;
