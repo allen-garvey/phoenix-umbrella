@@ -82,7 +82,6 @@
 import { fetchJson, sendJson } from 'umbrella-common-js/ajax.js';
 
 export default {
-    name: 'bookmark-tag-list',
     props: {
         csrfToken: {
             type: String,
