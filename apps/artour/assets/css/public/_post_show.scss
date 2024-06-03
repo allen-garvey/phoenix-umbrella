@@ -1,3 +1,4 @@
+@use 'sass:math';
 //Shared styles for all post show pages
 $post_show_spacing_margin: 30px;
 
@@ -8,7 +9,7 @@ $post_show_spacing_margin: 30px;
 .post-body-container{
 	margin-bottom: $post_show_spacing_margin;
 	p{
-		margin: 0 0 $post_show_spacing_margin / 2;
+		margin: 0 0 math.div($post_show_spacing_margin, 2);
 	}
 	& > p:last-of-type{
 		margin-bottom: 0;
