@@ -1,5 +1,5 @@
 <template>
-    <div :class="$style['track-time']">
+    <div :class="$style.trackTime">
         <span>{{formatTrackLength(elapsedTime)}}</span>
         <span>-</span>
         <span>{{formatTrackLength(totalTime)}}</span>
@@ -7,7 +7,7 @@
 </template>
 
 <style lang="scss" module>
-    .track-time{
+    .trackTime{
         font-size: 18px;
         color: #fff;
         margin-bottom: 8px;

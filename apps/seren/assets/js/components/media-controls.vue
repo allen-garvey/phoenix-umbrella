@@ -1,5 +1,5 @@
 <template>
-    <div :class="$style['media-controls-container']">
+    <div :class="$style.mediaControlsContainer">
         <template v-if="hasActiveTrack">
             <active-track-display
                 :artists-map="artistsMap"
@@ -30,7 +30,7 @@
 <style lang="scss" module>
     @import '~seren-styles/variables';
 
-    .media-controls-container{
+    .mediaControlsContainer{
         position: fixed;
         bottom: 0;
         height: $media-controls-container-height;

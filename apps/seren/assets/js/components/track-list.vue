@@ -1,5 +1,5 @@
 <template>
-    <table :class="$style['track-list']">
+    <table :class="$style.trackList">
         <thead>
             <th :class="$style.colPlayBtn"></th>
             <th 
@@ -53,7 +53,7 @@
 </template>
 
 <style lang="scss" module>
-    .track-list{
+    .trackList{
         width: 100%;
         table-layout: fixed;
         border-collapse: collapse;

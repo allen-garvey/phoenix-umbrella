@@ -1,12 +1,12 @@
 <template>
-    <nav :class="$style['nav']">
+    <nav :class="$style.nav">
         <ul 
-            :class="[$style['nav-list'], $style['nav-pills']]"
+            :class="[$style.navList, $style.navPills]"
         >
             <li v-for="(tab, i) in tabs" :key="i">
                 <router-link 
                     :to="tab.route(searchQuery)"
-                    :active-class="$style['router-link-active']"
+                    :active-class="$style.routerLinkActive"
                 >
                     {{ tab.title }}
                 </router-link>
@@ -22,7 +22,7 @@
         font-family: sans-serif;
     }
 
-    .nav-list{
+    .navList{
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -30,7 +30,7 @@
         list-style-type: none;
     }
 
-    .nav-pills li a{
+    .navPills li a{
         text-decoration: none;
         color: $accent_color_text;
         cursor: pointer;
@@ -40,7 +40,7 @@
             color: #0056b3;
         }
 
-        &.router-link-active{
+        &.routerLinkActive{
             background: $accent_color_text;
             color: white;
             border-radius: 4px;	

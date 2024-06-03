@@ -1,11 +1,11 @@
 <template>
-    <div :class="$style['active-track-display']">
+    <div :class="$style.activeTrackDisplay">
         {{activeTrackDisplay}}
     </div>
 </template>
 
 <style lang="scss" module>
-    .active-track-display{
+    .activeTrackDisplay{
         margin-bottom: 8px;
     }
 </style>
