@@ -18,12 +18,6 @@
             <div v-else></div>
             <router-link :to="parent.showRouteFor(nextImage)" v-if="nextImage">Next</router-link>
         </div>
-        <!-- <thumbnail-previews 
-            :parent="parent"
-            :images="images"
-            :imageId="image.id"
-            :thumbnailUrlFor="thumbnailUrlFor"
-        /> -->
     </div>
 </template>
 
@@ -47,7 +41,6 @@
 </style>
 
 <script>
-// import thumbnailPreviews from './thumbnail-previews.vue';
 
 export default {
     props: {
@@ -72,9 +65,6 @@ export default {
         imageIndex: {
             type: Number,
         },
-    },
-    components: {
-        // thumbnailPreviews,
     },
     computed: {
         parentName(){
