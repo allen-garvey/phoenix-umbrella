@@ -2,22 +2,21 @@
     <div v-if="initialLoadComplete">
         <ul 
             class="list-group"
-            :class="$style['tag-list']"
         >
             <li class="list-group-item list-group-item-info">
-                <div :class="$style['tag-list-header']">
+                <div :class="$style.tagListHeader">
                     <h4>Tags</h4>
                     <div>
                         <button class="btn btn-success" @click="addButtonAction()" :disabled="busy" v-show="!addTagMode">Add</button>
                     </div>
                 </div>
-                <div :class="$style['add-tag-container']" v-show="addTagMode">
+                <div :class="$style.add-tag-container" v-show="addTagMode">
                     <div 
-                        :class="$style['add-tag-select-container']" v-show="tagsThatCanBeAdded.length > 0"
+                        :class="$style.addTagSelectContainer" v-show="tagsThatCanBeAdded.length > 0"
                     >
                         <select 
                             class="form-control" 
-                            :class="$style['tag-select']"
+                            :class="$style.tagSelect"
                             ref="tagSelect"
                         >
                             <option v-for="tag in tagsThatCanBeAdded" :key="tag.id">{{tag.name}}</option>
@@ -29,7 +28,7 @@
                     </div>
                     <div 
                         class="alert alert-warning" 
-                        :class="$style['add-tag-alert']"
+                        :class="$style.addTagAlert"
                         v-show="tagsThatCanBeAdded.length === 0"
                     >
                         This bookmark has already been tagged with all available tags. <a :href="newTagUrl">Want to create more?</a>
@@ -38,7 +37,7 @@
             </li>
             <li 
                 class="list-group-item" 
-                :class="$style['tag-item']"
+                :class="$style.tagItem"
                 v-for="tag in tags" 
                 :key="tag.id"
             >
@@ -52,28 +51,28 @@
 </template>
 
 <style lang="scss" module>
-    .tag-item, 
-    .tag-list-header,
-    .add-tag-select-container{
+    .tagItem, 
+    .tagListHeader,
+    .addTagSelectContainer{
         display: flex;
         justify-content: space-between;
     }
-    .tag-item{
+    .tagItem{
         padding-top: 1em;
         padding-bottom: 1em;
     }
-    .add-tag-alert{
+    .addTagAlert{
         display: block;
     }
-    .tag-select{
+    .tagSelect{
         flex-basis: 85%;
     }
 
     @media screen and (max-width: 1000px){
-        .add-tag-select-container{
+        .addTagSelectContainer{
             flex-direction: column;
         }
-        .tag-select{
+        .tagSelect{
             margin-bottom: 1em;
         }
     }

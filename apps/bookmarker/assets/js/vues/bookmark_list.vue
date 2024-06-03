@@ -13,11 +13,11 @@
                 v-for="bookmark in bookmarks" 
                 :key="bookmark.id"
             >
-				<div :class="$style['bookmark-header-container']">
-					<div :class="$style['bookmark-title-container']">
+				<div :class="$style.bookmarkHeaderContainer">
+					<div :class="$style.bookmarkTitleContainer">
                         <a 
                             :href="bookmark.url" 
-                            :class="$style['bookmark-title']" 
+                            :class="$style.bookmarkTitle" 
                             rel="noreferrer noopener" 
                             target="_blank"
                         >
@@ -30,14 +30,14 @@
                             Edit
                         </a>
                     </div>
-                    <div :class="$style['bookmark-url']">{{ bookmark.url }}</div>
+                    <div :class="$style.bookmarkUrl">{{ bookmark.url }}</div>
                         <div 
-                            :class="$style['bookmark-description']" v-if="bookmark.description"
+                            :class="$style.bookmarkDescription" v-if="bookmark.description"
                         >
                             <p>{{bookmark.description}}</p>
                         </div>
                 </div>
-                <div :class="$style['bookmark-thumbnail-container']">
+                <div :class="$style.bookmarkThumbnailContainer">
                     <img :src="bookmark.thumbnail_url" loading="lazy" v-if="bookmark.thumbnail_url" />
                 </div>
             </li>
@@ -54,41 +54,43 @@
         flex-wrap: wrap;
         justify-content: space-between;
         margin-top: 0;
+        flex-direction: row;
     }
 
-    .bookmark-url, 
-    .bookmark-description{
+    .bookmarkUrl, 
+    .bookmarkDescription{
         font-size: 0.9em;
     }
 
-    .bookmark-url{
+    .bookmarkUrl{
         color: #888;
     }
 
-    .bookmark-title{
+    .bookmarkTitle{
         font-size: 16px;
     }
 
-    .bookmark-header-container{
+    .bookmarkHeaderContainer{
         margin-bottom: 5px;
     }
 
-    .bookmark-title-container{
+    .bookmarkTitleContainer{
         display: flex;
         justify-content: space-between;
         align-items: baseline;
         margin-bottom: 3px;
     }
 
-    .bookmark-thumbnail-container{
+    .bookmarkThumbnailContainer{
         &:empty{
             display: none;
         }
     }
 
-    .bookmark-item{
+    .bookmarkItem{
         border: none;
-        flex-basis: 33%;
+        flex-basis: 32%;
+        padding: 10px 15px;
 
         @media screen and (max-width: 870px){
             flex-basis: 50%;
@@ -146,7 +148,7 @@ export default {
         },
         bookmarkItemClasses(bookmark){
             return {
-                [this.$style['bookmark-item']]: true,
+                [this.$style.bookmarkItem]: true,
                 'list-group-item-success': bookmark.preview_image_selector,
             };
         },
