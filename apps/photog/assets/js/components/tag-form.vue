@@ -26,7 +26,6 @@
 <script>
 import { formMixinBuilder } from './mixins/form-mixin.js';
 import { toApiResource } from '../form-helpers.js';
-import { API_URL_BASE } from '../request-helpers.js';
 
 export default {
     props: {
