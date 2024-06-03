@@ -51,7 +51,6 @@ import TrackTime from './media-controls/track-time.vue';
 import Controls from './media-controls/controls.vue';
 
 export default {
-	name: 'Media-Controls',
 	props: {
         elapsedTime: {
             type: Number,

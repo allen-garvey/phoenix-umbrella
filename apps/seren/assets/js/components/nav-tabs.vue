@@ -52,7 +52,6 @@
 import Models from '../models';
 
 export default {
-    name: 'Nav-Tabs',
     props: {
         searchQuery: {
             type: String,

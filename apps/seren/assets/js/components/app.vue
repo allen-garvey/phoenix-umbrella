@@ -47,7 +47,6 @@ import { API_URL_BASE } from '../api-helpers';
 let audio = null;
 
 export default {
-	name: 'Seren-App',
 	components: {
 		SearchBar,
 		TrackList,

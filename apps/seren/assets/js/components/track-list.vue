@@ -125,7 +125,6 @@ import { nextTick } from 'vue';
 import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observer.vue';
 
 export default {
-	name: 'Track-List',
     components: {
         InfiniteObserver,
     },
