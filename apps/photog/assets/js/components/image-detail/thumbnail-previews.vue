@@ -1,10 +1,10 @@
 <template>
-    <div :class="$style['album-image-nav-previews']">
+    <div :class="$style.albumImageNavPreviews">
         <ul 
-            :class="$style['image-preview-list']" v-scroll-to-selected-item="'.current-image'"
+            :class="$style.imagePreviewList" v-scroll-to-selected-item="'.current-image'"
         >
             <li 
-                :class="{[$style['current-image']]: image.id === imageId}" 
+                :class="{[$style.currentImage]: image.id === imageId}" 
                 v-for="(image, i) in images" 
                 :key="i"
             >
@@ -20,8 +20,8 @@
     @import '~photog-styles/site/variables';  
     $preview_size: 50px;
 
-    .album-image-nav-previews{
-        .image-preview-list{
+    .albumImageNavPreviews{
+        .imagePreviewList{
             display: flex;
             overflow-x: scroll;
             overflow-y: hidden;
@@ -30,7 +30,7 @@
                 height: $preview_size;
                 width: $preview_size;
                 flex-shrink: 0; //so horizontal scrolling works
-                &.current-image{
+                &.currentImage{
                     border: 3px solid $photog_cover_image_color;
                 }
                 img{

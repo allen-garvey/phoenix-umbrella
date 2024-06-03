@@ -15,7 +15,7 @@
             v-if="imageExif"
         >
             <h4 
-                :class="$style['image-exif-heading']"
+                :class="$style.imageExifHeading"
             >
                 {{formatExifPropertyName(sectionKey)}}
             </h4>
@@ -42,7 +42,7 @@
 </template>
 
 <style lang="scss" module>
-    .image-exif-heading{
+    .imageExifHeading{
 		margin: 0 0 0.5rem;
 	}
 </style>

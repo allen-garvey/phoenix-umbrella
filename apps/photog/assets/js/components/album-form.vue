@@ -22,7 +22,7 @@
     </Form-Section>
     <div 
         class="container"
-        :class="$style['album-form-tags-container']" 
+        :class="$style.albumFormTagsContainer" 
         v-if="this.tags.length > 0"
     >
         <h2>Tags</h2>
@@ -35,7 +35,7 @@
             </ul>
             <div 
                 class="pull-right"
-                :class="$style['btn-container']"
+                :class="$style.btnContainer"
                 v-if="isEditForm"
             >
                 <button class="btn btn-success" @click="updateTags()">Update tags</button>
@@ -46,10 +46,10 @@
 </template>
 
 <style lang="scss" module>
-    .album-form-tags-container{
+    .albumFormTagsContainer{
         padding-bottom: 4rem;
     }
-    .btn-container{
+    .btnContainer{
         margin-top: 3rem;
     }
 </style>

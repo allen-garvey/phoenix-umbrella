@@ -8,7 +8,7 @@
             :newItemLink="newItemLink" 
         />
         <loading-animation v-if="!isInitialLoadComplete" />
-        <ul :class="$style['text-list']">
+        <ul :class="$style.textList">
             <li v-for="(item, i) in itemsList" :key="i">
                 <slot name="item" :item="item" :index="i"></slot>
             </li>
@@ -22,7 +22,7 @@
 </template>
 
 <style lang="scss" module>
-    .text-list > li{
+    .textList > li{
         padding: 1em 0;
     }
 </style>

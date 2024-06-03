@@ -1,5 +1,5 @@
 <template>
-<div :class="$style['thumbnail-filter-controls-container']">
+<div :class="$style.thumbnailFilterControlsContainer">
     <fieldset v-if="enableAlbumFilter">
         <label for="album_filter_mode_select">Album</label>
         <select class="form-control" id="album_filter_mode_select" v-model="localAlbumFilterMode">
@@ -20,7 +20,7 @@
 </template>
 
 <style lang="scss" module>
-    .thumbnail-filter-controls-container{
+    .thumbnailFilterControlsContainer{
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 2em;

@@ -12,7 +12,7 @@
             @mouseleave="onItemHoveredEnd"
         >
             <div 
-                :class="$style['thumbnail-image-container']" 
+                :class="$style.thumbnailImageContainer" 
                 v-if="isLinkDisabled"
             >
                 <img 
@@ -25,7 +25,7 @@
             </div>
             <router-link 
                 :to="showRouteFor(item, model)" 
-                :class="$style['thumbnail-image-container']" 
+                :class="$style.thumbnailImageContainer" 
                 :event="thumbnailLinkEvent" 
                 :draggable="!isReordering"
                 v-else
@@ -69,12 +69,12 @@
     $thumbnail_dimensions: 205px;
     $thumbnail_dimensions_big: 287px;
 
-    .thumbnail-list{
+    .thumbnailList{
         display: grid;
         grid-template-columns: repeat(auto-fill, $thumbnail_dimensions);
         grid-gap: 20px;
 
-        &.batch-select li{
+        &.batchSelect li{
             opacity: 0.65;
             cursor: pointer;
             &:hover{
@@ -83,7 +83,7 @@
             border: 6px solid transparent;
             border-radius: 5px;
 
-            &.batch-selected{
+            &.batchSelected{
                 border-color: $photog_favorited_color;
                 background-color: $photog_favorited_color;
                 color: white;
@@ -94,14 +94,14 @@
             border: 6px solid transparent;
             border-radius: 5px;
 
-            &.reorder-select{
+            &.reorderSelect{
                 border-color: $photog_selected_reorder_color;
                 background-color: $photog_selected_reorder_color;
             }
         }
     }
 
-    .thumbnail-image-container{
+    .thumbnailImageContainer{
         position: relative; //for image hearts
 
         img{
@@ -112,12 +112,12 @@
             object-fit: cover;
             transition: height 0.3s 0.15s ease-in;
 
-            &.cover-image{
+            &.coverImage{
                 border: 4px solid $photog_cover_image_color;
             }
         }
     }
-    .thumbnail-title{
+    .thumbnailTitle{
         display: flex;
         justify-content: space-between;
         align-items: baseline;
@@ -130,21 +130,21 @@
             color: black;
         }
 
-        &.thumbnail-title-favorite{
+        &.thumbnailTitleFavorite{
             a{
                 color: $photog_favorited_color;
             }
         }
 
-        &.default-title{
+        &.defaultTitle{
             font-size: 0.98rem;
         }
     }
 
-    .big.thumbnail-list {
+    .big.thumbnailList {
         grid-template-columns: repeat(auto-fill, $thumbnail_dimensions_big);
         
-        .thumbnail-image-container{
+        .thumbnailImageContainer{
             img{
                 height: $thumbnail_dimensions_big;
                 width: $thumbnail_dimensions_big;
@@ -220,8 +220,8 @@ export default {
     computed: {
         thumbnailListClass(){
             return {
-                [this.$style['thumbnail-list']]: true,
-                [this.$style['batch-select']]: this.isCurrentlyBatchSelect, 
+                [this.$style.thumbnailList]: true,
+                [this.$style.batchSelect]: this.isCurrentlyBatchSelect, 
                 [this.$style.reordering]: this.isReordering,
                 [this.$style.big]: this.useBigThumbnails,
             };
@@ -273,20 +273,20 @@ export default {
         },
         thumbnailImageClass(item){
             return {
-                [this.$style['cover-image']]: !this.isCurrentlyBatchSelect && this.isThumbnailCoverImage(item)
+                [this.$style.coverImage]: !this.isCurrentlyBatchSelect && this.isThumbnailCoverImage(item)
             };
         },
         thumbnailItemClass(i){
             return {
-                [this.$style['batch-selected']]: this.isCurrentlyBatchSelect && this.batchSelectedItems[i], 
-                [this.$style['reorder-select']]: this.isReordering && (this.currentDragIndex === i || this.selectedItemsToBatchReorder[i]), 
+                [this.$style.batchSelected]: this.isCurrentlyBatchSelect && this.batchSelectedItems[i], 
+                [this.$style.reorderSelect]: this.isReordering && (this.currentDragIndex === i || this.selectedItemsToBatchReorder[i]), 
             };
         },
         thumbnailTitleClass(item){
             return {
-                [this.$style['thumbnail-title']]: true,
-                [this.$style['default-title']]: !('name' in item), 
-                [this.$style['thumbnail-title-favorite']]: this.isThumbnailFavorited(item),
+                [this.$style.thumbnailTitle]: true,
+                [this.$style.defaultTitle]: !('name' in item), 
+                [this.$style.thumbnailTitleFavorite]: this.isThumbnailFavorited(item),
             };
         },
         onItemHovered(item, $event){

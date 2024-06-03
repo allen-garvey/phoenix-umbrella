@@ -1,13 +1,13 @@
 <template>
-    <div :class="$style['image-show-info-section']">
-        <h3 :class="$style['image-info-section-heading']">{{ heading }}</h3>
+    <div :class="$style.imageShowInfoSection">
+        <h3 :class="$style.imageInfoSectionHeading">{{ heading }}</h3>
         <slot></slot>
     </div>
 </template>
 
 <style lang="scss" module>
     $image_show_dt_width: 10em;
-    .image-show-info-section{
+    .imageShowInfoSection{
         dl{
             display: flex;
             flex-wrap: wrap;
@@ -26,7 +26,7 @@
             margin-left: 0;
         }
     }
-    .image-info-section-heading{
+    .imageInfoSectionHeading{
         margin-bottom: 0.5rem;
     }
 </style>
