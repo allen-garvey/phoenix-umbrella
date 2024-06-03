@@ -1,3 +1,5 @@
+@use "sass:map";
+
 /*
  * Button styles from default bootstrap theme
  */
@@ -51,8 +53,7 @@
 
 // Mixin for generating new styles
 @mixin btn-styles($btn-color: #555) {
-  @include gradient-vertical($start-color: $btn-color, $end-color: darken($btn-color, 12%));
-  @include reset-filter; // Disable gradients for IE9 because filter bleeds through rounded corners; see https://github.com/twbs/bootstrap/issues/10620
+  background-image: linear-gradient(to bottom, $btn-color 0%, darken($btn-color, 12%) 100%);
   background-repeat: repeat-x;
   border-color: darken($btn-color, 14%);
 
@@ -86,18 +87,23 @@
 // Common styles
 .btn {
   // Remove the gradient for the pressed/active state
+  border-radius: 4px;
   &:active,
   &.active {
     background-image: none;
   }
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 // Apply the mixin to the buttons
-.btn-default { @include btn-styles($btn-default-bg); text-shadow: 0 1px 0 #fff; border-color: #ccc; }
-.btn-primary { @include btn-styles($btn-primary-bg); }
-.btn-success { @include btn-styles($btn-success-bg); }
-.btn-info    { @include btn-styles($btn-info-bg); }
-.btn-warning { @include btn-styles($btn-warning-bg); }
-.btn-danger  { @include btn-styles($btn-danger-bg); }
+.btn-default { @include btn-styles(map.get($theme-colors, "secondary")); color: #fff; }
+.btn-primary { @include btn-styles(map.get($theme-colors, "primary")); }
+.btn-success { @include btn-styles(map.get($theme-colors, "success")); }
+.btn-info    { @include btn-styles(map.get($theme-colors, "info")); }
+.btn-warning { @include btn-styles(map.get($theme-colors, "warning")); }
+.btn-danger  { @include btn-styles(map.get($theme-colors, "danger")); }
 
 

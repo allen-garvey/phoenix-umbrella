@@ -1,5 +1,7 @@
+@use 'sass:math';
+
 @mixin font_size($pow : 1, $scale : $type_scale){
-	font-size : #{pow($scale, $pow)}rem;
+	font-size : #{math.pow($scale, $pow)}rem;
 }
 
 @mixin font_brand{
