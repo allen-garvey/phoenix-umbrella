@@ -4,6 +4,7 @@
 </template>
 
 <style lang="scss" module>
+    @use 'sass:math';
     /*
     * Styles for heart icon on favorited images
     * based on: https://css-tricks.com/hearts-in-html-and-css/
@@ -31,12 +32,12 @@
     }
 
     .heart:before {
-        top: -1 * $heart_size / 2;
+        top: math.div(-1 * $heart_size, 2);
         left: 0;
     }
 
     .heart:after {
-        left: $heart_size / 2;
+        left: math.div($heart_size, 2);
         top: 0;
     }
 </style>
