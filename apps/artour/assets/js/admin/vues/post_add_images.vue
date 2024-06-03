@@ -4,14 +4,14 @@
         <input name="_utf8" type="hidden" value="✓">
         <div class="button-container-right">
             <button type="button" @click="toggleSelectAllImages" class="btn btn-primary" v-show="images.length > 0">{{this.selectAllButtonText}}</button>
-            <button type="button" @click="toggleUnusedImages" class="btn btn-primary">{{this.unusedImagesButtonText}}</button>
+            <button type="button" @click="toggleUnusedImages" class="btn btn-primary">{{unusedImagesButtonText}}</button>
             <button type="submit" class="btn btn-primary" :disabled="areAllImagesUnchecked">Save</button>
         </div>
-        <ul :class="$style['post-add-images-list']">
+        <ul :class="$style.postAddImagesList">
             <li 
                 v-for="(image, index) in images" 
                 :key="index" 
-                :class="{[$style['item-selected']]: imagesSelected[index]}"
+                :class="{[$style.itemSelected]: imagesSelected[index]}"
             >
                 <div>
                     <label>
@@ -31,7 +31,7 @@
 <style lang="scss" module>
     @import '~artour-styles/admin/variables';
     
-    .post-add-images-list{
+    .postAddImagesList{
         $post_add_images_item_margin: 10px;
         list-style-type: none;
         padding-left: 0;
@@ -42,7 +42,7 @@
             & > *{
                 margin-right: $post_add_images_item_margin;
             }
-            &.item-selected{
+            &.itemSelected{
                 background-color: $item_selected_color;
             }
         }

@@ -16,12 +16,12 @@
                 Save Image Order
             </button>
         </div>
-        <ol :class="$style['post-album-image-list']">
+        <ol :class="$style.postAlbumImageList">
             <li 
                 v-for="(postImage, index) in postImages" 
                 :key="postImage.id" 
                 draggable="true" 
-                :class="{[$style['cover-image-container']]: postImage.image.id === coverImageIdModel}" 
+                :class="{[$style.coverImageContainer]: postImage.image.id === coverImageIdModel}" 
                 @dragstart="imageDragStart($event, index)" 
                 @dragover="imageDraggedOver($event, index)" 
                 @drop="imageDropped($event)"
@@ -31,15 +31,15 @@
                         <img :src="postImage.image.url.thumbnail" :alt="postImage.image.description"/>
                     </a>
                 </div>
-                <div :class="$style['image-title']">
+                <div :class="$style.imageTitle">
                     <a :href="postImage.image.url.self">{{postImage.image.title}}</a>
                     <p v-if="postImage.caption">{{postImage.caption}}</p>
                 </div>
-                <div :class="$style['image-buttons']">
+                <div :class="$style.imageButtons">
                     <a :href="postImage.url.edit" class="btn btn-light btn-sm" target="_blank">Edit</a>
                     <button class=" btn btn-primary btn-sm" v-show="postImage.image.id != coverImageIdModel" @click="setCoverImage(postImage.image.id)">Make cover image</button>
                 </div>
-                <div :class="$style['list-item-dragger']">&#9776;</div>
+                <div :class="$style.listItemDragger">&#9776;</div>
             </li>
         </ol>
     </div>
@@ -48,7 +48,7 @@
 <style lang="scss" module>
     @import '~artour-styles/admin/variables';
 
-    .post-album-image-list-controls{
+    .postAlbumImageListControls{
         display: flex;
         justify-content: flex-end;
         padding: 1em;
@@ -60,7 +60,7 @@
         }
     }
 
-    .post-album-image-list{
+    .postAlbumImageList{
         padding: 0;
         list-style-type: none;
         margin-top: 10px;
@@ -79,21 +79,21 @@
                 display: flex;
                 align-items: center;
             }
-            .image-title{
+            .imageTitle{
                 width: 20em;
                 flex-direction: column;
                 justify-content: center;
             }
-            .list-item-dragger{
+            .listItemDragger{
                 padding: 0 2em;
                 font-size: 2em;
                 cursor: move;
             }
         }
-        .cover-image-container{
+        .coverImageContainer{
             background-color: $item_selected_color;
         }
-        .image-buttons > *{
+        .imageButtons > *{
             margin-right: 1em;
             &:last-child{
                 margin-right: 0;
@@ -144,7 +144,7 @@ export default {
     computed: {
         controlsClasses(){
             return {
-                [this.$style['post-album-image-list-controls']]: true,
+                [this.$style.postAlbumImageListControls]: true,
                 'list-group-item-info': this.haveImagesBeenReordered,
             };
         },

@@ -2,14 +2,14 @@
     <div v-if="initialLoadComplete">
         <ul 
             class="list-group"
-            :class="$style['post-tags-list']"
+            :class="$style.tagsList"
         >
             <li 
                 class="list-group-item list-group-item-info"
-                :class="$style['list-heading-container']"
+                :class="$style.listHeadingContainer"
             >
-                <div :class="$style['list-header']">
-                    <h4 :class="$style['list-heading']">Tags</h4>
+                <div :class="$style.list-header">
+                    <h4 :class="$style.listHeading">Tags</h4>
                     <div v-show="!addTagMode">
                         <button class="btn btn-primary" @click="addButtonAction()" :disabled="busy">Add</button>
                     </div>
@@ -17,16 +17,16 @@
                 <div class="alert alert-warning" v-if="addTagMode && tagsThatCanBeAdded.length === 0">
                     This post has already been tagged with all available tags. <a :href="newTagUrl" target="_blank">Want to create more?</a>
                 </div>
-                <div :class="$style['add-tags-container']" v-show="addTagMode">
+                <div :class="$style.addTagsContainer" v-show="addTagMode">
                     <div>
                         <label v-for="(tag, index) in tagsThatCanBeAdded" :key="tag.id">
                             <input type="checkbox" @change="tagSelected(index)">{{tag.name}}
                         </label>
                     </div>
-                    <div :class="$style['add-tag-link']">
+                    <div :class="$style.addTagLink">
                         <a :href="newTagUrl" target="_blank">Create tag</a>
                     </div>
-                    <div :class="$style['button-container-right']">
+                    <div :class="$style.buttonContainerRight">
                         <button class="btn btn-primary" @click="cancelButtonAction()">Cancel</button>
                         <button class="btn btn-success" @click="saveButtonAction()" :disabled="busy">Save</button>
                     </div>
@@ -34,7 +34,7 @@
             </li>
             <li 
                 class="list-group-item" 
-                :class="$style['tag-item']"
+                :class="$style.tagItem"
                 v-for="tag in tags" 
                 :key="tag.id"
             >
@@ -46,10 +46,10 @@
 </template>
 
 <style lang="scss" module>
-    .post-tags-list{
+    .tagsList{
         margin-bottom: 40px;
     }
-    .list-heading-container{
+    .listHeadingContainer{
         padding-top: 1.5em;
         padding-bottom: 1.5em;
     }
@@ -57,11 +57,11 @@
         display: flex;
         justify-content: space-between;
     }
-    .list-heading{
+    .listHeading{
         margin-top: 0;
         font-size: 1.563em;
     }
-    .add-tag-link{
+    .addTagLink{
         margin-top: 0.5em;
         a:before{
             content: '+';
@@ -71,14 +71,14 @@
             font-weight: bold;
         }
     }
-    .add-tags-container{
+    .addTagsContainer{
         label{
             margin-right: 16px;
         }
         input[type="checkbox"]{
             margin-right: 10px;
         }
-        .button-container-right{
+        .buttonContainerRight{
             display: flex;
             justify-content: flex-end;
             button{
@@ -89,7 +89,7 @@
             }
         }
     }
-    .tag-item{
+    .tagItem{
         display: flex;
         justify-content: space-between;
         padding-top: 1em;
