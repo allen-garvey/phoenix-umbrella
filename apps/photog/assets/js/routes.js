@@ -359,7 +359,7 @@ export default {
                 return {
                     title: 'Clans',
                     headerButton: {
-                        title: 'Add clan',
+                        title: 'New',
                         className: 'btn-success',
                         route: { name: 'clansNew' },
                     },
