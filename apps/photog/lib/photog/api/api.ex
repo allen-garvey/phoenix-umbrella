@@ -1702,4 +1702,100 @@ defmodule Photog.Api do
     from(year in Year, where: year.id == ^year)
     |> Repo.delete_all
   end
+
+  alias Photog.Api.Clan
+
+  @doc """
+  Returns the list of clans.
+
+  ## Examples
+
+      iex> list_clans()
+      [%Clan{}, ...]
+
+  """
+  def list_clans do
+    Repo.all(Clan)
+  end
+
+  @doc """
+  Gets a single clan.
+
+  Raises `Ecto.NoResultsError` if the Clan does not exist.
+
+  ## Examples
+
+      iex> get_clan!(123)
+      %Clan{}
+
+      iex> get_clan!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_clan!(id), do: Repo.get!(Clan, id)
+
+  @doc """
+  Creates a clan.
+
+  ## Examples
+
+      iex> create_clan(%{field: value})
+      {:ok, %Clan{}}
+
+      iex> create_clan(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_clan(attrs \\ %{}) do
+    %Clan{}
+    |> Clan.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a clan.
+
+  ## Examples
+
+      iex> update_clan(clan, %{field: new_value})
+      {:ok, %Clan{}}
+
+      iex> update_clan(clan, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_clan(%Clan{} = clan, attrs) do
+    clan
+    |> Clan.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a clan.
+
+  ## Examples
+
+      iex> delete_clan(clan)
+      {:ok, %Clan{}}
+
+      iex> delete_clan(clan)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_clan(%Clan{} = clan) do
+    Repo.delete(clan)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking clan changes.
+
+  ## Examples
+
+      iex> change_clan(clan)
+      %Ecto.Changeset{data: %Clan{}}
+
+  """
+  def change_clan(%Clan{} = clan, attrs \\ %{}) do
+    Clan.changeset(clan, attrs)
+  end
 end
