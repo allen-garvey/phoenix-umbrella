@@ -56,4 +56,56 @@ defmodule Photog.ApiTest do
       assert %Ecto.Changeset{} = Api.change_clan(clan)
     end
   end
+
+  describe "clan_persons" do
+    alias Photog.Api.ClanPerson
+
+    import Photog.ApiFixtures
+
+    @invalid_attrs %{}
+
+    test "list_clan_persons/0 returns all clan_persons" do
+      clan_person = clan_person_fixture()
+      assert Api.list_clan_persons() == [clan_person]
+    end
+
+    test "get_clan_person!/1 returns the clan_person with given id" do
+      clan_person = clan_person_fixture()
+      assert Api.get_clan_person!(clan_person.id) == clan_person
+    end
+
+    test "create_clan_person/1 with valid data creates a clan_person" do
+      valid_attrs = %{}
+
+      assert {:ok, %ClanPerson{} = clan_person} = Api.create_clan_person(valid_attrs)
+    end
+
+    test "create_clan_person/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Api.create_clan_person(@invalid_attrs)
+    end
+
+    test "update_clan_person/2 with valid data updates the clan_person" do
+      clan_person = clan_person_fixture()
+      update_attrs = %{}
+
+      assert {:ok, %ClanPerson{} = clan_person} = Api.update_clan_person(clan_person, update_attrs)
+    end
+
+    test "update_clan_person/2 with invalid data returns error changeset" do
+      clan_person = clan_person_fixture()
+      assert {:error, %Ecto.Changeset{}} = Api.update_clan_person(clan_person, @invalid_attrs)
+      assert clan_person == Api.get_clan_person!(clan_person.id)
+    end
+
+    test "delete_clan_person/1 deletes the clan_person" do
+      clan_person = clan_person_fixture()
+      assert {:ok, %ClanPerson{}} = Api.delete_clan_person(clan_person)
+      assert_raise Ecto.NoResultsError, fn -> Api.get_clan_person!(clan_person.id) end
+    end
+
+    test "change_clan_person/1 returns a clan_person changeset" do
+      clan_person = clan_person_fixture()
+      assert %Ecto.Changeset{} = Api.change_clan_person(clan_person)
+    end
+  end
 end

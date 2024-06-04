@@ -1798,4 +1798,100 @@ defmodule Photog.Api do
   def change_clan(%Clan{} = clan, attrs \\ %{}) do
     Clan.changeset(clan, attrs)
   end
+
+  alias Photog.Api.ClanPerson
+
+  @doc """
+  Returns the list of clan_persons.
+
+  ## Examples
+
+      iex> list_clan_persons()
+      [%ClanPerson{}, ...]
+
+  """
+  def list_clan_persons do
+    Repo.all(ClanPerson)
+  end
+
+  @doc """
+  Gets a single clan_person.
+
+  Raises `Ecto.NoResultsError` if the Clan person does not exist.
+
+  ## Examples
+
+      iex> get_clan_person!(123)
+      %ClanPerson{}
+
+      iex> get_clan_person!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_clan_person!(id), do: Repo.get!(ClanPerson, id)
+
+  @doc """
+  Creates a clan_person.
+
+  ## Examples
+
+      iex> create_clan_person(%{field: value})
+      {:ok, %ClanPerson{}}
+
+      iex> create_clan_person(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_clan_person(attrs \\ %{}) do
+    %ClanPerson{}
+    |> ClanPerson.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a clan_person.
+
+  ## Examples
+
+      iex> update_clan_person(clan_person, %{field: new_value})
+      {:ok, %ClanPerson{}}
+
+      iex> update_clan_person(clan_person, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_clan_person(%ClanPerson{} = clan_person, attrs) do
+    clan_person
+    |> ClanPerson.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a clan_person.
+
+  ## Examples
+
+      iex> delete_clan_person(clan_person)
+      {:ok, %ClanPerson{}}
+
+      iex> delete_clan_person(clan_person)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_clan_person(%ClanPerson{} = clan_person) do
+    Repo.delete(clan_person)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking clan_person changes.
+
+  ## Examples
+
+      iex> change_clan_person(clan_person)
+      %Ecto.Changeset{data: %ClanPerson{}}
+
+  """
+  def change_clan_person(%ClanPerson{} = clan_person, attrs \\ %{}) do
+    ClanPerson.changeset(clan_person, attrs)
+  end
 end

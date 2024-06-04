@@ -17,4 +17,18 @@ defmodule Photog.ApiFixtures do
 
     clan
   end
+
+  @doc """
+  Generate a clan_person.
+  """
+  def clan_person_fixture(attrs \\ %{}) do
+    {:ok, clan_person} =
+      attrs
+      |> Enum.into(%{
+
+      })
+      |> Photog.Api.create_clan_person()
+
+    clan_person
+  end
 end
