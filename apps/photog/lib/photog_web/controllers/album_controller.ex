@@ -52,7 +52,7 @@ defmodule PhotogWeb.AlbumController do
     create_album(conn, album_params, fn _album -> true end)
   end
 
-  def create_album(conn, album_params, created_callback) do
+  defp create_album(conn, album_params, created_callback) do
     with {:ok, %Album{} = album} <- Api.create_album(album_params) do
       created_callback.(album)
       conn

@@ -1,8 +1,18 @@
 <template>
     <main class="main container">
-        <h2>{{ title }}</h2>
+        <div :class="$style.headerContainer">
+            <h2 :class="$style.title">{{ title }}</h2>
+            <router-link 
+                :to="headerButton.route" 
+                class="btn btn-sm"
+                :class="[headerButton.className, $style.headerButton]"
+                v-if="headerButton"
+            >
+                {{ headerButton.title }}
+            </router-link>
+        </div>
         <ul :class="$style.list" v-if="isInitialLoadComplete">
-            <li v-for="(item, index) in items" :key="index">
+            <li v-for="item in items" :key="item.id || item.title">
                 <router-link :to="item.route">{{ item.title }}</router-link>
             </li>
         </ul>
@@ -10,6 +20,18 @@
 </template>
 
 <style lang="scss" module>
+    .headerContainer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+        margin-bottom: 2rem;
+    }
+    a.headerButton {
+        align-self: center;
+    }
+    .title {
+        margin: 0;
+    }
     .list {
         margin-top: 1rem;
         font-size: 1.5rem;
@@ -32,6 +54,9 @@ export default {
         title: {
             type: String,
             required: true,
+        },
+        headerButton: {
+            type: Object,
         },
         getItems: {
             type: Function,

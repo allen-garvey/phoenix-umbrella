@@ -14,6 +14,7 @@ import ThumbnailList from './components/thumbnail-list.vue';
 import ImportsIndex from './components/imports-index.vue';
 import ImageDetail from './components/image-detail.vue';
 import AlbumForm from './components/album-form.vue';
+import ClanForm from './components/clan-form.vue';
 import PersonForm from './components/person-form.vue';
 import TagForm from './components/tag-form.vue';
 import ImportForm from './components/import-form.vue';
@@ -348,6 +349,48 @@ export default {
                     },
                 };
                 return props;
+            },
+        },
+        {
+            path: '/clans',
+            name: 'clansIndex',
+            component: ListPage,
+            props(route) {
+                return {
+                    title: 'Clans',
+                    headerButton: {
+                        title: 'Add clan',
+                        className: 'btn-success',
+                        route: { name: 'clansNew' },
+                    },
+                    getItems: (getModel) =>
+                        getModel('/clans').then((clans) =>
+                            clans.map((clan) => ({
+                                title: clan.name,
+                                id: clan.id,
+                                route: {
+                                    name: 'clansEdit',
+                                    params: { id: clan.id },
+                                },
+                            }))
+                        ),
+                };
+            },
+        },
+        //new route has to be before show route
+        {
+            path: '/clans/new',
+            name: 'clansNew',
+            component: ClanForm,
+        },
+        {
+            path: '/clans/:id/edit',
+            name: 'clansEdit',
+            component: ClanForm,
+            props: (route) => {
+                return {
+                    modelId: parseInt(route.params.id),
+                };
             },
         },
         //new route has to be before show route

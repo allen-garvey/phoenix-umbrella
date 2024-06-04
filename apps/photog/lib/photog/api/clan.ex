@@ -7,6 +7,8 @@ defmodule Photog.Api.Clan do
     field :name, :string
 
     timestamps()
+
+    has_many :clan_persons, Photog.Api.ClanPerson
   end
 
   @doc false

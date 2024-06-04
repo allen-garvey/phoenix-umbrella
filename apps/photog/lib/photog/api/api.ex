@@ -1715,7 +1715,11 @@ defmodule Photog.Api do
 
   """
   def list_clans do
-    Repo.all(Clan)
+    from(
+      Clan,
+      order_by: [:name]
+    )
+    |> Repo.all
   end
 
   @doc """
@@ -1732,7 +1736,15 @@ defmodule Photog.Api do
       ** (Ecto.NoResultsError)
 
   """
-  def get_clan!(id), do: Repo.get!(Clan, id)
+  def get_clan!(id) do
+    from(
+      clan in Clan,
+      join: clan_person in assoc(clan, :clan_persons),
+      where: clan.id == ^id,
+      preload: [clan_persons: clan_person]
+    )
+    |> Repo.one!
+  end
 
   @doc """
   Creates a clan.

@@ -3,6 +3,7 @@ defmodule PhotogWeb.ClanController do
 
   alias Photog.Api
   alias Photog.Api.Clan
+  alias Photog.Api.ClanPerson
 
   action_fallback PhotogWeb.FallbackController
 
@@ -11,8 +12,19 @@ defmodule PhotogWeb.ClanController do
     render(conn, "index.json", clans: clans)
   end
 
+  def create(conn, %{"clan" => clan_params, "person_ids" => person_ids}) do
+    create_clan(conn, clan_params, fn clan -> 
+      {_, _} = add_persons_to_clan(clan.id, person_ids)
+    end)
+  end
+
   def create(conn, %{"clan" => clan_params}) do
+    create_clan(conn, clan_params, fn _ -> true end)
+  end
+
+  defp create_clan(conn, clan_params, created_callback) do
     with {:ok, %Clan{} = clan} <- Api.create_clan(clan_params) do
+      created_callback.(clan)
       conn
       |> put_status(:created)
       |> render("show.json", clan: clan)
@@ -38,5 +50,18 @@ defmodule PhotogWeb.ClanController do
     with {:ok, %Clan{}} <- Api.delete_clan(clan) do
       send_resp(conn, :no_content, "")
     end
+  end
+
+  @doc """
+  Adds persons to an clan
+  returns {person_ids_added, errors}
+  """
+  def add_persons_to_clan(clan_id, person_ids) do
+    Enum.reduce(person_ids, {[], []}, fn person_id, {persons_added, errors} ->
+      case Api.create_clan_person(%{"clan_id" => clan_id, "person_id" => person_id}) do
+        {:ok, %ClanPerson{} = clan_person} -> { [clan_person.person_id | persons_added], errors }
+        {:error, _changeset}                -> { persons_added, [ person_id | errors] }
+      end
+    end)
   end
 end
