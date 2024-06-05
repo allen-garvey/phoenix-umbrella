@@ -369,7 +369,7 @@ export default {
                                 title: clan.name,
                                 id: clan.id,
                                 route: {
-                                    name: 'clansEdit',
+                                    name: 'clansShow',
                                     params: { id: clan.id },
                                 },
                             }))
@@ -391,6 +391,35 @@ export default {
                 return {
                     modelId: parseInt(route.params.id),
                 };
+            },
+        },
+        {
+            path: '/clans/:id',
+            name: 'clansShow',
+            component: ThumbnailList,
+            props: (route) => {
+                const props = {
+                    useBigThumbnails: true,
+                    apiPath: route.path,
+                    buildItemsApiUrl: () => `${route.path}/images`,
+                    itemsCountKey: 'images_count',
+                    isPaginated: true,
+                    enableHasAlbumFilter: true,
+                    editItemLinkFor: () => ({
+                        name: 'clansEdit',
+                        params: { id: route.params.id },
+                    }),
+                    isUnsafeDeleteEnabled: true,
+                    showRouteFor: (item, _model) => {
+                        return {
+                            name: 'imagesShow',
+                            params: {
+                                id: item.id,
+                            },
+                        };
+                    },
+                };
+                return props;
             },
         },
         //new route has to be before show route

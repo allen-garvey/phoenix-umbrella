@@ -45,10 +45,10 @@ defmodule PhotogWeb.ClanController do
   end
 
   def delete(conn, %{"id" => id}) do
-    clan = Api.get_clan!(id)
-
-    with {:ok, %Clan{}} <- Api.delete_clan(clan) do
-      send_resp(conn, :no_content, "")
+    with {1, _} <- Api.delete_clan_by_id(id) do
+      conn
+      |> put_view(CommonWeb.ApiGenericView)
+      |> render("ok.json", message: "Clan #{id} deleted.")
     end
   end
 
@@ -75,5 +75,13 @@ defmodule PhotogWeb.ClanController do
       {:ok, _} -> view |> render("ok.json", message: "ok")
       {:error, _} -> view |> put_status(:bad_request) |> render("error.json", message: "Error saving persons for clan #{id}")
     end
+  end
+
+  def images_for(conn, %{"id" => id, "limit" => limit, "offset" => offset}) do
+    images = Api.get_images_for_clan(id, String.to_integer(limit), String.to_integer(offset))
+    
+    conn
+    |> put_view(PhotogWeb.ImageView)
+    |> render("index_thumbnail_list.json", images: images)
   end
 end

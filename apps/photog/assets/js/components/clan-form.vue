@@ -81,9 +81,9 @@ export default {
             return 'New Clan';
         },
         backLink(){
-            // if(this.isEditForm){
-            //     return {name: 'clansShow', params: {id: this.modelId}};
-            // }
+            if(this.isEditForm){
+                return {name: 'clansShow', params: {id: this.modelId}};
+            }
             return {name: 'clansIndex'};
         },
     },
@@ -149,9 +149,8 @@ export default {
             return data;
         },
         saveSuccessful(clan){
-            // const modelId = clan.id;
-            // const redirectPath = this.successRedirect === '1' ? this.previousRoute : {name: 'clansShow', params: {id: modelId}};
-            const redirectPath = this.successRedirect === '1' ? this.previousRoute : {name: 'clansIndex'};
+            const modelId = clan.id;
+            const redirectPath = this.successRedirect === '1' ? this.previousRoute : {name: 'clansShow', params: {id: modelId}};
             redirectPath.state = {
                 flashMessage: JSON.stringify([`${clan.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info'])
             };

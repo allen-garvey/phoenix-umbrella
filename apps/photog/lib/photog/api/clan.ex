@@ -5,6 +5,7 @@ defmodule Photog.Api.Clan do
   @schema_prefix Grenadier.RepoPrefix.photog()
   schema "clans" do
     field :name, :string
+    field :images_count, :integer, default: -1, virtual: true
 
     timestamps()
 

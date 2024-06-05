@@ -1722,6 +1722,8 @@ defmodule Photog.Api do
     |> Repo.all
   end
 
+  alias Photog.Api.ClanPerson
+
   @doc """
   Gets a single clan.
 
@@ -1737,13 +1739,23 @@ defmodule Photog.Api do
 
   """
   def get_clan!(id) do
-    from(
+    images_subquery = clan_images_subquery(id)
+
+    images_count = from(
+      image in subquery(images_subquery),
+      select: count()
+    )
+    |> Repo.one!
+
+    clan = from(
       clan in Clan,
       join: clan_person in assoc(clan, :clan_persons),
       where: clan.id == ^id,
       preload: [clan_persons: clan_person]
     )
     |> Repo.one!
+
+    %Clan{clan | images_count: images_count}
   end
 
   @doc """
@@ -1798,6 +1810,14 @@ defmodule Photog.Api do
     Repo.delete(clan)
   end
 
+  def delete_clan_by_id(id) when is_binary(id) do
+    from(
+      clan in Clan,
+      where: clan.id == ^id
+    )
+    |> Repo.delete_all
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking clan changes.
 
@@ -1811,7 +1831,7 @@ defmodule Photog.Api do
     Clan.changeset(clan, attrs)
   end
 
-  alias Photog.Api.ClanPerson
+  
 
   @doc """
   Returns the list of clan_persons.
@@ -1919,5 +1939,39 @@ defmodule Photog.Api do
         create_clan_person!(%{clan_id: clan_id, person_id: person_id})
       end
     end)
+  end
+
+  defp clan_images_subquery(clan_id) do
+    # unfortunately we need to do a separate query here,
+    # as using the subquery directly causes an ecto error for some reason
+    clan_persons_count = from(
+      clan_person in ClanPerson,
+      where: clan_person.clan_id == ^clan_id,
+      select: count()
+    )
+    |> Repo.one!
+
+    from(
+      person_image in PersonImage,
+      join: clan_person in ClanPerson,
+      on: clan_person.person_id == person_image.person_id,
+      where: clan_person.clan_id == ^clan_id,
+      group_by: person_image.image_id,
+      having: count(person_image.person_id, :distinct) == ^clan_persons_count,
+      select: person_image.image_id
+    )
+  end
+
+  def get_images_for_clan(id, limit, offset) do
+    images_subquery = clan_images_subquery(id)
+
+    from(
+      image in Image,
+      where: image.id in subquery(images_subquery),
+      limit: ^limit,
+      offset: ^offset,
+      order_by: [desc: image.id]
+    )
+    |> Repo.all
   end
 end

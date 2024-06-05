@@ -12,7 +12,7 @@
         <Resource-Header 
             :title="titleForPage" 
             :editItemLink="editItemLinkFor(model)"
-            :shouldShowDelete="isDeleteEnabled && thumbnailList.length === 0 && isInitialLoadComplete"
+            :shouldShowDelete="isUnsafeDeleteEnabled || (isDeleteEnabled && thumbnailList.length === 0 && isInitialLoadComplete)"
             @triggerDelete="triggerDelete" 
             :newItemLink="newItemLink" 
             :previousPageLink="previousPageLink"
@@ -206,6 +206,10 @@ export default {
             default: () => undefined,
         },
         isDeleteEnabled: {
+            type: Boolean,
+            default: false,
+        },
+        isUnsafeDeleteEnabled: {
             type: Boolean,
             default: false,
         },

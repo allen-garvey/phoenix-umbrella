@@ -17,6 +17,7 @@ defmodule PhotogWeb.ClanView do
     %{
       id: clan.id,
       name: clan.name,
+      images_count: clan.images_count,
       person_ids: person_ids,
     }
   end
