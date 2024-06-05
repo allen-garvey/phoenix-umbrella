@@ -1844,15 +1844,15 @@ defmodule Photog.Api do
 
   @doc """
   Creates a clan_person.
+  """
+  def create_clan_person!(attrs \\ %{}) do
+    %ClanPerson{}
+    |> ClanPerson.changeset(attrs)
+    |> Repo.insert!()
+  end
 
-  ## Examples
-
-      iex> create_clan_person(%{field: value})
-      {:ok, %ClanPerson{}}
-
-      iex> create_clan_person(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
+  @doc """
+  Creates a clan_person.
   """
   def create_clan_person(attrs \\ %{}) do
     %ClanPerson{}
@@ -1905,5 +1905,19 @@ defmodule Photog.Api do
   """
   def change_clan_person(%ClanPerson{} = clan_person, attrs \\ %{}) do
     ClanPerson.changeset(clan_person, attrs)
+  end
+
+  @doc """
+  Replaces the current persons for an clan with given list of clan ids
+  """
+  def replace_persons_for_clan(clan_id, person_ids) when is_list(person_ids) do
+    Repo.transaction(fn ->
+      {_, nil} = from(clan_person in ClanPerson, where: clan_person.clan_id == ^clan_id)
+        |> Repo.delete_all
+
+      for person_id <- person_ids do
+        create_clan_person!(%{clan_id: clan_id, person_id: person_id})
+      end
+    end)
   end
 end

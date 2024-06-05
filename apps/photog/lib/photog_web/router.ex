@@ -35,7 +35,7 @@ defmodule PhotogWeb.Router do
     resources "/albums",  AlbumController
     resources "/clans",   ClanController
     resources "/persons", PersonController
-    resources "/clan_persons", ClanPersonController,    only: [:index, :show, :create]
+    resources "/clan_persons", ClanPersonController,    only: [:index, :show]
     resources "/person_images", PersonImageController,  only: [:index, :show, :create]
     resources "/album_images", AlbumImageController,    only: [:index, :show, :create]
     resources "/imports", ImportController,             only: [:index, :show, :update]
@@ -58,6 +58,9 @@ defmodule PhotogWeb.Router do
     get "/imports/:id/images",                ImportController, :images_for
     get "/tags/:id/albums",                   TagController,    :albums_for
     get "/tags/:id/images",                   TagController,    :images_for
+
+    # Replace clan persons
+    put "/clans/:id/persons",                 ClanController,  :replace_persons 
 
     # Reorder album images
     patch "/albums/:id/images/reorder",       AlbumController, :reorder_images

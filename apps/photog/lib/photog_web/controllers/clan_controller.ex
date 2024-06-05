@@ -64,4 +64,16 @@ defmodule PhotogWeb.ClanController do
       end
     end)
   end
+
+  @doc """
+  Replaces an clans's persons with given list of persons
+  """
+  def replace_persons(conn,  %{"id" => id, "person_ids" => person_ids}) when is_list(person_ids) do
+    view = conn |> put_view(CommonWeb.ApiGenericView)
+
+    case Api.replace_persons_for_clan(id, person_ids) do
+      {:ok, _} -> view |> render("ok.json", message: "ok")
+      {:error, _} -> view |> put_status(:bad_request) |> render("error.json", message: "Error saving persons for clan #{id}")
+    end
+  end
 end
