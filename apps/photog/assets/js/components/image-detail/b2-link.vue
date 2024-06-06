@@ -72,7 +72,6 @@ export default {
             this.onB2UrlRequested(this.image).then(this.urlLoaded);
         },
         urlLoaded(result){
-            console.log(result);
             this.isLoading = false;
             if(!result || result.imageId !== this.image.id){
                 return;
