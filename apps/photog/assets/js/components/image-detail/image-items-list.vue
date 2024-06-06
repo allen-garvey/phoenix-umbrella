@@ -225,6 +225,13 @@ export default {
             return this.itemsThatCanBeAdded;
         },
     },
+    watch: {
+        items(){
+            if(this.items.length === 0 && this.isEditMode){
+                this.mode = MODE_DEFAULT;
+            }
+        },
+    },
     methods: {
         idForItemToBeAdded(item, index){
             return `checkbox_${this.heading}_${index}_${item.id}`;
