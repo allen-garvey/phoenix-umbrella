@@ -1704,6 +1704,7 @@ defmodule Photog.Api do
   end
 
   alias Photog.Api.Clan
+  alias Photog.Api.ClanPerson
 
   @doc """
   Returns the list of clans.
@@ -1722,7 +1723,15 @@ defmodule Photog.Api do
     |> Repo.all
   end
 
-  alias Photog.Api.ClanPerson
+  def list_clans_full do
+    from(
+      clan in Clan,
+      join: clan_person in assoc(clan, :clan_persons),
+      preload: [clan_persons: clan_person],
+      order_by: [:name]
+    )
+    |> Repo.all
+  end
 
   @doc """
   Gets a single clan.

@@ -31,6 +31,7 @@
             </div>
         </div>
         <div v-if="isAddMode">
+            <slot name="itemsSuperManager" :on-selected="onItemsSuperManagerItemsSelected"></slot>
             <label>Search <input class="form-control" v-model="searchValue" v-focus /></label>
             <ul :class="$style.addItemsList">
                 <li v-for="(item, index) in filteredItemsThatCanBeAdded" :key="index">
@@ -279,6 +280,11 @@ export default {
             this.sendJson(`${API_URL_BASE}${this.removeItemApiUrlBase}/${item.id}/images`, 'DELETE', {image_ids: [this.imageId]}).then((response)=>{
                 //remove item from array
                 this.itemsUpdatedCallback(arrayRemove(this.items, index));
+            });
+        },
+        onItemsSuperManagerItemsSelected(itemsSelected){
+            itemsSelected.forEach(itemId => {
+                this.selectedItemsMap[itemId] = true;
             });
         },
     }

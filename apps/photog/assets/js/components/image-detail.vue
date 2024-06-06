@@ -77,7 +77,11 @@
             itemsApiName="persons" 
             removeItemApiUrlBase="/persons" 
             :itemsUpdatedCallback="imageItemsUpdatedBuilder('persons')" 
-        />
+        >
+            <template #itemsSuperManager="managerProps">
+                <Clan-Select :get-model="getModel" :on-selected="managerProps.onSelected" />
+            </template>
+        </Image-Items-List>
     </main>
 </div>
 </template>
@@ -126,6 +130,7 @@ import ImageItemsList from './image-detail/image-items-list.vue';
 import ExifInfo from './image-detail/exif-info.vue';
 import SwipeImage from './shared/swipe-image.vue';
 import B2Link from './image-detail/b2-link.vue';
+import ClanSelect from './image-detail/clan-select.vue';
 import { API_URL_BASE } from '../request-helpers';
 
 export default {
@@ -175,6 +180,7 @@ export default {
         ExifInfo,
         SwipeImage,
         B2Link,
+        ClanSelect,
     },
     created(){
         this.setup();

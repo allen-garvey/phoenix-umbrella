@@ -7,6 +7,11 @@ defmodule PhotogWeb.ClanController do
 
   action_fallback PhotogWeb.FallbackController
 
+  def index(conn, %{"excerpt" => "false"}) do
+    clans = Api.list_clans_full()
+    render(conn, "index.json", clans: clans)
+  end
+  
   def index(conn, _params) do
     clans = Api.list_clans()
     render(conn, "index.json", clans: clans)
