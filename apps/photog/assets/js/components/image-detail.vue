@@ -79,7 +79,11 @@
             :itemsUpdatedCallback="imageItemsUpdatedBuilder('persons')" 
         >
             <template #itemsSuperManager="managerProps">
-                <Clan-Select :get-model="getModel" :on-selected="managerProps.onSelected" />
+                <Clan-Select 
+                    :get-model="getModel" 
+                    :on-selected="managerProps.onSelected" 
+                    :on-removed="managerProps.onRemoved"
+                />
             </template>
         </Image-Items-List>
     </main>

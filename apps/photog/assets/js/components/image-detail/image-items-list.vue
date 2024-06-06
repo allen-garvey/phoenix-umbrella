@@ -31,7 +31,11 @@
             </div>
         </div>
         <div v-if="isAddMode">
-            <slot name="itemsSuperManager" :on-selected="onItemsSuperManagerItemsSelected"></slot>
+            <slot 
+                name="itemsSuperManager" 
+                :on-selected="(itemIds) => onItemsSuperManagerItemsUpdated(itemIds, true)"
+                :on-removed="(itemIds) => onItemsSuperManagerItemsUpdated(itemIds, false)"
+            ></slot>
             <label>Search <input class="form-control" v-model="searchValue" v-focus /></label>
             <ul :class="$style.addItemsList">
                 <li v-for="(item, index) in filteredItemsThatCanBeAdded" :key="index">
@@ -289,9 +293,9 @@ export default {
                 this.itemsUpdatedCallback(arrayRemove(this.items, index));
             });
         },
-        onItemsSuperManagerItemsSelected(itemsSelected){
-            itemsSelected.forEach(itemId => {
-                this.selectedItemsMap[itemId] = true;
+        onItemsSuperManagerItemsUpdated(itemIds, value){
+            itemIds.forEach(itemId => {
+                this.selectedItemsMap[itemId] = value;
             });
         },
     }

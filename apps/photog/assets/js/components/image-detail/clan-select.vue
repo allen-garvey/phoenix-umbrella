@@ -5,7 +5,8 @@
                 <option v-for="clan in clans" :key="clan.id" :value="clan">{{ clan.name }}</option>
             </select>
         </label>
-        <button @click="onClanSelected" :disabled="selectedClan === null" class="btn btn-primary" :class="$style.button">Add</button>
+        <button @click="onRemoved(selectedClan.person_ids)" :disabled="selectedClan === null" class="btn btn-outline-secondary" :class="$style.button">Remove</button>
+        <button @click="onSelected(selectedClan.person_ids)" :disabled="selectedClan === null" class="btn btn-primary" :class="$style.button">Add</button>
     </div>
 </template>
 
@@ -31,6 +32,10 @@ export default {
             type: Function,
             required: true,
         },
+        onRemoved: {
+            type: Function,
+            required: true,
+        },
     },
     created(){
         this.isInitialLoadComplete = false;
@@ -50,9 +55,6 @@ export default {
     computed: {
     },
     methods: {
-        onClanSelected(){
-            this.onSelected(this.selectedClan.person_ids);
-        }
     }
 };
 </script>
