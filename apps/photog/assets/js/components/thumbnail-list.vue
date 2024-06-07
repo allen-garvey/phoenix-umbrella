@@ -139,7 +139,7 @@ import InfiniteObserver from 'umbrella-common-js/vue/components/infinite-observe
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
 import ResourceHeader from './shared/resource-header.vue';
 import ThumbnailFilterControls from './thumbnail-list/components/thumbnail-filter-controls.vue';
-import RelatedFieldsList from './related-fields-list.vue';
+import RelatedFieldsList from './thumbnail-list/components/related-fields-list.vue';
 import BatchEdit from './thumbnail-list/components/batch-edit.vue';
 import ReorderItemsControls from './thumbnail-list/components/reorder-items-controls.vue';
 import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list.vue';

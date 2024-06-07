@@ -14,13 +14,13 @@
     .relatedFieldsList{
         display: flex;
         flex-wrap: wrap;
+        gap: 0.5em;
     }
 
     .listItem{
         padding: 1em;
         background-color: #eee;
         border-radius: 4px;
-        margin-right: 1em;
     }
 </style>
 
