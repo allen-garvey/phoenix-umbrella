@@ -76,6 +76,12 @@
             * List of batch edit resources that can be added to selected items
         -->
         <div v-if="shouldShowBatchResources" :class="$style.batchResourcesContainer">
+            <Clan-Select 
+                v-if="batchSelectResourceMode === batchEditResourceMode.PERSONS"
+                :get-model="getModel" 
+                :on-selected="onItemsSuperManagerItemsUpdatedCallback(true)" 
+                :on-removed="onItemsSuperManagerItemsUpdatedCallback(false)"
+            />
             <label>Search <input class="form-control" v-model="searchValue" v-focus ref="searchInput" /></label>
             <ul :class="$style.batchResourcesList">
                 <li 
@@ -151,11 +157,16 @@
 
 <script>
 import { nextTick } from 'vue';
+import ClanSelect from '../../shared/clan-select.vue';
 import focus from 'umbrella-common-js/vue/directives/focus.js';
 import { BATCH_EDIT_RESOURCE_MODE } from '../constants/batch-edit.js';
 
 export default {
     props: {
+        getModel: {
+            type: Function,
+            required: true,
+        },
         isCurrentlyBatchSelect: {
             type: Boolean,
             required: true,
@@ -212,6 +223,9 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+    components: {
+        ClanSelect,
     },
     directives: {
         focus,
@@ -281,6 +295,13 @@ export default {
         },
         onBatchItemCheckboxChanged(id){
             this.selectedItemsMap[id] = !this.selectedItemsMap[id];
+        },
+        onItemsSuperManagerItemsUpdatedCallback(value){
+            return (itemIds) => {
+                itemIds.forEach(itemId => {
+                    this.selectedItemsMap[itemId] = value;
+                });
+            };
         },
         setBatchResourceModeWrapper(mode){
             this.searchValue = '';

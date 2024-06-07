@@ -46,6 +46,7 @@
                 * Batch edit controls 
             -->
             <batch-edit
+                :getModel="getModel"
                 :isCurrentlyBatchSelect="isCurrentlyBatchSelect"
                 :isReordering="isReordering"
                 :toggleBatchSelect="toggleBatchSelect"
