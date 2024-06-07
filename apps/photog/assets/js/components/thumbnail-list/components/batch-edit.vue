@@ -102,20 +102,21 @@
                     </label>
                 </li>
             </ul>
-            <button 
-                class="btn btn-outline-dark" 
-                v-if="!isSearchEnabled && batchResources.length > batchResourcesMoreLimit" @click="toggleDisplayMoreBatchResources"
-            >
-                {{batchResourcesDisplayed.length < batchResources.length ? 'Show more' : 'Show less'}}
-            </button>
-            <button 
-                class="btn btn-success" 
-                :class="$style.lastButton"
-                :disabled="!anyBatchResourcesSelected || !anyItemsBatchSelected"
-                @click="saveBatchSelected(batchResourcesSelected)"
-            >
-                Save
-            </button>
+            <div :class="$style.bottomButtonContainer">
+                <button 
+                    class="btn btn-outline-dark" 
+                    v-if="isShowMoreEnabled" @click="toggleDisplayMoreBatchResources"
+                >
+                    {{batchResourcesDisplayed.length < batchResources.length ? 'Show more' : 'Show less'}}
+                </button>
+                <button 
+                    class="btn btn-success" 
+                    :disabled="!anyBatchResourcesSelected || !anyItemsBatchSelected"
+                    @click="saveBatchSelected(batchResourcesSelected)"
+                >
+                    Save
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -139,8 +140,9 @@
             margin-bottom: 0.5em;
         }
     }
-    .lastButton {
-        margin-left: 1em;
+    .bottomButtonContainer {
+        display: flex;
+        gap: 1em;
     }
     .resourceButtonsContainer{
         width: 100%;
@@ -160,6 +162,9 @@ import { nextTick } from 'vue';
 import ClanSelect from '../../shared/clan-select.vue';
 import focus from 'umbrella-common-js/vue/directives/focus.js';
 import { BATCH_EDIT_RESOURCE_MODE } from '../constants/batch-edit.js';
+
+const BATCH_RESOURCE_LENGTH_MAX_TO_SHOW_ALL = 40;
+const BATCH_RESOURCES_MORE_LIMIT = 16;
 
 export default {
     props: {
@@ -255,6 +260,9 @@ export default {
         isSearchEnabled(){
             return this.searchValue.length >= 2;
         },
+        isShowMoreEnabled(){
+            return !this.isSearchEnabled && this.batchResources.length > BATCH_RESOURCE_LENGTH_MAX_TO_SHOW_ALL && this.batchResources.length > BATCH_RESOURCES_MORE_LIMIT;
+        },
         batchResourcesDisplayed(){
             if(this.isSearchEnabled){
                 return this.batchResources
@@ -262,15 +270,15 @@ export default {
                         ({ name }) => name.toLowerCase().indexOf(this.searchValue.toLowerCase()) >= 0
                 );
             }
-            if(this.shouldShowAllBatchResources){
+            if(this.shouldShowAllBatchResources || this.batchResources.length <= BATCH_RESOURCE_LENGTH_MAX_TO_SHOW_ALL){
                 return this.batchResources;
             }
-            return this.batchResources.slice(0, this.batchResourcesMoreLimit);
+            return this.batchResources.slice(0, BATCH_RESOURCES_MORE_LIMIT);
         },
     },
     watch: {
         //called when model changes
-        batchResources(newValue){
+        batchResources(){
             this.shouldShowAllBatchResources = false;
             this.selectedItemsMap = {};
         },
@@ -278,7 +286,6 @@ export default {
     data(){
         return {
             shouldShowAllBatchResources: false,
-            batchResourcesMoreLimit: 16,
             selectedItemsMap: {},
             searchValue: '',
         };
