@@ -1,18 +1,20 @@
 <template>
     <div :class="{invisible: isReordering, [$style.thumbnailBatchSelectContainer]: true}">
-        <button
-            :class="toggleBatchEditButtonClass" 
-            @click="toggleBatchSelect"
-        >
-            {{isCurrentlyBatchSelect ? 'Cancel' : 'Batch edit'}}
-        </button>
-        <button 
-            class="btn btn-outline-primary" 
-            :class="$style.lastButton"
-            @click="batchSelectAll" 
-            v-if="isCurrentlyBatchSelect">
-            {{anyItemsBatchSelected ? 'Deselect all' : 'Select all'}}
-        </button>
+        <div :class="$style.buttonContainer">
+            <button
+                :class="toggleBatchEditButtonClass" 
+                @click="toggleBatchSelect"
+            >
+                {{isCurrentlyBatchSelect ? 'Cancel' : 'Batch edit'}}
+            </button>
+            <button 
+                class="btn btn-outline-primary" 
+                :class="$style.lastButton"
+                @click="batchSelectAll" 
+                v-if="isCurrentlyBatchSelect">
+                {{anyItemsBatchSelected ? 'Deselect all' : 'Select all'}}
+            </button>
+        </div>
         <!-- 
         * Batch edit controls when in batch edit mode
         -->
@@ -102,7 +104,7 @@
                     </label>
                 </li>
             </ul>
-            <div :class="$style.bottomButtonContainer">
+            <div :class="$style.buttonContainer">
                 <button 
                     class="btn btn-outline-dark" 
                     v-if="isShowMoreEnabled" @click="toggleDisplayMoreBatchResources"
@@ -140,9 +142,9 @@
             margin-bottom: 0.5em;
         }
     }
-    .bottomButtonContainer {
+    .buttonContainer {
         display: flex;
-        gap: 1em;
+        gap: 0.5em;
     }
     .resourceButtonsContainer{
         width: 100%;
