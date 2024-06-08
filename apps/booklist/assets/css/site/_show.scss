@@ -5,15 +5,15 @@
 %show_category{
 	display: flex;
 	.btn_group{
+		margin-left: 1rem;
 		text-align: right;
-		flex-basis: 150px;
 		align-self: center;
  	}
 }
 
  .show_header{
  	@extend %show_category;
- 	margin-bottom: 0.1rem;
+ 	margin-bottom: 0.5rem;
  }
  .show{
  	.btn_search{

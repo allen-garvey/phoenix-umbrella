@@ -1,16 +1,26 @@
 .btn {
   border-radius: 4px;
+  border: 1px transparent;
 }
 a.btn:hover {
   text-decoration: none;
 }
-.btn-success { 
-  background-color: #5cb85c;
+.btn-default {
+  border-color: #e0e0e0;
+  border-style: solid;
 
   &:hover {
-    background-color: #419641;
+    background-color: #e0e0e0;
   }
 }
-.btn-default:hover {
-  background-color: #e0e0e0;
+
+// bootstrap 3 button color
+.btn-primary{
+	background-color: #337ab7;
+	border-color: #2e6da4;
+
+	&:hover{
+		background-color: #286090;
+		border-color: #204d74;
+	}
 }
