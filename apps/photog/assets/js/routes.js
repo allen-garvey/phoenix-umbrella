@@ -114,6 +114,10 @@ export default {
                     getItems: () =>
                         Promise.resolve([
                             {
+                                title: 'On This Day',
+                                route: { name: 'imagesForToday' },
+                            },
+                            {
                                 title: 'All Images',
                                 route: { name: 'imagesIndex' },
                             },
