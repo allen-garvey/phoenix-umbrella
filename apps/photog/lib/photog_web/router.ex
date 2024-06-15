@@ -24,6 +24,7 @@ defmodule PhotogWeb.Router do
     pipe_through :api
     pipe_through :authenticate
 
+    # Imports
     # has to be here so it doesn't conflict with import show route
     get "/imports/last",  ImportController, :show_last
     get "/albums/count",  AlbumController,  :count
@@ -46,6 +47,8 @@ defmodule PhotogWeb.Router do
     get "/images/:id/exif",                   ImageController, :exif_for
     get "/images/years/:year",                ImageController, :images_for_year
     get "/images/years/:year/count",          ImageController, :images_for_year_count
+    get "/images/date/:month/:day",           ImageController, :images_for_date
+    get "/images/date/:month/:day/count",     ImageController, :images_for_date_count
 
     # Albums
     get "/albums/years/index",                YearController, :albums_years_list

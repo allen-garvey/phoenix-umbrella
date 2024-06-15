@@ -110,6 +110,34 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Returns the list of images taken on a given month and day
+  """
+  def list_images_for_date(month, day, limit, offset) when is_integer(month) and is_integer(day) do
+    from(
+      image in Image,
+      where: fragment("EXTRACT(month FROM ?)", image.creation_time) == ^month and fragment("EXTRACT(day FROM ?)", image.creation_time) == ^day, 
+      order_by: [:creation_time, :id],
+      limit: ^limit,
+      offset: ^offset
+    )
+    |> image_preload_import
+    |> Repo.all
+    |> image_default_preloads
+  end
+
+  @doc """
+  Returns the count of images taken on a given month and day
+  """
+  def images_count_for_date!(month, day) when is_integer(month) and is_integer(day) do
+    from(
+      image in Image,
+      where: fragment("EXTRACT(month FROM ?)", image.creation_time) == ^month and fragment("EXTRACT(day FROM ?)", image.creation_time) == ^day,
+      select: count(image.id)
+    )
+    |> Repo.one!
+  end
+
+  @doc """
   Returns total count of images
   """
   def images_count! do

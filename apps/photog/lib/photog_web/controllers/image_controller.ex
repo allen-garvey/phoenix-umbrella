@@ -72,6 +72,26 @@ defmodule PhotogWeb.ImageController do
   end
 
   @doc """
+  Returns all images taken in given date
+  """
+
+  def images_for_date(conn, %{"month" => month, "day" => day, "limit" => limit, "offset" => offset}) do
+    images = Api.list_images_for_date(String.to_integer(month), String.to_integer(day), limit, offset)
+    render(conn, "index.json", images: images)
+  end
+
+  @doc """
+  Return count of all images taken in given year
+  """
+  def images_for_date_count(conn, %{"month" => month, "day" => day}) do
+    count = Api.images_count_for_date!(String.to_integer(month), String.to_integer(day))
+    
+    conn
+    |> put_view(CommonWeb.ApiGenericView)
+    |> render("data.json", data: count)
+  end
+
+  @doc """
   Return count of all images
   """
   def count(conn, %{"favorites" => is_favorite_param}) do

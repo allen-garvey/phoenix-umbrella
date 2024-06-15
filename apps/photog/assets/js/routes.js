@@ -191,6 +191,36 @@ export default {
             },
         },
         {
+            path: '/images/today',
+            name: 'imagesForToday',
+            component: ThumbnailList,
+            props: (route) => {
+                const today = new Date();
+                const apiPath = `/images/date/${
+                    today.getMonth() + 1
+                }/${today.getDate()}`;
+
+                const props = {
+                    useBigThumbnails: true,
+                    apiPath,
+                    apiItemsCountPath: `${apiPath}/count`,
+                    enableBatchSelectImages: true,
+                    isPaginated: true,
+                    pageTitle: `On This Day`,
+                    showRouteFor: (item, _model) => {
+                        return {
+                            name: 'imagesShow',
+                            params: {
+                                id: item.id,
+                            },
+                        };
+                    },
+                };
+
+                return props;
+            },
+        },
+        {
             path: '/albums/years',
             name: 'albumsForYearIndex',
             component: YearsListPage,
