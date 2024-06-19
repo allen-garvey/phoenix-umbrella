@@ -108,7 +108,7 @@
             background-color: #fff;
             height: $thumbnail_dimensions;
             width: $thumbnail_dimensions;
-            border-radius: 10px;
+            border-radius: 4px;
             object-fit: cover;
             transition: height 0.3s 0.15s ease-in;
 
