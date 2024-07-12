@@ -1,5 +1,12 @@
 <template>
     <div class="main container">
+        <div :class="$style.section">
+            <h3>
+                <router-link :to="{ name: 'imagesForToday' }">
+                    On This Day
+                </router-link>
+            </h3>
+        </div>
         <div 
             :class="$style.section"
             v-if="recentAlbums.length > 0"
