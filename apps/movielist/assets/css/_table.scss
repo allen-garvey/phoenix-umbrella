@@ -2,6 +2,7 @@
 * Table styles
 */
 table{
+	color: #000;
 	margin-left: auto;
 	margin-right: auto;
 	border-spacing: 0;
@@ -21,6 +22,7 @@ tbody tr td:first-child::before {
     content: counter(rowNumber);
     min-width: 1em;
     opacity: 0.3;
+	color: #000;
 }
 td, th{
 	padding: 0.8em;
