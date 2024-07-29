@@ -75,6 +75,12 @@
             color: inherit;
         }
     }
+
+    @media (prefers-color-scheme: dark) {
+        .newActivityLink {
+            color: #fff;
+        }
+    }
 </style>
 
 <script>
