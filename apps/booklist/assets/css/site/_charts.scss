@@ -1,5 +1,11 @@
 #books_per_week_chart > svg{
     overflow: visible;
+
+    @media (prefers-color-scheme: dark) {
+        & {
+            background-color: #666;
+        }
+    }
 }
 
 .ct-series-a .ct-point, .ct-series-a .ct-line, .ct-series-a .ct-bar, .ct-series-a .ct-slice-donut{
