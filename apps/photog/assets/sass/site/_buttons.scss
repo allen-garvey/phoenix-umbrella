@@ -13,6 +13,10 @@
 a.btn{
     align-self: baseline;
 
+    &.btn-success {
+        color: #fff;
+    }
+
     &:hover{
         text-decoration: none;
     }
@@ -25,4 +29,17 @@ a.btn{
     font-size  : 0.875rem;
     line-height  : 0.9;
     border-radius : 0.2rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    .btn-outline-dark {
+        --bs-btn-color: #748290;
+        --bs-btn-border-color: #748290;
+        --bs-btn-hover-bg: #748290;
+        --bs-btn-hover-border-color: #748290;
+        --bs-btn-active-bg: #748290;
+        --bs-btn-active-border-color: #748290;
+        --bs-btn-disabled-color: #748290;
+        --bs-btn-disabled-border-color: #748290;
+    }
 }

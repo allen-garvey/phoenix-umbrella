@@ -128,6 +128,12 @@
 
         a{
             color: black;
+
+            @media (prefers-color-scheme: dark) {
+                & {
+                    color: #fff;
+                }
+            }
         }
 
         &.thumbnailTitleFavorite{

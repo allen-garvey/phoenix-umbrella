@@ -38,6 +38,12 @@
         font-weight: normal;
         a{
             color: black;
+
+            @media (prefers-color-scheme: dark) {
+                & {
+                    color: #fff;
+                }
+            }
         }
     }
     .navList{

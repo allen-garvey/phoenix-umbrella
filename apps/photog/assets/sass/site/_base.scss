@@ -14,6 +14,21 @@ body{
     font-family: sans-serif;
 }
 
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #333;
+        color: #fff;
+    }
+
+    a:link {
+        color: #7a75ff;
+    }
+
+    a:visited {
+        color: #a56fd8;
+    }
+}
+
 ul{
     list-style-type: none;
     padding-left: 0;
