@@ -2,6 +2,20 @@
  * Styles for default index view
  */
 
+ @media (prefers-color-scheme: dark) {
+	.index_list {
+		li {
+			&:nth-of-type(even){
+				background-color: #444;
+				
+				a {
+					color: #fff;
+				}
+			}
+		}
+	}
+}
+
  .index_list{
  	li{
  		display: flex;

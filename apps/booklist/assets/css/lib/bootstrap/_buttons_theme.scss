@@ -8,9 +8,11 @@ a.btn:hover {
 .btn-default {
   border-color: #e0e0e0;
   border-style: solid;
+  background-color: #fff;
 
   &:hover {
     background-color: #e0e0e0;
+    color: #000;
   }
 }
 
