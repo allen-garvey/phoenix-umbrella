@@ -21,18 +21,17 @@ h1.main_title{
 nav {
 	ul {
 		display: flex;
+		align-items: center;
 		flex-wrap: wrap;
 		list-style-type: none;
 		margin: 0;
 		padding-left: 0;
+		gap: 10px;
 	}
 	li {
+		display: flex;
 		font-family: $display_font_family;
 		font-size: 1.414em;
-
-		li + li {
-			margin-left: 10px;
-		}
 
 		//nav-pills styles
 		a{
