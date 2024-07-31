@@ -15,6 +15,18 @@ thead{
 tbody{
 	counter-reset: rowNumber;
 }
+
+@media (prefers-color-scheme: dark) {
+	thead a{
+		color: #000;
+	}
+
+    .default-table tbody{
+		background-color: #666;
+		color: #ddd;
+	}
+}
+
 tbody tr {
     counter-increment: rowNumber;
 }

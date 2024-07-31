@@ -1,5 +1,5 @@
 
-<table>
+<table class="default-table">
   <thead>
     <tr>
       <th></th>
@@ -15,7 +15,7 @@
       <td><%= streamer.name %></td>
 
       <td>
-        <%= link "Show", to: Routes.streamer_path(@conn, :show, streamer), class: "btn btn-xs btn-default" %>
+        <%= link "Show", to: Routes.streamer_path(@conn, :show, streamer), class: "btn btn-xs btn-light" %>
       </td>
     </tr>
 <% end %>

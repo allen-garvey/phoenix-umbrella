@@ -54,3 +54,9 @@ svg.ct-chart-line {
 		}
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+    svg text {
+        fill: #fff;
+    }
+}

@@ -40,3 +40,22 @@ nav{
 	color: white;
 	text-decoration: none;
 }
+
+@media (prefers-color-scheme: dark) {
+    .jumbotron{
+		background-color: #666;
+	}
+
+	h1.main_title{
+		a{
+			color: #eee;
+		}
+	}
+
+	nav{
+		//nav-pills styles
+		li a{
+			color: #c6dff5;
+		}
+	}
+}
