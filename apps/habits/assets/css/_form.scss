@@ -6,6 +6,11 @@ form.inline {
     box-sizing: border-box;
 }
 
+.form-control, .form-control:focus {
+    background-color: #fff;
+    color: #000;
+}
+
 .form-group {
     margin-bottom: 1rem;
 
@@ -16,6 +21,13 @@ form.inline {
 
     select.form-control {
         background-color: #fff;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .form-control, .form-control:focus, .form-group select.form-control {
+        background-color: #333;
+        color: #fff;
     }
 }
 
