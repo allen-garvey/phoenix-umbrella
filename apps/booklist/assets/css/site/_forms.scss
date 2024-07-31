@@ -10,4 +10,10 @@
  	margin-right: 1em;
  }
 
+ @media (prefers-color-scheme: dark) {
+	.form-control, .form-control:focus, .form-group select.form-control {
+        background-color: #333;
+        color: #fff;
+    }
+}
 
