@@ -35,8 +35,10 @@
     .hidden {
         visibility: hidden;
     }
-    .container {
-
+    @media (prefers-color-scheme: dark) {
+        .container {
+            background-color: #333;
+        }
     }
 </style>
 
