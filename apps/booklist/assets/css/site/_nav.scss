@@ -49,3 +49,9 @@
 		}
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+	.nav a {
+        color: $dark_mode_color_accent;
+    }
+}
