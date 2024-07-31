@@ -13,3 +13,10 @@
 .btn:hover {
     text-decoration: none;
 }
+
+@media (prefers-color-scheme: dark) {
+	.form-control, .form-control:focus, .form-group select.form-control {
+        background-color: #000;
+        color: #fff;
+    }
+}
