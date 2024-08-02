@@ -42,8 +42,8 @@
     tr.bordeaux {
         background-color: #ad0057;
         
-        &, & a {
-            color: rgba(255, 255, 255, 0.9);
+        &, & a:not(:global(.btn)) {
+            color: #fff;
         }
     }
 
@@ -58,7 +58,7 @@
     tr.yellow {
         background-color: yellow;
         
-        &, & a {
+        &, & a:not(:global(.btn)) {
             color: #000;
         }
     }
@@ -66,15 +66,15 @@
     tr.green {
         background-color: green;
         
-        &, & a {
-            color: rgba(255, 255, 255, 0.9);
+        &, & a:not(:global(.btn)) {
+            color: #fff;
         }
     }
 
     tr.lime {
         background-color: #47ff47;
 
-        &, & a {
+        &, & a:not(:global(.btn)) {
             color: #000;
         }
     }
@@ -82,23 +82,23 @@
     tr.blue {
         background-color: #0a7cff;
         
-        &, & a {
-            color: rgba(255, 255, 255, 0.9);
+        &, & a:not(:global(.btn)) {
+            color: #fff;
         }
     }
 
     tr.teal {
         background-color: teal;
         
-        &, & a {
-            color: rgba(255, 255, 255, 0.9);
+        &, & a:not(:global(.btn)) {
+            color: #fff;
         }
     }
 
     tr.cyan {
         background-color: #6ff;
 
-        &, & a {
+        &, & a:not(:global(.btn)) {
             color: #000;
         }
     }
@@ -110,8 +110,8 @@
     tr.black {
         background-color: #333;
 
-        &, & a {
-            color: rgba(255, 255, 255, 0.9);
+        &, & a:not(:global(.btn)) {
+            color: #fff;
         }
     }
 </style>
