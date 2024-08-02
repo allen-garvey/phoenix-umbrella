@@ -50,3 +50,15 @@ nav {
 	color: white;
 	text-decoration: none;
 }
+
+@media (prefers-color-scheme: dark) {
+	.jumbotron{
+		background-color: #000;
+	}
+
+	h1.main_title{
+		a{
+			color: #fff;
+		}
+	}
+}

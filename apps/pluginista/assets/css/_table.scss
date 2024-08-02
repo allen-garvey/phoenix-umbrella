@@ -31,3 +31,13 @@ th{
 td a{
 	color: black;
 }
+
+@media (prefers-color-scheme: dark) {
+	thead{
+		background-color: #000;
+	}
+
+	table a {
+		color: #fff;
+	}
+}

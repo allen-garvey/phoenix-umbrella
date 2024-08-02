@@ -59,3 +59,14 @@ a{
 	margin: 0 auto;
 	max-width: 1000px;
 }
+
+@media (prefers-color-scheme: dark) {
+	body {
+		color: #fff;
+		background-color: #333;
+	}
+
+	a {
+		color: #337ab7;
+	}
+}
