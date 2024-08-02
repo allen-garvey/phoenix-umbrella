@@ -84,9 +84,10 @@
         }
     }
 
-    .duplicateButton {
+    a.duplicateButton {
         display: inline-block;
         margin-left: 1em;
+        color: #000;
     }
 
     .selectedActivityContent {
