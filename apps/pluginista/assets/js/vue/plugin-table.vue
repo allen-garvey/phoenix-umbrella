@@ -36,11 +36,15 @@
 
 <style lang="scss" module>
     tr.red {
-        background-color: #ff2929;
+        background-color: #b02929;
+
+        &, & a:not(:global(.btn)) {
+            color: #fff;
+        }
     }
 
     tr.bordeaux {
-        background-color: #ad0057;
+        background-color: #8e1953;
         
         &, & a:not(:global(.btn)) {
             color: #fff;
@@ -48,15 +52,23 @@
     }
 
     tr.magenta {
-        background-color: #ff61ff;
+        background-color: #ea88ea;
+
+        &, & a:not(:global(.btn)) {
+            color: #000;
+        }
     }
 
     tr.orange {
         background-color: orange;
+
+        &, & a:not(:global(.btn)) {
+            color: #000;
+        }
     }
 
     tr.yellow {
-        background-color: yellow;
+        background-color: rgb(220, 220, 101);
         
         &, & a:not(:global(.btn)) {
             color: #000;
@@ -64,7 +76,7 @@
     }
 
     tr.green {
-        background-color: green;
+        background-color: rgb(37, 83, 37);
         
         &, & a:not(:global(.btn)) {
             color: #fff;
@@ -72,7 +84,7 @@
     }
 
     tr.lime {
-        background-color: #47ff47;
+        background-color: #89ed89;
 
         &, & a:not(:global(.btn)) {
             color: #000;
@@ -80,10 +92,10 @@
     }
 
     tr.blue {
-        background-color: #0a7cff;
+        background-color: #64a6f2;
         
         &, & a:not(:global(.btn)) {
-            color: #fff;
+            color: #000;
         }
     }
 
@@ -96,7 +108,7 @@
     }
 
     tr.cyan {
-        background-color: #6ff;
+        background-color: rgb(172, 231, 231);
 
         &, & a:not(:global(.btn)) {
             color: #000;
