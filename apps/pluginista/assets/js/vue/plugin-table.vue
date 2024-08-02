@@ -73,6 +73,10 @@
 
     tr.lime {
         background-color: #47ff47;
+
+        &, & a {
+            color: #000;
+        }
     }
 
     tr.blue {
