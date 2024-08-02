@@ -39,9 +39,17 @@
                 <a :href="`/activities/${selectedActivity.id}`">
                     {{ selectedActivity.title }} - {{ selectedActivity.date }}
                 </a>
+                <a 
+                    class="btn btn-light" 
+                    :class="$style.duplicateButton"
+                    :href="`/activities/new?duplicate=${selectedActivity.id}`">
+                        Duplicate
+                </a>
             </div>
-            <div>{{ categoriesMap.get(selectedActivity.category_id).name }}</div>
-            <div>{{ selectedActivity.description }}</div>
+            <div :class="$style.selectedActivityContent">
+                <div>{{ categoriesMap.get(selectedActivity.category_id).name }}</div>
+                <div>{{ selectedActivity.description }}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -74,6 +82,15 @@
         a {
             color: inherit;
         }
+    }
+
+    .duplicateButton {
+        display: inline-block;
+        margin-left: 1em;
+    }
+
+    .selectedActivityContent {
+        padding: 1em;
     }
 
     @media (prefers-color-scheme: dark) {
