@@ -37,3 +37,10 @@
 		border-color: #204d74;
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+	.form-control, .form-control:focus, .form-group select.form-control {
+		background-color: #000;
+        color: #fff;
+	}
+}
