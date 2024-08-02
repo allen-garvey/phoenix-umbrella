@@ -18,7 +18,7 @@
             <tr 
                 v-for="plugin in pluginsSorted" 
                 :key="plugin.id"
-                :class="{[this.$style[`row-${plugin.category?.color}`]]: plugin.category}"
+                :class="{[$style[plugin.category?.color]]: plugin.category}"
             >
                 <td></td>
                 <td><a :href="plugin.maker.url">{{plugin.maker.name}}</a></td>
@@ -35,11 +35,11 @@
 </template>
 
 <style lang="scss" module>
-    .row-red {
+    tr.red {
         background-color: #ff2929;
     }
 
-    .row-bordeaux {
+    tr.bordeaux {
         background-color: #ad0057;
         
         &, & a {
@@ -47,19 +47,23 @@
         }
     }
 
-    .row-magenta {
+    tr.magenta {
         background-color: #ff61ff;
     }
 
-    .row-orange {
+    tr.orange {
         background-color: orange;
     }
 
-    .row-yellow {
+    tr.yellow {
         background-color: yellow;
+        
+        &, & a {
+            color: #000;
+        }
     }
 
-    .row-green {
+    tr.green {
         background-color: green;
         
         &, & a {
@@ -67,11 +71,11 @@
         }
     }
 
-    .row-lime {
+    tr.lime {
         background-color: #47ff47;
     }
 
-    .row-blue {
+    tr.blue {
         background-color: #0a7cff;
         
         &, & a {
@@ -79,7 +83,7 @@
         }
     }
 
-    .row-teal {
+    tr.teal {
         background-color: teal;
         
         &, & a {
@@ -87,15 +91,19 @@
         }
     }
 
-    .row-cyan {
+    tr.cyan {
         background-color: #6ff;
+
+        &, & a {
+            color: #000;
+        }
     }
 
-    .row-violet {
+    tr.violet {
         background-color: #ba61ff;
     }
 
-    .row-black {
+    tr.black {
         background-color: #333;
 
         &, & a {
