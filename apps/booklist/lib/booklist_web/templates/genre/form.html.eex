@@ -7,7 +7,7 @@
 
   <%= Common.ViewHelpers.Form.input_group :name, f, &text_input/3, [autofocus: true] %>
 
-  <%= Common.ViewHelpers.Form.input_group :is_fiction, f, &checkbox/3 %>
+  <%= Common.ViewHelpers.Form.checkbox_input_group :is_fiction, f %>
 
   <%= CommonWeb.FormView.submit_button "Genre" %>
 <% end %>
