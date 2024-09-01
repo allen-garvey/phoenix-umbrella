@@ -32,7 +32,14 @@ defmodule Common.ViewHelpers.Form do
   Creates a form group container for a label and input
   """
 	def input_group(field, form, input_fun, input_opts \\ []) when is_atom(field) and is_function(input_fun, 3) and is_list(input_opts) do
-	  content_tag(:div, [label(form, field), input_fun.(form, field, [class: "form-control"] ++ input_opts), error_tag(form, field)], class: "form-group")
+	  content_tag(:div, [label(form, field), input_fun.(form, field, [class: Keyword.get(input_opts, :input_class, "form-control")] ++ input_opts), error_tag(form, field)], class: "form-group")
+	end
+
+  @doc """
+  Creates a form group container for a checkbox with a label
+  """
+	def checkbox_input_group(field, form, input_opts \\ []) when is_atom(field) and is_list(input_opts) do
+	  input_group(field, form, &checkbox/3, Keyword.put_new(input_opts, :input_class, "form-check-input"))
 	end
 
   @doc """
