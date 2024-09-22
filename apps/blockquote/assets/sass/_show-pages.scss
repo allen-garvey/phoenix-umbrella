@@ -26,3 +26,9 @@
 	list-style-type: square;
 	padding-left: 2em;
 }
+
+@media (prefers-color-scheme: dark) {
+	.related-fields-title {
+		color: #666;
+	}
+}

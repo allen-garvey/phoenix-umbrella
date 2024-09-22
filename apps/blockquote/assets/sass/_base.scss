@@ -110,3 +110,18 @@ li{
 .hidden {
     display: none;
 }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: #fff;
+        background-color: #333;
+    }
+
+    a:focus, a:hover {
+        color: #34705b;
+    }
+
+    .page-title {
+        color: #888;
+    }
+}

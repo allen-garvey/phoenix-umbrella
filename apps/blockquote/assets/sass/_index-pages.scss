@@ -29,3 +29,16 @@
 		border-bottom: 1px solid #eee;
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+	.index-list-title {
+		background-color: #579871;
+		color: #dedede;
+		border-color: transparent;
+	}
+	.index-list {
+		li {
+			background-color: #000;
+		}
+	}
+}

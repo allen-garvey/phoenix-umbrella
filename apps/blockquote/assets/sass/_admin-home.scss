@@ -18,3 +18,11 @@
 		font-weight: 600;
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+	.admin-fields-list {
+		li {
+			background-color: #000;
+		}
+	}
+}
