@@ -2,10 +2,7 @@
 /*
 * Home page
 */
-/* Main marketing message */
-.jumbotron {
-  border-bottom: 1px solid #e5e5e5;
-}
+
 //override default bootstrap
 .home-jumbotron{
 	margin-bottom: 1em;
@@ -21,6 +18,12 @@
 	}
 	p{
 		font-size: 1em;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.home-jumbotron {
+		background-color: #666;
 	}
 }
 

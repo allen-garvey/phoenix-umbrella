@@ -37,3 +37,40 @@ a {
 		text-decoration: underline;
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+
+	.table {
+		--bs-table-color: #fff;
+		--bs-table-bg: transparent;
+	}
+
+	body {
+		color: #fff;
+		background-color: #333;
+	}
+
+	a {
+		&:link {
+			color: #3f93dc;
+		}
+
+		&.btn-success {
+			color: #fff;
+		}
+	}
+
+	a.btn-success:link, a.btn-primary:link {
+		color: #fff;
+	}
+
+	a.btn-default:hover {
+		color: #000;
+	}
+
+	input, select, .form-control, .form-control:focus {
+		background-color: #000;
+		color: #fff;
+		color-scheme: dark;
+	}
+}

@@ -13,3 +13,10 @@
 .show-attribute-list li{
 	margin-bottom: 0.5em;
 }
+
+
+@media (prefers-color-scheme: dark) {
+	.list-group {
+		--bs-list-group-bg: #666;
+	}
+}
