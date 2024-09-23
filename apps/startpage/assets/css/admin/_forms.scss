@@ -6,3 +6,15 @@
 .form-example{
     margin-top: 1rem;
 }
+
+.form-group {
+    margin-bottom: 0.5em;
+}
+
+@media (prefers-color-scheme: dark) {
+	.form-control{
+		color-scheme: dark;
+        color: #fff;
+        background-color: #000;
+	}
+}
