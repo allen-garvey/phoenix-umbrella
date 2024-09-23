@@ -71,3 +71,10 @@ cite{
 		margin-left: 1.2em;
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+	blockquote{
+		color: #ededed;
+		background: #1a1a1a;
+	}
+}

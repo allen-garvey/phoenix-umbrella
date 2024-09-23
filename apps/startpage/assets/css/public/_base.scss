@@ -1,7 +1,6 @@
 /****************************
 * Variables
 *****************************/
-$menu_contents_bg_color : white;
 $menu_min_width : 170px;
 $media_query_breakpoint : 600px;
 
@@ -54,5 +53,31 @@ hr{
 	//base
 	.main_content{
 		flex-direction: column;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	body{
+		background-image: url('/images/night.webp');
+		background-position: center;
+		background-color: #333;
+	}
+
+	a {
+		&:link {
+			color: rgb(87, 92, 233);
+		}
+
+		&:visited {
+			color: rgb(130, 72, 185);
+		}
+
+		&:active {
+			color: red;
+		}
+	}
+
+	hr{
+		border-bottom: 1px solid rgba(96, 96, 96, 0.5);
 	}
 }
