@@ -49,5 +49,11 @@ h4{
 	font-size: 1.25rem;
 }
 
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #333;
+		color: #fff;
+	}
+}
 
 

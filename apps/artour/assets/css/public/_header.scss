@@ -22,3 +22,9 @@
 	text-decoration: none;
 	font-weight: bold;
 }
+
+@media (prefers-color-scheme: dark) {
+	.nav a {
+		color: #fff;
+	}
+}
