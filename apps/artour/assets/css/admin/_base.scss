@@ -47,3 +47,10 @@ form.link, form.button {
 	flex-wrap: wrap;
 	justify-content: space-between;
 }
+
+@media (prefers-color-scheme: dark) {
+	body {
+		color: #fff;
+		background-color: #333;
+	}
+}

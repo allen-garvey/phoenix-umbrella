@@ -1,7 +1,13 @@
 .submit_buttons_container{
 	display: flex;
 	justify-content: space-between;
+	margin-top: 1em;
 }
+
+.form-group {
+	margin-bottom: 0.5em;
+}
+
 textarea.form-control{
 	height: 15em;
 }
@@ -21,4 +27,12 @@ input[type="checkbox"]{
 
 .edit-image-preview-container img{
 	max-height: 300px;
+}
+
+@media (prefers-color-scheme: dark) {
+	.form-control, .form-control:focus {
+		color-scheme: dark;
+		background-color: #000;
+		color: #fff;
+	}
 }

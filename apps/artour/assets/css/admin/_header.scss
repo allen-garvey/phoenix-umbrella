@@ -18,9 +18,19 @@
 }
 
 .navbar-light .nav-link.btn{
-	color: #fff;
-
 	&:hover {
-		color: #ccc;
+		color: #fff;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.navbar-brand {
+		--bs-navbar-brand-color: #fff;
+		--bs-navbar-brand-hover-color: #fff;
+	}
+
+	.nav-link {
+		--bs-nav-link-color: #fff;
+		--bs-nav-link-hover-color: #fff;
 	}
 }
