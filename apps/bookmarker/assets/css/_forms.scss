@@ -6,3 +6,10 @@
 .form-group {
 	margin-bottom: 1rem;
 }
+
+@media (prefers-color-scheme: dark) {
+	.btn-default {
+		--bs-btn-color: #fff;
+		--bs-btn-hover-color: #000;
+	}
+}
