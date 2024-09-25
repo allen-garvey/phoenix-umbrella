@@ -51,8 +51,8 @@ a {
 	}
 
 	a {
-		&:link {
-			color: #3f93dc;
+		&, &:link {
+			color: #5c9ad0;
 		}
 
 		&.btn-success {
