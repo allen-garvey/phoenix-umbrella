@@ -68,8 +68,8 @@ export const importRelatedFields = [
 export const sortImagesCallback = (itemsList, sortDirection, reorderMode) => {
     if (reorderMode === 'NAME') {
         itemsList.sort((a, b) => {
-            const aName = a.master_path.replace(/^.*\//, '');
-            const bName = b.master_path.replace(/^.*\//, '');
+            const aName = a.mini_thumbnail_path.replace(/^.*\//, '');
+            const bName = b.mini_thumbnail_path.replace(/^.*\//, '');
 
             if (aName === bName) {
                 return 0;
