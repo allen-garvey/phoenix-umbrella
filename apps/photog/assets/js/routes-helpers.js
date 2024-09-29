@@ -71,14 +71,9 @@ export const sortImagesCallback = (itemsList, sortDirection, reorderMode) => {
             const aName = a.mini_thumbnail_path.replace(/^.*\//, '');
             const bName = b.mini_thumbnail_path.replace(/^.*\//, '');
 
-            if (aName === bName) {
-                return 0;
-            }
-            const isAGreater = aName > bName;
-            return (sortDirection && isAGreater) ||
-                (!sortDirection && !isAGreater)
-                ? 1
-                : -1;
+            return sortDirection
+                ? aName.localeCompare(bName)
+                : bName.localeCompare(aName);
         });
     } else {
         itemsList.sort((a, b) => {
@@ -96,27 +91,21 @@ export const sortAlbumsCallback = (itemsList, sortDirection, reorderMode) => {
             const aName = a.name.toLowerCase();
             const bName = b.name.toLowerCase();
 
-            if (aName === bName) {
-                return 0;
-            }
-
-            const isAGreater = aName > bName;
-            return (sortDirection && isAGreater) ||
-                (!sortDirection && !isAGreater)
-                ? 1
-                : -1;
+            return sortDirection
+                ? aName.localeCompare(bName)
+                : bName.localeCompare(aName);
         });
     } else {
         itemsList.sort((a, b) => {
             if (!sortDirection) {
                 const yearDiff = a.year - b.year;
-                if (yearDiff !== 0) {
+                if (!isNaN(yearDiff) && yearDiff !== 0) {
                     return yearDiff;
                 }
                 return a.id - b.id;
             }
             const yearDiff = b.year - a.year;
-            if (yearDiff !== 0) {
+            if (!isNaN(yearDiff) && yearDiff !== 0) {
                 return yearDiff;
             }
             return b.id - a.id;
