@@ -52,7 +52,7 @@ defmodule PhotogWeb.TagController do
     
     conn
     |> put_view(PhotogWeb.AlbumView)
-    |> render("index.json", albums: albums)
+    |> render("index_for_tags.json", albums: albums)
   end
 
   def images_for(conn, %{"id" => id, "excerpt" => "true"}) do

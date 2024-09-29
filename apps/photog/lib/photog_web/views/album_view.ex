@@ -8,6 +8,10 @@ defmodule PhotogWeb.AlbumView do
     %{data: Enum.map(albums, &album_excerpt_to_map/1)}
   end
 
+  def render("index_for_tags.json", %{albums: albums}) do
+    %{data: Enum.map(albums, &album_excerpt_tag_to_map/1)}
+  end
+
   def render("index_excerpt.json", %{albums: albums}) do
     %{data: render_many(albums, AlbumView, "album_excerpt_mini.json")}
   end
@@ -38,7 +42,7 @@ defmodule PhotogWeb.AlbumView do
     album_excerpt_mini_to_map(album)
   end
 
-  def album_excerpt_to_map(album) do
+  defp album_excerpt_to_map(album) do
     %{
       id: album.id,
       name: album.name,
@@ -48,6 +52,11 @@ defmodule PhotogWeb.AlbumView do
     }
   end
 
+  defp album_excerpt_tag_to_map(album) do
+    album_excerpt_to_map(album)
+    |> Map.put(:year, album.year)
+  end
+
   def album_excerpt_mini_to_map(album) do
     %{
       id: album.id,
@@ -55,4 +64,5 @@ defmodule PhotogWeb.AlbumView do
       is_favorite: album.is_favorite,
     }
   end
+
 end
