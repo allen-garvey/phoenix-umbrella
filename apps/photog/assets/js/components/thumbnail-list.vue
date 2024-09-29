@@ -423,6 +423,7 @@ export default {
             this.shouldShowAllBatchResources = false;
             this.hoveredItem = null;
             this.hoveredItemEvent = null;
+            this.isReordering = false;
             clearTimeout(this.hoveredEventStartTimeout);
             clearTimeout(this.hoveredEventEndTimeout);
             
