@@ -2,7 +2,13 @@
 <div>
     <Form-Section :heading="headingText" :backLink="backLink" :save="save" v-if="isInitialLoadComplete">
         <template v-slot:inputs>
-            <Form-Input :id="idForField('name')" label="Name" v-model="album.name" :errors="errors.name" />
+            <Form-Input 
+                :id="idForField('name')" 
+                label="Name" 
+                :focus="true"
+                v-model="album.name" 
+                :errors="errors.name" 
+            />
 
             <Form-Input :id="idForField('is_favorite')" label="Is Favorite" v-model="album.is_favorite" :errors="errors.is_favorite" input-type="checkbox" />
 

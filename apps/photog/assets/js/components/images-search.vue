@@ -2,7 +2,7 @@
     <div class="main container">
         <h2 :class="$style.sectionHeading">Image Search</h2>
         <form @submit.prevent="onSearchSubmit" :class="$style.form">
-            <label :class="$style.label">File name <input type="search" class="form-control" v-model="query" /></label>
+            <label :class="$style.label">File name <input type="search" class="form-control" v-model="query" v-focus /></label>
             <button type="submit" class="btn btn-success" :class="$style.submitButton" :disabled="!isSearchEnabled">Search</button>
         </form>
         <template v-if="!isLoading && lastQuery">
@@ -41,6 +41,7 @@
 </style>
 
 <script>
+import focus from 'umbrella-common-js/vue/directives/focus.js';
 import { API_URL_BASE } from '../request-helpers.js';
 import { fetchJson } from 'umbrella-common-js/ajax.js';
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
@@ -58,6 +59,9 @@ export default {
         ResourceHeader,
         ThumbnailItemsList,
         LoadingAnimation,
+    },
+    directives: {
+        focus,
     },
     data(){
         return {

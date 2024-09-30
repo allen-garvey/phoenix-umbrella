@@ -4,6 +4,7 @@
             <Form-Input 
                 :id="idForField('notes')" 
                 label="Notes" 
+                :focus="true"
                 v-model="importModel.notes" 
                 :errors="errors.notes" 
                 input-type="textarea" 

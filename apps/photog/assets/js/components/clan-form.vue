@@ -2,7 +2,13 @@
 <div>
     <Form-Section :heading="headingText" :backLink="backLink" :save="save" v-if="isInitialLoadComplete">
         <template v-slot:inputs>
-            <Form-Input :id="idForField('name')" label="Name" v-model="clan.name" :errors="errors.name" />
+            <Form-Input 
+                :id="idForField('name')" 
+                label="Name" 
+                :focus="true"
+                v-model="clan.name" 
+                :errors="errors.name" 
+            />
         </template>
     </Form-Section>
     <div 

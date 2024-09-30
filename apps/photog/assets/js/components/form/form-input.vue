@@ -1,13 +1,28 @@
 <template>
     <div class="form-group">
         <label :for="id">{{label}}</label>
-        <textarea :id="id" class="form-control" v-model="internalValue" :rows="textareaRows" v-if="isTextarea"></textarea>
-        <input :id="id" :class="inputClass" :type="inputType" v-model="internalValue" v-if="!isTextarea" />
+        <textarea 
+            :id="id" 
+            class="form-control" 
+            v-focus="focus"
+            v-model="internalValue" 
+            :rows="textareaRows" 
+            v-if="isTextarea">
+        </textarea>
+        <input 
+            :id="id" 
+            :class="inputClass" 
+            :type="inputType" 
+            v-focus="focus"
+            v-model="internalValue" 
+            v-if="!isTextarea" 
+        />
         <Form-Field-Errors :errors="errors" />
     </div>
 </template>
 
 <script>
+import focus from 'umbrella-common-js/vue/directives/focus.js';
 import FormFieldErrors from './form-field-errors.vue';
 
 export default {
@@ -34,9 +49,16 @@ export default {
         errors: {
             type: Array
         },
+        focus: {
+            type: Boolean,
+            default: false,
+        },
     },
     components: {
         FormFieldErrors,
+    },
+    directives: {
+        focus,
     },
     created(){
         //have to create copy, otherwise have problem with mutating
