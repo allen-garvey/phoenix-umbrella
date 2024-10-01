@@ -4,8 +4,8 @@ defmodule Common.SuperSearch do
 	end
 
 	def search_url(query) do
-		"#{base_url()}/?q=#{query}"
-			|> URI.encode
+		cleaned_query = URI.encode_query(%{"q" => query}, :rfc3986)
+		"#{base_url()}/?#{cleaned_query}"
 	end
 
 	def direct_search_url(library_key, query) do
