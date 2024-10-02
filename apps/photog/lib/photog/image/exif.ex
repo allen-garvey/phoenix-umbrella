@@ -9,14 +9,7 @@ defmodule Photog.Image.Exif do
   """
   def exif_for(%Image{} = image) do
     Photog.Image.master_file_path(image)
-    |> exif_for
-  end
-
-  def exif_for(image_file_path) when is_binary(image_file_path) do
-    with {exif_results, 0} <- System.cmd("exiftool", ["-duplicates", "-unknown", "-json", image_file_path]) do
-      Jason.decode!(exif_results)
-      |> Enum.at(0)
-    end
+    |> Common.ImageHelpers.Exif.exif_for()
   end
 
   @doc """

@@ -3,10 +3,10 @@ defmodule Umbrella.Common.Deps do
   def shared_phoenix_deps do
     ecto() ++
     phoenix_html() ++
+    jason() ++
     [
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_live_reload, "~> 1.3.3", only: :dev},
-      {:jason, "~> 1.4.0"},
       {:plug_cowboy, "~> 2.5.1"},
       {:common, in_umbrella: true},
       {:assertions, "~> 0.18.1", only: :test},
@@ -33,6 +33,12 @@ defmodule Umbrella.Common.Deps do
       {:phoenix_ecto, "~> 4.4.0"},
       {:ecto_sql, "~> 3.8.3"},
       {:postgrex, "~> 0.16.4"},
+    ]
+  end
+
+  def jason do
+    [
+      {:jason, "~> 1.4.0"},
     ]
   end
 

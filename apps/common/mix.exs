@@ -37,7 +37,8 @@ defmodule Common.MixProject do
   defp deps do
     Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
     Umbrella.Common.Deps.ecto() ++
-    Umbrella.Common.Deps.phoenix_html()
+    Umbrella.Common.Deps.phoenix_html() ++
+    Umbrella.Common.Deps.jason()
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

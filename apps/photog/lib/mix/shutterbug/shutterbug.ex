@@ -187,7 +187,7 @@ defmodule Mix.Tasks.Shutterbug do
   end
 
   def get_image_exif(image_source_path, now) do
-    exif_map = Exif.exif_for(image_source_path)
+    exif_map = Common.ImageHelpers.Exif.exif_for(image_source_path)
     creation_datetime = case Exif.exif_creation_time_as_datetime(exif_map) do
       {:ok, datetime, _} -> datetime
       {:error, reason}   -> Error.exit_with_error("#{image_source_path} exif creation date is in the wrong format because #{reason}", :image_exif_creation_date_wrong_format)

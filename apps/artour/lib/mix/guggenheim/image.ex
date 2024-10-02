@@ -54,15 +54,8 @@ defmodule Artour.Guggenheim.Image do
         |> Enum.join(" ")
     end
 
-    def exif_for(image_file_path) when is_binary(image_file_path) do
-        with {exif_results, 0} <- System.cmd("exiftool", ["-unknown", "-json", image_file_path]) do
-            Jason.decode!(exif_results)
-            |> Enum.at(0)
-        end
-    end
-
     def get_orientation(image_path) do
-        exif = exif_for(image_path)
+        exif = Common.ImageHelpers.Exif.exif_for(image_path)
 
         # square images are considered landscape
         case exif["ImageWidth"] < exif["ImageHeight"] do
