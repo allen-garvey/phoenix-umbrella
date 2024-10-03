@@ -6,11 +6,11 @@ defmodule Artour.Guggenheim.Image do
     """
     def get_image_year(source_directory_name, current_year) do
         Regex.split(~r/[ _-]+/, source_directory_name)
-            |> Enum.find_value(current_year, fn part -> 
-                case Regex.match?(~r/^[1-2]\d{3}$/, part) do
-                    true -> String.to_integer(part)
-                    _ -> false
-                end
+        |> Enum.find_value(current_year, fn part -> 
+            case Regex.match?(~r/^[1-2]\d{3}$/, part) do
+                true -> String.to_integer(part)
+                _ -> false
+            end
         end)
     end
 
