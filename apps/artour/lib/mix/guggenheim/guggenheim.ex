@@ -70,7 +70,7 @@ defmodule Mix.Tasks.Guggenheim do
       Filesystem.fix_permissions(temp_dir)
       Image.optimize_jpgs(temp_dir)
       
-      image_priv_dir = Path.join([__ENV__.file, "..", "..", "..", "..", "priv", "static", "media", "images"])
+      image_priv_dir = Path.join([:code.priv_dir(:artour), "static", "media", "images"])
       |> Path.expand
       IO.puts "\n\nImages imported. Copy contents of #{temp_dir} to #{image_priv_dir}"
     end
