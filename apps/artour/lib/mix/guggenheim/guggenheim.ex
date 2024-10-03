@@ -34,7 +34,7 @@ defmodule Mix.Tasks.Guggenheim do
       
       # Get list of image filenames
       source_image_models = Image.get_images_from_dir(source_directory_name)
-      if Enum.count(source_image_models) == 0 do
+      if Enum.empty?(source_image_models) do
         Error.exit_with_error("#{source_directory_name} contains no detected images", :no_images_found)
       end
 
