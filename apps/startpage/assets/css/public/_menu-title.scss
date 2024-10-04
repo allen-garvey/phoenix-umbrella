@@ -35,5 +35,5 @@
 	@include title_color(#493764, #49124c);
 }
 .purple_title{
-	@include title_color(#9400d3, lighten(#751947, 10%));
+	@include title_color(#9400d3);
 }
