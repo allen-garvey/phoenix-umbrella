@@ -97,7 +97,7 @@ defmodule Artour.Guggenheim.Image do
     def optimize_jpgs(temp_dir) do
         jpgs = Path.join(temp_dir, "*.jpg") |> Path.wildcard
 
-        if Enum.count(jpgs) > 0 do
+        if !Enum.empty?(jpgs) do
             System.cmd("jpegoptim", jpgs)
         end
     end
