@@ -1,14 +1,16 @@
 <template>
     <table :class="$style.trackList">
         <thead>
-            <th :class="$style.colPlayBtn"></th>
-            <th 
-                v-for="(column, i) in itemColumns"
-                :key="i" 
-                @click="sortItems(column.sort)"
-            >
-                {{column.title}}
-            </th>
+            <tr>
+                <th :class="$style.colPlayBtn"></th>
+                <th 
+                    v-for="(column, i) in itemColumns"
+                    :key="i" 
+                    @click="sortItems(column.sort)"
+                >
+                    {{column.title}}
+                </th>
+            </tr>
         </thead>
         <tbody>
             <tr 
