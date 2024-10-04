@@ -42,4 +42,9 @@ a.btn{
         --bs-btn-disabled-color: #748290;
         --bs-btn-disabled-border-color: #748290;
     }
+
+    .btn-outline-primary {
+        --bs-btn-color: #75acff;
+        --bs-btn-border-color: #75acff;
+    }
 }
