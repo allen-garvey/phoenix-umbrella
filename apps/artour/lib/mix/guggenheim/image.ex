@@ -108,12 +108,15 @@ defmodule Artour.Guggenheim.Image do
             "filename_small" => generate_image_size(image_path, temp_dir, 500, "sm"),
             "filename_medium" => generate_image_size(image_path, temp_dir, 900, "med"),
         }
-        large_image = case orientation do
-            :landscape -> %{"filename_large" => generate_image_size(image_path, temp_dir, 1600, "lg")}
-            :portrait -> %{"filename_large" => images["filename_medium"]}
+
+        large_image_path = case orientation do
+            :landscape -> generate_image_size(image_path, temp_dir, 1600, "lg")
+            :portrait -> images["filename_medium"]
         end
 
-        Map.merge(images, large_image)
+        images
+        |> Map.put("filename_large", large_image_path)
+
     end
 
     @doc """
