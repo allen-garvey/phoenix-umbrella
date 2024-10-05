@@ -27,11 +27,9 @@ defmodule Mix.Tasks.Shutterbug do
   	Error.exit_with_error("usage: mix shutterbug <image_source_directory>")
   end
 
-  def validate_args(directories) do
+  defp validate_args(directories) do
     directories
-    |> Enum.reduce(true, fn directory, is_valid -> 
-      is_valid and FileValidator.validate_import_directory!(directory)
-    end) and Command.validate_commands_are_installed!(["convert", "exiftool"])
+    |> Enum.all?(&FileValidator.validate_import_directory!/1) and Command.validate_commands_are_installed!(["convert", "exiftool"])
   end
 
   @doc """
@@ -123,11 +121,12 @@ defmodule Mix.Tasks.Shutterbug do
     if File.exists?(masters_path) do
       Error.exit_with_error("#{masters_path} already exists", :masters_directory_exists)
     end
-    File.mkdir_p!(masters_path)
-
+    
     if File.exists?(thumbnails_path) do
       Error.exit_with_error("#{thumbnails_path} already exists", :thumbnails_directory_exists)
     end
+    
+    File.mkdir_p!(masters_path)
     File.mkdir_p!(thumbnails_path)
 
     {target_relative_path, masters_path, thumbnails_path}
