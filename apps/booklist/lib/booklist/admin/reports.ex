@@ -93,7 +93,7 @@ defmodule Booklist.Reports do
   end
 
   def calculate_genres_count(genres, ratings, ratings_count) do
-    initial_map = Enum.reduce(genres, %{}, fn (genre, map) -> Map.put(map, genre.id, 0)  end)
+    initial_map = genres |> Enum.map(fn (genre) -> {genre.id, 0} end) |> Map.new
     genre_map = Enum.reduce(
                   ratings, initial_map, fn (rating, map) -> Map.update!(map, rating.book.genre_id, &increment/1) 
                 end)
