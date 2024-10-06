@@ -11,7 +11,7 @@ defmodule Bookmarker.Mixfile do
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
       elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
+      compilers: Mix.compilers,
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),

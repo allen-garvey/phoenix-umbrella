@@ -33,6 +33,12 @@ defmodule PluginistaWeb do
         root: "lib/pluginista_web/templates",
         namespace: PluginistaWeb
 
+        import Phoenix.HTML
+        import Phoenix.HTML.Form
+        use PhoenixHTMLHelpers
+
+        use Phoenix.Component
+
       # Import convenience functions from controllers
       import Phoenix.Controller,
         only: [get_flash: 1, get_flash: 2, view_module: 1, view_template: 1]
@@ -89,7 +95,9 @@ defmodule PluginistaWeb do
   defp view_helpers do
     quote do
       # Use all HTML functionality (forms, tags, etc)
-      use Phoenix.HTML
+      import Phoenix.HTML
+import Phoenix.HTML.Form
+use PhoenixHTMLHelpers
 
       # Import LiveView and .heex helpers (live_render, live_patch, <.form>, etc)
       import Phoenix.LiveView.Helpers

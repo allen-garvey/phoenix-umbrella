@@ -1,5 +1,5 @@
 defmodule Common.ViewHelpers.Form do
-  use Phoenix.HTML
+  use PhoenixHTMLHelpers
   import Common.ViewHelpers.Error
   
   @doc """

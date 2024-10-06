@@ -11,7 +11,7 @@ defmodule Artour.Mixfile do
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
       elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
+      compilers: Mix.compilers,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
       deps: deps()

@@ -1,6 +1,8 @@
 # For code shared across views that relates to whole application
 defmodule Artour.LayoutHelpers do
-	use Phoenix.HTML
+	import Phoenix.HTML
+import Phoenix.HTML.Form
+use PhoenixHTMLHelpers
 
 	@doc """
   	Used in title of site, in such places as the title tag

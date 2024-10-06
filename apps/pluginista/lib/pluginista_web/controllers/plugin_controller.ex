@@ -3,7 +3,6 @@ defmodule PluginistaWeb.PluginController do
 
   alias Pluginista.Admin
   alias Pluginista.Admin.Plugin
-  alias Pluginista.Admin.Maker
 
   def related_fields() do
     [

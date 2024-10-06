@@ -24,6 +24,8 @@ defmodule Umbrella.Common.Deps do
     [
       {:phoenix, "~> 1.7"},
       {:phoenix_html, "~> 4.1"},
+      {:phoenix_html_helpers, "~> 1.0"},
+      {:phoenix_view, "~> 2.0"},
       {:gettext, "~> 0.26"},
     ]
   end

@@ -1,5 +1,5 @@
 defmodule Common.ViewHelpers.Error do
-  use Phoenix.HTML
+  use PhoenixHTMLHelpers
   
   @doc """
   Generates tag for inlined form input errors.
