@@ -5,11 +5,11 @@ defmodule Umbrella.Common.Deps do
     phoenix_html() ++
     jason() ++
     [
-      {:phoenix_pubsub, "~> 2.0"},
-      {:phoenix_live_reload, "~> 1.3.3", only: :dev},
-      {:plug_cowboy, "~> 2.5.1"},
+      {:phoenix_pubsub, "~> 2.1"},
+      {:phoenix_live_reload, "~> 1.5", only: :dev},
+      {:plug_cowboy, "~> 2.7.2"},
       {:common, in_umbrella: true},
-      {:assertions, "~> 0.18.1", only: :test},
+      {:assertions, "~> 0.20", only: :test},
     ]
   end
 
@@ -22,48 +22,48 @@ defmodule Umbrella.Common.Deps do
 
   def phoenix_html do
     [
-      {:phoenix, "~> 1.6.11"},
-      {:phoenix_html, "~> 3.2.0"},
-      {:gettext, "~> 0.17.1"},
+      {:phoenix, "~> 1.7"},
+      {:phoenix_html, "~> 4.1"},
+      {:gettext, "~> 0.26"},
     ]
   end
 
   def ecto do
     [
-      {:phoenix_ecto, "~> 4.4.0"},
-      {:ecto_sql, "~> 3.8.3"},
-      {:postgrex, "~> 0.16.4"},
+      {:phoenix_ecto, "~> 4.6"},
+      {:ecto_sql, "~> 3.12"},
+      {:postgrex, "~> 0.19"},
     ]
   end
 
   def jason do
     [
-      {:jason, "~> 1.4.0"},
+      {:jason, "~> 1.4"},
     ]
   end
 
   def http_poison do
-    {:httpoison, "~> 1.8.2"}
+    {:httpoison, "~> 2.2"}
   end
 
   def floki do
-    {:floki, "~> 0.33.1"}
+    {:floki, "~> 0.36"}
   end
 
   def earmark do
-    {:earmark, "~> 1.4.27"}
+    {:earmark, "~> 1.4.47"}
   end
 
   def argon2 do
-    {:argon2_elixir, "~> 3.0.0"}
+    {:argon2_elixir, "~> 4.1"}
   end
 
   def telemetry do
     [
-      {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 1.0"},
-      {:phoenix_live_dashboard, "~> 0.6"},
-      {:phoenix_live_view, "~> 0.17.5"},
+      {:telemetry_metrics, "~> 1.0"},
+      {:telemetry_poller, "~> 1.1"},
+      {:phoenix_live_dashboard, "~> 0.8"},
+      {:phoenix_live_view, "~> 0.20"},
     ]
   end
 end
