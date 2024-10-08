@@ -1,5 +1,5 @@
 <% #can't have whitespace in alert, or alert:empty CSS will break %>
-<div class="alert alert-info"><%= get_flash(@conn, :info) %></div>
+<div class="alert alert-info"><%= Phoenix.Flash.get(@flash, :info) %></div>
 
 <h1><%= Common.StringHelpers.naive_pluralize(@item_name) %></h1>
 
