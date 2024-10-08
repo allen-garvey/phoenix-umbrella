@@ -28,7 +28,7 @@ defmodule MovielistWeb.StreamerController do
 
   def show(conn, %{"id" => id}) do
     streamer = Admin.get_streamer!(id)
-    render(conn, "show.html", streamer: streamer, require_modal: true,)
+    render(conn, "show.html", streamer: streamer, require_modal: true)
   end
 
   def edit(conn, %{"id" => id}) do
