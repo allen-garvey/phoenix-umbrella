@@ -21,7 +21,6 @@ defmodule BlockquoteWeb.Router do
     pipe_through :browser
     pipe_through :authenticate
 
-    # get "/", PageController, :index
     get "/", AdminController, :index
   end
 
