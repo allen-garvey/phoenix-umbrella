@@ -12,7 +12,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	.form-control{
+	.form-control, .form-control:focus, .form-group select.form-control {
 		color-scheme: dark;
         color: #fff;
         background-color: #000;
