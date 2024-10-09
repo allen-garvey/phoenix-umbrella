@@ -20,5 +20,5 @@ defmodule GrenadierWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :grenadier
+  use Gettext.Backend, otp_app: :grenadier
 end

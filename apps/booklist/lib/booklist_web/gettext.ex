@@ -20,5 +20,5 @@ defmodule BooklistWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :booklist
+  use Gettext.Backend, otp_app: :booklist
 end

@@ -20,5 +20,5 @@ defmodule StartpageWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :startpage
+  use Gettext.Backend, otp_app: :startpage
 end

@@ -20,5 +20,5 @@ defmodule Artour.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :artour
+  use Gettext.Backend, otp_app: :artour
 end

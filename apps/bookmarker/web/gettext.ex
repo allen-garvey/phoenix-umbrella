@@ -20,5 +20,5 @@ defmodule Bookmarker.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :bookmarker
+  use Gettext.Backend, otp_app: :bookmarker
 end

@@ -20,5 +20,5 @@ defmodule PhotogWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :photog
+  use Gettext.Backend, otp_app: :photog
 end
