@@ -532,6 +532,7 @@ defmodule Photog.Api do
       join: album_image in assoc(image, :album_images),
       join: album in assoc(album_image, :album),
       left_lateral_join: person_image in subquery(person_image_subquery),
+      on: true,
       where: album_image.album_id == ^id,
       order_by: [album_image.image_order, album_image.id],
       select: %Image{image | has_persons: not is_nil(person_image.id), has_albums: true}
@@ -800,6 +801,7 @@ defmodule Photog.Api do
       image in Image,
       as: :image,
       left_lateral_join: album_image in subquery(album_image_subquery),
+      on: true,
       join: person_image in assoc(image, :person_images),
       where: person_image.person_id == ^id,
       order_by: [desc: image.creation_time, desc: image.id],
@@ -1299,7 +1301,9 @@ defmodule Photog.Api do
       image in Image,
       as: :image,
       left_lateral_join: person_image in subquery(person_image_subquery),
+      on: true,
       left_lateral_join: album_image in subquery(album_image_subquery),
+      on: true,
       where: image.import_id == ^id,
       order_by: [image.creation_time, image.id],
       select: %Image{image | has_persons: not is_nil(person_image.id), has_albums: not is_nil(album_image.id)}
