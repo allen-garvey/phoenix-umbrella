@@ -3,9 +3,7 @@ defmodule GrenadierWeb.ErrorHelpers do
   Conveniences for translating and building error messages.
   """
 
-  import Phoenix.HTML
-import Phoenix.HTML.Form
-use PhoenixHTMLHelpers
+  use PhoenixHTMLHelpers
 
   @doc """
   Generates tag for inlined form input errors.

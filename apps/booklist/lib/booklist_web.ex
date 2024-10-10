@@ -38,8 +38,8 @@ defmodule BooklistWeb do
 
       # Use all HTML functionality (forms, tags, etc)
       import Phoenix.HTML
-import Phoenix.HTML.Form
-use PhoenixHTMLHelpers
+      import Phoenix.HTML.Form
+      use PhoenixHTMLHelpers
 
       import BooklistWeb.ErrorHelpers
       import BooklistWeb.Gettext

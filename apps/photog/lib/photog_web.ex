@@ -36,8 +36,8 @@ defmodule PhotogWeb do
 
       # Use all HTML functionality (forms, tags, etc)
       import Phoenix.HTML
-import Phoenix.HTML.Form
-use PhoenixHTMLHelpers
+      import Phoenix.HTML.Form
+      use PhoenixHTMLHelpers
 
       import PhotogWeb.Router.Helpers
       import PhotogWeb.ErrorHelpers

@@ -2,8 +2,6 @@ defmodule PluginistaWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
-
-  
   import Phoenix.HTML.Form
   use PhoenixHTMLHelpers
 
