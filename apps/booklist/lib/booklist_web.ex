@@ -41,7 +41,6 @@ defmodule BooklistWeb do
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
 
-      import BooklistWeb.ErrorHelpers
       import BooklistWeb.Gettext
       alias BooklistWeb.Router.Helpers, as: Routes
 
