@@ -46,23 +46,6 @@ defmodule HabitsWeb do
     end
   end
 
-  def live_view do
-    quote do
-      use Phoenix.LiveView,
-        layout: {HabitsWeb.LayoutView, "live.html"}
-
-      unquote(view_helpers())
-    end
-  end
-
-  def live_component do
-    quote do
-      use Phoenix.LiveComponent
-
-      unquote(view_helpers())
-    end
-  end
-
   def component do
     quote do
       use Phoenix.Component
@@ -77,7 +60,6 @@ defmodule HabitsWeb do
 
       import Plug.Conn
       import Phoenix.Controller
-      import Phoenix.LiveView.Router
     end
   end
 
@@ -94,9 +76,6 @@ defmodule HabitsWeb do
       import Phoenix.HTML
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
-
-      # Import LiveView and .heex helpers (live_render, live_patch, <.form>, etc)
-      import Phoenix.LiveView.Helpers
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View

@@ -1,8 +1,6 @@
 defmodule HabitsWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :habits
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: Common.Endpoint.session_options()]]
-
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phx.digest

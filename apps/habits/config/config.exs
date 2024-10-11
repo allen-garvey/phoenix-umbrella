@@ -18,8 +18,7 @@ config :habits, HabitsWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 6019],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: HabitsWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Habits.PubSub,
-  live_view: [signing_salt: "pIFpbEcf"]
+  pubsub_server: Habits.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
