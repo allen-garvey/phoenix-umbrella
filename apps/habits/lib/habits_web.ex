@@ -22,7 +22,6 @@ defmodule HabitsWeb do
       use Phoenix.Controller, namespace: HabitsWeb
 
       import Plug.Conn
-      import HabitsWeb.Gettext
       alias HabitsWeb.Router.Helpers, as: Routes
     end
   end
@@ -66,7 +65,6 @@ defmodule HabitsWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import HabitsWeb.Gettext
     end
   end
 
@@ -81,7 +79,6 @@ defmodule HabitsWeb do
       import Phoenix.View
 
       import HabitsWeb.ErrorHelpers
-      import HabitsWeb.Gettext
       alias HabitsWeb.Router.Helpers, as: Routes
     end
   end

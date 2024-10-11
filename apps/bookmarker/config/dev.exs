@@ -21,7 +21,6 @@ config :bookmarker, Bookmarker.Endpoint,
       # ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/static/js/app\.js$},
       ~r{priv/static/css/app\.css$},
-      # ~r{priv/gettext/.*(po)$},
       ~r{web/views/.*(ex)$},
       ~r{web/templates/.*(eex)$}
     ]

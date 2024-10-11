@@ -22,7 +22,6 @@ defmodule BlockquoteWeb do
       use Phoenix.Controller, namespace: BlockquoteWeb
       import Plug.Conn
       import BlockquoteWeb.Router.Helpers
-      import BlockquoteWeb.Gettext
     end
   end
 
@@ -40,7 +39,6 @@ defmodule BlockquoteWeb do
       use PhoenixHTMLHelpers
 
       import BlockquoteWeb.Router.Helpers
-      import BlockquoteWeb.Gettext
 
       import Common.ViewHelpers.Form
     end
@@ -57,7 +55,6 @@ defmodule BlockquoteWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import BlockquoteWeb.Gettext
     end
   end
 

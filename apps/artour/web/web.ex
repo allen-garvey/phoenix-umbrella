@@ -36,7 +36,6 @@ defmodule Artour.Web do
       import Ecto.Query
 
       import Artour.Router.Helpers
-      import Artour.Gettext
     end
   end
 
@@ -54,7 +53,6 @@ defmodule Artour.Web do
 
       import Artour.Router.Helpers
       import Artour.ErrorHelpers
-      import Artour.Gettext
       import Artour.LayoutHelpers
       import Artour.DateHelpers, only: [datetime_to_display_date: 1, date_to_us_date: 1, datetime_to_us_date: 1]
     end
@@ -73,7 +71,6 @@ defmodule Artour.Web do
       alias Grenadier.Repo
       import Ecto
       import Ecto.Query
-      import Artour.Gettext
     end
   end
 

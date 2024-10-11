@@ -22,7 +22,6 @@ defmodule PhotogWeb do
       use Phoenix.Controller, namespace: PhotogWeb
       import Plug.Conn
       import PhotogWeb.Router.Helpers
-      import PhotogWeb.Gettext
     end
   end
 
@@ -41,7 +40,6 @@ defmodule PhotogWeb do
 
       import PhotogWeb.Router.Helpers
       import PhotogWeb.ErrorHelpers
-      import PhotogWeb.Gettext
     end
   end
 
@@ -56,7 +54,6 @@ defmodule PhotogWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import PhotogWeb.Gettext
     end
   end
 

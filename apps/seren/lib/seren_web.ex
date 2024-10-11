@@ -22,7 +22,6 @@ defmodule SerenWeb do
       use Phoenix.Controller, namespace: SerenWeb
       import Plug.Conn
       import SerenWeb.Router.Helpers
-      import SerenWeb.Gettext
     end
   end
 
@@ -41,7 +40,6 @@ use PhoenixHTMLHelpers
 
       import SerenWeb.Router.Helpers
       import SerenWeb.ErrorHelpers
-      import SerenWeb.Gettext
     end
   end
 
@@ -56,7 +54,6 @@ use PhoenixHTMLHelpers
   def channel do
     quote do
       use Phoenix.Channel
-      import SerenWeb.Gettext
     end
   end
 

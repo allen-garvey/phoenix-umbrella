@@ -22,7 +22,6 @@ defmodule BooklistWeb do
       use Phoenix.Controller, namespace: BooklistWeb
 
       import Plug.Conn
-      import BooklistWeb.Gettext
       alias BooklistWeb.Router.Helpers, as: Routes
     end
   end
@@ -41,7 +40,6 @@ defmodule BooklistWeb do
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
 
-      import BooklistWeb.Gettext
       alias BooklistWeb.Router.Helpers, as: Routes
 
       import Common.ViewHelpers.Form
@@ -59,7 +57,6 @@ defmodule BooklistWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import BooklistWeb.Gettext
     end
   end
 

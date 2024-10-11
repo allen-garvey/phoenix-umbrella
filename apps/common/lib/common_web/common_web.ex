@@ -29,8 +29,7 @@ defmodule CommonWeb do
         import Phoenix.HTML
         import Phoenix.HTML.Form
         use PhoenixHTMLHelpers
-
-        import CommonWeb.Gettext
+        
         import CommonWeb.ErrorHelpers
       end
     end

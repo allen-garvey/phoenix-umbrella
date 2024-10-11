@@ -35,7 +35,6 @@ defmodule Bookmarker.Web do
       import Ecto.Query
 
       import Bookmarker.Router.Helpers
-      import Bookmarker.Gettext
     end
   end
 
@@ -53,7 +52,6 @@ defmodule Bookmarker.Web do
 
       import Bookmarker.Router.Helpers
       import Bookmarker.ErrorHelpers
-      import Bookmarker.Gettext
     end
   end
 
@@ -70,7 +68,6 @@ defmodule Bookmarker.Web do
       alias Grenadier.Repo
       import Ecto
       import Ecto.Query
-      import Bookmarker.Gettext
     end
   end
 

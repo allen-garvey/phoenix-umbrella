@@ -45,7 +45,6 @@ config :grenadier, GrenadierWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
       ~r"lib/grenadier_web/{live,views}/.*(ex)$",
       ~r"lib/grenadier_web/templates/.*(eex)$"
     ]

@@ -22,7 +22,6 @@ defmodule MovielistWeb do
       use Phoenix.Controller, namespace: MovielistWeb
 
       import Plug.Conn
-      import MovielistWeb.Gettext
       alias MovielistWeb.Router.Helpers, as: Routes
     end
   end
@@ -42,7 +41,6 @@ defmodule MovielistWeb do
       use PhoenixHTMLHelpers
 
       import MovielistWeb.ErrorHelpers
-      import MovielistWeb.Gettext
       alias MovielistWeb.Router.Helpers, as: Routes
 
       import Common.ViewHelpers.Form
@@ -60,7 +58,6 @@ defmodule MovielistWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import MovielistWeb.Gettext
     end
   end
 

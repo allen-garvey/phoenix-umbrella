@@ -22,7 +22,6 @@ defmodule GrenadierWeb do
       use Phoenix.Controller, namespace: GrenadierWeb
 
       import Plug.Conn
-      import GrenadierWeb.Gettext
       alias GrenadierWeb.Router.Helpers, as: Routes
     end
   end
@@ -42,7 +41,6 @@ defmodule GrenadierWeb do
       use PhoenixHTMLHelpers
 
       import GrenadierWeb.ErrorHelpers
-      import GrenadierWeb.Gettext
       alias GrenadierWeb.Router.Helpers, as: Routes
     end
   end
@@ -58,7 +56,6 @@ defmodule GrenadierWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import GrenadierWeb.Gettext
     end
   end
 

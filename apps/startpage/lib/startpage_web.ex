@@ -22,7 +22,6 @@ defmodule StartpageWeb do
       use Phoenix.Controller, namespace: StartpageWeb
 
       import Plug.Conn
-      import StartpageWeb.Gettext
       alias StartpageWeb.Router.Helpers, as: Routes
     end
   end
@@ -42,7 +41,6 @@ defmodule StartpageWeb do
       use PhoenixHTMLHelpers
 
       import StartpageWeb.ErrorHelpers
-      import StartpageWeb.Gettext
       alias StartpageWeb.Router.Helpers, as: Routes
     end
   end
@@ -58,7 +56,6 @@ defmodule StartpageWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import StartpageWeb.Gettext
     end
   end
 

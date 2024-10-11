@@ -51,7 +51,6 @@ config :booklist, BooklistWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
-      ~r{priv/gettext/.*(po)$},
       ~r{lib/booklist_web/views/.*(ex)$},
       ~r{lib/booklist_web/templates/.*(eex)$}
     ]

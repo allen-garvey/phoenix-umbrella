@@ -22,7 +22,6 @@ defmodule PluginistaWeb do
       use Phoenix.Controller, namespace: PluginistaWeb
 
       import Plug.Conn
-      import PluginistaWeb.Gettext
       alias PluginistaWeb.Router.Helpers, as: Routes
     end
   end
@@ -70,7 +69,6 @@ defmodule PluginistaWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import PluginistaWeb.Gettext
     end
   end
 
@@ -85,7 +83,6 @@ defmodule PluginistaWeb do
       import Phoenix.View
 
       import PluginistaWeb.ErrorHelpers
-      import PluginistaWeb.Gettext
       alias PluginistaWeb.Router.Helpers, as: Routes
     end
   end
