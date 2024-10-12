@@ -4,13 +4,11 @@ Elixir umbrella project containing several custom CMSs made with Elixir/Phoenix.
 
 ## Dependencies
 
-* Elixir >= 1.12
+* Elixir >= 1.14
 
-* node >= 14
+* node >= 20
 
-* npm
-
-* PostgreSQL
+* PostgreSQL 
 
 ## Getting Started
 
@@ -21,6 +19,8 @@ Elixir umbrella project containing several custom CMSs made with Elixir/Phoenix.
 * Make sure environment variables are set before compilation, as the values are set at compile time
 
 * Clone or download this repo
+
+* Update `postgres_config()` in `Umbrella.Common.Config` if necessary to match you PostgreSQL configuration
 
 * Run `mix deps.get`
 
