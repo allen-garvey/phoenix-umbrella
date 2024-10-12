@@ -35,6 +35,3 @@ config :logger, :console, format: "[$level] $message\n"
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
-
-# Configure your database
-# config :blockquote, Blockquote.Repo, Umbrella.Common.Config.postgres_config("blockquote_dev")

@@ -30,9 +30,6 @@ config :phoenix, :format_encoders, json: Jason
 # config :booklist, Booklist.Repo,
 #   types: Common.PostgrexTypes
 
-# Configure your database
-# config :booklist, Booklist.Repo, Umbrella.Common.Config.postgres_config("booklist_dev")
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

@@ -30,9 +30,6 @@ config :phoenix, :format_encoders, json: Jason
 # config :startpage, Startpage.Repo,
 #   types: Common.PostgrexTypes
 
-# Configure your database
-# config :startpage, Startpage.Repo, Umbrella.Common.Config.postgres_config("startpage_dev")
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

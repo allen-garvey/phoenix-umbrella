@@ -27,9 +27,6 @@ config :phoenix, :format_encoders, json: Jason
 # config :seren, Seren.Repo,
 #   types: Common.PostgrexTypes
 
-# Configure your database
-# config :seren, Seren.Repo, Umbrella.Common.Config.postgres_config("seren_dev")
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

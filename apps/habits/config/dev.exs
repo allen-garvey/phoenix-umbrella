@@ -2,9 +2,6 @@ import Config
 
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
-# Configure your database
-# config :habits, Habits.Repo, Umbrella.Common.Config.postgres_config("habits_dev")
-
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

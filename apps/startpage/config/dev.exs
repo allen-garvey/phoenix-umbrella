@@ -2,9 +2,6 @@ import Config
 
 Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
-# Configure your database
-# config :startpage, Startpage.Repo, Umbrella.Common.Config.postgres_config("startpage_dev")
-
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
