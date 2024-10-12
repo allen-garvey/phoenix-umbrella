@@ -39,7 +39,7 @@ defmodule Habits.MixProject do
     Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
     Umbrella.Common.Deps.shared_authenticated_phoenix_deps()
     ++ [Umbrella.Common.Deps.argon2()]
-    ++ Umbrella.Common.Deps.telemetry()
+    ++ Umbrella.Common.Deps.phoenix_component()
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

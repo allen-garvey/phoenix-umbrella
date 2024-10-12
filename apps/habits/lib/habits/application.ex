@@ -10,8 +10,6 @@ defmodule Habits.Application do
     children = [
       # Start the Ecto repository
       # Habits.Repo,
-      # Start the Telemetry supervisor
-      HabitsWeb.Telemetry,
       # Start the Endpoint (http/https)
       HabitsWeb.Endpoint
       # Start a worker by calling: Habits.Worker.start_link(arg)

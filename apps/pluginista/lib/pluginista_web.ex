@@ -32,11 +32,7 @@ defmodule PluginistaWeb do
         root: "lib/pluginista_web/templates",
         namespace: PluginistaWeb
 
-        import Phoenix.HTML
-        import Phoenix.HTML.Form
-        use PhoenixHTMLHelpers
-
-        use Phoenix.Component
+      use Phoenix.Component
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
