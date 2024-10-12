@@ -16,8 +16,7 @@ config :seren, SerenWeb.Endpoint,
   url: [host: "localhost"],
   http: [port: 6013],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
-  render_errors: [view: SerenWeb.ErrorView, accepts: ~w(html json)],
-  pubsub_server: Seren.PubSub
+  render_errors: [view: SerenWeb.ErrorView, accepts: ~w(html json)]
 
 # Configures Elixir's Logger
 config :logger, :console,

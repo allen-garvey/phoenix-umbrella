@@ -14,7 +14,6 @@ defmodule Grenadier.Application do
       GrenadierWeb.Endpoint,
       # Starts a worker by calling: Grenadier.Worker.start_link(arg)
       # {Grenadier.Worker, arg},
-      {Phoenix.PubSub, [name: Grenadier.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

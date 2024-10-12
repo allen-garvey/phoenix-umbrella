@@ -12,7 +12,6 @@ defmodule Bookmarker.Application do
       Bookmarker.Endpoint,
       # Start your own worker by calling: Bookmarker.Worker.start_link(arg1, arg2, arg3)
       # worker(Bookmarker.Worker, [arg1, arg2, arg3]),
-     {Phoenix.PubSub, [name: Bookmarker.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

@@ -16,8 +16,7 @@ config :artour, Artour.Endpoint,
   url: [host: "localhost"],
   http: [port: 6010],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
-  render_errors: [view: Artour.ErrorView, accepts: ~w(html json)],
-  pubsub_server: Artour.PubSub
+  render_errors: [view: Artour.ErrorView, accepts: ~w(html json)]
 
 # Configures Elixir's Logger
 config :logger, :console,

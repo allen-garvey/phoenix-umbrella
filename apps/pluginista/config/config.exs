@@ -17,8 +17,7 @@ config :pluginista, PluginistaWeb.Endpoint,
   url: [host: "localhost"],
   http: [port: 6018],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
-  render_errors: [view: PluginistaWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Pluginista.PubSub
+  render_errors: [view: PluginistaWeb.ErrorView, accepts: ~w(html json), layout: false]
 
 # Configures Elixir's Logger
 config :logger, :console,

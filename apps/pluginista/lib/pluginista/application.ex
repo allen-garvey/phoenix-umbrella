@@ -12,8 +12,6 @@ defmodule Pluginista.Application do
       # Pluginista.Repo,
       # Start the Telemetry supervisor
       PluginistaWeb.Telemetry,
-      # Start the PubSub system
-      {Phoenix.PubSub, name: Pluginista.PubSub},
       # Start the Endpoint (http/https)
       PluginistaWeb.Endpoint
       # Start a worker by calling: Pluginista.Worker.start_link(arg)

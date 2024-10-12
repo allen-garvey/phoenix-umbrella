@@ -12,7 +12,6 @@ defmodule Photog.Application do
       PhotogWeb.Endpoint,
       # Start your own worker by calling: Photog.Worker.start_link(arg1, arg2, arg3)
       # worker(Photog.Worker, [arg1, arg2, arg3]),
-      {Phoenix.PubSub, [name: Photog.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

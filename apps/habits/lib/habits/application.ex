@@ -12,8 +12,6 @@ defmodule Habits.Application do
       # Habits.Repo,
       # Start the Telemetry supervisor
       HabitsWeb.Telemetry,
-      # Start the PubSub system
-      {Phoenix.PubSub, name: Habits.PubSub},
       # Start the Endpoint (http/https)
       HabitsWeb.Endpoint
       # Start a worker by calling: Habits.Worker.start_link(arg)

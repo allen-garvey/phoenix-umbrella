@@ -20,8 +20,7 @@ config :photog, PhotogWeb.Endpoint,
   url: [host: "localhost"],
   http: [port: 6014],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
-  render_errors: [view: PhotogWeb.ErrorView, accepts: ~w(html json)],
-  pubsub_server: Photog.PubSub
+  render_errors: [view: PhotogWeb.ErrorView, accepts: ~w(html json)]
 
 # Configures Elixir's Logger
 config :logger, :console,

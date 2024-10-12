@@ -17,8 +17,7 @@ config :startpage, StartpageWeb.Endpoint,
   url: [host: "localhost"],
   http: [port: 6017],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
-  render_errors: [view: StartpageWeb.ErrorView, accepts: ~w(html json)],
-  pubsub_server: Startpage.PubSub
+  render_errors: [view: StartpageWeb.ErrorView, accepts: ~w(html json)]
 
 # Configures Elixir's Logger
 config :logger, :console,

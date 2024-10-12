@@ -14,7 +14,6 @@ defmodule Startpage.Application do
       StartpageWeb.Endpoint,
       # Starts a worker by calling: Startpage.Worker.start_link(arg)
       # {Startpage.Worker, arg},
-      {Phoenix.PubSub, [name: Startpage.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -14,7 +14,6 @@ defmodule Booklist.Application do
       BooklistWeb.Endpoint,
       # Starts a worker by calling: Booklist.Worker.start_link(arg)
       # {Booklist.Worker, arg},
-      {Phoenix.PubSub, [name: Booklist.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
