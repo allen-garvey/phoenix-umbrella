@@ -57,4 +57,10 @@ defmodule Umbrella.Common.Deps do
   def argon2 do
     {:argon2_elixir, "~> 4.1"}
   end
+
+  def phoenix_component do
+    [
+      {:phoenix_live_view, "~> 0.20"},
+    ]
+  end
 end
