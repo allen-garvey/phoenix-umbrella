@@ -40,7 +40,7 @@ defmodule GrenadierWeb do
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
 
-      import GrenadierWeb.ErrorHelpers
+      import Common.ViewHelpers.Form, only: [error_tag: 2]
       alias GrenadierWeb.Router.Helpers, as: Routes
     end
   end
