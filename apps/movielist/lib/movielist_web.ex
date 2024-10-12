@@ -40,7 +40,6 @@ defmodule MovielistWeb do
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
 
-      import MovielistWeb.ErrorHelpers
       alias MovielistWeb.Router.Helpers, as: Routes
 
       import Common.ViewHelpers.Form

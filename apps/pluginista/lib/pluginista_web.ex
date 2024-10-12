@@ -82,7 +82,6 @@ defmodule PluginistaWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import PluginistaWeb.ErrorHelpers
       alias PluginistaWeb.Router.Helpers, as: Routes
     end
   end
