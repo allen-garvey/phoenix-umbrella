@@ -10,8 +10,6 @@ defmodule Pluginista.Application do
     children = [
       # Start the Ecto repository
       # Pluginista.Repo,
-      # Start the Telemetry supervisor
-      PluginistaWeb.Telemetry,
       # Start the Endpoint (http/https)
       PluginistaWeb.Endpoint
       # Start a worker by calling: Pluginista.Worker.start_link(arg)

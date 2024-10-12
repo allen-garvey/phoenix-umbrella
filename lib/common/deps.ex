@@ -57,12 +57,4 @@ defmodule Umbrella.Common.Deps do
   def argon2 do
     {:argon2_elixir, "~> 4.1"}
   end
-
-  def telemetry do
-    [
-      {:telemetry_metrics, "~> 1.0"},
-      {:telemetry_poller, "~> 1.1"},
-      {:phoenix_live_dashboard, "~> 0.8"},
-    ]
-  end
 end
