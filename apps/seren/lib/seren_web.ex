@@ -33,13 +33,7 @@ defmodule SerenWeb do
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [view_module: 1]
 
-      # Use all HTML functionality (forms, tags, etc)
-      import Phoenix.HTML
-import Phoenix.HTML.Form
-use PhoenixHTMLHelpers
-
       import SerenWeb.Router.Helpers
-      import SerenWeb.ErrorHelpers
     end
   end
 
