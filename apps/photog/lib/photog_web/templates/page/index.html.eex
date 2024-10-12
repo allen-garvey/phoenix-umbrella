@@ -5,7 +5,8 @@
 <div 
     id="app" 
     data-csrf-token="<%= @csrf_token %>" 
-    data-image-url-prefix="<%= @image_url_prefix %>" data-image-thumbnails-only="<%= @image_thumbnails_only %>"
+    data-image-url-prefix="<%= @image_url_prefix %>" 
+    data-image-thumbnails-only="<%= @image_thumbnails_only %>"
     data-b2-bucket-prefix="<%= @b2_bucket_prefix %>"
 >
 </div>
