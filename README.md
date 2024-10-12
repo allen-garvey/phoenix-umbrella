@@ -28,9 +28,11 @@ Elixir umbrella project containing several custom CMSs made with Elixir/Phoenix.
 
 * Run `npm run deploy`
 
-* Run `mix ecto.setup`
+* In the Grenadier directory `cd apps/grenadier` run `mix ecto.setup`
 
-* Run `phxs`
+* Still in the Grenadier directory, run the mix tasks to create a user (documented in `apps/grenadier/README.md`)
+
+* In the project root directory run `mix phx.server`
 
 ## Individual App Documentation
 
