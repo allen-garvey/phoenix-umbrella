@@ -29,17 +29,11 @@ defmodule PhotogWeb do
     quote do
       use Phoenix.View, root: "lib/photog_web/templates",
                         namespace: PhotogWeb
-
+      
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [view_module: 1]
 
-      # Use all HTML functionality (forms, tags, etc)
-      import Phoenix.HTML
-      import Phoenix.HTML.Form
-      use PhoenixHTMLHelpers
-
       import PhotogWeb.Router.Helpers
-      import PhotogWeb.ErrorHelpers
     end
   end
 
