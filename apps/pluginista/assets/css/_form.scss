@@ -2,17 +2,19 @@
     box-sizing: border-box;
 }
 
-.form-group {
+.form-group, fieldset {
     margin-bottom: 1rem;
+}
 
+.form-group {
     &.right {
         display: flex;
         justify-content: flex-end;
     }
+}
 
-    select.form-control {
-        background-color: #fff;
-    }
+select.form-control {
+    background-color: #fff;
 }
 
 .btn {
