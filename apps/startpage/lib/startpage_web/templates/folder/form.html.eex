@@ -5,29 +5,15 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :name %>
-    <%= text_input f, :name, class: "form-control" %>
-    <%= error_tag f, :name %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :name, f, &text_input/3, [autofocus: true] %>
 
-  <div class="form-group">
-    <%= label f, :theme %>
-    <%= text_input f, :theme, class: "form-control" %>
-    <%= error_tag f, :theme %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :theme, f, &text_input/3 %>
 
-  <div class="form-group">
-    <%= label f, :order %>
-    <%= number_input f, :order, class: "form-control" %>
-    <%= error_tag f, :order %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :order, f, &number_input/3 %>
 
-  <div class="form-group">
-    <%= label f, :content %>
-    <%= textarea f, :content, rows: 16, class: "form-control" %>
-    <%= error_tag f, :content %>
-    <div class="form-example">
+  <%= Common.ViewHelpers.Form.input_group :content, f, &textarea/3, rows: 16 %>
+
+  <div class="form-example">
       Example:
       <code>
         <pre>
@@ -37,7 +23,6 @@ https://google.com --- Google
         </pre>
       </code>
     </div>
-  </div>
 
   <div class="form-group form-button-container">
     <%= link "Back", to: Routes.folder_path(@conn, :index), class: "btn btn-outline-secondary" %>

@@ -40,7 +40,6 @@ defmodule StartpageWeb do
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
 
-      import Common.ViewHelpers.Form, only: [error_tag: 2]
       alias StartpageWeb.Router.Helpers, as: Routes
     end
   end
