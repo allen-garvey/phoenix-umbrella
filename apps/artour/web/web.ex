@@ -23,7 +23,7 @@ defmodule Artour.Web do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Common.ViewHelpers.Form
+      import Common.ViewHelpers.Form, only: [define_map_for_form: 1]
     end
   end
 

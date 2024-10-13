@@ -41,8 +41,7 @@ defmodule MovielistWeb do
       use PhoenixHTMLHelpers
 
       alias MovielistWeb.Router.Helpers, as: Routes
-
-      import Common.ViewHelpers.Form
+      import Common.ViewHelpers.Form, only: [define_map_for_form: 1]
     end
   end
 

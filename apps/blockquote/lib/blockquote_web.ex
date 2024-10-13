@@ -40,7 +40,7 @@ defmodule BlockquoteWeb do
 
       import BlockquoteWeb.Router.Helpers
 
-      import Common.ViewHelpers.Form
+      import Common.ViewHelpers.Form, only: [error_tag: 2]
     end
   end
 

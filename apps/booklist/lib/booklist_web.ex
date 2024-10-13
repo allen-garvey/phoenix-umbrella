@@ -42,7 +42,7 @@ defmodule BooklistWeb do
 
       alias BooklistWeb.Router.Helpers, as: Routes
 
-      import Common.ViewHelpers.Form
+      import Common.ViewHelpers.Form, only: [error_tag: 2]
     end
   end
 
