@@ -1,5 +1,6 @@
 <%= render(BooklistWeb.SharedView, "show-header.html", 
       conn: @conn, 
+	  flash: @flash,
       resource_title_plural: "Locations", 
       resource_path_atom: :location_path, 
       item: @location, 

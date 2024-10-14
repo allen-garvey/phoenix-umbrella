@@ -1,5 +1,6 @@
 <%= render BooklistWeb.SharedView, "index.html", 
   conn: @conn, 
+  flash: @flash,
   item_name: "Book", 
   items: @books, 
   item_path: :book_path, 
