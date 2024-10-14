@@ -20,8 +20,11 @@ defmodule Artour.Guggenheim.Image do
     def get_images_from_dir(source_directory_name) do
         File.ls!(source_directory_name)
         |> Enum.filter(&is_image_filename/1)
-        |> Enum.map(fn image_path -> Path.join(source_directory_name, image_path) end)
-        |> Enum.map(fn image_path -> {image_path, get_orientation(image_path)} end)
+        |> Enum.sort(:asc)
+        |> Enum.map(fn image_path -> 
+            image_path_full = Path.join(source_directory_name, image_path) 
+            {image_path_full, get_orientation(image_path_full)}
+        end)
     end
 
     @doc """
