@@ -93,18 +93,14 @@ defmodule Booklist.Reports do
   end
 
   def calculate_genres_count(genres, ratings, ratings_count) do
-    initial_map = genres |> Enum.map(fn (genre) -> {genre.id, 0} end) |> Map.new
+    initial_map = Enum.map(genres, fn (genre) -> {genre.id, 0} end) |> Map.new
     genre_map = Enum.reduce(
                   ratings, initial_map, fn (rating, map) -> Map.update!(map, rating.book.genre_id, &increment/1) 
                 end)
     Enum.map(genres, fn (genre) -> %{genre: genre, count: genre_map[genre.id] |> calculate_percent_of_ratings(ratings_count)} end)
       |> Enum.filter(fn (%{count: count}) -> count > 0 end)
-      |> Enum.sort(fn (a, b) -> 
-        case a.count == b.count do
-          true -> a.genre.name < b.genre.name
-          false -> a.count > b.count
-        end 
-      end)
+      # sorting by count desc and name asc, that is why a.count and a.genre.name are mismatched
+      |> Enum.sort(fn (a, b) -> {a.count, b.genre.name} >= {b.count, a.genre.name} end)
   end
 
   @doc """
