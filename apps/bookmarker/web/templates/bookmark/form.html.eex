@@ -5,46 +5,19 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :title, class: "control-label" %>
-    <%= text_input f, :title, class: "form-control", autofocus: true %>
-    <%= error_tag f, :title %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :title, f, &text_input/3, autofocus: true %>
 
-  <div class="form-group">
-    <%= label f, :url, class: "control-label" %>
-    <%= url_input f, :url, class: "form-control" %>
-    <%= error_tag f, :url %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :url, f, &url_input/3 %>
 
-  <div class="form-group">
-    <%= label f, :description, class: "control-label" %>
-    <%= textarea f, :description, class: "form-control" %>
-    <%= error_tag f, :description %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :description, f, &textarea/3 %>
 
-  <div class="form-group">
-    <%= label f, :rss_url, class: "control-label" %>
-    <%= url_input f, :rss_url, class: "form-control" %>
-    <%= error_tag f, :rss_url %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :rss_url, f, &url_input/3 %>
 
-  <div class="form-group">
-    <%= label f, :preview_image_selector, class: "control-label" %>
-    <%= text_input f, :preview_image_selector, class: "form-control" %>
-    <%= error_tag f, :preview_image_selector %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :preview_image_selector, f, &text_input/3 %>
 
-  <div class="form-group">
-    <%= label f, :thumbnail_url, class: "control-label" %>
-    <%= url_input f, :thumbnail_url, class: "form-control" %>
-    <%= error_tag f, :thumbnail_url %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :thumbnail_url, f, &url_input/3 %>
 
-  <div class="form-group">
-    <%= label f, :folder_id, "Folder", class: "control-label" %>
-    <%= select f, :folder_id, @folders ,class: "form-control" %>
-  </div>
+  <%= Common.ViewHelpers.Form.select_group :folder_id, f, @folders %>
 
   <%= render Bookmarker.SharedView, "form_submit_buttons.html", form_type: @form_type, save_another: assigns[:save_another] %>
   

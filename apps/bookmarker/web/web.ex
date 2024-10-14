@@ -51,7 +51,6 @@ defmodule Bookmarker.Web do
       use PhoenixHTMLHelpers
 
       import Bookmarker.Router.Helpers
-      import Common.ViewHelpers.Form, only: [error_tag: 2]
     end
   end
 

@@ -5,23 +5,11 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control", autofocus: true %>
-    <%= error_tag f, :name %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :name, f, &text_input/3, autofocus: true %>
 
-  <div class="form-group">
-    <%= label f, :description, class: "control-label" %>
-    <%= text_input f, :description, class: "form-control" %>
-    <%= error_tag f, :description %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :description, f, &text_input/3 %>
 
-  <div class="form-group">
-    <%= label f, :is_favorite, class: "control-label" %>
-    <%= checkbox f, :is_favorite, class: "form-control" %>
-    <%= error_tag f, :is_favorite %>
-  </div>
+  <%= Common.ViewHelpers.Form.checkbox_input_group :is_favorite, f %>
 
   <%= render Bookmarker.SharedView, "form_submit_buttons.html", form_type: @form_type, save_another: assigns[:save_another] %>
 <% end %>
