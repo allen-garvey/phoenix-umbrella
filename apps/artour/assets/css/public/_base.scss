@@ -51,9 +51,36 @@ h4{
 
 @media (prefers-color-scheme: dark) {
 	body {
-		background-color: #333;
+		background-color: #222;
 		color: #fff;
+
+		&.home {
+			background-color: #000;
+		}
 	}
+
+	a {
+		color: rgb(100, 159, 248);
+
+		&:visited {
+			color: rgb(176, 118, 231);
+		}
+
+		&:active {
+			color: red;
+		}
+	}
+
+	.post-title {
+		a {
+			color: #fff;
+	
+			&:active {
+				color: red;
+			}
+		}
+	}
+
 }
 
 

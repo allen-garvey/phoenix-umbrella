@@ -14,7 +14,7 @@ defmodule Artour.PageController do
       _ -> nil
     end
     
-    render(conn, "index.html", posts: posts, main_container_class: "", javascript: true, facebook_image: facebook_image)
+    render(conn, "index.html", posts: posts, javascript: true, facebook_image: facebook_image, body_class: "home", main_container_class: "")
   end
 
   @doc """

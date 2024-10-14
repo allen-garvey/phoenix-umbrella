@@ -14,7 +14,7 @@
     end %>
   </head>
 
-  <body>
+  <body class="<%= assigns[:body_class] %>">
     <header class="header container">
       <nav class="nav">
         <div class="brand"><%= link site_title(), to: page_path(@conn, :index) %></div>
