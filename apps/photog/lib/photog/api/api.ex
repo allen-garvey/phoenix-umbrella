@@ -1305,7 +1305,7 @@ defmodule Photog.Api do
       left_lateral_join: album_image in subquery(album_image_subquery),
       on: true,
       where: image.import_id == ^id,
-      order_by: [image.creation_time, image.id],
+      order_by: [image.id, image.creation_time],
       select: %Image{image | has_persons: not is_nil(person_image.id), has_albums: not is_nil(album_image.id)}
     )
   end
