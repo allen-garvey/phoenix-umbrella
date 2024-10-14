@@ -7,6 +7,15 @@
 	margin-bottom: 1rem;
 }
 
+.form-check-input {
+	margin-left: 0.5em;
+}
+
+.help-block {
+	// variable is defined in bootstrap
+    color: $danger;
+}
+
 @media (prefers-color-scheme: dark) {
 	.btn-default {
 		--bs-btn-color: #fff;
