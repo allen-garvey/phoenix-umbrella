@@ -30,6 +30,10 @@ defmodule Artour.LayoutHelpers do
   	Takes string and splits by newlines, converts into
   	paragraph tags and returns string of combined paragraphs
   	"""
+  def to_paragraphs(nil) do
+    nil
+  end
+
 	def to_paragraphs(text) when is_binary(text) do
     text
       |> String.split("\n")
@@ -37,9 +41,4 @@ defmodule Artour.LayoutHelpers do
       |> Enum.filter(&(String.length(&1) > 1))
       |> Enum.map(&(content_tag(:p, &1)))
   end
-
-  def to_paragraphs(_not_string) do
-    raw ""
-  end
-
 end

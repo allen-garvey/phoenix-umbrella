@@ -16,15 +16,24 @@ defmodule Artour.PublicPostView do
     public_post_path(conn, :show, post.slug)
   end
 
+  def formatted_post_body(nil, _is_markdown) do
+    nil
+  end
+
   def formatted_post_body(post_body, is_markdown) when is_binary(post_body) and is_boolean(is_markdown) do
-    #pipeline for markdown adapted from:
-		#https://hackernoon.com/writing-a-blog-engine-in-phoenix-and-elixir-part-5-markdown-support-fde72badd8e1
-		#use html escape so that raw html is escaped, but markdown is still expanded
 		if is_markdown do
-			post_body |> html_escape |> safe_to_string |> Earmark.as_html! |> raw
+			post_body 
+      |> html_escape 
+      |> safe_to_string 
+      |> expand_markdown_links 
+      |> raw
 		else
 			to_paragraphs(post_body)
 		end 
+  end
+
+  def expand_markdown_links(body) when is_binary(body) do
+    Regex.replace(~r/\[([^\]]+)\]\(([^\)]+)\)/, body, fn _, text, url -> "<a#{attributes_escape(href: url) |> safe_to_string}>#{text}</a>" end)
   end
 
   @doc """

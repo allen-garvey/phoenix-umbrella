@@ -40,7 +40,6 @@ defmodule Artour.Mixfile do
     Umbrella.Common.Deps.shared_authenticated_phoenix_deps() ++
     [
       Umbrella.Common.Deps.http_poison(), # for mix task to test image urls for 404s
-      Umbrella.Common.Deps.earmark(), # for markdown in post bodies
     ]
   end
 

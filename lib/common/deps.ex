@@ -50,10 +50,6 @@ defmodule Umbrella.Common.Deps do
     {:floki, "~> 0.36"}
   end
 
-  def earmark do
-    {:earmark, "~> 1.4.47"}
-  end
-
   def argon2 do
     {:argon2_elixir, "~> 4.1"}
   end
