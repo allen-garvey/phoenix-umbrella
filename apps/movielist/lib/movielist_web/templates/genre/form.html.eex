@@ -5,7 +5,7 @@
     </div>
   <% end %>
 
-  <%= Common.ViewHelpers.Form.input_group :name, f, &text_input/3, [autofocus: true] %>
+  <%= Common.ViewHelpers.Form.input_group :name, f, &text_input/3, autofocus: true %>
 
   <%= CommonWeb.FormView.submit_button "Genre" %>
 <% end %>

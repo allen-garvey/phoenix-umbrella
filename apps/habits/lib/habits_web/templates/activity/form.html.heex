@@ -7,7 +7,7 @@
 
   <%= Common.ViewHelpers.Form.select_group :category_id, f, @categories %>
 
-  <%= Common.ViewHelpers.Form.input_group :title, f, &text_input/3, [autofocus: true] %>
+  <%= Common.ViewHelpers.Form.input_group :title, f, &text_input/3, autofocus: true %>
 
   <%= Common.ViewHelpers.Form.input_group :description, f, &textarea/3, [cols: 80, rows: 8] %>
 

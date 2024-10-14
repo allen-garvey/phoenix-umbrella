@@ -5,7 +5,7 @@
     </div>
   <% end %>
   
-  <%= Common.ViewHelpers.Form.input_group :first_name, f, &text_input/3, [autofocus: true] %>
+  <%= Common.ViewHelpers.Form.input_group :first_name, f, &text_input/3, autofocus: true %>
 
   <%= Common.ViewHelpers.Form.input_group :middle_name, f, &text_input/3 %>
 

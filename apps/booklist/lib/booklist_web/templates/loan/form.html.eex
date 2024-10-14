@@ -9,7 +9,7 @@
 
   <%= Common.ViewHelpers.Form.input_group :due_date, f, &date_input/3 %>
   
-  <%= Common.ViewHelpers.Form.input_group :item_count, f, &number_input/3, [autofocus: true] %>
+  <%= Common.ViewHelpers.Form.input_group :item_count, f, &number_input/3, autofocus: true %>
 
   <%= CommonWeb.FormView.submit_button "Loan" %>
 <% end %>

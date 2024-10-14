@@ -9,7 +9,7 @@
 
   <%= Common.ViewHelpers.Form.select_group :location_id, f, @locations %>
 
-  <%= Common.ViewHelpers.Form.input_group :call_number, f, &text_input/3, [autofocus: true] %>
+  <%= Common.ViewHelpers.Form.input_group :call_number, f, &text_input/3, autofocus: true %>
 
   <%= if !is_nil(assigns[:referrer]) do
   		hidden_input(f, :referrer, name: :referrer, value: assigns[:referrer])

@@ -9,7 +9,7 @@
   
   <%= Common.ViewHelpers.Form.date_input_group :date_scored, f %>
 
-  <%= Common.ViewHelpers.Form.input_group :score, f, &number_input/3, [autofocus: true] %>
+  <%= Common.ViewHelpers.Form.input_group :score, f, &number_input/3, autofocus: true %>
 
   <%= if !is_nil(assigns[:referrer]) do
   		hidden_input(f, :referrer, name: :referrer, value: assigns[:referrer])
