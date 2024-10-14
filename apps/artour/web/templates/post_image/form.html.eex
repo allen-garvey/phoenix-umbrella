@@ -5,29 +5,9 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :post_id, class: "control-label" %>
-    <%= number_input f, :post_id, class: "form-control" %>
-    <%= error_tag f, :post_id %>
-  </div>
-  
-  <div class="form-group">
-    <%= label f, :image_id, class: "control-label" %>
-    <%= number_input f, :image_id, class: "form-control" %>
-    <%= error_tag f, :image_id %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :order, f, &number_input/3 %>
 
-  <div class="form-group">
-    <%= label f, :order, class: "control-label" %>
-    <%= number_input f, :order, class: "form-control" %>
-    <%= error_tag f, :order %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :caption, class: "control-label" %>
-    <%= text_input f, :caption, class: "form-control" %>
-    <%= error_tag f, :caption %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :caption, f, &text_input/3, autofocus: "true" %>
 
   <%= render Artour.SharedView, "form_submit_buttons.html",
                                 show_delete: @show_delete,

@@ -52,7 +52,6 @@ defmodule Artour.Web do
       use PhoenixHTMLHelpers
 
       import Artour.Router.Helpers
-      import Common.ViewHelpers.Form, only: [error_tag: 2]
       import Artour.LayoutHelpers
       import Artour.DateHelpers, only: [datetime_to_display_date: 1, date_to_us_date: 1, datetime_to_us_date: 1]
     end

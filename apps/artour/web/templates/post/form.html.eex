@@ -5,55 +5,25 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :title, class: "control-label" %>
-    <%= text_input f, :title, class: "form-control", data_slug_source: true, spellcheck: "true" %>
-    <%= error_tag f, :title %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :title, f, &text_input/3, autofocus: true, autocorrect: "on", data_slug_source: "true" %>
 
-  <div class="form-group">
-    <%= label f, :slug, class: "control-label" %>
-    <%= text_input f, :slug, class: "form-control", data_slug: true %>
-    <%= error_tag f, :slug %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :slug, f, &text_input/3, data_slug: "true" %>
 
-  <div class="form-group">
-    <%= label f, :cover_image_id, class: "control-label" %>
-    <%= number_input f, :cover_image_id, class: "form-control" %>
-    <%= error_tag f, :cover_image_id %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :cover_image_id, f, &number_input/3 %>
 
-  <div class="form-group">
-    <%= label f, :body, class: "control-label" %>
-    <%= textarea f, :body, class: "form-control", spellcheck: "true" %>
-    <%= error_tag f, :body %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :body, f, &textarea/3, spellcheck: "true" %>
 
   <div class="spread_content">
-    <div class="form-group">
-      <%= label f, :is_markdown, "Markdown body", class: "control-label" %>
-      <%= checkbox f, :is_markdown %>
-      <%= error_tag f, :is_markdown %>
-    </div>
+    
+    <%= Common.ViewHelpers.Form.checkbox_input_group :is_markdown, f, label: "Markdown body" %>
 
-    <div class="form-group">
-      <%= label f, :is_nsfw, "NSFW", class: "control-label" %>
-      <%= checkbox f, :is_nsfw %>
-      <%= error_tag f, :is_nsfw %>
-    </div>
+    <%= Common.ViewHelpers.Form.checkbox_input_group :is_nsfw, f, label: "NSFW" %>
 
-    <div class="form-group">
-      <%= label f, :is_published, "Published", class: "control-label" %>
-      <%= checkbox f, :is_published %>
-      <%= error_tag f, :is_published %>
-    </div>
+    <%= Common.ViewHelpers.Form.checkbox_input_group :is_published, f, label: "Published" %>
+
   </div>
 
-  <div class="form-group">
-    <%= label f, :publication_date, class: "control-label" %>
-    <%= date_input f, :publication_date, class: "form-control" %>
-    <%= error_tag f, :publication_date %>
-  </div>
+  <%= Common.ViewHelpers.Form.input_group :publication_date, f, &date_input/3 %>
 
   <%= render Artour.SharedView, "form_submit_buttons.html",
                                 show_delete: @show_delete,
