@@ -1,10 +1,6 @@
 <%= render Bookmarker.SharedView, "form_header.html", model_name: "bookmark", back_path: bookmark_path(@conn, :index) %>
 
-<%= if assigns[:flash] do %>
-  <div class="alert alert-info">
-  	<%= @flash %>
-  </div>
-<% end %>
+<p class="alert alert-info" role="alert"><%= Phoenix.Flash.get(@flash, :info) %></p>
 
 <%= render "form.html", changeset: @changeset,
 						folders: @folders,
