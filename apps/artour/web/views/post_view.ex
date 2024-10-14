@@ -101,6 +101,14 @@ defmodule Artour.PostView do
   formatted values
   """
   def attribute_values(conn, post) do
-    [post.title, link(Artour.PublicPostView.show_path(conn, post), to: Artour.PublicPostView.show_path(conn, post)), datetime_to_us_date(post.publication_date), post.is_nsfw, post.is_markdown, post.is_published, to_paragraphs(post.body)]
+    [
+      post.title, 
+      link(Artour.PublicPostView.show_path(conn, post), to: Artour.PublicPostView.show_path(conn, post)), 
+      datetime_to_us_date(post.publication_date), 
+      post.is_nsfw, 
+      post.is_markdown, 
+      post.is_published, 
+      Artour.PublicPostView.formatted_post_body(post.body, post.is_markdown)
+    ]
   end
 end

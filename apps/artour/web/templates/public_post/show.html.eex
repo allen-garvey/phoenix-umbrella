@@ -5,16 +5,7 @@
 	</div>
 </div>
 <div class="post-body-container">
-	<%= 
-		#pipeline for markdown adapted from:
-		#https://hackernoon.com/writing-a-blog-engine-in-phoenix-and-elixir-part-5-markdown-support-fde72badd8e1
-		#use html escape so that raw html is escaped, but markdown is still expanded
-		if @post.is_markdown do
-			@post.body |> html_escape |> safe_to_string |> Earmark.as_html! |> raw
-		else
-			to_paragraphs(@post.body)
-		end 
-	%>
+	<%= formatted_post_body(@post.body, @post.is_markdown) %>
 </div>
 <%= render "album.html", conn: @conn, post_images: @post.post_images %>
 <%= render "lightbox.html" %>
