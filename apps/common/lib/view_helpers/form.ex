@@ -40,7 +40,14 @@ defmodule Common.ViewHelpers.Form do
   Creates a form group container for a label and input
   """
 	def input_group(field, form, input_fun, input_opts \\ []) when is_atom(field) and is_function(input_fun, 3) and is_list(input_opts) do
-	  content_tag(:div, [label(form, field), input_fun.(form, field, Keyword.put_new(input_opts, :class, "form-control")), error_tag(form, field)], class: "form-group")
+    {label_text, input_opts_cleaned} = Keyword.pop_first(input_opts, :label)
+
+    input_label = case label_text do
+      nil -> label(form, field)
+      _ -> label(form, field, label_text)
+    end
+
+	  content_tag(:div, [input_label, input_fun.(form, field, Keyword.put_new(input_opts_cleaned, :class, "form-control")), error_tag(form, field)], class: "form-group")
 	end
 
   @doc """
