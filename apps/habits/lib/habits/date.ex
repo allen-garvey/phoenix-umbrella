@@ -6,14 +6,22 @@ defmodule Habits.Date do
         end
     end
 
+    def has_same_month_and_year?(date1, date2) do
+        date1.year == date2.year and date1.month == date2.month
+    end
+
     def sunday_before(date) do
         day_of_week = Date.day_of_week(date, :sunday)
         Date.add(date, 1 - day_of_week)
     end
 
+    def saturday_after(date) do
+        day_of_week = Date.day_of_week(date, :sunday)
+        Date.add(date, 7 - day_of_week)
+    end
+
     def saturday_after_end_of_month(date) do
         end_of_month = Date.end_of_month(date)
-        day_of_week = Date.day_of_week(end_of_month, :sunday)
-        Date.add(end_of_month, 7 - day_of_week)
+        saturday_after(end_of_month)
     end
 end
