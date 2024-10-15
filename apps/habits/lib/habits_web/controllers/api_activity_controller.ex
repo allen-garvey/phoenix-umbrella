@@ -15,5 +15,21 @@ defmodule HabitsWeb.ApiActivityController do
           |> render("error.json", message: "From date #{from_error}, to date #{to_error}")
       end
     end
+
+    def index(conn, %{"year" => year, "month" => month}) do
+      with {:ok, date} <- Habits.Date.date_from(year, month) do
+        from_date = Habits.Date.sunday_before(date)
+        to_date = Habits.Date.saturday_after_end_of_month(date)
+        activities = Api.list_activities(from_date, to_date)
+        
+        render(conn, "index_from_to.json", from: Date.to_iso8601(from_date), to: Date.to_iso8601(to_date), activities: activities)
+      else
+        {:error, message} -> 
+          conn 
+            |> put_view(CommonWeb.ApiGenericView) 
+            |> put_status(:bad_request) 
+            |> render("error.json", message: "#{message}")
+      end
+    end
 end
   
