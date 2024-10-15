@@ -1,7 +1,6 @@
 # For code shared across views that relates to whole application
 defmodule Artour.LayoutHelpers do
 	
-  import Phoenix.HTML
   use PhoenixHTMLHelpers
 
 	@doc """
