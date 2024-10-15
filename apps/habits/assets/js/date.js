@@ -5,25 +5,6 @@ export const getTodaysDate = () => {
     return new Date(now.getTime() - timezoneOffset * 60 * 1000);
 };
 
-// get the sunday before the first of the month
-export const getMonthSunday = (date) => {
-    const firstDay = new Date(date.valueOf());
-    firstDay.setDate(1);
-    const dayOfWeek = firstDay.getDay();
-    firstDay.setDate(firstDay.getDate() - dayOfWeek);
-
-    return firstDay;
-};
-
-export const getSaturdayAfter = (date) => {
-    const saturdayAfter = new Date(date.getTime());
-    saturdayAfter.setDate(
-        saturdayAfter.getDate() + (6 - saturdayAfter.getDay())
-    );
-
-    return saturdayAfter;
-};
-
 // takes date string in format yyyy-mm-dd and returns date object
 // adds timestamp to fix bug where date is not parsed correctly
 // https://stackoverflow.com/questions/2488313/javascripts-getdate-returns-wrong-date
