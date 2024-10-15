@@ -59,10 +59,17 @@ export default {
         ActivityMonth,
     },
     created(){
-        const activitiesPromise = this.fetchActivities(
-            this.todaysDate.getMonth(), 
-            this.todaysDate.getFullYear()
-        );
+        let month = this.todaysDate.getMonth();
+        let year = this.todaysDate.getFullYear();
+
+        const urlParams = new URL(window.location.href).searchParams;
+
+        if(urlParams.has('year') && urlParams.has('month')){
+            month = parseInt(urlParams.get('month'));
+            year = urlParams.get('year');
+        }
+
+        const activitiesPromise = this.fetchActivities(month, year);
         const categoriesPromise = fetchJson('/api/categories')
             .then(data => this.categories = data);
         
@@ -85,6 +92,28 @@ export default {
             const categoriesMap = new Map();
             this.categories.forEach(category => categoriesMap.set(category.id, category));
             return categoriesMap;
+        },
+    },
+    watch: {
+        currentMonthActivities(to){
+            const currentMonthActivities = to;
+            
+            if(!currentMonthActivities){
+                return;
+            }
+
+            const url = new URL(window.location.href);
+            
+            if(this.currentMonthIndex === 0){
+                url.searchParams.delete('year');
+                url.searchParams.delete('month');
+            }
+            else {
+                url.searchParams.set('year', currentMonthActivities.year);
+                url.searchParams.set('month', currentMonthActivities.month);
+            }
+
+            history.replaceState(null, '', url.toString());
         },
     },
     methods: {
