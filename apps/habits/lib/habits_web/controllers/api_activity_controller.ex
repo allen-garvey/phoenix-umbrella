@@ -23,7 +23,7 @@ defmodule HabitsWeb.ApiActivityController do
         from_date = Habits.Date.sunday_before(date)
         to_date = case Habits.Date.has_same_month_and_year?(date, current_date) do
           true -> Habits.Date.saturday_after(current_date)
-          false -> Habits.Date.saturday_after_end_of_month(date)
+          false -> Date.end_of_month(date) |> Habits.Date.saturday_after()
         end
         
         activities = Api.list_activities(from_date, to_date)

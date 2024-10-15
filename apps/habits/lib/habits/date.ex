@@ -19,9 +19,4 @@ defmodule Habits.Date do
         day_of_week = Date.day_of_week(date, :sunday)
         Date.add(date, 7 - day_of_week)
     end
-
-    def saturday_after_end_of_month(date) do
-        end_of_month = Date.end_of_month(date)
-        saturday_after(end_of_month)
-    end
 end
