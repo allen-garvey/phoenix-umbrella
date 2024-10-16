@@ -1,6 +1,5 @@
 <template>
     <div :class="$style.container">
-        <h3 :class="$style.title">{{ monthName(month) }} {{ year }}</h3>
         <div 
             v-for="(week, weekNum) in weeks" 
             :class="$style.week"
@@ -58,10 +57,6 @@
     .container {
 
     }
-    .title {
-        text-align: center;
-        margin-bottom: 2.5rem;
-    }
     .week {
         display: flex;
         padding: 0 0 3em;
@@ -102,7 +97,7 @@
 </style>
 
 <script>
-import { formatDate, monthName, dateFromIso } from '../date';
+import { formatDate, dateFromIso } from '../date';
 
 export default {
     props: {
@@ -157,7 +152,6 @@ export default {
         },
     },
     methods: {
-        monthName,
         formatDayDate(dayDate){
             return dayDate.split('-').slice(1,3).join('/');
         },

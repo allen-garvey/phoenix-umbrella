@@ -16,6 +16,7 @@
                     Next Month
                 </button>
             </div>
+            <h3 :class="$style.title">{{ monthName(currentMonth) }} {{ currentYear }}</h3>
             <Activity-Month
                 :activities="currentMonthActivities.activities"
                 :categories-map="categoriesMap"
@@ -35,6 +36,10 @@
     .hidden {
         visibility: hidden;
     }
+    .title {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
     @media (prefers-color-scheme: dark) {
         .container {
             background-color: #333;
@@ -44,7 +49,7 @@
 
 <script>
 import { fetchJson } from 'umbrella-common-js/ajax.js';
-import { getTodaysDate, formatDate } from '../date';
+import { getTodaysDate, monthName, formatDate } from '../date';
 
 import ActivityMonth from './activity-month.vue';
 
@@ -128,6 +133,7 @@ export default {
     },
     methods: {
         formatDate,
+        monthName,
         fetchActivities(month, year){
             const key = keyFor(month, year);
 
