@@ -11,7 +11,7 @@
                 <button 
                     @click="goOneMonthForward" 
                     class="btn btn-light" 
-                    v-if="(currentMonthIndex > 0)"
+                    v-if="!isTodaysMonth"
                 >
                     Next Month
                 </button>
@@ -48,6 +48,8 @@ import { getTodaysDate, formatDate } from '../date';
 
 import ActivityMonth from './activity-month.vue';
 
+const keyFor = (month, year) => `${year}-${month}`;
+
 export default {
     props: {
         newActivityUrl: {
@@ -66,33 +68,41 @@ export default {
 
         if(urlParams.has('year') && urlParams.has('month')){
             month = parseInt(urlParams.get('month'));
-            year = urlParams.get('year');
+            year = parseInt(urlParams.get('year'));
         }
 
         const activitiesPromise = this.fetchActivities(month, year);
         const categoriesPromise = fetchJson('/api/categories')
             .then(data => this.categories = data);
         
-        Promise.all([activitiesPromise, categoriesPromise]).then(() => this.isLoading = false);
+        Promise.all([activitiesPromise, categoriesPromise]).then(() => {
+            this.currentMonth = month;
+            this.currentYear = year;
+            this.isLoading = false;
+        });
     },
     data(){
         return {
             todaysDate: getTodaysDate(),
             isLoading: true,
-            activities: [],
+            activities: new Map(),
             categories: [],
-            currentMonthIndex: 0,
+            currentMonth: 0,
+            currentYear: 0,
         };
     },
     computed: {
         currentMonthActivities(){
-            return this.activities[this.currentMonthIndex];
+            return this.activities.get(keyFor(this.currentMonth, this.currentYear));
         },
         categoriesMap(){
             const categoriesMap = new Map();
             this.categories.forEach(category => categoriesMap.set(category.id, category));
             return categoriesMap;
         },
+        isTodaysMonth(){
+            return this.currentMonth === this.todaysDate.getMonth() && this.currentYear === this.todaysDate.getFullYear();
+        }
     },
     watch: {
         currentMonthActivities(to){
@@ -119,9 +129,15 @@ export default {
     methods: {
         formatDate,
         fetchActivities(month, year){
+            const key = keyFor(month, year);
+
+            if(this.activities.has(key)){
+                return Promise.resolve();
+            }
+
             return fetchJson(`/api/activities?year=${year}&month=${month+1}`)
                 .then(data => { 
-                    this.activities.push({
+                    this.activities.set(key, {
                         meta: data.meta,
                         month: month,
                         year: year,
@@ -130,26 +146,36 @@ export default {
                 });
         },
         goOneMonthForward(){
-            this.currentMonthIndex = this.currentMonthIndex - 1;
+            let month = this.currentMonth + 1;
+            let year = this.currentYear;
+            
+            if(month > 11){
+                month = 0;
+                year = year + 1;
+            }
+            
+            this.isLoading = true;
+            this.fetchActivities(month, year).then(() => {
+                  this.currentMonth = month;
+                  this.currentYear = year; 
+                  this.isLoading = false; 
+            });
         },
         goOneMonthBack(){
-            const previousMonthIndex = this.currentMonthIndex + 1;
+            let month = this.currentMonth - 1;
+            let year = this.currentYear;
             
-            if(!this.activities[previousMonthIndex]){
-                this.isLoading = true;
-                const currentData = this.activities[this.currentMonthIndex];
-                let month = currentData.month - 1;
-                let year = currentData.year;
-                if(month < 0){
-                    month = 11;
-                    year = year - 1;
-                }
-
-                this.fetchActivities(month, year)
-                    .then(() => this.isLoading = false);
+            if(month < 0){
+                month = 11;
+                year = year - 1;
             }
-
-            this.currentMonthIndex = previousMonthIndex;
+            
+            this.isLoading = true;
+            this.fetchActivities(month, year).then(() => {
+                  this.currentMonth = month;
+                  this.currentYear = year;  
+                  this.isLoading = false;
+            });
         },
     }
 };
