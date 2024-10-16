@@ -36,7 +36,7 @@ defmodule Common.ViewHelpers.Form do
     end
   end
 
-  defp label_for_input(field, form, input_opts \\ []) do
+  defp label_for_input(field, form, input_opts) do
     {label_text, input_opts_cleaned} = Keyword.pop_first(input_opts, :label)
 
     input_label = case label_text do
