@@ -17,18 +17,19 @@ export const formatDate = (date) =>
         .toString()
         .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
-export const monthName = (monthNum) =>
-    [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-    ][monthNum];
+export const monthNames = () => [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+];
+
+export const monthName = (monthNum) => monthName()[monthNum];

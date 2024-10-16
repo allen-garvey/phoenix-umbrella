@@ -1,22 +1,40 @@
 <template>
     <div :class="$style.container">
         <div v-if="currentMonthActivities">
-            <div :class="{[$style.hidden]: isLoading}">
-                <button 
-                    @click="goOneMonthBack" 
-                    class="btn btn-light"
-                >
-                    Previous Month
-                </button>
-                <button 
-                    @click="goOneMonthForward" 
-                    class="btn btn-light" 
-                    v-if="!isTodaysMonth"
-                >
-                    Next Month
-                </button>
+            <div :class="$style.headingContainer">
+                <div :class="{[$style.hidden]: isLoading, [$style.heading]: true}">
+                    <button 
+                        @click="goOneMonthBack" 
+                        class="btn btn-light"
+                    >
+                        Previous Month
+                    </button>
+                    <select 
+                        :value="currentMonth" 
+                        @change="updateMonth($event.target.value)"
+                        class="form-control"
+                        :class="$style.monthInput"
+                    >
+                        <option v-for="(month, index) in monthNames" :value="index" :key="month">
+                            {{ month }}
+                        </option>
+                    </select>
+                    <input 
+                        type="number" 
+                        class="form-control"
+                        :class="$style.yearInput"
+                        :value="currentYear" 
+                        @input="updateYear($event.target.value)" 
+                    />
+                    <button 
+                        @click="goOneMonthForward" 
+                        class="btn btn-light" 
+                        :class="{[$style.hidden]: isTodaysMonth}"
+                    >
+                        Next Month
+                    </button>
+                </div>
             </div>
-            <h3 :class="$style.title">{{ monthName(currentMonth) }} {{ currentYear }}</h3>
             <Activity-Month
                 :activities="currentMonthActivities.activities"
                 :categories-map="categoriesMap"
@@ -36,9 +54,21 @@
     .hidden {
         visibility: hidden;
     }
-    .title {
-        text-align: center;
-        margin-bottom: 2.5rem;
+    .yearInput {
+        flex-basis: 5.5em;
+    }
+    .monthInput {
+        flex-basis: 7em;
+    }
+    .headingContainer {
+        display: flex;
+        justify-content: center;
+    }
+    .heading {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin: 1rem 0 2.5rem;
     }
     @media (prefers-color-scheme: dark) {
         .container {
@@ -49,7 +79,7 @@
 
 <script>
 import { fetchJson } from 'umbrella-common-js/ajax.js';
-import { getTodaysDate, monthName, formatDate } from '../date';
+import { getTodaysDate, monthName, monthNames, formatDate } from '../date';
 
 import ActivityMonth from './activity-month.vue';
 
@@ -107,7 +137,10 @@ export default {
         },
         isTodaysMonth(){
             return this.currentMonth === this.todaysDate.getMonth() && this.currentYear === this.todaysDate.getFullYear();
-        }
+        },
+        monthNames(){
+            return monthNames();
+        },
     },
     watch: {
         currentMonthActivities(to){
@@ -119,7 +152,7 @@ export default {
 
             const url = new URL(window.location.href);
             
-            if(this.currentMonthIndex === 0){
+            if(this.isTodaysMonth){
                 url.searchParams.delete('year');
                 url.searchParams.delete('month');
             }
@@ -181,6 +214,28 @@ export default {
                   this.currentMonth = month;
                   this.currentYear = year;  
                   this.isLoading = false;
+            });
+        },
+        updateMonth(monthString){
+            const month = parseInt(monthString);
+            if(isNaN(month)){
+                return;
+            }
+            this.isLoading = true;
+            this.fetchActivities(month, this.currentYear).then(() => {
+                this.currentMonth = month;
+                this.isLoading = false;
+            });
+        },
+        updateYear(yearString){
+            const year = parseInt(yearString);
+            if(isNaN(year)){
+                return;
+            }
+            this.isLoading = true;
+            this.fetchActivities(this.currentMonth, year).then(() => {
+                this.currentYear = year;
+                this.isLoading = false;
             });
         },
     }
