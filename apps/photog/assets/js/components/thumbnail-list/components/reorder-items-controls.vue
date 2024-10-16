@@ -6,6 +6,7 @@
                 :class="reorderButtonCssClass" 
                 v-show="shouldShowReorderButton" 
                 @click="reorderButtonAction()"
+                :disabled="isCurrentlySavingOrder"
             >
                 {{reorderButtonText}}
             </button>
@@ -13,9 +14,19 @@
                 class="btn btn-success"
                 :class="$style.saveButton" 
                 v-show="isReordering && isListReordered" 
+                :disabled="isCurrentlySavingOrder"
                 @click="saveOrder()"
             >
-                Save order
+                <span v-if="!isCurrentlySavingOrder">Save order</span>
+                <span v-else>Saving</span>
+                <span 
+                    class="spinner-border spinner-border-sm" 
+                    :class="$style.buttonSpinner"
+                    role="status" 
+                    aria-hidden="true"
+                    v-if="isCurrentlySavingOrder"
+                >
+                </span>
             </button>
         </div>
         <div
@@ -29,6 +40,7 @@
                     class="form-control"
                     :class="$style.select"
                     v-model="selectedReorderMode"
+                    :disabled="isCurrentlySavingOrder"
                 >
                     <option 
                         v-for="reorderMode in reorderModes"
@@ -43,6 +55,7 @@
                 <button 
                     class="btn btn-outline-warning"  
                     @click="$emit('reorder-by-sort', selectedReorderMode)"
+                    :disabled="isCurrentlySavingOrder"
                 >
                     Sort
                 </button>
@@ -78,6 +91,10 @@
         height: 100%;
         appearance: auto;
     }
+
+    .buttonSpinner {
+        margin-left: 0.5em;
+    }
 </style>
 
 <script>
@@ -90,6 +107,10 @@ export default {
             required: true,
         },
         isReordering: {
+            type: Boolean,
+            required: true,
+        },
+        isCurrentlySavingOrder: {
             type: Boolean,
             required: true,
         },

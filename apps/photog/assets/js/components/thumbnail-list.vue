@@ -75,6 +75,7 @@
                 :reorderButtonAction="reorderButtonAction"
                 :saveOrder="saveOrder"
                 :enableReorderBySort="!!reorderBySortCallback"
+                :isCurrentlySavingOrder="isCurrentlySavingOrder"
                 @reorder-by-sort="reorderBySort"
                 v-if="supportsReorder"
                 v-show="!isCurrentlyBatchSelect"
@@ -315,6 +316,7 @@ export default {
             selectedItemsToBatchReorder: {}, // indexes of items to reorder at the same time
             reorderDirection: true,
             isListReordered: false,
+            isCurrentlySavingOrder: false,
             reorderedThumbnailList: [],
             currentDragIndex: -1,
             hoveredItem: null,
@@ -424,6 +426,7 @@ export default {
             this.hoveredItem = null;
             this.hoveredItemEvent = null;
             this.isReordering = false;
+            this.isCurrentlySavingOrder = false;
             clearTimeout(this.hoveredEventStartTimeout);
             clearTimeout(this.hoveredEventEndTimeout);
             
@@ -703,9 +706,11 @@ export default {
             const url = `${API_URL_BASE}${this.apiPath}${this.reorderPathSuffix}`;
             const data = {};
             data[this.reorderItemsKey] = this.reorderedThumbnailList.map(item=>item.id);
+            this.isCurrentlySavingOrder = true;
             this.sendJson(url, 'PATCH', data).then((response)=>{
                 this.thumbnailList = this.reorderedThumbnailList;
                 this.isReordering = false;
+                this.isCurrentlySavingOrder = false;
             });
         },
         onClickWhenReordering(item, index, event){
