@@ -1,4 +1,4 @@
-<%= render "index_heading.html", conn: @conn, item_name_singular: @item_name_singular %>
+<%= render "index_heading.html", conn: @conn, item_name_singular: @item_name_singular, count: Enum.count(@items) %>
 
 <table class="table index_table">
   <thead>
