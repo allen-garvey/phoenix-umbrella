@@ -42,6 +42,7 @@ defmodule Mix.Tasks.Guggenheim do
       temp_dir = Filesystem.create_temp_dir!(source_directory_name)
 
       # Create thumbnails in temp dir
+      IO.puts "Generating image thumbnails..."
       Image.create_thumbnails(temp_dir, source_image_models)
 
       # Start Artour app so db is available
