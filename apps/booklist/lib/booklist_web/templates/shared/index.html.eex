@@ -1,7 +1,7 @@
 <% #can't have whitespace in alert, or alert:empty CSS will break %>
 <div class="alert alert-info"><%= Phoenix.Flash.get(@flash, :info) %></div>
 
-<h1><%= Common.StringHelpers.naive_pluralize(@item_name) %></h1>
+<h1><%= Common.StringHelpers.naive_pluralize(@item_name) %> <span class="index-items-count">(<%= Enum.count(@items) %>)</span></h1>
 
 <%= link "Add " <> @item_name, to: apply(Routes, @item_path, [@conn, :new]), class: "btn btn-success btn-sm" %>
 
