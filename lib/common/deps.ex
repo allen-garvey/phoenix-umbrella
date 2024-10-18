@@ -5,7 +5,6 @@ defmodule Umbrella.Common.Deps do
     phoenix_html() ++
     jason() ++
     [
-      {:phoenix_live_reload, "~> 1.5", only: :dev},
       {:plug_cowboy, "~> 2.7.2"},
       {:common, in_umbrella: true},
       {:assertions, "~> 0.20", only: :test},
