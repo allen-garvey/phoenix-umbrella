@@ -19,7 +19,7 @@
 </template>
 
 <style lang="scss" module>
-    @import '~seren-styles/variables';
+    @use '~seren-styles/variables';
 
     .searchBarContainer{
 		display: flex;
@@ -31,24 +31,24 @@
     }
     
     .button {
-        color: $accent_color_text;
+        color: variables.$accent_color_text;
         background: rgba(0,0,0,0);
-        border: solid 1px $accent_color_text;
+        border: solid 1px variables.$accent_color_text;
         border-radius: 2px;
 
         &[disabled]{
-            color: $outline_button_disabled_color;
-            border-color: $outline_button_disabled_color;
+            color: variables.$outline_button_disabled_color;
+            border-color: variables.$outline_button_disabled_color;
             cursor: not-allowed;
         }
         &:hover:enabled{
             color: white;
-            background: $accent_color_text;
+            background: variables.$accent_color_text;
         }
         &:active{
-            border-color: $accent_color_text_darker;
+            border-color: variables.$accent_color_text_darker;
             color: white;
-            background: $accent_color_text_darker;
+            background: variables.$accent_color_text_darker;
         }
     }
 </style>

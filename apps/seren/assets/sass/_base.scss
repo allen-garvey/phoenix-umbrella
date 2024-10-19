@@ -1,3 +1,5 @@
+@use 'variables';
+
 html, body{
 	margin: 0;
 }
@@ -8,7 +10,7 @@ html, body{
 
 .app-container{
 	position: relative;
-	padding-bottom: $media-controls-container-height + 20px;
+	padding-bottom: variables.$media-controls-container-height + 20px;
 	padding-top: 18px;
 }
 

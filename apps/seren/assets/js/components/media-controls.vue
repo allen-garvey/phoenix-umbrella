@@ -28,17 +28,17 @@
 </template>
 
 <style lang="scss" module>
-    @import '~seren-styles/variables';
+    @use '~seren-styles/variables';
 
     .mediaControlsContainer{
         position: fixed;
         bottom: 0;
-        height: $media-controls-container-height;
+        height: variables.$media-controls-container-height;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: $media_controls_background_color;
+        background: variables.$media_controls_background_color;
         box-shadow: 0px -1px 15px rgba(41, 56, 36, 0.6);
         padding: 24px;
         font-size: 15px;

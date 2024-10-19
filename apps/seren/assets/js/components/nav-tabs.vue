@@ -16,7 +16,7 @@
 </template>
 
 <style lang="scss" module>
-    @import '~seren-styles/variables';
+    @use '~seren-styles/variables';
 
     .nav{
         font-family: sans-serif;
@@ -32,7 +32,7 @@
 
     .navPills li a{
         text-decoration: none;
-        color: $accent_color_text;
+        color: variables.$accent_color_text;
         cursor: pointer;
         padding: 0.5em 1em;
 
@@ -41,7 +41,7 @@
         }
 
         &.routerLinkActive{
-            background: $accent_color_text;
+            background: variables.$accent_color_text;
             color: white;
             border-radius: 4px;	
         }
