@@ -1,8 +1,8 @@
 /* Public site CSS */
-@import "public/normalize";
-@import "public/base";
-@import "public/header";
-@import "public/homepage";
-@import "public/post_show";
-@import "public/post_show_album";
-@import "public/nsfw_modal";
+@use "public/normalize";
+@use "public/base";
+@use "public/header";
+@use "public/homepage";
+@use "public/post_show";
+@use "public/post_show_album";
+@use "public/nsfw_modal";
