@@ -1,6 +1,5 @@
-/****************************
-* Bookmarks
-*****************************/
+@use 'variables';
+
 .menu_container{
 	margin: 5px 20px 5px 0;
 }
@@ -10,7 +9,7 @@
 	list-style: none;
 	margin-top: 0;
 	padding: 1em 0.5em 0.5em;
-	min-width: $menu_min_width;
+	min-width: variables.$menu_min_width;
 	text-align: left;
 	max-width: 220px;
 
@@ -40,7 +39,7 @@
 	border-color: black;
 	border: solid;
 	padding: 0.5rem;
-	min-width: $menu_min_width;
+	min-width: variables.$menu_min_width;
 	text-align: center;
 	font-size: 1.3em;
 	opacity: .6;
@@ -60,7 +59,7 @@
 * Media Queries
 *****************************/
 
-@media screen and (max-width: $media_query_breakpoint) {
+@media screen and (max-width: variables.$media_query_breakpoint) {
 	.menu_container{
 		margin: 5px;
 		width: 100%;

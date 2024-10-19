@@ -1,6 +1,5 @@
-/****************************
-* Daily Quote
-*****************************/
+@use 'variables';
+
 .blockquote_container{
 	display: flex;
 	justify-content: center;
@@ -53,7 +52,7 @@ cite{
 * Media Queries
 *****************************/
 
-@media screen and (max-width: $media_query_breakpoint) {
+@media screen and (max-width: variables.$media_query_breakpoint) {
 	//daily quote
 	blockquote{
 		width: 100%;

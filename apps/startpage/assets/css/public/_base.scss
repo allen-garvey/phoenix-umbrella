@@ -1,12 +1,5 @@
-/****************************
-* Variables
-*****************************/
-$menu_min_width : 170px;
-$media_query_breakpoint : 600px;
+@use 'variables';
 
-/****************************
-* Base
-*****************************/
 html{
 	font-size: 19.2px;
 	font-family: "Calendas Plus", "Fanwood Text", "Georgia", "Droid Serif", "Times", serif;
@@ -49,7 +42,7 @@ hr{
 * Media Queries
 *****************************/
 
-@media screen and (max-width: $media_query_breakpoint) {
+@media screen and (max-width: variables.$media_query_breakpoint) {
 	//base
 	.main_content{
 		flex-direction: column;
