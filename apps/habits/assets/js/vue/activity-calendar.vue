@@ -2,10 +2,11 @@
     <div :class="$style.container">
         <div v-if="currentMonthActivities">
             <div :class="$style.headingContainer">
-                <div :class="{[$style.hidden]: isLoading, [$style.heading]: true}">
+                <div :class="$style.heading">
                     <button 
                         @click="goOneMonthBack" 
                         class="btn btn-light"
+                        :disabled="isLoading"
                     >
                         Previous Month
                     </button>
@@ -14,6 +15,7 @@
                         @change="updateMonth($event.target.value)"
                         class="form-control"
                         :class="$style.monthInput"
+                        :disabled="isLoading"
                     >
                         <option v-for="(month, index) in monthNames" :value="index" :key="month">
                             {{ month }}
@@ -25,11 +27,12 @@
                         :class="$style.yearInput"
                         :value="currentYear" 
                         @input="updateYear($event.target.value)" 
+                        :disabled="isLoading"
                     />
                     <button 
                         @click="goOneMonthForward" 
                         class="btn btn-light" 
-                        :class="{[$style.hidden]: isTodaysMonth}"
+                        :disabled="isLoading || isTodaysMonth"
                     >
                         Next Month
                     </button>
@@ -51,9 +54,6 @@
 </template>
 
 <style lang="scss" module>
-    .hidden {
-        visibility: hidden;
-    }
     .yearInput {
         flex-basis: 5.5em;
     }
