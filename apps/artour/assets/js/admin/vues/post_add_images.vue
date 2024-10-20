@@ -29,7 +29,7 @@
 </template>
 
 <style lang="scss" module>
-    @import '~artour-styles/admin/variables';
+    @use '~artour-styles/admin/variables';
     
     .postAddImagesList{
         $post_add_images_item_margin: 10px;
@@ -43,7 +43,7 @@
                 margin-right: $post_add_images_item_margin;
             }
             &.itemSelected{
-                background-color: $item_selected_color;
+                background-color: variables.$item_selected_color;
             }
         }
         img{

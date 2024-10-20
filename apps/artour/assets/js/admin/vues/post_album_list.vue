@@ -46,7 +46,7 @@
 </template>
 
 <style lang="scss" module>
-    @import '~artour-styles/admin/variables';
+    @use '~artour-styles/admin/variables';
 
     .postAlbumImageListControls{
         display: flex;
@@ -91,7 +91,7 @@
             }
         }
         .coverImageContainer{
-            background-color: $item_selected_color;
+            background-color: variables.$item_selected_color;
         }
         .imageButtons > *{
             margin-right: 1em;
