@@ -1,6 +1,4 @@
-/* This file is for your main application css. */
-
-@import "_phoenix.scss";
-@import "_header.scss";
-@import "_login-table.scss";
-@import "_admin-index.scss";
+@use "_phoenix.scss";
+@use "_header.scss";
+@use "_login-table.scss";
+@use "_admin-index.scss";
