@@ -1,16 +1,15 @@
-/*
- * Nav styles
- */
+@use '../base/variables';
+@use '../base/mixins';
 
 .nav{
-	@include font_heading;
-	@include font_size(3);
+	@include mixins.font_heading;
+	@include mixins.font_size(3);
 	padding: 0.5rem 0 0; //some sort of extra padding on bottom for some reason
-	background-color: $color_nav_background;
+	background-color: variables.$color_nav_background;
 	margin-bottom: 1rem;
 		a{
-			color: $color_nav_links;
-			@include media_q_inverse(sm){
+			color: variables.$color_nav_links;
+			@include mixins.media_q_inverse(sm){
 				display: block;
 			}
 		}
@@ -22,25 +21,25 @@
 	.nav_container{
 		display: flex;
 		justify-content: space-between;
-		@include media_q_inverse(sm){
+		@include mixins.media_q_inverse(sm){
 			flex-direction: column;
 		}
 	}
 	.nav_heading{
-		@include font_brand;
+		@include mixins.font_brand;
 	}
 
 	.nav_links{
-		@include font_size(2);
+		@include mixins.font_size(2);
 		font-weight: 100;
 		margin-top: 0.1em;
 		margin-bottom: 0;
-		@include media_q(sm){
+		@include mixins.media_q(sm){
 			float: right;
 		}
 		li{
 			margin-right: 0.5rem;
-			@include media_q(sm){
+			@include mixins.media_q(sm){
 				display: inline-block;
 			}
 		}
@@ -52,6 +51,6 @@
 
 @media (prefers-color-scheme: dark) {
 	.nav a {
-        color: $dark_mode_color_accent;
+        color: variables.$dark_mode_color_accent;
     }
 }

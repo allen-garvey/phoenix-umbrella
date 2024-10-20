@@ -1,6 +1,5 @@
-/**
-* Header styles
-*/
+@use '../base/mixins';
+
 .jumbotron{
-	@include font_brand;
+	@include mixins.font_brand;
 }

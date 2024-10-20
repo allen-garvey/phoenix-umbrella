@@ -1,6 +1,4 @@
-/*
- * Styles for home page
- */
+@use '../base/mixins';
 
 
 .home_header{
@@ -13,7 +11,7 @@
 	}
 }
 .home_section_container{
-	@include media_q(sm){
+	@include mixins.media_q(sm){
 		display: -webkit-flex;
 		display: flex;
 		-webkit-flex-direction: row;

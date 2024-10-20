@@ -1,10 +1,8 @@
-/*
- * Styles for fields page
- */
+@use '../base/mixins';
 
 
 .fields_list{
-	@include font_size(1);
+	@include mixins.font_size(1);
 	li{
 		margin-bottom: 0.5em;
 	}

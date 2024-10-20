@@ -1,13 +1,11 @@
-/*
-* Site base styles
-*/
+@use '../base/mixins';
 
 .alert:empty{
 	display: none;
 }
 
 .form-control{
-	@include font_size(1);
+	@include mixins.font_size(1);
 	box-sizing: border-box;
 	height: 2.2em;
 }

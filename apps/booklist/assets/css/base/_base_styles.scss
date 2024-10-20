@@ -1,36 +1,36 @@
-/**
-* Base styles
-*/
+@use 'variables';
+@use 'mixins';
+
 html{
-	font-size: $rem_base;
+	font-size: variables.$rem_base;
 	box-sizing: border-box;
 }
 *, *:before, *:after{
 	box-sizing: inherit;
 }
 body{
-	@include font_body;
-	color: $color_primary_text;
-	background-color: $color_primary_background;
+	@include mixins.font_body;
+	color: variables.$color_primary_text;
+	background-color: variables.$color_primary_background;
 	margin: 0;
 }
 
 h1,h2,h3,h4{
-	@include font_heading;
+	@include mixins.font_heading;
 	font-weight : normal;
 	margin: 0;
 }
 h1{
-	@include font_size(4);
+	@include mixins.font_size(4);
 }
 h2{
-	@include font_size(3);
+	@include mixins.font_size(3);
 }
 h3{
-	@include font_size(2);
+	@include mixins.font_size(2);
 }
 h4{
-	@include font_size(1);
+	@include mixins.font_size(1);
 }
 
 p{
@@ -51,7 +51,7 @@ img,svg{
 	max-width: 100%;
 }
 a{
-	color: $color_primary_accent;
+	color: variables.$color_primary_accent;
 	text-decoration: none;
 	&:hover{
 		text-decoration: underline;
@@ -65,7 +65,7 @@ a{
     }
 
 	a {
-		color: $dark_mode_color_accent;
+		color: variables.$dark_mode_color_accent;
 	}
 }
 
@@ -77,9 +77,9 @@ figure{
 * Layout
 */
 .container{
-	max-width: $container_width;
+	max-width: variables.$container_width;
 	margin: 0 auto;
-	padding: 0 $container_horizontal_padding;
+	padding: 0 variables.$container_horizontal_padding;
 }
 
 .clearfix:after {

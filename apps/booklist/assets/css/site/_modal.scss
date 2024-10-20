@@ -1,6 +1,5 @@
-/*
-* Styles for modal
-*/
+@use '../base/mixins';
+
 .modal_container{
 	display: flex;
 	z-index: 2;
@@ -22,7 +21,7 @@
 	z-index: 1;
 }
 .modal{
-	@include font_size(1);
+	@include mixins.font_size(1);
 	position: fixed;
 	top: 1em;
 	margin-top: auto;

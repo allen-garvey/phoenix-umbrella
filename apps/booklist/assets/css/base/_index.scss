@@ -1,4 +1,2 @@
-@import 'normalize.scss';
-@import 'constants.scss';
-@import 'mixins.scss';
-@import 'base_styles.scss';
+@use 'normalize.scss';
+@use 'base_styles.scss';

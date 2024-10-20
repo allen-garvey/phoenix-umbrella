@@ -1,5 +1,5 @@
-@import 'lib/bootstrap.scss';
-@import 'lib/bootstrap/_buttons_theme.scss';
-@import 'umbrella-common-styles/form.scss';
-@import 'base/index.scss';
-@import 'site/index.scss';
+@use 'lib/bootstrap.scss';
+@use 'lib/bootstrap/_buttons_theme.scss';
+@use 'umbrella-common-styles/form.scss' as common_form;
+@use 'base/index.scss' as base_index;
+@use 'site/index.scss' as site_index;

@@ -1,3 +1,5 @@
+@use '../base/mixins';
+
 #books_per_week_chart > svg{
     overflow: visible;
 }
@@ -57,6 +59,6 @@ svg.ct-chart-line {
 }
 
 .ct-axis-title{
-    @include font_size(-1);
-    @include font_heading;
+    @include mixins.font_size(-1);
+    @include mixins.font_heading;
 }
