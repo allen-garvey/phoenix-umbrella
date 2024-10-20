@@ -74,7 +74,7 @@
 </template>
 
 <style lang="scss" module>
-    @import '~photog-styles/site/variables';
+    @use '~photog-styles/site/variables';
 
     .textListContainer{
         margin-top: 3.5em;
@@ -117,7 +117,7 @@
         }
 
         .favoritedItem {
-            color: $photog_favorited_color;
+            color: variables.$photog_favorited_color;
         }
     }
 </style>

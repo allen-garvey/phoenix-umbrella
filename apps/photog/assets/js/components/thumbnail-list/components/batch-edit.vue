@@ -124,7 +124,7 @@
 </template>
 
 <style lang="scss" module>
-    @import '~photog-styles/site/variables';
+    @use '~photog-styles/site/variables';
 
     .thumbnailBatchSelectContainer{
         display: inline-block;
@@ -155,7 +155,7 @@
         flex-wrap: wrap;
     }
     .favoritedItem {
-        color: $photog_favorited_color;
+        color: variables.$photog_favorited_color;
     }
 </style>
 

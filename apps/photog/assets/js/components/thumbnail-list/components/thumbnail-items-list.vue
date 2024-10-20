@@ -65,7 +65,7 @@
 </template>
 
 <style lang="scss" module>
-    @import '~photog-styles/site/variables';
+    @use '~photog-styles/site/variables';
     $thumbnail_dimensions: 205px;
     $thumbnail_dimensions_big: 287px;
 
@@ -84,8 +84,8 @@
             border-radius: 5px;
 
             &.batchSelected{
-                border-color: $photog_favorited_color;
-                background-color: $photog_favorited_color;
+                border-color: variables.$photog_favorited_color;
+                background-color: variables.$photog_favorited_color;
                 color: white;
                 opacity: 1;
             }
@@ -95,8 +95,8 @@
             border-radius: 5px;
 
             &.reorderSelect{
-                border-color: $photog_selected_reorder_color;
-                background-color: $photog_selected_reorder_color;
+                border-color: variables.$photog_selected_reorder_color;
+                background-color: variables.$photog_selected_reorder_color;
             }
         }
     }
@@ -113,7 +113,7 @@
             transition: height 0.3s 0.15s ease-in;
 
             &.coverImage{
-                border: 4px solid $photog_cover_image_color;
+                border: 4px solid variables.$photog_cover_image_color;
             }
         }
     }
@@ -138,7 +138,7 @@
 
         &.thumbnailTitleFavorite{
             a{
-                color: $photog_favorited_color;
+                color: variables.$photog_favorited_color;
             }
         }
 

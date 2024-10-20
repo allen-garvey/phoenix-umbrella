@@ -19,9 +19,6 @@
 </template>
 
 <style lang="scss" module>
-    @import "~bootstrap/functions";
-    @import "~bootstrap/variables";
-
     .header{
         display: flex;
         align-items: baseline;
@@ -67,7 +64,8 @@
             border-radius: 5px;
 
             &:hover, &.router-link-exact-active{
-                background-color: $primary; //from bootstrap
+                // can't use bootstrap $primary variable due to incompatibility with @use
+                background-color: #0d6efd;
                 color: #fff;
                 text-decoration: none;
             }
