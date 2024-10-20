@@ -1,3 +1,5 @@
+@use 'variables';
+
 .form-control {
     box-sizing: border-box;
 }
@@ -18,7 +20,7 @@ select.form-control {
 }
 
 .btn {
-    font-family: $sans_serif_font_family;
+    font-family: variables.$sans_serif_font_family;
     
     &:hover {
         text-decoration: none;
