@@ -1,3 +1,5 @@
+@use 'variables';
+
 .jumbotron{
 	background-color: #eee;
 	padding: 8px 15px 30px;
@@ -8,7 +10,7 @@ header{
 }
 
 h1.main_title{
-	font-family: $title_font_family;
+	font-family: variables.$title_font_family;
 	font-size: 3.998em;
 	font-weight: normal;
 	margin: 0 10px 20px;

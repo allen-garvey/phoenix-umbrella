@@ -1,6 +1,5 @@
-/*
-* Table styles
-*/
+@use 'variables';
+
 table{
 	color: #000;
 	margin-left: auto;
@@ -44,13 +43,13 @@ th{
 	font-weight: normal;
 }
 .tr_primary{
-	background-color: $green;
+	background-color: variables.$green;
 }
 .tr_warning{
-	background-color: $yellow;
+	background-color: variables.$yellow;
 }
 .tr_error{
-	background-color: $red;
+	background-color: variables.$red;
 }
 
 td a{

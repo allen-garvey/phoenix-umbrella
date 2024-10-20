@@ -1,13 +1,13 @@
-@import 'lib/bootstrap';
-@import 'umbrella-common-styles/form.scss';
+@use 'lib/bootstrap';
+@use 'umbrella-common-styles/form.scss' as common_form;
 
-@import 'base.scss';
-@import 'header.scss';
-@import 'table.scss';
-@import 'modal.scss';
-@import 'show.scss';
-@import 'reports.scss';
-@import 'form.scss';
+@use 'base.scss';
+@use 'header.scss';
+@use 'table.scss';
+@use 'modal.scss';
+@use 'show.scss';
+@use 'reports.scss';
+@use 'form.scss';
 
 
 
