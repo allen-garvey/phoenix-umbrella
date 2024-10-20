@@ -1,8 +1,8 @@
-@import "lib/bootstrap";
-@import "lib/bootstrap/buttons_theme.scss";
-@import "base";
-@import "header";
-@import "home_page";
-@import "show_pages";
-@import "forms";
-@import "folder_preview";
+@use "lib/bootstrap";
+@use "lib/bootstrap/buttons_theme.scss";
+@use "base";
+@use "header";
+@use "home_page";
+@use "show_pages";
+@use "forms";
+@use "folder_preview";

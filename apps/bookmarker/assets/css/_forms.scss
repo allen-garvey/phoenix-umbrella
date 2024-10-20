@@ -12,8 +12,8 @@
 }
 
 .help-block {
-	// variable is defined in bootstrap
-    color: $danger;
+	// from bootstrap, can't use $danger variable since bootstrap isn't configured for @use
+    color: #dc3545;
 }
 
 @media (prefers-color-scheme: dark) {
