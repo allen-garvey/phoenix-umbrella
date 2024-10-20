@@ -1,9 +1,9 @@
-@import 'lib/bootstrap';
-@import 'umbrella-common-styles/form.scss';
+@use 'lib/bootstrap';
+@use 'umbrella-common-styles/form.scss' as common_form;
 
-@import 'base.scss';
-@import 'header.scss';
-@import 'table.scss';
-@import 'form.scss';
-@import 'categories.scss';
-@import 'index-page';
+@use 'base.scss';
+@use 'header.scss';
+@use 'table.scss';
+@use 'form.scss';
+@use 'categories.scss';
+@use 'index-page';
