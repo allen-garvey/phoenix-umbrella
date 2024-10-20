@@ -1,4 +1,4 @@
-/* HEADER */
+@use 'variables';
 
 .header {
     background: #33664d;
@@ -17,13 +17,13 @@
     margin: 0;
     font-weight: 300;
     font-size: 1.953rem;
-    padding: 16px $contentHorizontalPadding;
+    padding: 16px variables.$contentHorizontalPadding;
 }
 
 /* BREADCRUMBS */
 
 .breadcrumbs {
-    background: $secondary_color;
+    background: variables.$secondary_color;
     padding: 10px 40px;
     color: #c4dce8;
 }

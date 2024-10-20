@@ -1,4 +1,4 @@
-/* FORM DEFAULTS */
+@use 'variables';
 
 input, textarea, select, .form-row p, form .button, button {
     font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
@@ -49,7 +49,7 @@ $form_group_padding: 10px;
 
 .button, input[type=submit], input[type=button], .submit-row input, .submit-row .button, a.button {
     font-size: 1rem;
-    background: $secondary_color;
+    background: variables.$secondary_color;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;

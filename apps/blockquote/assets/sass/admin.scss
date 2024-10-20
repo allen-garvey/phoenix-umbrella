@@ -1,9 +1,8 @@
-@import 'variables';
-@import 'base';
-@import 'icons';
-@import 'header';
-@import 'alerts';
-@import 'forms';
-@import 'admin-home';
-@import 'index-pages';
-@import 'show-pages';
+@use 'base';
+@use 'icons';
+@use 'header';
+@use 'alerts';
+@use 'forms';
+@use 'admin-home';
+@use 'index-pages';
+@use 'show-pages';

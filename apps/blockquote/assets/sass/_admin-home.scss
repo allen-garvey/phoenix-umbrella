@@ -1,12 +1,14 @@
+@use 'variables';
+
 .admin-fields-list{
 	padding: 0;
 	width: 450px;
-	border-top: 20px solid $secondary_color;
+	border-top: 20px solid variables.$secondary_color;
 	li{
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 0;
-		padding: 8px $contentHorizontalPadding;
+		padding: 8px variables.$contentHorizontalPadding;
 		border-bottom: 1px solid #eee;
 		background-color: #fff;
 
