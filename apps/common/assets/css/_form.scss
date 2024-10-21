@@ -8,3 +8,19 @@
         margin-left: 1em;
     }
 }
+
+.form-control {
+    box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+	.form-control, .form-control:focus, .form-group select.form-control {
+        background-color: #000;
+        color: #fff;
+        color-scheme: dark;
+    }
+}
+
+input:disabled, select:disabled, button:disabled {
+    cursor: not-allowed;
+}
