@@ -1,5 +1,6 @@
 @use "lib/bootstrap";
 @use "lib/bootstrap/buttons_theme.scss";
+@use 'umbrella-common-styles/form.scss' as common_form;
 @use "base";
 @use "header";
 @use "home_page";

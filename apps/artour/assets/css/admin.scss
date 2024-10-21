@@ -1,4 +1,5 @@
 @use "lib/bootstrap";
+@use 'umbrella-common-styles/form.scss' as common_form;
 @use "admin/base";
 @use "admin/header";
 @use "admin/show_header";

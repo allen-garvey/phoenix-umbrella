@@ -2,4 +2,4 @@
 
 @use "site/base";
 @use "site/buttons";
-@use "site/forms";
+@use 'umbrella-common-styles/form.scss' as common_form;

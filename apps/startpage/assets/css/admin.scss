@@ -1,5 +1,6 @@
 @use "./admin/normalize";
 @use "./admin/bootstrap";
+@use 'umbrella-common-styles/form.scss' as common_form;
 @use "./admin/base";
 @use "./admin/index-pages";
 @use "./admin/forms";

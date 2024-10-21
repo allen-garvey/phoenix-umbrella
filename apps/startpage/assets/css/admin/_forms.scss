@@ -10,11 +10,3 @@
 .form-group {
     margin-bottom: 0.5em;
 }
-
-@media (prefers-color-scheme: dark) {
-	.form-control, .form-control:focus, .form-group select.form-control {
-		color-scheme: dark;
-        color: #fff;
-        background-color: #000;
-	}
-}

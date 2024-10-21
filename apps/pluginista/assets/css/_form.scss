@@ -1,9 +1,5 @@
 @use 'variables';
 
-.form-control {
-    box-sizing: border-box;
-}
-
 .form-group, fieldset {
     margin-bottom: 1rem;
 }
@@ -43,12 +39,7 @@ select.form-control {
 }
 
 @media (prefers-color-scheme: dark) {
-	.form-control, .form-control:focus, .form-group select.form-control {
-		background-color: #000;
-        color: #fff;
-        color-scheme: dark;
-	}
-}    fieldset {
+    fieldset {
         background-color: #000;
     }
 }
