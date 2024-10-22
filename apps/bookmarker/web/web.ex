@@ -42,9 +42,6 @@ defmodule Bookmarker.Web do
     quote do
       use Phoenix.View, root: "web/templates"
 
-      # Import convenience functions from controllers
-      import Phoenix.Controller, only: [view_module: 1]
-
       # Use all HTML functionality (forms, tags, etc)
       import Phoenix.HTML
       import Phoenix.HTML.Form
