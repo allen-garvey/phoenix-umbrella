@@ -40,7 +40,6 @@ defmodule Bookmarker.Router do
     pipe_through :api
     pipe_through :authenticate
 
-    # get "/folders", ApiFolderController, :index
     get "/folders/:folder_id/bookmarks", ApiFolderController, :bookmarks_for_folder
   end
 end
