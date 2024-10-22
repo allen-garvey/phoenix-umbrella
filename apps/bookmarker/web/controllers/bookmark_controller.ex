@@ -36,7 +36,13 @@ defmodule Bookmarker.BookmarkController do
   end
 
   def show(conn, %{"id" => id}) do
-    bookmark = Repo.get!(Bookmark, id) |> Repo.preload([:folder])
+    bookmark = from(
+      bookmark in Bookmark,
+      join: folder in assoc(bookmark, :folder),
+      where: bookmark.id == ^id,
+      preload: [folder: folder]
+    )
+    |> Repo.one!()
     render(conn, "show.html", bookmark: bookmark)
   end
 
