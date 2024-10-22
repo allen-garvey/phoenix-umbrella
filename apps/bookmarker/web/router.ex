@@ -31,8 +31,6 @@ defmodule Bookmarker.Router do
     get "/", PageController, :index
     resources "/folders", FolderController
     resources "/bookmarks", BookmarkController
-    resources "/tags", TagController
-    resources "/bookmarks_tags", BookmarkTagController
 
     get "/preview/folder/:folder_name", FolderPreviewController, :show
   end
@@ -44,9 +42,5 @@ defmodule Bookmarker.Router do
 
     # get "/folders", ApiFolderController, :index
     get "/folders/:folder_id/bookmarks", ApiFolderController, :bookmarks_for_folder
-    get "/bookmarks/:bookmark_id/tags", ApiTagController, :tags_for_bookmark
-    get "/bookmarks/:bookmark_id/tags/unused", ApiTagController, :unused_tags_for_bookmark
-    post "/bookmarks_tags/", ApiBookmarkTagController, :create_bookmark_tag
-    delete "/bookmarks_tags/", ApiBookmarkTagController, :delete_bookmark_tag
   end
 end

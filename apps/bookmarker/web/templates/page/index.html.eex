@@ -8,12 +8,6 @@
 <div class="home-shortcuts-section">
   <ul>
     <li>
-      <%= link "Tags", to: tag_path(@conn, :index) %>
-    </li>
-    <li>
-      <%= link "Bookmarks Tags", to: bookmark_tag_path(@conn, :index) %>
-    </li>
-    <li>
       <%= link "Add folder", to: folder_path(@conn, :new) %>
     </li>
   </ul>

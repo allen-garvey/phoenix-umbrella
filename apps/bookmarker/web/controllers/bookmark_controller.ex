@@ -36,8 +36,8 @@ defmodule Bookmarker.BookmarkController do
   end
 
   def show(conn, %{"id" => id}) do
-    bookmark = Repo.get!(Bookmark, id) |> Repo.preload([:folder, :tags])
-    render(conn, "show.html", enable_js: true, csrf_token: get_csrf_token(), bookmark: bookmark)
+    bookmark = Repo.get!(Bookmark, id) |> Repo.preload([:folder])
+    render(conn, "show.html", bookmark: bookmark)
   end
 
   def edit(conn, %{"id" => id}) do
