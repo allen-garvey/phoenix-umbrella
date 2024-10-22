@@ -55,6 +55,7 @@
         justify-content: space-between;
         margin-top: 0;
         flex-direction: row;
+        gap: 1rem;
     }
 
     .bookmarkUrl, 
@@ -64,6 +65,7 @@
 
     .bookmarkUrl{
         color: #888;
+        word-wrap: break-word;
     }
 
     .bookmarkTitle{
@@ -89,14 +91,14 @@
 
     .bookmarkItem{
         border: none;
-        flex-basis: 32%;
+        width: 32%;
         padding: 10px 15px;
 
-        @media screen and (max-width: 870px){
-            flex-basis: 50%;
+        @media screen and (max-width: 1020px){
+            width: 48%;
         }
-        @media screen and (max-width: 584px){
-            flex-basis: 100%;
+        @media screen and (max-width: 640px){
+            width: 100%;
         }
     }
 </style>
