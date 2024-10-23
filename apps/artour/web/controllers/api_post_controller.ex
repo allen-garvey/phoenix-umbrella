@@ -2,41 +2,6 @@ defmodule Artour.ApiPostController do
   use Artour.Web, :controller
 
   alias Artour.Api
-  alias Artour.Admin
-
-  @doc """
-  Returns list of all tags unused by a post
-  """
-  def tags_for(conn, %{"post_id" => post_id, "unused" => "true"}) do
-    tags = Api.unused_tags_for_post(post_id)
-    render(conn, "tags_list.json", tags: tags)
-  end
-
-  def tags_for(conn, %{"post_id" => post_id}) do
-    tags = Api.tags_for_post(post_id)
-    render(conn, "tags_list.json", tags: tags)
-  end
-
-  @doc """
-  Adds tags to a post
-  tags json list of tag ids
-  """
-  def add_tags(conn, %{"post_id" => post_id, "tags" => tags}) do
-    Api.create_post_tags(post_id, tags)
-    conn 
-    |> put_view(CommonWeb.ApiGenericView)
-    |> render("ok.json", message: "Tags added to post")
-  end
-
-  @doc """
-  Removes a tag from a post
-  """
-  def remove_tag(conn, %{"post_id" => post_id, "tag_id" => tag_id}) do
-    Admin.delete_post_tag(post_id, tag_id)
-    conn 
-    |> put_view(CommonWeb.ApiGenericView)
-    |> render("ok.json", message: "Post tag deleted")
-  end
 
   @doc """
   Update attributes of post

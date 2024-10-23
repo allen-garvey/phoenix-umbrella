@@ -11,5 +11,3 @@
 </div>
 
 <div id="post_album_list_component" data-csrf-token="<%= @csrf_token %>" data-cover-image-id="<%= @post.cover_image_id %>" data-post-images-api-url="<%= api_post_path(@conn, :post_images, @post) %>" data-edit-post-api-url="<%= api_post_path(@conn, :update, @post) %>" data-reorder-images-api-url="<%= api_post_path(@conn, :reorder_images, @post) %>"></div>
-
-<%= render "tags_list.html", conn: @conn, post: @post, csrf_token: @csrf_token %>

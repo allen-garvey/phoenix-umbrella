@@ -7,7 +7,6 @@ defmodule Artour.Admin do
   alias Grenadier.Repo
 
   alias Artour.Post
-  alias Artour.PostTag
   alias Artour.Image
   # alias Artour.PostImage
 
@@ -31,14 +30,7 @@ defmodule Artour.Admin do
   Raises `Ecto.NoResultsError` if the Post does not exist.
   """
   def get_post_for_show!(id) do
-    from(
-          post in Post,
-          left_join: tag in assoc(post, :tags),
-          where: post.id == ^id,
-          preload: [tags: tag],
-          order_by: [tag.name]
-        )
-    |> Repo.one!
+    Repo.get!(Post, id)
   end
 
   @doc """
@@ -126,17 +118,6 @@ defmodule Artour.Admin do
   """
   def change_image(%Image{} = image) do
     Image.changeset(image, %{})
-  end
-
-  @doc """
-  Deletes a single post_tag, given post_id and tag_id
-  """
-  def delete_post_tag(post_id, tag_id) do
-    #use transaction to ensure only 1 row gets deleted
-    Repo.transaction(fn ->
-      {1, nil} = from(pt in PostTag, where: pt.post_id == ^post_id and pt.tag_id ==^tag_id)
-      |> Repo.delete_all()
-    end)
   end
 
 end

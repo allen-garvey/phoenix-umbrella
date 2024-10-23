@@ -1,8 +1,0 @@
-<%= render Artour.SharedView, "show_heading.html",
-                                conn: @conn,
-                                item_attribute_names: attribute_names(),
-                                item_attribute_values: attribute_values(@conn, @post_tag),
-                                item_name_singular: "post tag",
-                                item: @post_tag,
-                                title: display_name(@post_tag)
-%>

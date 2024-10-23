@@ -1,6 +1,0 @@
-<div id="post_add_tags_list" 
-	data-post-id="<%= @post.id %>"
-	data-csrf-token="<%= @csrf_token %>"
-	data-api-base-url="<%= api_post_path(@conn, :tags_for, @post.id) %>"
-	data-new-tag-url="<%= tag_path(@conn, :new) %>"
-></div>

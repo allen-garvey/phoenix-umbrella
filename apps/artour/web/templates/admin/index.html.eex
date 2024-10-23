@@ -4,6 +4,4 @@
 	<li><%= link "Images", to: image_path(@conn, :index) %></li>
 	<li><%= link "Posts", to: post_path(@conn, :index) %></li>
 	<li><%= link "Post Images", to: post_image_path(@conn, :index) %></li>
-	<li><%= link "Post Tags", to: post_tag_path(@conn, :index) %></li>
-	<li><%= link "Tags", to: tag_path(@conn, :index) %></li>
 </ul>

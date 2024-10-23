@@ -8,10 +8,8 @@ defmodule Artour.Api do
   alias Artour.Admin
 
   alias Artour.Post
-  alias Artour.Tag
   alias Artour.Image
   alias Artour.PostImage
-  alias Artour.PostTag
 
   @doc """
   Returns the list of a post's post images
@@ -77,47 +75,6 @@ defmodule Artour.Api do
       {1, nil} -> :ok
       _        -> :error
     end
-  end
-
-  @doc """
-  Gets tags not used by post
-  """
-  def unused_tags_for_post(post_id) do
-    post_tags_subquery = from(post_tag in PostTag, where: post_tag.post_id == ^post_id)
-
-    from(
-      t in Tag,
-      left_join: post_tag in subquery(post_tags_subquery),
-      on: t.id == post_tag.tag_id,
-      where: is_nil(post_tag.tag_id),
-      order_by: t.name
-    )
-    |> Repo.all
-  end
-
-  @doc """
-  Gets tags used by post
-  """
-  def tags_for_post(post_id) do
-    from(
-        t in Artour.Tag,
-        join: post_tag in assoc(t, :post_tags),
-        where: post_tag.post_id == ^post_id,
-        order_by: t.name
-    )
-    |> Repo.all
-  end
-
-  @doc """
-  Adds tags to post by creating post tags from given post id and list of tag ids
-  """
-  def create_post_tags(post_id, tags) when is_list(tags) do
-    Repo.transaction(fn ->
-      for tag_id <- tags do
-        PostTag.changeset(%PostTag{}, %{"post_id" => post_id, "tag_id" => tag_id})
-        |> Repo.insert!
-      end
-    end)
   end
 
   @doc """
