@@ -8,7 +8,7 @@ defmodule Artour.Public do
 
   alias Artour.Post
   # alias Artour.Image
-  alias Artour.PostImage
+  # alias Artour.PostImage
 
   @doc """
   Returns the list of posts.
@@ -28,11 +28,13 @@ defmodule Artour.Public do
     from(
           post in Post,
           join: cover_image in assoc(post, :cover_image),
+          join: post_images in assoc(post, :post_images),
+          join: image in assoc(post_images, :image),
           where: post.slug == ^slug and post.is_published == true,
-          preload: [cover_image: cover_image]
+          preload: [cover_image: cover_image, post_images: {post_images, [image: image]}],
+          order_by: [post_images.order, post_images.id]
         )
     |> Repo.one!
-    |> Repo.preload(post_images: from(pi in PostImage, join: image in assoc(pi, :image), preload: [image: image], order_by: [pi.order, pi.id]))
   end
 
   @doc """
