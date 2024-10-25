@@ -69,7 +69,7 @@
     }
 
     .bookmarkTitle{
-        font-size: 16px;
+        font-size: 1.25rem;
     }
 
     .bookmarkHeaderContainer{
