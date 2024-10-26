@@ -89,6 +89,20 @@
         padding: 1em;
     }
 
+    $portrait-width: 1000px;
+
+    @media (max-width: $portrait-width) {
+        .week {
+            flex-direction: column;
+        }
+    }
+
+    @media (min-width: ($portrait-width + 1px)) and (hover: none) {
+        .dayContents {
+            padding: 2em;
+        }
+    }
+
     @media (prefers-color-scheme: dark) {
         .newActivityLink {
             color: #fff;
