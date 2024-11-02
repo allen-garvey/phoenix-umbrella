@@ -16,7 +16,7 @@
             <a :href="masterUrlFor(image)" target="_blank" rel="noreferrer">
                 <Swipe-Image
                     :src="thumbnailUrlFor(image)"
-                    :images-class="$style.image"
+                    :image-class="$style.image"
                     :on-swiped="onKeyPressed"
                 />
             </a>
