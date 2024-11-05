@@ -93,7 +93,7 @@ defmodule Artour.PostView do
   same order as the attribute_values function
   """
   def attribute_names() do
-    ["Title", "Public Url", "Publication Date", "NSFW", "Markdown", "Published", "Body"]
+    ["Title", "Public Url", "Export Url", "Publication Date", "NSFW", "Markdown", "Published", "Body"]
   end
 
   @doc """
@@ -101,9 +101,13 @@ defmodule Artour.PostView do
   formatted values
   """
   def attribute_values(conn, post) do
+    show_url = Artour.PublicPostView.show_path(conn, post)
+    api_images_url = api_post_path(conn, :post_images, post.id, export: "true")
+    
     [
       post.title, 
-      link(Artour.PublicPostView.show_path(conn, post), to: Artour.PublicPostView.show_path(conn, post)), 
+      link(show_url, to: show_url), 
+      link(api_images_url, to: api_images_url), 
       datetime_to_us_date(post.publication_date), 
       post.is_nsfw, 
       post.is_markdown, 
