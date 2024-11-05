@@ -24,11 +24,18 @@ defmodule Artour.ApiPostController do
 
   @doc """
   Returns list of all of a post's images
+  export=true param used for personal website
   """
+  def post_images(conn, %{"post_id" => post_id, "export" => "true"}) do
+    post_images = Api.list_post_images_for_post(post_id)
+    render(conn, "post_images_list_export.json", post_images: post_images)
+  end
+  
   def post_images(conn, %{"post_id" => post_id}) do
     post_images = Api.list_post_images_for_post(post_id)
     render(conn, "post_images_list.json", post_images: post_images)
   end
+
 
   @doc """
   Reorder post album images

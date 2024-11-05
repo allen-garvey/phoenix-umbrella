@@ -1,6 +1,8 @@
 defmodule Artour.ApiPostView do
   use Artour.Web, :view
 
+  alias Artour.ImageView
+
   @doc """
   Used to get images that can be added to post
   """
@@ -13,6 +15,13 @@ defmodule Artour.ApiPostView do
   """
   def render("post_images_list.json", %{post_images: post_images}) do
     %{data: Enum.map(post_images, &post_image_to_map/1)}
+  end
+
+  @doc """
+  Used to get a post's post images for personal website model
+  """
+  def render("post_images_list_export.json", %{post_images: post_images}) do
+    Enum.map(post_images, &post_image_export_to_map/1)
   end
 
   defp post_image_to_map(post_image) do
@@ -29,5 +38,19 @@ defmodule Artour.ApiPostView do
     }
   end
 
-
+  defp post_image_export_to_map(post_image) do
+    image = post_image.image
+    
+    %{
+      id: image.id,
+      caption: post_image.caption,
+      description: image.description,
+      url: %{
+        large: ImageView.url_for(Artour.Endpoint, image, :large, :cloud),
+        medium: ImageView.url_for(Artour.Endpoint, image, :medium, :cloud),
+        small: ImageView.url_for(Artour.Endpoint, image, :small, :cloud),
+        thumbnail: ImageView.url_for(Artour.Endpoint, image, :thumbnail, :cloud),
+      },
+    }
+  end
 end
