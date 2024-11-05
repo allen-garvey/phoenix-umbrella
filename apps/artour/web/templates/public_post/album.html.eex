@@ -1,10 +1,11 @@
-<div class="post-thumbnails">
+<div class="post-thumbnails" data-slideshow-images="true">
 	<%= for post_image <- @post_images do
 	  link Artour.ImageView.img_tag_for(@conn, post_image.image, :thumbnail, :cloud), 
 	  	to: Artour.ImageView.url_for(@conn, post_image.image, :large, :cloud), 
 	  	data_src: Artour.ImageView.url_for(@conn, post_image.image, :small, :cloud), 
 	  	data_srcset: Artour.ImageView.srcset_for_fullsize(@conn, post_image.image, :cloud),
 	  	data_slug: post_image.image.id,
-	  	data_caption: post_image.caption
+	  	data_caption: post_image.caption,
+		data_slideshow_image: "true"
 	end %>
 </div>
