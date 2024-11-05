@@ -12,7 +12,21 @@ defmodule Artour.ApiPostView do
   Used to get a post's post images
   """
   def render("post_images_list.json", %{post_images: post_images}) do
-    %{data: render_many(post_images, Artour.ApiPostImageView, "post_image.json")}
+    %{data: Enum.map(post_images, &post_image_to_map/1)}
+  end
+
+  defp post_image_to_map(post_image) do
+    %{
+      id: post_image.id,
+      # post_id: post_image.post_id,
+      order: post_image.order,
+      caption: post_image.caption,
+      image: Artour.ApiImageView.render("image_thumbnail_excerpt.json", api_image: post_image.image),
+      url: %{
+        # show: post_image_path(Artour.Endpoint, :show, post_image),
+        edit: post_image_path(Artour.Endpoint, :edit, post_image),
+      },
+    }
   end
 
 
