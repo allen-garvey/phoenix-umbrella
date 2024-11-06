@@ -52,10 +52,10 @@ defmodule Artour.ImageController do
     image = Repo.get!(Image, id)
 
     case Admin.update_image(image, image_params) do
-      {:ok, image} ->
+      {:ok, _image} ->
         conn
         |> put_flash(:info, "Image updated successfully.")
-        |> redirect(to: image_path(conn, :show, image))
+        |> redirect(to: image_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", image: image, changeset: changeset)
     end
