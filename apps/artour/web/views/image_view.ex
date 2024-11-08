@@ -30,13 +30,7 @@ defmodule Artour.ImageView do
     render "form_page.html", assigns
   end
 
-  @doc """
-  Generates the contents of HTML img tag srcset attribute
-  for a given image instance
-  assumes that image.filename_small is used as src attribute
-  doesn't use large url, because assumes image is in container
-  """
-  def srcset_for(image) do
+  defp srcset_for(image) do
     "#{url_for(image, :small)} 400w, #{url_for(image, :medium)} 800w"
   end
 
@@ -53,8 +47,6 @@ defmodule Artour.ImageView do
 
   @doc """
   Returns HTML img tag for a given image instance
-  lazy loaded version of img_tag_for/3
-  src is set to the small source file, and srcset is used for other sizes
   """
   def lazy_img_tag_for(image) do
     tag(:img,
@@ -66,14 +58,6 @@ defmodule Artour.ImageView do
           alt: image.description,
           class: "lazy-image-placeholder"
         )
-  end
-
-  @doc """
-  Returns HTML img tag for a given image instance
-  src is set to the small source file, and srcset is used for other sizes
-  """
-  def img_tag_for(image) do
-    img_tag(url_for(image, :small), alt: image.description, srcset: srcset_for(image), loading: "lazy")
   end
 
   @doc """
