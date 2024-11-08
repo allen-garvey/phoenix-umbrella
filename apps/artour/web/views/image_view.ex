@@ -36,8 +36,8 @@ defmodule Artour.ImageView do
   assumes that image.filename_small is used as src attribute
   doesn't use large url, because assumes image is in container
   """
-  def srcset_for(conn, image) do
-    "#{url_for(conn, image, :small)} 400w, #{url_for(conn, image, :medium)} 800w"
+  def srcset_for(image) do
+    "#{url_for(image, :small)} 400w, #{url_for(image, :medium)} 800w"
   end
 
   @doc """
@@ -47,8 +47,8 @@ defmodule Artour.ImageView do
   used for when image is being shown fullsize 
   (not in a container, such as in an album)
   """
-  def srcset_for_fullsize(conn, image) do
-    "#{srcset_for(conn, image)}, #{url_for(conn, image, :large)} 1000w"
+  def srcset_for_fullsize(image) do
+    "#{srcset_for(image)}, #{url_for(image, :large)} 1000w"
   end
 
   @doc """
@@ -56,12 +56,12 @@ defmodule Artour.ImageView do
   lazy loaded version of img_tag_for/3
   src is set to the small source file, and srcset is used for other sizes
   """
-  def lazy_img_tag_for(conn, image) do
+  def lazy_img_tag_for(image) do
     tag(:img,
         data:
           [
-            src: url_for(conn, image, :small),
-            srcset: srcset_for(conn, image)
+            src: url_for(image, :small),
+            srcset: srcset_for(image)
           ],
           alt: image.description,
           class: "lazy-image-placeholder"
@@ -72,16 +72,16 @@ defmodule Artour.ImageView do
   Returns HTML img tag for a given image instance
   src is set to the small source file, and srcset is used for other sizes
   """
-  def img_tag_for(conn, image) do
-    img_tag(url_for(conn, image, :small), alt: image.description, srcset: srcset_for(conn, image), loading: "lazy")
+  def img_tag_for(image) do
+    img_tag(url_for(image, :small), alt: image.description, srcset: srcset_for(image), loading: "lazy")
   end
 
   @doc """
   Returns HTML img tag for a given image instance
   size: atom should be the same as for url_for
   """
-  def img_tag_for(conn, image, size) do
-    img_tag(url_for(conn, image, size), alt: image.description, loading: "lazy")
+  def img_tag_for(image, size) do
+    img_tag(url_for(image, size), alt: image.description, loading: "lazy")
   end
 
   @doc """
@@ -98,11 +98,9 @@ defmodule Artour.ImageView do
 
   @doc """
   Returns url for image
-  size is atom representing image size
   """
-  def url_for(conn, image, size) do
-    image_url = URI.encode("/media/images/" <> filename_for_size(image, size))
-    static_path(conn, image_url)
+  def url_for(image, size) do
+    URI.encode("/media/images/" <> filename_for_size(image, size))
   end
 
   @doc """
@@ -117,8 +115,8 @@ defmodule Artour.ImageView do
   Used on index page - takes image instance and returns abbreviated list of 
   formatted values
   """
-  def attribute_values_short(conn, image) do
-  	[image.title, img_tag(url_for(conn, image, :thumbnail), class: "thumbnail", loading: "lazy"), image.description, image.year]
+  def attribute_values_short(_conn, image) do
+  	[image.title, img_tag(url_for(image, :thumbnail), class: "thumbnail", loading: "lazy"), image.description, image.year]
   end
 
   @doc """

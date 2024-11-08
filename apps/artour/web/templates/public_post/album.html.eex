@@ -1,9 +1,9 @@
 <div class="post-thumbnails" data-slideshow-images="true">
 	<%= for post_image <- @post_images do
-	  link Artour.ImageView.img_tag_for(@conn, post_image.image, :thumbnail), 
-	  	to: Artour.ImageView.url_for(@conn, post_image.image, :large), 
-	  	data_src: Artour.ImageView.url_for(@conn, post_image.image, :small), 
-	  	data_srcset: Artour.ImageView.srcset_for_fullsize(@conn, post_image.image),
+	  link Artour.ImageView.img_tag_for(post_image.image, :thumbnail), 
+	  	to: Artour.ImageView.url_for(post_image.image, :large), 
+	  	data_src: Artour.ImageView.url_for(post_image.image, :small), 
+	  	data_srcset: Artour.ImageView.srcset_for_fullsize(post_image.image),
 	  	data_slug: post_image.image.id,
 	  	data_caption: post_image.caption,
 		data_slideshow_image: "true"

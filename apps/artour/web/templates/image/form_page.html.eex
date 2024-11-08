@@ -6,7 +6,7 @@
 
 <%= if assigns[:show_delete] do
   # if show_delete, we are on edit page
-  content_tag(:figure, img_tag_for(@conn, @image, :small), class: "edit-image-preview-container")
+  content_tag(:figure, img_tag_for(@image, :small), class: "edit-image-preview-container")
 end %>
 
 <%= render "form.html", changeset: @changeset,
