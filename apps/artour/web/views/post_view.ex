@@ -54,7 +54,7 @@ defmodule Artour.PostView do
       img_tag(Artour.ImageView.url_for(post.cover_image, :thumbnail), class: "thumbnail-sm", loading: "lazy"),
       link(post.slug, to: Artour.PublicPostView.show_path(conn, post), class: publication_date_index_cell_class(post.is_published)), 
       content_tag(:div, is_nsfw_index_cell_content(post.is_nsfw), class: is_nsfw_index_cell_class(post.is_nsfw)),
-      content_tag(:div, datetime_to_us_date(post.publication_date), class: publication_date_index_cell_class(post.is_published)), 
+      content_tag(:div, Common.DateHelpers.us_formatted_date(post.publication_date), class: publication_date_index_cell_class(post.is_published)), 
     ]
   end
 
@@ -108,7 +108,7 @@ defmodule Artour.PostView do
       post.title, 
       link(show_url, to: show_url), 
       link(api_images_url, to: api_images_url), 
-      datetime_to_us_date(post.publication_date), 
+      Common.DateHelpers.us_formatted_date(post.publication_date), 
       post.is_nsfw, 
       post.is_markdown, 
       post.is_published, 

@@ -53,7 +53,7 @@ defmodule Artour.Web do
 
       import Artour.Router.Helpers
       import Artour.LayoutHelpers
-      import Artour.DateHelpers, only: [datetime_to_display_date: 1, date_to_us_date: 1, datetime_to_us_date: 1]
+      import Artour.DateHelpers, only: [datetime_to_display_date: 1]
     end
   end
 

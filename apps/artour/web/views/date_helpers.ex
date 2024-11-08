@@ -33,30 +33,4 @@ defmodule Artour.DateHelpers do
 		", " <>
 		Integer.to_string(datetime.year)
 	end
-
-	@doc """
-  	Takes date string as argument
-  	returns string date in format MM-DD-YYYY
-	"""
-	def date_to_us_date(nil) do
-		nil
-	end
-	
-	def date_to_us_date(date) do
-		datetime_to_us_date(date)
-	end
-
-	@doc """
-  	Takes date or datetime and
-  	returns string date in format MM-DD-YYYY
-  	"""
-	def datetime_to_us_date(datetime) do
-		String.pad_leading(Integer.to_string(datetime.month), 2, "0") <> 
-		"-" <>
-		String.pad_leading(Integer.to_string(datetime.day), 2, "0") <> 
-		"-" <>
-		Integer.to_string(datetime.year)
-	end
-
-
 end

@@ -116,6 +116,6 @@ defmodule Artour.ImageView do
   formatted values
   """
   def attribute_values(image) do
-    [image.title, image.description, image.filename_large, image.filename_medium, image.filename_small, image.filename_thumbnail, Artour.DateHelpers.date_to_us_date(image.completion_date), image.year]
+    [image.title, image.description, image.filename_large, image.filename_medium, image.filename_small, image.filename_thumbnail, Common.DateHelpers.us_formatted_date(image.completion_date), image.year]
   end
 end
