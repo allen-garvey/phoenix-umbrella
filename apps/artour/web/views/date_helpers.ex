@@ -1,11 +1,7 @@
 # For code shared across views that relates to whole application
 defmodule Artour.DateHelpers do
 
-	@doc """
-  	Takes integer representing month
-  	returns full English month-name
-  	"""
-	def to_month_name(month_number) do
+	defp to_month_name(month_number) do
 		case month_number do
 		  1 -> "January"
 		  2 -> "February"
