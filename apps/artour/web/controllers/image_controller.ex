@@ -39,7 +39,12 @@ defmodule Artour.ImageController do
 
   def show(conn, %{"id" => id}) do
     image = Admin.get_image!(id)
-    render(conn, "show.html", image: image)
+    
+    thumbnail_sizes = case image.filename_large == image.filename_medium do
+      true -> [:thumbnail, :small]
+      false -> [:thumbnail, :small, :medium]
+    end
+    render(conn, "show.html", image: image, thumbnail_sizes: thumbnail_sizes)
   end
 
   def edit(conn, %{"id" => id}) do
