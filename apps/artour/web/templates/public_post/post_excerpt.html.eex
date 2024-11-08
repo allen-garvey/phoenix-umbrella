@@ -9,12 +9,12 @@
 		<div class="post-key-image-super-container">
 			<a href="<%= show_path(@conn, @post) %>">
 				<div class="post-key-image-container">
-					<%= Artour.ImageView.lazy_img_tag_for(@conn, @post.cover_image, :cloud) %>
+					<%= Artour.ImageView.lazy_img_tag_for(@conn, @post.cover_image) %>
 				</div>
 			</a>
 		</div>
 	</div>
 	<div class="post-excerpt-background-blur">
-		<%= Artour.ImageView.lazy_img_tag_for(@conn, @post.cover_image, :cloud) %>
+		<%= Artour.ImageView.lazy_img_tag_for(@conn, @post.cover_image) %>
 	</div>
 </article>

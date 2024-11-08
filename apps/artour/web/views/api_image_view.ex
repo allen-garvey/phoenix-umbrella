@@ -16,7 +16,7 @@ defmodule Artour.ApiImageView do
       description: image.description,
       url: %{
         self: image_path(Artour.Endpoint, :show, image),
-        thumbnail: ImageView.url_for(Artour.Endpoint, image, :thumbnail, :local)
+        thumbnail: ImageView.url_for(Artour.Endpoint, image, :thumbnail)
       },
     }
   end

@@ -46,10 +46,10 @@ defmodule Artour.ApiPostView do
       caption: post_image.caption,
       description: image.description,
       url: %{
-        large: ImageView.url_for(Artour.Endpoint, image, :large, :cloud),
-        medium: ImageView.url_for(Artour.Endpoint, image, :medium, :cloud),
-        small: ImageView.url_for(Artour.Endpoint, image, :small, :cloud),
-        thumbnail: ImageView.url_for(Artour.Endpoint, image, :thumbnail, :cloud),
+        large: ImageView.url_for(Artour.Endpoint, image, :large),
+        medium: ImageView.url_for(Artour.Endpoint, image, :medium),
+        small: ImageView.url_for(Artour.Endpoint, image, :small),
+        thumbnail: ImageView.url_for(Artour.Endpoint, image, :thumbnail),
       },
     }
   end

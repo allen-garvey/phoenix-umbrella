@@ -36,8 +36,8 @@ defmodule Artour.ImageView do
   assumes that image.filename_small is used as src attribute
   doesn't use large url, because assumes image is in container
   """
-  def srcset_for(conn, image, location) do
-    "#{url_for(conn, image, :small, location)} 400w, #{url_for(conn, image, :medium, location)} 800w"
+  def srcset_for(conn, image) do
+    "#{url_for(conn, image, :small)} 400w, #{url_for(conn, image, :medium)} 800w"
   end
 
   @doc """
@@ -47,22 +47,21 @@ defmodule Artour.ImageView do
   used for when image is being shown fullsize 
   (not in a container, such as in an album)
   """
-  def srcset_for_fullsize(conn, image, location) do
-    "#{srcset_for(conn, image, location)}, #{url_for(conn, image, :large, location)} 1000w"
+  def srcset_for_fullsize(conn, image) do
+    "#{srcset_for(conn, image)}, #{url_for(conn, image, :large)} 1000w"
   end
 
   @doc """
   Returns HTML img tag for a given image instance
   lazy loaded version of img_tag_for/3
   src is set to the small source file, and srcset is used for other sizes
-  location: atom that should be either :cloud or :local
   """
-  def lazy_img_tag_for(conn, image, location) do
+  def lazy_img_tag_for(conn, image) do
     tag(:img,
         data:
           [
-            src: url_for(conn, image, :small, location),
-            srcset: srcset_for(conn, image, location)
+            src: url_for(conn, image, :small),
+            srcset: srcset_for(conn, image)
           ],
           alt: image.description,
           class: "lazy-image-placeholder"
@@ -72,30 +71,17 @@ defmodule Artour.ImageView do
   @doc """
   Returns HTML img tag for a given image instance
   src is set to the small source file, and srcset is used for other sizes
-  location: atom that should be either :cloud or :local
   """
-  def img_tag_for(conn, image, location) do
-    img_tag(url_for(conn, image, :small, location), alt: image.description, srcset: srcset_for(conn, image, location), loading: "lazy")
+  def img_tag_for(conn, image) do
+    img_tag(url_for(conn, image, :small), alt: image.description, srcset: srcset_for(conn, image), loading: "lazy")
   end
 
   @doc """
   Returns HTML img tag for a given image instance
   size: atom should be the same as for url_for
-  location: atom that should be either :cloud or :local
   """
-  def img_tag_for(conn, image, size, location) do
-    img_tag(url_for(conn, image, size, location), alt: image.description, loading: "lazy")
-  end
-
-  @doc """
-  Returns base url for location
-  location is local (admin) or cloud (potentially b2 on s3)
-  """
-  def base_url_for(location_atom) do
-    case location_atom do
-      :local -> "/media/images/"
-      :cloud -> "/media/images/"
-    end
+  def img_tag_for(conn, image, size) do
+    img_tag(url_for(conn, image, size), alt: image.description, loading: "lazy")
   end
 
   @doc """
@@ -113,10 +99,9 @@ defmodule Artour.ImageView do
   @doc """
   Returns url for image
   size is atom representing image size
-  location is either :cloud (public) or :local (admin)
   """
-  def url_for(conn, image, size, location) do
-    image_url = URI.encode(base_url_for(location) <> filename_for_size(image, size))
+  def url_for(conn, image, size) do
+    image_url = URI.encode("/media/images/" <> filename_for_size(image, size))
     static_path(conn, image_url)
   end
 
@@ -133,7 +118,7 @@ defmodule Artour.ImageView do
   formatted values
   """
   def attribute_values_short(conn, image) do
-  	[image.title, img_tag(url_for(conn, image, :thumbnail, :local), class: "thumbnail", loading: "lazy"), image.description, image.year]
+  	[image.title, img_tag(url_for(conn, image, :thumbnail), class: "thumbnail", loading: "lazy"), image.description, image.year]
   end
 
   @doc """

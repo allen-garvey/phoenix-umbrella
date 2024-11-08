@@ -7,7 +7,7 @@
     <%= tag :link, rel: "stylesheet", href: static_path(@conn, "/assets/app.css") %>
     <%= tag :meta, name: "description", content: site_description() %>
     <%= if assigns[:facebook_image] do
-      tag :meta, property: "og:image", content: Artour.ImageView.url_for(@conn, @facebook_image, :small, :cloud)
+      tag :meta, property: "og:image", content: Artour.ImageView.url_for(@conn, @facebook_image, :small)
     end %>
     <%= if assigns[:page_title] do
       tag :meta, property: "og:title", content: @page_title
