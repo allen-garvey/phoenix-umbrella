@@ -59,14 +59,6 @@
 		img{
 			max-height: 100vh;
 		}
-		
-		.image-container{
-			transition: translateX 0.3s;
-			display: none;
-			&.active{
-				display: block;
-			}
-		}
 	}
 	//buttons
 	$lightbox_button_dimensions: 45px;
@@ -78,8 +70,11 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		top: calc(100vh - #{$lightbox_button_dimensions * 2 + 50px});
 		z-index: 100;
+
+		@media screen and (max-width: 799px) {
+			top: calc(100vh - #{$lightbox_button_dimensions * 2 + 50px});
+		}
 	}
 	.caption-container{
 		position: relative;

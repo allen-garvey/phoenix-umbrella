@@ -1,8 +1,3 @@
-/*
- * Functionality to display album show pages in lightbox
- */
-
-import { createDiv } from './dom-helpers';
 import { IMAGE_QUERY_STRING_KEY, setImageUrl, clearImageUrl } from './history';
 
 const FIRST_IMAGE_CLASS = 'first-image';
@@ -10,6 +5,10 @@ const LAST_IMAGE_CLASS = 'last-image';
 const imageLinks = document.querySelectorAll(
     '[data-slideshow-images] a[data-slideshow-image]'
 );
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxContainer = document.getElementById('lightbox-container');
+const captionBody = document.querySelector('.caption-body');
+
 const slideData = initializeSlideData(imageLinks);
 let currentImageIndex = null;
 let isLightboxVisible = false;
@@ -20,24 +19,12 @@ function initializeSlideData(links) {
         src: link.dataset.src,
         srcset: link.dataset.srcset,
         id: link.dataset.slug,
-        isInitialized: false,
     }));
 }
 
-function initializeLightbox(numImageLinks) {
+function initializeLightbox() {
     const lightboxBackground = document.querySelector('.lightbox-background');
     lightboxBackground.onclick = hideLightbox;
-
-    const imagesContainer = document.querySelector(
-        '.lightbox-images-container'
-    );
-    const imagesFragment = document.createDocumentFragment();
-    //add empty placeholder divs for images
-    //will be lazy loaded by inserting img tag when necessary
-    for (let i = 0; i < numImageLinks; i++) {
-        imagesFragment.appendChild(createDiv('image-container'));
-    }
-    imagesContainer.appendChild(imagesFragment);
 
     const closeButton = document.querySelector('.close-window-button');
     closeButton.onclick = hideLightbox;
@@ -56,44 +43,26 @@ function setVisibleImageAt(imageIndex) {
     currentImageIndex = imageIndex;
 
     // hide or show prev / next buttons
-    const controlsContainer = document.getElementById('lightbox-container');
     if (imageIndex === 0) {
-        controlsContainer.classList.add(FIRST_IMAGE_CLASS);
+        lightboxContainer.classList.add(FIRST_IMAGE_CLASS);
     } else {
-        controlsContainer.classList.remove(FIRST_IMAGE_CLASS);
+        lightboxContainer.classList.remove(FIRST_IMAGE_CLASS);
     }
 
     if (imageIndex === slideData.length - 1) {
-        controlsContainer.classList.add(LAST_IMAGE_CLASS);
+        lightboxContainer.classList.add(LAST_IMAGE_CLASS);
     } else {
-        controlsContainer.classList.remove(LAST_IMAGE_CLASS);
+        lightboxContainer.classList.remove(LAST_IMAGE_CLASS);
     }
 
-    const parentSelector = `.lightbox-images-container .image-container:nth-child(${
-        imageIndex + 1
-    })`;
-    const parent = document.querySelector(parentSelector);
     const currentImageData = slideData[imageIndex];
-    //initialize img tag if necessary
-    if (!currentImageData.isInitialized) {
-        currentImageData.isInitialized = true;
-        const imgTag = document.createElement('img');
-        imgTag.src = currentImageData.src;
-        imgTag.srcset = currentImageData.srcset;
-        parent.appendChild(imgTag);
-    }
-    document.querySelector('.caption-body').textContent =
-        currentImageData.caption;
+
+    lightboxImage.src = currentImageData.src;
+    lightboxImage.srcset = currentImageData.srcset;
+
+    captionBody.textContent = currentImageData.caption;
 
     setImageUrl(currentImageData.id);
-
-    document
-        .querySelectorAll('.lightbox-images-container>.image-container')
-        .forEach((element, i) => {
-            const action = i === imageIndex ? 'add' : 'remove';
-            element.classList[action]('active');
-            element.style.transform = '';
-        });
 }
 
 function displayLightbox() {
@@ -101,12 +70,12 @@ function displayLightbox() {
         return;
     }
     isLightboxVisible = true;
-    document.querySelector('.lightbox-container').classList.remove('hidden');
+    lightboxContainer.classList.remove('hidden');
 }
 
 function hideLightbox() {
     isLightboxVisible = false;
-    document.querySelector('.lightbox-container').classList.add('hidden');
+    lightboxContainer.classList.add('hidden');
     clearImageUrl();
 }
 
@@ -142,9 +111,7 @@ function initializeImageSwipeHandlers() {
         const touch = e.touches[0];
         touchStartX = touch.clientX;
         touchStartY = touch.clientY;
-        activeImageContainer = document.querySelector(
-            '.lightbox-images-container .image-container.active'
-        );
+        activeImageContainer = lightboxImage;
     });
     imagesContainer.addEventListener('touchmove', function (e) {
         if (activeImageContainer === null) {
@@ -188,11 +155,10 @@ function initializeImageSwipeHandlers() {
             //swiped right, show previous image
             if (touchEndX > touchStartX) {
                 showPreviousImage();
-                return;
+            } else {
+                //swiped left, show next image
+                showNextImage();
             }
-            //swiped left, show next image
-            showNextImage();
-            return;
         }
 
         activeImageContainer.style.transform = 'translateX(0px)';
@@ -241,10 +207,10 @@ function displayImageFromUrl(slideData, imageId) {
 }
 
 export function initializeDisplayAlbumLightbox() {
-    if (!document.querySelector('.lightbox-container')) {
+    if (!lightboxContainer) {
         return;
     }
-    initializeLightbox(imageLinks.length);
+    initializeLightbox();
     initializeImageLinkClickHandlers(imageLinks);
     initializeImageSwipeHandlers();
     initializeKeyboardShortcuts();
