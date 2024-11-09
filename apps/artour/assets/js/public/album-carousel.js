@@ -187,15 +187,11 @@ function initializeImageSwipeHandlers() {
         if (thresholdMet) {
             //swiped right, show previous image
             if (touchEndX > touchStartX) {
-                if (currentImageIndex > 0) {
-                    showPreviousImage();
-                }
+                showPreviousImage();
                 return;
             }
             //swiped left, show next image
-            if (currentImageIndex < slideData.length - 1) {
-                showNextImage();
-            }
+            showNextImage();
             return;
         }
 
@@ -204,22 +200,18 @@ function initializeImageSwipeHandlers() {
 }
 
 function initializeKeyboardShortcuts() {
-    document.onkeydown = function (e) {
-        //don't do anything if lightbox is invisible
+    document.onkeydown = (e) => {
         if (!isLightboxVisible) {
             return;
         }
-        switch (e.keyCode) {
-            //escape key
-            case 27:
+        switch (e.key) {
+            case 'Escape':
                 hideLightbox();
                 break;
-            //right arrow
-            case 39:
+            case 'ArrowRight':
                 showNextImage();
                 break;
-            //left arrow
-            case 37:
+            case 'ArrowLeft':
                 showPreviousImage();
                 break;
         }
@@ -227,32 +219,24 @@ function initializeKeyboardShortcuts() {
 }
 
 function showNextImage() {
-    //stop at the end
     if (currentImageIndex >= slideData.length - 1) {
         return;
     }
     setVisibleImageAt(currentImageIndex + 1);
 }
 function showPreviousImage() {
-    //stop at beginning
     if (currentImageIndex <= 0) {
         return;
     }
     setVisibleImageAt(currentImageIndex - 1);
 }
 
-//display image in lightbox on page load if image id is in
-//hash url
+// display image in lightbox on page load if image id is in hash url
 function displayImageFromUrl(slideData, imageId) {
-    if (!imageId) {
-        return;
-    }
-    for (let i = 0; i < slideData.length; i++) {
-        if (slideData[i].id === imageId) {
-            setVisibleImageAt(i);
-            displayLightbox();
-            break;
-        }
+    const imageIndex = slideData.findIndex((item) => item.id === imageId);
+    if (imageIndex >= 0) {
+        setVisibleImageAt(imageIndex);
+        displayLightbox();
     }
 }
 
