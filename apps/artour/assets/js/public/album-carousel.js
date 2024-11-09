@@ -97,6 +97,9 @@ function setVisibleImageAt(imageIndex) {
 }
 
 function displayLightbox() {
+    if (isLightboxVisible) {
+        return;
+    }
     isLightboxVisible = true;
     document.querySelector('.lightbox-container').classList.remove('hidden');
 }
@@ -159,7 +162,9 @@ function initializeImageSwipeHandlers() {
             return;
         }
 
-        activeImageContainer.style.transform = `translateX(calc(${xCoordinate}px - 50%))`;
+        const diff = xCoordinate - touchStartX;
+
+        activeImageContainer.style.transform = `translateX(${diff}px)`;
     });
     imagesContainer.addEventListener('touchend', function (e) {
         if (activeImageContainer === null) {
@@ -179,24 +184,19 @@ function initializeImageSwipeHandlers() {
             thresholdMet = false;
         }
 
-        if (!thresholdMet) {
-            activeImageContainer.style.transform = 'translateX(0px)';
-            return;
-        }
-
-        //swiped right, show previous image
-        if (touchEndX > touchStartX) {
-            if (currentImageIndex > 0) {
-                showPreviousImage();
+        if (thresholdMet) {
+            //swiped right, show previous image
+            if (touchEndX > touchStartX) {
+                if (currentImageIndex > 0) {
+                    showPreviousImage();
+                }
                 return;
             }
-        }
-        //swiped left, show next image
-        else {
-            if (currentImageIndex < slideData.length - 2) {
+            //swiped left, show next image
+            if (currentImageIndex < slideData.length - 1) {
                 showNextImage();
-                return;
             }
+            return;
         }
 
         activeImageContainer.style.transform = 'translateX(0px)';
