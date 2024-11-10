@@ -4,14 +4,7 @@
 .post-brief{
 	position: relative;
 	padding: 2rem 0 4rem;
-
-	img{
-		transition: opacity 0.5s;
-		&.lazy-image-placeholder{
-			min-height: 700px;
-			opacity: 0;
-		}
-	}
+	min-height: 600px; // needed to reduce the amount of images fetched on page load
 }
 
 /*
