@@ -5,6 +5,3 @@ import css from '../../css/main.scss';
 
 import { initializeDisplayAlbumLightbox } from './album-carousel';
 initializeDisplayAlbumLightbox();
-
-import { initializeImageLazyLoading } from './lazy-load-images';
-initializeImageLazyLoading();

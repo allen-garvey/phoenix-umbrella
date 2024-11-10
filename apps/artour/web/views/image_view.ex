@@ -48,16 +48,8 @@ defmodule Artour.ImageView do
   @doc """
   Returns HTML img tag for a given image instance
   """
-  def lazy_img_tag_for(image) do
-    tag(:img,
-        data:
-          [
-            src: url_for(image, :small),
-            srcset: srcset_for(image)
-          ],
-          alt: image.description,
-          class: "lazy-image-placeholder"
-        )
+  def img_tag_with_srcset_for(image) do
+    img_tag(url_for(image, :small), srcset: srcset_for(image), alt: image.description, loading: "lazy")
   end
 
   @doc """
