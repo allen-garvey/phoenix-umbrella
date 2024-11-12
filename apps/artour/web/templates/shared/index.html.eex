@@ -12,7 +12,7 @@
   <tbody>
     <%= for item <- @items do %>
       <tr>
-        <% [first_value | tail_values] = apply(@item_view, @row_values_func_name, [@conn, item]) %>
+        <% [first_value | tail_values] = @row_values_func.(@conn, item) %>
 
         <td><%= link first_value, to: path_for_item(@conn, @item_name_singular, :show, item) %></td>
         

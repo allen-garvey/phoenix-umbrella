@@ -4,11 +4,19 @@ defmodule Artour.PostImageController do
   alias Artour.PostImage
 
   def index(conn, _params) do
-    post_images = Repo.all(from(PostImage, order_by: [desc: :id])) |> Repo.preload([:image, :post])
-    view = view_module(conn)
-    put_view(conn, Artour.SharedView) |>
-      render("index.html", items: post_images, item_name_singular: "post image", column_headings: view.attribute_names_short(), item_view: view,
-                                row_values_func_name: :attribute_values_short)
+    post_images = 
+      from(PostImage, order_by: [desc: :id])
+      |> Repo.all() 
+      |> Repo.preload([:image, :post])
+    
+    put_view(conn, Artour.SharedView) 
+    |> render(
+        "index.html", 
+        items: post_images, 
+        item_name_singular: "post image", 
+        column_headings: Artour.PostImageView.attribute_names_short(), 
+        row_values_func: &Artour.PostImageView.attribute_values_short/2
+      )
   end
 
   def new(conn, _params) do

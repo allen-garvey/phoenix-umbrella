@@ -6,10 +6,15 @@ defmodule Artour.ImageController do
 
   def index(conn, _params) do
     images = Admin.list_images()
-    view = view_module(conn)
-    put_view(conn, Artour.SharedView) |>
-      render("index.html", items: images, item_name_singular: "image", column_headings: view.attribute_names_short(), item_view: view,
-                                row_values_func_name: :attribute_values_short)
+
+    put_view(conn, Artour.SharedView) 
+    |> render(
+      "index.html", 
+      items: images, 
+      item_name_singular: "image", 
+      column_headings: Artour.ImageView.attribute_names_short(), 
+      row_values_func: &Artour.ImageView.attribute_values_short/2
+    )
   end
 
   def new(conn, _params) do
