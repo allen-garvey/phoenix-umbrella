@@ -1,4 +1,4 @@
-<%= render Bookmarker.SharedView, "form_header.html", model_name: "bookmark", back_path: bookmark_path(@conn, :show, @bookmark) %>
+<%= render Bookmarker.SharedView, "form_header.html", heading: "Edit bookmark", back_path: bookmark_path(@conn, :show, @bookmark) %>
 
 <%= render "form.html", changeset: @changeset,
 						folders: @folders,
