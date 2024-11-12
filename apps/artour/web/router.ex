@@ -40,7 +40,6 @@ defmodule Artour.Router do
 
     get "/404.html", PageController, :error_404
 
-    get "/posts", PublicPostController, :index
     get "/posts/:slug", PublicPostController, :show
   end
 
