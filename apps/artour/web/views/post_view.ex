@@ -93,12 +93,18 @@ defmodule Artour.PostView do
   formatted values
   """
   def attributes(conn, post) do
-    show_url = Artour.PublicPostView.show_path(conn, post)
     api_images_url = api_post_path(conn, :post_images, post.id, export: "true")
+
+    public_url = case post.is_published do
+      true -> 
+        show_url = Artour.PublicPostView.show_path(conn, post)
+        link(show_url, to: show_url)
+      false -> ""
+    end
 
     [
       {"Title", post.title}, 
-      {"Public Url", link(show_url, to: show_url)}, 
+      {"Public Url", public_url}, 
       {"Export Url", link(api_images_url, to: api_images_url)}, 
       {"Publication Date", Common.DateHelpers.us_formatted_date(post.publication_date)}, 
       {"NSFW", post.is_nsfw}, 
