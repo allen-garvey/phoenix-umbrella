@@ -6,15 +6,8 @@ defmodule Artour.PostController do
 
   def index(conn, _params) do
     posts = Admin.list_posts()
-
-    put_view(conn, Artour.SharedView) 
-    |> render(
-        "index.html", 
-        items: posts, 
-        item_name_singular: "post", 
-        column_headings: Artour.PostView.attribute_names_short(), 
-        row_values_func:  &Artour.PostView.attribute_values_short/2
-      )
+    
+    render(conn, "index.html", items: posts)
   end
 
   def new(conn, _params) do

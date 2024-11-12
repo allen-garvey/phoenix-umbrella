@@ -1,0 +1,15 @@
+<%= render Artour.SharedView, "index_heading.html", 
+    conn: @conn, 
+    heading: "Post Images",
+    item_name_singular: "post image", 
+    count: Enum.count(@items),
+    new_path: post_image_path(@conn, :new)
+%>
+
+<%= render Artour.SharedView, "index.html", 
+    conn: @conn, 
+    items: @items,
+    item_path_func: &post_image_path/3,
+    column_headings: attribute_names_short(), 
+    row_values_func: &attribute_values_short/2
+%>

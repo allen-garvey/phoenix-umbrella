@@ -1,8 +1,8 @@
 <%= link "All resources", to: admin_path(@conn, :index), class: "back-link" %>
 <h1 class="index-heading">
-  <%= Common.StringHelpers.naive_pluralize(@item_name_singular) |> String.capitalize %>
+  <%= @heading %>
   <span class="index-heading-count">(<%= @count %>)</span>
 </h1>
 <div>
-  <%= link "Add " <> @item_name_singular, to: path_for_item(@conn, @item_name_singular, :new), class: "btn btn-sm btn-success" %>
+  <%= link "Add " <> @item_name_singular, to: @new_path, class: "btn btn-sm btn-success" %>
 </div>
