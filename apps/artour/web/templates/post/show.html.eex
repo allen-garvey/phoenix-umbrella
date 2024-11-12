@@ -1,11 +1,13 @@
 <%= render Artour.SharedView, "show_heading.html",
                                 conn: @conn,
-                                item_attribute_names: attribute_names(),
-                                item_attribute_values: attribute_values(@conn, @post),
-                                item_name_singular: "post",
-                                item: @post,
+                                index_path: post_path(@conn, :index),
+                                edit_path: post_path(@conn, :edit, @post),
+                                attributes: attributes(@conn, @post),
+                                item_name_plural: "posts",
                                 title: display_name(@post)
 %>
+
+
 <div class="button-container-right">
 	<%= link "Add images", to: post_path(@conn, :add_images, @post), class: "btn btn-success" %>
 </div>

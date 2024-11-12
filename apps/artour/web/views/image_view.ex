@@ -96,18 +96,18 @@ defmodule Artour.ImageView do
   end
 
   @doc """
-  Used on show page - returns list of attribute names in the
-  same order as the attribute_values function
+  Used on show page
   """
-  def attribute_names() do
-    ["Title", "Description", "Filename Large", "Filename Medium", "Filename Small", "Filename Thumbnail", "Date Completed", "Year"]
-  end
-
-  @doc """
-  Used on show page - takes image instance and returns list of 
-  formatted values
-  """
-  def attribute_values(image) do
-    [image.title, image.description, image.filename_large, image.filename_medium, image.filename_small, image.filename_thumbnail, Common.DateHelpers.us_formatted_date(image.completion_date), image.year]
+  def attributes(image) do
+    [
+      {"Title", image.title}, 
+      {"Description", image.description}, 
+      {"Filename Large", image.filename_large}, 
+      {"Filename Medium", image.filename_medium}, 
+      {"Filename Small", image.filename_small}, 
+      {"Filename Thumbnail", image.filename_thumbnail}, 
+      {"Date Completed", Common.DateHelpers.us_formatted_date(image.completion_date)}, 
+      {"Year", image.year},
+    ]
   end
 end

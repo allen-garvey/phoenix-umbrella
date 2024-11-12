@@ -89,30 +89,22 @@ defmodule Artour.PostView do
   end
 
   @doc """
-  Used on show page - returns list of attribute names in the
-  same order as the attribute_values function
-  """
-  def attribute_names() do
-    ["Title", "Public Url", "Export Url", "Publication Date", "NSFW", "Markdown", "Published", "Body"]
-  end
-
-  @doc """
   Used on show page - takes post instance and returns list of 
   formatted values
   """
-  def attribute_values(conn, post) do
+  def attributes(conn, post) do
     show_url = Artour.PublicPostView.show_path(conn, post)
     api_images_url = api_post_path(conn, :post_images, post.id, export: "true")
-    
+
     [
-      post.title, 
-      link(show_url, to: show_url), 
-      link(api_images_url, to: api_images_url), 
-      Common.DateHelpers.us_formatted_date(post.publication_date), 
-      post.is_nsfw, 
-      post.is_markdown, 
-      post.is_published, 
-      Artour.PublicPostView.formatted_post_body(post.body, post.is_markdown)
+      {"Title", post.title}, 
+      {"Public Url", link(show_url, to: show_url)}, 
+      {"Export Url", link(api_images_url, to: api_images_url)}, 
+      {"Publication Date", Common.DateHelpers.us_formatted_date(post.publication_date)}, 
+      {"NSFW", post.is_nsfw}, 
+      {"Markdown", post.is_markdown}, 
+      {"Published", post.is_published}, 
+      {"Body", Artour.PublicPostView.formatted_post_body(post.body, post.is_markdown)},
     ]
   end
 end

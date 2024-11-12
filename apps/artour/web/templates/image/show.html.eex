@@ -1,9 +1,9 @@
 <%= render Artour.SharedView, "show_heading.html",
                                 conn: @conn,
-                                item_attribute_names: attribute_names(),
-                                item_attribute_values: attribute_values(@image),
-                                item_name_singular: "image",
-                                item: @image,
+                                index_path: image_path(@conn, :index),
+                                edit_path: image_path(@conn, :edit, @image),
+                                attributes: attributes(@image),
+                                item_name_plural: "images",
                                 title: display_name(@image)
 %>
 

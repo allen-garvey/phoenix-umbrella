@@ -1,14 +1,14 @@
-<%= link "All " <> Common.StringHelpers.naive_pluralize(@item_name_singular), to: path_for_item(@conn, @item_name_singular, :index), class: "back-link" %>
+<%= link "All " <> @item_name_plural, to: @index_path, class: "back-link" %>
 
 <div class="show-heading">
   <h1 class="show-title"><%= @title %></h1>
-  <%= link "Edit", to: path_for_item(@conn, @item_name_singular, :edit, @item), class: "btn btn-primary btn-sm" %>
+  <%= link "Edit", to: @edit_path, class: "btn btn-primary btn-sm" %>
 </div>
 
 
 <dl class="show-attribute-list">
-  <%= for {name, attribute} <- Enum.zip(@item_attribute_names, @item_attribute_values) do %>
+  <%= for { name, value } <- @attributes do %>
     <dt><%= name %></dt>
-    <dd><%= attribute %></dd>  
+    <dd><%= value %></dd>  
   <% end %>
 </dl>

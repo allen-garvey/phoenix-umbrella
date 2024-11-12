@@ -47,24 +47,15 @@ defmodule Artour.PostImageView do
   end
 
   @doc """
-  Used on show pages - returns list of attribute names in the
-  same order as the attribute_values function
-  """
-  def attribute_names() do
-    attribute_names_short()
-  end
-
-  @doc """
   Used on show pages - takes post image instance and returns list of 
   formatted values
   """
-  def attribute_values(conn, post_image) do
+  def attributes(conn, post_image) do
     [
-      link(Artour.PostView.display_name(post_image.post), to: post_path(conn, :show, post_image.post)), 
-      link(Artour.ImageView.display_name(post_image.image), to: image_path(conn, :show, post_image.image)), 
-      post_image.caption, 
-      post_image.order
+      {"Post", link(Artour.PostView.display_name(post_image.post), to: post_path(conn, :show, post_image.post))}, 
+      {"Image", link(Artour.ImageView.display_name(post_image.image), to: image_path(conn, :show, post_image.image))}, 
+      {"Caption", post_image.caption}, 
+      {"Order", post_image.order},
     ]
   end
-
 end
