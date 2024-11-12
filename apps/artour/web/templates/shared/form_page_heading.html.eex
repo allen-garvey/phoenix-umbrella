@@ -1,3 +1,3 @@
-<%= link "All " <> Common.StringHelpers.naive_pluralize(@item_name_singular), to: path_for_item(@conn, @item_name_singular, :index), class: "back-link" %>
+<%= link "All " <> @item_name_plural, to: @index_path, class: "back-link" %>
 
 <h1><%= @heading %></h1>

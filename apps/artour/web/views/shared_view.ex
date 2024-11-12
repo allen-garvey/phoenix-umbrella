@@ -9,22 +9,6 @@ defmodule Artour.SharedView do
 	end
 
 	@doc """
-  	Returns path for item
-  	(e.g. :index, :show, :new)
-  	"""
-	def path_for_item(conn, item_name_singular, path_atom) do
-		apply(Artour.Router.Helpers, item_path_func_name(item_name_singular), [conn, path_atom])
-	end
-
-	@doc """
-  	Returns path for item instance
-  	(e.g. :edit and :show)
-  	"""
-	def path_for_item(conn, item_name_singular, path_atom, item_instance) do
-		apply(Artour.Router.Helpers, item_path_func_name(item_name_singular), [conn, path_atom, item_instance])
-	end
-
-	@doc """
   	Used as heading for new  and edit item form
   	for :new, item_name should be item_name_singular
   	for :edit, item_name should be item display_name
