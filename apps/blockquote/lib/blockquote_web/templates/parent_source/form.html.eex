@@ -1,0 +1,30 @@
+<%= if assigns[:parent_source] do %>
+    <%= render BlockquoteWeb.SharedView, "form_edit_heading.html", 
+        item_name: to_s(@parent_source),
+        item_path: parent_source_path(@conn, :show, @parent_source)
+    %>
+
+<% else %>
+    <%= render BlockquoteWeb.SharedView, "form_heading.html", heading: "Add parent_source"%>
+<% end %>
+
+<%= form_for @changeset, form_action(@conn, assigns[:parent_source]), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= Common.ViewHelpers.Form.input_group :title, f, &text_input/3, label_class: "required", autofocus: true %>
+
+  <%= Common.ViewHelpers.Form.input_group :subtitle, f, &text_input/3 %>
+
+  <%= Common.ViewHelpers.Form.select_group :source_type_id, f, @related_fields[:source_types], label_class: "required" %>
+
+  <%= Common.ViewHelpers.Form.input_group :url, f, &url_input/3 %>
+
+  <%= render BlockquoteWeb.SharedView, "submit_row.html",
+                                save_another: !!assigns[:save_another]
+  %>
+
+<% end %>

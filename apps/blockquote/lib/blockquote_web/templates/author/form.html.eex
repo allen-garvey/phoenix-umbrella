@@ -1,0 +1,28 @@
+<%= if assigns[:author] do %>
+    <%= render BlockquoteWeb.SharedView, "form_edit_heading.html", 
+        item_name: to_s(@author),
+        item_path: author_path(@conn, :show, @author)
+    %>
+
+<% else %>
+    <%= render BlockquoteWeb.SharedView, "form_heading.html", heading: "Add author"%>
+<% end %>
+
+<%= form_for @changeset, form_action(@conn, assigns[:author]), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= Common.ViewHelpers.Form.input_group :first_name, f, &text_input/3, label_class: "required", autofocus: true %>
+
+  <%= Common.ViewHelpers.Form.input_group :middle_name, f, &text_input/3 %>
+
+  <%= Common.ViewHelpers.Form.input_group :last_name, f, &text_input/3 %>
+
+  <%= render BlockquoteWeb.SharedView, "submit_row.html",
+                                save_another: !!assigns[:save_another]
+  %>
+
+<% end %>

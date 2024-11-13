@@ -1,0 +1,40 @@
+<%= if assigns[:quote] do %>
+    <%= render BlockquoteWeb.SharedView, "form_edit_heading.html", 
+        item_name: "Quote",
+        item_path: quote_path(@conn, :show, @quote)
+    %>
+
+<% else %>
+    <%= render BlockquoteWeb.SharedView, "form_heading.html", heading: "Add quote"%>
+<% end %>
+
+<%= form_for @changeset, form_action(@conn, assigns[:quote]), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= Common.ViewHelpers.Form.input_group :body, f, &textarea/3, cols: 80, rows: 10, spellcheck: "true", autofocus: true, label_class: "required" %>
+
+  <ul class="text-symbols-list">
+    <li>Em dash <span class="symbol">&mdash;</span></li>
+    <li>En dash <span class="symbol">&ndash;</span></li>
+    <li>Ellipsis &hellip;</li>
+    <li>Single smart quote left <span class="symbol">&lsquo;</span></li>
+    <li>Single smart quote right <span class="symbol">&rsquo;</span></li>
+    <li>Double smart quote left <span class="symbol">&ldquo;</span></li>
+    <li>Double smart quote right <span class="symbol">&rdquo;</span></li>
+  </ul>
+
+  <%= Common.ViewHelpers.Form.select_group :category_id, f, @related_fields[:categories], label_class: "required" %>
+
+  <%= Common.ViewHelpers.Form.select_group :author_id, f, @related_fields[:authors] %>
+
+  <%= Common.ViewHelpers.Form.select_group :source_id, f, @related_fields[:sources], label_class: "required" %>
+
+  <%= render BlockquoteWeb.SharedView, "submit_row.html",
+                                save_another: !!assigns[:save_another]
+  %>
+
+<% end %>

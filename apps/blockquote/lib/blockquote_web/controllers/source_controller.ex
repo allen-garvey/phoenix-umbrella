@@ -4,17 +4,17 @@ defmodule BlockquoteWeb.SourceController do
   alias Blockquote.Admin
   alias Blockquote.Admin.Source
 
-  def custom_render(conn, template, assigns) do
+  defp custom_render(conn, template, assigns) do
     custom_render(conn, view_module(conn), template, assigns)
   end
 
-  def custom_render(conn, view_module, template, assigns) do
+  defp custom_render(conn, view_module, template, assigns) do
     assigns = [{:item_name_singular, "source"}] ++ assigns
     put_view(conn, view_module)
     |> render(template, assigns)
   end
 
-  def related_fields do
+  defp related_fields do
     authors = Admin.list_authors() |> BlockquoteWeb.AuthorView.map_for_form
     source_types = Admin.list_source_types() |> BlockquoteWeb.SourceTypeView.map_for_form
     #insert blank value since parent source is optional
@@ -28,12 +28,12 @@ defmodule BlockquoteWeb.SourceController do
     custom_render(conn, BlockquoteWeb.SharedView, "index.html", items: sources, item_view: view_module(conn), item_display_func: :to_s)
   end
 
-  def new_page(conn, changeset) do
-    custom_render(conn, "new.html", changeset: changeset, related_fields: related_fields())
+  defp new_page(conn, changeset) do
+    render(conn, "form.html", changeset: changeset, related_fields: related_fields())
   end
 
-  def edit_page(conn, changeset, source) do
-    custom_render(conn, "edit.html", changeset: changeset, related_fields: related_fields(), item: source)
+  defp edit_page(conn, changeset, source) do
+    render(conn, "form.html", changeset: changeset, related_fields: related_fields(), source: source)
   end
 
   def new(conn, %{"parent_source" => parent_source_id}) do

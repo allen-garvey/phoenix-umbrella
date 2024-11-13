@@ -4,11 +4,11 @@ defmodule BlockquoteWeb.AuthorController do
   alias Blockquote.Admin
   alias Blockquote.Admin.Author
 
-  def custom_render(conn, template, assigns) do
+  defp custom_render(conn, template, assigns) do
     custom_render(conn, view_module(conn), template, assigns)
   end
 
-  def custom_render(conn, view_module, template, assigns) do
+  defp custom_render(conn, view_module, template, assigns) do
     assigns = [{:item_name_singular, "author"}] ++ assigns
     put_view(conn, view_module)
     |> render(template, assigns)
@@ -21,7 +21,7 @@ defmodule BlockquoteWeb.AuthorController do
 
   def new(conn, _params) do
     changeset = Admin.change_author(%Author{})
-    custom_render(conn, "new.html", changeset: changeset)
+    render(conn, "form.html", changeset: changeset)
   end
 
   def create(conn, %{"author" => author_params}) do
@@ -31,7 +31,7 @@ defmodule BlockquoteWeb.AuthorController do
         |> put_flash(:info, "Author created successfully.")
         |> redirect(to: author_path(conn, :show, author))
       {:error, %Ecto.Changeset{} = changeset} ->
-        custom_render(conn, "new.html", changeset: changeset)
+        render(conn, "form.html", changeset: changeset)
     end
   end
 
@@ -43,7 +43,7 @@ defmodule BlockquoteWeb.AuthorController do
   def edit(conn, %{"id" => id}) do
     author = Admin.get_author!(id)
     changeset = Admin.change_author(author)
-    custom_render(conn, "edit.html", author: author, changeset: changeset)
+    render(conn, "form.html", author: author, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "author" => author_params}) do
@@ -55,7 +55,7 @@ defmodule BlockquoteWeb.AuthorController do
         |> put_flash(:info, "Author updated successfully.")
         |> redirect(to: author_path(conn, :show, author))
       {:error, %Ecto.Changeset{} = changeset} ->
-        custom_render(conn, "edit.html", author: author, changeset: changeset)
+        render(conn, "form.html", author: author, changeset: changeset)
     end
   end
 

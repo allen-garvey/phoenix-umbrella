@@ -1,28 +1,5 @@
 defmodule BlockquoteWeb.SourceView do
   use BlockquoteWeb, :view
-
-  alias BlockquoteWeb.Link
-  
-  def render("new.html", assigns) do
-    assigns = Map.merge(assigns, shared_form_assigns(assigns))
-    render BlockquoteWeb.SharedView, "new.html", assigns
-  end
-
-  def render("edit.html", assigns) do
-    assigns = Map.merge(assigns, 
-      %{
-        item_display_name: to_s(assigns[:item])
-      }
-    ) |> Map.merge(shared_form_assigns(assigns))
-    render BlockquoteWeb.SharedView, "edit.html", assigns
-  end
-
-  def shared_form_assigns(assigns) do
-    %{
-        required_fields: Blockquote.Admin.Source.required_fields(), 
-        form_fields: form_fields(assigns[:related_fields])
-      }
-  end
   
   def to_s(source) do
     to_s(source.title, source.subtitle)
@@ -56,23 +33,18 @@ defmodule BlockquoteWeb.SourceView do
       {"release date", source.release_date}, 
     ]
   end
-  
-  
-  def form_fields(related_fields) do
-    [
-      {:title, :string, nil},
-      {:subtitle, :string, nil},
-      {:author_id, :select, related_fields[:authors]},
-      {:source_type_id, :select, related_fields[:source_types]},
-      {:parent_source_id, :select, related_fields[:parent_sources]},
-      {:url, :string, nil},
-      {:release_date, :date, nil},
-    ]
+
+  def form_action(conn, nil) do
+    source_path(conn, :create)
+  end
+
+  def form_action(conn, source) do
+    source_path(conn, :update, source)
   end
 
   def show_buttons(conn, source) do
     [
-      %Link{title: "Add quote", path: quote_path(conn, :new, source: source.id)}
+      %BlockquoteWeb.Link{title: "Add quote", path: quote_path(conn, :new, source: source.id)}
     ]
   end
 end

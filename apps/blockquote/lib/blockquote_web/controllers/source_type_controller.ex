@@ -4,11 +4,11 @@ defmodule BlockquoteWeb.SourceTypeController do
   alias Blockquote.Admin
   alias Blockquote.Admin.SourceType
 
-  def custom_render(conn, template, assigns) do
+  defp custom_render(conn, template, assigns) do
     custom_render(conn, view_module(conn), template, assigns)
   end
 
-  def custom_render(conn, view_module, template, assigns) do
+  defp custom_render(conn, view_module, template, assigns) do
     assigns = [{:item_name_singular, "source type"}] ++ assigns
     put_view(conn, view_module)
     |> render(template, assigns)
@@ -21,7 +21,7 @@ defmodule BlockquoteWeb.SourceTypeController do
 
   def new(conn, _params) do
     changeset = Admin.change_source_type(%SourceType{})
-    custom_render(conn, "new.html", changeset: changeset)
+    render(conn, "form.html", changeset: changeset)
   end
 
   def create(conn, %{"source_type" => source_type_params}) do
@@ -31,7 +31,7 @@ defmodule BlockquoteWeb.SourceTypeController do
         |> put_flash(:info, "Source type created successfully.")
         |> redirect(to: source_type_path(conn, :show, source_type))
       {:error, %Ecto.Changeset{} = changeset} ->
-        custom_render(conn, "new.html", changeset: changeset)
+        render(conn, "form.html", changeset: changeset)
     end
   end
 
@@ -43,7 +43,7 @@ defmodule BlockquoteWeb.SourceTypeController do
   def edit(conn, %{"id" => id}) do
     source_type = Admin.get_source_type!(id)
     changeset = Admin.change_source_type(source_type)
-    custom_render(conn, "edit.html", source_type: source_type, changeset: changeset)
+    render(conn, "form.html", source_type: source_type, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "source_type" => source_type_params}) do
@@ -55,7 +55,7 @@ defmodule BlockquoteWeb.SourceTypeController do
         |> put_flash(:info, "Source type updated successfully.")
         |> redirect(to: source_type_path(conn, :show, source_type))
       {:error, %Ecto.Changeset{} = changeset} ->
-        custom_render(conn, "edit.html", source_type: source_type, changeset: changeset)
+        render(conn, "form.html", source_type: source_type, changeset: changeset)
     end
   end
 

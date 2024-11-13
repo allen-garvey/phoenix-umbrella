@@ -12,16 +12,12 @@ defmodule Blockquote.Admin.SourceType do
     has_many :parent_sources, Blockquote.Admin.ParentSource
     has_many :sources, Blockquote.Admin.Source
   end
-  
-  def required_fields() do
-    [:name]
-  end
 
   @doc false
   def changeset(%SourceType{} = source_type, attrs) do
     source_type
     |> cast(attrs, [:name])
-    |> validate_required(required_fields())
+    |> validate_required([:name])
     |> unique_constraint(:name)
   end
 end

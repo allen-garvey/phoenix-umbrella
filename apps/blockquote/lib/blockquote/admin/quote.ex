@@ -16,10 +16,6 @@ defmodule Blockquote.Admin.Quote do
     has_many :daily_quotes, Blockquote.Admin.DailyQuote
   end
   
-  def required_fields() do
-    [:body, :source_id, :category_id]
-  end
-  
   @doc """
 	Validates that the quote author_id is blank or not the same
 	as the source author id
@@ -39,7 +35,7 @@ defmodule Blockquote.Admin.Quote do
   def changeset(%Quote{} = quote, attrs) do
     quote
     |> cast(attrs, [:body, :author_id, :category_id, :source_id])
-    |> validate_required(required_fields())
+    |> validate_required([:body, :source_id, :category_id])
     |> assoc_constraint(:author)
     |> assoc_constraint(:source)
     |> assoc_constraint(:category)

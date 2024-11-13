@@ -4,11 +4,11 @@ defmodule BlockquoteWeb.CategoryController do
   alias Blockquote.Admin
   alias Blockquote.Admin.Category
 
-  def custom_render(conn, template, assigns) do
+  defp custom_render(conn, template, assigns) do
     custom_render(conn, view_module(conn), template, assigns)
   end
 
-  def custom_render(conn, view_module, template, assigns) do
+  defp custom_render(conn, view_module, template, assigns) do
     assigns = [{:item_name_singular, "category"}] ++ assigns
     put_view(conn, view_module)
     |> render(template, assigns)
@@ -21,7 +21,7 @@ defmodule BlockquoteWeb.CategoryController do
 
   def new(conn, _params) do
     changeset = Admin.change_category(%Category{})
-    custom_render(conn, "new.html", changeset: changeset)
+    render(conn, "form.html", changeset: changeset)
   end
 
   def create(conn, %{"category" => category_params}) do
@@ -31,7 +31,7 @@ defmodule BlockquoteWeb.CategoryController do
         |> put_flash(:info, "Category created successfully.")
         |> redirect(to: category_path(conn, :show, category))
       {:error, %Ecto.Changeset{} = changeset} ->
-        custom_render(conn, "new.html", changeset: changeset)
+        render(conn, "form.html", changeset: changeset)
     end
   end
 
@@ -43,7 +43,7 @@ defmodule BlockquoteWeb.CategoryController do
   def edit(conn, %{"id" => id}) do
     category = Admin.get_category!(id)
     changeset = Admin.change_category(category)
-    custom_render(conn, "edit.html", category: category, changeset: changeset)
+    render(conn, "form.html", changeset: changeset, category: category)
   end
 
   def update(conn, %{"id" => id, "category" => category_params}) do
@@ -55,7 +55,7 @@ defmodule BlockquoteWeb.CategoryController do
         |> put_flash(:info, "Category updated successfully.")
         |> redirect(to: category_path(conn, :show, category))
       {:error, %Ecto.Changeset{} = changeset} ->
-        custom_render(conn, "edit.html", category: category, changeset: changeset)
+        render(conn, "form.html", changeset: changeset, category: category)
     end
   end
 

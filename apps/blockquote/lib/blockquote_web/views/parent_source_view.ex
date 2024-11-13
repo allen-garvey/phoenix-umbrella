@@ -1,28 +1,5 @@
 defmodule BlockquoteWeb.ParentSourceView do
   use BlockquoteWeb, :view
-
-  alias BlockquoteWeb.Link
-  
-  def render("new.html", assigns) do
-    assigns = Map.merge(assigns, shared_form_assigns(assigns))
-    render BlockquoteWeb.SharedView, "new.html", assigns
-  end
-
-  def render("edit.html", assigns) do
-    assigns = Map.merge(assigns, 
-      %{
-        item_display_name: to_s(assigns[:item])
-      }
-    ) |> Map.merge(shared_form_assigns(assigns))
-    render BlockquoteWeb.SharedView, "edit.html", assigns
-  end
-
-  def shared_form_assigns(assigns) do
-    %{
-        required_fields: Blockquote.Admin.ParentSource.required_fields(), 
-        form_fields: form_fields(assigns[:related_fields])
-      }
-  end
   
   def to_s(parent_source) do
     to_s(parent_source.title, parent_source.subtitle)
@@ -36,7 +13,6 @@ defmodule BlockquoteWeb.ParentSourceView do
     title <> ": " <> subtitle
   end
   
-  
   Common.ViewHelpers.Form.define_map_for_form()
   
   def item_columns(conn, parent_source) do
@@ -47,20 +23,18 @@ defmodule BlockquoteWeb.ParentSourceView do
       {"url", BlockquoteWeb.SharedView.linkify(parent_source.url)}, 
     ]
   end
-  
-  
-  def form_fields(related_fields) do
-    [
-      {:title, :string, nil},
-      {:subtitle, :string, nil},
-      {:source_type_id, :select, related_fields[:source_types]},
-      {:url, :string, nil},
-    ]
+
+  def form_action(conn, nil) do
+    parent_source_path(conn, :create)
+  end
+
+  def form_action(conn, parent_source) do
+    parent_source_path(conn, :update, parent_source)
   end
 
   def show_buttons(conn, parent_source) do
     [
-      %Link{title: "Add source", path: source_path(conn, :new, parent_source: parent_source.id)}
+      %BlockquoteWeb.Link{title: "Add source", path: source_path(conn, :new, parent_source: parent_source.id)}
     ]
   end
 end

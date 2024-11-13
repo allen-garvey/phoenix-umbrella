@@ -1,0 +1,2 @@
+<span><%= link "Back to #{@item_name}", to: @item_path %></span>
+<%= render "form_heading.html", heading: "Edit #{@item_name}" %>

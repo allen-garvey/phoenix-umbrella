@@ -11,16 +11,12 @@ defmodule Blockquote.Admin.DailyQuote do
     
     belongs_to :quote, Blockquote.Admin.Quote
   end
-  
-  def required_fields() do
-    [:date_used, :quote_id]
-  end
 
   @doc false
   def changeset(%DailyQuote{} = daily_quote, attrs) do
     daily_quote
     |> cast(attrs, [:date_used, :quote_id])
-    |> validate_required(required_fields())
+    |> validate_required([:date_used, :quote_id])
     |> unique_constraint(:date_used)
   end
 end

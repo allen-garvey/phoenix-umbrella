@@ -4,17 +4,17 @@ defmodule BlockquoteWeb.ParentSourceController do
   alias Blockquote.Admin
   alias Blockquote.Admin.ParentSource
 
-  def custom_render(conn, template, assigns) do
+  defp custom_render(conn, template, assigns) do
     custom_render(conn, view_module(conn), template, assigns)
   end
 
-  def custom_render(conn, view_module, template, assigns) do
+  defp custom_render(conn, view_module, template, assigns) do
     assigns = [{:item_name_singular, "parent source"}] ++ assigns
     put_view(conn, view_module)
     |> render(template, assigns)
   end
 
-  def related_fields do
+  defp related_fields do
     source_types = Admin.list_source_types() |> BlockquoteWeb.SourceTypeView.map_for_form
 
     [source_types: source_types]
@@ -25,17 +25,17 @@ defmodule BlockquoteWeb.ParentSourceController do
     custom_render(conn, BlockquoteWeb.SharedView, "index.html", items: parent_sources, item_view: view_module(conn), item_display_func: :to_s)
   end
 
-  def new_page(conn, changeset, _params) do
-    custom_render(conn, "new.html", changeset: changeset, related_fields: related_fields())
+  defp new_page(conn, changeset) do
+    render(conn, "form.html", changeset: changeset, related_fields: related_fields())
   end
 
-  def edit_page(conn, changeset, parent_source) do
-    custom_render(conn, "edit.html", changeset: changeset, related_fields: related_fields(), item: parent_source)
+  defp edit_page(conn, changeset, parent_source) do
+    render(conn, "form.html", changeset: changeset, related_fields: related_fields(), parent_source: parent_source)
   end
 
-  def new(conn, params) do
+  def new(conn, _params) do
     changeset = Admin.change_parent_source(%ParentSource{})
-    new_page(conn, changeset, params)
+    new_page(conn, changeset)
   end
 
   def create(conn, %{"parent_source" => parent_source_params}) do
@@ -45,7 +45,7 @@ defmodule BlockquoteWeb.ParentSourceController do
         |> put_flash(:info, "Parent source created successfully.")
         |> redirect(to: parent_source_path(conn, :show, parent_source))
       {:error, %Ecto.Changeset{} = changeset} ->
-        new_page(conn, changeset, nil)
+        new_page(conn, changeset)
     end
   end
 

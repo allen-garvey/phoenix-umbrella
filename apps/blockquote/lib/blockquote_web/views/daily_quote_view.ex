@@ -2,27 +2,6 @@ defmodule BlockquoteWeb.DailyQuoteView do
   use BlockquoteWeb, :view
   alias BlockquoteWeb.SharedView
   
-  def render("new.html", assigns) do
-    assigns = Map.merge(assigns, shared_form_assigns(assigns))
-    render BlockquoteWeb.SharedView, "new.html", assigns
-  end
-
-  def render("edit.html", assigns) do
-    assigns = Map.merge(assigns, 
-      %{
-        item_display_name: "Daily quote"
-      }
-    ) |> Map.merge(shared_form_assigns(assigns))
-    render BlockquoteWeb.SharedView, "edit.html", assigns
-  end
-
-  def shared_form_assigns(assigns) do
-    %{
-        required_fields: Blockquote.Admin.DailyQuote.required_fields(), 
-        form_fields: form_fields(assigns[:related_fields])
-      }
-  end
-  
   def to_s(daily_quote) do
     "#{Date.to_iso8601(daily_quote.date_used)} — #{BlockquoteWeb.QuoteView.to_short_excerpt(daily_quote.quote)}"
   end
@@ -36,10 +15,11 @@ defmodule BlockquoteWeb.DailyQuoteView do
     ]
   end
   
-  def form_fields(related_fields) do
-    [
-      {:date_used, :date, nil},
-      {:quote_id, :select, related_fields[:quotes]},
-    ]
+  def form_action(conn, nil) do
+    daily_quote_path(conn, :create)
+  end
+
+  def form_action(conn, daily_quote) do
+    daily_quote_path(conn, :update, daily_quote)
   end
 end

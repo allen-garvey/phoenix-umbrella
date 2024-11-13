@@ -1,0 +1,24 @@
+<%= if assigns[:source_type] do %>
+    <%= render BlockquoteWeb.SharedView, "form_edit_heading.html", 
+        item_name: to_s(@source_type),
+        item_path: source_type_path(@conn, :show, @source_type)
+    %>
+
+<% else %>
+    <%= render BlockquoteWeb.SharedView, "form_heading.html", heading: "Add source type"%>
+<% end %>
+
+<%= form_for @changeset, form_action(@conn, assigns[:source_type]), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= Common.ViewHelpers.Form.input_group :name, f, &text_input/3, label_class: "required", autofocus: true %>
+
+  <%= render BlockquoteWeb.SharedView, "submit_row.html",
+                                save_another: !!assigns[:save_another]
+  %>
+
+<% end %>

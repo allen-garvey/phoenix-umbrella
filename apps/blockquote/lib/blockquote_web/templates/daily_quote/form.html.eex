@@ -1,0 +1,27 @@
+<%= if assigns[:daily_quote] do %>
+    <%= render BlockquoteWeb.SharedView, "form_edit_heading.html", 
+        item_name: "Daily Quote",
+        item_path: daily_quote_path(@conn, :show, @daily_quote)
+    %>
+
+<% else %>
+    <%= render BlockquoteWeb.SharedView, "form_heading.html", heading: "Add daily quote"%>
+<% end %>
+
+<%= form_for @changeset, form_action(@conn, assigns[:daily_quote]), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+  
+  <%= Common.ViewHelpers.Form.input_group :date_used, f, &date_input/3, label_class: "required", autofocus: true %>
+
+  <%= Common.ViewHelpers.Form.select_group :quote_id, f, @related_fields[:quotes], label_class: "required" %>
+
+
+  <%= render BlockquoteWeb.SharedView, "submit_row.html",
+                                save_another: !!assigns[:save_another]
+  %>
+
+<% end %>

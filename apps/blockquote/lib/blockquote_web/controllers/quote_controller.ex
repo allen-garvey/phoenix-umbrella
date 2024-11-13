@@ -5,11 +5,11 @@ defmodule BlockquoteWeb.QuoteController do
   alias Blockquote.Admin.Quote
   alias Grenadier.Repo
 
-  def custom_render(conn, template, assigns) do
+  defp custom_render(conn, template, assigns) do
     custom_render(conn, view_module(conn), template, assigns)
   end
 
-  def custom_render(conn, view_module, template, assigns) do
+  defp custom_render(conn, view_module, template, assigns) do
     assigns = [{:item_name_singular, "quote"}] ++ assigns
     put_view(conn, view_module)
     |> render(template, assigns)
@@ -44,11 +44,11 @@ defmodule BlockquoteWeb.QuoteController do
   end
 
   def new_page(conn, changeset) do
-    custom_render(conn, "new.html", changeset: changeset, related_fields: related_fields(), save_another: true)
+    render(conn, "form.html", changeset: changeset, related_fields: related_fields(), save_another: true)
   end
 
   def edit_page(conn, changeset, quote) do
-    custom_render(conn, "edit.html", changeset: changeset, related_fields: related_fields(), item: quote)
+    render(conn, "form.html", changeset: changeset, related_fields: related_fields(), quote: quote)
   end
 
   def create_succeeded(conn, quote, "true") do

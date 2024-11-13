@@ -1,27 +1,6 @@
 defmodule BlockquoteWeb.QuoteView do
   use BlockquoteWeb, :view
   
-  def render("new.html", assigns) do
-    assigns = Map.merge(assigns, shared_form_assigns(assigns))
-    render BlockquoteWeb.SharedView, "new.html", assigns
-  end
-
-  def render("edit.html", assigns) do
-    assigns = Map.merge(assigns, 
-      %{
-        item_display_name: "Quote"
-      }
-    ) |> Map.merge(shared_form_assigns(assigns))
-    render BlockquoteWeb.SharedView, "edit.html", assigns
-  end
-
-  def shared_form_assigns(assigns) do
-    %{
-        required_fields: Blockquote.Admin.Quote.required_fields(), 
-        form_fields: form_fields(assigns[:related_fields])
-      }
-  end
-  
   def to_excerpt(quote) do
     to_excerpt(quote, 130)
   end
@@ -67,13 +46,12 @@ defmodule BlockquoteWeb.QuoteView do
       {"added", BlockquoteWeb.SharedView.item_date_created(quote)},
     ]
   end
-  
-  def form_fields(related_fields) do
-    [
-      {:body, :text, nil},
-      {:category_id, :select, related_fields[:categories]},
-      {:author_id, :select, related_fields[:authors]},
-      {:source_id, :select, related_fields[:sources]},
-    ]
+
+  def form_action(conn, nil) do
+    quote_path(conn, :create)
+  end
+
+  def form_action(conn, quote) do
+    quote_path(conn, :update, quote)
   end
 end

@@ -1,0 +1,1 @@
+<h2 class="page-title"><%= @heading %></h2>
