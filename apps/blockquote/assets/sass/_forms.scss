@@ -95,8 +95,10 @@ input[type=button][disabled].default {
     opacity: 0.4;
 }
 
-.form-group input[type="text"]{
-    width: 30em;
+.form-group{
+    input[type="text"], input[type="url"] {
+        width: 30em;
+    }
 }
 
 /* FORM LABELS */
