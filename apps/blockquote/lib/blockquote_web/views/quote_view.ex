@@ -32,7 +32,7 @@ defmodule BlockquoteWeb.QuoteView do
   
   def to_excerpt(quote, max_length) do
     if String.length(quote.body) > max_length do
-        quote.body |> String.slice(0, max_length) |> Kernel.<>("...")
+        quote.body |> String.slice(0, max_length) |> Kernel.<>("…")
     else
         quote.body
     end
