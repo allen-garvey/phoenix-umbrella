@@ -39,10 +39,9 @@ select[multiple] {
 
 
 /* FORM ROWS */
-$form_group_padding: 10px;
+$form_group_padding: 0.5rem;
 .form-group {
-    padding: $form_group_padding;
-    border-bottom: 1px solid #eee;
+    padding: $form_group_padding 0;
 }
 
 /* FORM BUTTONS */
@@ -162,11 +161,9 @@ label {
     display: flex;
     flex-wrap: wrap;
     list-style-type: none;
-    padding: $form_group_padding;
+    padding: $form_group_padding 0;
+    gap: 0.5em 2em;
 
-    li{
-        margin-right: 2em;
-    }
     .symbol{
         font-weight: bold;
     }
