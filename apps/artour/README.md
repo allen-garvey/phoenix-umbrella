@@ -11,7 +11,6 @@ A CMS and blog static site generator specifically designed for photography and a
   * Render site to static HTML files `mix distill.html`
   * Copy static assets for static site `mix distill.static`
   * Convenience task to combine previous two tasks `mix distill.site`
-  * Test image urls for 404s `mix distill.test.image_urls https://site_url.com/media/images/`
 
 ### Guggenheim
   * Create image sizes and import images to database `mix guggenheim <folder_path>`
