@@ -181,7 +181,11 @@ label {
         color: #cacaca;
     }
 
-    .required label, label.required {
+    .required label, label.required, textarea {
         color: #fff;
+    }
+
+    select.form-control, textarea {
+        background-color: #000;
     }
 }
