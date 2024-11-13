@@ -8,16 +8,16 @@
 
 <%= render BlockquoteWeb.SharedView, "related_fields_list.html",
                                 conn: @conn,
-                                item_name_singular: "parent source",
+                                heading: "Parent Sources",
+                                item_path: &parent_source_path/3,
                                 items: @source_type.parent_sources,
-                                item_view: BlockquoteWeb.ParentSourceView,
-                                item_display_func: :to_s
+                                item_display_func: &BlockquoteWeb.ParentSourceView.to_s/1
 %>
 
 <%= render BlockquoteWeb.SharedView, "related_fields_list.html",
                                 conn: @conn,
-                                item_name_singular: "source",
+                                heanding: "Sources",
+                                item_path: &source_path/3,
                                 items: @source_type.sources,
-                                item_view: BlockquoteWeb.SourceView,
-                                item_display_func: :to_s
+                                item_display_func: &BlockquoteWeb.SourceView.to_s/1
 %>

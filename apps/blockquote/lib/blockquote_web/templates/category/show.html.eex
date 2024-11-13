@@ -8,8 +8,8 @@
 
 <%= render BlockquoteWeb.SharedView, "related_fields_list.html",
                                 conn: @conn,
-                                item_name_singular: "quote",
+                                heading: "Quotes",
+                                item_path: &quote_path/3,
                                 items: @category.quotes,
-                                item_view: BlockquoteWeb.QuoteView,
-                                item_display_func: :to_excerpt
+                                item_display_func: &BlockquoteWeb.QuoteView.to_excerpt/1
 %>

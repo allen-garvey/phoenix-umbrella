@@ -9,8 +9,8 @@
 
 <%= render BlockquoteWeb.SharedView, "related_fields_list.html",
                                 conn: @conn,
-                                item_name_singular: "source",
+                                heading: "Sources",
+                                item_path: &source_path/3,
                                 items: @parent_source.sources,
-                                item_view: BlockquoteWeb.SourceView,
-                                item_display_func: :to_s
+                                item_display_func: &BlockquoteWeb.SourceView.to_s/1
 %>
