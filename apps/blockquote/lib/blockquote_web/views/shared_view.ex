@@ -1,10 +1,7 @@
 defmodule BlockquoteWeb.SharedView do
   use BlockquoteWeb, :view
 
-	@doc """
-  	Used to generate name for path helper function
-  	"""
-	def item_path_func_name(item_name_singular) do
+	defp item_path_func_name(item_name_singular) do
 		String.to_atom(String.replace(item_name_singular, " ", "_") <> "_path")
 	end
 
@@ -42,77 +39,9 @@ defmodule BlockquoteWeb.SharedView do
   		link(url, to: url)
   	end
 
+	def breadcrumb_link(conn, item_name_singular) do
+		link_title = item_name_singular |> Common.StringHelpers.naive_pluralize |> String.capitalize
 
-  	@doc """
-  	Used for forms to determine if required
-  	"""
-  	def field_required?(field_atom, required_fields) do
-  		required_fields |> Enum.member?(field_atom)
-  	end
-
-  	def field_required_label_class(true) do
-  		"required"
-  	end
-
-  	def field_required_label_class(false) do
-  		""
-  	end
-
-	def form_item_label(f, field, required_fields) do
-		label f, field, class: "control-label " <> field_required_label_class(field_required?(field, required_fields))
+		link link_title, to: path_for_item(conn, item_name_singular, :index)
 	end
-
-	def form_input(f, :string, field, required_fields, nil) do
-		text_input(f, field, class: "form-control", required: field_required?(field, required_fields))
-	end
-
-	def form_input(f, :text, field, required_fields, nil) do
-		textarea(f, field, class: "form-control", required: field_required?(field, required_fields), cols: 80, rows: 10)
-	end
-
-	def form_input(f, :date, field, required_fields, nil) do
-    date_input(f, field, class: "form-control", required: field_required?(field, required_fields))
-	end
-
-	def form_input(f, :select, field, required_fields, items) do
-		select(f, field, items, class: "form-control", required: field_required?(field, required_fields))
-	end
-
-  def breadcrumb_link(conn, item_name_singular) do
-    link_title = item_name_singular |> Common.StringHelpers.naive_pluralize |> String.capitalize
-
-    link link_title, to: path_for_item(conn, item_name_singular, :index)
-  end
-
-  def render("new.html", assigns) do
-      conn = assigns[:conn]
-      item_name_singular = assigns[:item_name_singular]
-
-      assigns = Map.merge(assigns,
-          %{
-              title: "Add " <> item_name_singular,
-              action: path_for_item(conn, item_name_singular, :create),
-          }
-      )
-
-      render "form_page.html", assigns
-  end
-
-  def render("edit.html", assigns) do
-      conn = assigns[:conn]
-      item_name_singular = assigns[:item_name_singular]
-      item = assigns[:item]
-      item_display_name = assigns[:item_display_name]
-
-      assigns = Map.merge(assigns,
-          %{
-              title: "Edit " <> item_display_name,
-              back_link_title: "Back to " <> item_display_name,
-              back_link_path: path_for_item(conn, item_name_singular, :show, item),
-              action: path_for_item(conn, item_name_singular, :update, item),
-          }
-      )
-
-      render "form_page.html", assigns
-  end
 end
