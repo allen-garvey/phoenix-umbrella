@@ -37,14 +37,15 @@ defmodule Common.ViewHelpers.Form do
   end
 
   defp label_for_input(field, form, input_opts) do
-    {label_text, input_opts_cleaned} = Keyword.pop_first(input_opts, :label)
+    {label_text, input_opts_cleaned_1} = Keyword.pop_first(input_opts, :label)
+    {label_class, input_opts_cleaned_2} = Keyword.pop_first(input_opts_cleaned_1, :label_class, "")
 
     input_label = case label_text do
-      nil -> label(form, field)
-      _ -> label(form, field, label_text)
+      nil -> label(form, field, class: label_class)
+      _ -> label(form, field, label_text, class: label_class)
     end
 
-    {input_label, input_opts_cleaned}
+    {input_label, input_opts_cleaned_2}
   end
 
   @doc """
