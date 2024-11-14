@@ -5,7 +5,10 @@ defmodule BlockquoteWeb.ParentSourceController do
   alias Blockquote.Admin.ParentSource
 
   defp custom_render(conn, template, assigns) do
-    assigns = [{:item_name_singular, "parent source"}] ++ assigns
+    assigns = [
+      item_name_singular: "parent source", 
+      breadcrumb: {"Parent sources", parent_source_path(conn, :index)}
+    ] ++ assigns
     render(conn, template, assigns)
   end
 
@@ -21,11 +24,11 @@ defmodule BlockquoteWeb.ParentSourceController do
   end
 
   defp new_page(conn, changeset) do
-    render(conn, "form.html", changeset: changeset, related_fields: related_fields())
+    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields())
   end
 
   defp edit_page(conn, changeset, parent_source) do
-    render(conn, "form.html", changeset: changeset, related_fields: related_fields(), parent_source: parent_source)
+    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields(), parent_source: parent_source)
   end
 
   def new(conn, _params) do

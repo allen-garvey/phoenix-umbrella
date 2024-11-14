@@ -5,7 +5,7 @@
     %>
 
 <% else %>
-    <%= render BlockquoteWeb.SharedView, "form_heading.html", heading: "Add parent_source"%>
+    <%= render BlockquoteWeb.SharedView, "form_heading.html", heading: "Add parent source"%>
 <% end %>
 
 <%= form_for @changeset, form_action(@conn, assigns[:parent_source]), fn f -> %>

@@ -5,7 +5,10 @@ defmodule BlockquoteWeb.SourceController do
   alias Blockquote.Admin.Source
 
   defp custom_render(conn, template, assigns) do
-    assigns = [{:item_name_singular, "source"}] ++ assigns
+    assigns = [
+      item_name_singular: "source", 
+      breadcrumb: {"Sources", source_path(conn, :index)}
+    ] ++ assigns
     render(conn, template, assigns)
   end
 
@@ -24,11 +27,11 @@ defmodule BlockquoteWeb.SourceController do
   end
 
   defp new_page(conn, changeset) do
-    render(conn, "form.html", changeset: changeset, related_fields: related_fields())
+    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields())
   end
 
   defp edit_page(conn, changeset, source) do
-    render(conn, "form.html", changeset: changeset, related_fields: related_fields(), source: source)
+    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields(), source: source)
   end
 
   def new(conn, %{"parent_source" => parent_source_id}) do

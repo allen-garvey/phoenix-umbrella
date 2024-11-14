@@ -16,8 +16,8 @@
       <div class="breadcrumbs">
         <div class="container">
           <a href="/admin">Home</a>
-          <%= if assigns[:item_name_singular] do
-              BlockquoteWeb.SharedView.breadcrumb_link(@conn, @item_name_singular)
+          <%= if assigns[:breadcrumb] do
+              BlockquoteWeb.SharedView.breadcrumb_link(@breadcrumb)
           end %>
         </div>
     </div>

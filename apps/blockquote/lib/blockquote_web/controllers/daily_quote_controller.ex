@@ -5,7 +5,10 @@ defmodule BlockquoteWeb.DailyQuoteController do
   alias Blockquote.Admin.DailyQuote
 
   defp custom_render(conn, template, assigns) do
-    assigns = [{:item_name_singular, "daily quote"}] ++ assigns
+    assigns = [
+      item_name_singular: "daily quote", 
+      breadcrumb: {"Daily quotes", daily_quote_path(conn, :index)}
+    ] ++ assigns
     render(conn, template, assigns)
   end
 
@@ -20,11 +23,11 @@ defmodule BlockquoteWeb.DailyQuoteController do
   end
 
   defp new_page(conn, changeset) do
-    render(conn, "form.html", changeset: changeset, related_fields: related_fields())
+    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields())
   end
 
   defp edit_page(conn, changeset, daily_quote) do
-    render(conn, "form.html", changeset: changeset, related_fields: related_fields(), daily_quote: daily_quote)
+    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields(), daily_quote: daily_quote)
   end
 
   def new(conn, _params) do

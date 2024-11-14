@@ -5,7 +5,10 @@ defmodule BlockquoteWeb.SourceTypeController do
   alias Blockquote.Admin.SourceType
 
   defp custom_render(conn, template, assigns) do
-    assigns = [{:item_name_singular, "source type"}] ++ assigns
+    assigns = [
+      item_name_singular: "source type", 
+      breadcrumb: {"Source types", source_type_path(conn, :index)}
+    ] ++ assigns
     render(conn, template, assigns)
   end
 
@@ -16,7 +19,7 @@ defmodule BlockquoteWeb.SourceTypeController do
 
   def new(conn, _params) do
     changeset = Admin.change_source_type(%SourceType{})
-    render(conn, "form.html", changeset: changeset)
+    custom_render(conn, "form.html", changeset: changeset)
   end
 
   def create(conn, %{"source_type" => source_type_params}) do
@@ -26,7 +29,7 @@ defmodule BlockquoteWeb.SourceTypeController do
         |> put_flash(:info, "Source type created successfully.")
         |> redirect(to: source_type_path(conn, :show, source_type))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "form.html", changeset: changeset)
+        custom_render(conn, "form.html", changeset: changeset)
     end
   end
 
@@ -38,7 +41,7 @@ defmodule BlockquoteWeb.SourceTypeController do
   def edit(conn, %{"id" => id}) do
     source_type = Admin.get_source_type!(id)
     changeset = Admin.change_source_type(source_type)
-    render(conn, "form.html", source_type: source_type, changeset: changeset)
+    custom_render(conn, "form.html", source_type: source_type, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "source_type" => source_type_params}) do
@@ -50,7 +53,7 @@ defmodule BlockquoteWeb.SourceTypeController do
         |> put_flash(:info, "Source type updated successfully.")
         |> redirect(to: source_type_path(conn, :show, source_type))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "form.html", source_type: source_type, changeset: changeset)
+        custom_render(conn, "form.html", source_type: source_type, changeset: changeset)
     end
   end
 

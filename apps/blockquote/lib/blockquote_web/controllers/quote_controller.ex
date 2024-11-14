@@ -6,7 +6,10 @@ defmodule BlockquoteWeb.QuoteController do
   alias Grenadier.Repo
 
   defp custom_render(conn, template, assigns) do
-    assigns = [{:item_name_singular, "quote"}] ++ assigns
+    assigns = [
+      item_name_singular: "quote", 
+      breadcrumb: {"Quotes", quote_path(conn, :index)}
+    ] ++ assigns
     render(conn, template, assigns)
   end
 
@@ -39,11 +42,11 @@ defmodule BlockquoteWeb.QuoteController do
   end
 
   def new_page(conn, changeset) do
-    render(conn, "form.html", changeset: changeset, related_fields: related_fields(), save_another: true)
+    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields(), save_another: true)
   end
 
   def edit_page(conn, changeset, quote) do
-    render(conn, "form.html", changeset: changeset, related_fields: related_fields(), quote: quote)
+    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields(), quote: quote)
   end
 
   def create_succeeded(conn, quote, "true") do

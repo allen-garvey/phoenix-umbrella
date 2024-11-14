@@ -5,7 +5,10 @@ defmodule BlockquoteWeb.AuthorController do
   alias Blockquote.Admin.Author
 
   defp custom_render(conn, template, assigns) do
-    assigns = [{:item_name_singular, "author"}] ++ assigns
+    assigns = [
+      item_name_singular: "author", 
+      breadcrumb: {"Authors", author_path(conn, :index)}
+    ] ++ assigns
     render(conn, template, assigns)
   end
 
@@ -16,7 +19,7 @@ defmodule BlockquoteWeb.AuthorController do
 
   def new(conn, _params) do
     changeset = Admin.change_author(%Author{})
-    render(conn, "form.html", changeset: changeset)
+    custom_render(conn, "form.html", changeset: changeset)
   end
 
   def create(conn, %{"author" => author_params}) do
@@ -26,7 +29,7 @@ defmodule BlockquoteWeb.AuthorController do
         |> put_flash(:info, "Author created successfully.")
         |> redirect(to: author_path(conn, :show, author))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "form.html", changeset: changeset)
+        custom_render(conn, "form.html", changeset: changeset)
     end
   end
 
@@ -38,7 +41,7 @@ defmodule BlockquoteWeb.AuthorController do
   def edit(conn, %{"id" => id}) do
     author = Admin.get_author!(id)
     changeset = Admin.change_author(author)
-    render(conn, "form.html", author: author, changeset: changeset)
+    custom_render(conn, "form.html", author: author, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "author" => author_params}) do
@@ -50,7 +53,7 @@ defmodule BlockquoteWeb.AuthorController do
         |> put_flash(:info, "Author updated successfully.")
         |> redirect(to: author_path(conn, :show, author))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "form.html", author: author, changeset: changeset)
+        custom_render(conn, "form.html", author: author, changeset: changeset)
     end
   end
 

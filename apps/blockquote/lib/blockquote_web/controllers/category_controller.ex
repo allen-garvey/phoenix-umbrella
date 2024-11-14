@@ -5,7 +5,10 @@ defmodule BlockquoteWeb.CategoryController do
   alias Blockquote.Admin.Category
 
   defp custom_render(conn, template, assigns) do
-    assigns = [{:item_name_singular, "category"}] ++ assigns
+    assigns = [
+      item_name_singular: "category", 
+      breadcrumb: {"Categories", category_path(conn, :index)}
+    ] ++ assigns
     render(conn, template, assigns)
   end
 
@@ -16,7 +19,7 @@ defmodule BlockquoteWeb.CategoryController do
 
   def new(conn, _params) do
     changeset = Admin.change_category(%Category{})
-    render(conn, "form.html", changeset: changeset)
+    custom_render(conn, "form.html", changeset: changeset)
   end
 
   def create(conn, %{"category" => category_params}) do
@@ -26,7 +29,7 @@ defmodule BlockquoteWeb.CategoryController do
         |> put_flash(:info, "Category created successfully.")
         |> redirect(to: category_path(conn, :show, category))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "form.html", changeset: changeset)
+        custom_render(conn, "form.html", changeset: changeset)
     end
   end
 
@@ -38,7 +41,7 @@ defmodule BlockquoteWeb.CategoryController do
   def edit(conn, %{"id" => id}) do
     category = Admin.get_category!(id)
     changeset = Admin.change_category(category)
-    render(conn, "form.html", changeset: changeset, category: category)
+    custom_render(conn, "form.html", changeset: changeset, category: category)
   end
 
   def update(conn, %{"id" => id, "category" => category_params}) do
@@ -50,7 +53,7 @@ defmodule BlockquoteWeb.CategoryController do
         |> put_flash(:info, "Category updated successfully.")
         |> redirect(to: category_path(conn, :show, category))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "form.html", changeset: changeset, category: category)
+        custom_render(conn, "form.html", changeset: changeset, category: category)
     end
   end
 
