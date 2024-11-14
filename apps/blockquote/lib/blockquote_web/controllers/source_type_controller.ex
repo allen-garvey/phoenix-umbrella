@@ -16,7 +16,7 @@ defmodule BlockquoteWeb.SourceTypeController do
 
   def index(conn, _params) do
     source_types = Admin.list_source_types()
-    custom_render(conn, BlockquoteWeb.SharedView, "index.html", items: source_types, item_view: view_module(conn), item_display_func: :to_s)
+    custom_render(conn, "index.html", source_types: source_types)
   end
 
   def new(conn, _params) do

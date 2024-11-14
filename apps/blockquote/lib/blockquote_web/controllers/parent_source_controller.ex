@@ -22,7 +22,7 @@ defmodule BlockquoteWeb.ParentSourceController do
 
   def index(conn, _params) do
     parent_sources = Admin.list_parent_sources()
-    custom_render(conn, BlockquoteWeb.SharedView, "index.html", items: parent_sources, item_view: view_module(conn), item_display_func: :to_s)
+    custom_render(conn, "index.html", parent_sources: parent_sources)
   end
 
   defp new_page(conn, changeset) do

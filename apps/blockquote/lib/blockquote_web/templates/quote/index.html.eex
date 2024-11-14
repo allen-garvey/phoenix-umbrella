@@ -1,0 +1,8 @@
+<%= render BlockquoteWeb.SharedView, "index.html",
+                            conn: @conn,
+                            items: @quotes,
+                            item_name_singular: @item_name_singular,
+                            item_display_func: &to_excerpt/1,
+                            new_path: quote_path(@conn, :new),
+                            item_path_func: &quote_path/3
+%>

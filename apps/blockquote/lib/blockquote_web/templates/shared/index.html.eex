@@ -1,17 +1,17 @@
 <div class="index-header">
   <h2 class="page-title"><%= "Select " <> @item_name_singular %></h2>
   <div class="object-tools">
-    <%= link "Add " <> @item_name_singular, to: path_for_item(@conn, @item_name_singular, :new), class: "addlink" %>
+    <%= link "Add " <> @item_name_singular, to: @new_path, class: "addlink" %>
   </div>
 </div>
 <h3 class='index-list-title'><%= String.capitalize(@item_name_singular) %></h3>
 <ol class="index-list">
   <%= for item <- @items do %>
       <li>
-        <div><%= link apply(@item_view, @item_display_func, [item]) , to: path_for_item(@conn, @item_name_singular, :show, item) %></div>
+        <div><%= link @item_display_func.(item) , to: @item_path_func.(@conn, :show, item) %></div>
 
         <div>
-          <%= link "Edit", to: path_for_item(@conn, @item_name_singular, :edit, item), class: "btn btn-default btn-xs" %>
+          <%= link "Edit", to: @item_path_func.(@conn, :edit, item), class: "btn btn-default btn-xs" %>
         </div>
       </li>
   <% end %>

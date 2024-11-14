@@ -25,7 +25,7 @@ defmodule BlockquoteWeb.QuoteController do
 
   def index(conn, _params) do
     quotes = Admin.list_quotes()
-    custom_render(conn, BlockquoteWeb.SharedView, "index.html", items: quotes, item_view: view_module(conn), item_display_func: :to_excerpt)
+    custom_render(conn, "index.html", quotes: quotes)
   end
 
   def new(conn, %{"author" => author_id}) do

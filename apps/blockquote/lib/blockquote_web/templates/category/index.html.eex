@@ -1,0 +1,8 @@
+<%= render BlockquoteWeb.SharedView, "index.html",
+                            conn: @conn,
+                            items: @categories,
+                            item_name_singular: @item_name_singular,
+                            item_display_func: &to_s/1,
+                            new_path: category_path(@conn, :new),
+                            item_path_func: &category_path/3
+%>

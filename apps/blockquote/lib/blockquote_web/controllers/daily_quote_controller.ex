@@ -21,7 +21,7 @@ defmodule BlockquoteWeb.DailyQuoteController do
 
   def index(conn, _params) do
     daily_quotes = Admin.list_daily_quotes_for_index()
-    custom_render(conn, BlockquoteWeb.SharedView, "index.html", items: daily_quotes, item_view: view_module(conn), item_display_func: :to_s)
+    custom_render(conn, "index.html", daily_quotes: daily_quotes)
   end
 
   defp new_page(conn, changeset) do

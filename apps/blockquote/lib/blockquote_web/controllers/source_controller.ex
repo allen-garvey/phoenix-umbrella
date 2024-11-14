@@ -25,7 +25,7 @@ defmodule BlockquoteWeb.SourceController do
 
   def index(conn, _params) do
     sources = Admin.list_sources()
-    custom_render(conn, BlockquoteWeb.SharedView, "index.html", items: sources, item_view: view_module(conn), item_display_func: :to_s)
+    custom_render(conn, "index.html", sources: sources)
   end
 
   defp new_page(conn, changeset) do

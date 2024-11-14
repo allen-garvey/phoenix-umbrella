@@ -16,7 +16,7 @@ defmodule BlockquoteWeb.AuthorController do
 
   def index(conn, _params) do
     authors = Admin.list_authors()
-    custom_render(conn, BlockquoteWeb.SharedView, "index.html", items: authors, item_view: view_module(conn), item_display_func: :to_sorted_name)
+    custom_render(conn, "index.html", authors: authors)
   end
 
   def new(conn, _params) do
