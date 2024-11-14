@@ -3,5 +3,6 @@
                                 title: "Daily quote",
                                 item_name_singular: @item_name_singular,
                                 item: @daily_quote,
+                                item_path: &daily_quote_path/3,
                                 item_columns: item_columns(@conn, @daily_quote)
 %>

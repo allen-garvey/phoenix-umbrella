@@ -3,6 +3,7 @@
                                 title: to_s(@source_type),
                                 item_name_singular: @item_name_singular,
                                 item: @source_type,
+                                item_path: &source_type_path/3,
                                 item_columns: item_columns(@conn, @source_type)
 %>
 

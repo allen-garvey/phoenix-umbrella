@@ -3,6 +3,7 @@
                                 title: to_s(@category),
                                 item_name_singular: @item_name_singular,
                                 item: @category,
+                                item_path: &category_path/3,
                                 item_columns: item_columns(@conn, @category)
 %>
 

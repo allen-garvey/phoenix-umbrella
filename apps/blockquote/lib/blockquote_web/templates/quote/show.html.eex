@@ -3,5 +3,6 @@
                                 title: "Quote",
                                 item_name_singular: @item_name_singular,
                                 item: @quote,
+                                item_path: &quote_path/3,
                                 item_columns: item_columns(@conn, @quote)
 %>

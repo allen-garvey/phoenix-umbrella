@@ -3,6 +3,7 @@
                                 title: to_s(@author),
                                 item_name_singular: @item_name_singular,
                                 item: @author,
+                                item_path: &author_path/3,
                                 item_columns: item_columns(@conn, @author),
                                 extra_buttons: show_buttons(@conn, @author)
 %>
