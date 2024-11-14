@@ -1,7 +1,7 @@
 <%= render(MovielistWeb.SharedView, "show_header.html", 
       conn: @conn, 
       resource_title_plural: "Genres", 
-      resource_path_atom: :genre_path, 
+      resource_path_func: &Routes.genre_path/3, 
       item: @genre, 
       item_name: to_s(@genre)
     ) 
