@@ -7,9 +7,9 @@
 <section>
 <h3>Resources</h3>
 <ul>
-    <%= for {resource_title, resource_path_atom} <- @resources do %>
+    <%= for {resource_title, resource_path} <- @resources do %>
         <li>
-        	<%= link resource_title, to: apply(Routes, resource_path_atom, [@conn, :index]), class: "field-title" %>
+        	<%= link resource_title, to: resource_path, class: "field-title" %>
         </li>
     <% end %>
 </ul>
