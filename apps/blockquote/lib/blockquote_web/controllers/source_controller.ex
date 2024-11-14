@@ -5,13 +5,8 @@ defmodule BlockquoteWeb.SourceController do
   alias Blockquote.Admin.Source
 
   defp custom_render(conn, template, assigns) do
-    custom_render(conn, view_module(conn), template, assigns)
-  end
-
-  defp custom_render(conn, view_module, template, assigns) do
     assigns = [{:item_name_singular, "source"}] ++ assigns
-    put_view(conn, view_module)
-    |> render(template, assigns)
+    render(conn, template, assigns)
   end
 
   defp related_fields do
