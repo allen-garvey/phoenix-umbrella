@@ -198,7 +198,7 @@ defmodule Movielist.Admin do
   """
   def list_movies_suggestions do
     list_movies_active_base_query()
-     |> where([m], fragment("(? <= CURRENT_DATE OR ? <= CURRENT_DATE)", m.home_release_date, m.theater_release_date))
+     |> where([m], fragment("(? <= CURRENT_DATE)", m.home_release_date))
      |> order_by([m], [asc: fragment("release_status"), desc: m.pre_rating, desc: fragment("release_date"), asc: :sort_title, asc: :id])
      |> Repo.all
      |> preload_movie_virtual_fields
