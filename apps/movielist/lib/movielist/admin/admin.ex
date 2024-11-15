@@ -186,22 +186,41 @@ defmodule Movielist.Admin do
   @doc """
   Returns the list of active along with calculated release dates movies.
   """
-  def list_movies_active do
+  def list_movies_active(sort) do
+    order_by = case sort do
+      "streamer" -> [asc: dynamic([m, genre, streamer], streamer.name), desc: :pre_rating, asc: :sort_title, asc: :id]
+      "genre" -> [asc: dynamic([m, genre], genre.name), desc: :pre_rating, asc: :sort_title, asc: :id]
+      "title" -> [asc: :sort_title, desc: :pre_rating, asc: :id]
+      _ -> [asc: dynamic([], fragment("release_status")), asc: dynamic([], fragment("release_date")), desc: :pre_rating, asc: :sort_title, asc: :id]
+    end
+
     list_movies_active_base_query()
-     |> order_by([m], [asc: fragment("release_status"), asc: fragment("release_date"), desc: :pre_rating, asc: :sort_title, asc: :id])
+     |> order_by(^order_by)
      |> Repo.all
      |> preload_movie_virtual_fields
   end
 
   @doc """
-  Similar to list_movies_active, but returns only movies that have been released and has slightly different sorting
+  Similar to list_movies_active, but returns only movies that have been released
   """
-  def list_movies_suggestions do
-    list_movies_active_base_query()
-     |> where([m], fragment("(? <= CURRENT_DATE)", m.home_release_date))
-     |> order_by([m], [asc: fragment("release_status"), desc: m.pre_rating, desc: fragment("release_date"), asc: :sort_title, asc: :id])
+  def list_movies_suggestions(sort) do
+    order_by = case sort do
+      "streamer" -> [asc: dynamic([m, genre, streamer], streamer.name), desc: :pre_rating, asc: :sort_title, asc: :id]
+      "genre" -> [asc: dynamic([m, genre], genre.name), desc: :pre_rating, asc: :sort_title, asc: :id]
+      "title" -> [asc: :sort_title, desc: :pre_rating, asc: :id]
+      _ -> [desc: :pre_rating, asc: :sort_title, asc: :id]
+    end
+
+     from(
+          m in Movie,
+          join: genre in assoc(m, :genre),
+          left_join: streamer in assoc(m, :streamer),
+          where: m.is_active == true and fragment("(? <= CURRENT_DATE)", m.home_release_date),
+          order_by: ^order_by,
+          preload: [genre: genre, streamer: streamer],
+          select: %Movie{m | release_status: :home_released}
+     )
      |> Repo.all
-     |> preload_movie_virtual_fields
   end
 
   @doc """

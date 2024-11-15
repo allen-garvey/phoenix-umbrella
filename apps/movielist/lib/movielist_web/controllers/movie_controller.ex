@@ -16,14 +16,30 @@ defmodule MovielistWeb.MovieController do
     render(conn, "index.html", movies: movies, page_atom: :movies_index)
   end
 
+  def index_active(conn, %{"sort" => sort}) do
+    index_active_page(conn, sort)
+  end
+
   def index_active(conn, _params) do
-    movies = Admin.list_movies_active()
-    render(conn, "index_active.html", movies: movies, page_atom: :movies_index)
+    index_active_page(conn, nil)
+  end
+
+  defp index_active_page(conn, sort) do
+    movies = Admin.list_movies_active(sort)
+    render(conn, "index_active.html", movies: movies, page_route: :index_active, page_atom: :movies_index)
+  end
+
+  def index_suggestions(conn, %{"sort" => sort}) do
+    suggestions_page(conn, sort)
   end
 
   def index_suggestions(conn, _params) do
-    movies = Admin.list_movies_suggestions()
-    render(conn, "index_active.html", movies: movies, page_atom: :movies_suggestions)
+    suggestions_page(conn, nil)
+  end
+
+  defp suggestions_page(conn, sort) do
+    movies = Admin.list_movies_suggestions(sort)
+    render(conn, "index_active.html", movies: movies, page_route: :index_suggestions, page_atom: :movies_suggestions)
   end
 
   def new(conn, _params) do

@@ -3,12 +3,14 @@
   <thead>
     <tr>
       <th></th>
-      <th>Title</th>
-      <th>Genre</th>
-      <th>Pre</th>
+      <th><%= link "Title", to: Routes.movie_path(@conn, @page_route, sort: "title") %></th>
+      <th><%= link "Genre", to: Routes.movie_path(@conn, @page_route, sort: "genre") %></th>
+      <th><%= link "Pre", to: Routes.movie_path(@conn, @page_route, sort: "score") %></th>
       <th>Length</th>
-      <th>Release</th>
-      <th>Streamer</th>
+      <%= if @page_atom != :movies_suggestions do %>
+        <th>Release</th>
+      <% end %>
+      <th><%= link "Streamer", to: Routes.movie_path(@conn, @page_route, sort: "streamer") %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -22,7 +24,9 @@
         <td><%= link MovielistWeb.GenreView.to_s(movie.genre), to: Routes.genre_path(@conn, :show, movie.genre) %></td>
         <td><%= movie.pre_rating %></td>
         <td><%= format_length(movie.length) %></td>
-        <td class="<%= css_class_for_release_date(movie.release_status, movie.home_release_date) %>"><%= Common.DateHelpers.us_formatted_date(movie.release_date) %></td>
+        <%= if @page_atom != :movies_suggestions do %>
+          <td class="<%= css_class_for_release_date(movie.release_status, movie.home_release_date) %>"><%= Common.DateHelpers.us_formatted_date(movie.release_date) %></td>
+        <% end %>
         <td><%= MovielistWeb.StreamerView.show_link(@conn, movie.streamer) %></td>
         <td>
           <%= link "Show", to: Routes.movie_path(@conn, :show, movie), class: "btn btn-sm btn-light" %>
