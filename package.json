@@ -11,7 +11,7 @@
     "test": "ava",
     "build": "webpack --config webpack/webpack.config.js",
     "deploy": "webpack --config webpack/webpack.production.config.js",
-    "watch": "webpack --config webpack/webpack.watch.config.js"
+    "watch": "webpack --config webpack/webpack.config.js --watch"
   },
   "ava": {
     "files": [
