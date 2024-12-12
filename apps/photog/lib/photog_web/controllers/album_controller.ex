@@ -5,8 +5,9 @@ defmodule PhotogWeb.AlbumController do
   alias Photog.Api.Album
   alias Photog.Api.AlbumImage
   alias Photog.Api.AlbumTag
+  alias Common.NumberHelpers
 
-  action_fallback PhotogWeb.FallbackController
+  action_fallback(PhotogWeb.FallbackController)
 
   # used for forms when we only need name and id
   def index(conn, %{"excerpt" => "true"}) do
@@ -15,12 +16,23 @@ defmodule PhotogWeb.AlbumController do
   end
 
   def index(conn, %{"favorites" => is_favorite_param, "limit" => limit, "offset" => offset}) do
-    albums = Api.list_album_favorites(is_favorite_param == "true", String.to_integer(limit), String.to_integer(offset))
+    albums =
+      Api.list_album_favorites(
+        is_favorite_param == "true",
+        NumberHelpers.string_to_positive_integer(limit, 1),
+        NumberHelpers.string_to_positive_integer(offset, 0)
+      )
+
     render(conn, "index.json", albums: albums)
   end
 
   def index(conn, %{"limit" => limit, "offset" => offset}) do
-    albums = Api.list_albums(String.to_integer(limit), String.to_integer(offset))
+    albums =
+      Api.list_albums(
+        NumberHelpers.string_to_positive_integer(limit, 1),
+        NumberHelpers.string_to_positive_integer(offset, 0)
+      )
+
     render(conn, "index.json", albums: albums)
   end
 
@@ -30,20 +42,20 @@ defmodule PhotogWeb.AlbumController do
   end
 
   def create(conn, %{"album" => album_params, "image_ids" => image_ids, "tag_ids" => tag_ids}) do
-    create_album(conn, album_params, fn album -> 
+    create_album(conn, album_params, fn album ->
       {_, _} = add_images_to_album(album.id, image_ids)
       {_, _} = add_tags_to_album(album.id, tag_ids)
     end)
   end
 
   def create(conn, %{"album" => album_params, "tag_ids" => tag_ids}) do
-    create_album(conn, album_params, fn album -> 
+    create_album(conn, album_params, fn album ->
       {_, _} = add_tags_to_album(album.id, tag_ids)
     end)
   end
 
   def create(conn, %{"album" => album_params, "image_ids" => image_ids}) do
-    create_album(conn, album_params, fn album -> 
+    create_album(conn, album_params, fn album ->
       {_, _} = add_images_to_album(album.id, image_ids)
     end)
   end
@@ -55,6 +67,7 @@ defmodule PhotogWeb.AlbumController do
   defp create_album(conn, album_params, created_callback) do
     with {:ok, %Album{} = album} <- Api.create_album(album_params) do
       created_callback.(album)
+
       conn
       |> put_status(:created)
       |> render("show_excerpt_mini.json", album: album)
@@ -68,8 +81,8 @@ defmodule PhotogWeb.AlbumController do
   def add_images_to_album(album_id, image_ids) do
     Enum.reduce(image_ids, {[], []}, fn image_id, {images_added, errors} ->
       case Api.create_album_image(%{"album_id" => album_id, "image_id" => image_id}) do
-        {:ok, %AlbumImage{} = album_image} -> { [album_image.image_id | images_added], errors }
-        {:error, _changeset}                -> { images_added, [ image_id | errors] }
+        {:ok, %AlbumImage{} = album_image} -> {[album_image.image_id | images_added], errors}
+        {:error, _changeset} -> {images_added, [image_id | errors]}
       end
     end)
   end
@@ -81,8 +94,8 @@ defmodule PhotogWeb.AlbumController do
   def add_tags_to_album(album_id, tag_ids) do
     Enum.reduce(tag_ids, {[], []}, fn tag_id, {tags_added, errors} ->
       case Api.create_album_tag(%{"album_id" => album_id, "tag_id" => tag_id}) do
-        {:ok, %AlbumTag{} = album_tag} -> { [album_tag.tag_id | tags_added], errors }
-        {:error, _changeset}                -> { tags_added, [ tag_id | errors] }
+        {:ok, %AlbumTag{} = album_tag} -> {[album_tag.tag_id | tags_added], errors}
+        {:error, _changeset} -> {tags_added, [tag_id | errors]}
       end
     end)
   end
@@ -90,7 +103,8 @@ defmodule PhotogWeb.AlbumController do
   @doc """
   Removes images from an album
   """
-  def remove_images_from_album(conn, %{"id" => album_id, "image_ids" => image_ids}) when is_list(image_ids) do
+  def remove_images_from_album(conn, %{"id" => album_id, "image_ids" => image_ids})
+      when is_list(image_ids) do
     Api.delete_album_images(album_id, image_ids)
 
     conn
@@ -103,22 +117,32 @@ defmodule PhotogWeb.AlbumController do
   """
   def reorder_images(conn, %{"id" => id, "image_ids" => image_ids}) when is_list(image_ids) do
     view = conn |> put_view(CommonWeb.ApiGenericView)
-    
+
     case Api.reorder_images_for_album(id, image_ids) do
-      {:ok, _} -> view |> render("ok.json", message: "ok")
-      {:error, _} -> view |> put_status(:bad_request) |> render("error.json", message: "Could not reorder images for #{id}")
+      {:ok, _} ->
+        view |> render("ok.json", message: "ok")
+
+      {:error, _} ->
+        view
+        |> put_status(:bad_request)
+        |> render("error.json", message: "Could not reorder images for #{id}")
     end
   end
 
   @doc """
   Replaces an album's tags with given list of tags
   """
-  def replace_tags(conn,  %{"id" => id, "tag_ids" => tag_ids}) when is_list(tag_ids) do
+  def replace_tags(conn, %{"id" => id, "tag_ids" => tag_ids}) when is_list(tag_ids) do
     view = conn |> put_view(CommonWeb.ApiGenericView)
 
     case Api.replace_tags_for_album(id, tag_ids) do
-      {:ok, _} -> view |> render("ok.json", message: "ok")
-      {:error, _} -> view |> put_status(:bad_request) |> render("error.json", message: "Error saving tags for album #{id}")
+      {:ok, _} ->
+        view |> render("ok.json", message: "ok")
+
+      {:error, _} ->
+        view
+        |> put_status(:bad_request)
+        |> render("error.json", message: "Error saving tags for album #{id}")
     end
   end
 
@@ -127,15 +151,15 @@ defmodule PhotogWeb.AlbumController do
   """
   def count(conn, %{"favorites" => is_favorite_param}) do
     count = Api.albums_favorite_count!(is_favorite_param == "true")
-    
+
     conn
     |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
   end
 
   def count(conn, _params) do
-    count = Api.albums_count!
-    
+    count = Api.albums_count!()
+
     conn
     |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
@@ -143,15 +167,20 @@ defmodule PhotogWeb.AlbumController do
 
   def images_for(conn, %{"id" => id, "excerpt" => "true"}) do
     images = Api.get_images_for_album(id, :excerpt)
-    
+
     conn
     |> put_view(PhotogWeb.ImageView)
     |> render("index_slideshow.json", images: images)
   end
 
   def images_for(conn, %{"id" => id, "limit" => limit, "offset" => offset}) do
-    images = Api.get_images_for_album(id, String.to_integer(limit), String.to_integer(offset))
-    
+    images =
+      Api.get_images_for_album(
+        id,
+        NumberHelpers.string_to_positive_integer(limit, 1),
+        NumberHelpers.string_to_positive_integer(offset, 0)
+      )
+
     conn
     |> put_view(PhotogWeb.ImageView)
     |> render("index_thumbnail_list.json", images: images)
@@ -161,7 +190,13 @@ defmodule PhotogWeb.AlbumController do
   Returns all albums taken in given year
   """
   def albums_for_year(conn, %{"year" => year, "limit" => limit, "offset" => offset}) do
-    albums = Api.list_albums_for_year(String.to_integer(year), String.to_integer(limit), String.to_integer(offset))
+    albums =
+      Api.list_albums_for_year(
+        NumberHelpers.string_to_positive_integer(year, 1),
+        NumberHelpers.string_to_positive_integer(limit, 1),
+        NumberHelpers.string_to_positive_integer(offset, 0)
+      )
+
     render(conn, "index.json", albums: albums)
   end
 
@@ -169,8 +204,8 @@ defmodule PhotogWeb.AlbumController do
   Return count of all albums taken in given year
   """
   def albums_for_year_count(conn, %{"year" => year}) do
-    count = String.to_integer(year) |> Api.albums_count_for_year!
-    
+    count = NumberHelpers.string_to_positive_integer(year, 1) |> Api.albums_count_for_year!()
+
     conn
     |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
@@ -179,7 +214,7 @@ defmodule PhotogWeb.AlbumController do
   def show(conn, %{"id" => id}) do
     album = Api.get_album!(id)
     persons = Api.get_persons_for_album(id)
-    
+
     render(conn, "show.json", album: album, persons: persons)
   end
 
