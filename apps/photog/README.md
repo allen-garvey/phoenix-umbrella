@@ -10,6 +10,7 @@ Single page web app for your photo library. Originally designed to export Apple 
 ## Getting Started
 
 * Create symbolic links for image directories by running:
+* `mkdir -p priv/static/media`
 * `ln -s <masters_directory> priv/static/media/images`
 * `ln -s <thumbnails_directory> priv/static/media/thumbnails`
 
