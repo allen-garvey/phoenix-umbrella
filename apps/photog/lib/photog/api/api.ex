@@ -22,7 +22,7 @@ defmodule Photog.Api do
   def image_preload_import(query) do
     query
     |> join(:inner, [image], import in assoc(image, :import))
-    |> preload([image, import], [import: import])
+    |> preload([image, import], import: import)
   end
 
   @doc """
@@ -46,12 +46,12 @@ defmodule Photog.Api do
   def list_images do
     from(Image, order_by: [desc: :creation_time, desc: :id])
     |> image_preload_import
-    |> Repo.all
+    |> Repo.all()
     |> image_default_preloads
   end
 
   @doc """
-  Returns the list of images starting at offset, 
+  Returns the list of images starting at offset,
   where number of results is less than or equal to the limit.
 
   ## Examples
@@ -62,13 +62,13 @@ defmodule Photog.Api do
   """
   def list_images(limit, offset) do
     from(
-      Image, 
+      Image,
       order_by: [desc: :creation_time, desc: :id],
       limit: ^limit,
       offset: ^offset
     )
     |> image_preload_import
-    |> Repo.all
+    |> Repo.all()
     |> image_default_preloads
   end
 
@@ -78,22 +78,22 @@ defmodule Photog.Api do
   def list_images_for_year(year) when is_integer(year) do
     from(
       image in Image,
-      where: fragment("EXTRACT(year FROM ?)", image.creation_time) == ^year, 
+      where: fragment("EXTRACT(year FROM ?)", image.creation_time) == ^year,
       order_by: [:creation_time, :id]
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def list_images_for_year(year, limit, offset) when is_integer(year) do
     from(
       image in Image,
-      where: fragment("EXTRACT(year FROM ?)", image.creation_time) == ^year, 
+      where: fragment("EXTRACT(year FROM ?)", image.creation_time) == ^year,
       order_by: [:creation_time, :id],
       limit: ^limit,
       offset: ^offset
     )
     |> image_preload_import
-    |> Repo.all
+    |> Repo.all()
     |> image_default_preloads
   end
 
@@ -103,25 +103,28 @@ defmodule Photog.Api do
   def images_count_for_year!(year) when is_integer(year) do
     from(
       image in Image,
-      where: fragment("EXTRACT(year FROM ?)", image.creation_time) == ^year, 
+      where: fragment("EXTRACT(year FROM ?)", image.creation_time) == ^year,
       select: count(image.id)
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   @doc """
   Returns the list of images taken on a given month and day
   """
-  def list_images_for_date(month, day, limit, offset) when is_integer(month) and is_integer(day) do
+  def list_images_for_date(month, day, limit, offset)
+      when is_integer(month) and is_integer(day) do
     from(
       image in Image,
-      where: fragment("EXTRACT(month FROM ?)", image.creation_time) == ^month and fragment("EXTRACT(day FROM ?)", image.creation_time) == ^day, 
+      where:
+        fragment("EXTRACT(month FROM ?)", image.creation_time) == ^month and
+          fragment("EXTRACT(day FROM ?)", image.creation_time) == ^day,
       order_by: [:creation_time, :id],
       limit: ^limit,
       offset: ^offset
     )
     |> image_preload_import
-    |> Repo.all
+    |> Repo.all()
     |> image_default_preloads
   end
 
@@ -131,10 +134,12 @@ defmodule Photog.Api do
   def images_count_for_date!(month, day) when is_integer(month) and is_integer(day) do
     from(
       image in Image,
-      where: fragment("EXTRACT(month FROM ?)", image.creation_time) == ^month and fragment("EXTRACT(day FROM ?)", image.creation_time) == ^day,
+      where:
+        fragment("EXTRACT(month FROM ?)", image.creation_time) == ^month and
+          fragment("EXTRACT(day FROM ?)", image.creation_time) == ^day,
       select: count(image.id)
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   @doc """
@@ -145,26 +150,26 @@ defmodule Photog.Api do
       image in Image,
       select: count(image.id)
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   def images_favorite_count!(is_favorite) when is_boolean(is_favorite) do
     from(
       image in Image,
-      where: image.is_favorite == ^is_favorite, 
+      where: image.is_favorite == ^is_favorite,
       select: count(image.id)
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   def images_not_in_album_count! do
     from(
       image in Image,
       left_join: album_image in assoc(image, :album_images),
-      where: is_nil(album_image.id), 
+      where: is_nil(album_image.id),
       select: count(image.id)
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   @doc """
@@ -178,14 +183,14 @@ defmodule Photog.Api do
   """
   def list_image_favorites(is_favorite, limit, offset) when is_boolean(is_favorite) do
     from(
-      image in Image, 
-      where: image.is_favorite == ^is_favorite, 
+      image in Image,
+      where: image.is_favorite == ^is_favorite,
       order_by: [desc: :creation_time, desc: :id],
       limit: ^limit,
       offset: ^offset
     )
     |> image_preload_import
-    |> Repo.all
+    |> Repo.all()
     |> image_default_preloads
   end
 
@@ -195,11 +200,11 @@ defmodule Photog.Api do
   def list_images_for_query(search_query) when is_binary(search_query) do
     from(
       image in Image,
-      where: ilike(image.master_path, ^"%#{search_query}%"), 
+      where: ilike(image.master_path, ^"%#{search_query}%"),
       order_by: [:creation_time, :id],
       limit: 100
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -213,14 +218,14 @@ defmodule Photog.Api do
   """
   def list_images_not_in_album(limit, offset) do
     from(
-        image in Image,
-        left_join: album_image in assoc(image, :album_images),
-        where: is_nil(album_image),
-        order_by: [desc: image.creation_time, desc: image.id],
-        limit: ^limit,
-        offset: ^offset
+      image in Image,
+      left_join: album_image in assoc(image, :album_images),
+      where: is_nil(album_image),
+      order_by: [desc: image.creation_time, desc: image.id],
+      limit: ^limit,
+      offset: ^offset
     )
-    |> Repo.all
+    |> Repo.all()
     |> image_default_preloads
   end
 
@@ -241,7 +246,7 @@ defmodule Photog.Api do
       limit: ^limit,
       offset: ^offset
     )
-    |> Repo.all
+    |> Repo.all()
     |> image_default_preloads
   end
 
@@ -261,16 +266,16 @@ defmodule Photog.Api do
   """
   def get_image!(id) do
     from(image in Image, where: image.id == ^id)
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   def get_image!(id, :full) do
     from(
-      image in Image, 
+      image in Image,
       where: image.id == ^id
     )
     |> image_preload_import
-    |> Repo.one!
+    |> Repo.one!()
     |> image_default_preloads
     |> Repo.preload(versions: from(image in Image, select: [:id], order_by: [:id]))
   end
@@ -291,11 +296,11 @@ defmodule Photog.Api do
   """
   def get_image_with_exif!(id) do
     from(
-          i in Image,
-          where: i.id == ^id,
-          select: [:id, :master_path, :exif]
-        )
-    |> Repo.one!
+      i in Image,
+      where: i.id == ^id,
+      select: [:id, :master_path, :exif]
+    )
+    |> Repo.one!()
   end
 
   @doc """
@@ -385,7 +390,7 @@ defmodule Photog.Api do
   """
   def list_albums do
     list_albums_query()
-    |> Repo.all
+    |> Repo.all()
   end
 
   def list_albums(limit, offset) do
@@ -402,7 +407,7 @@ defmodule Photog.Api do
     |> where([album], album.is_favorite == ^is_favorite)
     |> exclude(:order_by)
     |> order_by([:name, :id])
-    |> Repo.all
+    |> Repo.all()
     # need to do it this way since because of joins offset and limit don't work correctly
     |> Enum.slice(offset, limit)
   end
@@ -413,45 +418,69 @@ defmodule Photog.Api do
   def list_albums_for_year(year, limit, offset) do
     list_albums_query()
     |> where([album], album.year == ^year)
-    |> Repo.all
+    |> Repo.all()
     # need to do it this way since because of joins offset and limit don't work correctly
     |> Enum.slice(offset, limit)
+  end
+
+  @doc """
+  Returns the freshest albums,
+  as determined as albums which have had images added
+  most recently
+  """
+  def list_albums_fresh(limit) do
+    album_images_subquery =
+      from(
+        album_image in AlbumImage,
+        group_by: [album_image.album_id],
+        order_by: [desc: max(album_image.id)],
+        select: [:album_id],
+        limit: ^limit
+      )
+
+    list_albums_query()
+    |> join(:inner, [album], album_image in subquery(album_images_subquery),
+      on: album.id == album_image.album_id
+    )
+    |> Repo.all()
   end
 
   @doc """
   Returns the string list of years where there are albums
   """
   def distinct_album_years do
-    years_query = from(
-      album in Album,
-      left_join: year in Year,
-      on: album.year == year.id,
-      group_by: [album.year],
-      order_by: [desc: :year],
-      select: %{year: album.year, count: count()}
-    )
+    years_query =
+      from(
+        album in Album,
+        left_join: year in Year,
+        on: album.year == year.id,
+        group_by: [album.year],
+        order_by: [desc: :year],
+        select: %{year: album.year, count: count()}
+      )
 
-    year_images = from(
-      image in Image,
-      join: album_image in assoc(image, :album_images),
-      join: album in assoc(album_image, :album),
-      join: year in assoc(album, :years),
-      order_by: [desc: album_image.image_order, desc: album_image.id],
-      select: %{
-        year: year.id,
-        image: %{
-          id: image.id,
-          mini_thumbnail_path: image.mini_thumbnail_path,
+    year_images =
+      from(
+        image in Image,
+        join: album_image in assoc(image, :album_images),
+        join: album in assoc(album_image, :album),
+        join: year in assoc(album, :years),
+        order_by: [desc: album_image.image_order, desc: album_image.id],
+        select: %{
+          year: year.id,
+          image: %{
+            id: image.id,
+            mini_thumbnail_path: image.mini_thumbnail_path
+          }
         }
-      }
-    )
-    |> Repo.all
-    |> Enum.reduce(%{}, fn year_image, map -> 
-      year = year_image[:year]
-      image = year_image[:image]
+      )
+      |> Repo.all()
+      |> Enum.reduce(%{}, fn year_image, map ->
+        year = year_image[:year]
+        image = year_image[:image]
 
-      Map.update(map, year, [image], fn images -> [image | images] end)
-    end)
+        Map.update(map, year, [image], fn images -> [image | images] end)
+      end)
 
     from(
       year in Year,
@@ -459,16 +488,15 @@ defmodule Photog.Api do
       on: year.id == year_aggregate.year,
       order_by: [desc: year_aggregate.year],
       select: %{
-        year: year_aggregate.year, 
-        count: year_aggregate.count, 
+        year: year_aggregate.year,
+        count: year_aggregate.count,
         description: year.description,
-        album_id: year.album_id,
+        album_id: year.album_id
       }
     )
-    |> Repo.all
+    |> Repo.all()
     |> Enum.map(fn year -> Map.put(year, :images, year_images[year[:year]]) end)
   end
-
 
   @doc """
   Returns the list of albums.
@@ -477,19 +505,25 @@ defmodule Photog.Api do
   and then the rest of the albums, in the order they were created
   """
   def list_albums_excerpt do
-    %{true => favorite_albums, false => non_favorite_albums} = from(
-      Album,
-      order_by: [desc: :is_favorite, desc: :id],
-      select: [:id, :name, :is_favorite]
-    )
-    |> Repo.all
-    |> Enum.group_by(fn album -> album.is_favorite end)
+    %{true => favorite_albums, false => non_favorite_albums} =
+      from(
+        Album,
+        order_by: [desc: :is_favorite, desc: :id],
+        select: [:id, :name, :is_favorite]
+      )
+      |> Repo.all()
+      |> Enum.group_by(fn album -> album.is_favorite end)
 
-    sorted_favorite_albums = Enum.sort(favorite_albums, fn (album1, album2) -> album1.name <= album2.name end)
+    sorted_favorite_albums =
+      Enum.sort(favorite_albums, fn album1, album2 -> album1.name <= album2.name end)
 
     recent_albums_first_offset = 3
 
-    Enum.concat([Enum.slice(non_favorite_albums, 0..(recent_albums_first_offset-1)), sorted_favorite_albums, Enum.slice(non_favorite_albums, recent_albums_first_offset..-1)])
+    Enum.concat([
+      Enum.slice(non_favorite_albums, 0..(recent_albums_first_offset - 1)),
+      sorted_favorite_albums,
+      Enum.slice(non_favorite_albums, recent_albums_first_offset..-1)
+    ])
   end
 
   def albums_count! do
@@ -497,7 +531,7 @@ defmodule Photog.Api do
       album in Album,
       select: count(album.id)
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   def albums_count_for_year!(year) do
@@ -506,25 +540,26 @@ defmodule Photog.Api do
       where: album.year == ^year,
       select: count(album.id)
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   def albums_favorite_count!(is_favorite) when is_boolean(is_favorite) do
     from(
       album in Album,
-      where: album.is_favorite == ^is_favorite, 
+      where: album.is_favorite == ^is_favorite,
       select: count(album.id)
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   defp get_images_for_album_query(id) do
-    person_image_subquery = from(
-      person_image in PersonImage,
-      where: person_image.image_id == parent_as(:image).id,
-      limit: 1,
-      select: %{id: person_image.id}
-    )
+    person_image_subquery =
+      from(
+        person_image in PersonImage,
+        where: person_image.image_id == parent_as(:image).id,
+        limit: 1,
+        select: %{id: person_image.id}
+      )
 
     from(
       image in Image,
@@ -544,14 +579,14 @@ defmodule Photog.Api do
   """
   def get_images_for_album(id) do
     get_images_for_album_query(id)
-    |> Repo.all
+    |> Repo.all()
   end
 
   def get_images_for_album(id, limit, offset) do
     get_images_for_album_query(id)
     |> limit(^limit)
     |> offset(^offset)
-    |> Repo.all
+    |> Repo.all()
   end
 
   def get_images_for_album(id, :excerpt) do
@@ -561,7 +596,7 @@ defmodule Photog.Api do
       where: album_image.album_id == ^id,
       order_by: [album_image.image_order, album_image.id]
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -579,27 +614,30 @@ defmodule Photog.Api do
 
   """
   def get_album!(id) do
-    tags_query = from(
-      tag in Tag,
-      join: album_tag in assoc(tag, :album_tags),
-      where: album_tag.album_id == ^id,
-      order_by: [asc: tag.name, desc: tag.id]
-    )
+    tags_query =
+      from(
+        tag in Tag,
+        join: album_tag in assoc(tag, :album_tags),
+        where: album_tag.album_id == ^id,
+        order_by: [asc: tag.name, desc: tag.id]
+      )
 
-    album = from(
-      album in Album,
-      join: cover_image in assoc(album, :cover_image),
-      where: album.id == ^id,
-      preload: [cover_image: cover_image, tags: ^tags_query]
-    )
-      |> Repo.one!
+    album =
+      from(
+        album in Album,
+        join: cover_image in assoc(album, :cover_image),
+        where: album.id == ^id,
+        preload: [cover_image: cover_image, tags: ^tags_query]
+      )
+      |> Repo.one!()
 
-    images_count = from(
-      album_image in AlbumImage,
-      where: album_image.album_id == ^id,
-      select: count(album_image.id)
-    )
-      |> Repo.one!
+    images_count =
+      from(
+        album_image in AlbumImage,
+        where: album_image.album_id == ^id,
+        select: count(album_image.id)
+      )
+      |> Repo.one!()
 
     %Album{album | images_count: images_count}
   end
@@ -614,7 +652,7 @@ defmodule Photog.Api do
       where: album.id == ^id,
       select: %{id: person.id, name: person.name}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -674,7 +712,7 @@ defmodule Photog.Api do
       album in Album,
       where: album.id == ^album_id
     )
-    |> Repo.delete_all
+    |> Repo.delete_all()
   end
 
   @doc """
@@ -695,12 +733,14 @@ defmodule Photog.Api do
   """
   def reorder_images_for_album(album_id, image_ids) when is_list(image_ids) do
     Repo.transaction(fn ->
-      for {image_id, i} <- image_ids |> Enum.with_index do
+      for {image_id, i} <- image_ids |> Enum.with_index() do
         now = DateTime.utc_now() |> DateTime.truncate(:second)
-        {1, nil} = from(
-              album_image in AlbumImage,
-              where: album_image.album_id == ^album_id and album_image.image_id == ^image_id
-            )
+
+        {1, nil} =
+          from(
+            album_image in AlbumImage,
+            where: album_image.album_id == ^album_id and album_image.image_id == ^image_id
+          )
           |> Repo.update_all(set: [image_order: i, updated_at: now])
       end
     end)
@@ -711,13 +751,13 @@ defmodule Photog.Api do
   """
   def replace_tags_for_album(album_id, tag_ids) when is_list(tag_ids) do
     Repo.transaction(fn ->
-      {_, nil} = from(album_tag in AlbumTag, where: album_tag.album_id == ^album_id)
-        |> Repo.delete_all
+      {_, nil} =
+        from(album_tag in AlbumTag, where: album_tag.album_id == ^album_id)
+        |> Repo.delete_all()
 
       for tag_id <- tag_ids do
         create_album_tag!(%{album_id: album_id, tag_id: tag_id})
       end
-
     end)
   end
 
@@ -740,7 +780,7 @@ defmodule Photog.Api do
       order_by: :name,
       select: %Person{person | images_count: count(person.id)}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -753,7 +793,7 @@ defmodule Photog.Api do
       order_by: [desc: :is_favorite, asc: :name],
       select: [:id, :name, :is_favorite]
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -771,31 +811,34 @@ defmodule Photog.Api do
 
   """
   def get_person!(id) do
-    person = from(
-      person in Person,
-      join:  cover_image in assoc(person, :cover_image),
-      where: person.id == ^id,
-      preload: [cover_image: cover_image]
-    )
-    |> Repo.one!
+    person =
+      from(
+        person in Person,
+        join: cover_image in assoc(person, :cover_image),
+        where: person.id == ^id,
+        preload: [cover_image: cover_image]
+      )
+      |> Repo.one!()
 
-    images_count = from(
-      person_image in PersonImage,
-      where: person_image.person_id == ^id,
-      select: count(person_image.id)
-    )
-    |> Repo.one!
+    images_count =
+      from(
+        person_image in PersonImage,
+        where: person_image.person_id == ^id,
+        select: count(person_image.id)
+      )
+      |> Repo.one!()
 
     %Person{person | images_count: images_count}
   end
 
   defp get_images_for_person_query(id) do
-    album_image_subquery = from(
-      album_image in AlbumImage,
-      where: album_image.image_id == parent_as(:image).id,
-      limit: 1,
-      select: %{id: album_image.id}
-    )
+    album_image_subquery =
+      from(
+        album_image in AlbumImage,
+        where: album_image.image_id == parent_as(:image).id,
+        limit: 1,
+        select: %{id: album_image.id}
+      )
 
     from(
       image in Image,
@@ -814,14 +857,14 @@ defmodule Photog.Api do
   """
   def get_images_for_person(id) do
     get_images_for_person_query(id)
-    |> Repo.all
+    |> Repo.all()
   end
 
   def get_images_for_person(id, limit, offset) do
     get_images_for_person_query(id)
     |> limit(^limit)
     |> offset(^offset)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -881,7 +924,7 @@ defmodule Photog.Api do
       person in Person,
       where: person.id == ^person_id
     )
-    |> Repo.delete_all
+    |> Repo.delete_all()
   end
 
   @doc """
@@ -983,7 +1026,7 @@ defmodule Photog.Api do
       person_image in PersonImage,
       where: person_image.person_id == ^person_id and person_image.image_id in ^image_ids
     )
-    |> Repo.delete_all
+    |> Repo.delete_all()
   end
 
   @doc """
@@ -1085,7 +1128,7 @@ defmodule Photog.Api do
       album_image in AlbumImage,
       where: album_image.album_id == ^album_id and album_image.image_id in ^image_ids
     )
-    |> Repo.delete_all
+    |> Repo.delete_all()
   end
 
   @doc """
@@ -1106,7 +1149,7 @@ defmodule Photog.Api do
   """
   def manually_preload_camera_model(results) do
     results
-    |> Enum.map(fn { import, {camera_make, camera_model} } -> 
+    |> Enum.map(fn {import, {camera_make, camera_model}} ->
       %Import{import | camera_model: Import.determine_camera_model(camera_make, camera_model)}
     end)
   end
@@ -1138,18 +1181,19 @@ defmodule Photog.Api do
       import in Import,
       select: count(import.id)
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   defp list_imports_with_count_and_limited_images_query do
     from(
-        import in Import,
-        join: cover_image in assoc(import, :cover_image),
-        left_join: image in assoc(import, :images),
-        group_by: [import.id, cover_image.id],
-        order_by: [desc: import.import_time, desc: import.id],
-        select: {%Import{import | images_count: count(import.id), images: [cover_image]},
-        {cover_image.exif["Make"], cover_image.exif["Model"]}}
+      import in Import,
+      join: cover_image in assoc(import, :cover_image),
+      left_join: image in assoc(import, :images),
+      group_by: [import.id, cover_image.id],
+      order_by: [desc: import.import_time, desc: import.id],
+      select:
+        {%Import{import | images_count: count(import.id), images: [cover_image]},
+         {cover_image.exif["Make"], cover_image.exif["Model"]}}
     )
   end
 
@@ -1159,7 +1203,7 @@ defmodule Photog.Api do
   """
   def list_imports_with_count_and_limited_images do
     list_imports_with_count_and_limited_images_query()
-    |> Repo.all
+    |> Repo.all()
     |> manually_preload_camera_model
   end
 
@@ -1167,7 +1211,7 @@ defmodule Photog.Api do
     list_imports_with_count_and_limited_images_query()
     |> limit(^limit)
     |> offset(^offset)
-    |> Repo.all
+    |> Repo.all()
     |> manually_preload_camera_model
   end
 
@@ -1183,17 +1227,18 @@ defmodule Photog.Api do
       order_by: [desc: album.name, desc: album.id],
       select: {import.id, %{id: album.id, name: album.name}}
     )
-    |> Repo.all
+    |> Repo.all()
     |> generate_import_albums_map
   end
 
   def albums_map_for_imports_list(limit, offset) do
-    import_subquery = from(
-      import in Import,
-      limit: ^limit,
-      offset: ^offset,
-      order_by: [desc: import.import_time, desc: import.id]
-    )
+    import_subquery =
+      from(
+        import in Import,
+        limit: ^limit,
+        offset: ^offset,
+        order_by: [desc: import.import_time, desc: import.id]
+      )
 
     from(
       import in subquery(import_subquery),
@@ -1203,13 +1248,13 @@ defmodule Photog.Api do
       order_by: [desc: album.name, desc: album.id],
       select: {import.id, %{id: album.id, name: album.name}}
     )
-    |> Repo.all
+    |> Repo.all()
     |> generate_import_albums_map
   end
 
   defp generate_import_albums_map(results) do
     results
-    |> Enum.reduce(%{}, fn ({import_id, album}, map) -> 
+    |> Enum.reduce(%{}, fn {import_id, album}, map ->
       Map.update(map, import_id, [album], fn albums_list -> [album | albums_list] end)
     end)
   end
@@ -1230,13 +1275,13 @@ defmodule Photog.Api do
   """
   def get_import!(id) do
     from(
-        import in Import,
-        where: import.id == ^id,
-        left_join: image in assoc(import, :images),
-        group_by: [import.id],
-        select: %Import{import | images_count: count(import.id)}
+      import in Import,
+      where: import.id == ^id,
+      left_join: image in assoc(import, :images),
+      group_by: [import.id],
+      select: %Import{import | images_count: count(import.id)}
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   @doc """
@@ -1246,14 +1291,14 @@ defmodule Photog.Api do
   """
   def get_last_import!() do
     from(
-        import in Import,
-        left_join: image in assoc(import, :images),
-        group_by: [import.id],
-        order_by: [desc: :import_time, desc: :id],
-        limit: 1,
-        select: %Import{import | images_count: count(import.id)}
+      import in Import,
+      left_join: image in assoc(import, :images),
+      group_by: [import.id],
+      order_by: [desc: :import_time, desc: :id],
+      limit: 1,
+      select: %Import{import | images_count: count(import.id)}
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   def get_albums_for_import(id) do
@@ -1266,7 +1311,7 @@ defmodule Photog.Api do
       where: import.id == ^id,
       select: %{id: album.id, name: album.name}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def get_persons_for_import(id) do
@@ -1279,23 +1324,25 @@ defmodule Photog.Api do
       where: import.id == ^id,
       select: %{id: person.id, name: person.name}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   defp get_images_for_import_query(id) do
-    person_image_subquery = from(
-      person_image in PersonImage,
-      where: person_image.image_id == parent_as(:image).id,
-      limit: 1,
-      select: %{id: person_image.id}
-    )
+    person_image_subquery =
+      from(
+        person_image in PersonImage,
+        where: person_image.image_id == parent_as(:image).id,
+        limit: 1,
+        select: %{id: person_image.id}
+      )
 
-    album_image_subquery = from(
-      album_image in AlbumImage,
-      where: album_image.image_id == parent_as(:image).id,
-      limit: 1,
-      select: %{id: album_image.id}
-    )
+    album_image_subquery =
+      from(
+        album_image in AlbumImage,
+        where: album_image.image_id == parent_as(:image).id,
+        limit: 1,
+        select: %{id: album_image.id}
+      )
 
     from(
       image in Image,
@@ -1306,20 +1353,24 @@ defmodule Photog.Api do
       on: true,
       where: image.import_id == ^id,
       order_by: [image.id, image.creation_time],
-      select: %Image{image | has_persons: not is_nil(person_image.id), has_albums: not is_nil(album_image.id)}
+      select: %Image{
+        image
+        | has_persons: not is_nil(person_image.id),
+          has_albums: not is_nil(album_image.id)
+      }
     )
   end
 
   def get_images_for_import(id) do
     get_images_for_import_query(id)
-    |> Repo.all
+    |> Repo.all()
   end
 
   def get_images_for_import(id, limit, offset) do
     get_images_for_import_query(id)
     |> offset(^offset)
     |> limit(^limit)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -1389,40 +1440,43 @@ defmodule Photog.Api do
 
   defp list_tags_query() do
     # based on: https://justinappears.com/posts/lateral-joins-ecto
-    album_tag_subquery = from(
-      album_tag in AlbumTag,
-      where: album_tag.tag_id == parent_as(:tag).id,
-      order_by: [desc: :id],
-      limit: 1,
-      select: %{album_id: album_tag.album_id}
-    )
+    album_tag_subquery =
+      from(
+        album_tag in AlbumTag,
+        where: album_tag.tag_id == parent_as(:tag).id,
+        order_by: [desc: :id],
+        limit: 1,
+        select: %{album_id: album_tag.album_id}
+      )
 
     from(
-        tag in Tag,
-        as: :tag,
-        left_lateral_join: album_tag in subquery(album_tag_subquery),
-        on: true,
-        left_join: album in Album,
-        on: album.id == album_tag.album_id,
-        left_join: image in assoc(album, :cover_image),
-        left_join: album_tag_2 in assoc(tag, :album_tags),
-        left_join: cover_album in assoc(tag, :cover_album),
-        left_join: cover_album_image in assoc(cover_album, :cover_image),
-        group_by: [tag.id, image.id, album.id, cover_album.id, cover_album_image.id],
-        order_by: tag.name,
-        select: {%Tag{tag | albums_count: count(tag.id)}, image, cover_album_image}
+      tag in Tag,
+      as: :tag,
+      left_lateral_join: album_tag in subquery(album_tag_subquery),
+      on: true,
+      left_join: album in Album,
+      on: album.id == album_tag.album_id,
+      left_join: image in assoc(album, :cover_image),
+      left_join: album_tag_2 in assoc(tag, :album_tags),
+      left_join: cover_album in assoc(tag, :cover_album),
+      left_join: cover_album_image in assoc(cover_album, :cover_image),
+      group_by: [tag.id, image.id, album.id, cover_album.id, cover_album_image.id],
+      order_by: tag.name,
+      select: {%Tag{tag | albums_count: count(tag.id)}, image, cover_album_image}
     )
   end
 
   defp preload_tags_cover_images(tags_results) do
     tags_results
-    |> Enum.map(fn {tag, image, cover_album_image} -> 
-      cover_image = case cover_album_image do
-        nil -> image
-        _   -> cover_album_image
-      end
-      %Tag{tag | cover_image: cover_image} 
-    end) 
+    |> Enum.map(fn {tag, image, cover_album_image} ->
+      cover_image =
+        case cover_album_image do
+          nil -> image
+          _ -> cover_album_image
+        end
+
+      %Tag{tag | cover_image: cover_image}
+    end)
   end
 
   @doc """
@@ -1430,11 +1484,11 @@ defmodule Photog.Api do
   """
   def list_tags_excerpt() do
     from(
-      Tag, 
-      order_by: [desc: :is_favorite, asc: :name, asc: :id], 
+      Tag,
+      order_by: [desc: :is_favorite, asc: :name, asc: :id],
       select: [:id, :name, :is_favorite]
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -1442,14 +1496,14 @@ defmodule Photog.Api do
   """
   def list_tags do
     list_tags_query()
-    |> Repo.all
+    |> Repo.all()
     |> preload_tags_cover_images()
   end
 
   def list_tags_by_favorite(is_favorite) when is_boolean(is_favorite) do
     list_tags_query()
     |> where([tag], tag.is_favorite == ^is_favorite)
-    |> Repo.all
+    |> Repo.all()
     |> preload_tags_cover_images()
   end
 
@@ -1470,12 +1524,13 @@ defmodule Photog.Api do
   def get_tag!(id) do
     tag = Repo.get!(Tag, id)
 
-    albums_count = from(
-      album_tag in AlbumTag,
-      where: album_tag.tag_id == ^id,
-      select: count(album_tag.id)
-    )
-    |> Repo.one!
+    albums_count =
+      from(
+        album_tag in AlbumTag,
+        where: album_tag.tag_id == ^id,
+        select: count(album_tag.id)
+      )
+      |> Repo.one!()
 
     %Tag{tag | albums_count: albums_count}
   end
@@ -1495,7 +1550,7 @@ defmodule Photog.Api do
       preload: [cover_image: cover_image],
       select: %Album{album | images_count: count(album.id)}
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def get_albums_for_tag(id, limit, offset) do
@@ -1515,7 +1570,7 @@ defmodule Photog.Api do
       where: album_tag.tag_id == ^id,
       order_by: [album_tag.album_order, album_image.image_order, album_image.id]
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -1575,7 +1630,7 @@ defmodule Photog.Api do
       tag in Tag,
       where: tag.id == ^tag_id
     )
-    |> Repo.delete_all
+    |> Repo.delete_all()
   end
 
   @doc """
@@ -1596,12 +1651,14 @@ defmodule Photog.Api do
   """
   def reorder_albums_for_tag(tag_id, album_ids) when is_list(album_ids) do
     Repo.transaction(fn ->
-      for {album_id, i} <- album_ids |> Enum.with_index do
+      for {album_id, i} <- album_ids |> Enum.with_index() do
         now = DateTime.utc_now() |> DateTime.truncate(:second)
-        {1, nil} = from(
-              album_tag in AlbumTag,
-              where: album_tag.tag_id == ^tag_id and album_tag.album_id == ^album_id
-            )
+
+        {1, nil} =
+          from(
+            album_tag in AlbumTag,
+            where: album_tag.tag_id == ^tag_id and album_tag.album_id == ^album_id
+          )
           |> Repo.update_all(set: [album_order: i, updated_at: now])
       end
     end)
@@ -1702,7 +1759,7 @@ defmodule Photog.Api do
       album_tag in AlbumTag,
       where: album_tag.tag_id == ^tag_id and album_tag.album_id in ^album_ids
     )
-    |> Repo.delete_all
+    |> Repo.delete_all()
   end
 
   @doc """
@@ -1724,7 +1781,10 @@ defmodule Photog.Api do
   def upsert_year(%{"id" => _id, "description" => description, "album_id" => album_id} = attrs) do
     %Year{}
     |> Year.changeset(attrs)
-    |> Repo.insert(on_conflict: [set: [description: description, album_id: album_id]], conflict_target: :id)
+    |> Repo.insert(
+      on_conflict: [set: [description: description, album_id: album_id]],
+      conflict_target: :id
+    )
   end
 
   @doc """
@@ -1732,7 +1792,7 @@ defmodule Photog.Api do
   """
   def delete_year(year) do
     from(year in Year, where: year.id == ^year)
-    |> Repo.delete_all
+    |> Repo.delete_all()
   end
 
   alias Photog.Api.Clan
@@ -1752,7 +1812,7 @@ defmodule Photog.Api do
       Clan,
       order_by: [:name]
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   def list_clans_full do
@@ -1762,7 +1822,7 @@ defmodule Photog.Api do
       preload: [clan_persons: clan_person],
       order_by: [:name]
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -1782,19 +1842,21 @@ defmodule Photog.Api do
   def get_clan!(id) do
     images_subquery = clan_images_subquery(id)
 
-    images_count = from(
-      image in subquery(images_subquery),
-      select: count()
-    )
-    |> Repo.one!
+    images_count =
+      from(
+        image in subquery(images_subquery),
+        select: count()
+      )
+      |> Repo.one!()
 
-    clan = from(
-      clan in Clan,
-      join: clan_person in assoc(clan, :clan_persons),
-      where: clan.id == ^id,
-      preload: [clan_persons: clan_person]
-    )
-    |> Repo.one!
+    clan =
+      from(
+        clan in Clan,
+        join: clan_person in assoc(clan, :clan_persons),
+        where: clan.id == ^id,
+        preload: [clan_persons: clan_person]
+      )
+      |> Repo.one!()
 
     %Clan{clan | images_count: images_count}
   end
@@ -1856,7 +1918,7 @@ defmodule Photog.Api do
       clan in Clan,
       where: clan.id == ^id
     )
-    |> Repo.delete_all
+    |> Repo.delete_all()
   end
 
   @doc """
@@ -1871,8 +1933,6 @@ defmodule Photog.Api do
   def change_clan(%Clan{} = clan, attrs \\ %{}) do
     Clan.changeset(clan, attrs)
   end
-
-  
 
   @doc """
   Returns the list of clan_persons.
@@ -1973,8 +2033,9 @@ defmodule Photog.Api do
   """
   def replace_persons_for_clan(clan_id, person_ids) when is_list(person_ids) do
     Repo.transaction(fn ->
-      {_, nil} = from(clan_person in ClanPerson, where: clan_person.clan_id == ^clan_id)
-        |> Repo.delete_all
+      {_, nil} =
+        from(clan_person in ClanPerson, where: clan_person.clan_id == ^clan_id)
+        |> Repo.delete_all()
 
       for person_id <- person_ids do
         create_clan_person!(%{clan_id: clan_id, person_id: person_id})
@@ -1985,12 +2046,13 @@ defmodule Photog.Api do
   defp clan_images_subquery(clan_id) do
     # unfortunately we need to do a separate query here,
     # as using the subquery directly causes an ecto error for some reason
-    clan_persons_count = from(
-      clan_person in ClanPerson,
-      where: clan_person.clan_id == ^clan_id,
-      select: count()
-    )
-    |> Repo.one!
+    clan_persons_count =
+      from(
+        clan_person in ClanPerson,
+        where: clan_person.clan_id == ^clan_id,
+        select: count()
+      )
+      |> Repo.one!()
 
     from(
       person_image in PersonImage,
@@ -2013,6 +2075,6 @@ defmodule Photog.Api do
       offset: ^offset,
       order_by: [desc: image.id]
     )
-    |> Repo.all
+    |> Repo.all()
   end
 end

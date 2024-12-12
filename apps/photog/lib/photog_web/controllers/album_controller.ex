@@ -41,6 +41,11 @@ defmodule PhotogWeb.AlbumController do
     render(conn, "index.json", albums: albums)
   end
 
+  def index_fresh(conn, %{"limit" => limit}) do
+    albums = Api.list_albums_fresh(NumberHelpers.string_to_positive_integer(limit, 1))
+    render(conn, "index.json", albums: albums)
+  end
+
   def create(conn, %{"album" => album_params, "image_ids" => image_ids, "tag_ids" => tag_ids}) do
     create_album(conn, album_params, fn album ->
       {_, _} = add_images_to_album(album.id, image_ids)
