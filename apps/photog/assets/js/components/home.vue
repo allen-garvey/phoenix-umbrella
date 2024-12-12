@@ -12,7 +12,7 @@
             v-if="recentAlbums.length > 0"
         >
             <div :class="$style.flexHeader">
-                <h3 :class="$style.sectionHeading">Recent Albums</h3>
+                <h3 :class="$style.sectionHeading">Freshest Albums</h3>
                 <router-link 
                     :to="{ name: 'albumsForYear', params: { year: currentYear } }"
                     :class="$style.headerSupplement"
@@ -96,11 +96,7 @@ export default {
     created(){
         this.setWindowTitle('');
 
-        this.getModel('/albums', {
-            isPaginated: true,
-            offset: 0,
-            limit: 6,
-        }).then((albums) => {
+        this.getModel('/albums/fresh?limit=6').then((albums) => {
             this.recentAlbums = albums;
         });
 
