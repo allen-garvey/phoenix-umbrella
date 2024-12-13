@@ -35,7 +35,7 @@ export default {
             path: '/tags',
             name: 'tagsIndex',
             component: ThumbnailList,
-            props: (route) => {
+            props: route => {
                 const props = {
                     apiPath: route.path,
                     newItemLink: { name: 'tagsNew' },
@@ -63,7 +63,7 @@ export default {
             path: '/persons',
             name: 'personsIndex',
             component: ThumbnailList,
-            props: (route) => {
+            props: route => {
                 const props = {
                     apiPath: route.path,
                     newItemLink: { name: 'personsNew' },
@@ -84,7 +84,7 @@ export default {
             path: '/images',
             name: 'imagesIndex',
             component: ThumbnailList,
-            props: (route) => {
+            props: route => {
                 const props = {
                     useBigThumbnails: true,
                     apiPath: route.path,
@@ -148,7 +148,7 @@ export default {
             path: '/images/years/:year',
             name: 'imagesForYear',
             component: ThumbnailList,
-            props: (route) => {
+            props: route => {
                 const year = parseInt(route.params.year);
                 const previousYear = year - 1;
                 const nextYear = year + 1;
@@ -198,7 +198,7 @@ export default {
             path: '/images/today',
             name: 'imagesForToday',
             component: ThumbnailList,
-            props: (route) => {
+            props: route => {
                 const today = new Date();
                 const apiPath = `/images/date/${
                     today.getMonth() + 1
@@ -229,20 +229,16 @@ export default {
             name: 'albumsForYearIndex',
             component: YearsListPage,
         },
-        buildAlbumVariant(
-            '/albums/favorites',
-            'albumFavoritesIndex',
-            (route) => {
-                const props = {
-                    apiPath: '/albums/?favorites=true',
-                    apiItemsCountPath: '/albums/count?favorites=true',
-                    pageTitle: 'Favorite Albums',
-                };
+        buildAlbumVariant('/albums/favorites', 'albumFavoritesIndex', route => {
+            const props = {
+                apiPath: '/albums/?favorites=true',
+                apiItemsCountPath: '/albums/count?favorites=true',
+                pageTitle: 'Favorite Albums',
+            };
 
-                return props;
-            }
-        ),
-        buildAlbumVariant('/albums/years/:year', 'albumsForYear', (route) => {
+            return props;
+        }),
+        buildAlbumVariant('/albums/years/:year', 'albumsForYear', route => {
             const year = parseInt(route.params.year);
             const previousYear = year - 1;
             const nextYear = year + 1;
@@ -277,12 +273,10 @@ export default {
             isPaginated: true,
             enableBatchSelectImages: true,
             pageTitle: 'Favorite images',
-            itemPreviewContentCallback: (image) => {
-                const albums = image.albums
-                    .map((album) => album.name)
-                    .join(', ');
+            itemPreviewContentCallback: image => {
+                const albums = image.albums.map(album => album.name).join(', ');
                 const persons = image.persons
-                    .map((person) => person.name)
+                    .map(person => person.name)
                     .join(', ');
                 const messages = [];
                 if (albums) {
@@ -321,7 +315,7 @@ export default {
             path: '/albums/:id/edit',
             name: 'albumsEdit',
             component: AlbumForm,
-            props: (route) => {
+            props: route => {
                 return {
                     modelId: parseInt(route.params.id),
                 };
@@ -331,7 +325,7 @@ export default {
             path: '/albums/:id',
             name: 'albumsShow',
             component: ThumbnailList,
-            props: (route) => {
+            props: route => {
                 const props = {
                     useBigThumbnails: true,
                     batchRemoveItemsCallback(image_ids, sendJSON) {
@@ -365,9 +359,9 @@ export default {
                     reorderItemsKey: 'image_ids',
                     reorderBySortCallback: sortImagesCallback,
                     relatedFields: albumRelatedFields,
-                    getDescription: (album) => album.description,
-                    itemPreviewContentCallback: (image) =>
-                        image.persons.map((person) => person.name).join(', '),
+                    getDescription: album => album.description,
+                    itemPreviewContentCallback: image =>
+                        image.persons.map(person => person.name).join(', '),
                     showRouteFor: (item, _model) => {
                         return {
                             name: 'albumImagesShow',
@@ -397,9 +391,9 @@ export default {
                         className: 'btn-success',
                         route: { name: 'clansNew' },
                     },
-                    getItems: (getModel) =>
-                        getModel('/clans').then((clans) =>
-                            clans.map((clan) => ({
+                    getItems: getModel =>
+                        getModel('/clans').then(clans =>
+                            clans.map(clan => ({
                                 title: clan.name,
                                 id: clan.id,
                                 route: {
@@ -421,7 +415,7 @@ export default {
             path: '/clans/:id/edit',
             name: 'clansEdit',
             component: ClanForm,
-            props: (route) => {
+            props: route => {
                 return {
                     modelId: parseInt(route.params.id),
                 };
@@ -431,7 +425,7 @@ export default {
             path: '/clans/:id',
             name: 'clansShow',
             component: ThumbnailList,
-            props: (route) => {
+            props: route => {
                 const props = {
                     useBigThumbnails: true,
                     apiPath: route.path,
@@ -466,7 +460,7 @@ export default {
             path: '/persons/:id/edit',
             name: 'personsEdit',
             component: PersonForm,
-            props: (route) => {
+            props: route => {
                 return {
                     modelId: parseInt(route.params.id),
                 };
@@ -476,7 +470,7 @@ export default {
             path: '/persons/:id',
             name: 'personsShow',
             component: ThumbnailList,
-            props: (route) => {
+            props: route => {
                 const props = {
                     useBigThumbnails: true,
                     batchRemoveItemsCallback(image_ids, sendJSON) {
@@ -506,8 +500,8 @@ export default {
                         params: { id: route.params.id },
                     }),
                     isDeleteEnabled: true,
-                    itemPreviewContentCallback: (image) =>
-                        image.albums.map((album) => album.name).join(', '),
+                    itemPreviewContentCallback: image =>
+                        image.albums.map(album => album.name).join(', '),
                     showRouteFor: (item, _model) => {
                         return {
                             name: 'personImagesShow',
@@ -526,7 +520,7 @@ export default {
             path: '/tags/new',
             name: 'tagsNew',
             component: TagForm,
-            props: (route) => {
+            props: route => {
                 return {};
             },
         },
@@ -534,7 +528,7 @@ export default {
             path: '/tags/:id/edit',
             name: 'tagsEdit',
             component: TagForm,
-            props: (route) => {
+            props: route => {
                 return {
                     modelId: parseInt(route.params.id),
                     itemsUrl: `/tags/${route.params.id}/albums?excerpt=true`,
@@ -545,7 +539,7 @@ export default {
             path: '/tags/:id',
             name: 'tagsShow',
             component: ThumbnailList,
-            props: (route) => {
+            props: route => {
                 const props = {
                     setCoverImageCallback(cover_album_id, sendJSON, tag) {
                         const tagId = tag.id;
@@ -574,7 +568,7 @@ export default {
                     reorderPathSuffix: '/albums/reorder',
                     reorderItemsKey: 'album_ids',
                     reorderBySortCallback: sortAlbumsCallback,
-                    showRouteFor: (item) => {
+                    showRouteFor: item => {
                         return {
                             name: 'albumsShow',
                             params: {
@@ -597,14 +591,14 @@ export default {
             component: ImagesSearch,
         },
         buildImportsShowVariant('/imports/last', 'importsShowLast', {
-            buildItemsApiUrl: (model) => `/imports/${model.id}/images`,
+            buildItemsApiUrl: model => `/imports/${model.id}/images`,
         }),
         buildImportsShowVariant('/imports/:id', 'importsShow'),
         {
             path: '/imports/:id/edit',
             name: 'importsEdit',
             component: ImportForm,
-            props: (route) => {
+            props: route => {
                 return {
                     modelId: parseInt(route.params.id),
                 };
@@ -617,7 +611,7 @@ export default {
                 import(
                     /* webpackChunkName: "image-editor" */ './components/image-editor/components/image-editor-page.vue'
                 ),
-            props: (route) => {
+            props: route => {
                 return {
                     imageId: parseInt(route.params.id),
                 };
@@ -627,7 +621,7 @@ export default {
             path: '/images/:id',
             name: 'imagesShow',
             component: ImageDetail,
-            props: (route) => {
+            props: route => {
                 return {
                     imageId: parseInt(route.params.id),
                 };
@@ -637,22 +631,19 @@ export default {
             path: '/albums/:album_id/images/:image_id',
             name: 'albumImagesShow',
             component: ImageDetail,
-            props: (route) => {
+            props: route => {
                 return {
                     imageId: parseInt(route.params.image_id),
                     parent: {
                         id: route.params.album_id,
                         getName(image) {
-                            for (let i = 0; i < image.albums.length; i++) {
-                                const album = image.albums[i];
-                                if (album.id == route.params.album_id) {
-                                    return album.name;
-                                }
-                            }
+                            return image.albums.find(
+                                album => album.id == route.params.album_id
+                            ).name;
                         },
                         parentRouteName: 'albumsShow',
                         imagesApiPath: `/albums/${route.params.album_id}/images?excerpt=true`,
-                        showRouteFor: (item) => {
+                        showRouteFor: item => {
                             return {
                                 name: 'albumImagesShow',
                                 params: {
@@ -676,22 +667,19 @@ export default {
             path: '/persons/:person_id/images/:image_id',
             name: 'personImagesShow',
             component: ImageDetail,
-            props: (route) => {
+            props: route => {
                 return {
                     imageId: parseInt(route.params.image_id),
                     parent: {
                         id: route.params.person_id,
                         getName(image) {
-                            for (let i = 0; i < image.persons.length; i++) {
-                                const person = image.persons[i];
-                                if (person.id == route.params.person_id) {
-                                    return person.name;
-                                }
-                            }
+                            return image.persons.find(
+                                person => person.id == route.params.person_id
+                            ).name;
                         },
                         imagesApiPath: `/persons/${route.params.person_id}/images?excerpt=true`,
                         parentRouteName: 'personsShow',
-                        showRouteFor: (item) => {
+                        showRouteFor: item => {
                             return {
                                 name: 'personImagesShow',
                                 params: {
@@ -708,7 +696,7 @@ export default {
             path: '/imports/:import_id/images/:image_id',
             name: 'importImagesShow',
             component: ImageDetail,
-            props: (route) => {
+            props: route => {
                 return {
                     imageId: parseInt(route.params.image_id),
                     parent: {
@@ -716,7 +704,7 @@ export default {
                         name: 'Import',
                         imagesApiPath: `/imports/${route.params.import_id}/images?excerpt=true`,
                         parentRouteName: 'importsShow',
-                        showRouteFor: (item) => {
+                        showRouteFor: item => {
                             return {
                                 name: 'importImagesShow',
                                 params: {
@@ -733,7 +721,7 @@ export default {
             path: '/slideshows/albums/:album_id',
             name: 'albumSlideshow',
             component: Slideshow,
-            props: (route) => {
+            props: route => {
                 return {
                     apiPath: `/albums/${route.params.album_id}/images?excerpt=true`,
                     getImageShowRoute(image) {
@@ -757,7 +745,7 @@ export default {
             path: '/slideshows/tags/:tag_id',
             name: 'tagSlideshow',
             component: Slideshow,
-            props: (route) => {
+            props: route => {
                 return {
                     apiPath: `/tags/${route.params.tag_id}/images?excerpt=true`,
                     getImageShowRoute(image) {
@@ -780,7 +768,7 @@ export default {
             path: '/slideshows/images/years/:year',
             name: 'imageYearSlideshow',
             component: Slideshow,
-            props: (route) => {
+            props: route => {
                 return {
                     apiPath: `/images/years/${route.params.year}/?excerpt=true`,
                     getImageShowRoute(image) {
