@@ -41,9 +41,6 @@
             :shouldShowRequestButton="!imageExif && !hasExifBeenRequested"
             @exif-requested="loadExif"
         />
-        <div :class="$style.actionButtonContainer">
-            <router-link :to="{name: 'imagesEditor', params: {id: imageId}}">Editor</router-link>
-        </div>
         
         <div :class="$style.actionButtonContainer" v-if="isB2Enabled">
             <B2-Link :image="image" :onB2UrlRequested="onB2UrlRequested" />

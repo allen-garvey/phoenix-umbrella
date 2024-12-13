@@ -605,19 +605,6 @@ export default {
             },
         },
         {
-            path: '/images/:id/editor',
-            name: 'imagesEditor',
-            component: () =>
-                import(
-                    /* webpackChunkName: "image-editor" */ './components/image-editor/components/image-editor-page.vue'
-                ),
-            props: route => {
-                return {
-                    imageId: parseInt(route.params.id),
-                };
-            },
-        },
-        {
             path: '/images/:id',
             name: 'imagesShow',
             component: ImageDetail,
