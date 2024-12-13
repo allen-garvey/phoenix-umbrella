@@ -5,26 +5,48 @@ defmodule PhotogWeb.ImageController do
   alias Photog.Api.Image
   alias Photog.Api.AlbumImage
   alias Photog.Api.PersonImage
+  alias Common.NumberHelpers
 
-  action_fallback PhotogWeb.FallbackController
+  action_fallback(PhotogWeb.FallbackController)
 
   def index(conn, %{"favorites" => is_favorite_param, "limit" => limit, "offset" => offset}) do
-    images = Api.list_image_favorites(is_favorite_param == "true", limit, offset)
+    images =
+      Api.list_image_favorites(
+        is_favorite_param == "true",
+        NumberHelpers.string_to_positive_integer(limit, 1),
+        NumberHelpers.string_to_positive_integer(offset, 0)
+      )
+
     render(conn, "index.json", images: images)
   end
 
   def index(conn, %{"in_album" => "false", "limit" => limit, "offset" => offset}) do
-    images = Api.list_images_not_in_album(limit, offset)
+    images =
+      Api.list_images_not_in_album(
+        NumberHelpers.string_to_positive_integer(limit, 1),
+        NumberHelpers.string_to_positive_integer(offset, 0)
+      )
+
     render(conn, "index.json", images: images)
   end
 
   def index(conn, %{"amazon_photos_id" => "false", "limit" => limit, "offset" => offset}) do
-    images = Api.list_images_with_no_amazon_photos_id(limit, offset)
+    images =
+      Api.list_images_with_no_amazon_photos_id(
+        NumberHelpers.string_to_positive_integer(limit, 1),
+        NumberHelpers.string_to_positive_integer(offset, 0)
+      )
+
     render(conn, "index.json", images: images)
   end
 
   def index(conn, %{"limit" => limit, "offset" => offset}) do
-    images = Api.list_images(limit, offset)
+    images =
+      Api.list_images(
+        NumberHelpers.string_to_positive_integer(limit, 1),
+        NumberHelpers.string_to_positive_integer(offset, 0)
+      )
+
     render(conn, "index.json", images: images)
   end
 
@@ -51,12 +73,18 @@ defmodule PhotogWeb.ImageController do
   Returns all images taken in given year
   """
   def images_for_year(conn, %{"year" => year, "excerpt" => "true"}) do
-    images = String.to_integer(year) |> Api.list_images_for_year()
+    images = NumberHelpers.string_to_positive_integer(year, 1) |> Api.list_images_for_year()
     render(conn, "index_slideshow.json", images: images)
   end
 
   def images_for_year(conn, %{"year" => year, "limit" => limit, "offset" => offset}) do
-    images = String.to_integer(year) |> Api.list_images_for_year(limit, offset)
+    images =
+      Api.list_images_for_year(
+        NumberHelpers.string_to_positive_integer(year, 1),
+        NumberHelpers.string_to_positive_integer(limit, 1),
+        NumberHelpers.string_to_positive_integer(offset, 0)
+      )
+
     render(conn, "index.json", images: images)
   end
 
@@ -64,8 +92,8 @@ defmodule PhotogWeb.ImageController do
   Return count of all images taken in given year
   """
   def images_for_year_count(conn, %{"year" => year}) do
-    count = String.to_integer(year) |> Api.images_count_for_year!
-    
+    count = NumberHelpers.string_to_positive_integer(year, 1) |> Api.images_count_for_year!()
+
     conn
     |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
@@ -75,17 +103,34 @@ defmodule PhotogWeb.ImageController do
   Returns all images taken in given date
   """
 
-  def images_for_date(conn, %{"month" => month, "day" => day, "limit" => limit, "offset" => offset}) do
-    images = Api.list_images_for_date(String.to_integer(month), String.to_integer(day), limit, offset)
+  def images_for_date(conn, %{
+        "month" => month,
+        "day" => day,
+        "limit" => limit,
+        "offset" => offset
+      }) do
+    images =
+      Api.list_images_for_date(
+        NumberHelpers.string_to_positive_integer(month, 1),
+        NumberHelpers.string_to_positive_integer(day, 1),
+        NumberHelpers.string_to_positive_integer(limit, 1),
+        NumberHelpers.string_to_positive_integer(offset, 0)
+      )
+
     render(conn, "index.json", images: images)
   end
 
+  @spec images_for_date_count(Plug.Conn.t(), map()) :: Plug.Conn.t()
   @doc """
   Return count of all images taken in given year
   """
   def images_for_date_count(conn, %{"month" => month, "day" => day}) do
-    count = Api.images_count_for_date!(String.to_integer(month), String.to_integer(day))
-    
+    count =
+      Api.images_count_for_date!(
+        NumberHelpers.string_to_positive_integer(month, 1),
+        NumberHelpers.string_to_positive_integer(day, 1)
+      )
+
     conn
     |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
@@ -96,23 +141,23 @@ defmodule PhotogWeb.ImageController do
   """
   def count(conn, %{"favorites" => is_favorite_param}) do
     count = Api.images_favorite_count!(is_favorite_param == "true")
-    
+
     conn
     |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
   end
 
   def count(conn, %{"in_album" => "false"}) do
-    count = Api.images_not_in_album_count!
-    
+    count = Api.images_not_in_album_count!()
+
     conn
     |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
   end
 
   def count(conn, _params) do
-    count = Api.images_count!
-    
+    count = Api.images_count!()
+
     conn
     |> put_view(CommonWeb.ApiGenericView)
     |> render("data.json", data: count)
@@ -123,7 +168,7 @@ defmodule PhotogWeb.ImageController do
   """
   def search(conn, %{"q" => search_query}) do
     images = Api.list_images_for_query(search_query)
-    
+
     render(conn, "index.json", images: images)
   end
 
@@ -144,21 +189,18 @@ defmodule PhotogWeb.ImageController do
       String.split(albums, ",")
       |> Enum.reduce({[], []}, fn album_id, {albums_added, errors} ->
         case Api.create_album_image(%{"image_id" => image_id, "album_id" => album_id}) do
-          {:ok, %AlbumImage{} = album_image} -> { [album_image.album_id | albums_added], errors }
-          {:error, _changeset}                -> { albums_added, [ album_id | errors] }
-
+          {:ok, %AlbumImage{} = album_image} -> {[album_image.album_id | albums_added], errors}
+          {:error, _changeset} -> {albums_added, [album_id | errors]}
         end
       end)
 
     conn
     |> put_view(CommonWeb.ApiGenericView)
-    |> (&(
-      if Enum.empty?(errors) do
-        render(&1, "ok.json", message: albums_added)
-      else
-        render(&1, "mixed_response.json", message: albums_added, error: errors)
-      end
-    )).()
+    |> (&(if Enum.empty?(errors) do
+            render(&1, "ok.json", message: albums_added)
+          else
+            render(&1, "mixed_response.json", message: albums_added, error: errors)
+          end)).()
   end
 
   @doc """
@@ -170,21 +212,21 @@ defmodule PhotogWeb.ImageController do
       String.split(persons, ",")
       |> Enum.reduce({[], []}, fn person_id, {persons_added, errors} ->
         case Api.create_person_image(%{"image_id" => image_id, "person_id" => person_id}) do
-          {:ok, %PersonImage{} = person_image} -> { [person_image.person_id | persons_added], errors }
-          {:error, _changeset}                  -> { persons_added, [ person_id | errors] }
+          {:ok, %PersonImage{} = person_image} ->
+            {[person_image.person_id | persons_added], errors}
 
+          {:error, _changeset} ->
+            {persons_added, [person_id | errors]}
         end
       end)
 
     conn
     |> put_view(CommonWeb.ApiGenericView)
-    |> (&(
-      if Enum.empty?(errors) do
-        render(&1, "ok.json", message: persons_added)
-      else
-        render(&1, "mixed_response.json", message: persons_added, error: errors)
-      end
-    )).()
+    |> (&(if Enum.empty?(errors) do
+            render(&1, "ok.json", message: persons_added)
+          else
+            render(&1, "mixed_response.json", message: persons_added, error: errors)
+          end)).()
   end
 
   def update(conn, %{"id" => id, "image" => image_params}) do
@@ -199,6 +241,7 @@ defmodule PhotogWeb.ImageController do
 
   def delete(conn, %{"id" => id}) do
     image = Api.get_image!(id)
+
     with {:ok, %Image{}} <- Api.delete_image(image) do
       send_resp(conn, :no_content, "")
     end
