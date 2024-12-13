@@ -8,6 +8,8 @@ import {
     albumRelatedFields,
     sortImagesCallback,
     sortAlbumsCallback,
+    getApiPathForTodaysImages,
+    todaysImagesTitle,
 } from './routes-helpers';
 
 import ThumbnailList from './components/thumbnail-list.vue';
@@ -114,7 +116,7 @@ export default {
                     getItems: () =>
                         Promise.resolve([
                             {
-                                title: 'On This Day',
+                                title: todaysImagesTitle,
                                 route: { name: 'imagesForToday' },
                             },
                             {
@@ -199,10 +201,7 @@ export default {
             name: 'imagesForToday',
             component: ThumbnailList,
             props: route => {
-                const today = new Date();
-                const apiPath = `/images/date/${
-                    today.getMonth() + 1
-                }/${today.getDate()}`;
+                const apiPath = getApiPathForTodaysImages();
 
                 const props = {
                     useBigThumbnails: true,
@@ -210,12 +209,12 @@ export default {
                     apiItemsCountPath: `${apiPath}/count`,
                     enableBatchSelectImages: true,
                     isPaginated: true,
-                    pageTitle: `On This Day`,
+                    pageTitle: todaysImagesTitle,
                     showRouteFor: (item, _model) => {
                         return {
-                            name: 'imagesShow',
+                            name: 'todaysImagesShow',
                             params: {
-                                id: item.id,
+                                image_id: item.id,
                             },
                         };
                     },
@@ -696,6 +695,32 @@ export default {
                                 name: 'importImagesShow',
                                 params: {
                                     import_id: route.params.import_id,
+                                    image_id: item.id,
+                                },
+                            };
+                        },
+                    },
+                };
+            },
+        },
+        {
+            path: '/images/today/images/:image_id',
+            name: 'todaysImagesShow',
+            component: ImageDetail,
+            props: route => {
+                const apiPath = getApiPathForTodaysImages();
+
+                return {
+                    imageId: parseInt(route.params.image_id),
+                    parent: {
+                        id: route.params.album_id,
+                        name: todaysImagesTitle,
+                        parentRouteName: 'imagesForToday',
+                        imagesApiPath: apiPath,
+                        showRouteFor: item => {
+                            return {
+                                name: 'todaysImagesShow',
+                                params: {
                                     image_id: item.id,
                                 },
                             };

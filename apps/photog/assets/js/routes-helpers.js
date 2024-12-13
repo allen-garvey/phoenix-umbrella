@@ -17,7 +17,7 @@ export const albumRelatedFields = [
             ];
 
             return year.concat(
-                item.tags.map((tag) => ({
+                item.tags.map(tag => ({
                     name: tag.name,
                     to: {
                         name: 'tagsShow',
@@ -30,7 +30,7 @@ export const albumRelatedFields = [
     {
         name: 'persons',
         getItems(item, images) {
-            return item.persons.map((person) => ({
+            return item.persons.map(person => ({
                 name: person.name,
                 to: {
                     name: 'personsShow',
@@ -42,7 +42,7 @@ export const albumRelatedFields = [
 ];
 
 const itemsToRoutesList = (items, showRouteName) =>
-    items.map((item) => ({
+    items.map(item => ({
         name: item.name,
         to: {
             name: showRouteName,
@@ -112,3 +112,10 @@ export const sortAlbumsCallback = (itemsList, sortDirection, reorderMode) => {
         });
     }
 };
+
+export const getApiPathForTodaysImages = () => {
+    const today = new Date();
+    return `/images/date/${today.getMonth() + 1}/${today.getDate()}`;
+};
+
+export const todaysImagesTitle = 'On This Day';
