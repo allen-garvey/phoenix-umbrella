@@ -28,6 +28,15 @@ defmodule Photog.Shutterbug.File do
     |> Map.new()
   end
 
+  def add_prefix_to_file(directory_prefix_map, source_path) do
+    prefix = Map.get(directory_prefix_map, Path.dirname(source_path))
+    "#{prefix}_#{Path.basename(source_path)}"
+  end
+
+  def file_path_with_prefix(directory_prefix_map, source_path, dest_path) do
+    Path.join(dest_path, add_prefix_to_file(directory_prefix_map, source_path))
+  end
+
   def get_image_master_action_for(image_source_path, convert_to_webp)
       when is_boolean(convert_to_webp) do
     extension = Path.extname(image_source_path)

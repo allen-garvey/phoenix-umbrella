@@ -63,6 +63,7 @@ defmodule Mix.Tasks.Shutterbug do
       )
       when is_boolean(convert_to_webp) do
     image_files = get_image_files(source_directory_name)
+    directory_prefix_map = File.get_directory_prefix_map(image_files)
 
     # create directories for masters and thumbnails
     now = DateTime.utc_now()
@@ -89,16 +90,15 @@ defmodule Mix.Tasks.Shutterbug do
         for {image_source_path, index} <- Enum.with_index(image_files) do
           IO.puts("Importing image #{index + 1}/#{image_file_count} #{image_source_path}")
 
-          # get image filename
-          image_file = Path.basename(image_source_path)
-
           # create image master
-          image_master_path = Path.join(masters_path, image_file)
+          image_master_path =
+            File.file_path_with_prefix(directory_prefix_map, image_source_path, masters_path)
+
           master_name = create_image_master(image_source_path, image_master_path, convert_to_webp)
 
           # create thumbnails
           {thumbnail_name, mini_thumbnail_name} =
-            create_image_thumbnails(image_file, image_source_path, thumbnails_path)
+            create_image_thumbnails(directory_prefix_map, image_source_path, thumbnails_path)
 
           # get paths needed when creating image resource
           image_thumbnail_relative_path = Path.join(target_relative_path, thumbnail_name)
@@ -163,16 +163,17 @@ defmodule Mix.Tasks.Shutterbug do
   @doc """
   Creates image thumbnails given image thumbnail file name, image source directory and path to create thumbnails in
   """
-  def create_image_thumbnails(image_file, image_source_path, thumbnails_path) do
+  def create_image_thumbnails(directory_prefix_map, image_source_path, thumbnails_path) do
     thumbnail_name =
       create_thumbnail(
-        Path.extname(image_file) == ".svg",
-        image_file,
+        Path.extname(image_source_path) == ".svg",
+        directory_prefix_map,
         image_source_path,
         thumbnails_path
       )
 
-    mini_thumbnail_name = create_mini_thumbnail(image_file, image_source_path, thumbnails_path)
+    mini_thumbnail_name =
+      create_mini_thumbnail(directory_prefix_map, image_source_path, thumbnails_path)
 
     {thumbnail_name, mini_thumbnail_name}
   end
@@ -180,23 +181,31 @@ defmodule Mix.Tasks.Shutterbug do
   @doc """
   First argument is should_copy - if true just copies, otherwise resizes
   """
-  def create_thumbnail(true, image_file, image_source_path, thumbnails_path) do
-    image_thumbnail_path = Path.join(thumbnails_path, image_file)
+  def create_thumbnail(true, directory_prefix_map, image_source_path, thumbnails_path) do
+    image_thumbnail_path =
+      File.file_path_with_prefix(directory_prefix_map, image_source_path, thumbnails_path)
+
     File.safe_copy(image_source_path, image_thumbnail_path)
 
-    image_file
+    Path.basename(image_thumbnail_path)
   end
 
-  def create_thumbnail(false, image_file, image_source_path, thumbnails_path) do
-    thumbnail_name = Photog.Shutterbug.Image.thumbnail_name(image_file)
+  def create_thumbnail(false, directory_prefix_map, image_source_path, thumbnails_path) do
+    thumbnail_name =
+      File.add_prefix_to_file(directory_prefix_map, image_source_path)
+      |> Photog.Shutterbug.Image.thumbnail_name()
+
     image_thumbnail_path = Path.join(thumbnails_path, thumbnail_name)
     File.resize_image(image_source_path, image_thumbnail_path, 768)
 
     thumbnail_name
   end
 
-  def create_mini_thumbnail(image_file, image_source_path, thumbnails_path) do
-    mini_thumbnail_name = Photog.Shutterbug.Image.mini_thumbnail_name(image_file)
+  def create_mini_thumbnail(directory_prefix_map, image_source_path, thumbnails_path) do
+    mini_thumbnail_name =
+      File.add_prefix_to_file(directory_prefix_map, image_source_path)
+      |> Photog.Shutterbug.Image.mini_thumbnail_name()
+
     image_mini_thumbnail_path = Path.join(thumbnails_path, mini_thumbnail_name)
     File.resize_image(image_source_path, image_mini_thumbnail_path, 300)
 

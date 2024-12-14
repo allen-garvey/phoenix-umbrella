@@ -43,4 +43,18 @@ defmodule Photog.Shutterbug.FileTest do
     assert File.get_image_master_action_for("test/hello.heic", true) == :convert_to_webp_lossy
     assert File.get_image_master_action_for("test/hello.tiff", true) == :convert_to_webp_lossy
   end
+
+  test "add_prefix_to_file" do
+    directory_prefix_map = Map.new([{"something/hello", "045"}])
+
+    assert File.add_prefix_to_file(directory_prefix_map, "something/hello/test.png") ==
+             "045_test.png"
+  end
+
+  test "file_path_with_prefix" do
+    directory_prefix_map = Map.new([{"test", "01"}])
+
+    assert File.file_path_with_prefix(directory_prefix_map, "test/hello.jpg", "path/to/masters") ==
+             "path/to/masters/01_hello.jpg"
+  end
 end
