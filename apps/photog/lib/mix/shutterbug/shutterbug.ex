@@ -1,12 +1,16 @@
 defmodule Mix.Tasks.Shutterbug do
   use Mix.Task
 
+  alias Photog.Shutterbug.ImageThumbnailPlan
   alias Grenadier.Repo
   alias Common.MixHelpers.Error
   alias Photog.Shutterbug.FileValidator
   alias Common.MixHelpers.Command
   alias Photog.Image.Exif
   alias Photog.Shutterbug.File
+  alias Photog.Shutterbug.Planner
+  alias Photog.Shutterbug.ImageMasterPlan
+  alias Photog.Shutterbug.Convert
 
   @moduledoc """
   Given a directory of images, will copy image files to masters directory, create thumbnails, and add image resources to database
@@ -63,7 +67,7 @@ defmodule Mix.Tasks.Shutterbug do
       )
       when is_boolean(convert_to_webp) do
     image_files = get_image_files(source_directory_name)
-    directory_prefix_map = File.get_directory_prefix_map(image_files)
+    image_file_count = Enum.count(image_files)
 
     # create directories for masters and thumbnails
     now = DateTime.utc_now()
@@ -75,6 +79,21 @@ defmodule Mix.Tasks.Shutterbug do
         now
       )
 
+    image_plans =
+      Planner.make_plan_for_images(image_files, masters_path, thumbnails_path, convert_to_webp)
+
+    IO.puts("Converting images")
+
+    for {image_plan, index} <- Enum.with_index(image_plans) do
+      IO.puts(
+        "Converting image #{index + 1}/#{image_file_count} #{image_plan.master_plan.source_path}"
+      )
+
+      create_image_master(image_plan.master_plan)
+      create_thumbnail(image_plan.thumbnail_plan)
+      create_thumbnail(image_plan.mini_thumbnail_plan)
+    end
+
     # disable logging of database queries
     Logger.configure(level: :error)
     # start app so repo is available
@@ -82,34 +101,32 @@ defmodule Mix.Tasks.Shutterbug do
 
     Repo.transaction(
       fn ->
-        # create import
         import_id = Photog.Shutterbug.Import.create_import()
-        # get count for progress countdown
-        image_file_count = Enum.count(image_files)
 
-        for {image_source_path, index} <- Enum.with_index(image_files) do
-          IO.puts("Importing image #{index + 1}/#{image_file_count} #{image_source_path}")
+        for {image_plan, index} <- Enum.with_index(image_plans) do
+          IO.puts(
+            "Importing image #{index + 1}/#{image_file_count} #{image_plan.master_plan.source_path}"
+          )
 
-          # create image master
-          image_master_path =
-            File.file_path_with_prefix(directory_prefix_map, image_source_path, masters_path)
+          image_master_relative_path =
+            Path.join(
+              target_relative_path,
+              Path.basename(image_plan.master_plan.destination_path)
+            )
 
-          master_name = create_image_master(image_source_path, image_master_path, convert_to_webp)
-
-          # create thumbnails
-          {thumbnail_name, mini_thumbnail_name} =
-            create_image_thumbnails(directory_prefix_map, image_source_path, thumbnails_path)
-
-          # get paths needed when creating image resource
-          image_thumbnail_relative_path = Path.join(target_relative_path, thumbnail_name)
+          image_thumbnail_relative_path =
+            Path.join(
+              target_relative_path,
+              Path.basename(image_plan.thumbnail_plan.destination_path)
+            )
 
           image_mini_thumbnail_relative_path =
-            Path.join(target_relative_path, mini_thumbnail_name)
+            Path.join(
+              target_relative_path,
+              Path.basename(image_plan.mini_thumbnail_plan.destination_path)
+            )
 
-          image_master_relative_path = Path.join(target_relative_path, master_name)
-
-          # get exif data for creation_time
-          {exif_map, creation_datetime} = get_image_exif(image_source_path, now)
+          {exif_map, creation_datetime} = get_image_exif(image_plan.master_plan.source_path, now)
 
           image =
             Photog.Shutterbug.Image.create_image!(%{
@@ -143,73 +160,31 @@ defmodule Mix.Tasks.Shutterbug do
     image_files
   end
 
-  @doc """
-  Either converts png image to webp lossless, or for other image types copies to masters folder
-  """
-  def create_image_master(image_source_path, image_master_path, convert_to_webp)
-      when is_boolean(convert_to_webp) do
-    case File.get_image_master_action_for(image_source_path, convert_to_webp) do
+  defp create_image_master(%ImageMasterPlan{} = image_plan) do
+    case image_plan.action do
       :safe_copy ->
-        File.safe_copy(image_source_path, image_master_path)
+        File.safe_copy(image_plan.source_path, image_plan.destination_path)
 
       :convert_to_webp_lossy ->
-        File.convert_to_webp_lossy(image_source_path, image_master_path)
+        Convert.to_webp_lossy(image_plan.source_path, image_plan.destination_path)
 
       :convert_to_webp_lossless ->
-        File.convert_to_webp_lossless(image_source_path, image_master_path)
+        Convert.to_webp_lossless(image_plan.source_path, image_plan.destination_path)
     end
   end
 
-  @doc """
-  Creates image thumbnails given image thumbnail file name, image source directory and path to create thumbnails in
-  """
-  def create_image_thumbnails(directory_prefix_map, image_source_path, thumbnails_path) do
-    thumbnail_name =
-      create_thumbnail(
-        Path.extname(image_source_path) == ".svg",
-        directory_prefix_map,
-        image_source_path,
-        thumbnails_path
-      )
+  defp create_thumbnail(%ImageThumbnailPlan{} = thumbnail_plan) do
+    case thumbnail_plan.action do
+      :safe_copy ->
+        File.safe_copy(thumbnail_plan.source_path, thumbnail_plan.destination_path)
 
-    mini_thumbnail_name =
-      create_mini_thumbnail(directory_prefix_map, image_source_path, thumbnails_path)
-
-    {thumbnail_name, mini_thumbnail_name}
-  end
-
-  @doc """
-  First argument is should_copy - if true just copies, otherwise resizes
-  """
-  def create_thumbnail(true, directory_prefix_map, image_source_path, thumbnails_path) do
-    image_thumbnail_path =
-      File.file_path_with_prefix(directory_prefix_map, image_source_path, thumbnails_path)
-
-    File.safe_copy(image_source_path, image_thumbnail_path)
-
-    Path.basename(image_thumbnail_path)
-  end
-
-  def create_thumbnail(false, directory_prefix_map, image_source_path, thumbnails_path) do
-    thumbnail_name =
-      File.add_prefix_to_file(directory_prefix_map, image_source_path)
-      |> Photog.Shutterbug.Image.thumbnail_name()
-
-    image_thumbnail_path = Path.join(thumbnails_path, thumbnail_name)
-    File.resize_image(image_source_path, image_thumbnail_path, 768)
-
-    thumbnail_name
-  end
-
-  def create_mini_thumbnail(directory_prefix_map, image_source_path, thumbnails_path) do
-    mini_thumbnail_name =
-      File.add_prefix_to_file(directory_prefix_map, image_source_path)
-      |> Photog.Shutterbug.Image.mini_thumbnail_name()
-
-    image_mini_thumbnail_path = Path.join(thumbnails_path, mini_thumbnail_name)
-    File.resize_image(image_source_path, image_mini_thumbnail_path, 300)
-
-    mini_thumbnail_name
+      _ ->
+        Convert.resize_image(
+          thumbnail_plan.source_path,
+          thumbnail_plan.destination_path,
+          thumbnail_plan.size
+        )
+    end
   end
 
   def get_image_exif(image_source_path, now) do

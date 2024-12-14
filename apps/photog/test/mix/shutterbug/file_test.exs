@@ -53,24 +53,6 @@ defmodule Photog.Shutterbug.FileTest do
            }
   end
 
-  test "get_image_master_action_for() without webp option" do
-    assert File.get_image_master_action_for("test/hello.jpg", false) == :safe_copy
-    assert File.get_image_master_action_for("test/hello.svg", false) == :safe_copy
-    assert File.get_image_master_action_for("test/hello.png", false) == :convert_to_webp_lossless
-    assert File.get_image_master_action_for("test/hello.webp", false) == :safe_copy
-    assert File.get_image_master_action_for("test/hello.heic", false) == :convert_to_webp_lossy
-    assert File.get_image_master_action_for("test/hello.tiff", false) == :safe_copy
-  end
-
-  test "get_image_master_action_for() using webp option" do
-    assert File.get_image_master_action_for("test/hello.jpg", true) == :convert_to_webp_lossy
-    assert File.get_image_master_action_for("test/hello.svg", true) == :safe_copy
-    assert File.get_image_master_action_for("test/hello.png", true) == :convert_to_webp_lossless
-    assert File.get_image_master_action_for("test/hello.webp", true) == :safe_copy
-    assert File.get_image_master_action_for("test/hello.heic", true) == :convert_to_webp_lossy
-    assert File.get_image_master_action_for("test/hello.tiff", true) == :convert_to_webp_lossy
-  end
-
   test "add_prefix_to_file" do
     directory_prefix_map = Map.new([{"something/hello", "045"}])
 
