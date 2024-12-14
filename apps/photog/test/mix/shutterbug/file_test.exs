@@ -8,12 +8,13 @@ defmodule Photog.Shutterbug.FileTest do
       ["b/test.jpg", "something.webp", "a/test.jpg", "HELLO/aoeu/test.jpg", "hello/aoeu/test.jpg"]
       |> File.get_directory_prefix_map()
 
-    assert Enum.count(directory_prefix_map) == 5
-    assert Map.get(directory_prefix_map, ".") == "1"
-    assert Map.get(directory_prefix_map, "HELLO/aoeu") == "2"
-    assert Map.get(directory_prefix_map, "a") == "3"
-    assert Map.get(directory_prefix_map, "b") == "4"
-    assert Map.get(directory_prefix_map, "hello/aoeu") == "5"
+    assert directory_prefix_map == %{
+             "." => "1",
+             "HELLO/aoeu" => "2",
+             "a" => "3",
+             "b" => "4",
+             "hello/aoeu" => "5"
+           }
   end
 
   test "get_directory_prefix_map with double digits" do
@@ -22,8 +23,34 @@ defmodule Photog.Shutterbug.FileTest do
       |> Enum.map(fn digit -> "#{to_string([digit])}/test.webp" end)
       |> File.get_directory_prefix_map()
 
-    assert Enum.count(directory_prefix_map) == 26
-    assert Map.get(directory_prefix_map, "b") == "02"
+    assert directory_prefix_map == %{
+             "a" => "01",
+             "b" => "02",
+             "c" => "03",
+             "d" => "04",
+             "e" => "05",
+             "f" => "06",
+             "g" => "07",
+             "h" => "08",
+             "i" => "09",
+             "j" => "10",
+             "k" => "11",
+             "l" => "12",
+             "m" => "13",
+             "n" => "14",
+             "o" => "15",
+             "p" => "16",
+             "q" => "17",
+             "r" => "18",
+             "s" => "19",
+             "t" => "20",
+             "u" => "21",
+             "v" => "22",
+             "w" => "23",
+             "x" => "24",
+             "y" => "25",
+             "z" => "26"
+           }
   end
 
   test "get_image_master_action_for() without webp option" do
