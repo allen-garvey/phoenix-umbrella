@@ -7,10 +7,10 @@ config :photog, PhotogWeb.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
 
 # Configure your database
-# config :photog, Photog.Repo,
+config :photog, ecto_repos: [Grenadier.Repo]
 #   adapter: Ecto.Adapters.Postgres,
 #   username: "postgres",
 #   password: "postgres",

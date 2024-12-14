@@ -7,7 +7,7 @@ config :blockquote, BlockquoteWeb.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
 
 # Configure your database
 # config :blockquote, Blockquote.Repo,
