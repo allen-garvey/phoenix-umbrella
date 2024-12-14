@@ -92,7 +92,7 @@ defmodule Mix.Tasks.Shutterbug do
       create_thumbnail(image_plan.mini_thumbnail_plan)
     end
 
-    # disable logging of database queries
+    # set logging of database queries
     Logger.configure(level: :error)
     # start app so repo is available
     Mix.Task.run("app.start", [])
