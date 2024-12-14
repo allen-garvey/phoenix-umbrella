@@ -1,5 +1,6 @@
 defmodule Photog.Shutterbug.File do
   alias Common.MixHelpers.Error
+  alias Photog.Shutterbug.Directory
 
   @doc """
   Returns map of file directories with unique keys to use
@@ -25,6 +26,25 @@ defmodule Photog.Shutterbug.File do
       {key, String.pad_leading("#{index + 1}", pad_amount, "0")}
     end)
     |> Map.new()
+  end
+
+  def get_image_master_action_for(image_source_path, convert_to_webp)
+      when is_boolean(convert_to_webp) do
+    extension = Path.extname(image_source_path)
+
+    cond do
+      Enum.member?([".webp", ".svg"], extension) ->
+        :safe_copy
+
+      extension == ".png" ->
+        :convert_to_webp_lossless
+
+      convert_to_webp || extension == ".heic" ->
+        :convert_to_webp_lossy
+
+      true ->
+        :safe_copy
+    end
   end
 
   @doc """
@@ -154,5 +174,31 @@ defmodule Photog.Shutterbug.File do
           :error_creating_thumbnail
         )
     end
+  end
+
+  @doc """
+  Create directories for masters and thumbnails
+  """
+  def create_directories_for_masters_and_thumbnails(
+        masters_target_directory_name,
+        thumbnails_target_directory_name,
+        now
+      ) do
+    target_relative_path = Directory.import_relative_path(now)
+    masters_path = Directory.masters_path(masters_target_directory_name, now)
+    thumbnails_path = Directory.thumbnails_path(thumbnails_target_directory_name, now)
+
+    if File.exists?(masters_path) do
+      Error.exit_with_error("#{masters_path} already exists", :masters_directory_exists)
+    end
+
+    if File.exists?(thumbnails_path) do
+      Error.exit_with_error("#{thumbnails_path} already exists", :thumbnails_directory_exists)
+    end
+
+    File.mkdir_p!(masters_path)
+    File.mkdir_p!(thumbnails_path)
+
+    {target_relative_path, masters_path, thumbnails_path}
   end
 end
