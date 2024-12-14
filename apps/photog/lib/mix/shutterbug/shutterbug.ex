@@ -165,10 +165,16 @@ defmodule Mix.Tasks.Shutterbug do
   """
   def create_image_thumbnails(image_file, image_source_path, thumbnails_path) do
     thumbnail_name =
-      Regex.match?(~r/\.svg$/, image_file)
-      |> create_thumbnail(image_file, image_source_path, thumbnails_path)
+      create_thumbnail(
+        Path.extname(image_file) == ".svg",
+        image_file,
+        image_source_path,
+        thumbnails_path
+      )
 
-    {thumbnail_name, create_mini_thumbnail(image_file, image_source_path, thumbnails_path)}
+    mini_thumbnail_name = create_mini_thumbnail(image_file, image_source_path, thumbnails_path)
+
+    {thumbnail_name, mini_thumbnail_name}
   end
 
   @doc """
