@@ -41,6 +41,31 @@ export const albumRelatedFields = [
     },
 ];
 
+export const imageListRelatedFields = [
+    {
+        name: 'albums',
+        getItems(model, itemsModel) {
+            const albumsMap = new Map(
+                model.flatMap(image =>
+                    image.albums.map(album => [album.id, album.name])
+                )
+            );
+
+            return Array.from(albumsMap)
+                .sort(([aId, aName], [bId, bName]) =>
+                    aName.localeCompare(bName)
+                )
+                .map(([id, name]) => ({
+                    name,
+                    to: {
+                        name: 'albumsShow',
+                        params: { id },
+                    },
+                }));
+        },
+    },
+];
+
 const itemsToRoutesList = (items, showRouteName) =>
     items.map(item => ({
         name: item.name,

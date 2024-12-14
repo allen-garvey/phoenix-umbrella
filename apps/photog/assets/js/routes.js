@@ -6,6 +6,7 @@ import {
 } from './router-helpers.js';
 import {
     albumRelatedFields,
+    imageListRelatedFields,
     sortImagesCallback,
     sortAlbumsCallback,
     getApiPathForTodaysImages,
@@ -210,6 +211,7 @@ export default {
                     enableBatchSelectImages: true,
                     isPaginated: true,
                     pageTitle: todaysImagesTitle,
+                    relatedFields: imageListRelatedFields,
                     showRouteFor: (item, _model) => {
                         return {
                             name: 'todaysImagesShow',
