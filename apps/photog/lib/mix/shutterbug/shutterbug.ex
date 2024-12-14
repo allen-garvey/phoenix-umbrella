@@ -82,8 +82,6 @@ defmodule Mix.Tasks.Shutterbug do
     image_plans =
       Planner.make_plan_for_images(image_files, masters_path, thumbnails_path, convert_to_webp)
 
-    IO.puts("Converting images")
-
     for {image_plan, index} <- Enum.with_index(image_plans) do
       IO.puts(
         "Converting image #{index + 1}/#{image_file_count} #{image_plan.master_plan.source_path}"
