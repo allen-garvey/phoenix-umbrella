@@ -22,7 +22,6 @@
             </a>
         </div>
         <div :class="$style.imageShowLinkContainer">
-            <a :href="masterUrlFor(image)" target="_blank" rel="noreferrer">View full-size</a>
             <a :href="amazonUrl" v-if="amazonUrl" target="_blank" rel="noreferrer">View in Amazon Photos</a>
         </div>
         <div>
