@@ -19,7 +19,7 @@ form.inline {
 
 @media (prefers-color-scheme: dark) {
     .form-control, .form-control:focus, .form-group select.form-control {
-        background-color: #333;
+        background-color: variables.$background-color-dark;
     }
 }
 

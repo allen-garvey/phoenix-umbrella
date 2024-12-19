@@ -1,6 +1,5 @@
-/*
-* Table styles
-*/
+@use './variables';
+
 table{
 	border-spacing: 0;
 	border-collapse: collapse;
@@ -10,7 +9,7 @@ thead{
 }
 @media (prefers-color-scheme: dark) {
 	thead{
-		background-color: #2a2a2a;
+		background-color: variables.$background-color-dark;
 	}
 }
 //for CSS row numbers in first td of row

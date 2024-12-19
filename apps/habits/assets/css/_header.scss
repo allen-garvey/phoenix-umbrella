@@ -54,7 +54,7 @@ nav {
 
 @media (prefers-color-scheme: dark) {
     .jumbotron{
-		background-color: #333;
+		background-color: variables.$background-color-dark;
 	}
 
 	h1.main_title{
