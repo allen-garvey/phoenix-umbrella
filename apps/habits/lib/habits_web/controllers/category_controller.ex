@@ -60,4 +60,11 @@ defmodule HabitsWeb.CategoryController do
     |> put_flash(:info, "Category deleted successfully.")
     |> redirect(to: Routes.category_path(conn, :index))
   end
+
+  def activities_list(conn, %{"id" => id}) do
+    category = Admin.get_category!(id)
+    activities = Admin.activites_for_category(id)
+
+    render(conn, "activities_list.html", category: category, activities: activities)
+  end
 end

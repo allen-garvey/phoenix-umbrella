@@ -7,6 +7,7 @@ defmodule Habits.Admin do
   alias Grenadier.Repo
 
   alias Habits.Admin.Category
+  alias Habits.Admin.Activity
 
   @doc """
   Returns the list of categories.
@@ -22,7 +23,7 @@ defmodule Habits.Admin do
       category in Category,
       order_by: category.name
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -105,8 +106,15 @@ defmodule Habits.Admin do
   def change_category(%Category{} = category, attrs \\ %{}) do
     Category.changeset(category, attrs)
   end
-  
-  alias Habits.Admin.Activity
+
+  def activites_for_category(category_id) do
+    from(
+      activity in Activity,
+      where: activity.category_id == ^category_id,
+      order_by: [desc: :date, desc: :id]
+    )
+    |> Repo.all()
+  end
 
   @doc """
   Gets a single category id or nil.
@@ -115,11 +123,12 @@ defmodule Habits.Admin do
   and finds the most popular category id.
   """
   def get_recent_popular_category_id() do
-    activities_query = from(
-      Activity,
-      order_by: [desc: :inserted_at, desc: :id],
-      limit: 10
-    )
+    activities_query =
+      from(
+        Activity,
+        order_by: [desc: :inserted_at, desc: :id],
+        limit: 10
+      )
 
     from(
       activity in subquery(activities_query),
@@ -128,7 +137,7 @@ defmodule Habits.Admin do
       select: activity.category_id,
       limit: 1
     )
-    |> Repo.one
+    |> Repo.one()
   end
 
   @doc """
@@ -147,7 +156,7 @@ defmodule Habits.Admin do
       preload: [category: category],
       order_by: [desc: activity.id]
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -171,7 +180,7 @@ defmodule Habits.Admin do
       preload: [category: category],
       where: activity.id == ^id
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   @doc """

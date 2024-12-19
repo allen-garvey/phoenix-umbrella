@@ -1,0 +1,22 @@
+<h1><%= link @category.name, to: Routes.category_path(@conn, :show, @category) %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th>Description</th>
+      <th class="activity-index-date-heading">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for activity <- @activities do %>
+    <tr>
+      <td></td>
+      <td class={HabitsWeb.CategoryView.color_style(@category)}><%= activity.title %></td>
+      <td><%= activity.description %></td>
+      <td><%= activity.date %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
