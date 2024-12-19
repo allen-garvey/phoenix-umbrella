@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const FileManagerPlugin = require('filemanager-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -141,52 +140,6 @@ module.exports = {
             __VUE_OPTIONS_API__: true,
             __VUE_PROD_DEVTOOLS__: false,
             __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
-        }),
-        new FileManagerPlugin({
-            events: {
-                onEnd: {
-                    copy: [
-                        {
-                            source: path.join(
-                                __dirname,
-                                '..',
-                                'apps',
-                                'assets',
-                                'image-editor.js'
-                            ),
-                            destination: path.join(
-                                __dirname,
-                                '..',
-                                'apps',
-                                'photog',
-                                'priv',
-                                'static',
-                                'assets',
-                                'image-editor.js'
-                            ),
-                        },
-                        {
-                            source: path.join(
-                                __dirname,
-                                '..',
-                                'apps',
-                                'assets',
-                                'photog-editor-worker.js'
-                            ),
-                            destination: path.join(
-                                __dirname,
-                                '..',
-                                'apps',
-                                'photog',
-                                'priv',
-                                'static',
-                                'assets',
-                                'photog-editor-worker.js'
-                            ),
-                        },
-                    ],
-                },
-            },
         }),
     ],
 };
