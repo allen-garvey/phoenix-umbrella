@@ -8,6 +8,11 @@ table{
 thead{
 	background-color: #eee;
 }
+@media (prefers-color-scheme: dark) {
+	thead{
+		background-color: #2a2a2a;
+	}
+}
 //for CSS row numbers in first td of row
 tbody{
 	counter-reset: rowNumber;
