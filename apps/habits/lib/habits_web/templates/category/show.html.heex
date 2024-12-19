@@ -1,16 +1,10 @@
-<h1>Show Category</h1>
+<h1><%= @category.name %></h1>
 <div class="show-button-group">
     <%= link "Edit", to: Routes.category_path(@conn, :edit, @category), class: "btn btn-primary" %>
     <%= CommonWeb.FormView.delete_button_with_form(@conn, Routes.category_path(@conn, :delete, @category), class: "btn btn-danger") %>
 </div>
 
 <ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @category.name %>
-  </li>
-
   <li>
     <strong>Color:</strong>
     <span class={color_style(@category)}><%= @category.color %></span>
