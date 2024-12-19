@@ -7,11 +7,6 @@ table{
 thead{
 	background-color: #eee;
 }
-@media (prefers-color-scheme: dark) {
-	thead{
-		background-color: variables.$background-color-dark;
-	}
-}
 //for CSS row numbers in first td of row
 tbody{
 	counter-reset: rowNumber;
@@ -34,4 +29,14 @@ th{
 
 td a{
 	color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+	thead{
+		background-color: variables.$background-color-dark;
+	}
+
+	td a {
+		color: #fff;
+	}
 }
