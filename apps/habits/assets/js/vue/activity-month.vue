@@ -46,7 +46,7 @@
                 </a>
             </div>
             <div :class="$style.selectedActivityContent">
-                <div>{{ categoriesMap.get(selectedActivity.category_id).name }}</div>
+                <div><a :href="`/categories/${selectedActivity.category_id}`" target="_blank">{{ categoriesMap.get(selectedActivity.category_id).name }}</a></div>
                 <div>{{ selectedActivity.description }}</div>
             </div>
         </div>
