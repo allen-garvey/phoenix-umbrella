@@ -6,7 +6,7 @@ defmodule HabitsWeb.ActivityController do
 
   def related_fields() do
     [
-      categories: Admin.list_categories() |> HabitsWeb.CategoryView.map_for_form,
+      categories: Admin.list_categories() |> HabitsWeb.CategoryView.map_for_form()
     ]
   end
 
@@ -17,25 +17,33 @@ defmodule HabitsWeb.ActivityController do
 
   def new(conn, %{"duplicate" => id}) do
     activity = Admin.get_activity!(id)
-    
+
     Admin.change_activity(%Activity{
       category_id: activity.category_id,
       title: activity.title,
       description: activity.description,
-      date: Common.ModelHelpers.Date.today(),
+      date: Common.ModelHelpers.Date.today()
+    })
+    |> new_route(conn)
+  end
+
+  def new(conn, %{"category" => category_id}) do
+    Admin.change_activity(%Activity{
+      category_id: category_id
     })
     |> new_route(conn)
   end
 
   def new(conn, params) do
-    date = case Date.from_iso8601(params["date"] || "") do
-      {:ok, date} -> date
-      {:error, _} -> Common.ModelHelpers.Date.today()
-    end
+    date =
+      case Date.from_iso8601(params["date"] || "") do
+        {:ok, date} -> date
+        {:error, _} -> Common.ModelHelpers.Date.today()
+      end
 
     Admin.change_activity(%Activity{
       category_id: Admin.get_recent_popular_category_id(),
-      date: date,
+      date: date
     })
     |> new_route(conn)
   end
@@ -45,11 +53,13 @@ defmodule HabitsWeb.ActivityController do
   end
 
   def create_succeeded(conn, activity, "true") do
-    changeset = Admin.change_activity(%Activity{ 
-      category_id: activity.category_id,
-      date: activity.date,
-      title: activity.title, 
-    })
+    changeset =
+      Admin.change_activity(%Activity{
+        category_id: activity.category_id,
+        date: activity.date,
+        title: activity.title
+      })
+
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 

@@ -2,6 +2,7 @@
 <div class="show-button-group">
     <%= link "Edit", to: Routes.category_path(@conn, :edit, @category), class: "btn btn-primary" %>
     <%= CommonWeb.FormView.delete_button_with_form(@conn, Routes.category_path(@conn, :delete, @category), class: "btn btn-danger") %>
+    <%= link "Add Activity", to: Routes.activity_path(@conn, :new, category: @category.id), class: "btn btn-success" %>
 </div>
 
 <ul>
