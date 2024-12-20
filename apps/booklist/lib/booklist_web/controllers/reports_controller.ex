@@ -4,10 +4,7 @@ defmodule BooklistWeb.ReportsController do
   alias Booklist.Reports
 
   def report_for_year(conn, year, current_year) when is_integer(year) do
-    ratings_task = Task.async(fn -> Reports.get_ratings(year) end)
-    genres_task = Task.async(fn -> Reports.get_genres() end)
-
-    ratings = Task.await(ratings_task)
+    ratings = Reports.get_ratings(year)
     ratings_count = Enum.count(ratings)
 
     average_rating =
@@ -28,7 +25,7 @@ defmodule BooklistWeb.ReportsController do
       |> Reports.calculate_percent_of_ratings(ratings_count)
 
     genres_count =
-      Task.await(genres_task) |> Reports.calculate_genres_count(ratings, ratings_count)
+      Reports.get_genres() |> Reports.calculate_genres_count(ratings, ratings_count)
 
     render(conn, "show.html",
       year: year,
