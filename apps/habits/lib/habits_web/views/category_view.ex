@@ -47,11 +47,4 @@ defmodule HabitsWeb.CategoryView do
       _ -> color_style(category)
     end
   end
-
-  def streak_item_text(count) do
-    case count do
-      0 -> ""
-      _ -> count
-    end
-  end
 end

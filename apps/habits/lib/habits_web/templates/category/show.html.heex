@@ -35,7 +35,6 @@
         <td><%= Enum.at(week, 0) |> elem(0) |> Common.DateHelpers.us_formatted_date() %></td>
         <%= for {_date, count} <- week do %>
           <td class={streak_item_style(@category, count)}>
-            <div class="activity-streak-text"><%= streak_item_text(count) %></div>
           </td>
         <% end %>
       </tr>

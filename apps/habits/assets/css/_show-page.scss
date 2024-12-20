@@ -28,10 +28,6 @@
     }
 }
 
-.activity-streak-text {
-    opacity: 0.3;
-}
-
 @media (prefers-color-scheme: dark) {
     .activity-streak-table {
         background-color: variables.$background-color-dark;
