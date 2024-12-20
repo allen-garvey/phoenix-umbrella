@@ -1,6 +1,39 @@
+@use './variables';
+
 .show-button-group {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
     margin-bottom: 1em;
+}
+
+.activity-streak-table {
+    tbody tr td:first-child::before {
+        content: none;
+    }
+
+    td, th {
+        height: 2em;
+        width: 2em;
+        border: 1px solid #000;
+        box-sizing: border-box;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.1em;
+    }
+
+    td:first-of-type, th:first-of-type {
+        width: 8em;
+    }
+}
+
+.activity-streak-text {
+    opacity: 0.3;
+}
+
+@media (prefers-color-scheme: dark) {
+    .activity-streak-table {
+        background-color: variables.$background-color-dark;
+    }
 }

@@ -116,6 +116,17 @@ defmodule Habits.Admin do
     |> Repo.all()
   end
 
+  def activity_streak_for_category(category_id, start_date) do
+    from(
+      activity in Activity,
+      where: activity.category_id == ^category_id and activity.date >= ^start_date,
+      group_by: [activity.date],
+      order_by: [activity.date],
+      select: %{count: count(activity.id), date: activity.date}
+    )
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single category id or nil.
 

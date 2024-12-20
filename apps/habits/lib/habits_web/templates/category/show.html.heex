@@ -13,3 +13,32 @@
 </ul>
 
 <h3><%= link "Activities", to: Routes.category_path(@conn, :activities_list, @category) %></h3>
+
+<h3>Streaks</h3>
+
+<table class="activity-streak-table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>M</th>
+      <th>T</th>
+      <th>W</th>
+      <th>R</th>
+      <th>F</th>
+      <th>S</th>
+      <th>U</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for week <- @activity_streak do %>
+      <tr>
+        <td><%= Enum.at(week, 0) |> elem(0) |> Common.DateHelpers.us_formatted_date() %></td>
+        <%= for {_date, count} <- week do %>
+          <td class={streak_item_style(@category, count)}>
+            <div class="activity-streak-text"><%= streak_item_text(count) %></div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

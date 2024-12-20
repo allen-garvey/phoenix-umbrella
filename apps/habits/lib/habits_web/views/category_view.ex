@@ -24,7 +24,7 @@ defmodule HabitsWeb.CategoryView do
       "salmon",
       "sandy",
       "sky",
-      "yellow",
+      "yellow"
     ]
   end
 
@@ -38,6 +38,20 @@ defmodule HabitsWeb.CategoryView do
     case Enum.find_value(colors(), false, fn color -> color == category.color end) do
       true -> "#{prefix}#{category.color}"
       false -> ""
+    end
+  end
+
+  def streak_item_style(%Category{} = category, count) do
+    case count do
+      0 -> ""
+      _ -> color_style(category)
+    end
+  end
+
+  def streak_item_text(count) do
+    case count do
+      0 -> ""
+      _ -> count
     end
   end
 end
