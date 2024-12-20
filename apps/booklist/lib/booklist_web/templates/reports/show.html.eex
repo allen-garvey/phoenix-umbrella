@@ -1,8 +1,8 @@
 <div class="spread_content">
 	<%= link "Previous year", to: reports_for_year_path(@conn, @year - 1) %>
-	<%= 
+	<%=
 		if @should_show_next_year == true do
-			link "Next year", to: reports_for_year_path(@conn, @year + 1) 
+			link "Next year", to: reports_for_year_path(@conn, @year + 1)
 		end
 	%>
 </div>
@@ -55,7 +55,24 @@
 
 <section class="reporting_books_by_week">
 	<h2>Books Read Per Week</h2>
-	<div class="books_per_week_chart" id="books_per_week_chart"></div>
+	<table class="reporting_books_by_week_table">
+		<tbody>
+			<%= for count <- @ratings_count_by_week_max..1//-1 do %>
+				<tr>
+					<th><%= count %></th>
+					<%= for week <- @ratings_count_by_week do %>
+						<td class="<%= ratings_by_week_chart_item_class(week.count, count) %>"></td>
+					<% end %>
+				</tr>
+			<% end %>
+		</tbody>
+		<tfoot>
+			<th>Week number</th>
+			<%= for week <- @ratings_count_by_week do %>
+				<td><%= week.week_number %></td>
+			<% end %>
+		</tfoot>
+	</table>
 </section>
 
 <section>
@@ -71,7 +88,3 @@
 		<% end %>
 	</ol>
 </section>
-
-<script type="text/javascript">
-window.BOOKLIST_CHART_DATA = <%= raw(ratings_by_week_to_json(@ratings_count_by_week)) %>;
-</script>

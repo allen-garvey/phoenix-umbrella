@@ -18,12 +18,10 @@ import css from '../css/app.scss';
 
 import { initializeDeleteModals } from './delete-modals.js';
 import { initializeQRCodeButtons } from './qr-code-modal.js';
-import { initializeBooksPerWeekChart } from './reports/books-per-week-chart';
 import { initializeYesterdayButton } from 'umbrella-common-js/date-input.js';
 import { initializeTitleInputSplit } from './forms.js';
 
 initializeDeleteModals();
 initializeQRCodeButtons();
-initializeBooksPerWeekChart();
 initializeYesterdayButton();
 initializeTitleInputSplit();

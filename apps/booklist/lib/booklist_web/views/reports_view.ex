@@ -16,13 +16,11 @@ defmodule BooklistWeb.ReportsView do
     Routes.reports_path(conn, :years_show, year)
   end
 
-  @doc """
-  Returns database results as json string
-  """
-  def ratings_by_week_to_json(results) do
-    results
-      |> Enum.map(fn result -> [Integer.to_string(result[:week_number]), result[:count]] end)
-      |> Jason.encode!
+  def ratings_by_week_chart_item_class(rating_count, current_count)
+      when is_integer(rating_count) and is_integer(current_count) do
+    case rating_count >= current_count do
+      true -> "count-filled"
+      false -> ""
+    end
   end
-
 end

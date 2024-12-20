@@ -31,6 +31,35 @@
 	margin: 1.5em 0 1em;
 }
 
+.reporting_books_by_week_table {
+	border-collapse: collapse;
+	font-size: 0.75rem;
+	text-align: center;
+	
+	th, td {
+		border: 1px solid #ccc;
+	}
+
+	tbody td {
+		width: 1.25rem;
+		height: 1.25rem;
+	}
+
+	.count-filled {
+		background-color: #049704;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+    .reporting_books_by_week_table  {
+        background-color: #404040;
+
+		th, td {
+			border-color: #575757;
+		}
+    }
+}
+
 .reporting_top_rated_books_list{
 	list-style: none;
 	counter-reset: item;
