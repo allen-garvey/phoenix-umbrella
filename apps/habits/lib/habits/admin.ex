@@ -107,7 +107,7 @@ defmodule Habits.Admin do
     Category.changeset(category, attrs)
   end
 
-  def activites_for_category(category_id) do
+  def activities_for_category(category_id) do
     from(
       activity in Activity,
       where: activity.category_id == ^category_id,
