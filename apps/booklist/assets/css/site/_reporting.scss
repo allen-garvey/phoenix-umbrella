@@ -37,7 +37,7 @@
 	text-align: center;
 	
 	th, td {
-		border: 1px solid #ccc;
+		border: 1px solid rgba(204,204,204, 0.55);
 	}
 
 	tbody td {
@@ -55,7 +55,7 @@
         background-color: #404040;
 
 		th, td {
-			border-color: #575757;
+			border-color: rgba(87,87,87, 0.55);
 		}
     }
 }
