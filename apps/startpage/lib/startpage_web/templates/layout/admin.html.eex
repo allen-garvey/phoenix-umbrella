@@ -7,12 +7,6 @@
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/assets/admin.css") %>"/>
   </head>
   <body>
-    <%# <header>
-      <nav role="navigation">
-        <ul>
-        </ul>
-      </nav>
-    </header> %>
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= Phoenix.Flash.get(@flash, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= Phoenix.Flash.get(@flash, :error) %></p>
