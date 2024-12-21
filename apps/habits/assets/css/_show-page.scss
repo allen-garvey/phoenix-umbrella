@@ -7,6 +7,21 @@
     margin-bottom: 1em;
 }
 
+/**
+* Category show pages
+*/
+.category-show-title-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin-bottom: 0.75em;
+    align-items: center;
+
+    .category-show-title {
+        padding: 0 0.15em;
+    }
+}
+
 .activity-streak-table {
     tbody tr td:first-child::before {
         content: none;

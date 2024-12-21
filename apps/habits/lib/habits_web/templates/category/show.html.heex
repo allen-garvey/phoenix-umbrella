@@ -1,21 +1,12 @@
-<h1><%= @category.name %></h1>
+<div class="category-show-title-container">
+  <h1 class={[color_style(@category), "category-show-title"]}><%= @category.name %></h1>
+  <%= link "Activities", to: Routes.category_path(@conn, :activities_list, @category), class: "btn btn-sm btn-dark" %>
+</div>
 <div class="show-button-group">
-    <%= link "Edit", to: Routes.category_path(@conn, :edit, @category), class: "btn btn-primary" %>
     <%= CommonWeb.FormView.delete_button_with_form(@conn, Routes.category_path(@conn, :delete, @category), class: "btn btn-danger") %>
+    <%= link "Edit", to: Routes.category_path(@conn, :edit, @category), class: "btn btn-primary" %>
     <%= link "Add Activity", to: Routes.activity_path(@conn, :new, category: @category.id), class: "btn btn-success" %>
 </div>
-
-<ul>
-  <li>
-    <strong>Color:</strong>
-    <span class={color_style(@category)}><%= @category.color %></span>
-  </li>
-
-</ul>
-
-<h3><%= link "Activities", to: Routes.category_path(@conn, :activities_list, @category) %></h3>
-
-<h3>Streaks</h3>
 
 <table class="activity-streak-table">
   <thead>
