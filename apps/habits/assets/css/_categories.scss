@@ -4,7 +4,10 @@
 
 .category-color--beige {
     background-color: antiquewhite;
-    color: #000;
+    
+    &, a {
+        color: #000;
+    }
 }
 .category-color--black {
     background-color: black;
@@ -17,11 +20,17 @@
 }
 .category-color--cyan {
     background-color: cyan;
-    color: #000;
+    
+    &, a {
+        color: #000;
+    }
 }
 .category-color--gold {
     background-color: gold;
-    color: #000;
+    
+    &, a {
+        color: #000;
+    }
 }
 .category-color--green {
     background-color: green;
@@ -31,7 +40,10 @@
 }
 .category-color--lime {
     background-color: lawngreen;
-    color: #000;
+    
+    &, a {
+        color: #000;
+    }
 }
 .category-color--maroon {
     background-color: maroon;
@@ -41,10 +53,17 @@
 }
 .category-color--orange {
     background-color: orange;
+
+    &, a {
+        color: #000;
+    }
 }
 .category-color--pink {
     background-color: pink;
-    color: #000;
+    
+    &, a {
+        color: #000;
+    }
 }
 .category-color--purple {
     background-color: rebeccapurple;
@@ -57,12 +76,19 @@
 }
 .category-color--sandy {
     background-color: sandybrown;
+
+    &, a {
+        color: #000;
+    }
 }
 .category-color--sky {
     background-color: deepskyblue;
 }
 .category-color--yellow {
     background-color: yellow;
-    color: #000;
+    
+    &, a {
+        color: #000;
+    }
 }
 
