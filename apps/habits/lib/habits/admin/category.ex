@@ -6,6 +6,7 @@ defmodule Habits.Admin.Category do
   schema "categories" do
     field :name, :string
     field :color, :string
+    field :is_favorite, :boolean, default: false
 
     has_many :activities, Habits.Admin.Activity
 
@@ -15,7 +16,7 @@ defmodule Habits.Admin.Category do
   @doc false
   def changeset(category, attrs) do
     category
-    |> cast(attrs, [:name, :color])
+    |> cast(attrs, [:name, :color, :is_favorite])
     |> validate_required([:name])
     |> unique_constraint([:name])
   end

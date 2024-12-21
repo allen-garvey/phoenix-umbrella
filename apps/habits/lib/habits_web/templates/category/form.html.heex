@@ -9,6 +9,8 @@
 
   <%= Common.ViewHelpers.Form.select_group :color, f, colors_for_form() %>
 
+  <%= Common.ViewHelpers.Form.checkbox_input_group :is_favorite, f %>
+
   <div>
     <%= submit "Save", class: "btn btn-success" %>
   </div>
