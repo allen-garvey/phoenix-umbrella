@@ -52,6 +52,7 @@ defmodule HabitsWeb.CategoryController do
       end)
       |> elem(0)
       |> Enum.chunk_every(7)
+      |> Enum.reverse()
 
     render(conn, "show.html", category: category, activity_streak: activity_streak)
   end
