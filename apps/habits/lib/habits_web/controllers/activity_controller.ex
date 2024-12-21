@@ -63,8 +63,8 @@ defmodule HabitsWeb.ActivityController do
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
-  def create_succeeded(conn, _activity, _save_another) do
-    redirect(conn, to: Routes.page_path(conn, :index))
+  def create_succeeded(conn, activity, _save_another) do
+    redirect(conn, to: Routes.category_path(conn, :show, activity.category_id))
   end
 
   def create(conn, %{"activity" => activity_params} = params) do
