@@ -10,6 +10,8 @@ form.inline {
     &.right {
         display: flex;
         justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 1em;
     }
 
     select.form-control {
@@ -28,10 +30,6 @@ form.inline {
     
     &:hover {
         text-decoration: none;
-    }
-
-    & + & {
-        margin-left: 1rem;
     }
 }
 
