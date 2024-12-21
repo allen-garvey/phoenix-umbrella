@@ -26,6 +26,15 @@ defmodule Habits.Admin do
     |> Repo.all()
   end
 
+  def list_favorite_categories do
+    from(
+      category in Category,
+      where: category.is_favorite == true,
+      order_by: category.name
+    )
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single category.
 
