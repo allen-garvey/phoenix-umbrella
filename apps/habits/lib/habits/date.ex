@@ -6,7 +6,7 @@ defmodule Habits.Date do
     end
   end
 
-  def has_same_month_and_year?(date1, date2) do
+  def has_same_month_and_year?(%Date{} = date1, %Date{} = date2) do
     date1.year == date2.year and date1.month == date2.month
   end
 end
