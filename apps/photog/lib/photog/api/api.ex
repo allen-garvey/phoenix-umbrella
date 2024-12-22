@@ -72,26 +72,26 @@ defmodule Photog.Api do
     |> image_default_preloads
   end
 
-  @doc """
-  Returns the list of images taken in given year
-  """
-  def list_images_for_year(year) when is_integer(year) do
+  defp list_images_for_year_query(year) when is_integer(year) do
     from(
       image in Image,
       where: fragment("EXTRACT(year FROM ?)", image.creation_time) == ^year,
       order_by: [:creation_time, :id]
     )
+  end
+
+  @doc """
+  Returns the list of images taken in given year
+  """
+  def list_images_for_year(year) when is_integer(year) do
+    list_images_for_year_query(year)
     |> Repo.all()
   end
 
   def list_images_for_year(year, limit, offset) when is_integer(year) do
-    from(
-      image in Image,
-      where: fragment("EXTRACT(year FROM ?)", image.creation_time) == ^year,
-      order_by: [:creation_time, :id],
-      limit: ^limit,
-      offset: ^offset
-    )
+    list_images_for_year_query(year)
+    |> limit(^limit)
+    |> offset(^offset)
     |> image_preload_import
     |> Repo.all()
     |> image_default_preloads
