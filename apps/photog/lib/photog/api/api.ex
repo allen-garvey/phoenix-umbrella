@@ -650,24 +650,24 @@ defmodule Photog.Api do
         order_by: [asc: tag.name, desc: tag.id]
       )
 
-    album =
-      from(
-        album in Album,
-        join: cover_image in assoc(album, :cover_image),
-        where: album.id == ^id,
-        preload: [cover_image: cover_image, tags: ^tags_query]
-      )
-      |> Repo.one!()
-
-    images_count =
+    album_images_count_query =
       from(
         album_image in AlbumImage,
         where: album_image.album_id == ^id,
-        select: count(album_image.id)
+        group_by: [album_image.album_id],
+        select: %Album{id: album_image.album_id, images_count: count(album_image.id)}
       )
-      |> Repo.one!()
 
-    %Album{album | images_count: images_count}
+    from(
+      album in Album,
+      join: cover_image in assoc(album, :cover_image),
+      join: album_count in subquery(album_images_count_query),
+      on: album_count.id == album.id,
+      where: album.id == ^id,
+      preload: [cover_image: cover_image, tags: ^tags_query],
+      select: %Album{album | images_count: album_count.images_count}
+    )
+    |> Repo.one!()
   end
 
   def get_persons_for_album(id) do
@@ -1549,18 +1549,23 @@ defmodule Photog.Api do
       ** (Ecto.NoResultsError)
 
   """
-  def get_tag!(id) do
-    tag = Repo.get!(Tag, id)
-
-    albums_count =
+  def get_tag!(tag_id) do
+    tag_albums_count_query =
       from(
         album_tag in AlbumTag,
-        where: album_tag.tag_id == ^id,
-        select: count(album_tag.id)
+        where: album_tag.tag_id == ^tag_id,
+        group_by: [album_tag.tag_id],
+        select: %Tag{id: album_tag.tag_id, albums_count: count(album_tag.id)}
       )
-      |> Repo.one!()
 
-    %Tag{tag | albums_count: albums_count}
+    from(
+      tag in Tag,
+      join: tag_albums_count in subquery(tag_albums_count_query),
+      on: tag.id == tag_albums_count.id,
+      where: tag.id == ^tag_id,
+      select: %Tag{tag | albums_count: tag_albums_count.albums_count}
+    )
+    |> Repo.one!()
   end
 
   defp get_albums_for_tag_query(tag_id) do
