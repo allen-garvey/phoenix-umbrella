@@ -102,6 +102,18 @@ defmodule PhotogWeb.ImageController do
   @doc """
   Returns all images taken in given date
   """
+  def images_for_date(conn, %{
+        "month" => month,
+        "day" => day
+      }) do
+    images =
+      Api.list_images_for_date(
+        NumberHelpers.string_to_positive_integer(month, 1),
+        NumberHelpers.string_to_positive_integer(day, 1)
+      )
+
+    render(conn, "index.json", images: images)
+  end
 
   def images_for_date(conn, %{
         "month" => month,
@@ -120,13 +132,12 @@ defmodule PhotogWeb.ImageController do
     render(conn, "index.json", images: images)
   end
 
-  @spec images_for_date_count(Plug.Conn.t(), map()) :: Plug.Conn.t()
   @doc """
   Return count of all images taken in given year
   """
   def images_for_date_count(conn, %{"month" => month, "day" => day}) do
     count =
-      Api.images_count_for_date!(
+      Api.images_count_for_date(
         NumberHelpers.string_to_positive_integer(month, 1),
         NumberHelpers.string_to_positive_integer(day, 1)
       )
