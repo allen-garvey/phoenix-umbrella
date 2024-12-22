@@ -380,7 +380,7 @@ defmodule Photog.Api do
     Image.changeset(image, %{})
   end
 
-  def list_albums_query do
+  defp list_albums_query do
     from(album in Album,
       join: cover_image in assoc(album, :cover_image),
       left_join: album_image in assoc(album, :album_images),
@@ -393,12 +393,6 @@ defmodule Photog.Api do
 
   @doc """
   Returns the list of albums.
-
-  ## Examples
-
-      iex> list_albums()
-      [%Album{}, ...]
-
   """
   def list_albums do
     list_albums_query()
@@ -406,33 +400,55 @@ defmodule Photog.Api do
   end
 
   def list_albums(limit, offset) do
-    list_albums()
-    # need to do it this way since because of joins offset and limit don't work correctly
-    |> Enum.slice(offset, limit)
+    albums_limit_subquery = from(Album, limit: ^limit, offset: ^offset, order_by: [desc: :id])
+
+    list_albums_query()
+    |> join(:inner, [album], limit_album in subquery(albums_limit_subquery),
+      on: album.id == limit_album.id
+    )
+    |> Repo.all()
   end
 
   @doc """
   Returns the list of albums based on whether or not they are favorited
   """
   def list_album_favorites(is_favorite, limit, offset) when is_boolean(is_favorite) do
+    albums_limit_subquery =
+      from(album in Album,
+        where: album.is_favorite == ^is_favorite,
+        limit: ^limit,
+        offset: ^offset,
+        order_by: [:name, :id]
+      )
+
     list_albums_query()
     |> where([album], album.is_favorite == ^is_favorite)
     |> exclude(:order_by)
     |> order_by([:name, :id])
+    |> join(:inner, [album], limit_album in subquery(albums_limit_subquery),
+      on: album.id == limit_album.id
+    )
     |> Repo.all()
-    # need to do it this way since because of joins offset and limit don't work correctly
-    |> Enum.slice(offset, limit)
   end
 
   @doc """
   Returns the list of albums for the given year.
   """
   def list_albums_for_year(year, limit, offset) do
+    albums_limit_subquery =
+      from(album in Album,
+        where: album.year == ^year,
+        limit: ^limit,
+        offset: ^offset,
+        order_by: [desc: :id]
+      )
+
     list_albums_query()
     |> where([album], album.year == ^year)
+    |> join(:inner, [album], limit_album in subquery(albums_limit_subquery),
+      on: album.id == limit_album.id
+    )
     |> Repo.all()
-    # need to do it this way since because of joins offset and limit don't work correctly
-    |> Enum.slice(offset, limit)
   end
 
   @doc """
@@ -1547,27 +1563,42 @@ defmodule Photog.Api do
     %Tag{tag | albums_count: albums_count}
   end
 
-  @doc """
-  Gets albums for a tag
-  """
-  def get_albums_for_tag(id) do
+  defp get_albums_for_tag_query(tag_id) do
     from(
       album in Album,
       join: cover_image in assoc(album, :cover_image),
       left_join: album_image in assoc(album, :album_images),
       join: album_tag in assoc(album, :album_tags),
-      where: album_tag.tag_id == ^id,
+      where: album_tag.tag_id == ^tag_id,
       group_by: [album.id, cover_image.id, album_tag.id, album_tag.album_order],
       order_by: [asc: album_tag.album_order, desc: album_tag.id],
       preload: [cover_image: cover_image],
       select: %Album{album | images_count: count(album.id)}
     )
+  end
+
+  @doc """
+  Gets albums for a tag
+  """
+  def get_albums_for_tag(tag_id) do
+    get_albums_for_tag_query(tag_id)
     |> Repo.all()
   end
 
-  def get_albums_for_tag(id, limit, offset) do
-    get_albums_for_tag(id)
-    |> Enum.slice(offset, limit)
+  def get_albums_for_tag(tag_id, limit, offset) do
+    album_tags_limit_subquery =
+      from(album_tag in AlbumTag,
+        where: album_tag.tag_id == ^tag_id,
+        limit: ^limit,
+        offset: ^offset,
+        order_by: [asc: album_tag.album_order, desc: album_tag.id]
+      )
+
+    get_albums_for_tag_query(tag_id)
+    |> join(:inner, [album], album_tag in subquery(album_tags_limit_subquery),
+      on: album.id == album_tag.album_id
+    )
+    |> Repo.all()
   end
 
   @doc """
