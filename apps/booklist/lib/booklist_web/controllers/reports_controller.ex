@@ -13,10 +13,11 @@ defmodule BooklistWeb.ReportsController do
 
     highest_rating = Enum.at(ratings, 0)
     lowest_rating = Enum.at(ratings, -1)
-    ratings_count_by_week = Reports.calculate_ratings_by_week(ratings, year < current_year)
+    today = Common.ModelHelpers.Date.today()
+    ratings_count_by_week = Reports.calculate_ratings_by_week(ratings, year, today)
 
-    ratings_count_by_week_max =
-      Enum.max_by(ratings_count_by_week, fn week -> week.count end).count
+    {_, ratings_count_by_week_max} =
+      Enum.max_by(ratings_count_by_week, fn {_week, count} -> count end)
 
     books_per_week_average = (ratings_count / Enum.count(ratings_count_by_week)) |> Float.round(2)
 

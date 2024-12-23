@@ -60,16 +60,16 @@
 			<%= for count <- @ratings_count_by_week_max..1//-1 do %>
 				<tr>
 					<th><%= count %></th>
-					<%= for week <- @ratings_count_by_week do %>
-						<td class="<%= ratings_by_week_chart_item_class(week.count, count) %>"></td>
+					<%= for {_, week_count} <- @ratings_count_by_week do %>
+						<td class="<%= ratings_by_week_chart_item_class(week_count, count) %>"></td>
 					<% end %>
 				</tr>
 			<% end %>
 		</tbody>
 		<tfoot>
 			<th>Week number</th>
-			<%= for week <- @ratings_count_by_week do %>
-				<td><%= week.week_number %></td>
+			<%= for {week, _} <- @ratings_count_by_week do %>
+				<td><%= week + 1 %></td>
 			<% end %>
 		</tfoot>
 	</table>
