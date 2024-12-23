@@ -10,6 +10,7 @@ config :booklist, BooklistWeb.Endpoint,
 config :logger, level: :warning
 
 # Configure your database
+config :booklist, ecto_repos: [Grenadier.Repo]
 # config :booklist, Booklist.Repo,
 #   username: "postgres",
 #   password: "postgres",
