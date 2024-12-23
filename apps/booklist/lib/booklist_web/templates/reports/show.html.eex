@@ -67,7 +67,7 @@
 			<% end %>
 		</tbody>
 		<tfoot>
-			<th>Week number</th>
+			<th>Week</th>
 			<%= for {week, _} <- @ratings_count_by_week do %>
 				<td><%= week + 1 %></td>
 			<% end %>
