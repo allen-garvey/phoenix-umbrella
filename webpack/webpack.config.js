@@ -47,10 +47,6 @@ module.exports = {
                 __dirname,
                 '../node_modules/bootstrap/scss'
             ),
-            'chartist-styles': path.resolve(
-                __dirname,
-                '../node_modules/chartist/dist/index.scss'
-            ),
             'photog-styles': path.resolve(
                 __dirname,
                 '../apps/photog/assets/sass/'
