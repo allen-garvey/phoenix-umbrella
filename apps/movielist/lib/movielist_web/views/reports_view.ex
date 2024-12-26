@@ -36,13 +36,11 @@ defmodule MovielistWeb.ReportsView do
     Routes.reports_path(conn, :show, year, sort: sort)
   end
 
-  @doc """
-  Returns database results as json string
-  """
-  def ratings_by_month_to_json(results) do
-    results
-      |> Enum.map(fn result -> [Integer.to_string(result[:month_number]), result[:count]] end)
-      |> Jason.encode!
+  def ratings_by_month_chart_item_class(rating_count, current_count)
+      when is_integer(rating_count) and is_integer(current_count) do
+    case rating_count >= current_count do
+      true -> "count-filled"
+      false -> ""
+    end
   end
-
 end

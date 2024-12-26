@@ -20,7 +20,24 @@
 
 <section>
 	<h2>Movies Watched Per Month</h2>
-	<div id="movies_per_month_chart"></div>
+	<table class="reporting_movies_by_month_table">
+		<tbody>
+			<%= for count <- @ratings_count_by_month_max..1//-1 do %>
+				<tr>
+					<th><%= count %></th>
+					<%= for {_, month_count} <- @ratings_count_by_month do %>
+						<td class="<%= ratings_by_month_chart_item_class(month_count, count) %>"></td>
+					<% end %>
+				</tr>
+			<% end %>
+		</tbody>
+		<tfoot>
+			<th>Month</th>
+			<%= for {month, _} <- @ratings_count_by_month do %>
+				<td><%= month %></td>
+			<% end %>
+		</tfoot>
+	</table>
 </section>
 
 <section>
@@ -46,7 +63,3 @@
 	  </tbody>
 	</table>
 </section>
-
-<script type="text/javascript">
-window.MOVIELIST_CHART_DATA = <%= raw(ratings_by_month_to_json(@ratings_count_by_month)) %>;
-</script>

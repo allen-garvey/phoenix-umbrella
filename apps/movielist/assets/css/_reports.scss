@@ -12,51 +12,32 @@
 	}
 }
 
-#movies_per_month_chart {
-	margin-bottom: 2rem;
-
-	svg {
-		overflow: visible;
-	}
-}
-
-svg.ct-chart-line {
-	overflow: overlay;
-
-	.ct-grids {
-		stroke: #dedede;
-
-		.ct-horizontal {
-			stroke: #efefef;
-		}
-	}
+.reporting_movies_by_month_table {
+	border-collapse: collapse;
+	font-size: 0.75rem;
+	text-align: center;
 	
-	.ct-series {
-		.ct-line, .ct-point {
-			stroke: #d70206;
-			stroke-width: 2px;
-			fill: none;
-		}
+	th, td {
+		border: 1px solid rgba(204,204,204, 0.55);
+	}
 
-		.ct-area {
-			fill: #d70206;
-			fill-opacity: 0.1;
-		}
+	tbody td {
+		width: 1.25rem;
+		height: 1.25rem;
+	}
 
-		.ct-point {
-			stroke-width: 6px;
-			stroke-linecap: round;
-		}
-
-		.ct-label {
-			font-size: 1rem;
-			fill-opacity: 0.25;
-		}
+	.count-filled {
+		background-color: #c60003;
 	}
 }
 
 @media (prefers-color-scheme: dark) {
-    svg text {
-        fill: #fff;
+    .reporting_movies_by_month_table  {
+        background-color: #212121;
+		color: #fff;
+
+		th, td {
+			border-color: rgba(87,87,87, 0.55);
+		}
     }
 }

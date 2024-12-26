@@ -12,9 +12,7 @@ import css from '../css/app.scss';
 // import "phoenix_html"
 
 import { initializeDeleteModals } from './delete-modals.js';
-import { initializeMoviesPerMonthChart } from './reports/movies-per-month-chart';
 import { initializeYesterdayButton } from 'umbrella-common-js/date-input.js';
 
 initializeDeleteModals();
-initializeMoviesPerMonthChart();
 initializeYesterdayButton();
