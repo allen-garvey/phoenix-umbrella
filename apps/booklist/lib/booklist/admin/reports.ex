@@ -11,10 +11,6 @@ defmodule Booklist.Reports do
   alias Booklist.Admin.Author
   alias Booklist.Admin.Book
 
-  def increment(num) do
-    num + 1
-  end
-
   def calculate_percent_of_ratings(total, ratings_count) do
     (total / max(ratings_count, 1) * 100) |> Float.round(2)
   end
@@ -53,14 +49,25 @@ defmodule Booklist.Reports do
     start_date = Date.new!(year, 1, 1) |> Date.beginning_of_week(:sunday)
     end_date = get_end_date(year, current_date)
 
-    weeks_count_map = ratings |> Enum.reduce(%{}, fn rating, map ->
-      Map.update(map, Date.beginning_of_week(rating.date_scored, :sunday), 1, &increment/1)
-    end)
+    weeks_count_map =
+      ratings
+      |> Enum.reduce(%{}, fn rating, map ->
+        Map.update(
+          map,
+          Date.beginning_of_week(rating.date_scored, :sunday),
+          1,
+          &Common.Function.increment/1
+        )
+      end)
 
     Stream.iterate(start_date, fn current_date -> Date.add(current_date, 7) end)
-    |> Stream.take_while(fn current_date -> Date.before?(current_date, end_date) or current_date == end_date end)
+    |> Stream.take_while(fn current_date ->
+      Date.before?(current_date, end_date) or current_date == end_date
+    end)
     |> Stream.with_index()
-    |> Stream.map(fn {current_date, index} -> {index, Map.get(weeks_count_map, current_date, 0)} end)
+    |> Stream.map(fn {current_date, index} ->
+      {index, Map.get(weeks_count_map, current_date, 0)}
+    end)
     |> Enum.to_list()
   end
 
@@ -76,7 +83,7 @@ defmodule Booklist.Reports do
       Enum.reduce(
         ratings,
         initial_map,
-        fn rating, map -> Map.update!(map, rating.book.genre_id, &increment/1) end
+        fn rating, map -> Map.update!(map, rating.book.genre_id, &Common.Function.increment/1) end
       )
 
     Enum.map(genres, fn genre ->

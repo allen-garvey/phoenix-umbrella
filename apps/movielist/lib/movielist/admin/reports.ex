@@ -10,10 +10,7 @@ defmodule Movielist.Reports do
   alias Movielist.Admin.Movie
   alias Movielist.Admin.Rating
 
-  def increment(num) do
-    num + 1
-  end
-
+  @spec calculate_percent_of_ratings(number(), any()) :: float()
   def calculate_percent_of_ratings(total, ratings_count) do
     (total / max(ratings_count, 1)) |> Float.round(2)
   end
@@ -81,7 +78,7 @@ defmodule Movielist.Reports do
     month_map =
       ratings
       |> Enum.reduce(Map.new(), fn rating, month_map ->
-        Map.update(month_map, rating.date_scored.month, 1, &increment/1)
+        Map.update(month_map, rating.date_scored.month, 1, &Common.Function.increment/1)
       end)
 
     1..end_month
