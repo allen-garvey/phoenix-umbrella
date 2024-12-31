@@ -661,11 +661,19 @@ defmodule Photog.Api do
     from(
       album in Album,
       join: cover_image in assoc(album, :cover_image),
-      join: album_count in subquery(album_images_count_query),
+      left_join: album_count in subquery(album_images_count_query),
       on: album_count.id == album.id,
       where: album.id == ^id,
       preload: [cover_image: cover_image, tags: ^tags_query],
-      select: %Album{album | images_count: album_count.images_count}
+      select: %Album{
+        album
+        | images_count:
+            fragment(
+              "CASE WHEN ? THEN ? ELSE 0 END",
+              not is_nil(album_count.images_count),
+              album_count.images_count
+            )
+      }
     )
     |> Repo.one!()
   end
