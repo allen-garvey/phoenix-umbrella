@@ -23,7 +23,7 @@ tbody{
     .default-table tbody{
 		background-color: #666;
 
-		&, a {
+		&, a:not(.btn) {
 			color: #ddd;
 		}
 	}
