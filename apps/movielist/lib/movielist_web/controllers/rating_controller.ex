@@ -6,7 +6,7 @@ defmodule MovielistWeb.RatingController do
 
   def related_fields() do
     [
-      movies: Admin.list_movies() |> MovielistWeb.MovieView.map_for_form,
+      movies: Admin.list_movies() |> MovielistWeb.MovieView.map_for_form()
     ]
   end
 
@@ -22,7 +22,7 @@ defmodule MovielistWeb.RatingController do
 
   def new(conn, %{"movie_id" => movie_id}) do
     changeset = Admin.change_rating_with_movie(%Rating{}, movie_id)
-    render(conn, "new.html", [changeset: changeset, referrer: "movie"] ++ related_fields())
+    render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
   def new(conn, _params) do
@@ -30,26 +30,27 @@ defmodule MovielistWeb.RatingController do
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
-  def create(conn, %{"rating" => rating_params, "referrer" => "movie"}) do
-    create_action(conn, rating_params, fn (conn, rating) -> Routes.movie_path(conn, :show, rating.movie_id) end, "movie")
-  end
-
   def create(conn, %{"rating" => rating_params}) do
-    create_action(conn, rating_params, fn (conn, rating) -> Routes.rating_path(conn, :show, rating) end)
-  end
-
-  def create_action(conn, rating_params, success_redirect_callback, referrer \\ nil) when is_function(success_redirect_callback, 2) do
     case Admin.create_rating(rating_params) do
       {:ok, rating} ->
-        # make movie inactive once rated
-        Admin.get_movie!(rating.movie_id)
-        |> Admin.update_movie(%{"is_active" => false})
+        movie = Admin.get_movie!(rating.movie_id)
+        Admin.update_movie(movie, %{"is_active" => false})
+
         conn
-        |> put_flash(:info, "Rating created successfully.")
-        |> redirect(to: success_redirect_callback.(conn, rating))
+        |> put_flash(
+          :info,
+          "Rating created successfully for #{MovielistWeb.MovieView.to_s(movie)}."
+        )
+        |> redirect(
+          to:
+            MovielistWeb.ReportsView.reports_for_year_path_score_sorted(
+              conn,
+              rating.date_scored.year
+            )
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", [changeset: changeset, referrer: referrer] ++ related_fields())
+        render(conn, "new.html", [changeset: changeset] ++ related_fields())
     end
   end
 
