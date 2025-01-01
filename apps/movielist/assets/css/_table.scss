@@ -2,10 +2,13 @@
 
 table{
 	color: #000;
-	margin-left: auto;
-	margin-right: auto;
 	border-spacing: 0;
 	border-collapse: collapse;
+
+	&.table-centered {
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 thead{
 	background-color: #eee;

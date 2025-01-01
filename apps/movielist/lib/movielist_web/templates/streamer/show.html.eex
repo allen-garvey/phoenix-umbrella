@@ -17,7 +17,7 @@
 </ul>
 
 <%= if !Enum.empty?(@streamer.movies) do %>
-  <table class="default-table">
+  <table class="default-table table-centered">
     <thead>
       <tr>
         <th>Title</th>
