@@ -7,7 +7,7 @@
 
 <h1>Reporting for <%= Integer.to_string(@year) %></h1>
 
-<div class="stats_container">
+<section class="stats_container">
 	<div>
 		<div class="heading">Movies watched:</div>
 		<div><%= @rating_count %></div>
@@ -16,7 +16,7 @@
 		<div class="heading">Average rating:</div>
 		<div><%= @average_score %></div>
 	</div>
-</div>
+</section>
 
 <section>
 	<h2>Movies Watched Per Month</h2>

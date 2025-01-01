@@ -19,7 +19,11 @@ body{
 }
 
 main{
-	padding-bottom: 15em;
+	padding: 0 variables.$horizontal_padding 15rem;
+}
+
+section {
+	margin-bottom: 2em;
 }
 
 nav li{
@@ -30,6 +34,10 @@ nav li{
 
 h1,h2,h3,h4,button{
 	font-family: variables.$sans_serif_font_family;
+}
+
+h1,h2,h3,h4 {
+	margin: 0 0 0.5em;
 }
 
 a{
