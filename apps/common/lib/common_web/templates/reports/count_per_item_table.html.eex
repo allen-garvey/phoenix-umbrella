@@ -1,0 +1,18 @@
+<table class="<%= @table_class %>">
+    <tbody>
+        <%= for current_count <- get_items_max_count(@items_with_counts)..1//-1 do %>
+            <tr>
+                <th><%= current_count %></th>
+                <%= for {_, item_count} <- @items_with_counts do %>
+                    <td class="<%= count_per_item_table_item_class(item_count, current_count) %>"></td>
+                <% end %>
+            </tr>
+        <% end %>
+    </tbody>
+    <tfoot>
+        <th><%= @item_title %></th>
+        <%= for {item_title, _} <- @items_with_counts do %>
+            <td><%= item_title %></td>
+        <% end %>
+    </tfoot>
+</table>

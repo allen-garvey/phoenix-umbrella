@@ -20,9 +20,6 @@ defmodule MovielistWeb.ReportsController do
 
       ratings_count_by_month = Reports.calculate_ratings_per_month(ratings, year, today)
 
-      {_, ratings_count_by_month_max} =
-        Enum.max_by(ratings_count_by_month, fn {_, count} -> count end)
-
       should_show_next_year = year < current_year
 
       render(conn, "show.html",
@@ -32,7 +29,6 @@ defmodule MovielistWeb.ReportsController do
         rating_count: rating_count,
         average_score: average_score,
         ratings_count_by_month: ratings_count_by_month,
-        ratings_count_by_month_max: ratings_count_by_month_max,
         should_show_next_year: should_show_next_year
       )
     end

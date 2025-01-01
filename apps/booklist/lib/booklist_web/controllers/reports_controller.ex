@@ -16,9 +16,6 @@ defmodule BooklistWeb.ReportsController do
     today = Common.ModelHelpers.Date.today()
     ratings_count_by_week = Reports.calculate_ratings_by_week(ratings, year, today)
 
-    {_, ratings_count_by_week_max} =
-      Enum.max_by(ratings_count_by_week, fn {_week, count} -> count end)
-
     books_per_week_average = (ratings_count / Enum.count(ratings_count_by_week)) |> Float.round(2)
 
     nonfiction_percent =
@@ -39,7 +36,6 @@ defmodule BooklistWeb.ReportsController do
       ratings: ratings,
       genres_count: genres_count,
       ratings_count_by_week: ratings_count_by_week,
-      ratings_count_by_week_max: ratings_count_by_week_max,
       should_show_next_year: year < current_year
     )
   end

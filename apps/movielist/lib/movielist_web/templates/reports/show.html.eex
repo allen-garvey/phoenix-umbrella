@@ -20,24 +20,12 @@
 
 <section>
 	<h2>Movies Watched Per Month</h2>
-	<table class="reporting_movies_by_month_table">
-		<tbody>
-			<%= for count <- @ratings_count_by_month_max..1//-1 do %>
-				<tr>
-					<th><%= count %></th>
-					<%= for {_, month_count} <- @ratings_count_by_month do %>
-						<td class="<%= ratings_by_month_chart_item_class(month_count, count) %>"></td>
-					<% end %>
-				</tr>
-			<% end %>
-		</tbody>
-		<tfoot>
-			<th>Month</th>
-			<%= for {month, _} <- @ratings_count_by_month do %>
-				<td><%= month %></td>
-			<% end %>
-		</tfoot>
-	</table>
+
+	<%= render CommonWeb.ReportsView, "count_per_item_table.html",
+		table_class: "reporting_movies_by_month_table",
+		item_title: "Month",
+		items_with_counts: @ratings_count_by_month
+	%>
 </section>
 
 <section>

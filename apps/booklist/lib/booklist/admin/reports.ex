@@ -66,7 +66,7 @@ defmodule Booklist.Reports do
     end)
     |> Stream.with_index()
     |> Stream.map(fn {current_date, index} ->
-      {index, Map.get(weeks_count_map, current_date, 0)}
+      {index + 1, Map.get(weeks_count_map, current_date, 0)}
     end)
     |> Enum.to_list()
   end
