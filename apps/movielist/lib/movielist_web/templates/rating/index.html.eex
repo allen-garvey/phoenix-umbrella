@@ -14,7 +14,7 @@
 <%= for rating <- @ratings do %>
     <tr class="<%= css_class_for_score(rating.score) %>">
       <td></td>
-      <td><%= link MovielistWeb.MovieView.to_s(rating.movie), to: Routes.movie_path(@conn, :show, rating.movie) %></td>
+      <td><%= link MovielistWeb.MovieView.to_s(rating.movie), to: Routes.rating_path(@conn, :show, rating) %></td>
       <td><%= Common.DateHelpers.us_formatted_date(rating.date_scored) %></td>
       <td><%= rating.score %></td>
 
