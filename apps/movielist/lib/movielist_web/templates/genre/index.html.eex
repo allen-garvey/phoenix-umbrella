@@ -12,14 +12,11 @@
 <%= for genre <- @genres do %>
     <tr>
       <td></td>
-      <td><%= genre.name %></td>
-
       <td>
-        <%= link "Show", to: Routes.genre_path(@conn, :show, genre), class: "btn btn-xs btn-light" %>
+        <%= link genre.name, to: Routes.genre_path(@conn, :show, genre) %>
       </td>
+      <td></td>
     </tr>
 <% end %>
   </tbody>
 </table>
-
-

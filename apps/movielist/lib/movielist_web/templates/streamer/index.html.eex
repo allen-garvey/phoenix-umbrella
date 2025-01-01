@@ -12,14 +12,9 @@
 <%= for streamer <- @streamers do %>
     <tr>
       <td></td>
-      <td><%= streamer.name %></td>
-
-      <td>
-        <%= link "Show", to: Routes.streamer_path(@conn, :show, streamer), class: "btn btn-xs btn-light" %>
-      </td>
+      <td><%= link streamer.name, to: Routes.streamer_path(@conn, :show, streamer) %></td>
+      <td></td>
     </tr>
 <% end %>
   </tbody>
 </table>
-
-
