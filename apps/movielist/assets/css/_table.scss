@@ -19,8 +19,8 @@ tbody{
 	thead {
 		background-color: #cacaca;
 
-		a{
-			color: #000;
+		&, a:not(.btn){
+			color: #727272;
 		}
 	}
 	
