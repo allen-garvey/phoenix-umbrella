@@ -12,8 +12,32 @@
 	}
 }
 
-#movies_per_month_chart {
-	svg {
-		overflow: visible;
+.spending_per_year_table {
+	border-collapse: collapse;
+	font-size: 0.75rem;
+	text-align: center;
+	
+	th, td {
+		border: 1px solid rgba(204,204,204, 0.55);
 	}
+
+	tbody td {
+		width: 1.25rem;
+		height: 1.25rem;
+	}
+
+	.count-filled {
+		background-color: #17adbd;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+    .spending_per_year_table {
+        background-color: #212121;
+		color: #fff;
+
+		th, td {
+			border-color: rgba(87,87,87, 0.55);
+		}
+    }
 }

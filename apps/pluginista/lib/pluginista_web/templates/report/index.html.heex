@@ -15,6 +15,16 @@
   </li>
 </ul>
 
+<section>
+	<h2>Spending per year</h2>
+
+	<%= render CommonWeb.ReportsView, "count_per_item_table.html",
+		table_class: "spending_per_year_table",
+		item_title: "Year",
+		items_with_counts: @spending_per_year
+	%>
+</section>
+
 <table>
   <thead>
     <tr>
