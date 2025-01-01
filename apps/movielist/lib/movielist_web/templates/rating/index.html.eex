@@ -7,7 +7,7 @@
       <th><%= link "Date scored", to: Routes.rating_path(@conn, :index) %></th>
       <th><%= link "Score", to: ratings_index_score_sorted_path(@conn) %></th>
 
-      <th><%= link "New Rating", to: Routes.rating_path(@conn, :new), class: "btn btn-success" %></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
