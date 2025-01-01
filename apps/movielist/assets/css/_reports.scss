@@ -1,10 +1,8 @@
 .stats_container{
 	display: flex;
 	flex-wrap: wrap;
+	gap: 1em 3em;
 
-	& > *{
-		margin-right: 3em;
-	}
 	.heading{
 		font-weight: bold;
 	}
