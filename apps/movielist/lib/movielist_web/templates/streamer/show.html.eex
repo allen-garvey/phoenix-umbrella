@@ -1,10 +1,10 @@
-<%= render(MovielistWeb.SharedView, "show_header.html", 
-      conn: @conn, 
-      resource_title_plural: "Streamers", 
-      resource_path_func: &Routes.streamer_path/3, 
-      item: @streamer, 
+<%= render(MovielistWeb.SharedView, "show_header.html",
+      conn: @conn,
+      resource_title_plural: "Streamers",
+      resource_path_func: &Routes.streamer_path/3,
+      item: @streamer,
       item_name: to_s(@streamer)
-    ) 
+    )
 %>
 
 <ul>
@@ -17,7 +17,7 @@
 </ul>
 
 <%= if !Enum.empty?(@streamer.movies) do %>
-  <table>
+  <table class="default-table">
     <thead>
       <tr>
         <th>Title</th>
