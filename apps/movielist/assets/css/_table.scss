@@ -22,7 +22,10 @@ tbody{
 
     .default-table tbody{
 		background-color: #666;
-		color: #ddd;
+
+		&, a {
+			color: #ddd;
+		}
 	}
 }
 
