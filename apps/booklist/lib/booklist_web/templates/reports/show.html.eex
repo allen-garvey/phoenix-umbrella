@@ -10,23 +10,23 @@
 <h1>Reporting for <%= Integer.to_string(@year) %></h1>
 
 <div class="stat_boxes">
-	<div class="stat_box">
+	<div>
 		<div class="heading">Number of books read</div>
 		<div class="info"><%= @ratings_count %></div>
 	</div>
-	<div class="stat_box">
+	<div>
 		<div class="heading">Books per week</div>
 		<div class="info"><%= @books_per_week_average %></div>
 	</div>
-	<div class="stat_box">
+	<div>
 		<div class="heading">Average Rating</div>
 		<div class="info"><%= @average_rating %></div>
 	</div>
-	<div class="stat_box">
+	<div>
 		<div class="heading">Non-fiction</div>
 		<div class="info"><%= @nonfiction_percent %>%</div>
 	</div>
-	<div class="stat_box">
+	<div>
 		<%= if !is_nil(@highest_rating) do %>
 			<div class="heading">Highest Rating</div>
 			<div class="info">
@@ -34,7 +34,7 @@
 			</div>
 		<% end %>
 	</div>
-	<div class="stat_box">
+	<div>
 		<%= if !is_nil(@lowest_rating) do  %>
 			<div class="heading">Lowest Rating</div>
 			<div class="info">
@@ -46,7 +46,7 @@
 
 <div class="stat_boxes">
 	<%= for %{genre: genre, count: count} <- @genres_count do %>
-		<div class="genre_stat_box">
+		<div>
 			<span class="heading"><%= BooklistWeb.GenreView.to_s(genre) %></span>
 			<span class="info"><%= count %>%</span>
 		</div>

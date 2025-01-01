@@ -5,26 +5,13 @@
 .stat_boxes{
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
-	margin-top: 1em;
+	margin: 1em 0 2em;
 	font-size: 1.4rem;
-
-	& + & {
-		margin-top: 3rem;
-	}
+	gap: 1em 2em;
 	
 	.heading {
 		font-weight: bold;
 	}
-}
-
-.stat_box {
-	margin-bottom: 0.5rem;
-}
-
-.genre_stat_box {
-	flex-basis: 25%;
-	padding: 0.25em;
 }
 
 .reporting_books_by_week{
