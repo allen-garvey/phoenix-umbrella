@@ -20,8 +20,8 @@ defmodule Umbrella.Common.Deps do
 
   def phoenix_html do
     [
-      {:phoenix, "~> 1.7"},
-      {:phoenix_html, "~> 4.1"},
+      {:phoenix, "~> 1.7.18"},
+      {:phoenix_html, "~> 4.2"},
       {:phoenix_html_helpers, "~> 1.0"},
       {:phoenix_view, "~> 2.0"},
     ]
@@ -29,9 +29,9 @@ defmodule Umbrella.Common.Deps do
 
   def ecto do
     [
-      {:phoenix_ecto, "~> 4.6"},
+      {:phoenix_ecto, "~> 4.6.3"},
       {:ecto_sql, "~> 3.12"},
-      {:postgrex, "~> 0.19"},
+      {:postgrex, "~> 0.19.3"},
     ]
   end
 
@@ -46,7 +46,7 @@ defmodule Umbrella.Common.Deps do
   end
 
   def floki do
-    {:floki, "~> 0.36"}
+    {:floki, "~> 0.37"}
   end
 
   def argon2 do
@@ -55,7 +55,7 @@ defmodule Umbrella.Common.Deps do
 
   def phoenix_component do
     [
-      {:phoenix_live_view, "~> 0.20"},
+      {:phoenix_live_view, "~> 1.0.1"},
     ]
   end
 end
