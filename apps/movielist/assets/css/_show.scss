@@ -2,16 +2,20 @@
 
 .show_header{
 	display: flex;
+	flex-wrap: wrap;
 	gap: 1em;
+
+	.heading {
+		margin: 0;
+	}
 
 	.btn_group{
 		text-align: right;
 		flex-basis: 150px;
 		align-self: center;
-	}
-}
 
-.btn_group form{
-	display: inline-block;
-	margin-left: 1em;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1em;
+	}
 }
