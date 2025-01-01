@@ -16,15 +16,20 @@ tbody{
 }
 
 @media (prefers-color-scheme: dark) {
-	thead a{
-		color: #000;
+	thead {
+		background-color: #cacaca;
+
+		a{
+			color: #000;
+		}
 	}
+	
 
     .default-table tbody{
-		background-color: #666;
+		background-color: variables.$dark_secondary_bg_color;
 
 		&, a:not(.btn) {
-			color: #ddd;
+			color: #fff;
 		}
 	}
 }
