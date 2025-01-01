@@ -33,7 +33,6 @@
 	border-radius: 6px;
 	box-shadow: 0 5px 15px rgba(0,0,0,.5);
 	max-height: 95vh;
-	overflow: scroll;
 }
 .modal_buttons{
 	display: none;
@@ -58,5 +57,13 @@
 .modal_body{
 	img{
 		margin-top: 1em;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.modal {
+		background-color: #000;
+		color: #fff;
+		border: 1px solid #cacaca;
 	}
 }
