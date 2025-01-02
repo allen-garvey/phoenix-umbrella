@@ -32,7 +32,6 @@
     "@vue/compiler-sfc": "3.5.13",
     "ajv": "^8.17.1",
     "ava": "^6.2.0",
-    "bootstrap": "^5.3.3",
     "css-loader": "^7.1.2",
     "mini-css-extract-plugin": "^2.9.2",
     "sass": "^1.83.0",
