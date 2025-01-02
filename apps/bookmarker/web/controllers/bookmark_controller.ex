@@ -5,7 +5,7 @@ defmodule Bookmarker.BookmarkController do
   alias Bookmarker.Admin
 
   def index(conn, _params) do
-    bookmarks = Repo.all(from Bookmark, order_by: [desc: :id])
+    bookmarks = Repo.all(from(Bookmark, order_by: [desc: :id]))
     render(conn, "index.html", bookmarks: bookmarks)
   end
 
@@ -23,12 +23,18 @@ defmodule Bookmarker.BookmarkController do
         if submit_type == "add_another" do
           changeset = Bookmark.changeset(%Bookmark{folder_id: bookmark.folder_id})
           folders = Admin.folder_form_list()
-          render(conn, "new.html", changeset: changeset, folders: folders, flash: Bookmark.to_s(bookmark) <> " saved.")
+
+          render(conn, "new.html",
+            changeset: changeset,
+            folders: folders,
+            flash: Bookmark.to_s(bookmark) <> " saved."
+          )
         else
           conn
-            |> put_flash(:info, "Bookmark created successfully.")
-            |> redirect(to: bookmark_path(conn, :index))
+          |> put_flash(:info, "Bookmark created successfully.")
+          |> redirect(to: folder_path(conn, :show, bookmark.folder_id))
         end
+
       {:error, changeset} ->
         folders = Admin.folder_form_list()
         render(conn, "new.html", changeset: changeset, folders: folders)
@@ -36,13 +42,15 @@ defmodule Bookmarker.BookmarkController do
   end
 
   def show(conn, %{"id" => id}) do
-    bookmark = from(
-      bookmark in Bookmark,
-      join: folder in assoc(bookmark, :folder),
-      where: bookmark.id == ^id,
-      preload: [folder: folder]
-    )
-    |> Repo.one!()
+    bookmark =
+      from(
+        bookmark in Bookmark,
+        join: folder in assoc(bookmark, :folder),
+        where: bookmark.id == ^id,
+        preload: [folder: folder]
+      )
+      |> Repo.one!()
+
     render(conn, "show.html", bookmark: bookmark)
   end
 
@@ -62,6 +70,7 @@ defmodule Bookmarker.BookmarkController do
         conn
         |> put_flash(:info, "Bookmark updated successfully.")
         |> redirect(to: bookmark_path(conn, :show, bookmark))
+
       {:error, changeset} ->
         folders = Admin.folder_form_list()
         render(conn, "edit.html", bookmark: bookmark, changeset: changeset, folders: folders)
@@ -79,5 +88,4 @@ defmodule Bookmarker.BookmarkController do
     |> put_flash(:info, "Bookmark deleted successfully.")
     |> redirect(to: bookmark_path(conn, :index))
   end
-
 end
