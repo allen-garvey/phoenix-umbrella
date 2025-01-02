@@ -1,36 +1,28 @@
-/*
-* Header and Nav
-*/
-/* Custom page header */
 .header {
 	padding-top: 1em;
 	margin-bottom: 1em;
-
-	ul {
-		margin-top: 0;
-	}
 }
 
-.navbar {
-	@media screen and (min-width: 576px) {
+.navbar, .navbar-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1em;
+	flex-direction: column;
+}
+
+.navbar-nav {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+@media screen and (min-width: 576px) {
+	.navbar {
 		justify-content: space-between;
 	}
-}
 
-.navbar-light .nav-link.btn{
-	&:hover {
-		color: #fff;
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	.navbar-brand {
-		--bs-navbar-brand-color: #fff;
-		--bs-navbar-brand-hover-color: #fff;
-	}
-
-	.nav-link {
-		--bs-nav-link-color: #fff;
-		--bs-nav-link-hover-color: #fff;
+	.navbar-nav, .navbar {
+		flex-direction: row;
+		align-items: center;
 	}
 }
