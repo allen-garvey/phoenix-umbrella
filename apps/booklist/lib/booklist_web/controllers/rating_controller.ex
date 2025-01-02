@@ -6,7 +6,7 @@ defmodule BooklistWeb.RatingController do
 
   def related_fields() do
     [
-      books: Admin.list_books() |> BooklistWeb.BookView.map_for_form,
+      books: Admin.list_books() |> BooklistWeb.BookView.map_for_form()
     ]
   end
 
@@ -22,7 +22,7 @@ defmodule BooklistWeb.RatingController do
 
   def new(conn, %{"book_id" => book_id}) do
     changeset = Admin.change_rating_with_book(%Rating{}, book_id)
-    render(conn, "new.html", [changeset: changeset, referrer: "book"] ++ related_fields())
+    render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
   def new(conn, _params) do
@@ -30,25 +30,20 @@ defmodule BooklistWeb.RatingController do
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
-  def create(conn, %{"rating" => rating_params, "referrer" => "book"}) do
-    create_action(conn, rating_params, fn (conn, rating) -> Routes.book_path(conn, :show, rating.book_id) end, "book")
-  end
-
   def create(conn, %{"rating" => rating_params}) do
-    create_action(conn, rating_params, fn (conn, rating) -> Routes.rating_path(conn, :show, rating) end)
-  end
-
-  def create_action(conn, rating_params, success_redirect_callback, referrer \\ nil) when is_function(success_redirect_callback, 2) do
     case Admin.create_rating(rating_params) do
       {:ok, rating} ->
         # make book inactive once rated
         Admin.update_book_active_status(rating.book_id, false)
+
         conn
         |> put_flash(:info, "Rating created successfully.")
-        |> redirect(to: success_redirect_callback.(conn, rating))
+        |> redirect(
+          to: BooklistWeb.ReportsView.reports_for_year_path(conn, rating.date_scored.year)
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", [changeset: changeset, referrer: referrer] ++ related_fields())
+        render(conn, "new.html", [changeset: changeset] ++ related_fields())
     end
   end
 
