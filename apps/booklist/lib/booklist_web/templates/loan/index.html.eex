@@ -1,8 +1,7 @@
-<%= render BooklistWeb.SharedView, "index.html", 
-  conn: @conn, 
-  flash: @flash,
-  item_name: "Loan", 
-  items: @loans, 
-  item_path: :loan_path, 
-  item_to_s: &to_s/1 
+<%= render BooklistWeb.SharedView, "index.html",
+  conn: @conn,
+  item_name: "Loan",
+  items: @loans,
+  item_path: :loan_path,
+  item_to_s: &to_s/1
 %>

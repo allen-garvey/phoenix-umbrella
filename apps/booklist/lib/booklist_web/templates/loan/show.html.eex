@@ -1,14 +1,13 @@
-<%= render(BooklistWeb.SharedView, "show-header.html", 
+<%= render(BooklistWeb.SharedView, "show-header.html",
       conn: @conn,
-	  flash: @flash, 
-      resource_title_plural: "Loans", 
-      resource_path_atom: :loan_path, 
-      item: @loan, 
-      item_name: to_s(@loan)) 
+      resource_title_plural: "Loans",
+      resource_path_atom: :loan_path,
+      item: @loan,
+      item_name: to_s(@loan))
 %>
 
-<%= 
-	if !is_nil(@loan.library.url) do 
+<%=
+	if !is_nil(@loan.library.url) do
 		link "Renew loan", to: @loan.library.url
 	end
 %>

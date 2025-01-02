@@ -21,6 +21,8 @@
       </div>
     </nav>
     <div class="container">
+      <% #can't have whitespace in alert, or alert:empty CSS will break %>
+      <div class="alert alert-info"><%= Phoenix.Flash.get(@flash, :info) %></div>
       <%= @inner_content %>
     </div>
     <div class="modal_container" id="modal_container" style="display:none;">

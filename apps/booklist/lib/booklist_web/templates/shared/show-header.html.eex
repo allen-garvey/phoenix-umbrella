@@ -1,8 +1,5 @@
 <%= link "All " <> @resource_title_plural, to: apply(Routes, @resource_path_atom, [@conn, :index]), class: "back_link" %>
 
-<% #can't have whitespace in alert, or alert:empty CSS will break %>
-<div class="alert alert-info"><%= Phoenix.Flash.get(@flash, :info) %></div>
-
 <div class="show_header show">
 	<h1 class="heading"><%= @item_name %></h1>
 	<div class="btn_group">
@@ -12,8 +9,8 @@
 			end
 		%>
 		<%= if assigns[:search_query] do
-				link content_tag(:div, "⚲", class: "search_icon"), to: Common.SuperSearch.search_url(@search_query), class: "btn btn-primary btn-xs btn_search"	
-			end 
+				link content_tag(:div, "⚲", class: "search_icon"), to: Common.SuperSearch.search_url(@search_query), class: "btn btn-primary btn-xs btn_search"
+			end
 		%>
 	</div>
 </div>
