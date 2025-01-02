@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../base/variables';
 @use '../base/mixins';
 
@@ -23,10 +24,10 @@
  		min-height: 65px;
  		@include mixins.font_size(1);
  		&:nth-of-type(odd){
- 			background-color: lighten(variables.$color_secondary_accent, 35%);
+			background-color: color.adjust(variables.$color_secondary_accent, $lightness: 35%);
  		}
  		a{
- 			color: darken(variables.$color_primary_accent, 30%);
+			color: color.adjust(variables.$color_primary_accent, $lightness: -30%);
  		}
  		a:first-child{
  			flex-grow: 1;

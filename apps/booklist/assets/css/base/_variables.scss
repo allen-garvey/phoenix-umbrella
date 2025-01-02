@@ -1,6 +1,5 @@
-/**
-* Constants
-*/
+@use 'sass:color';
+
 //type scale descriptive names
 $type_scale_min3 : 1.20;
 $type_scale_maj3 : 1.25;
@@ -24,7 +23,7 @@ $font_code : Menlo, Monaco, Consolas, Inconsolata, 'Courier New', monospace;
 $color_primary_text : black !default;
 $color_primary_accent : dodgerblue !default;
 $color_primary_background : white !default;
-$color_nav_links : lighten($color_primary_accent, 20%);
+$color_nav_links: color.adjust($color_primary_accent, $lightness: 20%);
 $color_nav_background: black;
 $color_secondary_accent: #419641;
 
