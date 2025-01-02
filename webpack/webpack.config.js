@@ -43,6 +43,10 @@ module.exports = {
                 __dirname,
                 '../apps/common/assets/css/'
             ),
+            'bootstrap-custom': path.resolve(
+                __dirname,
+                '../apps/common/assets/css/lib/bootstrap/scss'
+            ),
             bootstrap: path.resolve(
                 __dirname,
                 '../node_modules/bootstrap/scss'
