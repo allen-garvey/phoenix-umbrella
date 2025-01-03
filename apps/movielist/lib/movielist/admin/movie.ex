@@ -24,28 +24,24 @@ defmodule Movielist.Admin.Movie do
     timestamps()
   end
 
-  @doc """
-  Adds sort_title to changeset generated from title
-  """
-  def generate_sort_title(changeset) do
-    change(changeset, %{sort_title: sort_title_from(get_field(changeset, :title))})
-  end
-
-  def sort_title_from(nil) do
-    nil
-  end
-
-  def sort_title_from(title) do
-    Regex.replace(~r/^the\s+/i, title, "")
-  end
-
   @doc false
   def changeset(movie, attrs) do
     movie
-    |> cast(attrs, [:title, :sort_title, :subtitle, :genre_id, :streamer_id, :theater_release_date, :home_release_date, :pre_rating, :is_active, :length])
+    |> cast(attrs, [
+      :title,
+      :sort_title,
+      :subtitle,
+      :genre_id,
+      :streamer_id,
+      :theater_release_date,
+      :home_release_date,
+      :pre_rating,
+      :is_active,
+      :length
+    ])
     # sort_title is required, but we are not validating it here since it generated from the title
     |> validate_required([:title, :genre_id, :pre_rating, :is_active])
-    |> generate_sort_title
+    |> Common.ModelHelpers.SortTitle.generate_sort_title(:title, :sort_title)
     |> Common.ModelHelpers.Number.validate_score(:pre_rating)
     |> assoc_constraint(:genre)
     |> assoc_constraint(:streamer)

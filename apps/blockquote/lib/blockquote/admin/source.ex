@@ -2,7 +2,6 @@ defmodule Blockquote.Admin.Source do
   use Ecto.Schema
   import Ecto.Changeset
   alias Blockquote.Admin.Source
-  alias Blockquote.Admin.ModelHelpers.SortTitle
 
   @schema_prefix Grenadier.RepoPrefix.blockquote()
   schema "sources" do
@@ -13,7 +12,7 @@ defmodule Blockquote.Admin.Source do
     field :release_date, :date
 
     timestamps()
-    
+
     has_many :quotes, Blockquote.Admin.Quote
     belongs_to :source_type, Blockquote.Admin.SourceType
     belongs_to :author, Blockquote.Admin.Author
@@ -24,7 +23,7 @@ defmodule Blockquote.Admin.Source do
   def changeset(%Source{} = source, attrs) do
     source
     |> cast(attrs, [:title, :subtitle, :url, :author_id, :source_type_id, :parent_source_id, :sort_title, :release_date])
-    |> SortTitle.generate_sort_title(:title, :sort_title)
+    |> Common.ModelHelpers.SortTitle.generate_sort_title(:title, :sort_title)
     |> validate_required([:title, :sort_title, :author_id, :source_type_id])
     |> assoc_constraint(:source_type)
     |> assoc_constraint(:author)
