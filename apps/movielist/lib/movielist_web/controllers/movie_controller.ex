@@ -3,11 +3,12 @@ defmodule MovielistWeb.MovieController do
 
   alias Movielist.Admin
   alias Movielist.Admin.Movie
+  alias MovielistWeb.MovieView
 
   def related_fields() do
     [
-      genres: Admin.list_genres() |> MovielistWeb.GenreView.map_for_form,
-      streamers: [nil | Admin.list_streamers() |> MovielistWeb.StreamerView.map_for_form],
+      genres: Admin.list_genres() |> MovielistWeb.GenreView.map_for_form(),
+      streamers: [nil | Admin.list_streamers() |> MovielistWeb.StreamerView.map_for_form()]
     ]
   end
 
@@ -26,7 +27,12 @@ defmodule MovielistWeb.MovieController do
 
   defp index_active_page(conn, sort) do
     movies = Admin.list_movies_active(sort)
-    render(conn, "index_active.html", movies: movies, page_route: :index_active, page_atom: :movies_index)
+
+    render(conn, "index_active.html",
+      movies: movies,
+      page_route: :index_active,
+      page_atom: :movies_index
+    )
   end
 
   def index_suggestions(conn, %{"sort" => sort}) do
@@ -39,13 +45,20 @@ defmodule MovielistWeb.MovieController do
 
   defp suggestions_page(conn, sort) do
     movies = Admin.list_movies_suggestions(sort)
-    render(conn, "index_active.html", movies: movies, page_route: :index_suggestions, page_atom: :movies_suggestions)
+
+    render(conn, "index_active.html",
+      movies: movies,
+      page_route: :index_suggestions,
+      page_atom: :movies_suggestions
+    )
   end
 
   def new(conn, _params) do
-    changeset = Admin.change_movie(%Movie{
-      genre_id: Admin.get_recent_popular_genre_id()
-    })
+    changeset =
+      Admin.change_movie(%Movie{
+        genre_id: Admin.get_recent_popular_genre_id()
+      })
+
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
@@ -53,8 +66,8 @@ defmodule MovielistWeb.MovieController do
     case Admin.create_movie(movie_params) do
       {:ok, movie} ->
         conn
-        |> put_flash(:info, "Movie created successfully.")
-        |> redirect(to: Routes.movie_path(conn, :show, movie))
+        |> put_flash(:info, "#{MovieView.to_s(movie)} created successfully.")
+        |> redirect(to: Routes.movie_path(conn, :index_active))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset] ++ related_fields())
@@ -63,8 +76,15 @@ defmodule MovielistWeb.MovieController do
 
   def show(conn, %{"id" => id}) do
     movie = Admin.get_movie!(id)
-    changeset_is_active = movie |> Admin.change_movie |> Admin.change_movie_is_active(!movie.is_active)
-    render(conn, "show.html", movie: movie, changeset_is_active: changeset_is_active, require_modal: true)
+
+    changeset_is_active =
+      movie |> Admin.change_movie() |> Admin.change_movie_is_active(!movie.is_active)
+
+    render(conn, "show.html",
+      movie: movie,
+      changeset_is_active: changeset_is_active,
+      require_modal: true
+    )
   end
 
   def edit(conn, %{"id" => id}) do
