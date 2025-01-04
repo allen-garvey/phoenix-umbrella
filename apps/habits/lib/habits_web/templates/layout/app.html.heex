@@ -1,5 +1,12 @@
 <main class="container">
-  <p class="alert alert-info" role="alert"><%= Phoenix.Flash.get(@flash, :info) %></p>
-  <p class="alert alert-danger" role="alert"><%= Phoenix.Flash.get(@flash, :error) %></p>
-  <%= @inner_content %>
+  <div class="main-padding">
+    <p class="alert alert-info" role="alert"><%= Phoenix.Flash.get(@flash, :info) %></p>
+    <p class="alert alert-danger" role="alert"><%= Phoenix.Flash.get(@flash, :error) %></p>
+  </div>
+  <div class={case assigns[:no_main_padding] do
+  true -> ""
+  _ -> "main-padding"
+  end}>
+    <%= @inner_content %>
+  </div>
 </main>

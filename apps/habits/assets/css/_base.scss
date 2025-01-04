@@ -62,5 +62,8 @@ a{
 .container{
 	margin: 0 auto;
 	max-width: 1400px;
+}
+
+.main-padding {
 	padding: 0 variables.$main-horizontal-padding;
 }
