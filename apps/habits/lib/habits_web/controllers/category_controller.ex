@@ -10,6 +10,15 @@ defmodule HabitsWeb.CategoryController do
     render(conn, "index.html", categories: categories)
   end
 
+  def create_category_activity_index(conn, _params) do
+    categories = Admin.list_categories()
+
+    render(conn, "create_category_activity_index.html",
+      categories: categories,
+      no_main_padding: true
+    )
+  end
+
   def new(conn, _params) do
     changeset = Admin.change_category(%Category{})
     render(conn, "new.html", changeset: changeset)

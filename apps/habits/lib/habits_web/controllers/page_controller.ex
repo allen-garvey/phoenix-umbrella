@@ -1,7 +1,7 @@
 defmodule HabitsWeb.PageController do
   use HabitsWeb, :controller
 
-  def index(conn, _params) do
-    render(conn, "index.html")
+  def calendar(conn, _params) do
+    render(conn, "calendar.html", no_main_padding: true)
   end
 end

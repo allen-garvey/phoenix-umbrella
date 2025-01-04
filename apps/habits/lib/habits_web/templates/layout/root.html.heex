@@ -10,10 +10,11 @@
   </head>
   <body>
     <header class="jumbotron">
-        <h1 class="main_title"><%= link "Habits", to: Routes.page_path(@conn, :index) %></h1>
       <div class="container main-padding">
+        <h1 class="main_title"><%= link "Habits", to: Routes.category_path(@conn, :create_category_activity_index) %></h1>
         <nav>
           <ul class="nav">
+            <li><%= link "Calendar", to: Routes.page_path(@conn, :calendar) %></li>
             <li><%= link "Categories", to: Routes.category_path(@conn, :index) %></li>
             <li><%= link "Activities", to: Routes.activity_path(@conn, :index) %></li>
             <%= for category <- @favorite_categories do %>

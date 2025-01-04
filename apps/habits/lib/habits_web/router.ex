@@ -25,7 +25,8 @@ defmodule HabitsWeb.Router do
     pipe_through :browser
     pipe_through :authenticate
 
-    get "/", PageController, :index
+    get "/", CategoryController, :create_category_activity_index
+    get "/calendar", PageController, :calendar
 
     get "/categories/:id/activities", CategoryController, :activities_list
 
