@@ -8,7 +8,6 @@ defmodule HabitsWeb.Router do
     plug :put_root_layout, {HabitsWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug HabitsWeb.Plugs.FetchFavoriteCategories
   end
 
   pipeline :authenticate do

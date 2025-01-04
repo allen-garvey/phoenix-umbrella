@@ -17,7 +17,7 @@
             <li><%= link "Calendar", to: Routes.page_path(@conn, :calendar) %></li>
             <li><%= link "Categories", to: Routes.category_path(@conn, :index) %></li>
             <li><%= link "Activities", to: Routes.activity_path(@conn, :index) %></li>
-            <%= for category <- @favorite_categories do %>
+            <%= for category <- Habits.Admin.list_favorite_categories(assigns[:categories]) do %>
               <li>
                 <%= link HabitsWeb.CategoryView.to_s(category), to: Routes.category_path(@conn, :show, category) %>
               </li>
