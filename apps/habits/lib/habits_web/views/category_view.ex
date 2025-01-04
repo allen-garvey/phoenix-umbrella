@@ -33,7 +33,7 @@ defmodule HabitsWeb.CategoryView do
   end
 
   def color_style(%Category{} = category) do
-    "center category-color category-color--#{category.color}"
+    "category-color category-color--#{category.color}"
   end
 
   def streak_item_style(%Category{} = category, count) do
