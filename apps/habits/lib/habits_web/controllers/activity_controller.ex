@@ -6,7 +6,7 @@ defmodule HabitsWeb.ActivityController do
 
   def related_fields() do
     [
-      categories: Admin.list_categories() |> HabitsWeb.CategoryView.map_for_form()
+      categories: Admin.list_categories()
     ]
   end
 
