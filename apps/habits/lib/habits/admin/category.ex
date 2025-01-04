@@ -17,7 +17,7 @@ defmodule Habits.Admin.Category do
   def changeset(category, attrs) do
     category
     |> cast(attrs, [:name, :color, :is_favorite])
-    |> validate_required([:name])
+    |> validate_required([:name, :color])
     |> unique_constraint([:name])
   end
 end
