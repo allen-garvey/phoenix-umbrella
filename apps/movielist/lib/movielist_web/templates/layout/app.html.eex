@@ -23,8 +23,8 @@
       </nav>
     </header>
     <main role="main" class="container">
-      <p class="alert alert-info" role="alert"><%= Phoenix.Flash.get(@flash, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= Phoenix.Flash.get(@flash, :error) %></p>
+      <div class="alert alert-info" role="alert"><%= Phoenix.Flash.get(@flash, :info) %></div>
+      <div class="alert alert-danger" role="alert"><%= Phoenix.Flash.get(@flash, :error) %></div>
       <%= @inner_content %>
     </main>
     <% #only show pages require modal %>

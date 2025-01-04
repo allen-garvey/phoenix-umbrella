@@ -1,13 +1,14 @@
 @use 'lib/bootstrap-custom';
-@use 'umbrella-common-styles/form.scss' as common_form;
+@use 'umbrella-common-styles/form' as common_form;
 
-@use 'base.scss';
-@use 'header.scss';
-@use 'table.scss';
-@use 'modal.scss';
-@use 'show.scss';
-@use 'reports.scss';
-@use 'form.scss';
+@use 'base';
+@use 'header';
+@use 'table';
+@use 'modal';
+@use 'alerts';
+@use 'show';
+@use 'reports';
+@use 'form';
 
 
 

@@ -2,7 +2,7 @@ defmodule MovielistWeb.MovieView do
   use MovielistWeb, :view
 
   def to_s(movie) do
-  	to_s(movie.title, movie.subtitle)
+    to_s(movie.title, movie.subtitle)
   end
 
   def to_s(title, nil) do
@@ -15,12 +15,19 @@ defmodule MovielistWeb.MovieView do
 
   Common.ViewHelpers.Form.define_map_for_form()
 
+  def movie_created_flash(conn, movie) do
+    [
+      content_tag(:div, "#{to_s(movie)} created successfully."),
+      link("Add rating", to: Routes.rating_path(conn, :new, movie.id), class: "btn btn-success")
+    ]
+  end
+
   @doc """
   String representation of active status
   """
   def is_active_status(is_active) do
     case is_active do
-      true  -> "Active"
+      true -> "Active"
       false -> "Inactive"
     end
   end
@@ -30,23 +37,23 @@ defmodule MovielistWeb.MovieView do
   """
   def active_button_class(is_active) do
     case is_active do
-      true  -> "btn-primary"
+      true -> "btn-primary"
       false -> "btn-light"
     end
   end
 
   def row_class_for_active_status(is_active) do
     case is_active do
-      true  -> "tr_primary"
+      true -> "tr_primary"
       false -> "tr_error"
     end
   end
 
   def css_class_for_release_status(release_status) do
     case release_status do
-      :home_released    -> "tr_primary"
+      :home_released -> "tr_primary"
       :theater_released -> "tr_warning"
-      _                 -> "tr_error"
+      _ -> "tr_error"
     end
   end
 
