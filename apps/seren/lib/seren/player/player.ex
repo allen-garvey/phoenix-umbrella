@@ -94,8 +94,10 @@ defmodule Seren.Player do
       left_join: album in assoc(t, :album),
       left_join: c in assoc(t, :composer),
       where:
-        ilike(t.title, ^like_query) or ilike(artist.name, ^like_query) or
-          ilike(album.title, ^like_query) or ilike(c.name, ^like_query),
+        ilike(t.title, ^like_query) or
+          ilike(artist.name, ^like_query) or
+          ilike(album.title, ^like_query) or
+          ilike(c.name, ^like_query),
       order_by: [artist.name, album.title, :album_disc_number, :track_number, :title],
       limit: ^limit
     )
