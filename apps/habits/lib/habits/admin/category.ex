@@ -13,11 +13,19 @@ defmodule Habits.Admin.Category do
     timestamps()
   end
 
+  defp validate_color(changeset, color_key) do
+    case(Enum.member?(HabitsWeb.CategoryView.colors(), get_field(changeset, color_key))) do
+      true -> changeset
+      false -> add_error(changeset, color_key, "Invalid color.")
+    end
+  end
+
   @doc false
   def changeset(category, attrs) do
     category
     |> cast(attrs, [:name, :color, :is_favorite])
     |> validate_required([:name, :color])
+    |> validate_color(:color)
     |> unique_constraint([:name])
   end
 end
