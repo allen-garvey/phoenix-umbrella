@@ -1,4 +1,5 @@
 import TrackList from './components/track-list.vue';
+import TrackList2 from './components/track-list2.vue';
 import ArtistList from './components/artist-list.vue';
 import ComposerList from './components/composer-list.vue';
 import AlbumList from './components/album-list.vue';
@@ -40,15 +41,7 @@ export default {
         {
             path: '/tracks',
             name: 'tracksIndex',
-            component: TrackList,
-            props: route => {
-                return {
-                    itemColumns: Models.trackItemColumns,
-                    itemFields: Models.trackItemFields,
-                    getItemsKey: 'tracks',
-                    isInfiniteScrollDisabled: false,
-                };
-            },
+            component: TrackList2,
         },
         {
             path: '/search/tracks',
