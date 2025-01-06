@@ -1,5 +1,6 @@
 import TrackList from './components/track-list.vue';
 import ArtistList from './components/artist-list.vue';
+import ComposerList from './components/composer-list.vue';
 import Models from './models';
 
 function relatedTracksProps(route) {
@@ -43,20 +44,7 @@ export default {
         {
             path: '/composers',
             name: 'composersIndex',
-            component: TrackList,
-            props: route => {
-                return {
-                    itemColumns: Models.defaultItemColumns,
-                    itemFields: Models.defaultItemFields,
-                    getItemsKey: 'composers',
-                    routeForItem(item) {
-                        return {
-                            name: 'composerTracks',
-                            params: { id: item.id },
-                        };
-                    },
-                };
-            },
+            component: ComposerList,
         },
         {
             path: '/tracks',
