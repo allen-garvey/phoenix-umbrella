@@ -90,7 +90,7 @@ export default {
                     },
                 },
                 {
-                    title: 'Search',
+                    title: 'Search Results',
                     route(searchQuery) {
                         return {
                             name: 'searchTracks',
