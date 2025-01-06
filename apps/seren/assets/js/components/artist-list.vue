@@ -1,5 +1,5 @@
 <template>
-    <items-table :sortItemsFunc="sortArtists" :itemColumns="itemColumns">
+    <items-table :onSortRequested="sortArtists" :itemColumns="itemColumns">
         <tr v-for="artist in artists" :key="artist.id">
             <td>
                 <router-link

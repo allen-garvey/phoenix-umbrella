@@ -70,7 +70,7 @@ export default {
             type: Array,
             required: true,
         },
-        sortItemsFunc: {
+        onSortRequested: {
             type: Function,
             required: true,
         },
@@ -101,7 +101,7 @@ export default {
                 this.sortAsc = !this.sortAsc;
             }
             this.previousSortKey = key;
-            this.sortItemsFunc(key, this.sortAsc);
+            this.onSortRequested(key, this.sortAsc);
         },
     },
 };
