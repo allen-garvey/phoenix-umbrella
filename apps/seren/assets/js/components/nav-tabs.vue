@@ -82,14 +82,6 @@ export default {
                     },
                 },
                 {
-                    title: 'Genres',
-                    route(searchQuery) {
-                        return {
-                            name: 'genresIndex',
-                        };
-                    },
-                },
-                {
                     title: 'Tracks',
                     route(searchQuery) {
                         return {

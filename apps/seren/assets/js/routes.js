@@ -59,21 +59,6 @@ export default {
             },
         },
         {
-            path: '/genres',
-            name: 'genresIndex',
-            component: TrackList,
-            props: route => {
-                return {
-                    itemColumns: Models.defaultItemColumns,
-                    itemFields: Models.defaultItemFields,
-                    getItemsKey: 'genres',
-                    routeForItem(item) {
-                        return { name: 'genreTracks', params: { id: item.id } };
-                    },
-                };
-            },
-        },
-        {
             path: '/tracks',
             name: 'tracksIndex',
             component: TrackList,
