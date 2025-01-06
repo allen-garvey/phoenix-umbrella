@@ -1,10 +1,8 @@
 <template>
     <nav :class="$style.nav">
-        <ul 
-            :class="[$style.navList, $style.navPills]"
-        >
+        <ul :class="[$style.navList, $style.navPills]">
             <li v-for="(tab, i) in tabs" :key="i">
-                <router-link 
+                <router-link
                     :to="tab.route(searchQuery)"
                     :active-class="$style.routerLinkActive"
                 >
@@ -16,41 +14,39 @@
 </template>
 
 <style lang="scss" module>
-    @use '~seren-styles/variables';
+@use '~seren-styles/variables';
 
-    .nav{
-        font-family: sans-serif;
+.nav {
+    font-family: sans-serif;
+}
+
+.navList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    list-style-type: none;
+}
+
+.navPills li a {
+    text-decoration: none;
+    color: variables.$accent_color_text;
+    cursor: pointer;
+    padding: 0.5em 1em;
+
+    &:hover {
+        color: #0056b3;
     }
 
-    .navList{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 0;
-        list-style-type: none;
+    &.routerLinkActive {
+        background: variables.$accent_color_text;
+        color: white;
+        border-radius: 4px;
     }
-
-    .navPills li a{
-        text-decoration: none;
-        color: variables.$accent_color_text;
-        cursor: pointer;
-        padding: 0.5em 1em;
-
-        &:hover{
-            color: #0056b3;
-        }
-
-        &.routerLinkActive{
-            background: variables.$accent_color_text;
-            color: white;
-            border-radius: 4px;	
-        }
-    }
+}
 </style>
 
 <script>
-import Models from '../models';
-
 export default {
     props: {
         searchQuery: {
@@ -58,12 +54,62 @@ export default {
             required: true,
         },
     },
-	data(){
-		return {
-			tabs: Models.getTabs(),
-		};
-	},
-	computed: {
-	},
+    computed: {
+        tabs() {
+            return [
+                {
+                    title: 'Artists',
+                    route(searchQuery) {
+                        return {
+                            name: 'artistsIndex',
+                        };
+                    },
+                },
+                {
+                    title: 'Albums',
+                    route(searchQuery) {
+                        return {
+                            name: 'albumsIndex',
+                        };
+                    },
+                },
+                {
+                    title: 'Composers',
+                    route(searchQuery) {
+                        return {
+                            name: 'composersIndex',
+                        };
+                    },
+                },
+                {
+                    title: 'Genres',
+                    route(searchQuery) {
+                        return {
+                            name: 'genresIndex',
+                        };
+                    },
+                },
+                {
+                    title: 'Tracks',
+                    route(searchQuery) {
+                        return {
+                            name: 'tracksIndex',
+                        };
+                    },
+                },
+                {
+                    title: 'Search',
+                    route(searchQuery) {
+                        return {
+                            name: 'searchTracks',
+                            query: {
+                                q: searchQuery,
+                            },
+                        };
+                    },
+                },
+            ];
+        },
+    },
 };
 </script>
