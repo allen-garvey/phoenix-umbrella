@@ -1,12 +1,17 @@
 .create-category-activity-list {
     list-style-type: none;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
     gap: 1em 0.5em;
+    
+    &, li {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
 
-    a {
+    }
+
+    li {
         padding: 1em;
-        display: inline-block;
+        gap: 1.25em;
     }
 }

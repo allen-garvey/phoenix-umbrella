@@ -5,7 +5,7 @@
 .category-color--beige {
     background-color: antiquewhite;
     
-    &, a {
+    &, a:not(.btn) {
         color: #000;
     }
 }
@@ -21,14 +21,14 @@
 .category-color--cyan {
     background-color: cyan;
     
-    &, a {
+    &, a:not(.btn) {
         color: #000;
     }
 }
 .category-color--gold {
     background-color: gold;
     
-    &, a {
+    &, a:not(.btn) {
         color: #000;
     }
 }
@@ -41,7 +41,7 @@
 .category-color--lime {
     background-color: lawngreen;
     
-    &, a {
+    &, a:not(.btn) {
         color: #000;
     }
 }
@@ -54,14 +54,14 @@
 .category-color--orange {
     background-color: orange;
 
-    &, a {
+    &, a:not(.btn) {
         color: #000;
     }
 }
 .category-color--pink {
     background-color: pink;
     
-    &, a {
+    &, a:not(.btn) {
         color: #000;
     }
 }
@@ -77,7 +77,7 @@
 .category-color--sandy {
     background-color: sandybrown;
 
-    &, a {
+    &, a:not(.btn) {
         color: #000;
     }
 }
@@ -87,7 +87,7 @@
 .category-color--yellow {
     background-color: yellow;
     
-    &, a {
+    &, a:not(.btn) {
         color: #000;
     }
 }
