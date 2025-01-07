@@ -3,10 +3,14 @@
         <thead>
             <tr>
                 <template v-for="(column, i) in itemColumns" :key="i">
-                    <th v-if="column" @click="sortItems(column.sort)">
-                        {{ column.title }}
+                    <th :class="column?.class">
+                        <template
+                            v-if="column?.title"
+                            @click="sortItems(column.sort)"
+                        >
+                            {{ column.title }}
+                        </template>
                     </th>
-                    <th v-else></th>
                 </template>
             </tr>
         </thead>
@@ -42,7 +46,10 @@
     }
     th {
         text-align: left;
-        cursor: pointer;
+
+        &:not(:empty) {
+            cursor: pointer;
+        }
     }
 
     tbody tr {
