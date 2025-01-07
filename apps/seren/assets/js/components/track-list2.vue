@@ -67,9 +67,14 @@
 </template>
 
 <style lang="scss" module>
+$playButtonDimensions: 50px;
+
+.colPlayBtnHeading {
+    width: $playButtonDimensions;
+}
 .colPlayBtn {
-    height: 50px;
-    width: 50px;
+    height: $playButtonDimensions;
+    width: $playButtonDimensions;
 
     svg {
         display: none;
@@ -103,6 +108,10 @@
             display: block;
         }
     }
+}
+
+.shortColumn {
+    width: 8em;
 }
 </style>
 
@@ -168,15 +177,31 @@ export default {
     computed: {
         itemColumns() {
             return [
-                null,
+                { class: this.$style.colPlayBtnHeading },
                 { title: 'Title', sort: 'title' },
                 { title: 'Artist', sort: 'artist' },
                 { title: 'Album', sort: 'album' },
-                { title: 'Length', sort: 'length' },
+                {
+                    title: 'Length',
+                    sort: 'length',
+                    class: this.$style.shortColumn,
+                },
                 { title: 'Composer', sort: 'composer' },
-                { title: 'Bit Rate', sort: 'bit_rate' },
-                { title: 'Play Count', sort: 'play_count' },
-                { title: 'Date Added', sort: 'date_added' },
+                {
+                    title: 'Bit Rate',
+                    sort: 'bit_rate',
+                    class: this.$style.shortColumn,
+                },
+                {
+                    title: 'Play Count',
+                    sort: 'play_count',
+                    class: this.$style.shortColumn,
+                },
+                {
+                    title: 'Date Added',
+                    sort: 'date_added',
+                    class: this.$style.shortColumn,
+                },
             ];
         },
     },
