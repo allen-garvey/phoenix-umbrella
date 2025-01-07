@@ -11,7 +11,6 @@
             :get-items="getItems"
             :artists-map="artistsMap"
             :albums-map="albumsMap"
-            :genres-map="genresMap"
             :composers-map="composersMap"
         />
         <Media-Controls
@@ -62,7 +61,6 @@ export default {
 
         Promise.all([
             loadModelAndMap('artists', this, this.artistsMap),
-            loadModelAndMap('genres', this, this.genresMap),
             loadModelAndMap('composers', this, this.composersMap),
             loadModelAndMap('albums', this, this.albumsMap),
             this.loadMoreTracks(),
@@ -75,11 +73,9 @@ export default {
             tracks: [],
             artists: [],
             albums: [],
-            genres: [],
             composers: [],
             artistsMap: new Map(),
             albumsMap: new Map(),
-            genresMap: new Map(),
             composersMap: new Map(),
             displayTracks: [],
             //activeTrackTrackList: the track list when the currently playing track started playing

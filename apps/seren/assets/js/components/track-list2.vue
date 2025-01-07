@@ -43,9 +43,6 @@
                 {{ formatTrackLength(track.length) }}
             </td>
             <td>
-                {{ track.genre?.name }}
-            </td>
-            <td>
                 <router-link
                     :to="{
                         name: 'composerTracks',
@@ -144,10 +141,6 @@ export default {
             type: Map,
             required: true,
         },
-        genresMap: {
-            type: Map,
-            required: true,
-        },
         composersMap: {
             type: Map,
             required: true,
@@ -180,7 +173,6 @@ export default {
                 { title: 'Artist', sort: 'artist' },
                 { title: 'Album', sort: 'album' },
                 { title: 'Length', sort: 'length' },
-                { title: 'Genre', sort: 'genre' },
                 { title: 'Composer', sort: 'composer' },
                 { title: 'Bit Rate', sort: 'bit_rate' },
                 { title: 'Play Count', sort: 'play_count' },
@@ -197,7 +189,6 @@ export default {
                 this.tracks = tracks.map(track => ({
                     ...track,
                     artist: this.artistsMap.get(track.artist_id),
-                    genre: this.genresMap.get(track.genre_id),
                     album: this.albumsMap.get(track.album_id),
                     composer: this.composersMap.get(track.composer_id),
                 }));
@@ -240,18 +231,6 @@ export default {
                     sortFunction = (a, b) => {
                         const compare = a.album?.title.localeCompare(
                             b.album?.title
-                        );
-                        if (compare !== undefined && compare !== 0) {
-                            return compare;
-                        }
-
-                        return a.title.localeCompare(b.title);
-                    };
-                    break;
-                case 'genre':
-                    sortFunction = (a, b) => {
-                        const compare = a.genre?.name.localeCompare(
-                            b.genre?.name
                         );
                         if (compare !== undefined && compare !== 0) {
                             return compare;

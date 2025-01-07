@@ -78,17 +78,5 @@ export default {
                 };
             },
         },
-        {
-            path: '/genres/:id/tracks',
-            name: 'genreTracks',
-            component: TrackList,
-            props: route => {
-                return {
-                    getItemsKey: {
-                        apiPath: route.path,
-                    },
-                };
-            },
-        },
     ],
 };

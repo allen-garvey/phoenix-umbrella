@@ -3,48 +3,54 @@
         <thead>
             <tr>
                 <th :class="$style.colPlayBtn"></th>
-                <th 
+                <th
                     v-for="(column, i) in itemColumns"
-                    :key="i" 
+                    :key="i"
                     @click="sortItems(column.sort)"
                 >
-                    {{column.title}}
+                    {{ column.title }}
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr 
-                v-for="(item, i) in items"
-                :key="i"
-            >
-                <td 
-                    @click="rowPlayButtonClicked(item, i)" 
-                    :class="{[$style.colPlayBtn]: true, [$style.isPlaying]: isTrackPlaying(item)}"
+            <tr v-for="(item, i) in items" :key="i">
+                <td
+                    @click="rowPlayButtonClicked(item, i)"
+                    :class="{
+                        [$style.colPlayBtn]: true,
+                        [$style.isPlaying]: isTrackPlaying(item),
+                    }"
                 >
-                    <button :class="$style.playButton" v-if="this.canRowBePlayed">
+                    <button
+                        :class="$style.playButton"
+                        v-if="this.canRowBePlayed"
+                    >
                         <svg>
-                            <use href="#icon-pause" v-if="isTrackPlaying(item)" />
+                            <use
+                                href="#icon-pause"
+                                v-if="isTrackPlaying(item)"
+                            />
                             <use href="#icon-play" v-else />
                         </svg>
                     </button>
                 </td>
-                <td 
+                <td
                     v-for="(field, j) in itemFields(item)"
                     :key="`${item.id}${i}${field}${j}`"
                 >
-                    <router-link 
+                    <router-link
                         :to="routeForItem(item)"
                         v-if="routeForItem && j === 0"
                     >
-                        {{field}}
+                        {{ field }}
                     </router-link>
-                    <span v-else>{{field}}</span>
+                    <span v-else>{{ field }}</span>
                 </td>
             </tr>
             <tr>
                 <td :colspan="itemColumns.length + 1">
-                    <infinite-observer 
-                        :on-trigger="infiniteScrollTriggered" 
+                    <infinite-observer
+                        :on-trigger="infiniteScrollTriggered"
                         v-if="!isInfiniteScrollDisabled"
                     >
                     </infinite-observer>
@@ -55,71 +61,74 @@
 </template>
 
 <style lang="scss" module>
-    .trackList{
-        width: 100%;
-        table-layout: fixed;
-        border-collapse: collapse;
+.trackList {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
 
-        a {
-            text-decoration: none;
-        }
+    a {
+        text-decoration: none;
+    }
 
-        thead{
-            background: #b6cfe7;
-            font-family: sans-serif;
-        }
-        th, td{
-            padding: 0.5em;
-        }
-        th{
-            text-align: left;
-            cursor: pointer;
-        }
+    thead {
+        background: #b6cfe7;
+        font-family: sans-serif;
+    }
+    th,
+    td {
+        padding: 0.5em;
+    }
+    th {
+        text-align: left;
+        cursor: pointer;
+    }
 
-        tbody tr{
-            transition: background-color 0.3s ease;
-            
-            &:nth-of-type(even){
-                background: #e6f2fe;
-            }
+    tbody tr {
+        transition: background-color 0.3s ease;
+
+        &:nth-of-type(even) {
+            background: #e6f2fe;
+        }
+    }
+}
+
+.colPlayBtn {
+    height: 50px;
+    width: 50px;
+
+    svg {
+        display: none;
+    }
+
+    &:hover,
+    &.isPlaying {
+        svg {
+            display: block;
         }
     }
 
-    .colPlayBtn{
-        height: 50px;
-        width: 50px;
+    &:hover {
+        svg {
+            color: dodgerblue;
+        }
+    }
+}
+
+.playButton {
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+
+    &:active,
+    &:focus {
+        border: none;
 
         svg {
-            display: none;
-        }
-
-        &:hover, &.isPlaying {
-            svg {
-                display: block;
-            }
-        }
-
-        &:hover {
-            svg {
-                color: dodgerblue;
-            }
+            display: block;
         }
     }
-
-    .playButton {
-        height: 50px;
-        background-color: transparent;
-        border: none;
-        width: 100%;
-
-        &:active, &:focus {
-            border: none;
-
-            svg {
-                display: block;
-            }
-        }
-    }
+}
 </style>
 
 <script>
@@ -167,8 +176,8 @@ export default {
             type: Function,
             required: true,
         },
-        //if on list page with list of tracks, routeForItem will be null meaning we should play the track, 
-        //otherwise it will be a function taking the row and giving us a route to go to 
+        //if on list page with list of tracks, routeForItem will be null meaning we should play the track,
+        //otherwise it will be a function taking the row and giving us a route to go to
         routeForItem: {
             default: null,
         },
@@ -184,72 +193,66 @@ export default {
             type: Map,
             required: true,
         },
-        genresMap: {
-            type: Map,
-            required: true,
-        },
         composersMap: {
             type: Map,
             required: true,
         },
     },
-	data(){
-		return {
+    data() {
+        return {
             items: [],
-			previousSortKey: null,
+            previousSortKey: null,
             sortAsc: true,
-		};
-	},
-	computed: {
-        canRowBePlayed(){
+        };
+    },
+    computed: {
+        canRowBePlayed() {
             return !this.routeForItem;
         },
     },
-    created(){
+    created() {
         this.loadItems();
     },
     watch: {
-        '$route'(to, from){
+        $route(to, from) {
             this.items = [];
             nextTick().then(() => {
                 this.loadItems();
             });
         },
     },
-	methods: {
-        loadItems(){
+    methods: {
+        loadItems() {
             this.items = [];
-            this.getItems(this.getItemsKey).then((items)=>{
+            this.getItems(this.getItemsKey).then(items => {
                 this.items = items;
             });
         },
-        infiniteScrollTriggered($state){
-            this.loadMoreTracks().then(()=>{
+        infiniteScrollTriggered($state) {
+            this.loadMoreTracks().then(() => {
                 this.loadItems();
                 $state.loaded();
             });
         },
-		sortItems(key){
-			if(key !== this.previousSortKey){
-				this.sortAsc = true;
-			}
-			else{
-				this.sortAsc = !this.sortAsc;
+        sortItems(key) {
+            if (key !== this.previousSortKey) {
+                this.sortAsc = true;
+            } else {
+                this.sortAsc = !this.sortAsc;
             }
-			this.previousSortKey = key;
+            this.previousSortKey = key;
             this.sortItemsFunc(this.items, key, this.sortAsc);
         },
-        rowPlayButtonClicked(item, i){
-            if(!this.canRowBePlayed){
+        rowPlayButtonClicked(item, i) {
+            if (!this.canRowBePlayed) {
                 return;
             }
-            if(this.isTrackPlaying(item)){
+            if (this.isTrackPlaying(item)) {
                 this.stopTrack();
-            }
-            else{
+            } else {
                 this.playTrack(item, i, this.items);
             }
         },
-	}
+    },
 };
 </script>
