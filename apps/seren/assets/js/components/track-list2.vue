@@ -1,6 +1,6 @@
 <template>
     <items-table :onSortRequested="sortTracks" :itemColumns="itemColumns">
-        <tr v-for="(track, i) in tracks" :key="track.id">
+        <tr v-for="(track, i) in tracks" :key="track.id" :class="$style.row">
             <td
                 @click="rowPlayButtonClicked(track, i)"
                 :class="{
@@ -78,18 +78,13 @@ $playButtonDimensions: 50px;
 
     svg {
         display: none;
+        color: dodgerblue;
     }
 
-    &:hover,
+    .row:hover &,
     &.isPlaying {
         svg {
             display: block;
-        }
-    }
-
-    &:hover {
-        svg {
-            color: dodgerblue;
         }
     }
 }
