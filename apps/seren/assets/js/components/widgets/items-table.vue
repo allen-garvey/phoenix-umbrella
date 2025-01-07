@@ -12,12 +12,9 @@
         </thead>
         <tbody>
             <slot></slot>
-            <tr>
+            <tr v-if="infiniteScroll">
                 <td>
-                    <infinite-observer
-                        :on-trigger="infiniteScrollTriggered"
-                        v-if="infiniteScroll"
-                    >
+                    <infinite-observer :on-trigger="infiniteScrollTriggered">
                     </infinite-observer>
                 </td>
             </tr>
