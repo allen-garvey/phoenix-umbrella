@@ -6,7 +6,6 @@
             v-if="isInitialLoadComplete"
             :load-more-tracks="loadMoreTracks"
             :is-track-playing="isTrackPlaying"
-            :sort-items-func="sortItems"
             :play-track="playTrack"
             :stop-track="stop"
             :get-items="getItems"
@@ -36,7 +35,7 @@ import SearchBar from './search-bar.vue';
 import NavTabs from './nav-tabs.vue';
 import MediaControls from './media-controls.vue';
 
-import Models from '../models';
+import { loadModelAndMap } from '../models';
 import { fetchJson } from 'umbrella-common-js/ajax.js';
 import { API_URL_BASE } from '../api-helpers';
 
@@ -62,10 +61,10 @@ export default {
         });
 
         Promise.all([
-            Models.loadModelAndMap('artists', this, this.artistsMap),
-            Models.loadModelAndMap('genres', this, this.genresMap),
-            Models.loadModelAndMap('composers', this, this.composersMap),
-            Models.loadModelAndMap('albums', this, this.albumsMap),
+            loadModelAndMap('artists', this, this.artistsMap),
+            loadModelAndMap('genres', this, this.genresMap),
+            loadModelAndMap('composers', this, this.composersMap),
+            loadModelAndMap('albums', this, this.albumsMap),
             this.loadMoreTracks(),
         ]).then(() => {
             this.isInitialLoadComplete = true;
@@ -250,14 +249,6 @@ export default {
             const trackIndex = this.activeTrack.index + 1;
             const track = this.activeTrackTrackList[trackIndex];
             this.play(track, trackIndex, this.activeTrack.path);
-        },
-        sortItems(items, key, sortAsc) {
-            const relatedFields = {
-                artists: this.artistsMap,
-                genres: this.genresMap,
-                composers: this.composersMap,
-            };
-            Models.sortItems(items, key, sortAsc, relatedFields);
         },
     },
 };

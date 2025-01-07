@@ -1,21 +1,21 @@
 <template>
     <div :class="$style.trackTime">
-        <span>{{formatTrackLength(elapsedTime)}}</span>
+        <span>{{ formatTrackLength(elapsedTime) }}</span>
         <span>-</span>
-        <span>{{formatTrackLength(totalTime)}}</span>
+        <span>{{ formatTrackLength(totalTime) }}</span>
     </div>
 </template>
 
 <style lang="scss" module>
-    .trackTime{
-        font-size: 18px;
-        color: #fff;
-        margin-bottom: 8px;
-    }
+.trackTime {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 8px;
+}
 </style>
 
 <script>
-import Util from '../../util';
+import { formatTrackLength } from '../../view-helpers';
 
 export default {
     props: {
@@ -29,7 +29,7 @@ export default {
         },
     },
     methods: {
-        formatTrackLength: Util.formatTrackLength,
-	}
+        formatTrackLength,
+    },
 };
 </script>
