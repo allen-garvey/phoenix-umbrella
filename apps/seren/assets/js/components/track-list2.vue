@@ -110,11 +110,16 @@
 </style>
 
 <script>
+import { nextTick } from 'vue';
 import ItemsTable from './widgets/items-table.vue';
 import { formatTrackLength, formatUtcDateToUs } from '../view-helpers';
 
 export default {
     props: {
+        // might be string or object
+        getItemsKey: {
+            required: true,
+        },
         getItems: {
             type: Function,
             required: true,
@@ -188,7 +193,7 @@ export default {
         formatUtcDateToUs,
         loadTracks() {
             this.tracks = [];
-            this.getItems('tracks').then(tracks => {
+            this.getItems(this.getItemsKey).then(tracks => {
                 this.tracks = tracks.map(track => ({
                     ...track,
                     artist: this.artistsMap.get(track.artist_id),

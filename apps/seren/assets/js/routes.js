@@ -1,19 +1,7 @@
-import TrackList from './components/track-list.vue';
-import TrackList2 from './components/track-list2.vue';
+import TrackList from './components/track-list2.vue';
 import ArtistList from './components/artist-list.vue';
 import ComposerList from './components/composer-list.vue';
 import AlbumList from './components/album-list.vue';
-import Models from './models';
-
-function relatedTracksProps(route) {
-    return {
-        itemColumns: Models.trackItemColumns,
-        itemFields: Models.trackItemFields,
-        getItemsKey: {
-            apiPath: route.path,
-        },
-    };
-}
 
 export default {
     mode: 'history',
@@ -41,18 +29,17 @@ export default {
         {
             path: '/tracks',
             name: 'tracksIndex',
-            component: TrackList2,
+            component: TrackList,
+            props: {
+                getItemsKey: 'tracks',
+            },
         },
         {
             path: '/search/tracks',
             name: 'searchTracks',
             component: TrackList,
-            props: route => {
-                return {
-                    itemColumns: Models.trackItemColumns,
-                    itemFields: Models.trackItemFields,
-                    getItemsKey: 'searchTracks',
-                };
+            props: {
+                getItemsKey: 'searchTracks',
             },
         },
         {
@@ -60,7 +47,11 @@ export default {
             name: 'artistTracks',
             component: TrackList,
             props: route => {
-                return relatedTracksProps(route);
+                return {
+                    getItemsKey: {
+                        apiPath: route.path,
+                    },
+                };
             },
         },
         {
@@ -68,7 +59,11 @@ export default {
             name: 'albumTracks',
             component: TrackList,
             props: route => {
-                return relatedTracksProps(route);
+                return {
+                    getItemsKey: {
+                        apiPath: route.path,
+                    },
+                };
             },
         },
         {
@@ -76,7 +71,11 @@ export default {
             name: 'composerTracks',
             component: TrackList,
             props: route => {
-                return relatedTracksProps(route);
+                return {
+                    getItemsKey: {
+                        apiPath: route.path,
+                    },
+                };
             },
         },
         {
@@ -84,7 +83,11 @@ export default {
             name: 'genreTracks',
             component: TrackList,
             props: route => {
-                return relatedTracksProps(route);
+                return {
+                    getItemsKey: {
+                        apiPath: route.path,
+                    },
+                };
             },
         },
     ],
