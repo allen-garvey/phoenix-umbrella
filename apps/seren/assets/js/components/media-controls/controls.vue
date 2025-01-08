@@ -1,28 +1,29 @@
 <template>
     <div :class="$style.mediaControls">
-        <button 
-            :class="[$style.button, $style.buttonPrevious, $style.buttonRounded]" 
-            @click="previousButtonAction" 
-            :disabled="!hasPreviousTrack" 
-            title="Play previous track">
+        <button
+            :class="[$style.button, $style.buttonSecondary]"
+            @click="previousButtonAction"
+            :disabled="!hasPreviousTrack"
+            title="Play previous track"
+        >
             <svg>
                 <use href="#icon-skip-back" />
             </svg>
         </button>
-        <button 
+        <button
             :class="[$style.button, $style.buttonPlay]"
-            @click="playButtonAction" 
+            @click="playButtonAction"
             :title="playButtonTitle"
         >
-            <svg :class="{[$style.playIcon]: !isPlaying}">
+            <svg>
                 <use href="#icon-pause" v-if="isPlaying" />
                 <use href="#icon-play" v-else />
             </svg>
         </button>
-        <button 
-            :class="[$style.button, $style.buttonNext, $style.buttonRounded]"
-            @click="playNextTrack" 
-            :disabled="!hasNextTrack" 
+        <button
+            :class="[$style.button, $style.buttonSecondary]"
+            @click="playNextTrack"
+            :disabled="!hasNextTrack"
             title="Play next track"
         >
             <svg>
@@ -33,55 +34,40 @@
 </template>
 
 <style lang="scss" module>
-    svg {
-        position: relative;
-    }
+svg {
+    position: relative;
+}
 
-    .mediaControls{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .button{
-        cursor: pointer;
-        border: none;
-        background-color: transparent;
-        font-size: 24px;
-        margin-right: 3px;
+.mediaControls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.button {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
 
-        &:hover, &:active{
-            border-color: white;
-            color: white;
-        }
-        &:active{
-            background-color: #85b8ea;
-        }
+    &:hover,
+    &:active {
+        border-color: white;
+        color: white;
     }
+    &:active {
+        background-color: #85b8ea;
+    }
+}
 
-    .buttonPlay{
-        height: 48px;
-        width: 48px;
-        border: 2px solid transparent;
-        border-radius: 50%;
-        margin: 0 5px;
-    }
+.buttonPlay {
+    height: 42px;
+    width: 42px;
+}
 
-    .playIcon {
-        right: -2px;
-    }
-
-    .buttonRounded{
-        border-radius: 20%;
-        height: 34px;
-        width: 34px;
-    }
-    .buttonPrevious{
-        padding: 0;
-    }
-    .buttonNext{
-        padding: 0;
-        margin-right: 0;
-    }
+.buttonSecondary {
+    height: 42px;
+    width: 42px;
+}
 </style>
 
 <script>
@@ -121,14 +107,13 @@ export default {
         },
     },
     computed: {
-        playButtonTitle(){
-			if(this.isPlaying){
-				return `Pause ${this.activeTrack.track.title}`;
-			}
-			else if(this.hasActiveTrack){
-				return `Play ${this.activeTrack.track.title}`;
-			}
-			return 'Play track';
+        playButtonTitle() {
+            if (this.isPlaying) {
+                return `Pause ${this.activeTrack.track.title}`;
+            } else if (this.hasActiveTrack) {
+                return `Play ${this.activeTrack.track.title}`;
+            }
+            return 'Play track';
         },
     },
 };

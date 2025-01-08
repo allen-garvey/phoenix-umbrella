@@ -25,6 +25,8 @@
             :play-next-track="playNextTrack"
             :play-button-action="playButtonAction"
             :previous-button-action="previousButtonAction"
+            :audio-volume="audioVolume"
+            @volume-changed="adjustVolume"
         />
     </div>
 </template>
@@ -37,6 +39,7 @@ import MediaControls from './media-controls.vue';
 import { loadModelAndMap } from '../models';
 import { fetchJson } from 'umbrella-common-js/ajax.js';
 import { API_URL_BASE } from '../api-helpers';
+import { getUserVolume, saveUserVolume } from '../user-settings';
 
 let audio = null;
 
@@ -48,6 +51,7 @@ export default {
     },
     created() {
         audio = new Audio();
+        audio.volume = this.audioVolume;
         audio.addEventListener('ended', () => {
             if (this.hasNextTrack) {
                 this.playNextTrack();
@@ -70,6 +74,7 @@ export default {
     },
     data() {
         return {
+            audioVolume: getUserVolume(),
             tracks: [],
             artists: [],
             albums: [],
@@ -245,6 +250,11 @@ export default {
             const trackIndex = this.activeTrack.index + 1;
             const track = this.activeTrackTrackList[trackIndex];
             this.play(track, trackIndex, this.activeTrack.path);
+        },
+        adjustVolume(value) {
+            audio.volume = value;
+            this.audioVolume = value;
+            saveUserVolume(value);
         },
     },
 };
