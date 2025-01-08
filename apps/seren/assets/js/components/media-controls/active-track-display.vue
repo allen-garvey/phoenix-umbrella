@@ -1,13 +1,36 @@
 <template>
-    <div :class="$style.activeTrackDisplay">
-        {{activeTrackDisplay}}
+    <div :class="$style.activeTrackDisplay" v-if="activeTrack.track">
+        <router-link
+            :to="{
+                name: 'artistTracks',
+                params: { id: activeArtist.id },
+            }"
+        >
+            {{ activeArtist.name }}
+        </router-link>
+        <span>
+            {{ activeTrackTitle }}
+        </span>
+        <router-link
+            :to="{
+                name: 'albumTracks',
+                params: { id: activeAlbum.id },
+            }"
+            v-if="activeAlbum"
+        >
+            {{ activeAlbum.title }}
+        </router-link>
     </div>
 </template>
 
 <style lang="scss" module>
-    .activeTrackDisplay{
-        margin-bottom: 8px;
-    }
+.activeTrackDisplay {
+    margin-bottom: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1em;
+}
 </style>
 
 <script>
@@ -17,25 +40,26 @@ export default {
             type: Map,
             required: true,
         },
+        albumsMap: {
+            type: Map,
+            required: true,
+        },
         activeTrack: {
             type: Object,
             required: true,
         },
     },
     computed: {
-        activeTrackDisplay(){
-			if(!this.activeTrack.track){
-				return '';
-			}
-            const titleArray = [
-                this.artistsMap.get(this.activeTrack.track.artist_id).name,
-                this.activeTrack.track.title,
-            ];
-			if(this.activeTrack.track.album_title){
-                titleArray.push(this.activeTrack.track.album_title);
-			}
-			return titleArray.join(' - ');;
-		},
+        activeArtist() {
+            return this.artistsMap.get(this.activeTrack.track.artist_id);
+        },
+        activeTrackTitle() {
+            console.log(this.activeTrack.track);
+            return this.activeTrack.track.title;
+        },
+        activeAlbum() {
+            return this.albumsMap.get(this.activeTrack.track.album_id);
+        },
     },
 };
 </script>

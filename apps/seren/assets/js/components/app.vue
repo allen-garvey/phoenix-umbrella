@@ -21,6 +21,7 @@
             :has-previous-track="hasPreviousTrack"
             :has-next-track="hasNextTrack"
             :artists-map="artistsMap"
+            :albumsMap="albumsMap"
             :active-track="activeTrack"
             :play-next-track="playNextTrack"
             :play-button-action="playButtonAction"

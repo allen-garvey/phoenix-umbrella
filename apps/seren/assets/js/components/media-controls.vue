@@ -4,6 +4,7 @@
             <div :class="$style.controlsContainer">
                 <active-track-display
                     :artists-map="artistsMap"
+                    :albumsMap="albumsMap"
                     :active-track="activeTrack"
                 />
                 <track-time
@@ -131,6 +132,10 @@ export default {
             required: true,
         },
         artistsMap: {
+            type: Map,
+            required: true,
+        },
+        albumsMap: {
             type: Map,
             required: true,
         },
