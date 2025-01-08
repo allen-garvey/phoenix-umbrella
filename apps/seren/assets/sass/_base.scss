@@ -8,6 +8,10 @@ html, body{
 	box-sizing: border-box;
 }
 
+a {
+	text-decoration: none;
+}
+
 .app-container{
 	position: relative;
 	padding-bottom: variables.$media-controls-container-height + 20px;

@@ -66,10 +66,6 @@
     table-layout: fixed;
     border-collapse: collapse;
 
-    a {
-        text-decoration: none;
-    }
-
     thead {
         background: #b6cfe7;
         font-family: sans-serif;

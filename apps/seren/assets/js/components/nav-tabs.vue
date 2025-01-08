@@ -29,7 +29,6 @@
 }
 
 .navPills li a {
-    text-decoration: none;
     color: variables.$accent_color_text;
     cursor: pointer;
     padding: 0.5em 1em;
