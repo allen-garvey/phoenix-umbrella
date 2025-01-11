@@ -4,7 +4,7 @@ defmodule Bookmarker.FolderController do
   alias Bookmarker.Folder
 
   def index(conn, _params) do
-    folders = Folder.with_bookmarks_count_query |> Repo.all
+    folders = Folder.with_bookmarks_count_query() |> Repo.all()
 
     render(conn, "index.html", folders: folders)
   end
@@ -22,6 +22,7 @@ defmodule Bookmarker.FolderController do
         conn
         |> put_flash(:info, "Folder created successfully.")
         |> redirect(to: folder_path(conn, :index))
+
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -35,7 +36,7 @@ defmodule Bookmarker.FolderController do
   def edit(conn, %{"id" => id}) do
     folder = Repo.get!(Folder, id)
     changeset = Folder.changeset(folder)
-    render(conn, "edit.html", folder: folder, changeset: changeset)
+    render(conn, "edit.html", folder: folder, changeset: changeset, enable_js: true)
   end
 
   def update(conn, %{"id" => id, "folder" => folder_params}) do
@@ -47,6 +48,7 @@ defmodule Bookmarker.FolderController do
         conn
         |> put_flash(:info, "Folder updated successfully.")
         |> redirect(to: folder_path(conn, :show, folder))
+
       {:error, changeset} ->
         render(conn, "edit.html", folder: folder, changeset: changeset)
     end

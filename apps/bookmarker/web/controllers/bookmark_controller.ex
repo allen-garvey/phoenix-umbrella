@@ -58,7 +58,13 @@ defmodule Bookmarker.BookmarkController do
     bookmark = Repo.get!(Bookmark, id)
     changeset = Bookmark.changeset(bookmark)
     folders = Admin.folder_form_list()
-    render(conn, "edit.html", bookmark: bookmark, changeset: changeset, folders: folders)
+
+    render(conn, "edit.html",
+      bookmark: bookmark,
+      changeset: changeset,
+      folders: folders,
+      enable_js: true
+    )
   end
 
   def update(conn, %{"id" => id, "bookmark" => bookmark_params}) do

@@ -34,7 +34,7 @@
         <%= @inner_content %>
       </main>
 
-    </div> <!-- /container -->
+    </div>
     <%= if assigns[:enable_js] do %>
       <script src="<%= static_path(@conn, "/assets/app.js") %>"></script>
     <% end %>
