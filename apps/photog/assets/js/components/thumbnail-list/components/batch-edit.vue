@@ -1,122 +1,173 @@
 <template>
-    <div :class="{invisible: isReordering, [$style.thumbnailBatchSelectContainer]: true}">
+    <div
+        :class="{
+            invisible: isReordering,
+            [$style.thumbnailBatchSelectContainer]: true,
+        }"
+    >
         <div :class="$style.buttonContainer">
             <button
-                :class="toggleBatchEditButtonClass" 
+                :class="toggleBatchEditButtonClass"
                 @click="toggleBatchSelect"
             >
-                {{isCurrentlyBatchSelect ? 'Cancel' : 'Batch edit'}}
+                {{ isCurrentlyBatchSelect ? 'Cancel' : 'Batch edit' }}
             </button>
-            <button 
-                class="btn btn-outline-primary" 
+            <button
+                class="btn btn-outline-primary"
                 :class="$style.lastButton"
-                @click="batchSelectAll" 
-                v-if="isCurrentlyBatchSelect">
-                {{anyItemsBatchSelected ? 'Deselect all' : 'Select all'}}
+                @click="batchSelectAll"
+                v-if="isCurrentlyBatchSelect"
+            >
+                {{ anyItemsBatchSelected ? 'Deselect all' : 'Select all' }}
             </button>
         </div>
         <!-- 
         * Batch edit controls when in batch edit mode
         -->
-        <div 
-            :class="$style.resourceButtonsContainer" 
+        <div
+            :class="$style.resourceButtonsContainer"
             v-if="isCurrentlyBatchSelect"
         >
             <div v-if="enableBatchSelectImages" class="btn-group">
-                <button class="btn btn-primary" 
-                    @click="setBatchResourceModeWrapper(batchEditResourceMode.ALBUMS)" 
-                    :class="buttonClassForResourceMode(batchEditResourceMode.ALBUMS)">
+                <button
+                    class="btn btn-primary"
+                    @click="
+                        setBatchResourceModeWrapper(
+                            batchEditResourceMode.ALBUMS
+                        )
+                    "
+                    :class="
+                        buttonClassForResourceMode(batchEditResourceMode.ALBUMS)
+                    "
+                >
                     Add Albums
                 </button>
-                <button 
-                    class="btn btn-primary" 
-                    @click="setBatchResourceModeWrapper(batchEditResourceMode.PERSONS)" 
-                    :class="buttonClassForResourceMode(batchEditResourceMode.PERSONS)"
+                <button
+                    class="btn btn-primary"
+                    @click="
+                        setBatchResourceModeWrapper(
+                            batchEditResourceMode.PERSONS
+                        )
+                    "
+                    :class="
+                        buttonClassForResourceMode(
+                            batchEditResourceMode.PERSONS
+                        )
+                    "
                 >
                     Add Persons
                 </button>
-                <button 
-                    class="btn btn-outline-primary" 
-                    @click="createResourceWithImages('albumsNew')" 
+                <button
+                    class="btn btn-outline-primary"
+                    @click="createResourceWithImages('albumsNew')"
                     :disabled="!anyItemsBatchSelected"
                 >
                     Create Album
                 </button>
-                <button 
-                    class="btn btn-outline-primary" 
-                    @click="createResourceWithImages('personsNew')" 
+                <button
+                    class="btn btn-outline-primary"
+                    @click="createResourceWithImages('personsNew')"
                     :disabled="!anyItemsBatchSelected"
                 >
                     Create Person
                 </button>
             </div>
-            <button 
-                class="btn btn-outline-success" 
+            <button
+                class="btn btn-outline-success"
                 @click="$emit('set-cover-image')"
                 v-if="enableSetCoverImage"
             >
                 Set cover image
             </button>
-            <button 
-                class="btn btn-danger" 
+            <button
+                class="btn btn-danger"
                 @click="$emit('remove-items')"
                 :disabled="!anyItemsBatchSelected"
                 v-if="enableRemoveItems"
             >
                 Remove items
             </button>
-            <button 
-                class="btn btn-primary" 
-                @click="setBatchResourceModeWrapper(batchEditResourceMode.TAGS)" 
-                :class="buttonClassForResourceMode(batchEditResourceMode.TAGS)" 
+            <button
+                class="btn btn-primary"
+                @click="setBatchResourceModeWrapper(batchEditResourceMode.TAGS)"
+                :class="buttonClassForResourceMode(batchEditResourceMode.TAGS)"
                 v-if="enableBatchSelectAlbums"
             >
                 Add Tags
             </button>
-        </div>  
+        </div>
         <!-- 
             * List of batch edit resources that can be added to selected items
         -->
-        <div v-if="shouldShowBatchResources" :class="$style.batchResourcesContainer">
-            <Clan-Select 
+        <div
+            v-if="shouldShowBatchResources"
+            :class="$style.batchResourcesContainer"
+        >
+            <Clan-Select
                 v-if="batchSelectResourceMode === batchEditResourceMode.PERSONS"
-                :get-model="getModel" 
-                :on-selected="onItemsSuperManagerItemsUpdatedCallback(true)" 
+                :get-model="getModel"
+                :on-selected="onItemsSuperManagerItemsUpdatedCallback(true)"
                 :on-removed="onItemsSuperManagerItemsUpdatedCallback(false)"
             />
-            <label>Search <input class="form-control" v-model="searchValue" v-focus ref="searchInput" /></label>
+            <label
+                >Search
+                <input
+                    class="form-control"
+                    v-model="searchValue"
+                    v-focus
+                    ref="searchInput"
+            /></label>
             <ul :class="$style.batchResourcesList">
-                <li 
-                    v-for="(resource, index) in batchResourcesDisplayed" 
+                <li
+                    v-for="(resource, index) in batchResourcesDisplayed"
                     :key="resource.id"
                 >
-                    <input 
-                        type="checkbox" 
-                        :id="idForBatchResource(resource, index)" 
+                    <input
+                        type="checkbox"
+                        :id="idForBatchResource(resource, index)"
                         :checked="selectedItemsMap[resource.id]"
-                        @change="onBatchItemCheckboxChanged(resource.id)"  
+                        @change="onBatchItemCheckboxChanged(resource.id)"
                     />
-                    <label 
+                    <label
                         :for="idForBatchResource(resource, index)"
-                        :class="{[$style.favoritedItem]: resource.is_favorite}"
+                        :class="{
+                            [$style.favoritedItem]: resource.is_favorite,
+                        }"
                     >
-                        {{resource.name}}
+                        {{ resource.name }}
                     </label>
                 </li>
             </ul>
             <div :class="$style.buttonContainer">
-                <button 
-                    class="btn btn-outline-dark" 
-                    v-if="isShowMoreEnabled" @click="toggleDisplayMoreBatchResources"
+                <button
+                    class="btn btn-outline-dark"
+                    v-if="isShowMoreEnabled"
+                    @click="toggleDisplayMoreBatchResources"
                 >
-                    {{batchResourcesDisplayed.length < batchResources.length ? 'Show more' : 'Show less'}}
+                    {{
+                        batchResourcesDisplayed.length < batchResources.length
+                            ? 'Show more'
+                            : 'Show less'
+                    }}
                 </button>
-                <button 
-                    class="btn btn-success" 
-                    :disabled="!anyBatchResourcesSelected || !anyItemsBatchSelected"
+                <button
+                    class="btn btn-success"
+                    :disabled="
+                        !anyBatchResourcesSelected ||
+                        !anyItemsBatchSelected ||
+                        isCurrentlyBatchSaving
+                    "
                     @click="saveBatchSelected(batchResourcesSelected)"
                 >
-                    Save
+                    <span>Save</span>
+                    <span
+                        class="spinner-border spinner-border-sm"
+                        :class="$style.buttonSpinner"
+                        role="status"
+                        aria-hidden="true"
+                        v-if="isCurrentlyBatchSaving"
+                    >
+                    </span>
                 </button>
             </div>
         </div>
@@ -124,39 +175,43 @@
 </template>
 
 <style lang="scss" module>
-    @use '~photog-styles/site/variables';
+@use '~photog-styles/site/variables';
 
-    .thumbnailBatchSelectContainer{
-        display: inline-block;
-    }
-    .batchResourcesContainer {
-        margin-top: 1em;
-    }
-    .batchResourcesList{
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 1em;
+.thumbnailBatchSelectContainer {
+    display: inline-block;
+}
+.batchResourcesContainer {
+    margin-top: 1em;
+}
+.batchResourcesList {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1em;
 
-        li{
-            flex-basis: 25%;
-            margin-bottom: 0.5em;
-        }
+    li {
+        flex-basis: 25%;
+        margin-bottom: 0.5em;
     }
-    .buttonContainer {
-        display: flex;
-        gap: 0.5em;
-    }
-    .resourceButtonsContainer{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        margin-top: 1em;
-        gap: 1em 0.5em;
-        flex-wrap: wrap;
-    }
-    .favoritedItem {
-        color: variables.$photog_favorited_color;
-    }
+}
+.buttonContainer {
+    display: flex;
+    gap: 0.5em;
+}
+.resourceButtonsContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+    gap: 1em 0.5em;
+    flex-wrap: wrap;
+}
+.favoritedItem {
+    color: variables.$photog_favorited_color;
+}
+
+.buttonSpinner {
+    margin-left: 0.5em;
+}
 </style>
 
 <script>
@@ -177,7 +232,7 @@ export default {
         isCurrentlyBatchSelect: {
             type: Boolean,
             required: true,
-        },   
+        },
         isReordering: {
             type: Boolean,
             required: true,
@@ -230,6 +285,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        isCurrentlyBatchSaving: {
+            type: Boolean,
+            required: true,
+        },
     },
     components: {
         ClanSelect,
@@ -238,41 +297,54 @@ export default {
         focus,
     },
     computed: {
-        batchEditResourceMode(){
+        batchEditResourceMode() {
             return BATCH_EDIT_RESOURCE_MODE;
         },
-        batchResourcesSelected(){
+        batchResourcesSelected() {
             return this.batchResources
-                    .map( ({ id }) => id )
-                    .filter( id => this.selectedItemsMap[id] );
+                .map(({ id }) => id)
+                .filter(id => this.selectedItemsMap[id]);
         },
-        anyBatchResourcesSelected(){
+        anyBatchResourcesSelected() {
             return this.batchResourcesSelected.length > 0;
         },
-        toggleBatchEditButtonClass(){
+        toggleBatchEditButtonClass() {
             return {
-                'btn': true,
-                'btn-outline-primary' : !this.isCurrentlyBatchSelect, 
+                btn: true,
+                'btn-outline-primary': !this.isCurrentlyBatchSelect,
                 'btn-outline-secondary': this.isCurrentlyBatchSelect,
             };
         },
-        shouldShowBatchResources(){
-            return this.batchSelectResourceMode !== this.batchEditResourceMode.NONE;
+        shouldShowBatchResources() {
+            return (
+                this.batchSelectResourceMode !== this.batchEditResourceMode.NONE
+            );
         },
-        isSearchEnabled(){
+        isSearchEnabled() {
             return this.searchValue.length >= 2;
         },
-        isShowMoreEnabled(){
-            return !this.isSearchEnabled && this.batchResources.length > BATCH_RESOURCE_LENGTH_MAX_TO_SHOW_ALL && this.batchResources.length > BATCH_RESOURCES_MORE_LIMIT;
+        isShowMoreEnabled() {
+            return (
+                !this.isSearchEnabled &&
+                this.batchResources.length >
+                    BATCH_RESOURCE_LENGTH_MAX_TO_SHOW_ALL &&
+                this.batchResources.length > BATCH_RESOURCES_MORE_LIMIT
+            );
         },
-        batchResourcesDisplayed(){
-            if(this.isSearchEnabled){
-                return this.batchResources
-                    .filter(
-                        ({ name }) => name.toLowerCase().indexOf(this.searchValue.toLowerCase()) >= 0
+        batchResourcesDisplayed() {
+            if (this.isSearchEnabled) {
+                return this.batchResources.filter(
+                    ({ name }) =>
+                        name
+                            .toLowerCase()
+                            .indexOf(this.searchValue.toLowerCase()) >= 0
                 );
             }
-            if(this.shouldShowAllBatchResources || this.batchResources.length <= BATCH_RESOURCE_LENGTH_MAX_TO_SHOW_ALL){
+            if (
+                this.shouldShowAllBatchResources ||
+                this.batchResources.length <=
+                    BATCH_RESOURCE_LENGTH_MAX_TO_SHOW_ALL
+            ) {
                 return this.batchResources;
             }
             return this.batchResources.slice(0, BATCH_RESOURCES_MORE_LIMIT);
@@ -280,12 +352,12 @@ export default {
     },
     watch: {
         //called when model changes
-        batchResources(){
+        batchResources() {
             this.shouldShowAllBatchResources = false;
             this.selectedItemsMap = {};
         },
     },
-    data(){
+    data() {
         return {
             shouldShowAllBatchResources: false,
             selectedItemsMap: {},
@@ -293,32 +365,35 @@ export default {
         };
     },
     methods: {
-        idForBatchResource(item, index){
+        idForBatchResource(item, index) {
             return `batch_resource_id_${item.id}_${index}`;
         },
-        buttonClassForResourceMode(resourceMode){
-            return resourceMode === this.batchSelectResourceMode ? 'btn-primary' : 'btn-secondary';
+        buttonClassForResourceMode(resourceMode) {
+            return resourceMode === this.batchSelectResourceMode
+                ? 'btn-primary'
+                : 'btn-secondary';
         },
-        toggleDisplayMoreBatchResources(){
-            this.shouldShowAllBatchResources = !this.shouldShowAllBatchResources;
+        toggleDisplayMoreBatchResources() {
+            this.shouldShowAllBatchResources =
+                !this.shouldShowAllBatchResources;
         },
-        onBatchItemCheckboxChanged(id){
+        onBatchItemCheckboxChanged(id) {
             this.selectedItemsMap[id] = !this.selectedItemsMap[id];
         },
-        onItemsSuperManagerItemsUpdatedCallback(value){
-            return (itemIds) => {
+        onItemsSuperManagerItemsUpdatedCallback(value) {
+            return itemIds => {
                 itemIds.forEach(itemId => {
                     this.selectedItemsMap[itemId] = value;
                 });
             };
         },
-        setBatchResourceModeWrapper(mode){
+        setBatchResourceModeWrapper(mode) {
             this.searchValue = '';
             this.setBatchResourceMode(mode);
             nextTick().then(() => {
                 this.$refs.searchInput.focus();
             });
         },
-    }
+    },
 };
 </script>
