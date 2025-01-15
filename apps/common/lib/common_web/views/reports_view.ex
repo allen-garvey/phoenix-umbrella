@@ -5,7 +5,7 @@ defmodule CommonWeb.ReportsView do
     {_, max_count} =
       Enum.max_by(items_with_counts, fn {_, count} -> count end)
 
-    max_count
+    max(max_count, 1)
   end
 
   def count_per_item_table_item_class(item_count, current_count)
