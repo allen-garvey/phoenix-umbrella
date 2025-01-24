@@ -23,18 +23,22 @@ defmodule Blockquote.Api do
       join: source in assoc(q, :source),
       join: source_author in assoc(source, :author),
       left_join: parent_source in assoc(source, :parent_source),
-      preload: [author: author, category: category, source: {source, [author: source_author, parent_source: parent_source]}],
+      preload: [
+        author: author,
+        category: category,
+        source: {source, [author: source_author, parent_source: parent_source]}
+      ],
       order_by: fragment("random()"),
       limit: 1
     )
-      |> Repo.one!
+    |> Repo.one!()
   end
 
   @doc """
   Gets a single daily quote for today's date if there is one already saved or nil
 
   """
-  def get_todays_daily_quote() do 
+  def get_todays_daily_quote() do
     from(
       daily_quote in DailyQuote,
       join: q in assoc(daily_quote, :quote),
@@ -43,11 +47,18 @@ defmodule Blockquote.Api do
       join: source in assoc(q, :source),
       join: source_author in assoc(source, :author),
       left_join: parent_source in assoc(source, :parent_source),
-      preload: [quote: {q, [author: author, category: category, source: {source, [author: source_author, parent_source: parent_source]}]}],
-      where: daily_quote.date_used == ^Date.utc_today,
+      preload: [
+        quote:
+          {q,
+           [
+             author: author,
+             category: category,
+             source: {source, [author: source_author, parent_source: parent_source]}
+           ]}
+      ],
+      where: daily_quote.date_used == ^Common.ModelHelpers.Date.today(),
       limit: 1
     )
-      |> Repo.one
+    |> Repo.one()
   end
-
 end

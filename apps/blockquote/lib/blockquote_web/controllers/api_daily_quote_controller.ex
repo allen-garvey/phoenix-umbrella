@@ -17,15 +17,18 @@ defmodule BlockquoteWeb.ApiDailyQuoteController do
       # no quote for today yet
       nil ->
         quote = Api.get_random_quote!()
-        daily_quote_params = %{quote_id: quote.id, date_used: Date.utc_today}
+        daily_quote_params = %{quote_id: quote.id, date_used: Common.ModelHelpers.Date.today()}
+
         case Blockquote.Admin.create_daily_quote(daily_quote_params) do
           # not really important if insert fails or not (such as due to race condition with someone else)
           # since if it does fail, we still have a quote to show (even if it is the "wrong" one),
           # and on refresh the "right" one will be retrieved anyway
           _ -> quote
         end
+
       # daily quote already saved
-      daily_quote -> daily_quote.quote
+      daily_quote ->
+        daily_quote.quote
     end
   end
 end
