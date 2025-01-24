@@ -36,6 +36,13 @@ defmodule HabitsWeb.CategoryView do
     "category-color category-color--#{category.color}"
   end
 
+  def category_has_activity_style(%Category{} = category) do
+    case category.has_daily_activity do
+      false -> ""
+      true -> "rainbow-border"
+    end
+  end
+
   def streak_item_style(%Category{} = category, count) do
     case count do
       0 -> ""

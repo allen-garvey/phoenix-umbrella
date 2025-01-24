@@ -1,8 +1,8 @@
 <ul class="create-category-activity-list">
   <%= for category <- @categories do %>
-    <li class={ color_style(category) }>
+    <li class={ [color_style(category), category_has_activity_style(category)] }>
       <%= link HabitsWeb.CategoryView.to_s(category), to: Routes.category_path(@conn, :show, category) %>
-       <%= link "Add", to: Routes.activity_path(@conn, :new, category: category.id), class: "btn btn-sm btn-light" %>
+        <%= link "Add", to: Routes.activity_path(@conn, :new, category: category.id), class: "btn btn-sm btn-light" %>
     </li>
   <% end %>
 </ul>

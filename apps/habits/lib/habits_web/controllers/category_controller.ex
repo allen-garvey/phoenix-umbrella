@@ -11,7 +11,8 @@ defmodule HabitsWeb.CategoryController do
   end
 
   def create_category_activity_index(conn, _params) do
-    categories = Admin.list_categories()
+    today = Common.ModelHelpers.Date.today()
+    categories = Admin.list_categories_with_daily_activity(today)
 
     render(conn, "create_category_activity_index.html",
       categories: categories,

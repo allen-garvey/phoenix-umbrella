@@ -1,11 +1,47 @@
+@property --border-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 45deg;
+}
+
+.rainbow-border {
+    border-width: 8px;
+    border-style: solid;
+    border-image: linear-gradient(
+            var(--border-angle),
+            #ff595e,
+            #ffca3a,
+            #8ac926,
+            #1982c4,
+            #6a4c93,
+            #ff6700
+        )
+        1;
+    animation: rotate-border 5s linear forwards infinite;
+}
+
+@keyframes rotate-border {
+    from {
+        --border-angle: 45deg;
+    }
+
+    to {
+        --border-angle: 405deg;
+    }
+}
+
+/**
+* Category colors
+*/
 .category-color {
     color: white;
 }
 
 .category-color--beige {
     background-color: antiquewhite;
-    
-    &, a:not(.btn) {
+
+    &,
+    a:not(.btn) {
         color: #000;
     }
 }
@@ -20,15 +56,17 @@
 }
 .category-color--cyan {
     background-color: cyan;
-    
-    &, a:not(.btn) {
+
+    &,
+    a:not(.btn) {
         color: #000;
     }
 }
 .category-color--gold {
     background-color: gold;
-    
-    &, a:not(.btn) {
+
+    &,
+    a:not(.btn) {
         color: #000;
     }
 }
@@ -40,8 +78,9 @@
 }
 .category-color--lime {
     background-color: lawngreen;
-    
-    &, a:not(.btn) {
+
+    &,
+    a:not(.btn) {
         color: #000;
     }
 }
@@ -54,14 +93,16 @@
 .category-color--orange {
     background-color: orange;
 
-    &, a:not(.btn) {
+    &,
+    a:not(.btn) {
         color: #000;
     }
 }
 .category-color--pink {
     background-color: pink;
-    
-    &, a:not(.btn) {
+
+    &,
+    a:not(.btn) {
         color: #000;
     }
 }
@@ -77,7 +118,8 @@
 .category-color--sandy {
     background-color: sandybrown;
 
-    &, a:not(.btn) {
+    &,
+    a:not(.btn) {
         color: #000;
     }
 }
@@ -86,9 +128,9 @@
 }
 .category-color--yellow {
     background-color: yellow;
-    
-    &, a:not(.btn) {
+
+    &,
+    a:not(.btn) {
         color: #000;
     }
 }
-

@@ -8,6 +8,8 @@ defmodule Habits.Admin.Category do
     field :color, :string
     field :is_favorite, :boolean, default: false
 
+    field :has_daily_activity, :boolean, virtual: true
+
     has_many :activities, Habits.Admin.Activity
 
     timestamps()
