@@ -6,7 +6,7 @@
       <th><%= link "Title", to: Routes.movie_path(@conn, @page_route, sort: "title") %></th>
       <th><%= link "Genre", to: Routes.movie_path(@conn, @page_route, sort: "genre") %></th>
       <th><%= link "Pre", to: Routes.movie_path(@conn, @page_route, sort: "score") %></th>
-      <th>Length</th>
+      <th class="movie-length-column">Length</th>
       <%= if @page_atom != :movies_suggestions do %>
         <th>Release</th>
       <% end %>
