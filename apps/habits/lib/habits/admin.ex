@@ -30,7 +30,8 @@ defmodule Habits.Admin do
     daily_activities_query =
       from(
         activity in Activity,
-        where: activity.date == ^date
+        where: activity.date == ^date,
+        distinct: activity.category_id
       )
 
     from(
