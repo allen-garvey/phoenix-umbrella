@@ -18,8 +18,8 @@
       <td class={HabitsWeb.CategoryView.color_style(@category)}><%= activity.title %></td>
       <td><%= activity.description %></td>
       <td><%= activity.date %></td>
-      <td><%= link "Show", to: Routes.activity_path(@conn, :show, activity), class: "btn btn-light" %></td>
       <td><%= link "Edit", to: Routes.activity_path(@conn, :edit, activity), class: "btn btn-primary" %></td>
+      <td><%= link "Duplicate", to: Routes.activity_path(@conn, :new, duplicate: activity.id), class: "btn btn-light" %></td>
     </tr>
 <% end %>
   </tbody>
