@@ -37,6 +37,24 @@
     color: white;
 }
 
+.category-color--aquamarine {
+    background-color: #7fffca;    ;
+
+    &,
+    a:not(.btn) {
+        color: #000;
+    }
+}
+
+.category-color--seafoam-green {
+    background-color: #9fe2bf;
+
+    &,
+    a:not(.btn) {
+        color: #000;
+    }
+}
+
 .category-color--beige {
     background-color: antiquewhite;
 

@@ -6,6 +6,7 @@ defmodule HabitsWeb.CategoryView do
 
   def colors do
     [
+      "aquamarine",
       "beige",
       "black",
       "blue",
@@ -23,6 +24,7 @@ defmodule HabitsWeb.CategoryView do
       "red",
       "salmon",
       "sandy",
+      "seafoam-green",
       "sky",
       "yellow"
     ]
