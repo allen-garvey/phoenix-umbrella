@@ -57,7 +57,8 @@ defmodule HabitsWeb.ActivityController do
       Admin.change_activity(%Activity{
         category_id: activity.category_id,
         date: activity.date,
-        title: activity.title
+        title: activity.title,
+        description: activity.description
       })
 
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
