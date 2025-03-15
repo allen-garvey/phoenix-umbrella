@@ -1,6 +1,6 @@
 <div class="category-show-title-container">
   <h1 class={[color_style(@category), "category-show-title"]}><%= @category.name %></h1>
-  <%= link "Activities", to: Routes.category_path(@conn, :activities_list, @category), class: "btn btn-sm btn-dark" %>
+  <%= link "Activities", to: Routes.category_path(@conn, :activities_list, @category, limit: 21), class: "btn btn-sm btn-dark" %>
 </div>
 <div class="show-button-group">
     <%= CommonWeb.FormView.delete_button_with_form(@conn, Routes.category_path(@conn, :delete, @category), class: "btn btn-danger") %>

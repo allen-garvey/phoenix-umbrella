@@ -97,6 +97,23 @@ defmodule HabitsWeb.CategoryController do
     |> redirect(to: Routes.category_path(conn, :index))
   end
 
+  def activities_list(conn, %{"id" => id, "limit" => limit}) do
+    cleaned_limit =
+      case Integer.parse(limit) do
+        :error -> 30
+        {val, _} -> max(val, 1)
+      end
+
+    category = Admin.get_category!(id)
+    activities = Admin.activities_for_category(id, cleaned_limit)
+
+    render(conn, "activities_list.html",
+      category: category,
+      activities: activities,
+      has_limit: true
+    )
+  end
+
   def activities_list(conn, %{"id" => id}) do
     category = Admin.get_category!(id)
     activities = Admin.activities_for_category(id)

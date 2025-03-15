@@ -138,12 +138,22 @@ defmodule Habits.Admin do
     Category.changeset(category, attrs)
   end
 
-  def activities_for_category(category_id) do
+  defp activities_for_category_query(category_id) do
     from(
       activity in Activity,
       where: activity.category_id == ^category_id,
       order_by: [desc: :date, desc: :id]
     )
+  end
+
+  def activities_for_category(category_id) do
+    activities_for_category_query(category_id)
+    |> Repo.all()
+  end
+
+  def activities_for_category(category_id, limit) do
+    activities_for_category_query(category_id)
+    |> limit(^limit)
     |> Repo.all()
   end
 
