@@ -10,6 +10,17 @@ defmodule HabitsWeb.ActivityController do
     ]
   end
 
+  def index(conn, %{"limit" => limit}) do
+    cleaned_limit =
+      case Integer.parse(limit) do
+        :error -> 30
+        {val, _} -> max(val, 1)
+      end
+
+    activities = Admin.list_activities(cleaned_limit)
+    render(conn, "index.html", activities: activities, has_limit: true)
+  end
+
   def index(conn, _params) do
     activities = Admin.list_activities()
     render(conn, "index.html", activities: activities)

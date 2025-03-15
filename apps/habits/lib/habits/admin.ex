@@ -192,6 +192,15 @@ defmodule Habits.Admin do
     |> Repo.one()
   end
 
+  defp list_activities_query do
+    from(
+      activity in Activity,
+      join: category in assoc(activity, :category),
+      preload: [category: category],
+      order_by: [desc: activity.id]
+    )
+  end
+
   @doc """
   Returns the list of activities.
 
@@ -202,12 +211,13 @@ defmodule Habits.Admin do
 
   """
   def list_activities do
-    from(
-      activity in Activity,
-      join: category in assoc(activity, :category),
-      preload: [category: category],
-      order_by: [desc: activity.id]
-    )
+    list_activities_query()
+    |> Repo.all()
+  end
+
+  def list_activities(limit) do
+    list_activities_query()
+    |> limit(^limit)
     |> Repo.all()
   end
 

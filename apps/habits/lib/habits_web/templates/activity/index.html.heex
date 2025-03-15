@@ -1,4 +1,9 @@
-<h1>Activities</h1>
+<div class="category-show-title-container">
+  <h1>Activities</h1>
+  <%= if assigns[:has_limit] do %>
+    <%= link "All activities", to: Routes.activity_path(@conn, :index), class: "btn btn-sm btn-dark" %>
+  <% end %>
+</div>
 
 <table>
   <thead>
