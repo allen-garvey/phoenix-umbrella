@@ -19,8 +19,8 @@ defmodule PhotogWeb.AlbumController do
     albums =
       Api.list_album_favorites(
         is_favorite_param == "true",
-        NumberHelpers.string_to_positive_integer(limit, 1),
-        NumberHelpers.string_to_positive_integer(offset, 0)
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
       )
 
     render(conn, "index.json", albums: albums)
@@ -29,8 +29,8 @@ defmodule PhotogWeb.AlbumController do
   def index(conn, %{"limit" => limit, "offset" => offset}) do
     albums =
       Api.list_albums(
-        NumberHelpers.string_to_positive_integer(limit, 1),
-        NumberHelpers.string_to_positive_integer(offset, 0)
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
       )
 
     render(conn, "index.json", albums: albums)
@@ -42,7 +42,7 @@ defmodule PhotogWeb.AlbumController do
   end
 
   def index_fresh(conn, %{"limit" => limit}) do
-    albums = Api.list_albums_fresh(NumberHelpers.string_to_positive_integer(limit, 1))
+    albums = Api.list_albums_fresh(NumberHelpers.string_to_integer_with_min(limit, 1, 1))
     render(conn, "index.json", albums: albums)
   end
 
@@ -182,8 +182,8 @@ defmodule PhotogWeb.AlbumController do
     images =
       Api.get_images_for_album(
         id,
-        NumberHelpers.string_to_positive_integer(limit, 1),
-        NumberHelpers.string_to_positive_integer(offset, 0)
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
       )
 
     conn
@@ -197,9 +197,9 @@ defmodule PhotogWeb.AlbumController do
   def albums_for_year(conn, %{"year" => year, "limit" => limit, "offset" => offset}) do
     albums =
       Api.list_albums_for_year(
-        NumberHelpers.string_to_positive_integer(year, 1),
-        NumberHelpers.string_to_positive_integer(limit, 1),
-        NumberHelpers.string_to_positive_integer(offset, 0)
+        NumberHelpers.string_to_integer_with_min(year, 1),
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
       )
 
     render(conn, "index.json", albums: albums)
@@ -209,7 +209,7 @@ defmodule PhotogWeb.AlbumController do
   Return count of all albums taken in given year
   """
   def albums_for_year_count(conn, %{"year" => year}) do
-    count = NumberHelpers.string_to_positive_integer(year, 1) |> Api.albums_count_for_year!()
+    count = NumberHelpers.string_to_integer_with_min(year, 1) |> Api.albums_count_for_year!()
 
     conn
     |> put_view(CommonWeb.ApiGenericView)

@@ -22,11 +22,8 @@ defmodule Common.NumberHelpers do
     end
   end
 
-  @doc """
-  Converts string to integer greater than or equal to 0. Returns default value on failure
-  """
-  def string_to_positive_integer(s, default) when is_binary(s) and is_integer(default) do
+  def string_to_integer_with_min(s, default, min_value \\ 0) do
     string_to_integer(s, default)
-    |> max(0)
+    |> max(min_value)
   end
 end

@@ -13,8 +13,8 @@ defmodule PhotogWeb.ImageController do
     images =
       Api.list_image_favorites(
         is_favorite_param == "true",
-        NumberHelpers.string_to_positive_integer(limit, 1),
-        NumberHelpers.string_to_positive_integer(offset, 0)
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
       )
 
     render(conn, "index.json", images: images)
@@ -23,8 +23,8 @@ defmodule PhotogWeb.ImageController do
   def index(conn, %{"in_album" => "false", "limit" => limit, "offset" => offset}) do
     images =
       Api.list_images_not_in_album(
-        NumberHelpers.string_to_positive_integer(limit, 1),
-        NumberHelpers.string_to_positive_integer(offset, 0)
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
       )
 
     render(conn, "index.json", images: images)
@@ -33,8 +33,8 @@ defmodule PhotogWeb.ImageController do
   def index(conn, %{"amazon_photos_id" => "false", "limit" => limit, "offset" => offset}) do
     images =
       Api.list_images_with_no_amazon_photos_id(
-        NumberHelpers.string_to_positive_integer(limit, 1),
-        NumberHelpers.string_to_positive_integer(offset, 0)
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
       )
 
     render(conn, "index.json", images: images)
@@ -43,8 +43,8 @@ defmodule PhotogWeb.ImageController do
   def index(conn, %{"limit" => limit, "offset" => offset}) do
     images =
       Api.list_images(
-        NumberHelpers.string_to_positive_integer(limit, 1),
-        NumberHelpers.string_to_positive_integer(offset, 0)
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
       )
 
     render(conn, "index.json", images: images)
@@ -73,16 +73,16 @@ defmodule PhotogWeb.ImageController do
   Returns all images taken in given year
   """
   def images_for_year(conn, %{"year" => year, "excerpt" => "true"}) do
-    images = NumberHelpers.string_to_positive_integer(year, 1) |> Api.list_images_for_year()
+    images = NumberHelpers.string_to_integer_with_min(year, 1) |> Api.list_images_for_year()
     render(conn, "index_slideshow.json", images: images)
   end
 
   def images_for_year(conn, %{"year" => year, "limit" => limit, "offset" => offset}) do
     images =
       Api.list_images_for_year(
-        NumberHelpers.string_to_positive_integer(year, 1),
-        NumberHelpers.string_to_positive_integer(limit, 1),
-        NumberHelpers.string_to_positive_integer(offset, 0)
+        NumberHelpers.string_to_integer_with_min(year, 1),
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
       )
 
     render(conn, "index.json", images: images)
@@ -92,7 +92,7 @@ defmodule PhotogWeb.ImageController do
   Return count of all images taken in given year
   """
   def images_for_year_count(conn, %{"year" => year}) do
-    count = NumberHelpers.string_to_positive_integer(year, 1) |> Api.images_count_for_year!()
+    count = NumberHelpers.string_to_integer_with_min(year, 1) |> Api.images_count_for_year!()
 
     conn
     |> put_view(CommonWeb.ApiGenericView)
@@ -108,8 +108,8 @@ defmodule PhotogWeb.ImageController do
       }) do
     images =
       Api.list_images_for_date(
-        NumberHelpers.string_to_positive_integer(month, 1),
-        NumberHelpers.string_to_positive_integer(day, 1)
+        NumberHelpers.string_to_integer_with_min(month, 1),
+        NumberHelpers.string_to_integer_with_min(day, 1)
       )
 
     render(conn, "index.json", images: images)
@@ -123,10 +123,10 @@ defmodule PhotogWeb.ImageController do
       }) do
     images =
       Api.list_images_for_date(
-        NumberHelpers.string_to_positive_integer(month, 1),
-        NumberHelpers.string_to_positive_integer(day, 1),
-        NumberHelpers.string_to_positive_integer(limit, 1),
-        NumberHelpers.string_to_positive_integer(offset, 0)
+        NumberHelpers.string_to_integer_with_min(month, 1),
+        NumberHelpers.string_to_integer_with_min(day, 1),
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
       )
 
     render(conn, "index.json", images: images)
@@ -138,8 +138,8 @@ defmodule PhotogWeb.ImageController do
   def images_for_date_count(conn, %{"month" => month, "day" => day}) do
     count =
       Api.images_count_for_date(
-        NumberHelpers.string_to_positive_integer(month, 1),
-        NumberHelpers.string_to_positive_integer(day, 1)
+        NumberHelpers.string_to_integer_with_min(month, 1),
+        NumberHelpers.string_to_integer_with_min(day, 1)
       )
 
     conn
