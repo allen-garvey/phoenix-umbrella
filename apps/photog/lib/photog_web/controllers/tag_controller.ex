@@ -3,8 +3,9 @@ defmodule PhotogWeb.TagController do
 
   alias Photog.Api
   alias Photog.Api.Tag
+  alias Common.NumberHelpers
 
-  action_fallback PhotogWeb.FallbackController
+  action_fallback(PhotogWeb.FallbackController)
 
   def index(conn, %{"excerpt" => "true"}) do
     tags = Api.list_tags_excerpt()
@@ -34,6 +35,7 @@ defmodule PhotogWeb.TagController do
   """
   def reorder_albums(conn, %{"id" => id, "album_ids" => album_ids}) when is_list(album_ids) do
     Api.reorder_albums_for_tag(id, album_ids)
+
     conn
     |> put_view(CommonWeb.ApiGenericView)
     |> render("ok.json", message: "ok")
@@ -41,15 +43,20 @@ defmodule PhotogWeb.TagController do
 
   def albums_for(conn, %{"id" => id, "excerpt" => "true"}) do
     albums = Api.get_albums_for_tag(id)
-    
+
     conn
     |> put_view(PhotogWeb.AlbumView)
     |> render("index_excerpt.json", albums: albums)
   end
 
   def albums_for(conn, %{"id" => id, "limit" => limit, "offset" => offset}) do
-    albums = Api.get_albums_for_tag(id, String.to_integer(limit), String.to_integer(offset))
-    
+    albums =
+      Api.get_albums_for_tag(
+        id,
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
+      )
+
     conn
     |> put_view(PhotogWeb.AlbumView)
     |> render("index_for_tags.json", albums: albums)
@@ -57,7 +64,7 @@ defmodule PhotogWeb.TagController do
 
   def images_for(conn, %{"id" => id, "excerpt" => "true"}) do
     images = Api.get_images_for_tag(id, :excerpt)
-    
+
     conn
     |> put_view(PhotogWeb.ImageView)
     |> render("index_slideshow.json", images: images)
@@ -87,7 +94,8 @@ defmodule PhotogWeb.TagController do
   @doc """
   Removes albums from an tag
   """
-  def remove_albums_from_tag(conn, %{"id" => tag_id, "album_ids" => album_ids}) when is_list(album_ids) do
+  def remove_albums_from_tag(conn, %{"id" => tag_id, "album_ids" => album_ids})
+      when is_list(album_ids) do
     Api.delete_album_tags(tag_id, album_ids)
 
     conn

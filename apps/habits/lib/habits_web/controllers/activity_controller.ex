@@ -3,6 +3,7 @@ defmodule HabitsWeb.ActivityController do
 
   alias Habits.Admin
   alias Habits.Admin.Activity
+  alias Common.NumberHelpers
 
   def related_fields() do
     [
@@ -11,13 +12,7 @@ defmodule HabitsWeb.ActivityController do
   end
 
   def index(conn, %{"limit" => limit}) do
-    cleaned_limit =
-      case Integer.parse(limit) do
-        :error -> 30
-        {val, _} -> max(val, 1)
-      end
-
-    activities = Admin.list_activities(cleaned_limit)
+    activities = Admin.list_activities(NumberHelpers.string_to_integer_with_min(limit, 30, 1))
     render(conn, "index.html", activities: activities, has_limit: true)
   end
 

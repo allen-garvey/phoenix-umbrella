@@ -4,6 +4,7 @@ defmodule HabitsWeb.CategoryController do
   alias Habits.Admin
   alias Habits.Admin.Category
   alias HabitsWeb.CategoryView
+  alias Common.NumberHelpers
 
   def index(conn, _params) do
     categories = Admin.list_categories()
@@ -98,14 +99,10 @@ defmodule HabitsWeb.CategoryController do
   end
 
   def activities_list(conn, %{"id" => id, "limit" => limit}) do
-    cleaned_limit =
-      case Integer.parse(limit) do
-        :error -> 30
-        {val, _} -> max(val, 1)
-      end
-
     category = Admin.get_category!(id)
-    activities = Admin.activities_for_category(id, cleaned_limit)
+
+    activities =
+      Admin.activities_for_category(id, NumberHelpers.string_to_integer_with_min(limit, 30, 1))
 
     render(conn, "activities_list.html",
       category: category,
