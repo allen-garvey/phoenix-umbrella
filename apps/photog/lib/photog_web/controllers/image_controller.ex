@@ -104,19 +104,6 @@ defmodule PhotogWeb.ImageController do
   """
   def images_for_date(conn, %{
         "month" => month,
-        "day" => day
-      }) do
-    images =
-      Api.list_images_for_date(
-        NumberHelpers.string_to_integer_with_min(month, 1),
-        NumberHelpers.string_to_integer_with_min(day, 1)
-      )
-
-    render(conn, "index.json", images: images)
-  end
-
-  def images_for_date(conn, %{
-        "month" => month,
         "day" => day,
         "limit" => limit,
         "offset" => offset
@@ -127,6 +114,19 @@ defmodule PhotogWeb.ImageController do
         NumberHelpers.string_to_integer_with_min(day, 1),
         NumberHelpers.string_to_integer_with_min(limit, 1, 1),
         NumberHelpers.string_to_integer_with_min(offset, 0)
+      )
+
+    render(conn, "index.json", images: images)
+  end
+
+  def images_for_date(conn, %{
+        "month" => month,
+        "day" => day
+      }) do
+    images =
+      Api.list_images_for_date(
+        NumberHelpers.string_to_integer_with_min(month, 1),
+        NumberHelpers.string_to_integer_with_min(day, 1)
       )
 
     render(conn, "index.json", images: images)
