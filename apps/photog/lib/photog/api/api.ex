@@ -125,7 +125,6 @@ defmodule Photog.Api do
   def list_images_for_date(month, day)
       when is_integer(month) and is_integer(day) do
     list_images_for_date_query(month, day)
-    |> image_preload_import
     |> Repo.all()
     |> image_default_preloads
   end
@@ -135,7 +134,6 @@ defmodule Photog.Api do
     list_images_for_date_query(month, day)
     |> limit(^limit)
     |> offset(^offset)
-    |> image_preload_import
     |> Repo.all()
     |> image_default_preloads
   end
