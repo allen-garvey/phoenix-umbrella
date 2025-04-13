@@ -33,3 +33,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= render "activities_list.html", conn: @conn, activities: @activities, category: @category, title: "Recent activities", has_limit: true %>

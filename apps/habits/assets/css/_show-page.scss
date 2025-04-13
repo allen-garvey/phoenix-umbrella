@@ -23,6 +23,8 @@
 }
 
 .activity-streak-table {
+    margin-bottom: 2rem;
+    
     tbody tr td:first-child::before {
         content: none;
     }

@@ -48,12 +48,14 @@ defmodule HabitsWeb.CategoryController do
       |> Date.shift(month: -3)
       |> Date.beginning_of_week(:monday)
 
-    activities =
+    activities = Admin.activities_for_category(id, 12)
+
+    activity_streak_activities =
       Admin.activity_streak_for_category(id, start_date)
 
     activity_streak =
       Date.range(start_date, today)
-      |> Enum.reduce({[], activities}, fn date, {total, activities} ->
+      |> Enum.reduce({[], activity_streak_activities}, fn date, {total, activities} ->
         activity = Enum.at(activities, 0, nil)
 
         cond do
@@ -65,10 +67,13 @@ defmodule HabitsWeb.CategoryController do
       |> Enum.chunk_every(7)
       |> Enum.reverse()
 
-    render(conn, "show.html", category: category, activity_streak: activity_streak)
+    render(conn, "show.html",
+      category: category,
+      activity_streak: activity_streak,
+      activities: activities
+    )
   end
 
-  @spec edit(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def edit(conn, %{"id" => id}) do
     category = Admin.get_category!(id)
     changeset = Admin.change_category(category)
