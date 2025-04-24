@@ -58,6 +58,8 @@ defmodule PhotogWeb.Router do
     # Items for model
     get("/albums/:id/images", AlbumController, :images_for)
     get("/clans/:id/images", ClanController, :images_for)
+    get("/persons/:id/images/favorites/count", PersonController, :favorite_images_for_count)
+    get("/persons/:id/images/favorites", PersonController, :favorite_images_for)
     get("/persons/:id/images", PersonController, :images_for)
     get("/imports/:id/images", ImportController, :images_for)
     get("/tags/:id/albums", TagController, :albums_for)

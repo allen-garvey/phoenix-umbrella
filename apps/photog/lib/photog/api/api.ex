@@ -865,6 +865,36 @@ defmodule Photog.Api do
     %Person{person | images_count: images_count}
   end
 
+  defp get_favorite_images_for_person_query(id) do
+    from(
+      image in Image,
+      join: person in assoc(image, :persons),
+      where: person.id == ^id and image.is_favorite == true,
+      order_by: [
+        desc: fragment("CASE WHEN ? = ? THEN 1 ELSE 0 END", image.id, person.cover_image_id),
+        desc: image.creation_time,
+        desc: image.id
+      ]
+    )
+  end
+
+  def get_favorite_images_for_person(id, limit, offset) do
+    get_favorite_images_for_person_query(id)
+    |> limit(^limit)
+    |> offset(^offset)
+    |> Repo.all()
+  end
+
+  def get_favorite_images_for_person_count(id) do
+    images_query = get_favorite_images_for_person_query(id)
+
+    from(
+      subquery(images_query),
+      select: count()
+    )
+    |> Repo.one!()
+  end
+
   defp get_images_for_person_query(id) do
     album_image_subquery =
       from(

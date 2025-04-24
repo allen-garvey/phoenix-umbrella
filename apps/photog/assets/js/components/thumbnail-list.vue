@@ -25,6 +25,7 @@
                 :description="getDescription(model)"
                 :count="filteredThumbnailList.length"
                 :total="itemsTotal"
+                :extraLinks="headerExtraLinks"
             />
 
             <!-- 
@@ -296,6 +297,9 @@ export default {
             type: Boolean,
             default: false,
         },
+        headerExtraLinks: {
+            type: Array,
+        },
     },
     components: {
         InfiniteObserver,
@@ -339,6 +343,12 @@ export default {
         };
     },
     computed: {
+        apiPathKey() {
+            const itemApiUrl = this.buildItemsApiUrl
+                ? this.buildItemsApiUrl({ id: '1' })
+                : '';
+            return this.apiPath + '|:|' + itemApiUrl;
+        },
         titleForPage() {
             if (!this.isInitialLoadComplete) {
                 return '';
@@ -429,7 +439,7 @@ export default {
     watch: {
         // changes when route changes, and is for some reason faster
         // than watching the route
-        apiPath() {
+        apiPathKey() {
             this.setup();
         },
     },

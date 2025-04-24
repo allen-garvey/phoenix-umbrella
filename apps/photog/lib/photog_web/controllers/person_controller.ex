@@ -82,6 +82,27 @@ defmodule PhotogWeb.PersonController do
     |> render("index_thumbnail_list.json", images: images)
   end
 
+  def favorite_images_for(conn, %{"id" => id, "limit" => limit, "offset" => offset}) do
+    images =
+      Api.get_favorite_images_for_person(
+        id,
+        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
+        NumberHelpers.string_to_integer_with_min(offset, 0)
+      )
+
+    conn
+    |> put_view(PhotogWeb.ImageView)
+    |> render("index_thumbnail_list.json", images: images)
+  end
+
+  def favorite_images_for_count(conn, %{"id" => id}) do
+    count = Api.get_favorite_images_for_person_count(id)
+
+    conn
+    |> put_view(CommonWeb.ApiGenericView)
+    |> render("data.json", data: count)
+  end
+
   def show(conn, %{"id" => id}) do
     person = Api.get_person!(id)
     render(conn, "show.json", person: person)
