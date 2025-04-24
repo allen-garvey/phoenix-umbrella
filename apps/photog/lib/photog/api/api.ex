@@ -869,7 +869,8 @@ defmodule Photog.Api do
     from(
       image in Image,
       join: person in assoc(image, :persons),
-      where: person.id == ^id and image.is_favorite == true,
+      where:
+        person.id == ^id and (image.is_favorite == true or image.id == person.cover_image_id),
       order_by: [
         desc: fragment("CASE WHEN ? = ? THEN 1 ELSE 0 END", image.id, person.cover_image_id),
         desc: image.creation_time,
