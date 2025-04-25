@@ -12,7 +12,6 @@ export function buildImagesIndexVariant(path, name, props = {}) {
                         name: 'imagesShow',
                         params: {
                             id: item.id,
-                            image_id: item.id,
                         },
                     };
                 },
