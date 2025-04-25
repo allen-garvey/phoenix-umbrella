@@ -1,21 +1,24 @@
 import { getCurrentYear } from './date-helpers';
-import { buildImagesIndexVariant } from './routes/images.js';
+import { buildImagesIndexVariant } from './route-helpers/images.js';
 
-import { buildImportsShowVariant } from './routes/imports.js';
+import { buildImportsShowVariant } from './route-helpers/imports.js';
 
-import { buildAlbumVariant } from './routes/albums.js';
+import { buildAlbumVariant } from './route-helpers/albums.js';
 
 import {
     getApiPathForTodaysImages,
     todaysImagesTitle,
-} from './routes/on-this-day.js';
+} from './route-helpers/on-this-day.js';
 
-import { sortImagesCallback, sortAlbumsCallback } from './routes/sorting.js';
+import {
+    sortImagesCallback,
+    sortAlbumsCallback,
+} from './route-helpers/sorting.js';
 
 import {
     albumRelatedFields,
     imageListRelatedFields,
-} from './routes/related-fields.js';
+} from './route-helpers/related-fields.js';
 
 import ThumbnailList from './components/thumbnail-list.vue';
 import ImportsIndex from './components/imports-index.vue';

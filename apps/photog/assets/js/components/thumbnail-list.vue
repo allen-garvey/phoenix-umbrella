@@ -176,7 +176,7 @@ import { BATCH_EDIT_RESOURCE_MODE } from './thumbnail-list/constants/batch-edit.
 import {
     ALBUM_FILTER_QUERY_PARAM_NAME,
     PERSON_FILTER_QUERY_PARAM_NAME,
-} from '../routes/filtering.js';
+} from '../route-helpers/filtering.js';
 
 export default {
     props: {
