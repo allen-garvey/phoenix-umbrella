@@ -1,3 +1,8 @@
+import {
+    getPersonsShowApiPath,
+    getPersonsShowSharedProps,
+} from '../route-helpers/persons';
+
 import ThumbnailList from '../components/thumbnail-list.vue';
 import PersonForm from '../components/person-form.vue';
 
@@ -44,52 +49,20 @@ export default () => [
         name: 'personsShow',
         component: ThumbnailList,
         props: route => {
+            const personId = route.params.id;
+
             const props = {
-                useBigThumbnails: true,
-                batchRemoveItemsCallback(image_ids, sendJSON) {
-                    const personId = route.params.id;
-                    return sendJSON(
-                        `/api/persons/${personId}/images`,
-                        'DELETE',
-                        { image_ids }
-                    );
-                },
-                setCoverImageCallback(cover_image_id, sendJSON) {
-                    const personId = route.params.id;
-                    return sendJSON(`/api/persons/${personId}`, 'PATCH', {
-                        person: {
-                            cover_image_id,
-                        },
-                    });
-                },
-                apiPath: route.path,
+                ...getPersonsShowSharedProps(personId),
+                isDeleteEnabled: true,
                 buildItemsApiUrl: () => `${route.path}/images`,
                 itemsCountKey: 'images_count',
-                isPaginated: true,
                 enableHasAlbumFilter: true,
-                enableBatchSelectImages: true,
-                editItemLinkFor: () => ({
-                    name: 'personsEdit',
-                    params: { id: route.params.id },
-                }),
-                isDeleteEnabled: true,
-                itemPreviewContentCallback: image =>
-                    image.albums.map(album => album.name).join(', '),
-                showRouteFor: (item, _model) => {
-                    return {
-                        name: 'personImagesShow',
-                        params: {
-                            person_id: route.params.id,
-                            image_id: item.id,
-                        },
-                    };
-                },
                 headerExtraLinks: [
                     {
                         class: 'btn-outline-dark',
                         link: {
                             name: 'personsShowFavorites',
-                            params: { id: route.params.id },
+                            params: { id: personId },
                         },
                         text: 'Favorites',
                     },
@@ -103,52 +76,19 @@ export default () => [
         name: 'personsShowFavorites',
         component: ThumbnailList,
         props: route => {
-            const itemApiPath = `/persons/${route.params.id}`;
+            const personId = route.params.id;
+            const itemApiPath = getPersonsShowApiPath(personId);
 
             const props = {
-                useBigThumbnails: true,
-                batchRemoveItemsCallback(image_ids, sendJSON) {
-                    const personId = route.params.id;
-                    return sendJSON(
-                        `/api/persons/${personId}/images`,
-                        'DELETE',
-                        { image_ids }
-                    );
-                },
-                setCoverImageCallback(cover_image_id, sendJSON) {
-                    const personId = route.params.id;
-                    return sendJSON(`/api/persons/${personId}`, 'PATCH', {
-                        person: {
-                            cover_image_id,
-                        },
-                    });
-                },
-                apiPath: itemApiPath,
+                ...getPersonsShowSharedProps(personId),
                 buildItemsApiUrl: () => `${itemApiPath}/images/favorites`,
                 apiItemsCountPath: `${itemApiPath}/images/favorites/count`,
-                isPaginated: true,
-                enableBatchSelectImages: true,
-                editItemLinkFor: () => ({
-                    name: 'personsEdit',
-                    params: { id: route.params.id },
-                }),
-                itemPreviewContentCallback: image =>
-                    image.albums.map(album => album.name).join(', '),
-                showRouteFor: (item, _model) => {
-                    return {
-                        name: 'personImagesShow',
-                        params: {
-                            person_id: route.params.id,
-                            image_id: item.id,
-                        },
-                    };
-                },
                 headerExtraLinks: [
                     {
                         class: 'btn-outline-dark',
                         link: {
                             name: 'personsShow',
-                            params: { id: route.params.id },
+                            params: { id: personId },
                         },
                         text: 'All images',
                     },
