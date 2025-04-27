@@ -39,5 +39,6 @@ defmodule HabitsWeb.Router do
 
     get "/activities", ApiActivityController, :index
     get "/categories", ApiCategoryController, :index
+    get "/categories/:id/activities/recent", ApiCategoryController, :recent_activities_for
   end
 end

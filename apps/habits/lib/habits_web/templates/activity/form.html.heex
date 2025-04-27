@@ -5,9 +5,12 @@
     </div>
   <% end %>
 
-  <%= Common.ViewHelpers.Form.select_group :category_id, f, HabitsWeb.CategoryView.map_for_form(@categories) %>
+  <%= Common.ViewHelpers.Form.select_group :category_id, f, HabitsWeb.CategoryView.map_for_form(@categories), id: "activity_category_id" %>
 
-  <%= Common.ViewHelpers.Form.input_group :title, f, &text_input/3, autofocus: true %>
+  <%= Common.ViewHelpers.Form.input_group :title, f, &text_input/3, autofocus: true, list: "recent_activity_titles_list" %>
+
+  <datalist id="recent_activity_titles_list">
+  </datalist>
 
   <%= Common.ViewHelpers.Form.input_group :description, f, &textarea/3, [cols: 80, rows: 8] %>
 
