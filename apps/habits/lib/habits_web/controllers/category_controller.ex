@@ -2,6 +2,7 @@ defmodule HabitsWeb.CategoryController do
   use HabitsWeb, :controller
 
   alias Habits.Admin
+  alias Habits.Admin.Activity
   alias Habits.Admin.Category
   alias HabitsWeb.CategoryView
   alias Common.NumberHelpers
@@ -11,13 +12,54 @@ defmodule HabitsWeb.CategoryController do
     render(conn, "index.html", categories: categories)
   end
 
+  defp split_activities_into_today_and_yesterday(activities, yesterday) do
+    case Enum.chunk_by(activities, fn activity -> activity.date end) do
+      [] ->
+        [[], []]
+
+      [todays_activities, yesterdays_activities] ->
+        [todays_activities, yesterdays_activities]
+
+      [activities] ->
+        case Enum.at(activities, 0).date == yesterday do
+          true -> [[], activities]
+          false -> [activities, []]
+        end
+    end
+  end
+
+  defp preload_category(activities, category_map) do
+    Enum.map(activities, fn activity ->
+      %Activity{activity | category: Map.get(category_map, activity.category_id)}
+    end)
+  end
+
   def create_category_activity_index(conn, _params) do
-    today = Common.ModelHelpers.Date.today()
-    categories = Admin.list_categories_with_daily_activity(today)
+    yesterday = Common.ModelHelpers.Date.today() |> Date.add(-1)
+
+    [todays_activities, yesterdays_activities] =
+      Admin.list_activities_after(yesterday)
+      |> split_activities_into_today_and_yesterday(yesterday)
+
+    todays_categorys_set = MapSet.new(todays_activities, fn activity -> activity.category_id end)
+
+    categories =
+      Admin.list_categories()
+      |> Enum.map(fn category ->
+        %Category{
+          category
+          | has_daily_activity: MapSet.member?(todays_categorys_set, category.id)
+        }
+      end)
+
+    category_map = Map.new(categories, fn category -> {category.id, category} end)
 
     render(conn, "create_category_activity_index.html",
       categories: categories,
-      no_main_padding: true
+      no_main_padding: true,
+      body_class: "create-category-activity-index-page",
+      todays_activities: preload_category(todays_activities, category_map),
+      yesterdays_activities: preload_category(yesterdays_activities, category_map)
     )
   end
 

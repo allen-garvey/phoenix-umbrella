@@ -1,33 +1,35 @@
-<div class="category-show-title-container">
-  <h1>
-    <%= assigns[:title] || link(@category.name, to: Routes.category_path(@conn, :show, @category)) %>
-  </h1>
-  <%= if assigns[:has_limit] do %>
-    <%= link "All activities", to: Routes.category_path(@conn, :activities_list, @category), class: "btn btn-sm btn-dark" %>
-  <% end %>
-</div>
+<section>
+  <div class="category-show-title-container">
+    <h1>
+      <%= assigns[:title] || link(@category.name, to: Routes.category_path(@conn, :show, @category)) %>
+    </h1>
+    <%= if assigns[:has_limit] do %>
+      <%= link "All activities", to: Routes.category_path(@conn, :activities_list, @category), class: "btn btn-sm btn-dark" %>
+    <% end %>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th>Title</th>
-      <th>Description</th>
-      <th class="activity-index-date-heading">Date</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for activity <- @activities do %>
-    <tr>
-      <td></td>
-      <td class={HabitsWeb.CategoryView.color_style(@category)}><%= activity.title %></td>
-      <td><%= activity.description %></td>
-      <td><%= activity.date %></td>
-      <td><%= link "Edit", to: Routes.activity_path(@conn, :edit, activity), class: "btn btn-primary" %></td>
-      <td><%= link "Duplicate", to: Routes.activity_path(@conn, :new, duplicate: activity.id), class: "btn btn-light" %></td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Description</th>
+        <th class="activity-index-date-heading">Date</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+  <%= for activity <- @activities do %>
+      <tr>
+        <td></td>
+        <td class={HabitsWeb.CategoryView.color_style(assigns[:category] || activity.category)}><%= activity.title %></td>
+        <td><%= activity.description %></td>
+        <td><%= activity.date %></td>
+        <td><%= link "Edit", to: Routes.activity_path(@conn, :edit, activity), class: "btn btn-primary" %></td>
+        <td><%= link "Duplicate", to: Routes.activity_path(@conn, :new, duplicate: activity.id), class: "btn btn-light" %></td>
+      </tr>
+  <% end %>
+    </tbody>
+  </table>
+</section>

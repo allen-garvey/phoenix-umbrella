@@ -26,24 +26,6 @@ defmodule Habits.Admin do
     |> Repo.all()
   end
 
-  def list_categories_with_daily_activity(date) do
-    daily_activities_query =
-      from(
-        activity in Activity,
-        where: activity.date == ^date,
-        distinct: activity.category_id
-      )
-
-    from(
-      category in Category,
-      left_join: activity in subquery(daily_activities_query),
-      on: activity.category_id == category.id,
-      order_by: category.name,
-      select: %Category{category | has_daily_activity: not is_nil(activity)}
-    )
-    |> Repo.all()
-  end
-
   def list_favorite_categories(nil) do
     from(
       category in Category,
@@ -218,6 +200,15 @@ defmodule Habits.Admin do
   def list_activities(limit) do
     list_activities_query()
     |> limit(^limit)
+    |> Repo.all()
+  end
+
+  def list_activities_after(date) do
+    from(
+      activity in Activity,
+      where: activity.date >= ^date,
+      order_by: [desc: activity.date, asc: activity.id]
+    )
     |> Repo.all()
   end
 

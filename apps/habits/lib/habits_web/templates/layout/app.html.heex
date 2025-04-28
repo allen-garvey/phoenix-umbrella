@@ -3,7 +3,7 @@
     <p class="alert alert-info" role="alert"><%= Phoenix.Flash.get(@flash, :info) %></p>
     <p class="alert alert-danger" role="alert"><%= Phoenix.Flash.get(@flash, :error) %></p>
   </div>
-  <div class={main_padding(assigns[:no_main_padding])}>
+  <div class={[main_padding(assigns[:no_main_padding]), assigns[:body_class]]}>
     <%= @inner_content %>
   </div>
 </main>

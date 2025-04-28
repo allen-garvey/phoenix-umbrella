@@ -10,3 +10,11 @@
 <%= if Enum.empty?(@categories) do %>
     <%= link "Create a category", to: Routes.category_path(@conn, :new), class: "btn btn-success" %>
 <% end %>
+
+<%= if !Enum.empty?(@todays_activities) do %>
+    <%= render "activities_list.html", conn: @conn, activities: @todays_activities, title: "Today’s activities" %>
+<% end %>
+
+<%= if !Enum.empty?(@yesterdays_activities) do %>
+    <%= render "activities_list.html", conn: @conn, activities: @yesterdays_activities, title: "Yesterday’s activities" %>
+<% end %>
