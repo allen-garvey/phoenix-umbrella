@@ -1,5 +1,5 @@
 import { sortAlbumsCallback } from '../route-helpers/sorting.js';
-import { API_URL_BASE } from '../request-helpers.js';
+import { updateItemFavorite } from '../route-helpers/albums.js';
 
 import ThumbnailList from '../components/thumbnail-list.vue';
 import TagForm from '../components/tag-form.vue';
@@ -92,21 +92,7 @@ export default () => [
                     name: 'tagSlideshow',
                     params: { tag_id: route.params.id },
                 },
-                updateItemFavorite(sendJson, item) {
-                    const id = item.id;
-
-                    const newValue = !item.is_favorite;
-                    item.is_favorite = newValue;
-
-                    const apiUrl = `${API_URL_BASE}/albums/${id}`;
-
-                    return sendJson(apiUrl, 'PATCH', {
-                        album: {
-                            id,
-                            is_favorite: newValue,
-                        },
-                    });
-                },
+                updateItemFavorite,
             };
 
             return props;
