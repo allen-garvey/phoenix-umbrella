@@ -1,4 +1,22 @@
+import { API_URL_BASE } from '../request-helpers';
+
 import ThumbnailList from '../components/thumbnail-list.vue';
+
+export const updateItemFavorite = (sendJson, item) => {
+    const id = item.id;
+
+    const newValue = !item.is_favorite;
+    item.is_favorite = newValue;
+
+    const apiUrl = `${API_URL_BASE}/images/${id}`;
+
+    return sendJson(apiUrl, 'PATCH', {
+        image: {
+            id,
+            is_favorite: newValue,
+        },
+    });
+};
 
 export function buildImagesIndexVariant(path, name, props = {}) {
     return {
@@ -15,6 +33,7 @@ export function buildImagesIndexVariant(path, name, props = {}) {
                         },
                     };
                 },
+                updateItemFavorite,
             };
             return Object.assign(defaultProps, props);
         },

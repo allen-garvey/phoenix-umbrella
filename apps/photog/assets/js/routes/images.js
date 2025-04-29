@@ -2,7 +2,10 @@ import {
     getApiPathForTodaysImages,
     todaysImagesTitle,
 } from '../route-helpers/on-this-day.js';
-import { buildImagesIndexVariant } from '../route-helpers/images.js';
+import {
+    buildImagesIndexVariant,
+    updateItemFavorite,
+} from '../route-helpers/images.js';
 import { imageListRelatedFields } from '../route-helpers/related-fields.js';
 
 import { getCurrentYear } from '../date-helpers';
@@ -33,6 +36,7 @@ export default () => [
                         },
                     };
                 },
+                updateItemFavorite,
             };
             return props;
         },
@@ -112,6 +116,7 @@ export default () => [
                     name: 'imageYearSlideshow',
                     params: { year: route.params.year },
                 },
+                updateItemFavorite,
             };
 
             if (year < new Date().getFullYear()) {
@@ -150,6 +155,7 @@ export default () => [
                         },
                     };
                 },
+                updateItemFavorite,
             };
 
             return props;
