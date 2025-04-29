@@ -123,6 +123,11 @@
                 @itemHoverEnd="onItemHoveredEnd"
                 :miniThumbnailUrlFor="miniThumbnailUrlFor"
                 :useBigThumbnails="useBigThumbnails"
+                :updateItemFavorite="
+                    updateItemFavorite
+                        ? item => updateItemFavorite(sendJson, item)
+                        : null
+                "
             />
             <infinite-observer
                 :onTrigger="loadMoreThumbnails"
@@ -299,6 +304,9 @@ export default {
         },
         headerExtraLinks: {
             type: Array,
+        },
+        updateItemFavorite: {
+            type: Function,
         },
     },
     components: {

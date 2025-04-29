@@ -3,6 +3,8 @@ import {
     getPersonsShowSharedProps,
 } from '../route-helpers/persons';
 
+import { API_URL_BASE } from '../request-helpers';
+
 import ThumbnailList from '../components/thumbnail-list.vue';
 import PersonForm from '../components/person-form.vue';
 
@@ -67,6 +69,21 @@ export default () => [
                         text: 'Favorites',
                     },
                 ],
+                updateItemFavorite(sendJson, item) {
+                    const id = item.id;
+
+                    const newValue = !item.is_favorite;
+                    item.is_favorite = newValue;
+
+                    const apiUrl = `${API_URL_BASE}/images/${id}`;
+
+                    return sendJson(apiUrl, 'PATCH', {
+                        image: {
+                            id,
+                            is_favorite: newValue,
+                        },
+                    });
+                },
             };
             return props;
         },
