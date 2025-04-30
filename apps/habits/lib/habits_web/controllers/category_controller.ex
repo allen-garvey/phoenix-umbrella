@@ -12,20 +12,9 @@ defmodule HabitsWeb.CategoryController do
     render(conn, "index.html", categories: categories)
   end
 
-  defp split_activities_into_today_and_yesterday(activities, yesterday) do
-    case Enum.chunk_by(activities, fn activity -> activity.date end) do
-      [] ->
-        [[], []]
-
-      [todays_activities, yesterdays_activities] ->
-        [todays_activities, yesterdays_activities]
-
-      [activities] ->
-        case Enum.at(activities, 0).date == yesterday do
-          true -> [[], activities]
-          false -> [activities, []]
-        end
-    end
+  defp split_activities_by_day(activities, days_map) do
+    Enum.chunk_by(activities, fn activity -> activity.date end)
+    |> Map.new(fn activities -> {Map.get(days_map, Enum.at(activities, 0).date), activities} end)
   end
 
   defp preload_category(activities, category_map) do
@@ -35,13 +24,22 @@ defmodule HabitsWeb.CategoryController do
   end
 
   def create_category_activity_index(conn, _params) do
-    yesterday = Common.ModelHelpers.Date.today() |> Date.add(-1)
+    today = Common.ModelHelpers.Date.today()
+    yesterday = today |> Date.add(-1)
+    day_before_yesterday = today |> Date.add(-2)
 
-    [todays_activities, yesterdays_activities] =
-      Admin.list_activities_after(yesterday)
-      |> split_activities_into_today_and_yesterday(yesterday)
+    activities_map =
+      Admin.list_activities_after(day_before_yesterday)
+      |> split_activities_by_day(
+        Map.new([
+          {today, :today},
+          {yesterday, :yesterday},
+          {day_before_yesterday, :day_before_yesterday}
+        ])
+      )
 
-    todays_categorys_set = MapSet.new(todays_activities, fn activity -> activity.category_id end)
+    todays_categorys_set =
+      MapSet.new(Map.get(activities_map, :today, []), fn activity -> activity.category_id end)
 
     categories =
       Admin.list_categories()
@@ -58,8 +56,11 @@ defmodule HabitsWeb.CategoryController do
       categories: categories,
       no_main_padding: true,
       body_class: "create-category-activity-index-page",
-      todays_activities: preload_category(todays_activities, category_map),
-      yesterdays_activities: preload_category(yesterdays_activities, category_map)
+      todays_activities: preload_category(Map.get(activities_map, :today, []), category_map),
+      yesterdays_activities:
+        preload_category(Map.get(activities_map, :yesterday, []), category_map),
+      day_before_yesterdays_activities:
+        preload_category(Map.get(activities_map, :day_before_yesterday, []), category_map)
     )
   end
 

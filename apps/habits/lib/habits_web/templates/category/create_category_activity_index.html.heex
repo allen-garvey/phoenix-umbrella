@@ -18,3 +18,7 @@
 <%= if !Enum.empty?(@yesterdays_activities) do %>
     <%= render "activities_list.html", conn: @conn, activities: @yesterdays_activities, title: "Yesterday’s activities" %>
 <% end %>
+
+<%= if !Enum.empty?(@day_before_yesterdays_activities) do %>
+    <%= render "activities_list.html", conn: @conn, activities: @day_before_yesterdays_activities, title: "Day before yesterday’s activities" %>
+<% end %>
