@@ -1,4 +1,5 @@
 import { importRelatedFields } from './related-fields.js';
+import { updateItemFavorite } from './images.js';
 
 import ThumbnailList from '../components/thumbnail-list.vue';
 
@@ -40,6 +41,7 @@ export function buildImportsShowVariant(path, name, props = {}) {
                         },
                     };
                 },
+                updateItemFavorite,
             };
             return Object.assign(defaultProps, props);
         },

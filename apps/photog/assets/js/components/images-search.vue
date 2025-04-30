@@ -2,16 +2,34 @@
     <div class="main container">
         <h2 :class="$style.sectionHeading">Image Search</h2>
         <form @submit.prevent="onSearchSubmit" :class="$style.form">
-            <label :class="$style.label">File name <input type="search" class="form-control" v-model="query" v-focus /></label>
-            <button type="submit" class="btn btn-success" :class="$style.submitButton" :disabled="!isSearchEnabled">Search</button>
+            <label :class="$style.label"
+                >File name
+                <input
+                    type="search"
+                    class="form-control"
+                    v-model="query"
+                    v-focus
+            /></label>
+            <button
+                type="submit"
+                class="btn btn-success"
+                :class="$style.submitButton"
+                :disabled="!isSearchEnabled"
+            >
+                Search
+            </button>
         </form>
         <template v-if="!isLoading && lastQuery">
             <template v-if="images.length > 0">
-                <ResourceHeader :title="`Results for ${lastQuery}`" :count="images.length" />
+                <ResourceHeader
+                    :title="`Results for ${lastQuery}`"
+                    :count="images.length"
+                />
                 <thumbnail-items-list
                     :items="images"
                     :showRouteFor="showRouteForImage"
                     :miniThumbnailUrlFor="miniThumbnailUrlFor"
+                    :updateItemFavorite="updateFavorite"
                 />
             </template>
             <p v-else>No results found for {{ lastQuery }}</p>
@@ -21,26 +39,26 @@
 </template>
 
 <style lang="scss" module>
-    .sectionHeading {
-        margin: 0 0 0.5rem;
-    }
+.sectionHeading {
+    margin: 0 0 0.5rem;
+}
 
-    .form {
-        display: flex;
-    }
+.form {
+    display: flex;
+}
 
-    .label {
-        flex-grow: 1;
-    }
+.label {
+    flex-grow: 1;
+}
 
-    .submitButton {
-        align-self: end;
-        margin-left: 1em;
-    }
-
+.submitButton {
+    align-self: end;
+    margin-left: 1em;
+}
 </style>
 
 <script>
+import { updateItemFavorite } from '../route-helpers/images.js';
 import focus from 'umbrella-common-js/vue/directives/focus.js';
 import { API_URL_BASE } from '../request-helpers.js';
 import { fetchJson } from 'umbrella-common-js/ajax.js';
@@ -50,6 +68,10 @@ import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list
 
 export default {
     props: {
+        sendJson: {
+            type: Function,
+            required: true,
+        },
         miniThumbnailUrlFor: {
             type: Function,
             required: true,
@@ -63,7 +85,7 @@ export default {
     directives: {
         focus,
     },
-    data(){
+    data() {
         return {
             query: '',
             images: [],
@@ -72,8 +94,11 @@ export default {
         };
     },
     computed: {
-        isSearchEnabled(){
+        isSearchEnabled() {
             return this.query.length > 2;
+        },
+        updateFavorite() {
+            return item => updateItemFavorite(this.sendJson, item);
         },
     },
     methods: {
@@ -85,17 +110,21 @@ export default {
                 },
             };
         },
-        onSearchSubmit(){
-            if(!this.isSearchEnabled){
+        onSearchSubmit() {
+            if (!this.isSearchEnabled) {
                 return;
             }
             this.isLoading = true;
             this.lastQuery = this.query;
-            fetchJson(`${API_URL_BASE}/images/search?q=${encodeURIComponent(this.query)}`).then((images) => {
+            fetchJson(
+                `${API_URL_BASE}/images/search?q=${encodeURIComponent(
+                    this.query
+                )}`
+            ).then(images => {
                 this.images = images;
                 this.isLoading = false;
             });
         },
-    }
+    },
 };
 </script>

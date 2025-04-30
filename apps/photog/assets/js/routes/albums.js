@@ -1,6 +1,7 @@
 import { buildAlbumVariant } from '../route-helpers/albums.js';
 import { albumRelatedFields } from '../route-helpers/related-fields.js';
 import { sortImagesCallback } from '../route-helpers/sorting.js';
+import { updateItemFavorite } from '../route-helpers/images.js';
 
 import AlbumForm from '../components/album-form.vue';
 import YearsListPage from '../components/years-list-page.vue';
@@ -119,6 +120,7 @@ export default () => [
                     name: 'albumSlideshow',
                     params: { album_id: route.params.id },
                 },
+                updateItemFavorite,
             };
             return props;
         },
