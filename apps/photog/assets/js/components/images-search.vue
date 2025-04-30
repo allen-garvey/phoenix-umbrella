@@ -66,6 +66,8 @@ import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animatio
 import ResourceHeader from './shared/resource-header.vue';
 import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list.vue';
 
+const SEARCH_QUERY_PARAM_KEY = 'q';
+
 export default {
     props: {
         sendJson: {
@@ -93,12 +95,27 @@ export default {
             lastQuery: '',
         };
     },
+    created() {
+        const query = this.$route.query[SEARCH_QUERY_PARAM_KEY];
+        if (query) {
+            this.query = query;
+            this.updateSearchResults(query);
+        }
+    },
     computed: {
         isSearchEnabled() {
             return this.query.length > 2;
         },
         updateFavorite() {
             return item => updateItemFavorite(this.sendJson, item);
+        },
+    },
+    watch: {
+        $route(to) {
+            const query = to.query[SEARCH_QUERY_PARAM_KEY];
+            if (query) {
+                this.updateSearchResults(query);
+            }
         },
     },
     methods: {
@@ -110,19 +127,23 @@ export default {
                 },
             };
         },
+        updateSearchResults(query) {
+            this.isLoading = true;
+            this.lastQuery = query;
+            fetchJson(
+                `${API_URL_BASE}/images/search?q=${encodeURIComponent(query)}`
+            ).then(images => {
+                this.images = images;
+                this.isLoading = false;
+            });
+        },
         onSearchSubmit() {
             if (!this.isSearchEnabled) {
                 return;
             }
-            this.isLoading = true;
-            this.lastQuery = this.query;
-            fetchJson(
-                `${API_URL_BASE}/images/search?q=${encodeURIComponent(
-                    this.query
-                )}`
-            ).then(images => {
-                this.images = images;
-                this.isLoading = false;
+            this.$router.push({
+                name: 'imagesSearch',
+                query: { [SEARCH_QUERY_PARAM_KEY]: this.query },
             });
         },
     },
