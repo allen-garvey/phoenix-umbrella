@@ -120,7 +120,7 @@ export default {
             flashAlert.$el.scrollIntoView({ behavior: 'smooth', block: 'end' });
         },
         //wrapper for send json so cache can be cleared after something is sent to API
-        sendJson(url, method, data, options) {
+        sendJson(url, method, data, options = {}) {
             return sendJson(url, this.csrfToken, method, data).then(
                 response => {
                     //assume cache needs to be cleared
