@@ -10,12 +10,17 @@ export const updateItemFavorite = (sendJson, item) => {
 
     const apiUrl = `${API_URL_BASE}/images/${id}`;
 
-    return sendJson(apiUrl, 'PATCH', {
-        image: {
-            id,
-            is_favorite: newValue,
+    return sendJson(
+        apiUrl,
+        'PATCH',
+        {
+            image: {
+                id,
+                is_favorite: newValue,
+            },
         },
-    });
+        { preserveCache: true }
+    );
 };
 
 export function buildImagesIndexVariant(path, name, props = {}) {

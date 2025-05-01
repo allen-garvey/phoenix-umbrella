@@ -36,12 +36,17 @@ export default () => [
 
                     const apiUrl = `${API_URL_BASE}/persons/${id}`;
 
-                    return sendJson(apiUrl, 'PATCH', {
-                        person: {
-                            id,
-                            is_favorite: newValue,
+                    return sendJson(
+                        apiUrl,
+                        'PATCH',
+                        {
+                            person: {
+                                id,
+                                is_favorite: newValue,
+                            },
                         },
-                    });
+                        { preserveCache: true }
+                    );
                 },
             };
             return props;

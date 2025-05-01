@@ -10,12 +10,17 @@ export const updateItemFavorite = (sendJson, item) => {
 
     const apiUrl = `${API_URL_BASE}/albums/${id}`;
 
-    return sendJson(apiUrl, 'PATCH', {
-        album: {
-            id,
-            is_favorite: newValue,
+    return sendJson(
+        apiUrl,
+        'PATCH',
+        {
+            album: {
+                id,
+                is_favorite: newValue,
+            },
         },
-    });
+        { preserveCache: true }
+    );
 };
 
 export function buildAlbumVariant(path, name, propsBuilder = null) {
