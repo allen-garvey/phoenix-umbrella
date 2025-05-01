@@ -1,3 +1,4 @@
+import { API_URL_BASE } from '../request-helpers';
 import { sortAlbumsCallback } from '../route-helpers/sorting.js';
 import { updateItemFavorite } from '../route-helpers/albums.js';
 
@@ -55,7 +56,7 @@ export default () => [
             const props = {
                 setCoverImageCallback(cover_album_id, sendJSON, tag) {
                     const tagId = tag.id;
-                    return sendJSON(`/api/tags/${tagId}`, 'PATCH', {
+                    return sendJSON(`${API_URL_BASE}/tags/${tagId}`, 'PATCH', {
                         tag: {
                             cover_album_id,
                         },
@@ -63,9 +64,13 @@ export default () => [
                 },
                 batchRemoveItemsCallback(album_ids, sendJSON) {
                     const tagId = route.params.id;
-                    return sendJSON(`/api/tags/${tagId}/albums`, 'DELETE', {
-                        album_ids,
-                    });
+                    return sendJSON(
+                        `${API_URL_BASE}/tags/${tagId}/albums`,
+                        'DELETE',
+                        {
+                            album_ids,
+                        }
+                    );
                 },
                 apiPath: route.path,
                 buildItemsApiUrl: () => `${route.path}/albums`,

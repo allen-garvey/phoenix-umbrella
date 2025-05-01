@@ -1,3 +1,4 @@
+import { API_URL_BASE } from '../request-helpers';
 import { buildAlbumVariant } from '../route-helpers/albums.js';
 import { albumRelatedFields } from '../route-helpers/related-fields.js';
 import { sortImagesCallback } from '../route-helpers/sorting.js';
@@ -77,17 +78,25 @@ export default () => [
                 useBigThumbnails: true,
                 batchRemoveItemsCallback(image_ids, sendJSON) {
                     const albumId = route.params.id;
-                    return sendJSON(`/api/albums/${albumId}/images`, 'DELETE', {
-                        image_ids,
-                    });
+                    return sendJSON(
+                        `${API_URL_BASE}/albums/${albumId}/images`,
+                        'DELETE',
+                        {
+                            image_ids,
+                        }
+                    );
                 },
                 setCoverImageCallback(cover_image_id, sendJSON) {
                     const albumId = route.params.id;
-                    return sendJSON(`/api/albums/${albumId}`, 'PATCH', {
-                        album: {
-                            cover_image_id,
-                        },
-                    });
+                    return sendJSON(
+                        `${API_URL_BASE}/albums/${albumId}`,
+                        'PATCH',
+                        {
+                            album: {
+                                cover_image_id,
+                            },
+                        }
+                    );
                 },
                 apiPath: route.path,
                 buildItemsApiUrl: () => `${route.path}/images`,

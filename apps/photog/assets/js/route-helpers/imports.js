@@ -1,3 +1,4 @@
+import { API_URL_BASE } from '../request-helpers';
 import { importRelatedFields } from './related-fields.js';
 import { updateItemFavorite } from './images.js';
 
@@ -13,11 +14,15 @@ export function buildImportsShowVariant(path, name, props = {}) {
                 useBigThumbnails: true,
                 setCoverImageCallback(cover_image_id, sendJSON, model) {
                     const importId = model.id;
-                    return sendJSON(`/api/imports/${importId}`, 'PATCH', {
-                        import: {
-                            cover_image_id,
-                        },
-                    });
+                    return sendJSON(
+                        `${API_URL_BASE}/imports/${importId}`,
+                        'PATCH',
+                        {
+                            import: {
+                                cover_image_id,
+                            },
+                        }
+                    );
                 },
                 apiPath: route.path,
                 buildItemsApiUrl: () => `${route.path}/images`,

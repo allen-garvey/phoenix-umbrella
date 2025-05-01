@@ -1,3 +1,5 @@
+import { API_URL_BASE } from '../request-helpers';
+
 export const getPersonsShowApiPath = personId => `/persons/${personId}`;
 
 export const getPersonsShowSharedProps = personId => {
@@ -6,12 +8,12 @@ export const getPersonsShowSharedProps = personId => {
     return {
         useBigThumbnails: true,
         batchRemoveItemsCallback(image_ids, sendJSON) {
-            return sendJSON(`/api${itemApiPath}/images`, 'DELETE', {
+            return sendJSON(`${API_URL_BASE}${itemApiPath}/images`, 'DELETE', {
                 image_ids,
             });
         },
         setCoverImageCallback(cover_image_id, sendJSON) {
-            return sendJSON(`/api${itemApiPath}`, 'PATCH', {
+            return sendJSON(`${API_URL_BASE}${itemApiPath}`, 'PATCH', {
                 person: {
                     cover_image_id,
                 },

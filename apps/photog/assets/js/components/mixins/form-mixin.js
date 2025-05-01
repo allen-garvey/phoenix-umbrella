@@ -1,3 +1,5 @@
+import { API_URL_BASE } from '../../request-helpers';
+
 import FormSection from '../form/form-section.vue';
 import FormInput from '../form/form-input.vue';
 
@@ -75,7 +77,7 @@ export function formMixinBuilder() {
                 return Promise.all([modelPromise, itemsPromise]);
             },
             save() {
-                let apiUrl = `/api/${this.resourceApiUrlBase}`;
+                let apiUrl = `${API_URL_BASE}/${this.resourceApiUrlBase}`;
                 let apiMethod = 'POST';
                 if (this.isEditForm) {
                     apiUrl = `${apiUrl}/${this.modelId}`;
@@ -83,7 +85,7 @@ export function formMixinBuilder() {
                 }
                 const resource = this.getResourceForSave();
 
-                this.sendJson(apiUrl, apiMethod, resource).then((response) => {
+                this.sendJson(apiUrl, apiMethod, resource).then(response => {
                     if (response.errors) {
                         this.errors = response.errors;
                     } else {
