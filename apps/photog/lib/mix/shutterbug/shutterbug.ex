@@ -189,8 +189,8 @@ defmodule Mix.Tasks.Shutterbug do
     exif_map = Common.ImageHelpers.Exif.exif_for(image_source_path)
 
     creation_datetime =
-      case Exif.exif_creation_time_as_datetime(exif_map) do
-        {:ok, datetime, _} ->
+      case Exif.exif_creation_time_as_datetime(exif_map, Path.basename(image_source_path)) do
+        {:ok, datetime} ->
           datetime
 
         {:error, reason} ->
