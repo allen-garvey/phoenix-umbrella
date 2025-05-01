@@ -27,19 +27,18 @@ defmodule Photog.Image.Exif do
   def file_path_to_datetime(file_path) when is_binary(file_path) do
     case Regex.match?(~r/^[12]\d{3}-[01]\d-[0123]\d\D/, file_path) do
       true ->
-        String.split(file_path, "-") |> file_split_to_datetime()
+        String.slice(file_path, 0..9)
+        |> String.split("-")
+        |> Enum.map(&String.to_integer/1)
+        |> file_split_to_datetime()
 
       false ->
         {:error, :no_date_found_in_path}
     end
   end
 
-  def file_split_to_datetime([years, months, days | _rest]) do
-    case Date.new(
-           String.to_integer(years),
-           String.to_integer(months),
-           String.to_integer(days)
-         ) do
+  defp file_split_to_datetime([years, months, days]) do
+    case Date.new(years, months, days) do
       {:ok, date} -> DateTime.new(date, Time.new!(0, 0, 0, 0), "Etc/UTC")
       error -> error
     end
