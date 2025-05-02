@@ -4,6 +4,9 @@ defmodule Photog.Image.ExifTest do
   alias Photog.Image.Exif
 
   test "file_path_to_datetime() with non-date path" do
+    assert Exif.file_path_to_datetime("") ==
+             {:error, :no_date_found_in_path}
+
     assert Exif.file_path_to_datetime("hello.webp") ==
              {:error, :no_date_found_in_path}
 
