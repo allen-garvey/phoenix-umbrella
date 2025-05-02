@@ -10,6 +10,9 @@ defmodule Photog.Image.ExifTest do
     assert Exif.file_path_to_datetime("1-2025-01-01-image.png") ==
              {:error, :no_date_found_in_path}
 
+    assert Exif.file_path_to_datetime("1-2025-01-011-image.png") ==
+             {:error, :no_date_found_in_path}
+
     assert Exif.file_path_to_datetime("3025-01-01-image.jpg") ==
              {:error, :no_date_found_in_path}
 
