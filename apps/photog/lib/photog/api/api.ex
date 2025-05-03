@@ -1937,7 +1937,7 @@ defmodule Photog.Api do
     clan =
       from(
         clan in Clan,
-        join: clan_person in assoc(clan, :clan_persons),
+        left_join: clan_person in assoc(clan, :clan_persons),
         where: clan.id == ^id,
         preload: [clan_persons: clan_person]
       )
