@@ -1,14 +1,20 @@
 <template>
-    <Form-Section :heading="headingText" :back-link="backLink" :save="save" v-if="isInitialLoadComplete">
+    <Form-Section
+        :heading="headingText"
+        :back-link="backLink"
+        :save="save"
+        :isSaving="isSaving"
+        v-if="isInitialLoadComplete"
+    >
         <template v-slot:inputs>
-            <Form-Input 
-                :id="idForField('notes')" 
-                label="Notes" 
+            <Form-Input
+                :id="idForField('notes')"
+                label="Notes"
                 :focus="true"
-                v-model="importModel.notes" 
-                :errors="errors.notes" 
-                input-type="textarea" 
-                :textarea-rows="4" 
+                v-model="importModel.notes"
+                :errors="errors.notes"
+                input-type="textarea"
+                :textarea-rows="4"
             />
         </template>
     </Form-Section>
@@ -35,60 +41,65 @@ export default {
             importModel: {},
             resourceApiUrlBase: '/imports',
             routeBase: 'imports',
-        }
+        };
     },
     computed: {
-        headingText(){
-            if(this.isEditForm){
+        headingText() {
+            if (this.isEditForm) {
                 return `Edit ${this.model.name}`;
             }
             return 'New Import';
         },
-        backLink(){
-            if(this.isEditForm){
-                return {name: 'importsShow', params: {id: this.modelId}};
+        backLink() {
+            if (this.isEditForm) {
+                return { name: 'importsShow', params: { id: this.modelId } };
             }
-            return {name: 'importsIndex'};
+            return { name: 'importsIndex' };
         },
     },
     methods: {
-        setupModel(importModel=null){
+        setupModel(importModel = null) {
             //edit form
-            if(importModel){
+            if (importModel) {
                 this.importModel = {
                     notes: importModel.notes,
                     cover_image_id: importModel.cover_image.id,
                 };
             }
             //new form
-            else{
+            else {
                 this.importModel = {};
             }
         },
-        idForField(fieldName){
+        idForField(fieldName) {
             return `id_import_${fieldName}_input`;
         },
-        getResourceForSave(){
+        getResourceForSave() {
             // only want to send notes
             const importModel = {
                 notes: this.importModel.notes,
                 cover_image_id: this.importModel.cover_image_id,
             };
 
-            return {import: toApiResource(importModel)};
+            return { import: toApiResource(importModel) };
         },
-        saveSuccessful(importModel){
-            const flashMessage = JSON.stringify([`${importModel.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info']);
+        saveSuccessful(importModel) {
+            const flashMessage = JSON.stringify([
+                `${importModel.name} ${
+                    this.isEditForm ? 'updated' : 'created'
+                }`,
+                'info',
+            ]);
             this.$router.push({
-                name: 'importsShow', 
+                name: 'importsShow',
                 params: {
                     id: importModel.id,
                 },
                 state: {
                     flashMessage,
-                }
+                },
             });
         },
-    }
-}
+    },
+};
 </script>

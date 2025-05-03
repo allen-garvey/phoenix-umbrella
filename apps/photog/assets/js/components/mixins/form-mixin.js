@@ -32,6 +32,7 @@ export function formMixinBuilder() {
                 model: null,
                 items: [],
                 errors: {},
+                isSaving: false,
             };
         },
         created() {
@@ -53,6 +54,7 @@ export function formMixinBuilder() {
         methods: {
             setup() {
                 this.isInitialLoadComplete = false;
+                this.isSaving = false;
                 this.errors = {};
                 if (this.isEditForm) {
                     this.loadModel().then(([model, items]) => {
@@ -77,6 +79,7 @@ export function formMixinBuilder() {
                 return Promise.all([modelPromise, itemsPromise]);
             },
             save() {
+                this.isSaving = true;
                 let apiUrl = `${API_URL_BASE}/${this.resourceApiUrlBase}`;
                 let apiMethod = 'POST';
                 if (this.isEditForm) {
@@ -86,6 +89,7 @@ export function formMixinBuilder() {
                 const resource = this.getResourceForSave();
 
                 this.sendJson(apiUrl, apiMethod, resource).then(response => {
+                    this.isSaving = false;
                     if (response.errors) {
                         this.errors = response.errors;
                     } else {

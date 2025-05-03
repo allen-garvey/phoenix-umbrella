@@ -1,30 +1,44 @@
 <template>
-    <Form-Section :heading="headingText" :back-link="backLink" :save="save" v-if="isInitialLoadComplete">
+    <Form-Section
+        :heading="headingText"
+        :back-link="backLink"
+        :save="save"
+        :isSaving="isSaving"
+        v-if="isInitialLoadComplete"
+    >
         <template v-slot:inputs>
-            <Form-Input 
-                :id="idForField('name')" 
-                label="Name" 
+            <Form-Input
+                :id="idForField('name')"
+                label="Name"
                 :focus="true"
-                v-model="tag.name" 
-                :errors="errors.name" 
+                v-model="tag.name"
+                :errors="errors.name"
             />
-            
-            <Form-Input :id="idForField('is_favorite')" label="Is Favorite" v-model="tag.is_favorite" :errors="errors.is_favorite" input-type="checkbox" />
-            
+
+            <Form-Input
+                :id="idForField('is_favorite')"
+                label="Is Favorite"
+                v-model="tag.is_favorite"
+                :errors="errors.is_favorite"
+                input-type="checkbox"
+            />
+
             <div class="form-group" v-if="albums.length > 0">
                 <label for="cover_album_id_input">Cover Album</label>
-                <select 
-                    class="form-control" 
+                <select
+                    class="form-control"
                     v-model="tag.cover_album_id"
                     id="cover_album_id_input"
                     v-if="isEditForm"
                 >
                     <option value=""></option>
-                    <option 
+                    <option
                         v-for="album in albums"
                         :key="album.id"
                         :value="album.id"
-                    >{{album.name}}</option>
+                    >
+                        {{ album.name }}
+                    </option>
                 </select>
             </div>
         </template>
@@ -48,40 +62,42 @@ export default {
             tag: {},
             resourceApiUrlBase: '/tags',
             routeBase: 'tags',
-        }
+        };
     },
     computed: {
-        headingText(){
-            if(this.isEditForm){
+        headingText() {
+            if (this.isEditForm) {
                 return `Edit ${this.model.name}`;
             }
             return 'New Tag';
         },
-        backLink(){
-            if(this.isEditForm){
-                return {name: 'tagsShow', params: {id: this.modelId}};
+        backLink() {
+            if (this.isEditForm) {
+                return { name: 'tagsShow', params: { id: this.modelId } };
             }
-            return {name: 'tagsIndex'};
+            return { name: 'tagsIndex' };
         },
-        albums(){
-            return this.items.sort((albumA, albumB) => albumA.name.localeCompare(albumB.name));
+        albums() {
+            return this.items.sort((albumA, albumB) =>
+                albumA.name.localeCompare(albumB.name)
+            );
         },
     },
     methods: {
-        setupModel(tag=null){
+        setupModel(tag = null) {
             //edit form
-            if(tag){
+            if (tag) {
                 this.tag = tag;
             }
             //new form
-            else{
+            else {
                 this.tag = {};
             }
         },
-        idForField(fieldName){
+        idForField(fieldName) {
             return `id_tag_${fieldName}_input`;
         },
-        getResourceForSave(){
+        getResourceForSave() {
             // don't want to send albums
             const tag = {
                 name: this.tag.name,
@@ -89,20 +105,23 @@ export default {
                 cover_album_id: this.tag.cover_album_id,
             };
 
-            return {tag: toApiResource(tag)};
+            return { tag: toApiResource(tag) };
         },
-        saveSuccessful(tag){
-            const flashMessage = JSON.stringify([`${tag.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info']);
+        saveSuccessful(tag) {
+            const flashMessage = JSON.stringify([
+                `${tag.name} ${this.isEditForm ? 'updated' : 'created'}`,
+                'info',
+            ]);
             this.$router.push({
-                name: 'tagsShow', 
+                name: 'tagsShow',
                 params: {
                     id: tag.id,
                 },
                 state: {
                     flashMessage,
-                }
+                },
             });
         },
-    }
-}
+    },
+};
 </script>

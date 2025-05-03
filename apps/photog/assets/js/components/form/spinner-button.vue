@@ -3,6 +3,7 @@
         @click="$emit('buttonClick')"
         class="btn"
         :class="buttonClasses"
+        :type="buttonType"
         :disabled="isDisabled || isLoading"
     >
         <span v-if="!isLoading">{{ buttonText }}</span>
@@ -46,6 +47,10 @@ export default {
         buttonClasses: {
             type: Array,
             required: true,
+        },
+        buttonType: {
+            type: String,
+            default: 'button',
         },
     },
 };

@@ -1,48 +1,63 @@
 <template>
-<div>
-    <Form-Section :heading="headingText" :backLink="backLink" :save="save" v-if="isInitialLoadComplete">
-        <template v-slot:inputs>
-            <Form-Input 
-                :id="idForField('name')" 
-                label="Name" 
-                :focus="true"
-                v-model="clan.name" 
-                :errors="errors.name" 
-            />
-        </template>
-    </Form-Section>
-    <div 
-        class="container"
-        :class="$style.personsContainer" 
-        v-if="this.persons.length > 0"
-    >
-        <h2>Persons</h2>
-        <div class="form-group">
-            <ul class="spread-content">
-                <li v-for="person in persons" :key="person.id">
-                    <input type="checkbox" :id="idForPerson(person)" :checked="personsActive[person.id]" @change="personChecked(person.id)" />
-                    <label :for="idForPerson(person)">{{person.name}}</label>
-                </li>
-            </ul>
-            <div 
-                class="pull-right"
-                :class="$style.btnContainer"
-                v-if="isEditForm"
-            >
-                <button class="btn btn-success" @click="updatePersons()">Update persons</button>
+    <div>
+        <Form-Section
+            :heading="headingText"
+            :backLink="backLink"
+            :save="save"
+            :isSaving="isSaving"
+            v-if="isInitialLoadComplete"
+        >
+            <template v-slot:inputs>
+                <Form-Input
+                    :id="idForField('name')"
+                    label="Name"
+                    :focus="true"
+                    v-model="clan.name"
+                    :errors="errors.name"
+                />
+            </template>
+        </Form-Section>
+        <div
+            class="container"
+            :class="$style.personsContainer"
+            v-if="this.persons.length > 0"
+        >
+            <h2>Persons</h2>
+            <div class="form-group">
+                <ul class="spread-content">
+                    <li v-for="person in persons" :key="person.id">
+                        <input
+                            type="checkbox"
+                            :id="idForPerson(person)"
+                            :checked="personsActive[person.id]"
+                            @change="personChecked(person.id)"
+                        />
+                        <label :for="idForPerson(person)">{{
+                            person.name
+                        }}</label>
+                    </li>
+                </ul>
+                <div
+                    class="pull-right"
+                    :class="$style.btnContainer"
+                    v-if="isEditForm"
+                >
+                    <button class="btn btn-success" @click="updatePersons()">
+                        Update persons
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <style lang="scss" module>
-    .personsContainer{
-        padding-bottom: 4rem;
-    }
-    .btnContainer{
-        margin-top: 3rem;
-    }
+.personsContainer {
+    padding-bottom: 4rem;
+}
+.btnContainer {
+    margin-top: 3rem;
+}
 </style>
 
 <script>
@@ -62,10 +77,10 @@ export default {
         },
     },
     mixins: [formMixinBuilder(), albumAndPersonFormMixinBuilder()],
-    beforeRouteEnter(to, from, next){
+    beforeRouteEnter(to, from, next) {
         //unfortunately has to be duplicated here
         //since beforeRouteEnter can't be added via mixin
-        next((self) => {
+        next(self => {
             self.previousRoute = from;
         });
     },
@@ -77,92 +92,104 @@ export default {
             personsActive: {},
             resourceApiUrlBase: `/clans`,
             routeBase: 'clans',
-        }
+        };
     },
     computed: {
-        headingText(){
-            if(this.isEditForm){
+        headingText() {
+            if (this.isEditForm) {
                 return `Edit ${this.model.name}`;
             }
             return 'New Clan';
         },
-        backLink(){
-            if(this.isEditForm){
-                return {name: 'clansShow', params: {id: this.modelId}};
+        backLink() {
+            if (this.isEditForm) {
+                return { name: 'clansShow', params: { id: this.modelId } };
             }
-            return {name: 'clansIndex'};
+            return { name: 'clansIndex' };
         },
     },
     methods: {
-        idForPerson(person){
+        idForPerson(person) {
             return `clan_person_${person.id}_checkbox_id`;
         },
-        personChecked(personId){
+        personChecked(personId) {
             this.personsActive[personId] = !this.personsActive[personId];
         },
-        getPersonIdsForSave(){
-            return this.persons.reduce((personIds, person)=>{
-                if(this.personsActive[person.id]){
+        getPersonIdsForSave() {
+            return this.persons.reduce((personIds, person) => {
+                if (this.personsActive[person.id]) {
                     personIds.push(person.id);
                 }
                 return personIds;
             }, []);
         },
-        updatePersons(){
+        updatePersons() {
             const person_ids = this.getPersonIdsForSave();
-            this.sendJson(`${API_URL_BASE}/clans/${this.clan.id}/persons`, 'PUT', { person_ids}).then((res)=>{
-                if(!res.error){
+            this.sendJson(
+                `${API_URL_BASE}/clans/${this.clan.id}/persons`,
+                'PUT',
+                { person_ids }
+            ).then(res => {
+                if (!res.error) {
                     this.saveSuccessful(this.clan);
                 }
             });
         },
-        setupModel(clan=null){
-            this.getModel('/persons').then((persons)=>{
+        setupModel(clan = null) {
+            this.getModel('/persons').then(persons => {
                 this.persons = persons;
             });
 
             //edit form
-            if(clan){
+            if (clan) {
                 this.clan = {
                     id: clan.id,
                     name: clan.name,
                 };
 
-                this.personsActive = clan.person_ids.reduce((personsActive, personId)=>{
-                    personsActive[personId] = true;
-                    return personsActive;
-                }, {});
+                this.personsActive = clan.person_ids.reduce(
+                    (personsActive, personId) => {
+                        personsActive[personId] = true;
+                        return personsActive;
+                    },
+                    {}
+                );
             }
             //new form
-            else{
+            else {
                 const clan = {
                     name: '',
                 };
                 this.clan = clan;
             }
         },
-        idForField(fieldName){
+        idForField(fieldName) {
             return `id_clan_${fieldName}_input`;
         },
-        getResourceForSave(){
-            const data = {clan: toApiResource(this.clan)};
-            if(this.isCreateForm){
+        getResourceForSave() {
+            const data = { clan: toApiResource(this.clan) };
+            if (this.isCreateForm) {
                 const person_ids = this.getPersonIdsForSave();
-                if(person_ids.length > 0){
+                if (person_ids.length > 0) {
                     data.person_ids = person_ids;
                 }
             }
             return data;
         },
-        saveSuccessful(clan){
+        saveSuccessful(clan) {
             const modelId = clan.id;
-            const redirectPath = this.successRedirect === '1' ? this.previousRoute : {name: 'clansShow', params: {id: modelId}};
+            const redirectPath =
+                this.successRedirect === '1'
+                    ? this.previousRoute
+                    : { name: 'clansShow', params: { id: modelId } };
             redirectPath.state = {
-                flashMessage: JSON.stringify([`${clan.name} ${this.isEditForm ? 'updated' : 'created'}`, 'info'])
+                flashMessage: JSON.stringify([
+                    `${clan.name} ${this.isEditForm ? 'updated' : 'created'}`,
+                    'info',
+                ]),
             };
             this.$router.push(redirectPath);
         },
-    }
-}
+    },
+};
 </script>
-    
