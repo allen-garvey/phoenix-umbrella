@@ -1,6 +1,7 @@
 import {
     getPersonsShowApiPath,
     getPersonsShowSharedProps,
+    getPersonsIndexSharedProps,
 } from '../route-helpers/persons';
 
 import { updateItemFavorite } from '../route-helpers/images';
@@ -17,37 +18,41 @@ export default () => [
         component: ThumbnailList,
         props: route => {
             const props = {
+                ...getPersonsIndexSharedProps(),
                 apiPath: route.path,
-                newItemLink: { name: 'personsNew' },
                 pageTitle: 'Persons',
-                showRouteFor: (item, _model) => {
-                    return {
-                        name: 'personsShow',
-                        params: {
-                            id: item.id,
+                headerExtraLinks: [
+                    {
+                        class: 'btn-outline-dark',
+                        link: {
+                            name: 'favoritePersonsIndex',
                         },
-                    };
-                },
-                updateItemFavorite(sendJson, item) {
-                    const id = item.id;
+                        text: 'Favorites',
+                    },
+                ],
+            };
 
-                    const newValue = !item.is_favorite;
-                    item.is_favorite = newValue;
-
-                    const apiUrl = `${API_URL_BASE}/persons/${id}`;
-
-                    return sendJson(
-                        apiUrl,
-                        'PATCH',
-                        {
-                            person: {
-                                id,
-                                is_favorite: newValue,
-                            },
+            return props;
+        },
+    },
+    {
+        path: '/persons/favorites',
+        name: 'favoritePersonsIndex',
+        component: ThumbnailList,
+        props: route => {
+            const props = {
+                ...getPersonsIndexSharedProps(),
+                apiPath: route.path,
+                pageTitle: 'Favorite persons',
+                headerExtraLinks: [
+                    {
+                        class: 'btn-outline-dark',
+                        link: {
+                            name: 'personsIndex',
                         },
-                        { preserveCache: true }
-                    );
-                },
+                        text: 'All persons',
+                    },
+                ],
             };
             return props;
         },

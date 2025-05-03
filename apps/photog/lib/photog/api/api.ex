@@ -830,6 +830,20 @@ defmodule Photog.Api do
     |> Repo.all()
   end
 
+  def list_favorite_persons do
+    from(
+      person in Person,
+      join: cover_image in assoc(person, :cover_image),
+      left_join: person_image in assoc(person, :person_images),
+      where: person.is_favorite == true,
+      group_by: [person.id, cover_image.id],
+      preload: [cover_image: cover_image],
+      order_by: :name,
+      select: %Person{person | images_count: count(person.id)}
+    )
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single person.
 

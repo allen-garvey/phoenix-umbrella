@@ -18,6 +18,11 @@ defmodule PhotogWeb.PersonController do
     render(conn, "index.json", persons: persons)
   end
 
+  def favorites_index(conn, _params) do
+    persons = Api.list_favorite_persons()
+    render(conn, "index.json", persons: persons)
+  end
+
   def create(conn, %{"person" => person_params, "image_ids" => image_ids}) do
     with {:ok, %Person{} = person} <- Api.create_person(person_params) do
       {_, _} = add_images_to_person(person.id, image_ids)

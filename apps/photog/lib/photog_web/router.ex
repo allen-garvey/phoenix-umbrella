@@ -31,6 +31,7 @@ defmodule PhotogWeb.Router do
     get("/imports/count", ImportController, :count)
     get("/images/search", ImageController, :search)
     get("/albums/fresh", AlbumController, :index_fresh)
+    get("/persons/favorites", PersonController, :favorites_index)
 
     resources("/images", ImageController, only: [:index, :show, :update])
     resources("/albums", AlbumController)
