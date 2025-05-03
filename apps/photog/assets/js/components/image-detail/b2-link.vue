@@ -1,41 +1,40 @@
 <template>
     <div>
-        <a 
-            :href="url" 
-            v-if="url" 
-            target="_blank" 
-            rel="noopener noreferrer nofollow" 
+        <a
+            :href="url"
+            v-if="url"
+            target="_blank"
+            rel="noopener noreferrer nofollow"
             :class="$style.url"
         >
-            Open image in Backblaze B2 <svg><use href="#icon-external-link" /></svg>
+            Open image in Backblaze B2
+            <svg><use href="#icon-external-link" /></svg>
         </a>
-        <button 
-            @click="loadUrl" 
-            class="btn btn-sm btn-outline-dark"
-            :disabled="isLoading"
+        <spinner-button
             v-else
-        >
-            <span v-if="!isLoading">Get B2 image url</span>
-            <span v-else>
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                Loading...
-            </span>
-        </button>
+            @buttonClick="loadUrl"
+            :isLoading="isLoading"
+            :buttonClasses="['btn-sm', 'btn-outline-dark']"
+            buttonText="Get B2 image url"
+            spinnerText="Loading..."
+        />
     </div>
 </template>
 
 <style lang="scss" module>
-    .url {
-        font-size: 1rem;
+.url {
+    font-size: 1rem;
 
-        svg {
-            height: 1em;
-            width: 1em;
-        }
+    svg {
+        height: 1em;
+        width: 1em;
     }
+}
 </style>
 
 <script>
+import SpinnerButton from '../form/spinner-button.vue';
+
 export default {
     props: {
         image: {
@@ -47,37 +46,40 @@ export default {
             required: true,
         },
     },
-    created(){
+    components: {
+        SpinnerButton,
+    },
+    created() {
         this.setup();
     },
-    data(){
+    data() {
         return {
             isLoading: false,
             url: null,
         };
     },
     watch: {
-        image(){
+        image() {
             this.setup();
         },
     },
     methods: {
-        setup(){
+        setup() {
             this.isLoading = false;
             this.url = null;
             this.onB2UrlRequested(this.image, true).then(this.urlLoaded);
         },
-        loadUrl(){
+        loadUrl() {
             this.isLoading = true;
             this.onB2UrlRequested(this.image).then(this.urlLoaded);
         },
-        urlLoaded(result){
+        urlLoaded(result) {
             this.isLoading = false;
-            if(!result || result.imageId !== this.image.id){
+            if (!result || result.imageId !== this.image.id) {
                 return;
             }
             this.url = result.url;
-        }
-    }
+        },
+    },
 };
 </script>

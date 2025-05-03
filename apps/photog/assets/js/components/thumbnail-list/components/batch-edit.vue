@@ -150,25 +150,16 @@
                             : 'Show less'
                     }}
                 </button>
-                <button
-                    class="btn btn-success"
-                    :disabled="
-                        !anyBatchResourcesSelected ||
-                        !anyItemsBatchSelected ||
-                        isCurrentlyBatchSaving
+                <spinner-button
+                    @buttonClick="saveBatchSelected(batchResourcesSelected)"
+                    :isDisabled="
+                        !anyBatchResourcesSelected || !anyItemsBatchSelected
                     "
-                    @click="saveBatchSelected(batchResourcesSelected)"
-                >
-                    <span>Save</span>
-                    <span
-                        class="spinner-border spinner-border-sm"
-                        :class="$style.buttonSpinner"
-                        role="status"
-                        aria-hidden="true"
-                        v-if="isCurrentlyBatchSaving"
-                    >
-                    </span>
-                </button>
+                    :isLoading="isCurrentlyBatchSaving"
+                    :buttonClasses="['btn-success']"
+                    buttonText="Save"
+                    spinnerText="Saving..."
+                />
             </div>
         </div>
     </div>
@@ -208,10 +199,6 @@
 .favoritedItem {
     color: variables.$photog_favorited_color;
 }
-
-.buttonSpinner {
-    margin-left: 0.5em;
-}
 </style>
 
 <script>
@@ -219,6 +206,7 @@ import { nextTick } from 'vue';
 import ClanSelect from '../../shared/clan-select.vue';
 import focus from 'umbrella-common-js/vue/directives/focus.js';
 import { BATCH_EDIT_RESOURCE_MODE } from '../constants/batch-edit.js';
+import SpinnerButton from '../../form/spinner-button.vue';
 
 const BATCH_RESOURCE_LENGTH_MAX_TO_SHOW_ALL = 40;
 const BATCH_RESOURCES_MORE_LIMIT = 16;
@@ -292,6 +280,7 @@ export default {
     },
     components: {
         ClanSelect,
+        SpinnerButton,
     },
     directives: {
         focus,
