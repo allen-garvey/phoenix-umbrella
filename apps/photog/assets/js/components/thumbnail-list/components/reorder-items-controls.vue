@@ -1,6 +1,6 @@
 <template>
-    <div :class="$style.container">
-        <div :class="{ [$style.actionButtonContainer]: isReordering }">
+    <div :class="$style.buttonContainer">
+        <div :class="$style.buttonContainer">
             <button
                 class="btn"
                 :class="reorderButtonCssClass"
@@ -14,16 +14,16 @@
                 v-show="isReordering && isListReordered"
                 @buttonClick="saveOrder()"
                 :isLoading="isCurrentlySavingOrder"
-                :buttonClasses="['btn-success', $style.saveButton]"
+                :buttonClasses="['btn-success']"
                 buttonText="Save order"
                 spinnerText="Saving..."
             />
         </div>
         <div
-            :class="$style.sortContainer"
+            :class="$style.buttonContainer"
             v-if="enableReorderBySort && isReordering"
         >
-            <div :class="$style.selectContainer">
+            <div>
                 <select
                     class="form-control"
                     :class="$style.select"
@@ -53,25 +53,9 @@
 </template>
 
 <style lang="scss" module>
-.container {
+.buttonContainer {
     display: flex;
-    justify-content: space-between;
-}
-
-.saveButton {
-    margin-left: 1em;
-}
-
-.actionButtonContainer {
-    margin-right: 1em;
-}
-
-.sortContainer {
-    display: flex;
-}
-
-.selectContainer {
-    margin-right: 1em;
+    gap: 1em;
 }
 
 .select {
