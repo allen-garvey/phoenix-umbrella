@@ -108,7 +108,7 @@ import { toApiResource } from '../form-helpers.js';
 import { API_URL_BASE } from '../request-helpers.js';
 import { getCurrentYear } from '../date-helpers';
 
-import SpinnerButton from './spinner-button.vue';
+import SpinnerButton from './form/spinner-button.vue';
 
 export default {
     props: {
