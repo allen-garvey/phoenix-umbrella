@@ -78,9 +78,14 @@
                     :class="$style.btnContainer"
                     v-if="isEditForm"
                 >
-                    <button class="btn btn-success" @click="updateTags()">
-                        Update tags
-                    </button>
+                    <spinner-button
+                        :isLoading="isSaving"
+                        :buttonClasses="['btn-success']"
+                        buttonType="submit"
+                        buttonText="Update tags"
+                        spinnerText="Saving..."
+                        @buttonClick="updateTags()"
+                    />
                 </div>
             </div>
         </div>
@@ -103,6 +108,8 @@ import { toApiResource } from '../form-helpers.js';
 import { API_URL_BASE } from '../request-helpers.js';
 import { getCurrentYear } from '../date-helpers';
 
+import SpinnerButton from './spinner-button.vue';
+
 export default {
     props: {
         modelId: {
@@ -112,6 +119,9 @@ export default {
             type: Function,
             required: true,
         },
+    },
+    components: {
+        SpinnerButton,
     },
     mixins: [formMixinBuilder(), albumAndPersonFormMixinBuilder()],
     beforeRouteEnter(to, from, next) {
@@ -161,12 +171,14 @@ export default {
             }, []);
         },
         updateTags() {
+            this.isSaving = true;
             const tag_ids = this.getTagIdsForSave();
             this.sendJson(
                 `${API_URL_BASE}/albums/${this.album.id}/tags`,
                 'PUT',
                 { tag_ids }
             ).then(res => {
+                this.isSaving = false;
                 if (!res.error) {
                     this.saveSuccessful(this.album);
                 }

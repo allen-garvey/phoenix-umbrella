@@ -42,9 +42,14 @@
                     :class="$style.btnContainer"
                     v-if="isEditForm"
                 >
-                    <button class="btn btn-success" @click="updatePersons()">
-                        Update persons
-                    </button>
+                    <spinner-button
+                        :isLoading="isSaving"
+                        :buttonClasses="['btn-success']"
+                        buttonType="submit"
+                        buttonText="Update persons"
+                        spinnerText="Saving..."
+                        @buttonClick="updatePersons()"
+                    />
                 </div>
             </div>
         </div>
@@ -66,6 +71,8 @@ import { albumAndPersonFormMixinBuilder } from './mixins/album-and-person-form-m
 import { toApiResource } from '../form-helpers.js';
 import { API_URL_BASE } from '../request-helpers.js';
 
+import SpinnerButton from './spinner-button.vue';
+
 export default {
     props: {
         modelId: {
@@ -75,6 +82,9 @@ export default {
             type: Function,
             required: true,
         },
+    },
+    components: {
+        SpinnerButton,
     },
     mixins: [formMixinBuilder(), albumAndPersonFormMixinBuilder()],
     beforeRouteEnter(to, from, next) {
@@ -124,12 +134,14 @@ export default {
             }, []);
         },
         updatePersons() {
+            this.isSaving = true;
             const person_ids = this.getPersonIdsForSave();
             this.sendJson(
                 `${API_URL_BASE}/clans/${this.clan.id}/persons`,
                 'PUT',
                 { person_ids }
             ).then(res => {
+                this.isSaving = false;
                 if (!res.error) {
                     this.saveSuccessful(this.clan);
                 }
