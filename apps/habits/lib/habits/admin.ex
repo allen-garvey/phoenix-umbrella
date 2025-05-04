@@ -224,6 +224,17 @@ defmodule Habits.Admin do
     |> Repo.all()
   end
 
+  def activities_for_query(query) do
+    like_query = "%#{query}%"
+
+    list_activities_query()
+    |> where(
+      [activity],
+      ilike(activity.title, ^like_query) or ilike(activity.description, ^like_query)
+    )
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single activity.
 

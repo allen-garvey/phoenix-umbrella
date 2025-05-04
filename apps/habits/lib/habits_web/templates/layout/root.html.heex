@@ -22,6 +22,7 @@
                 <%= link HabitsWeb.CategoryView.to_s(category), to: Routes.category_path(@conn, :show, category) %>
               </li>
             <% end %>
+            <li><%= link "Search", to: Routes.activity_path(@conn, :search) %></li>
             <li><%= link "Add Activity", to: Routes.activity_path(@conn, :new), class: "btn btn-success" %></li>
           </ul>
         </nav>

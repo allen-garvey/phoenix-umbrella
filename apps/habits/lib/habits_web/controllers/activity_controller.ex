@@ -5,6 +5,16 @@ defmodule HabitsWeb.ActivityController do
   alias Habits.Admin.Activity
   alias Common.NumberHelpers
 
+  def search(conn, %{"q" => query}) do
+    activities = Admin.activities_for_query(query)
+
+    render(conn, "search.html", activities: activities, query: query)
+  end
+
+  def search(conn, _params) do
+    render(conn, "search.html", query: "")
+  end
+
   def related_fields() do
     [
       categories: Admin.list_categories()
