@@ -3,6 +3,11 @@
     display: flex;
 	flex-wrap: wrap;
 	gap: 1em;
+    align-items: flex-end;
+
+    .form-group {
+        margin-bottom: 0;
+    }
 }
 
 .activity-search-query-input {

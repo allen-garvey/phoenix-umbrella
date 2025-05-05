@@ -224,14 +224,24 @@ defmodule Habits.Admin do
     |> Repo.all()
   end
 
-  def activities_for_query(query) do
+  defp activities_for_query_query(query) do
     like_query = "%#{query}%"
 
-    list_activities_query()
-    |> where(
-      [activity],
-      ilike(activity.title, ^like_query) or ilike(activity.description, ^like_query)
+    from(
+      activity in Activity,
+      where: ilike(activity.title, ^like_query) or ilike(activity.description, ^like_query),
+      order_by: [desc: activity.date, desc: activity.id]
     )
+  end
+
+  def activities_for_query(query, "") do
+    activities_for_query_query(query)
+    |> Repo.all()
+  end
+
+  def activities_for_query(query, category_id) do
+    activities_for_query_query(query)
+    |> where([activity], activity.category_id == ^category_id)
     |> Repo.all()
   end
 

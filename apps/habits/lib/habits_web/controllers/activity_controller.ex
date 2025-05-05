@@ -5,14 +5,33 @@ defmodule HabitsWeb.ActivityController do
   alias Habits.Admin.Activity
   alias Common.NumberHelpers
 
-  def search(conn, %{"q" => query}) do
-    activities = Admin.activities_for_query(query)
+  defp preload_categories(activities, categories) do
+    category_map = Map.new(categories, fn category -> {category.id, category} end)
 
-    render(conn, "search.html", activities: activities, query: query)
+    Enum.map(activities, fn activity ->
+      %Activity{activity | category: Map.get(category_map, activity.category_id)}
+    end)
+  end
+
+  def search(conn, %{"q" => query, "category_id" => category_id}) do
+    categories = Admin.list_categories()
+
+    activities =
+      Admin.activities_for_query(query, category_id)
+      |> preload_categories(categories)
+
+    render(conn, "search.html",
+      activities: activities,
+      query: query,
+      category_id: category_id,
+      categories: categories
+    )
   end
 
   def search(conn, _params) do
-    render(conn, "search.html", query: "")
+    categories = Admin.list_categories()
+
+    render(conn, "search.html", query: "", categories: categories, category_id: nil)
   end
 
   def related_fields() do
