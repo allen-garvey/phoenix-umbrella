@@ -5,6 +5,8 @@
     </h1>
     <%= if assigns[:has_limit] do %>
       <%= link "All activities", to: Routes.category_path(@conn, :activities_list, @category), class: "btn btn-sm btn-dark" %>
+    <% else %>
+      <span>(<%= Enum.count(@activities) %>)</span>
     <% end %>
   </div>
 
