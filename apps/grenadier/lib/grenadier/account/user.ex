@@ -13,11 +13,13 @@ defmodule Grenadier.Account.User do
   end
 
   defp put_pass_hash(
-    %Ecto.Changeset{
-      valid?: true,
-      changes: %{password: password}} = changeset
-  ) when not is_nil(password) do
-    change(changeset, Argon2.add_hash(password))
+         %Ecto.Changeset{
+           valid?: true,
+           changes: %{password: password}
+         } = changeset
+       )
+       when not is_nil(password) do
+    change(changeset, password_hash: Argon2.hash_pwd_salt(password))
   end
 
   defp put_pass_hash(changeset), do: changeset

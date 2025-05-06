@@ -50,7 +50,7 @@ defmodule Umbrella.Common.Deps do
   end
 
   def argon2 do
-    {:argon2_elixir, "~> 4.1"}
+    {:argon2_elixir, "~> 4.1.3"}
   end
 
   def phoenix_component do

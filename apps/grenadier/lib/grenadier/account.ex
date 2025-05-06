@@ -49,13 +49,20 @@ defmodule Grenadier.Account do
     Repo.get_by(User, name: name)
   end
 
+  defp check_pass(%User{} = user, password) do
+    case Argon2.verify_pass(password, user.password_hash) do
+      true -> {:ok, user}
+      _ -> false
+    end
+  end
+
   @doc """
   Gets a single user given name and password,
   or false if either user does not exist or password is wrong
   """
   def authenticate_user(name, password) do
     case get_user_by_name(name) do
-      %User{} = user -> Argon2.check_pass(user, password)
+      %User{} = user -> check_pass(user, password)
       nil -> {:error, Argon2.no_user_verify()}
     end
   end
