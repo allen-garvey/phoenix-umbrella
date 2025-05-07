@@ -1,3 +1,9 @@
+<h1>
+    <%= case @query do
+        "" -> "Search activities"
+        query -> "Results for “#{query}”"
+    end %>
+</h1>
 <.form :let={f} method="get" for={%{"category_id" => @category_id}} class="activity-search-form">
     <input name="q" type="search" value={@query} class="form-control activity-search-query-input" autofocus />
 
