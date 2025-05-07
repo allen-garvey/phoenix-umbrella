@@ -13,6 +13,10 @@ defmodule HabitsWeb.ActivityController do
     end)
   end
 
+  def search(conn, %{"q" => ""}) do
+    search_default_page(conn)
+  end
+
   def search(conn, %{"q" => query, "category_id" => category_id}) do
     categories = Admin.list_categories()
 
@@ -29,6 +33,10 @@ defmodule HabitsWeb.ActivityController do
   end
 
   def search(conn, _params) do
+    search_default_page(conn)
+  end
+
+  defp search_default_page(conn) do
     categories = Admin.list_categories()
 
     render(conn, "search.html", query: "", categories: categories, category_id: nil)
