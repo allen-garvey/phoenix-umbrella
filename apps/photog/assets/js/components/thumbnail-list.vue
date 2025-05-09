@@ -9,6 +9,7 @@
             <!-- 
             * Header
         -->
+            <AlbumsSearchBar v-if="showAlbumsSearchBar" />
             <Resource-Header
                 :title="titleForPage"
                 :editItemLink="editItemLinkFor(model)"
@@ -160,6 +161,7 @@ import BatchEdit from './thumbnail-list/components/batch-edit.vue';
 import ReorderItemsControls from './thumbnail-list/components/reorder-items-controls.vue';
 import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list.vue';
 import ImagePreview from './thumbnail-list/components/image-preview.vue';
+import AlbumsSearchBar from './thumbnail-list/components/albums-search-bar.vue';
 
 import { API_URL_BASE } from '../request-helpers.js';
 import { arrayMove, batchReorderArray } from '../array-util.js';
@@ -308,6 +310,10 @@ export default {
         updateItemFavorite: {
             type: Function,
         },
+        showAlbumsSearchBar: {
+            type: Boolean,
+            default: false,
+        },
     },
     components: {
         InfiniteObserver,
@@ -319,6 +325,7 @@ export default {
         BatchEdit,
         ThumbnailItemsList,
         ImagePreview,
+        AlbumsSearchBar,
     },
     data() {
         return {

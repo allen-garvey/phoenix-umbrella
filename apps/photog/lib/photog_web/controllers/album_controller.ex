@@ -46,6 +46,11 @@ defmodule PhotogWeb.AlbumController do
     render(conn, "index.json", albums: albums)
   end
 
+  def search(conn, %{"q" => query}) do
+    albums = Api.list_albums_for_query(query)
+    render(conn, "index.json", albums: albums)
+  end
+
   def create(conn, %{"album" => album_params, "image_ids" => image_ids, "tag_ids" => tag_ids}) do
     create_album(conn, album_params, fn album ->
       {_, _} = add_images_to_album(album.id, image_ids)

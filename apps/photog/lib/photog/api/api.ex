@@ -471,6 +471,12 @@ defmodule Photog.Api do
     |> Repo.all()
   end
 
+  def list_albums_for_query(query) do
+    list_albums_query()
+    |> where([album], ilike(album.name, ^"%#{query}%"))
+    |> Repo.all()
+  end
+
   @doc """
   Returns the string list of years where there are albums
   """

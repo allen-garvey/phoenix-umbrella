@@ -15,6 +15,18 @@ export default () => [
         name: 'albumsForYearIndex',
         component: YearsListPage,
     },
+    buildAlbumVariant('/albums/search', 'albumsSearch', route => {
+        const query = route.query.q;
+
+        const props = {
+            apiPath: `/albums/search?q=${query}`,
+            isPaginated: false,
+            apiItemsCountPath: undefined,
+            pageTitle: `Search results for “${query}”`,
+        };
+
+        return props;
+    }),
     buildAlbumVariant('/albums/favorites', 'albumFavoritesIndex', route => {
         const props = {
             apiPath: '/albums/?favorites=true',

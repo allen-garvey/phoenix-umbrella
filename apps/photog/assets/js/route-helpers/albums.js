@@ -34,6 +34,7 @@ export function buildAlbumVariant(path, name, propsBuilder = null) {
                 apiItemsCountPath: `${route.path}/count`,
                 enableBatchSelectAlbums: true,
                 isPaginated: true,
+                showAlbumsSearchBar: true,
                 newItemLink: { name: 'albumsNew' },
                 pageTitle: 'Albums',
                 itemPreviewContentCallback: album =>
