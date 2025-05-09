@@ -19,6 +19,10 @@
         color: #fff;
         color-scheme: dark;
     }
+
+    .form-control::placeholder {
+        color: #999;
+    }
 }
 
 input:disabled, select:disabled, button:disabled {
