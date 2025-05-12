@@ -1,129 +1,138 @@
 <template>
-<div>
-    <loading-animation v-if="!isModelLoaded" />
-    <main class="main container" v-if="isModelLoaded">
-        <Parent-Thumbnails
-            :parent="parent"
-            :images="images"
-            :image="image"
-            :previousImage="previousImage"
-            :nextImage="nextImage" 
-            :imageIndex="modelIndex"
-            v-if="parent && images"
-        >
-        </Parent-Thumbnails>
-        <div :class="$style.imageShowThumbnailContainer">
-            <a :href="masterUrlFor(image)" target="_blank" rel="noreferrer">
-                <Swipe-Image
-                    :src="thumbnailUrlFor(image)"
-                    :image-class="$style.image"
-                    :on-swiped="onKeyPressed"
-                />
-            </a>
-        </div>
-        <div :class="$style.imageShowLinkContainer">
-            <a :href="amazonUrl" v-if="amazonUrl" target="_blank" rel="noreferrer">View in Amazon Photos</a>
-        </div>
-        <div>
-            <button class="btn" :class="image.is_favorite ? 'btn-primary' : 'btn-outline-dark'" @click="toggleImageIsFavorite">{{image.is_favorite ? 'Favorited' : 'Click to favorite'}}</button>
-        </div>
-        <Image-Info
-            :image="image"
-            :updateImage="updateImage"
-        />
-        <Image-Versions
-            :versions="image.versions"
-            v-if="image.versions && image.versions.length > 0"
-        />
-        <Exif-Info 
-            :imageExif="imageExif" 
-            :shouldShowRequestButton="!imageExif && !hasExifBeenRequested"
-            @exif-requested="loadExif"
-        />
-        
-        <div :class="$style.actionButtonContainer" v-if="isB2Enabled">
-            <B2-Link :image="image" :onB2UrlRequested="onB2UrlRequested" />
-        </div>
+    <div>
+        <loading-animation v-if="!isModelLoaded" />
+        <main class="main container" v-if="isModelLoaded">
+            <Parent-Info
+                :parent="parent"
+                :image="image"
+                :previousImage="previousImage"
+                :nextImage="nextImage"
+                :imageIndex="modelIndex"
+                v-if="parent && images"
+            />
+            <div :class="$style.imageShowThumbnailContainer">
+                <a :href="masterUrlFor(image)" target="_blank" rel="noreferrer">
+                    <Swipe-Image
+                        :src="thumbnailUrlFor(image)"
+                        :image-class="$style.image"
+                        :on-swiped="onKeyPressed"
+                    />
+                </a>
+            </div>
+            <div :class="$style.imageShowLinkContainer">
+                <a
+                    :href="amazonUrl"
+                    v-if="amazonUrl"
+                    target="_blank"
+                    rel="noreferrer"
+                    >View in Amazon Photos</a
+                >
+            </div>
+            <div>
+                <button
+                    class="btn"
+                    :class="
+                        image.is_favorite ? 'btn-primary' : 'btn-outline-dark'
+                    "
+                    @click="toggleImageIsFavorite"
+                >
+                    {{ image.is_favorite ? 'Favorited' : 'Click to favorite' }}
+                </button>
+            </div>
+            <Image-Info :image="image" :updateImage="updateImage" />
+            <Image-Versions
+                :versions="image.versions"
+                v-if="image.versions && image.versions.length > 0"
+            />
+            <Exif-Info
+                :imageExif="imageExif"
+                :shouldShowRequestButton="!imageExif && !hasExifBeenRequested"
+                @exif-requested="loadExif"
+            />
 
-        <Image-Items-List 
-            :imageId="image.id"
-            :getModel="getModel"
-            :sendJson="sendJson" 
-            heading="Albums" 
-            itemRouteName="albumsShow" 
-            :items="image.albums" 
-            getItemsApiUrl="/albums/?excerpt=true"
-            :currentItemsSet="itemsToIdSet(image.albums)"
-            :addItemsApiUrl="`/images/${image.id}/albums`" 
-            itemsApiName="albums" 
-            removeItemApiUrlBase="/albums" 
-            :itemsUpdatedCallback="imageItemsUpdatedBuilder('albums')" 
-        />
-        
-        <Image-Items-List 
-            :imageId="image.id"
-            :getModel="getModel"
-            :sendJson="sendJson" 
-            heading="Persons" 
-            itemRouteName="personsShow"
-            :items="image.persons" 
-            getItemsApiUrl="/persons/?excerpt=true"
-            :currentItemsSet="itemsToIdSet(image.persons)" 
-            :addItemsApiUrl="`/images/${image.id}/persons`" 
-            itemsApiName="persons" 
-            removeItemApiUrlBase="/persons" 
-            :itemsUpdatedCallback="imageItemsUpdatedBuilder('persons')" 
-        >
-            <template #itemsSuperManager="managerProps">
-                <Clan-Select 
-                    :get-model="getModel" 
-                    :on-selected="managerProps.onSelected" 
-                    :on-removed="managerProps.onRemoved"
-                />
-            </template>
-        </Image-Items-List>
-    </main>
-</div>
+            <div :class="$style.actionButtonContainer" v-if="isB2Enabled">
+                <B2-Link :image="image" :onB2UrlRequested="onB2UrlRequested" />
+            </div>
+
+            <Image-Items-List
+                :imageId="image.id"
+                :getModel="getModel"
+                :sendJson="sendJson"
+                heading="Albums"
+                itemRouteName="albumsShow"
+                :items="image.albums"
+                getItemsApiUrl="/albums/?excerpt=true"
+                :currentItemsSet="itemsToIdSet(image.albums)"
+                :addItemsApiUrl="`/images/${image.id}/albums`"
+                itemsApiName="albums"
+                removeItemApiUrlBase="/albums"
+                :itemsUpdatedCallback="imageItemsUpdatedBuilder('albums')"
+            />
+
+            <Image-Items-List
+                :imageId="image.id"
+                :getModel="getModel"
+                :sendJson="sendJson"
+                heading="Persons"
+                itemRouteName="personsShow"
+                :items="image.persons"
+                getItemsApiUrl="/persons/?excerpt=true"
+                :currentItemsSet="itemsToIdSet(image.persons)"
+                :addItemsApiUrl="`/images/${image.id}/persons`"
+                itemsApiName="persons"
+                removeItemApiUrlBase="/persons"
+                :itemsUpdatedCallback="imageItemsUpdatedBuilder('persons')"
+            >
+                <template #itemsSuperManager="managerProps">
+                    <Clan-Select
+                        :get-model="getModel"
+                        :on-selected="managerProps.onSelected"
+                        :on-removed="managerProps.onRemoved"
+                    />
+                </template>
+            </Image-Items-List>
+        </main>
+    </div>
 </template>
 
 <style lang="scss" module>
-    .imageShowThumbnailContainer{
-        display: flex;
-        justify-content: center;
-    }
-    .imageShowLinkContainer{
-        font-size: large;
-        text-align: center;
-        padding: 1em 0;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        
-        a{
-            display: block;
-            margin-left: 1em;
-            &:first-of-type{
-                margin-left: 0;
-            }
+.imageShowThumbnailContainer {
+    display: flex;
+    justify-content: center;
+}
+.imageShowLinkContainer {
+    font-size: large;
+    text-align: center;
+    padding: 1em 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    a {
+        display: block;
+        margin-left: 1em;
+        &:first-of-type {
+            margin-left: 0;
         }
     }
-    .image {
-        min-width: 200px;
-    }
-    .infiniteObserver{
-        padding-top: 20em;
-    }
-    .actionButtonContainer {
-        margin-top: 1rem;
-        font-size: 1.8rem;
-    }
+}
+.image {
+    min-width: 200px;
+}
+.infiniteObserver {
+    padding-top: 20em;
+}
+.actionButtonContainer {
+    margin-top: 1rem;
+    font-size: 1.8rem;
+}
 </style>
 
 <script>
 import { nextTick } from 'vue';
 
 import LoadingAnimation from 'umbrella-common-js/vue/components/loading-animation.vue';
-import ParentThumbnails from './image-detail/parent-thumbnails.vue';
+import ParentInfo from './image-detail/parent-info.vue';
 import ImageInfo from './image-detail/image-info.vue';
 import ImageVersions from './image-detail/image-versions.vue';
 import ImageItemsList from './image-detail/image-items-list.vue';
@@ -173,7 +182,7 @@ export default {
     },
     components: {
         LoadingAnimation,
-        ParentThumbnails,
+        ParentInfo,
         ImageInfo,
         ImageVersions,
         ImageItemsList,
@@ -182,7 +191,7 @@ export default {
         B2Link,
         ClanSelect,
     },
-    created(){
+    created() {
         this.setup();
     },
     data() {
@@ -192,80 +201,87 @@ export default {
             images: null, // for when is image in parent
             hasExifBeenRequested: false,
             imageExif: null,
-        }
+        };
     },
     computed: {
-        amazonUrl(){
-            if(!this.image.amazon_photos_id){
+        amazonUrl() {
+            if (!this.image.amazon_photos_id) {
                 return '';
             }
             return `https://www.amazon.com/photos/all/gallery/${this.image.amazon_photos_id}`;
         },
-        image(){
+        image() {
             return this.model;
         },
-        modelIndex(){
-            if(!this.images){
+        modelIndex() {
+            if (!this.images) {
                 return -1;
             }
-            for(let i=0;i<this.images.length;i++){
+            for (let i = 0; i < this.images.length; i++) {
                 const image = this.images[i];
-                if(image.id === this.imageId){
+                if (image.id === this.imageId) {
                     return i;
                 }
             }
-
         },
-        previousImage(){
-            if(!this.images || this.modelIndex < 0 || this.modelIndex === 0){
+        previousImage() {
+            if (!this.images || this.modelIndex < 0 || this.modelIndex === 0) {
                 return null;
             }
-            return this.images[this.modelIndex-1];
+            return this.images[this.modelIndex - 1];
         },
-        nextImage(){
-            if(!this.images || this.modelIndex < 0 || this.images.length <= this.modelIndex){
+        nextImage() {
+            if (
+                !this.images ||
+                this.modelIndex < 0 ||
+                this.images.length <= this.modelIndex
+            ) {
                 return null;
             }
-            return this.images[this.modelIndex+1];
+            return this.images[this.modelIndex + 1];
         },
     },
     watch: {
-        '$route'(to, from){
+        $route(to, from) {
             nextTick().then(() => {
                 this.setup();
             });
-        }
+        },
     },
     methods: {
-        setup(){
+        setup() {
             this.isModelLoaded = false;
             this.hasExifBeenRequested = false;
             this.imageExif = null;
             this.loadModel(`/images/${this.imageId}`);
             this.loadExif(true);
         },
-        loadModel(modelPath){
+        loadModel(modelPath) {
             const modelPromise = this.getModel(modelPath);
-            const imagesPromise = this.parent?.imagesApiPath ? this.getModel(this.parent.imagesApiPath) : Promise.resolve(null);
+            const imagesPromise = this.parent?.imagesApiPath
+                ? this.getModel(this.parent.imagesApiPath)
+                : Promise.resolve(null);
 
-            Promise.all([modelPromise, imagesPromise]).then(([model, images]) => {
-                this.model = model;
-                this.images = images;
-                this.isModelLoaded = true;
-            });
+            Promise.all([modelPromise, imagesPromise]).then(
+                ([model, images]) => {
+                    this.model = model;
+                    this.images = images;
+                    this.isModelLoaded = true;
+                }
+            );
         },
-        loadExif(onlyIfCached = false){
-            if(!onlyIfCached){
+        loadExif(onlyIfCached = false) {
+            if (!onlyIfCached) {
                 this.hasExifBeenRequested = true;
             }
-            this.getExif(this.imageId, { onlyIfCached }).then((imageExif)=>{
-                if(imageExif){
+            this.getExif(this.imageId, { onlyIfCached }).then(imageExif => {
+                if (imageExif) {
                     this.imageExif = imageExif.exif;
                 }
             });
         },
-        onKeyPressed(key){
-            switch(key){
+        onKeyPressed(key) {
+            switch (key) {
                 case 'ArrowLeft':
                     this.keyLeftAction();
                     break;
@@ -274,28 +290,30 @@ export default {
                     break;
             }
         },
-        keyLeftAction(){
-            if(this.previousImage){
+        keyLeftAction() {
+            if (this.previousImage) {
                 this.$router.push(this.parent.showRouteFor(this.previousImage));
             }
         },
-        keyRightAction(){
-            if(this.nextImage){
+        keyRightAction() {
+            if (this.nextImage) {
                 this.$router.push(this.parent.showRouteFor(this.nextImage));
             }
         },
-        imageItemsUpdatedBuilder(itemsKey){
+        imageItemsUpdatedBuilder(itemsKey) {
             //because image is cached should really have callback on app to update cache,
             //but just mutating it directly should be OK for now
-            return (updatedItems)=>{
-                this.image[itemsKey] = updatedItems; 
+            return updatedItems => {
+                this.image[itemsKey] = updatedItems;
             };
         },
-        updateImage(data){
+        updateImage(data) {
             const apiUrl = `${API_URL_BASE}/images/${this.image.id}`;
-            return this.sendJson(apiUrl, 'PATCH', data).then(() => this.loadModel(`/images/${this.imageId}`));
+            return this.sendJson(apiUrl, 'PATCH', data).then(() =>
+                this.loadModel(`/images/${this.imageId}`)
+            );
         },
-        toggleImageIsFavorite(){
+        toggleImageIsFavorite() {
             const newIsFavorite = !this.image.is_favorite;
 
             const data = {
@@ -305,16 +323,16 @@ export default {
                 },
             };
 
-            this.updateImage(data).then((response)=>{
+            this.updateImage(data).then(response => {
                 this.image.is_favorite = response.data.is_favorite;
             });
         },
-        itemsToIdSet(items){
-            return items.reduce((set, item) => { 
+        itemsToIdSet(items) {
+            return items.reduce((set, item) => {
                 set.add(item.id);
                 return set;
             }, new Set());
         },
-    }
-}
+    },
+};
 </script>
