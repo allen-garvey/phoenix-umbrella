@@ -24,7 +24,6 @@
   "homepage": "https://github.com/allen-garvey/phoenix-umbrella#readme",
   "devDependencies": {
     "@vue/compiler-sfc": "3.5.13",
-    "ajv": "^8.17.1",
     "css-loader": "^7.1.2",
     "mini-css-extract-plugin": "^2.9.2",
     "sass": "^1.88.0",
