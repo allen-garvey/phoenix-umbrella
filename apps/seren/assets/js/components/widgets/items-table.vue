@@ -31,6 +31,7 @@
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
+    font-size: 1.2rem;
 
     thead {
         background: var(--seren-table-header-bg-color);
