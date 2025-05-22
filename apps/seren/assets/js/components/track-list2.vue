@@ -78,7 +78,7 @@ $playButtonDimensions: 50px;
 
     svg {
         display: none;
-        color: dodgerblue;
+        color: var(--seren-accent-color-text);
     }
 
     .row:hover &,

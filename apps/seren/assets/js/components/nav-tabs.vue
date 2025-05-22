@@ -29,7 +29,7 @@
 }
 
 .navPills li a {
-    color: variables.$accent_color_text;
+    color: var(--seren-accent-color-text);
     cursor: pointer;
     padding: 0.5em 1em;
 
@@ -38,9 +38,17 @@
     }
 
     &.routerLinkActive {
-        background: variables.$accent_color_text;
+        background: var(--seren-accent-color-text);
         color: white;
         border-radius: 4px;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .navPills li a {
+        &.routerLinkActive {
+            background: #6875ca;
+        }
     }
 }
 </style>

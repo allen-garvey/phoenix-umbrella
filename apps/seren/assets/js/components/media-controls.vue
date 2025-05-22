@@ -68,8 +68,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: variables.$media_controls_background_color;
-    box-shadow: 0px -1px 15px rgba(41, 56, 36, 0.6);
+    background: var(--seren-media-bg-color);
+    box-shadow: 0px -1px 15px rgba(13, 15, 24, 0.3);
     padding: 24px;
     font-size: 15px;
 }

@@ -1,6 +1,13 @@
 @use 'variables';
 
-html, body{
+html {
+	--seren-media-bg-color: dodgerblue;
+	--seren-table-header-bg-color: #b6cfe7;
+	--seren-table-row-even-bg-color: #e6f2fe;
+	--seren-accent-color-text: #007bff;
+}
+
+body{
 	margin: 0;
 }
 
@@ -33,4 +40,19 @@ svg {
 
 button {
 	cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+	html {
+		background-color: #222;
+		color: #fff;
+		--seren-media-bg-color: #1d1f49;
+		--seren-table-header-bg-color: #1d1f49;
+		--seren-table-row-even-bg-color: #3a3a3a;
+		--seren-accent-color-text: #d0d3f3;
+	}
+
+	a {
+		color: var(--seren-accent-color-text);
+	}
 }

@@ -33,7 +33,7 @@
     border-collapse: collapse;
 
     thead {
-        background: #b6cfe7;
+        background: var(--seren-table-header-bg-color);
         font-family: sans-serif;
     }
     th,
@@ -52,7 +52,7 @@
         transition: background-color 0.3s ease;
 
         &:nth-of-type(even) {
-            background: #e6f2fe;
+            background: var(--seren-table-row-even-bg-color);
         }
     }
 }
