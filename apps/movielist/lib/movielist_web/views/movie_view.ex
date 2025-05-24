@@ -57,12 +57,22 @@ defmodule MovielistWeb.MovieView do
     end
   end
 
-  def search_query_for_release_status(movie_title, :theater_released, nil) do
-    "#{movie_title} digital release date"
+  def search_url_for(movie_title) do
+    Common.SuperSearch.search_url(movie_title)
   end
 
-  def search_query_for_release_status(movie_title, _release_status, _home_release_date) do
-    movie_title
+  def search_url_for(movie_title, :unreleased) do
+    query = URI.encode_query(%{"q" => "#{movie_title} theater release date"}, :rfc3986)
+    "https://www.google.com/search?#{query}"
+  end
+
+  def search_url_for(movie_title, :theater_released) do
+    query = URI.encode_query(%{"q" => "#{movie_title} digital release date"}, :rfc3986)
+    "https://www.google.com/search?#{query}"
+  end
+
+  def search_url_for(movie_title, :home_released) do
+    search_url_for(movie_title)
   end
 
   def css_class_for_release_date(:theater_released, nil) do

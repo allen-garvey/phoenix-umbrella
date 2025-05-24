@@ -16,7 +16,7 @@
     <%= for movie <- @movies do %>
       <tr class="<%= row_class_for_active_status(movie.is_active) %>">
         <td></td>
-        <td><%= link to_s(movie), to: Common.SuperSearch.search_url(to_s(movie)) %></td>
+        <td><%= link to_s(movie), to: search_url_for(to_s(movie)) %></td>
         <td><%= link MovielistWeb.GenreView.to_s(movie.genre), to: Routes.genre_path(@conn, :show, movie.genre) %></td>
         <td><%= Common.DateHelpers.us_formatted_date(movie.theater_release_date) %></td>
         <td><%= Common.DateHelpers.us_formatted_date(movie.home_release_date) %></td>
