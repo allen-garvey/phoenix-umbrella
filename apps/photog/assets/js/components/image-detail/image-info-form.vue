@@ -3,37 +3,39 @@
         {{ label }}
     </dt>
     <dd>
-        <div 
-            :class="$style.flexContainer"
-            v-if="!isEditing"
-        >
-            <slot>
-            </slot>
-            <button 
-                @click="edit()" 
-                class="btn btn-outline-primary btn-xs">Edit</button>
+        <div :class="$style.flexContainer" v-if="!isEditing">
+            <slot> </slot>
+            <button @click="edit()" class="btn btn-outline-primary btn-xs">
+                Edit
+            </button>
         </div>
-        <form 
+        <form
             @submit.prevent="update()"
             :class="[$style.editContainer, $style.flexContainer]"
-            v-if="isEditing" 
+            v-if="isEditing"
         >
             <div class="form-group">
-                <input 
-                    :type="inputType" 
-                    :class="inputClass" 
+                <input
+                    :type="inputType"
+                    :class="inputClass"
                     v-model="model"
                     ref="input"
                 />
             </div>
-            <button @click="cancelEdit()" type="button" class="btn btn-outline-secondary btn">Cancel</button>
+            <button
+                @click="cancelEdit()"
+                type="button"
+                class="btn btn-outline-secondary btn"
+            >
+                Cancel
+            </button>
             <button type="submit" class="btn btn-success btn">Save</button>
         </form>
     </dd>
 </template>
 
 <style lang="scss" module>
-.label{
+.label {
     margin-bottom: 1.5em;
 }
 .flexContainer {
@@ -43,11 +45,11 @@
     align-items: flex-start;
 }
 
-.editContainer{
-    .form-control{
+.editContainer {
+    .form-control {
         max-width: 14em;
     }
-    .form-group{
+    .form-group {
         margin-right: 1rem;
     }
 }
@@ -70,24 +72,27 @@ export default {
             type: String,
             required: true,
         },
-        image: {
-            type: Object,
+        imageId: {
+            type: [String, Number],
             required: true,
+        },
+        value: {
+            type: [String, Number],
         },
         updateImage: {
             type: Function,
             required: true,
         },
     },
-    data(){
+    data() {
         return {
             model: null,
             isEditing: false,
         };
     },
     computed: {
-        inputClass(){
-            if(this.inputType === 'checkbox'){
+        inputClass() {
+            if (this.inputType === 'checkbox') {
                 return 'form-check-input';
             }
 
@@ -95,36 +100,36 @@ export default {
         },
     },
     watch: {
-        image(){
+        value() {
             this.isEditing = false;
-            this.model = this.image[this.modelKey];
+            this.model = this.value;
         },
     },
-    created(){
-        this.model = this.image[this.modelKey];
+    created() {
+        this.model = this.value;
     },
     methods: {
-        update(){
+        update() {
             const value = this.model === '' ? null : this.model;
             const data = {
                 image: {
-                    id: this.image.id,
+                    id: this.imageId,
                     [this.modelKey]: value,
                 },
             };
-            this.updateImage(data).then((response)=>{
+            this.updateImage(data).then(response => {
                 this.isEditing = false;
             });
         },
-        edit(){
+        edit() {
             this.isEditing = true;
             nextTick().then(() => {
                 this.$refs.input.focus();
             });
         },
-        cancelEdit(){
+        cancelEdit() {
             this.isEditing = false;
         },
-    }
+    },
 };
 </script>

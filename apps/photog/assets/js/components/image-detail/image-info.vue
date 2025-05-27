@@ -1,67 +1,74 @@
 <template>
-    <image-info-section
-        heading="Info"
-    >
+    <image-info-section heading="Info">
         <dl>
             <!-- ID -->
             <dt>ID</dt>
             <dd>{{ image.id }}</dd>
-            
+
             <!-- Master path -->
             <dt>Master path</dt>
             <dd>
-                <image-path 
-                    :path="image.master_path"
-                />
+                <image-path :path="image.master_path" />
             </dd>
 
             <!-- Thumbnail path -->
             <dt>Thumbnail path</dt>
             <dd>
-                <image-path 
-                    :path="image.thumbnail_path"
-                />
+                <image-path :path="image.thumbnail_path" />
             </dd>
 
             <!-- Image date -->
             <dt>Date Taken</dt>
-            <dd>{{image.creation_time.formatted.us_date}} {{image.creation_time.formatted.time}}</dd>
-            
+            <dd>
+                {{ image.creation_time.formatted.us_date }}
+                {{ image.creation_time.formatted.time }}
+            </dd>
+
             <!-- Completion Date -->
             <image-info-form
                 label="Completion Date"
-                modelKey="completion_date"
                 inputType="date"
-                :image="image"
+                :imageId="image.id"
+                modelKey="completion_date"
+                :value="image.completion_date"
                 :updateImage="updateImage"
             >
-                <span v-if="image.completion_date">{{formatIsoDate(image.completion_date)}}</span>
+                <span v-if="image.completion_date">{{
+                    formatIsoDate(image.completion_date)
+                }}</span>
             </image-info-form>
-            
+
             <!-- Source Image -->
             <image-info-form
                 label="Source Image"
-                modelKey="source_image_id"
                 inputType="number"
-                :image="image"
+                :imageId="image.id"
+                modelKey="source_image_id"
+                :value="image.source_image_id"
                 :updateImage="updateImage"
             >
                 <router-link
-                    :to="{ name: 'imagesShow', params: { id: image.source_image_id } }"
+                    :to="{
+                        name: 'imagesShow',
+                        params: { id: image.source_image_id },
+                    }"
                     v-if="image.source_image_id"
                 >
                     View source image
                 </router-link>
             </image-info-form>
-            
+
             <!-- Import -->
             <dt>Import</dt>
             <dd>
-                <router-link 
-                    :to="{name: 'importsShow', params: {id: image.import.id}}" 
+                <router-link
+                    :to="{
+                        name: 'importsShow',
+                        params: { id: image.import.id },
+                    }"
                     class="preview-container"
                 >
-                    {{image.import.name}}
+                    {{ image.import.name }}
                 </router-link>
             </dd>
 
@@ -74,9 +81,10 @@
             <!-- Notes -->
             <image-info-form
                 label="Notes"
-                modelKey="notes"
                 inputType="text"
-                :image="image"
+                :imageId="image.id"
+                modelKey="notes"
+                :value="image.notes"
                 :updateImage="updateImage"
             >
                 <span v-if="image.notes">{{ image.notes }}</span>
@@ -85,9 +93,7 @@
     </image-info-section>
 </template>
 
-<style lang="scss" module>
-
-</style>
+<style lang="scss" module></style>
 
 <script>
 import { isoFormattedDateToUs } from '../../date-helpers';
@@ -100,7 +106,7 @@ export default {
     props: {
         image: {
             type: Object,
-            required: true
+            required: true,
         },
         updateImage: {
             type: Function,
@@ -112,12 +118,11 @@ export default {
         ImagePath,
         ImageInfoForm,
     },
-    computed: {
-    },
+    computed: {},
     methods: {
-        formatIsoDate(date){
+        formatIsoDate(date) {
             return isoFormattedDateToUs(date);
         },
-    }
+    },
 };
 </script>
