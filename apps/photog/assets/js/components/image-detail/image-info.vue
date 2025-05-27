@@ -18,16 +18,24 @@
             </dd>
 
             <!-- Image date -->
-            <dt>Date Taken</dt>
-            <dd>
-                {{ image.creation_time.formatted.us_date }}
-                {{ image.creation_time.formatted.time }}
-            </dd>
+            <image-info-form
+                label="Date Taken"
+                type="datetime"
+                :imageId="image.id"
+                modelKey="creation_time"
+                :value="image.creation_time.raw"
+                :updateImage="updateImage"
+            >
+                <span
+                    >{{ image.creation_time.formatted.us_date }}
+                    {{ image.creation_time.formatted.time }}</span
+                >
+            </image-info-form>
 
             <!-- Completion Date -->
             <image-info-form
                 label="Completion Date"
-                inputType="date"
+                type="date"
                 :imageId="image.id"
                 modelKey="completion_date"
                 :value="image.completion_date"
@@ -41,7 +49,7 @@
             <!-- Source Image -->
             <image-info-form
                 label="Source Image"
-                inputType="number"
+                type="number"
                 :imageId="image.id"
                 modelKey="source_image_id"
                 :value="image.source_image_id"
@@ -81,7 +89,6 @@
             <!-- Notes -->
             <image-info-form
                 label="Notes"
-                inputType="text"
                 :imageId="image.id"
                 modelKey="notes"
                 :value="image.notes"

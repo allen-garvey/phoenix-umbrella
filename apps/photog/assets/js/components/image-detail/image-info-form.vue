@@ -64,7 +64,7 @@ export default {
             type: String,
             required: true,
         },
-        inputType: {
+        type: {
             type: String,
             default: 'text',
         },
@@ -98,19 +98,34 @@ export default {
 
             return 'form-control';
         },
+        inputType() {
+            return this.type === 'datetime' ? 'date' : this.type;
+        },
     },
     watch: {
         value() {
             this.isEditing = false;
-            this.model = this.value;
+            this.setModel();
         },
     },
     created() {
-        this.model = this.value;
+        this.setModel();
     },
     methods: {
+        setModel() {
+            if (this.type === 'datetime' && this.value) {
+                // strip time from datetime
+                this.model = this.value.replace(/T.*$/, '');
+            } else {
+                this.model = this.value;
+            }
+        },
         update() {
-            const value = this.model === '' ? null : this.model;
+            let value = this.model === '' ? null : this.model;
+            if (value && this.type === 'datetime') {
+                // add time back to datetime
+                value = `${value}T${this.value.replace(/^.+T/, '')}`;
+            }
             const data = {
                 image: {
                     id: this.imageId,
