@@ -40,8 +40,7 @@ defmodule PhotogWeb.ImageView do
   def render("image_excerpt_mini.json", %{image: image}) do
     %{
       id: image.id,
-      is_favorite: image.is_favorite,
-      completion_date: DateHelpers.iso_formatted_date(image.completion_date),
+      is_favorite: image.is_favorite
     }
   end
 
@@ -49,48 +48,50 @@ defmodule PhotogWeb.ImageView do
     %{
       id: image.id,
       mini_thumbnail_path: image.mini_thumbnail_path,
-      thumbnail_path: image.thumbnail_path,
+      thumbnail_path: image.thumbnail_path
     }
   end
 
   def render("exif.json", %{image: image, exif: exif}) do
-    %{data: %{
-      image: %{
-        id: image.id,
-        master_path: image.master_path,
-      },
-      exif: %{
-        camera: %{
-          maker: exif["Make"],
-          model: exif["Model"],
-          model_release_year: exif["ModelReleaseYear"],
-          lens_info: exif["LensInfo"],
-          lens_model: exif["LensModel"],
-        },
-        file: %{
-          megapixels: exif["Megapixels"],
-          creation_time: Exif.exif_creation_time(exif),
-          file_type: exif["FileType"],
-          mime_type: exif["MIMEType"],
-          size: exif["FileSize"],
-        },
+    %{
+      data: %{
         image: %{
-          dimensions: %{
-            width: exif["ImageWidth"],
-            height: exif["ImageHeight"],
-          },
-          aperature: exif["Aperture"],
-          shutter: exif["ExposureTime"],
-          iso: exif["ISO"],
-          orientation: exif["Orientation"],
-          camera_mode: exif["ExposureProgram"],
-          flash: exif["Flash"],
-          focal_length: exif["FocalLength"],
-          hdr: exif["HDR"],
-          white_balance: exif["WhiteBalance"],
+          id: image.id,
+          master_path: image.master_path
         },
-      },
-    }}
+        exif: %{
+          camera: %{
+            maker: exif["Make"],
+            model: exif["Model"],
+            model_release_year: exif["ModelReleaseYear"],
+            lens_info: exif["LensInfo"],
+            lens_model: exif["LensModel"]
+          },
+          file: %{
+            megapixels: exif["Megapixels"],
+            creation_time: Exif.exif_creation_time(exif),
+            file_type: exif["FileType"],
+            mime_type: exif["MIMEType"],
+            size: exif["FileSize"]
+          },
+          image: %{
+            dimensions: %{
+              width: exif["ImageWidth"],
+              height: exif["ImageHeight"]
+            },
+            aperature: exif["Aperture"],
+            shutter: exif["ExposureTime"],
+            iso: exif["ISO"],
+            orientation: exif["Orientation"],
+            camera_mode: exif["ExposureProgram"],
+            flash: exif["Flash"],
+            focal_length: exif["FocalLength"],
+            hdr: exif["HDR"],
+            white_balance: exif["WhiteBalance"]
+          }
+        }
+      }
+    }
   end
 
   defp get_creation_time(image) do
@@ -98,7 +99,7 @@ defmodule PhotogWeb.ImageView do
       raw: image.creation_time,
       formatted: %{
         us_date: DateHelpers.us_formatted_date(image.creation_time),
-        time: DateHelpers.formatted_time(image.creation_time),
+        time: DateHelpers.formatted_time(image.creation_time)
       }
     }
   end
@@ -110,7 +111,7 @@ defmodule PhotogWeb.ImageView do
       mini_thumbnail_path: image.mini_thumbnail_path,
       is_favorite: image.is_favorite,
       has_albums: image.has_albums,
-      has_persons: image.has_persons,
+      has_persons: image.has_persons
     }
   end
 
@@ -121,30 +122,30 @@ defmodule PhotogWeb.ImageView do
       master_path: image.master_path,
       thumbnail_path: image.thumbnail_path,
       mini_thumbnail_path: image.mini_thumbnail_path,
-      is_favorite: image.is_favorite,
+      is_favorite: image.is_favorite
     }
   end
 
   def image_thumbnail_to_map(image) do
     %{
       id: image.id,
-      mini_thumbnail_path: image.mini_thumbnail_path,
+      mini_thumbnail_path: image.mini_thumbnail_path
     }
   end
 
   def image_full_to_map(image) do
-    import_data = case image.import do
-      %Import{} -> PhotogWeb.ImportView.import_excerpt_to_map(image.import)
-      _ -> nil
-    end
+    import_data =
+      case image.import do
+        %Import{} -> PhotogWeb.ImportView.import_excerpt_to_map(image.import)
+        _ -> nil
+      end
 
     albums = Common.ViewHelpers.Resource.get_maybe_loaded_or_default(image.albums, [])
     persons = Common.ViewHelpers.Resource.get_maybe_loaded_or_default(image.persons, [])
-    
+
     image_map = %{
       id: image.id,
       creation_time: get_creation_time(image),
-      completion_date: DateHelpers.iso_formatted_date(image.completion_date),
       amazon_photos_id: image.amazon_photos_id,
       master_path: image.master_path,
       thumbnail_path: image.thumbnail_path,
@@ -154,7 +155,7 @@ defmodule PhotogWeb.ImageView do
       albums: Enum.map(albums, &PhotogWeb.AlbumView.album_excerpt_mini_to_map/1),
       persons: Enum.map(persons, &PhotogWeb.PersonView.person_excerpt_mini_to_map/1),
       source_image_id: image.source_image_id,
-      notes: image.notes,
+      notes: image.notes
     }
 
     case Enumerable.impl_for(image.versions) do

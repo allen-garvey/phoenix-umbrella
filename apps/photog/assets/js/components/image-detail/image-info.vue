@@ -32,20 +32,6 @@
                 >
             </image-info-form>
 
-            <!-- Completion Date -->
-            <image-info-form
-                label="Completion Date"
-                type="date"
-                :imageId="image.id"
-                modelKey="completion_date"
-                :value="image.completion_date"
-                :updateImage="updateImage"
-            >
-                <span v-if="image.completion_date">{{
-                    formatIsoDate(image.completion_date)
-                }}</span>
-            </image-info-form>
-
             <!-- Source Image -->
             <image-info-form
                 label="Source Image"
