@@ -35,10 +35,18 @@
 </ul>
 
 
-<h3>Books</h3>
+<h3>Books (<%= Enum.count(@author.books) %>)</h3>
 
 <ul>
   <%= for book <- @author.books do %>
     <li><%= link BooklistWeb.BookView.to_s(book), to: Routes.book_path(@conn, :show, book) %></li>
+  <% end %>
+</ul>
+
+<h3>Ratings (<%= Enum.count(@ratings) %>)</h3>
+
+<ul>
+  <%= for rating <- @ratings do %>
+    <li><%= link BooklistWeb.RatingView.to_s(rating), to: Routes.rating_path(@conn, :show, rating) %></li>
   <% end %>
 </ul>

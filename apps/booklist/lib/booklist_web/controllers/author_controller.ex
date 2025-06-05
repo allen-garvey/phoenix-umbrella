@@ -6,8 +6,11 @@ defmodule BooklistWeb.AuthorController do
 
   def related_fields() do
     [
-      #add empty item at start of genres since it is optional
-      genres: Admin.list_genres() |> BooklistWeb.GenreView.map_for_form |> List.insert_at(0, {"", nil}),
+      # add empty item at start of genres since it is optional
+      genres:
+        Admin.list_genres()
+        |> BooklistWeb.GenreView.map_for_form()
+        |> List.insert_at(0, {"", nil})
     ]
   end
 
@@ -35,7 +38,8 @@ defmodule BooklistWeb.AuthorController do
 
   def show(conn, %{"id" => id}) do
     author = Admin.get_author_with_books!(id)
-    render(conn, "show.html", author: author)
+    ratings = Admin.list_ratings_for_author(id)
+    render(conn, "show.html", author: author, ratings: ratings)
   end
 
   def edit(conn, %{"id" => id}) do

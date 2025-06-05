@@ -113,21 +113,22 @@ defmodule Booklist.Admin do
   and finds the most popular genre id.
   """
   def get_recent_popular_genre() do
-    books_query = from(
-      Book,
-      order_by: [desc: :inserted_at, desc: :id],
-      limit: 10
-    )
-    
+    books_query =
+      from(
+        Book,
+        order_by: [desc: :inserted_at, desc: :id],
+        limit: 10
+      )
+
     from(
       book in subquery(books_query),
       join: genre in assoc(book, :genre),
       group_by: [book.genre_id, genre.is_fiction],
       order_by: [desc: count(book.genre_id)],
-      select: %Genre{ id: book.genre_id, is_fiction: genre.is_fiction},
+      select: %Genre{id: book.genre_id, is_fiction: genre.is_fiction},
       limit: 1
     )
-    |> Repo.one
+    |> Repo.one()
   end
 
   alias Booklist.Admin.Author
@@ -166,7 +167,7 @@ defmodule Booklist.Admin do
       preload: [genre: genre],
       where: author.id == ^id
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   @doc """
@@ -177,13 +178,25 @@ defmodule Booklist.Admin do
   def get_author_with_books!(id) do
     from(
       author in Author,
-      left_join: book  in assoc(author, :books),
+      left_join: book in assoc(author, :books),
       left_join: genre in assoc(author, :genre),
       preload: [books: book, genre: genre],
       where: author.id == ^id,
       order_by: [book.sort_title, book.id]
     )
-    |> Repo.one!
+    |> Repo.one!()
+  end
+
+  def list_ratings_for_author(id) do
+    from(
+      rating in Rating,
+      join: book in assoc(rating, :book),
+      join: author in assoc(book, :author),
+      preload: [book: book],
+      where: author.id == ^id,
+      order_by: [rating.date_scored, rating.id]
+    )
+    |> Repo.all()
   end
 
   @doc """
@@ -283,34 +296,39 @@ defmodule Booklist.Admin do
   """
   def list_books_read(is_read) when is_boolean(is_read) do
     list_books_read_query(is_read)
-      |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
   Returns a query for the list of books by whether or not they have been read (i.e. have ratings)
   """
   def list_books_read_query(true) do
-    #using inner join since no where in support
-    #use group_by instead of distinct since distinct orders by asc id automatically
-    from(b in Book, join: r in assoc(b, :ratings), group_by: [b.id, r.id], order_by: [desc: r.id, asc: b.sort_title])
+    # using inner join since no where in support
+    # use group_by instead of distinct since distinct orders by asc id automatically
+    from(b in Book,
+      join: r in assoc(b, :ratings),
+      group_by: [b.id, r.id],
+      order_by: [desc: r.id, asc: b.sort_title]
+    )
   end
 
   def list_books_read_query(false) do
     from(
-        b in Book,
-        left_join: rating in assoc(b, :ratings),
-        where: is_nil(rating.book_id),
-        order_by: [:sort_title, :id]
-      )
+      b in Book,
+      left_join: rating in assoc(b, :ratings),
+      where: is_nil(rating.book_id),
+      order_by: [:sort_title, :id]
+    )
   end
 
   @doc """
   Returns the list of books by whether or not they are active, and whether or not they have been read (i.e. have ratings)
   """
-  def list_books_by_active_and_read(is_active, is_read) when is_boolean(is_active) and is_boolean(is_read) do
-    list_books_read_query(is_read) 
-      |> where([b], b.is_active == ^is_active) 
-      |> Repo.all
+  def list_books_by_active_and_read(is_active, is_read)
+      when is_boolean(is_active) and is_boolean(is_read) do
+    list_books_read_query(is_read)
+    |> where([b], b.is_active == ^is_active)
+    |> Repo.all()
   end
 
   @doc """
@@ -318,14 +336,15 @@ defmodule Booklist.Admin do
   """
   def list_books_no_location(is_active) when is_boolean(is_active) do
     from(
-        b in Book,
-        left_join: book_location in assoc(b, :book_locations),
-        where:
-          is_nil(book_location.book_id)
-          and b.is_active == ^is_active
-          and b.on_bookshelf == false,
-        order_by: [:sort_title, :id])
-      |> Repo.all
+      b in Book,
+      left_join: book_location in assoc(b, :book_locations),
+      where:
+        is_nil(book_location.book_id) and
+          b.is_active == ^is_active and
+          b.on_bookshelf == false,
+      order_by: [:sort_title, :id]
+    )
+    |> Repo.all()
   end
 
   @doc """
@@ -352,18 +371,17 @@ defmodule Booklist.Admin do
       where: book.id == ^id,
       order_by: [desc: rating.date_scored, desc: rating.id]
     )
-      |> Repo.one!
-      |> Repo.preload(
-        [
-          book_locations: from(
-            b_l in BookLocation,
-            join: location in assoc(b_l, :location),
-            join: library in assoc(location, :library),
-            preload: [location: {location, library: library}], 
-            order_by: location.name
-          )
-        ]
-      )
+    |> Repo.one!()
+    |> Repo.preload(
+      book_locations:
+        from(
+          b_l in BookLocation,
+          join: location in assoc(b_l, :location),
+          join: library in assoc(location, :library),
+          preload: [location: {location, library: library}],
+          order_by: location.name
+        )
+    )
   end
 
   @doc """
@@ -405,8 +423,10 @@ defmodule Booklist.Admin do
   @doc """
   Changes a book active status
   """
-  def update_book_active_status(book_id, is_active) when is_integer(book_id) and is_boolean(is_active) do
+  def update_book_active_status(book_id, is_active)
+      when is_integer(book_id) and is_boolean(is_active) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
+
     from(b in Book, where: b.id == ^book_id)
     |> Repo.update_all(set: [is_active: is_active, updated_at: now])
   end
@@ -442,11 +462,11 @@ defmodule Booklist.Admin do
 
   def duplicate_book(book_changeset, %Book{} = book) do
     book_changeset
-      |> Ecto.Changeset.put_change(:title, book.title)
-      |> Ecto.Changeset.put_change(:subtitle, book.subtitle)
-      |> Ecto.Changeset.put_change(:author_id, book.author_id)
-      |> Ecto.Changeset.put_change(:genre_id, book.genre_id)
-      |> Ecto.Changeset.put_change(:is_fiction, book.is_fiction)
+    |> Ecto.Changeset.put_change(:title, book.title)
+    |> Ecto.Changeset.put_change(:subtitle, book.subtitle)
+    |> Ecto.Changeset.put_change(:author_id, book.author_id)
+    |> Ecto.Changeset.put_change(:genre_id, book.genre_id)
+    |> Ecto.Changeset.put_change(:is_fiction, book.is_fiction)
   end
 
   @doc """
@@ -455,14 +475,14 @@ defmodule Booklist.Admin do
   """
   def change_book_is_active(book_changeset, true) do
     book_changeset
-      |> Ecto.Changeset.put_change(:is_active, true)
+    |> Ecto.Changeset.put_change(:is_active, true)
   end
 
   def change_book_is_active(book_changeset, false) do
     book_changeset
-      |> Ecto.Changeset.put_change(:is_active, false)
-      #book can't be inactive and still on bookshelf
-      |> Ecto.Changeset.put_change(:on_bookshelf, false)
+    |> Ecto.Changeset.put_change(:is_active, false)
+    # book can't be inactive and still on bookshelf
+    |> Ecto.Changeset.put_change(:on_bookshelf, false)
   end
 
   @doc """
@@ -471,14 +491,14 @@ defmodule Booklist.Admin do
   """
   def change_book_on_bookshelf(book_changeset, true) do
     book_changeset
-      |> Ecto.Changeset.put_change(:on_bookshelf, true)
-      #is_active property has to be true when on_bookshelf is true
-      |> Ecto.Changeset.put_change(:is_active, true)
+    |> Ecto.Changeset.put_change(:on_bookshelf, true)
+    # is_active property has to be true when on_bookshelf is true
+    |> Ecto.Changeset.put_change(:is_active, true)
   end
 
   def change_book_on_bookshelf(book_changeset, false) do
     book_changeset
-      |> Ecto.Changeset.put_change(:on_bookshelf, false)
+    |> Ecto.Changeset.put_change(:on_bookshelf, false)
   end
 
   alias Booklist.Admin.Library
@@ -511,11 +531,20 @@ defmodule Booklist.Admin do
 
   """
   def get_library!(id) do
-    book_location_query = from(b_l in BookLocation, join: book in assoc(b_l, :book), left_join: author in assoc(book, :author), preload: [book: {book, [author: author]}], where: book.is_active == true and book.on_bookshelf == false, order_by: book.sort_title)
-    location_query = from(l in Location, preload: [book_locations: ^book_location_query], order_by: [:name, :id])
+    book_location_query =
+      from(b_l in BookLocation,
+        join: book in assoc(b_l, :book),
+        left_join: author in assoc(book, :author),
+        preload: [book: {book, [author: author]}],
+        where: book.is_active == true and book.on_bookshelf == false,
+        order_by: book.sort_title
+      )
+
+    location_query =
+      from(l in Location, preload: [book_locations: ^book_location_query], order_by: [:name, :id])
 
     Repo.get!(Library, id)
-      |> Repo.preload([locations: location_query])
+    |> Repo.preload(locations: location_query)
   end
 
   @doc """
@@ -595,9 +624,12 @@ defmodule Booklist.Admin do
 
   """
   def list_loans do
-    from(l in Loan, join: library in assoc(l, :library), preload: [library: library], order_by: [:due_date, library.name])
-      |> Repo.all
-
+    from(l in Loan,
+      join: library in assoc(l, :library),
+      preload: [library: library],
+      order_by: [:due_date, library.name]
+    )
+    |> Repo.all()
   end
 
   @doc """
@@ -606,9 +638,14 @@ defmodule Booklist.Admin do
   """
   def list_loans_due_soon do
     soon_date = Common.ModelHelpers.Date.today() |> Date.add(7)
-    
-    from(l in Loan, join: library in assoc(l, :library), preload: [library: library], where: l.due_date < ^soon_date, order_by: [:due_date, library.name])
-      |> Repo.all
+
+    from(l in Loan,
+      join: library in assoc(l, :library),
+      preload: [library: library],
+      where: l.due_date < ^soon_date,
+      order_by: [:due_date, library.name]
+    )
+    |> Repo.all()
   end
 
   @doc """
@@ -626,8 +663,13 @@ defmodule Booklist.Admin do
 
   """
   def get_loan!(id) do
-    from(l in Loan, join: library in assoc(l, :library), preload: [library: library], where: l.id == ^id, limit: 1)
-      |> Repo.one!
+    from(l in Loan,
+      join: library in assoc(l, :library),
+      preload: [library: library],
+      where: l.id == ^id,
+      limit: 1
+    )
+    |> Repo.one!()
   end
 
   @doc """
@@ -705,8 +747,12 @@ defmodule Booklist.Admin do
 
   """
   def list_locations do
-    from(l in Location, join: library in assoc(l, :library), preload: [library: library], order_by: [library.name, :name])
-      |> Repo.all
+    from(l in Location,
+      join: library in assoc(l, :library),
+      preload: [library: library],
+      order_by: [library.name, :name]
+    )
+    |> Repo.all()
   end
 
   @doc """
@@ -723,10 +769,24 @@ defmodule Booklist.Admin do
       ** (Ecto.NoResultsError)
 
   """
-  def get_location!(id) do 
-    from(l in Location, join: library in assoc(l, :library), preload: [library: library], where: l.id == ^id, limit: 1)
-      |> Repo.one!
-      |> Repo.preload([book_locations: (from b_l in BookLocation, join: book in assoc(b_l, :book), left_join: author in assoc(book, :author), preload: [book: {book, author: author}], where: book.is_active == true and book.on_bookshelf == false, order_by: book.sort_title)])
+  def get_location!(id) do
+    from(l in Location,
+      join: library in assoc(l, :library),
+      preload: [library: library],
+      where: l.id == ^id,
+      limit: 1
+    )
+    |> Repo.one!()
+    |> Repo.preload(
+      book_locations:
+        from(b_l in BookLocation,
+          join: book in assoc(b_l, :book),
+          left_join: author in assoc(book, :author),
+          preload: [book: {book, author: author}],
+          where: book.is_active == true and book.on_bookshelf == false,
+          order_by: book.sort_title
+        )
+    )
   end
 
   @doc """
@@ -800,7 +860,7 @@ defmodule Booklist.Admin do
   """
   def change_location_with_library(%Location{} = location, library_id) do
     Location.changeset(location, %{})
-      |> Ecto.Changeset.put_change(:library_id, library_id)
+    |> Ecto.Changeset.put_change(:library_id, library_id)
   end
 
   @doc """
@@ -813,8 +873,13 @@ defmodule Booklist.Admin do
 
   """
   def list_book_locations do
-    from(b_l in BookLocation, join: location in assoc(b_l, :location), join: book in assoc(b_l, :book), preload: [location: location, book: book], order_by: [book.title, location.name])
-      |> Repo.all
+    from(b_l in BookLocation,
+      join: location in assoc(b_l, :location),
+      join: book in assoc(b_l, :book),
+      preload: [location: location, book: book],
+      order_by: [book.title, location.name]
+    )
+    |> Repo.all()
   end
 
   @doc """
@@ -832,8 +897,14 @@ defmodule Booklist.Admin do
 
   """
   def get_book_location!(id) do
-    from(b_l in BookLocation, join: location in assoc(b_l, :location), join: book in assoc(b_l, :book), preload: [location: location, book: book], where: b_l.id == ^id, limit: 1)
-      |> Repo.one!
+    from(b_l in BookLocation,
+      join: location in assoc(b_l, :location),
+      join: book in assoc(b_l, :book),
+      preload: [location: location, book: book],
+      where: b_l.id == ^id,
+      limit: 1
+    )
+    |> Repo.one!()
   end
 
   @doc """
@@ -907,7 +978,7 @@ defmodule Booklist.Admin do
   """
   def change_book_location_with_book(%BookLocation{} = book_location, book_id) do
     BookLocation.changeset(book_location, %{})
-      |> Ecto.Changeset.put_change(:book_id, book_id)
+    |> Ecto.Changeset.put_change(:book_id, book_id)
   end
 
   @doc """
@@ -915,12 +986,12 @@ defmodule Booklist.Admin do
   """
   def list_ratings(sort) do
     from(
-      r in Rating, 
-      join: book in assoc(r, :book), 
-      preload: [book: book], 
+      r in Rating,
+      join: book in assoc(r, :book),
+      preload: [book: book],
       order_by: ^sort
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -933,14 +1004,14 @@ defmodule Booklist.Admin do
 
   """
   def list_ratings do
-    list_ratings([desc: :date_scored, desc: :id])
+    list_ratings(desc: :date_scored, desc: :id)
   end
 
   @doc """
   Returns the list of ratings sorted by score.
   """
   def list_ratings_by_score do
-    list_ratings([desc: :score, desc: :date_scored, desc: :id])
+    list_ratings(desc: :score, desc: :date_scored, desc: :id)
   end
 
   @doc """
@@ -948,13 +1019,13 @@ defmodule Booklist.Admin do
   """
   def list_ratings_for_genre(genre_id) do
     from(
-      r in Rating, 
+      r in Rating,
       join: book in assoc(r, :book),
       where: book.genre_id == ^genre_id,
-      preload: [book: book], 
+      preload: [book: book],
       order_by: [desc: :date_scored, desc: :id]
     )
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -972,8 +1043,13 @@ defmodule Booklist.Admin do
 
   """
   def get_rating!(id) do
-    from(r in Rating, join: book in assoc(r, :book), preload: [book: book], where: r.id == ^id, limit: 1)
-      |> Repo.one!
+    from(r in Rating,
+      join: book in assoc(r, :book),
+      preload: [book: book],
+      where: r.id == ^id,
+      limit: 1
+    )
+    |> Repo.one!()
   end
 
   @doc """
@@ -1047,6 +1123,6 @@ defmodule Booklist.Admin do
   """
   def change_rating_with_book(%Rating{} = rating, book_id) do
     Rating.changeset(rating, %{})
-      |> Ecto.Changeset.put_change(:book_id, book_id)
+    |> Ecto.Changeset.put_change(:book_id, book_id)
   end
 end
