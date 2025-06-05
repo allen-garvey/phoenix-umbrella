@@ -43,10 +43,10 @@
   <% end %>
 </ul>
 
-<h3>Ratings (<%= Enum.count(@ratings) %>)</h3>
+<h3>Ratings</h3>
 
-<ul>
+<ol>
   <%= for rating <- @ratings do %>
     <li><%= link BooklistWeb.RatingView.to_s(rating), to: Routes.rating_path(@conn, :show, rating) %></li>
   <% end %>
-</ul>
+</ol>
