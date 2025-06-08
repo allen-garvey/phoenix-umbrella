@@ -16,8 +16,18 @@
 
   <%= Common.ViewHelpers.Form.date_input_group :date, f %>
 
+
   <div class="form-group right-reverse">
     <%= submit "Save", class: "btn btn-success" %>
     <%= submit "Save and add another", class: "btn btn-light", name: "save_another", value: "true" %>
+    <%= if assigns[:activity] do
+        CommonWeb.FormView.delete_button()
+      end
+    %>
   </div>
 </.form>
+
+<%= if assigns[:activity] do
+    CommonWeb.FormView.hidden_delete_form(@conn, Routes.activity_path(@conn, :delete, @activity))
+  end
+%>
