@@ -26,7 +26,7 @@
       <td></td>
       <td class={["center", CategoryView.color_style(activity.category)]}><%= link HabitsWeb.CategoryView.to_s(activity.category), to: Routes.category_path(@conn, :show, activity.category) %></td>
       <td><%= activity.title %></td>
-      <td><%= activity.description %></td>
+      <td><%= linkify_description(activity.description) %></td>
       <td><%= activity.date %></td>
 
       <td>
