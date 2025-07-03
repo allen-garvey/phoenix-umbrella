@@ -62,9 +62,11 @@
 
 .yearInput {
     flex-basis: 5.5em;
+    flex-shrink: 0;
 }
 .monthInput {
     flex-basis: 7em;
+    flex-shrink: 0;
 }
 .headingContainer {
     display: flex;
