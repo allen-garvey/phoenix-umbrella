@@ -59,3 +59,10 @@
 		margin-top: 1em;
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+	.modal{
+		background-color: #2a2a2a;
+		color: #fff;
+	}
+}
