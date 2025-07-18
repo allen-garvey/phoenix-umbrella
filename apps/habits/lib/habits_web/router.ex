@@ -27,6 +27,7 @@ defmodule HabitsWeb.Router do
     get "/", CategoryController, :create_category_activity_index
     get "/calendar", PageController, :calendar
     get "/categories/:id/activities", CategoryController, :activities_list
+    get "/categories/:id/calendar", CategoryController, :calendar
     get "/activities/search", ActivityController, :search
 
     resources "/activities", ActivityController

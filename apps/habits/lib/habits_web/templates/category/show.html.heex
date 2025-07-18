@@ -1,5 +1,8 @@
 <div class="category-show-title-container">
   <h1 class={[color_style(@category), "category-show-title"]}><%= @category.name %></h1>
+  <%= if !assigns[:is_calendar] do
+    link "Calendar", to: Routes.category_path(@conn, :calendar, @category), class: "btn btn-sm btn-dark"
+  end %>
   <%= link "Activities", to: Routes.category_path(@conn, :activities_list, @category, limit: 21), class: "btn btn-sm btn-dark" %>
 </div>
 <div class="show-button-group">
@@ -8,30 +11,8 @@
     <%= link "Add Activity", to: Routes.activity_path(@conn, :new, category: @category.id), class: "btn btn-success" %>
 </div>
 
-<table class="activity-streak-table">
-  <thead>
-    <tr>
-      <th></th>
-      <th>M</th>
-      <th>T</th>
-      <th>W</th>
-      <th>R</th>
-      <th>F</th>
-      <th>S</th>
-      <th>U</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= for week <- @activity_streak do %>
-      <tr>
-        <td><%= Enum.at(week, 0) |> elem(0) |> Common.DateHelpers.us_formatted_date() %></td>
-        <%= for {_date, count} <- week do %>
-          <td class={streak_item_style(@category, count)}>
-          </td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render "activity_streak_table.html", category: @category, activity_streak: @activity_streak %>
 
-<%= render "activities_list.html", conn: @conn, activities: @activities, category: @category, title: "Recent activities", has_limit: true %>
+<%= if assigns[:activities] do
+  render "activities_list.html", conn: @conn, activities: @activities, category: @category, title: "Recent activities", has_limit: true
+end %>

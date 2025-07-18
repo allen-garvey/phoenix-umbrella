@@ -165,4 +165,26 @@ defmodule HabitsWeb.CategoryController do
 
     render(conn, "activities_list.html", category: category, activities: activities)
   end
+
+  def calendar(conn, %{"id" => id}) do
+    category = Admin.get_category!(id)
+
+    today = Common.ModelHelpers.Date.today()
+
+    start_date =
+      today
+      |> Date.shift(month: -12)
+      |> Date.beginning_of_week(:monday)
+
+    activity_streak =
+      Admin.activity_streak_counts_for_category(id, start_date, today)
+      |> Enum.chunk_every(7)
+      |> Enum.reverse()
+
+    render(conn, "show.html",
+      category: category,
+      activity_streak: activity_streak,
+      is_calendar: true
+    )
+  end
 end
