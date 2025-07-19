@@ -22,6 +22,12 @@
     }
 }
 
+.activity-streak-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 1em;
+}
+
 .activity-streak-table {
     margin-bottom: 2rem;
     

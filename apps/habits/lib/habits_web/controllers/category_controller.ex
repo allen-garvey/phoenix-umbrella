@@ -151,10 +151,10 @@ defmodule HabitsWeb.CategoryController do
     render(conn, "activities_list.html", category: category, activities: activities)
   end
 
-  def summary(conn, %{"id" => id, "from" => from}) do
-    case Date.from_iso8601(from) do
-      {:ok, start_date} ->
-        summary_page(conn, id, start_date, Common.ModelHelpers.Date.today())
+  def summary(conn, %{"id" => id, "from" => from, "to" => to}) do
+    case {Date.from_iso8601(from), Date.from_iso8601(to)} do
+      {{:ok, start_date}, {:ok, end_date}} ->
+        summary_page(conn, id, start_date, end_date)
 
       _ ->
         summary(conn, %{"id" => id})
@@ -174,13 +174,15 @@ defmodule HabitsWeb.CategoryController do
   defp summary_page(conn, category_id, %Date{} = start_date, %Date{} = end_date) do
     category = Admin.get_category!(category_id)
 
-    {activity_streak, _adjusted_start_date} =
+    {activity_streak, adjusted_start_date} =
       get_activity_streak(category_id, start_date, end_date)
 
     render(conn, "show.html",
       category: category,
       activity_streak: activity_streak,
-      is_summary: true
+      is_summary: true,
+      start_date: adjusted_start_date,
+      end_date: end_date
     )
   end
 

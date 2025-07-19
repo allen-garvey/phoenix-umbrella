@@ -11,6 +11,15 @@
     <%= link "Add Activity", to: Routes.activity_path(@conn, :new, category: @category.id), class: "btn btn-success" %>
 </div>
 
+<%= if assigns[:is_summary] do
+  form_for %{"from" => @start_date, "to" => @end_date}, Routes.category_path(@conn, :summary, @category), [method: "get", class: "activity-streak-form"], fn f ->
+    [Common.ViewHelpers.Form.input_group(:from, f, &date_input/3, autofocus: true),
+    Common.ViewHelpers.Form.input_group(:to, f, &date_input/3),
+    content_tag(:div, submit("Update", class: "btn btn-success"), class: "form-group")
+    ]
+  end
+end %>
+
 <%= render "activity_streak_table.html", category: @category, activity_streak: @activity_streak %>
 
 <%= if assigns[:activities] do
