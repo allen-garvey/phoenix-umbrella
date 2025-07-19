@@ -139,37 +139,15 @@ defmodule Habits.Admin do
     |> Repo.all()
   end
 
-  def activity_streak_for_category(category_id, start_date) do
+  def activity_streak_for_category(category_id, start_date, end_date) do
     from(
       activity in Activity,
-      where: activity.category_id == ^category_id and activity.date >= ^start_date,
+      where:
+        activity.category_id == ^category_id and activity.date >= ^start_date and
+          activity.date <= ^end_date,
       group_by: [activity.date],
       order_by: [activity.date],
-      select: %{count: count(activity.id), date: activity.date}
-    )
-    |> Repo.all()
-  end
-
-  def activity_streak_counts_for_category(category_id, start_date, end_date) do
-    activity_subquery =
-      from(
-        activity in Activity,
-        where:
-          activity.date >= ^start_date and activity.date <= ^end_date and
-            activity.category_id == ^category_id,
-        group_by: activity.date,
-        select: %{date: activity.date, count: count()}
-      )
-
-    from(
-      day in fragment(
-        "generate_series(?::date, ?::date, '1 day'::interval)",
-        ^start_date,
-        ^end_date
-      ),
-      left_join: activity in subquery(activity_subquery),
-      on: fragment("?::date", day) == activity.date,
-      select: {fragment("?", day), coalesce(activity.count, 0)}
+      select: %{count: count(), date: activity.date}
     )
     |> Repo.all()
   end

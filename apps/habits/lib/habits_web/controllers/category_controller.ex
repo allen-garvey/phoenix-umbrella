@@ -89,26 +89,11 @@ defmodule HabitsWeb.CategoryController do
     start_date =
       today
       |> Date.shift(month: -3)
-      |> Date.beginning_of_week(:monday)
 
     activities = Admin.activities_for_category(id, 12)
 
-    activity_streak_activities =
-      Admin.activity_streak_for_category(id, start_date)
-
-    activity_streak =
-      Date.range(start_date, today)
-      |> Enum.reduce({[], activity_streak_activities}, fn date, {total, activities} ->
-        activity = Enum.at(activities, 0, nil)
-
-        cond do
-          activity[:date] == date -> {total ++ [{date, activity.count}], Enum.drop(activities, 1)}
-          true -> {total ++ [{date, 0}], activities}
-        end
-      end)
-      |> elem(0)
-      |> Enum.chunk_every(7)
-      |> Enum.reverse()
+    {activity_streak, _adjusted_start_date} =
+      get_activity_streak(id, start_date, today)
 
     render(conn, "show.html",
       category: category,
@@ -189,19 +174,39 @@ defmodule HabitsWeb.CategoryController do
   defp summary_page(conn, category_id, %Date{} = start_date, %Date{} = end_date) do
     category = Admin.get_category!(category_id)
 
-    adjusted_start_date =
-      start_date
-      |> Date.beginning_of_week(:monday)
-
-    activity_streak =
-      Admin.activity_streak_counts_for_category(category_id, adjusted_start_date, end_date)
-      |> Enum.chunk_every(7)
-      |> Enum.reverse()
+    {activity_streak, _adjusted_start_date} =
+      get_activity_streak(category_id, start_date, end_date)
 
     render(conn, "show.html",
       category: category,
       activity_streak: activity_streak,
       is_summary: true
     )
+  end
+
+  defp get_activity_streak(category_id, %Date{} = start_date, %Date{} = end_date) do
+    adjusted_start_date =
+      start_date
+      |> Date.beginning_of_week(:monday)
+
+    activity_streak_activities =
+      Admin.activity_streak_for_category(category_id, adjusted_start_date, end_date)
+
+    activity_streak =
+      Date.range(adjusted_start_date, end_date)
+      |> Enum.reduce({[], activity_streak_activities}, fn date, {date_counts, activities} ->
+        activity = Enum.at(activities, 0, nil)
+
+        case activity[:date] == date do
+          true -> {[{date, activity.count}] ++ date_counts, Enum.drop(activities, 1)}
+          false -> {[{date, 0}] ++ date_counts, activities}
+        end
+      end)
+      |> elem(0)
+      |> Enum.reverse()
+      |> Enum.chunk_every(7)
+      |> Enum.reverse()
+
+    {activity_streak, adjusted_start_date}
   end
 end
