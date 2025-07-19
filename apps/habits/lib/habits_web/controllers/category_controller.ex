@@ -88,7 +88,7 @@ defmodule HabitsWeb.CategoryController do
 
     start_date =
       today
-      |> Date.shift(month: -3)
+      |> Date.shift(month: -2)
 
     activities = Admin.activities_for_category(id, 12)
 
