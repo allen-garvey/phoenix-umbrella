@@ -195,7 +195,7 @@ defmodule HabitsWeb.CategoryController do
       Admin.activity_streak_for_category(category_id, adjusted_start_date, end_date)
 
     activity_streak =
-      Date.range(adjusted_start_date, end_date)
+      Date.range(end_date, adjusted_start_date, -1)
       |> Enum.reduce({[], activity_streak_activities}, fn date, {date_counts, activities} ->
         activity = Enum.at(activities, 0, nil)
 
@@ -205,7 +205,6 @@ defmodule HabitsWeb.CategoryController do
         end
       end)
       |> elem(0)
-      |> Enum.reverse()
       |> Enum.chunk_every(7)
       |> Enum.reverse()
 

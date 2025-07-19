@@ -146,7 +146,7 @@ defmodule Habits.Admin do
         activity.category_id == ^category_id and activity.date >= ^start_date and
           activity.date <= ^end_date,
       group_by: [activity.date],
-      order_by: [activity.date],
+      order_by: [desc: activity.date],
       select: %{count: count(), date: activity.date}
     )
     |> Repo.all()
