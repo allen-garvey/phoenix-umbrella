@@ -1,7 +1,7 @@
 <div class="category-show-title-container">
   <h1 class={[color_style(@category), "category-show-title"]}><%= @category.name %></h1>
-  <%= if !assigns[:is_calendar] do
-    link "Calendar", to: Routes.category_path(@conn, :calendar, @category), class: "btn btn-sm btn-dark"
+  <%= if !assigns[:is_summary] do
+    link "Summary", to: Routes.category_path(@conn, :summary, @category), class: "btn btn-sm btn-dark"
   end %>
   <%= link "Activities", to: Routes.category_path(@conn, :activities_list, @category, limit: 21), class: "btn btn-sm btn-dark" %>
 </div>

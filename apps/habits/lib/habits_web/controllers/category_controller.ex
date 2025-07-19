@@ -166,27 +166,27 @@ defmodule HabitsWeb.CategoryController do
     render(conn, "activities_list.html", category: category, activities: activities)
   end
 
-  def calendar(conn, %{"id" => id, "from" => from}) do
+  def summary(conn, %{"id" => id, "from" => from}) do
     case Date.from_iso8601(from) do
       {:ok, start_date} ->
-        calendar_page(conn, id, start_date, Common.ModelHelpers.Date.today())
+        summary_page(conn, id, start_date, Common.ModelHelpers.Date.today())
 
       _ ->
-        calendar(conn, %{"id" => id})
+        summary(conn, %{"id" => id})
     end
   end
 
-  def calendar(conn, %{"id" => id}) do
+  def summary(conn, %{"id" => id}) do
     today = Common.ModelHelpers.Date.today()
 
     start_date =
       today
       |> Date.shift(month: -12)
 
-    calendar_page(conn, id, start_date, today)
+    summary_page(conn, id, start_date, today)
   end
 
-  defp calendar_page(conn, category_id, %Date{} = start_date, %Date{} = end_date) do
+  defp summary_page(conn, category_id, %Date{} = start_date, %Date{} = end_date) do
     category = Admin.get_category!(category_id)
 
     adjusted_start_date =
@@ -201,7 +201,7 @@ defmodule HabitsWeb.CategoryController do
     render(conn, "show.html",
       category: category,
       activity_streak: activity_streak,
-      is_calendar: true
+      is_summary: true
     )
   end
 end
