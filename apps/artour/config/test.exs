@@ -10,6 +10,7 @@ config :artour, Artour.Endpoint,
 config :logger, level: :warning
 
 # Configure your database
+config :artour, ecto_repos: [Grenadier.Repo]
 # config :artour, Artour.Repo,
 #   adapter: Ecto.Adapters.Postgres,
 #   username: "postgres",
