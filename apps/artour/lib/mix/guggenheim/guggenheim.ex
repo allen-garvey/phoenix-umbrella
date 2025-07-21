@@ -23,8 +23,7 @@ defmodule Mix.Tasks.Guggenheim do
     # Check if necessary shell commands are installed
     Common.MixHelpers.Command.validate_commands_are_installed!([
       "convert",
-      "exiftool",
-      "jpegoptim"
+      "exiftool"
     ])
 
     # Validate source directory
