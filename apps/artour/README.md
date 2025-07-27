@@ -7,6 +7,9 @@ A CMS and blog static site generator specifically designed for photography and a
   * `ln -s <images_of_artwork_directory> priv/static/media/images`
   * If the directory changes, run `ln -sfn <new_artwork_directory> priv/static/media/images`
 
+## External Image Domain
+  * If you are using another domain to host images, such as S3, you can set the environment variable `UMBRELLA_ARTOUR_IMAGES_URL=https://images.domain.com/`
+
 ## Custom Mix Tasks
   * Render site to static HTML files `mix distill.html`
   * Copy static assets for static site `mix distill.static`
