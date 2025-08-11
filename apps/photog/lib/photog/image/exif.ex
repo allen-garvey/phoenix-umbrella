@@ -25,23 +25,23 @@ defmodule Photog.Image.Exif do
   Looks at file path, if it matches YYYY-MM-DD pattern at the start returns datetime, otherwise returns nil
   """
   def file_path_to_datetime(file_path) when is_binary(file_path) do
-    case Regex.match?(~r/^[12]\d{3}-[01]\d-[0123]\d\D/, file_path) do
+    case Regex.match?(~r/^[12]\d{3}-\d{2}-\d{2}[^a-zA-Z\d]/, file_path) do
       true ->
         String.slice(file_path, 0..9)
-        |> String.split("-")
-        |> Enum.map(&String.to_integer/1)
-        |> file_split_to_datetime()
+        |> Date.from_iso8601()
+        |> date_to_datetime()
 
       false ->
         {:error, :no_date_found_in_path}
     end
   end
 
-  defp file_split_to_datetime([years, months, days]) do
-    case Date.new(years, months, days) do
-      {:ok, date} -> DateTime.new(date, Time.new!(0, 0, 0, 0), "Etc/UTC")
-      error -> error
-    end
+  defp date_to_datetime({:ok, date}) do
+    DateTime.new(date, Time.new!(0, 0, 0, 0), "Etc/UTC")
+  end
+
+  defp date_to_datetime({:error, _} = error) do
+    error
   end
 
   @doc """

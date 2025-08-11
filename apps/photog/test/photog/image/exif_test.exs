@@ -22,10 +22,10 @@ defmodule Photog.Image.ExifTest do
     assert Exif.file_path_to_datetime("3025-01-01-image.jpg") ==
              {:error, :no_date_found_in_path}
 
-    assert Exif.file_path_to_datetime("2025-31-01-image.webp") ==
+    assert Exif.file_path_to_datetime("2025-01-01Hello.webp") ==
              {:error, :no_date_found_in_path}
 
-    assert Exif.file_path_to_datetime("2025-01-41-image.webp") ==
+    assert Exif.file_path_to_datetime("2025-01-01something.png") ==
              {:error, :no_date_found_in_path}
   end
 
@@ -42,8 +42,20 @@ defmodule Photog.Image.ExifTest do
     assert Exif.file_path_to_datetime("2025-09-28_image.png") ==
              {:ok, ~U[2025-09-28 00:00:00.000000Z]}
 
+    assert Exif.file_path_to_datetime("2025-09-28 image.png") ==
+             {:ok, ~U[2025-09-28 00:00:00.000000Z]}
+
     assert Exif.file_path_to_datetime("2025-09-28__image.png") ==
              {:ok, ~U[2025-09-28 00:00:00.000000Z]}
+
+    assert Exif.file_path_to_datetime("2025-09-28$.png") ==
+             {:ok, ~U[2025-09-28 00:00:00.000000Z]}
+
+    assert Exif.file_path_to_datetime("2025-01-01.webp") ==
+             {:ok, ~U[2025-01-01 00:00:00.000000Z]}
+
+    assert Exif.file_path_to_datetime("2025-01-01 .webp") ==
+             {:ok, ~U[2025-01-01 00:00:00.000000Z]}
   end
 
   test "file_path_to_datetime() with date path and invalid date" do
@@ -51,6 +63,12 @@ defmodule Photog.Image.ExifTest do
              {:error, :invalid_date}
 
     assert Exif.file_path_to_datetime("2025-12-32_image.png") ==
+             {:error, :invalid_date}
+
+    assert Exif.file_path_to_datetime("2025-31-01-image.webp") ==
+             {:error, :invalid_date}
+
+    assert Exif.file_path_to_datetime("2025-01-41-image.webp") ==
              {:error, :invalid_date}
   end
 
