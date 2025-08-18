@@ -11,8 +11,8 @@ defmodule Movielist.Admin do
   alias Movielist.Admin.Rating
   alias Movielist.Admin.Streamer
 
-  #Estimated time in days between movies theater release and home release
-  @movie_home_release_estimated_lead_time 90
+  # Estimated time in days between movies theater release and home release
+  @movie_home_release_estimated_lead_time 45
 
   @doc """
   Returns the list of genres.
@@ -115,12 +115,13 @@ defmodule Movielist.Admin do
   and finds the most popular genre id.
   """
   def get_recent_popular_genre_id() do
-    movie_query = from(
-      Movie,
-      order_by: [desc: :inserted_at, desc: :id],
-      limit: 10
-    )
-    
+    movie_query =
+      from(
+        Movie,
+        order_by: [desc: :inserted_at, desc: :id],
+        limit: 10
+      )
+
     from(
       movie in subquery(movie_query),
       group_by: [movie.genre_id],
@@ -128,7 +129,7 @@ defmodule Movielist.Admin do
       select: movie.genre_id,
       limit: 1
     )
-    |> Repo.one
+    |> Repo.one()
   end
 
   @doc """
@@ -141,7 +142,13 @@ defmodule Movielist.Admin do
 
   """
   def list_movies do
-    Repo.all(from(m in Movie, join: genre in assoc(m, :genre), preload: [genre: genre], order_by: [:sort_title, :id]))
+    Repo.all(
+      from(m in Movie,
+        join: genre in assoc(m, :genre),
+        preload: [genre: genre],
+        order_by: [:sort_title, :id]
+      )
+    )
   end
 
   @doc """
@@ -149,17 +156,33 @@ defmodule Movielist.Admin do
   """
   def list_movies_active_base_query do
     from(
-          m in Movie,
-          join: genre in assoc(m, :genre),
-          left_join: streamer in assoc(m, :streamer),
-          where: m.is_active == true,
-          preload: [genre: genre, streamer: streamer],
-          select: %{
-                    movie: m,
-                    release_status: fragment("CASE WHEN ? <= CURRENT_DATE THEN 1 WHEN ? <= CURRENT_DATE THEN 2 ELSE 3 END AS release_status", m.home_release_date, m.theater_release_date),
-                    #can't use release_status in release_date without subquery, and can't have nested maps or structs in ecto subqueries, so easiest just to repeat release_status logic here
-                    release_date: fragment("CASE WHEN ? <= CURRENT_DATE THEN NULL WHEN ? <= CURRENT_DATE THEN COALESCE(?, ? + INTERVAL '? DAY') ELSE COALESCE(?, ?) END AS release_date", m.home_release_date, m.theater_release_date, m.home_release_date, m.theater_release_date, @movie_home_release_estimated_lead_time, m.theater_release_date, m.home_release_date)
-                    })
+      m in Movie,
+      join: genre in assoc(m, :genre),
+      left_join: streamer in assoc(m, :streamer),
+      where: m.is_active == true,
+      preload: [genre: genre, streamer: streamer],
+      select: %{
+        movie: m,
+        release_status:
+          fragment(
+            "CASE WHEN ? <= CURRENT_DATE THEN 1 WHEN ? <= CURRENT_DATE THEN 2 ELSE 3 END AS release_status",
+            m.home_release_date,
+            m.theater_release_date
+          ),
+        # can't use release_status in release_date without subquery, and can't have nested maps or structs in ecto subqueries, so easiest just to repeat release_status logic here
+        release_date:
+          fragment(
+            "CASE WHEN ? <= CURRENT_DATE THEN NULL WHEN ? <= CURRENT_DATE THEN COALESCE(?, ? + INTERVAL '? DAY') ELSE COALESCE(?, ?) END AS release_date",
+            m.home_release_date,
+            m.theater_release_date,
+            m.home_release_date,
+            m.theater_release_date,
+            @movie_home_release_estimated_lead_time,
+            m.theater_release_date,
+            m.home_release_date
+          )
+      }
+    )
   end
 
   @doc """
@@ -168,7 +191,11 @@ defmodule Movielist.Admin do
   def preload_movie_virtual_fields(results) do
     results
     |> Enum.map(fn %{movie: movie, release_status: release_status, release_date: release_date} ->
-      %Movie{movie | release_date: release_date, release_status: release_status_atom(release_status)}
+      %Movie{
+        movie
+        | release_date: release_date,
+          release_status: release_status_atom(release_status)
+      }
     end)
   end
 
@@ -187,40 +214,72 @@ defmodule Movielist.Admin do
   Returns the list of active along with calculated release dates movies.
   """
   def list_movies_active(sort) do
-    order_by = case sort do
-      "streamer" -> [asc: dynamic([m, genre, streamer], streamer.name), desc: :pre_rating, asc: :sort_title, asc: :id]
-      "genre" -> [asc: dynamic([m, genre], genre.name), desc: :pre_rating, asc: :sort_title, asc: :id]
-      "title" -> [asc: :sort_title, desc: :pre_rating, asc: :id]
-      _ -> [asc: dynamic([], fragment("release_status")), asc: dynamic([], fragment("release_date")), desc: :pre_rating, asc: :sort_title, asc: :id]
-    end
+    order_by =
+      case sort do
+        "streamer" ->
+          [
+            asc: dynamic([m, genre, streamer], streamer.name),
+            desc: :pre_rating,
+            asc: :sort_title,
+            asc: :id
+          ]
+
+        "genre" ->
+          [asc: dynamic([m, genre], genre.name), desc: :pre_rating, asc: :sort_title, asc: :id]
+
+        "title" ->
+          [asc: :sort_title, desc: :pre_rating, asc: :id]
+
+        _ ->
+          [
+            asc: dynamic([], fragment("release_status")),
+            asc: dynamic([], fragment("release_date")),
+            desc: :pre_rating,
+            asc: :sort_title,
+            asc: :id
+          ]
+      end
 
     list_movies_active_base_query()
-     |> order_by(^order_by)
-     |> Repo.all
-     |> preload_movie_virtual_fields
+    |> order_by(^order_by)
+    |> Repo.all()
+    |> preload_movie_virtual_fields
   end
 
   @doc """
   Similar to list_movies_active, but returns only movies that have been released
   """
   def list_movies_suggestions(sort) do
-    order_by = case sort do
-      "streamer" -> [asc: dynamic([m, genre, streamer], streamer.name), desc: :pre_rating, asc: :sort_title, asc: :id]
-      "genre" -> [asc: dynamic([m, genre], genre.name), desc: :pre_rating, asc: :sort_title, asc: :id]
-      "title" -> [asc: :sort_title, desc: :pre_rating, asc: :id]
-      _ -> [desc: :pre_rating, asc: :sort_title, asc: :id]
-    end
+    order_by =
+      case sort do
+        "streamer" ->
+          [
+            asc: dynamic([m, genre, streamer], streamer.name),
+            desc: :pre_rating,
+            asc: :sort_title,
+            asc: :id
+          ]
 
-     from(
-          m in Movie,
-          join: genre in assoc(m, :genre),
-          left_join: streamer in assoc(m, :streamer),
-          where: m.is_active == true and fragment("(? <= CURRENT_DATE)", m.home_release_date),
-          order_by: ^order_by,
-          preload: [genre: genre, streamer: streamer],
-          select: %Movie{m | release_status: :home_released}
-     )
-     |> Repo.all
+        "genre" ->
+          [asc: dynamic([m, genre], genre.name), desc: :pre_rating, asc: :sort_title, asc: :id]
+
+        "title" ->
+          [asc: :sort_title, desc: :pre_rating, asc: :id]
+
+        _ ->
+          [desc: :pre_rating, asc: :sort_title, asc: :id]
+      end
+
+    from(
+      m in Movie,
+      join: genre in assoc(m, :genre),
+      left_join: streamer in assoc(m, :streamer),
+      where: m.is_active == true and fragment("(? <= CURRENT_DATE)", m.home_release_date),
+      order_by: ^order_by,
+      preload: [genre: genre, streamer: streamer],
+      select: %Movie{m | release_status: :home_released}
+    )
+    |> Repo.all()
   end
 
   @doc """
@@ -247,7 +306,7 @@ defmodule Movielist.Admin do
       preload: [genre: genre, ratings: rating, streamer: streamer],
       order_by: [desc: rating.date_scored, desc: rating.id]
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   @doc """
@@ -330,6 +389,7 @@ defmodule Movielist.Admin do
   def list_ratings_base_query do
     from(r in Rating, join: movie in assoc(r, :movie), preload: [movie: movie])
   end
+
   @doc """
   Returns the list of ratings.
 
@@ -342,7 +402,7 @@ defmodule Movielist.Admin do
   def list_ratings do
     list_ratings_base_query()
     |> order_by(desc: :id)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -351,7 +411,7 @@ defmodule Movielist.Admin do
   def list_ratings_by_score do
     list_ratings_base_query()
     |> order_by(desc: :score, desc: :id)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -369,8 +429,12 @@ defmodule Movielist.Admin do
 
   """
   def get_rating!(id) do
-    from(r in Rating, join: movie in assoc(r, :movie), where: r.id == ^id, preload: [movie: movie])
-    |> Repo.one!
+    from(r in Rating,
+      join: movie in assoc(r, :movie),
+      where: r.id == ^id,
+      preload: [movie: movie]
+    )
+    |> Repo.one!()
   end
 
   @doc """
@@ -444,7 +508,7 @@ defmodule Movielist.Admin do
   """
   def change_rating_with_movie(%Rating{} = rating, movie_id) do
     Rating.changeset(rating, %{})
-      |> Ecto.Changeset.put_change(:movie_id, movie_id)
+    |> Ecto.Changeset.put_change(:movie_id, movie_id)
   end
 
   @doc """
@@ -475,18 +539,19 @@ defmodule Movielist.Admin do
 
   """
   def get_streamer!(id) do
-    movie_query = from(
-      movie in Movie,
-      where: movie.is_active == true,
-      order_by: [movie.sort_title]
-    )
+    movie_query =
+      from(
+        movie in Movie,
+        where: movie.is_active == true,
+        order_by: [movie.sort_title]
+      )
 
     from(
       streamer in Streamer,
       where: streamer.id == ^id,
       preload: [movies: ^movie_query]
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   @doc """
