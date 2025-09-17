@@ -39,7 +39,11 @@
                     {{ image.is_favorite ? 'Favorited' : 'Click to favorite' }}
                 </button>
             </div>
-            <Image-Info :image="image" :updateImage="updateImage" />
+            <Image-Info
+                :image="image"
+                :updateImage="updateImage"
+                :hasParent="!!parent"
+            />
             <Image-Versions
                 :versions="image.versions"
                 v-if="image.versions && image.versions.length > 0"

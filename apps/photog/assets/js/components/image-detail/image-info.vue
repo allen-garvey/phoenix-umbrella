@@ -3,7 +3,14 @@
         <dl>
             <!-- ID -->
             <dt>ID</dt>
-            <dd>{{ image.id }}</dd>
+            <dd v-if="!hasParent">{{ image.id }}</dd>
+            <dd v-else>
+                <router-link
+                    :to="{ name: 'imagesShow', params: { id: image.id } }"
+                >
+                    {{ image.id }}
+                </router-link>
+            </dd>
 
             <!-- Master path -->
             <dt>Master path</dt>
@@ -103,6 +110,10 @@ export default {
         },
         updateImage: {
             type: Function,
+            required: true,
+        },
+        hasParent: {
+            type: Boolean,
             required: true,
         },
     },
