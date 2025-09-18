@@ -12,8 +12,8 @@ defmodule PhotogWeb.B2Controller do
 
       download_token_response ->
         cond do
-          monotonic_time() + 800 -
-            download_token_response.time_requested > 0 ->
+          monotonic_time() -
+            download_token_response.time_requested < 800 ->
             render(conn, "download_token.json", download_token_response: download_token_response)
 
           true ->
