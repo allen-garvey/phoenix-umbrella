@@ -8,6 +8,6 @@ defmodule Photog.B2.DownloadTokenResponse do
     :download_token,
     :bucket_id,
     :file_name_prefix,
-    :time_requested
+    :expiration_time
   ]
 end

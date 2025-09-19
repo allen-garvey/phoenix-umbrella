@@ -11,12 +11,11 @@ defmodule PhotogWeb.B2Controller do
         download_new_token(conn)
 
       download_token_response ->
-        cond do
-          monotonic_time() -
-            download_token_response.time_requested < 800 ->
+        case DateTime.compare(DateTime.utc_now(), download_token_response.expiration_time) do
+          :lt ->
             render(conn, "download_token.json", download_token_response: download_token_response)
 
-          true ->
+          _ ->
             download_new_token(conn)
         end
     end
@@ -119,7 +118,7 @@ defmodule PhotogWeb.B2Controller do
       authorization_token: json["authorizationToken"],
       bucket_id: storage_api["bucketId"],
       file_name_prefix: storage_api["namePrefix"],
-      time_requested: monotonic_time()
+      expiration_time: DateTime.utc_now() |> DateTime.add(800, :second)
     }
 
     {:ok, download_token_response}
@@ -146,9 +145,5 @@ defmodule PhotogWeb.B2Controller do
       "" -> {:error, "Missing B2 application key"}
       _ -> {:ok, b2_application_key}
     end
-  end
-
-  defp monotonic_time do
-    System.convert_time_unit(System.monotonic_time(), :native, :second)
   end
 end
