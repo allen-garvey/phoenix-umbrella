@@ -10,7 +10,7 @@ export const getCachedValue = () => {
     return b2DownloadInfo;
 };
 
-export const updateCachedValue = (value) => {
+export const updateCachedValue = value => {
     b2DownloadInfo = value;
     lastFetchedTime = performance.now();
 };
@@ -24,7 +24,11 @@ export const constructB2UrlResponse = (
         return null;
     }
     return {
-        url: `${b2DownloadInfo.download_url}/file/${b2BucketPrefix}/${image.master_path}?Authorization=${b2DownloadInfo.download_token}`,
+        url: `${
+            b2DownloadInfo.download_url
+        }/file/${b2BucketPrefix}/${encodeURIComponent(
+            image.master_path
+        )}?Authorization=${b2DownloadInfo.download_token}`,
         imageId: image.id,
     };
 };
