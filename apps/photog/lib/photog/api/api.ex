@@ -1547,7 +1547,7 @@ defmodule Photog.Api do
       left_join: cover_album_image in assoc(cover_album, :cover_image),
       group_by: [tag.id, image.id, album.id, cover_album.id, cover_album_image.id],
       order_by: tag.name,
-      select: {%Tag{tag | albums_count: count(tag.id)}, image, cover_album_image}
+      select: {%Tag{tag | albums_count: count(album.id)}, image, cover_album_image}
     )
   end
 
