@@ -1617,10 +1617,10 @@ defmodule Photog.Api do
 
     from(
       tag in Tag,
-      join: tag_albums_count in subquery(tag_albums_count_query),
+      left_join: tag_albums_count in subquery(tag_albums_count_query),
       on: tag.id == tag_albums_count.id,
       where: tag.id == ^tag_id,
-      select: %Tag{tag | albums_count: tag_albums_count.albums_count}
+      select: %Tag{tag | albums_count: coalesce(tag_albums_count.albums_count, 0)}
     )
     |> Repo.one!()
   end
