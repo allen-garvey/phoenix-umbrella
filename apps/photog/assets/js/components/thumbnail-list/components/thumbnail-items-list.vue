@@ -18,7 +18,9 @@
                     :class="thumbnailImageClass(item)"
                     :draggable="!isReordering"
                     loading="lazy"
+                    v-if="thumbnailUrlFor(item)"
                 />
+                <div :class="$style.imagePlaceholder" v-else></div>
             </div>
             <router-link
                 :to="showRouteFor(item, model)"
@@ -33,7 +35,9 @@
                     :class="thumbnailImageClass(item)"
                     :draggable="!isReordering"
                     loading="lazy"
+                    v-if="thumbnailUrlFor(item)"
                 />
+                <div :class="$style.imagePlaceholder" v-else></div>
             </router-link>
             <h3 :class="thumbnailTitleClass(item)" :draggable="!isReordering">
                 <span v-if="isLinkDisabled">
@@ -109,8 +113,9 @@ $thumbnail_dimensions_big: 287px;
 .thumbnailImageContainer {
     position: relative; //for image hearts
 
-    img {
-        background-color: #fff;
+    img,
+    .imagePlaceholder {
+        background-color: gray;
         height: $thumbnail_dimensions;
         width: $thumbnail_dimensions;
         border-radius: 4px;
