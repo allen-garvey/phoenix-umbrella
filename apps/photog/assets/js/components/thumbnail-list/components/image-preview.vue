@@ -1,5 +1,5 @@
 <template>
-    <div :class="containerClasses">
+    <div :class="containerClasses" v-if="imageSrc">
         <div :class="$style.imageContainer">
             <img :class="$style.image" :src="imageSrc" alt="" />
         </div>
