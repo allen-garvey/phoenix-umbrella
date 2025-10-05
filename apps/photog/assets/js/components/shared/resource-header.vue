@@ -4,7 +4,7 @@
             <div>
                 <h1 :class="$style.title">
                     <span>{{ title }}</span>
-                    <span :class="$style.count" v-if="countText">{{
+                    <span :class="$style.count" v-if="countText !== false">{{
                         countText
                     }}</span>
                 </h1>
@@ -138,7 +138,7 @@ export default {
     },
     computed: {
         countText() {
-            if (!this.count || this.count < 0) {
+            if (!this.count && this.count !== 0) {
                 return false;
             }
             if (!this.total || this.total === this.count) {
