@@ -48,7 +48,7 @@ defmodule Photog.Shutterbug.Planner do
     extension = Path.extname(image_source_path)
 
     cond do
-      Enum.member?([".webp", ".svg"], extension) ->
+      Enum.member?([".webp", ".svg", ".avif"], extension) ->
         :safe_copy
 
       extension == ".png" ->

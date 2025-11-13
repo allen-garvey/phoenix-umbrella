@@ -69,7 +69,7 @@ defmodule Photog.Shutterbug.File do
   """
   def is_image_filename(filename) do
     !File.dir?(filename) and
-      Regex.match?(~r/^\.(heic|jpg|jpeg|png|svg|webp)$/i, Path.extname(filename))
+      Regex.match?(~r/^\.(avif|heic|jpg|jpeg|png|svg|webp)$/i, Path.extname(filename))
   end
 
   @doc """
