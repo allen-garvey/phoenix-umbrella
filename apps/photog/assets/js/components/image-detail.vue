@@ -19,15 +19,6 @@
                     />
                 </a>
             </div>
-            <div :class="$style.imageShowLinkContainer">
-                <a
-                    :href="amazonUrl"
-                    v-if="amazonUrl"
-                    target="_blank"
-                    rel="noreferrer"
-                    >View in Amazon Photos</a
-                >
-            </div>
             <div>
                 <button
                     class="btn"
@@ -208,12 +199,6 @@ export default {
         };
     },
     computed: {
-        amazonUrl() {
-            if (!this.image.amazon_photos_id) {
-                return '';
-            }
-            return `https://www.amazon.com/photos/all/gallery/${this.image.amazon_photos_id}`;
-        },
         image() {
             return this.model;
         },

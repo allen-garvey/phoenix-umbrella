@@ -187,12 +187,6 @@ export default () => [
         enableBatchSelectImages: true,
         pageTitle: 'Images not in an album',
     }),
-    buildImagesIndexVariant('/images/no-amazon', 'imageNoAmazonIndex', {
-        apiPath: '/images/?amazon_photos_id=false',
-        isPaginated: true,
-        enableBatchSelectImages: true,
-        pageTitle: 'Images with no Amazon Photos Id',
-    }),
     // has to be before images show
     {
         path: '/images/search',

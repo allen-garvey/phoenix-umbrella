@@ -146,7 +146,6 @@ defmodule PhotogWeb.ImageView do
     image_map = %{
       id: image.id,
       creation_time: get_creation_time(image),
-      amazon_photos_id: image.amazon_photos_id,
       master_path: image.master_path,
       thumbnail_path: image.thumbnail_path,
       mini_thumbnail_path: image.mini_thumbnail_path,

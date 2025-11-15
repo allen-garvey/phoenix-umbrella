@@ -22,14 +22,6 @@ JPEG, PNG, WebP and SVG image types are supported. This mix task both adds the i
 
 * To automatically convert jpg file masters to webp files on import to save space, use the `--webp` option after the source folder.
 
-## Adding Amazon Photos Ids to images
-
-By adding Amazon Photos Ids to images, you can see an Amazon photos link on the image details page
-
-* Sign in to Amazon cloud drive and view the contents of a folder with images in it. Save the AJAX response for `https://www.amazon.com/drive/v1/nodes?asset=ALL&tempLink=false` to a `.json` file
-
-* Run `mix shutterbug.load_amazon_photos <json_file_path> <folder_name>` to load the Amazon Photo Ids for those images, where `folder_name` is the folder containing the images
-
 ## Image url setup
 
 * You can optionally set the environment variable `UMBRELLA_PHOTOG_IMAGE_URL_PREFIX` as a random string, which is used as a prefix for image urls

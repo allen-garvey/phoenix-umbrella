@@ -10,7 +10,6 @@ defmodule Photog.Api.Image do
     field(:mini_thumbnail_path, :string)
     field(:thumbnail_path, :string)
     field(:exif, :map, load_in_query: false)
-    field(:amazon_photos_id, :string)
     field(:notes, :string)
 
     field(:has_albums, :boolean, default: false, virtual: true)
@@ -40,7 +39,6 @@ defmodule Photog.Api.Image do
       :is_favorite,
       :import_id,
       :exif,
-      :amazon_photos_id,
       :source_image_id,
       :notes
     ])
@@ -55,6 +53,5 @@ defmodule Photog.Api.Image do
     |> assoc_constraint(:import)
     |> assoc_constraint(:source_image)
     |> unique_constraint(:master_path)
-    |> unique_constraint(:amazon_photos_id)
   end
 end

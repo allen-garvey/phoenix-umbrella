@@ -30,16 +30,6 @@ defmodule PhotogWeb.ImageController do
     render(conn, "index.json", images: images)
   end
 
-  def index(conn, %{"amazon_photos_id" => "false", "limit" => limit, "offset" => offset}) do
-    images =
-      Api.list_images_with_no_amazon_photos_id(
-        NumberHelpers.string_to_integer_with_min(limit, 1, 1),
-        NumberHelpers.string_to_integer_with_min(offset, 0)
-      )
-
-    render(conn, "index.json", images: images)
-  end
-
   def index(conn, %{"limit" => limit, "offset" => offset}) do
     images =
       Api.list_images(

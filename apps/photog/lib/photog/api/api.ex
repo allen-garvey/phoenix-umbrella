@@ -240,27 +240,6 @@ defmodule Photog.Api do
   end
 
   @doc """
-  Returns the list of images that have no amazon photos id
-
-  ## Examples
-
-      iex> list_images_with_no_amazon_photos_id()
-      [%Image{}, ...]
-
-  """
-  def list_images_with_no_amazon_photos_id(limit, offset) do
-    from(
-      image in Image,
-      where: is_nil(image.amazon_photos_id),
-      order_by: [desc: :creation_time, desc: :id],
-      limit: ^limit,
-      offset: ^offset
-    )
-    |> Repo.all()
-    |> image_default_preloads
-  end
-
-  @doc """
   Gets a single image.
 
   Raises `Ecto.NoResultsError` if the Image does not exist.
