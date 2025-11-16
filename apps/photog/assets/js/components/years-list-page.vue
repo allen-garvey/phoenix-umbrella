@@ -1,88 +1,99 @@
 <template>
     <div class="main container">
         <h2>{{ title }}</h2>
-        <ul 
+        <ul
             :class="{
-                [$style.list]: true, 
+                [$style.list]: true,
                 [$style.editMode]: yearBeingEdited !== null,
             }"
             v-if="isInitialLoadComplete"
         >
-            <li 
-                v-for="year in years" 
-                :key="year.year" 
+            <li
+                v-for="year in years"
+                :key="year.year"
                 :class="{
                     [$style.item]: true,
                     [$style.edit]: year.year == yearBeingEdited?.year,
                 }"
             >
-                <router-link 
+                <router-link
                     :to="pathForYear(year)"
                     :class="$style.yearNameContainer"
                 >
                     {{ year.year }}
                     <span :class="$style.count">({{ year.count }})</span>
                 </router-link>
-                <div 
+                <div
                     :class="$style.yearContentContainer"
                     v-if="year.year !== yearBeingEdited?.year"
                 >
                     <div :class="$style.coverImageGrid">
-                        <router-link 
-                            :to="pathForYear(year)" 
+                        <router-link
+                            :to="pathForYear(year)"
                             :class="$style.coverImageContainer"
                             v-for="image in year.images"
                         >
-                            <img 
-                                :src="miniThumbnailUrlFor(image)"  
+                            <img
+                                :src="miniThumbnailUrlFor(image)"
                                 :class="$style.coverImage"
                                 loading="lazy"
                             />
                         </router-link>
                     </div>
-                    <router-link 
-                        :to="pathForYear(year)" 
+                    <router-link
+                        :to="pathForYear(year)"
                         :class="$style.description"
                         v-if="year.description"
                     >
                         {{ year.description }}
                     </router-link>
                 </div>
-                <button 
-                    class="btn btn-primary" 
-                    @click="editYear(year)" 
+                <button
+                    class="btn btn-primary"
+                    @click="editYear(year)"
                     :class="$style.editButton"
                 >
                     Edit
                 </button>
-                <form 
+                <form
                     :class="$style.editContainer"
                     v-if="year.year == yearBeingEdited?.year"
                     @submit.prevent="save()"
                 >
                     <div>
-                        <label for="descriptionInputId" :class="$style.label">Description</label>
-                        <input 
+                        <label for="descriptionInputId" :class="$style.label"
+                            >Description</label
+                        >
+                        <input
                             id="descriptionInputId"
-                            class="form-control" 
-                            :class="$style.descriptionInput" 
-                            v-model="yearBeingEditedTemp.description" 
-                            v-focus 
+                            class="form-control"
+                            :class="$style.descriptionInput"
+                            v-model="yearBeingEditedTemp.description"
+                            v-focus
                         />
                     </div>
                     <div>
-                        <label for="albumIdInputId" :class="$style.label">Album ID</label>
-                        <input 
+                        <label for="albumIdInputId" :class="$style.label"
+                            >Album ID</label
+                        >
+                        <select
+                            class="form-control"
+                            v-model="yearBeingEditedTemp.album_id"
                             id="albumIdInputId"
-                            class="form-control" 
-                            :class="$style.numberInput" 
-                            v-model="yearBeingEditedTemp.album_id" 
-                            type="number"
-                        />
+                        >
+                            <option value=""></option>
+                            <option
+                                v-for="album in yearBeingEditedAlbums"
+                                :key="album.id"
+                                :value="album.id"
+                            >
+                                {{ album.name }}
+                            </option>
+                        </select>
                     </div>
-                    <button 
-                        class="btn btn-outline-dark" 
-                        @click="cancelEdit()" 
+                    <button
+                        class="btn btn-outline-dark"
+                        @click="cancelEdit()"
                         type="button"
                     >
                         Cancel
@@ -96,93 +107,89 @@
 </template>
 
 <style lang="scss" module>
-    .list {
-        margin-top: 1rem;
-        font-size: 2.1rem;
-    }
+.list {
+    margin-top: 1rem;
+    font-size: 2.1rem;
+}
 
-    .item {
-        display: flex;
-        align-items: center;
-        min-height: 4rem;
-        margin-bottom: 0.5rem;
+.item {
+    display: flex;
+    align-items: center;
+    min-height: 4rem;
+    margin-bottom: 0.5rem;
 
-        &:hover {
-            .editButton {
-                visibility: visible;
-            }
-        }
-
+    &:hover {
         .editButton {
-            visibility: hidden;
-            margin-left: 0.5rem;
-        }
-
-        .editMode & .editButton {
-            display: none;
+            visibility: visible;
         }
     }
 
-    .yearNameContainer {
-        min-width: 4em;
+    .editButton {
+        visibility: hidden;
+        margin-left: 0.5rem;
     }
 
-    .yearContentContainer {
-        display: flex;
-        flex-direction: column;
+    .editMode & .editButton {
+        display: none;
     }
+}
 
-    .description {
-        font-size: 1rem;
-        margin-top: 0.5rem;
-    }
+.yearNameContainer {
+    min-width: 4em;
+}
 
-    .count {
-        display: inline-block;
-        color: #aaa;
-        font-size: 1.2rem;
-        margin-left: 0.2em;
-        margin: 0 1rem 0 -4px;
-        min-width: 2em;
-    }
+.yearContentContainer {
+    display: flex;
+    flex-direction: column;
+}
 
-    .coverImageGrid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
+.description {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
 
-    .coverImageContainer {
-        width: 175px;
-        height: 175px;
-    }
+.count {
+    display: inline-block;
+    color: #aaa;
+    font-size: 1.2rem;
+    margin-left: 0.2em;
+    margin: 0 1rem 0 -4px;
+    min-width: 2em;
+}
 
-    .coverImage {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 4px;
-    }
+.coverImageGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
 
-    .editContainer {
-        display: inline-flex;
-        flex-wrap: wrap;
-        align-items: flex-end;
-        gap: 1rem;
-        margin: 2rem 0;
-    }
+.coverImageContainer {
+    width: 175px;
+    height: 175px;
+}
 
-    .label {
-        font-size: 0.8rem;
-    }
+.coverImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
 
-    .descriptionInput {
-        width: 20em;
-    }
+.editContainer {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem;
+    margin: 2rem 0;
+}
 
-    .numberInput {
-        width: 6em;
-    }
+.label {
+    font-size: 0.8rem;
+}
+
+.descriptionInput {
+    width: 20em;
+}
 </style>
 
 <script>
@@ -218,59 +225,72 @@ export default {
             years: [],
             yearBeingEdited: null,
             yearBeingEditedTemp: null,
-        }
+            yearBeingEditedAlbums: [],
+        };
     },
-    created(){
+    created() {
         this.setup();
     },
     watch: {
-        '$route'(to, from){
+        $route(to, from) {
             nextTick().then(() => {
                 this.setup();
             });
-        }
+        },
     },
     computed: {
-        title(){
+        title() {
             return 'Albums for Year';
         },
     },
     methods: {
-        setup(forceRefresh=false){
+        setup(forceRefresh = false) {
             this.isInitialLoadComplete = false;
             this.years = [];
 
-            this.getModel('/albums/years/index', { forceRefresh }).then(years => {
-                this.years = years;
-                this.isInitialLoadComplete = true;
-            });
+            this.getModel('/albums/years/index', { forceRefresh }).then(
+                years => {
+                    this.years = years;
+                    this.isInitialLoadComplete = true;
+                }
+            );
         },
-        editYear(year){
+        editYear(year) {
             this.yearBeingEdited = year;
             this.yearBeingEditedTemp = { ...year };
+            this.yearBeingEditedAlbums = [];
+            this.getModel(`/albums/years/${year.year}?excerpt=true`).then(
+                albums => {
+                    this.yearBeingEditedAlbums = albums;
+                }
+            );
         },
-        cancelEdit(){
+        cancelEdit() {
             this.yearBeingEdited = null;
         },
-        save(){
+        save() {
             const params = {
                 description: this.yearBeingEditedTemp.description || null,
                 album_id: this.yearBeingEditedTemp.album_id || null,
             };
-            if(!params.description && !params.album_id){
-                this.sendJson(`${API_URL_BASE}/years/${this.yearBeingEdited.year}`, 'DELETE');
-            }
-            else {
-                const forceRefresh = params.album_id !== this.yearBeingEdited.album_id;
+            if (!params.description && !params.album_id) {
                 this.sendJson(
-                    `${API_URL_BASE}/years/${this.yearBeingEdited.year}`, 
-                    'PUT', 
+                    `${API_URL_BASE}/years/${this.yearBeingEdited.year}`,
+                    'DELETE'
+                );
+            } else {
+                const forceRefresh =
+                    params.album_id !== this.yearBeingEdited.album_id;
+                this.sendJson(
+                    `${API_URL_BASE}/years/${this.yearBeingEdited.year}`,
+                    'PUT',
                     {
-                        description: this.yearBeingEditedTemp.description || null,
+                        description:
+                            this.yearBeingEditedTemp.description || null,
                         album_id: this.yearBeingEditedTemp.album_id || null,
                     }
-                ).then(() => { 
-                    if(forceRefresh){
+                ).then(() => {
+                    if (forceRefresh) {
                         this.setup(true);
                     }
                 });
@@ -280,10 +300,10 @@ export default {
             this.yearBeingEdited.album_id = params.album_id;
             this.yearBeingEdited = null;
         },
-        pathForYear(year){
+        pathForYear(year) {
             return {
                 name: 'albumsForYear',
-                params: { year: year.year }
+                params: { year: year.year },
             };
         },
     },

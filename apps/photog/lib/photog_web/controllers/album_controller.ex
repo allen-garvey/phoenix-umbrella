@@ -197,7 +197,8 @@ defmodule PhotogWeb.AlbumController do
   end
 
   @doc """
-  Returns all albums taken in given year
+  Returns albums taken in given year
+  Excerpt version is used for year forms
   """
   def albums_for_year(conn, %{"year" => year, "limit" => limit, "offset" => offset}) do
     albums =
@@ -208,6 +209,13 @@ defmodule PhotogWeb.AlbumController do
       )
 
     render(conn, "index.json", albums: albums)
+  end
+
+  def albums_for_year(conn, %{"year" => year, "excerpt" => "true"}) do
+    albums =
+      Api.list_albums_for_year(NumberHelpers.string_to_integer_with_min(year, 1))
+
+    render(conn, "index_excerpt.json", albums: albums)
   end
 
   @doc """

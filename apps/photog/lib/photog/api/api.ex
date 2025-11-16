@@ -411,6 +411,14 @@ defmodule Photog.Api do
   @doc """
   Returns the list of albums for the given year.
   """
+  def list_albums_for_year(year) do
+    from(album in Album,
+      where: album.year == ^year,
+      order_by: [asc: :name, desc: :id]
+    )
+    |> Repo.all()
+  end
+
   def list_albums_for_year(year, limit, offset) do
     albums_limit_subquery =
       from(album in Album,
