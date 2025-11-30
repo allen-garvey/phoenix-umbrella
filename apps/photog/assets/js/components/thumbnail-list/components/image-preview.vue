@@ -80,11 +80,7 @@ export default {
         },
     },
     created() {
-        if (this.contentCallback) {
-            this.contentCallback(this.item, this.getModel).then(content => {
-                this.content = content;
-            });
-        }
+        this.updateContent();
     },
     data() {
         return {
@@ -111,10 +107,18 @@ export default {
     },
     watch: {
         item() {
+            this.updateContent();
+        },
+    },
+    methods: {
+        updateContent() {
             if (this.contentCallback) {
+                this.content = 'Loading…';
                 this.contentCallback(this.item, this.getModel).then(content => {
                     this.content = content;
                 });
+            } else {
+                this.content = '';
             }
         },
     },
