@@ -1,6 +1,7 @@
 import { API_URL_BASE } from '../request-helpers';
 import { importRelatedFields } from './related-fields.js';
 import { updateItemFavorite } from './images.js';
+import { imagePreviewContentCallback } from './images.js';
 
 import ThumbnailList from '../components/thumbnail-list.vue';
 
@@ -47,6 +48,7 @@ export function buildImportsShowVariant(path, name, props = {}) {
                     };
                 },
                 updateItemFavorite,
+                itemPreviewContentCallback: imagePreviewContentCallback,
             };
             return Object.assign(defaultProps, props);
         },

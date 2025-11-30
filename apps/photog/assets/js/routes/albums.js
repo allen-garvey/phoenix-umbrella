@@ -2,7 +2,10 @@ import { API_URL_BASE } from '../request-helpers';
 import { buildAlbumVariant } from '../route-helpers/albums.js';
 import { albumRelatedFields } from '../route-helpers/related-fields.js';
 import { sortImagesCallback } from '../route-helpers/sorting.js';
-import { updateItemFavorite } from '../route-helpers/images.js';
+import {
+    updateItemFavorite,
+    imagePreviewContentCallback,
+} from '../route-helpers/images.js';
 
 import AlbumForm from '../components/album-form.vue';
 import YearsListPage from '../components/years-list-page.vue';
@@ -126,8 +129,7 @@ export default () => [
                 reorderBySortCallback: sortImagesCallback,
                 relatedFields: albumRelatedFields,
                 getDescription: album => album.description,
-                itemPreviewContentCallback: image =>
-                    image.persons.map(person => person.name).join(', '),
+                itemPreviewContentCallback: imagePreviewContentCallback,
                 showRouteFor: (item, _model) => {
                     return {
                         name: 'albumImagesShow',

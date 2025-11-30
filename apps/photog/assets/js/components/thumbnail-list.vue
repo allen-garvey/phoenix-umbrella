@@ -101,6 +101,7 @@
                 </router-link>
             </div>
             <image-preview
+                :getModel="getModel"
                 :item="hoveredItem"
                 :mousePosition="hoveredItemEvent"
                 :contentCallback="itemPreviewContentCallback"

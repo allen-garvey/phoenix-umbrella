@@ -45,6 +45,9 @@ defmodule PhotogWeb.Router do
     resources("/tags", TagController)
     resources("/album_tags", AlbumTagController, only: [:index, :show, :create])
 
+    # Image preview popup content (list of albums or persons)
+    get("/images/:id/parents", ImageController, :parents_for)
+
     # Images
     get("/images/:id/exif", ImageController, :exif_for)
     get("/images/years/:year", ImageController, :images_for_year)

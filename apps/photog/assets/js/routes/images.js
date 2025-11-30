@@ -5,6 +5,7 @@ import {
 import {
     buildImagesIndexVariant,
     updateItemFavorite,
+    imagePreviewContentCallback,
 } from '../route-helpers/images.js';
 import { imageListRelatedFields } from '../route-helpers/related-fields.js';
 
@@ -37,6 +38,7 @@ export default () => [
                     };
                 },
                 updateItemFavorite,
+                itemPreviewContentCallback: imagePreviewContentCallback,
             };
             return props;
         },
@@ -117,6 +119,7 @@ export default () => [
                     params: { year: route.params.year },
                 },
                 updateItemFavorite,
+                itemPreviewContentCallback: imagePreviewContentCallback,
             };
 
             if (year < new Date().getFullYear()) {
@@ -156,6 +159,7 @@ export default () => [
                     };
                 },
                 updateItemFavorite,
+                itemPreviewContentCallback: imagePreviewContentCallback,
             };
 
             return props;
@@ -167,18 +171,7 @@ export default () => [
         isPaginated: true,
         enableBatchSelectImages: true,
         pageTitle: 'Favorite images',
-        itemPreviewContentCallback: image => {
-            const albums = image.albums.map(album => album.name).join(', ');
-            const persons = image.persons.map(person => person.name).join(', ');
-            const messages = [];
-            if (albums) {
-                messages.push(`Albums: ${albums}`);
-            }
-            if (persons) {
-                messages.push(`Persons: ${persons}`);
-            }
-            return messages.join('\n');
-        },
+        itemPreviewContentCallback: imagePreviewContentCallback,
     }),
     buildImagesIndexVariant('/images/uncategorized', 'imagesNotInAlbumIndex', {
         apiPath: '/images/?in_album=false',

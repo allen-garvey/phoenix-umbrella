@@ -2,6 +2,20 @@ import { API_URL_BASE } from '../request-helpers';
 
 import ThumbnailList from '../components/thumbnail-list.vue';
 
+export const imagePreviewContentCallback = (image, getModel) =>
+    getModel(`/images/${image.id}/parents`).then(image => {
+        const albums = image.albums;
+        const persons = image.persons;
+        const messages = [];
+        if (albums.length > 0) {
+            messages.push(`Albums: ${albums.join(', ')}`);
+        }
+        if (persons.length > 0) {
+            messages.push(`Persons: ${persons.join(', ')}`);
+        }
+        return messages.join('\n');
+    });
+
 export const updateItemFavorite = (sendJson, item) => {
     const id = item.id;
 
@@ -39,6 +53,7 @@ export function buildImagesIndexVariant(path, name, props = {}) {
                     };
                 },
                 updateItemFavorite,
+                itemPreviewContentCallback: imagePreviewContentCallback,
             };
             return Object.assign(defaultProps, props);
         },

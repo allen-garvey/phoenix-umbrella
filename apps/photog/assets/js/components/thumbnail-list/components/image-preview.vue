@@ -54,6 +54,10 @@
 <script>
 export default {
     props: {
+        getModel: {
+            type: Function,
+            required: true,
+        },
         item: {
             type: Object,
             required: true,
@@ -70,8 +74,20 @@ export default {
             required: true,
         },
     },
+    created() {
+        if (this.contentCallback) {
+            this.contentCallback(this.item, this.getModel).then(content => {
+                this.content = content;
+            });
+        }
+    },
+    data() {
+        return {
+            content: '',
+        };
+    },
     computed: {
-        containerClasses(){
+        containerClasses() {
             const width = window.innerWidth;
             const widthHalf = width / 2;
             const mouseX = this.mousePosition.x;
@@ -82,21 +98,20 @@ export default {
                 [this.$style.right]: mouseX < widthHalf,
             };
         },
-        imageSrc(){
+        imageSrc() {
             const item = this.item;
             const image = item.cover_image ? item.cover_image : item;
             return this.miniThumbnailUrlFor(image);
         },
-        content(){
-            try {
-                return this.contentCallback ? this.contentCallback(this.item) : null;
-            }
-            catch {
-                return null;
+    },
+    watch: {
+        item() {
+            if (this.contentCallback) {
+                this.contentCallback(this.item, this.getModel).then(content => {
+                    this.content = content;
+                });
             }
         },
     },
-    methods: {
-    }
 };
 </script>

@@ -292,6 +292,28 @@ defmodule Photog.Api do
     |> Repo.one!()
   end
 
+  def get_image_persons(id) do
+    from(
+      person in Person,
+      join: person_image in assoc(person, :person_images),
+      where: person_image.image_id == ^id,
+      order_by: [person.name, person.id],
+      select: [person.name]
+    )
+    |> Repo.all()
+  end
+
+  def get_image_albums(id) do
+    from(
+      album in Album,
+      join: album_image in assoc(album, :album_images),
+      where: album_image.image_id == ^id,
+      order_by: [album.name, album.id],
+      select: [album.name]
+    )
+    |> Repo.all()
+  end
+
   @doc """
   Creates a image.
 

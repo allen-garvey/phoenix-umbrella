@@ -182,6 +182,15 @@ defmodule PhotogWeb.ImageController do
   end
 
   @doc """
+  Gets the albums and persons for an image
+  """
+  def parents_for(conn, %{"id" => id}) do
+    albums = Api.get_image_albums(id)
+    persons = Api.get_image_persons(id)
+    render(conn, "parents.json", id: id, albums: albums, persons: persons)
+  end
+
+  @doc """
   Adds albums to an image
   tags comma-delimited list of album ids
   """

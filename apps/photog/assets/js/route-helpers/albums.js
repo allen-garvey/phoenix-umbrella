@@ -37,8 +37,6 @@ export function buildAlbumVariant(path, name, propsBuilder = null) {
                 showAlbumsSearchBar: true,
                 newItemLink: { name: 'albumsNew' },
                 pageTitle: 'Albums',
-                itemPreviewContentCallback: album =>
-                    album.tags.map(tag => tag.name).join(', '),
                 showRouteFor: (item, _model) => {
                     return {
                         name: 'albumsShow',

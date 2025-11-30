@@ -1,4 +1,5 @@
 import { API_URL_BASE } from '../request-helpers';
+import { imagePreviewContentCallback } from './images';
 
 export const getPersonsShowApiPath = personId => `/persons/${personId}`;
 
@@ -26,8 +27,7 @@ export const getPersonsShowSharedProps = personId => {
             name: 'personsEdit',
             params: { id: personId },
         }),
-        itemPreviewContentCallback: image =>
-            image.albums.map(album => album.name).join(', '),
+        itemPreviewContentCallback: imagePreviewContentCallback,
         showRouteFor: (item, _model) => {
             return {
                 name: 'personImagesShow',

@@ -5,6 +5,16 @@ defmodule PhotogWeb.ImageView do
   alias Photog.Image.Exif
   alias Common.DateHelpers
 
+  def render("parents.json", %{id: id, albums: albums, persons: persons}) do
+    %{
+      data: %{
+        id: id,
+        albums: albums,
+        persons: persons
+      }
+    }
+  end
+
   def render("index.json", %{images: images}) do
     %{data: render_many(images, ImageView, "image.json")}
   end
