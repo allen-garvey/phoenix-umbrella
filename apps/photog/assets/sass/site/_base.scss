@@ -12,11 +12,13 @@
 body{
     margin: 0;
     font-family: sans-serif;
+    --background-color: #fff;
+    background-color: var(--background-color);
 }
 
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: #2a2a2a;
+        --background-color: #2a2a2a;
         color: #fff;
     }
 
