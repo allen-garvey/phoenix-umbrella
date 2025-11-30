@@ -10,45 +10,50 @@
 </template>
 
 <style lang="scss" module>
-    .container {
-        background-color: #fff;
-        border: 2px solid #000;
-        box-shadow: 2px 2px 5px rgba(63, 55, 55, 0.5);
-        position: fixed;
-        top: 20vh;
-        z-index: 10;
+.container {
+    background-color: var(--background-color);
+    border: 2px solid #000;
+    box-shadow: 2px 2px 5px rgba(63, 55, 55, 0.5);
+    position: fixed;
+    top: 20vh;
+    z-index: 10;
 
-        &.left {
-            left: 100px;
-        }
-
-        &.right {
-            right: 100px;
-        }
+    &.left {
+        left: 100px;
     }
 
-    .imageContainer, .content {
-        // needs to be uppercase to not collide with Sass min()
-        max-width: Min(600px, 35vw);
+    &.right {
+        right: 100px;
     }
+}
 
-    .imageContainer {
-        height: 70vh;
-    }
+.imageContainer,
+.content {
+    // needs to be uppercase to not collide with Sass min()
+    max-width: Min(600px, 35vw);
+}
 
-    .image {
-        display: block;
-        height: 100%;
-        object-fit: cover;
-        max-height: 100%;
-        max-width: 100%;
-    }
+.imageContainer {
+    height: 70vh;
+}
 
-    .content {
-        background-color: #fff;
-        padding: 0.5em;
-        white-space: pre-line;
-    }
+.image {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.content {
+    padding: 0.5em;
+    white-space: pre-line;
+    // so width of text fits width of image
+    // https://stackoverflow.com/questions/55040250/how-to-match-width-of-text-to-width-of-dynamically-sized-image-title
+    display: inline-block;
+    width: 0;
+    min-width: 100%;
+}
 </style>
 
 <script>
