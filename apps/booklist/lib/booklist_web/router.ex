@@ -34,7 +34,7 @@ defmodule BooklistWeb.Router do
     resources "/locations", LocationController
     resources "/ratings", RatingController
 
-    #routes with duplicate methods have to be after resource routes, or they cause errors on index pages
+    # routes with duplicate methods have to be after resource routes, or they cause errors on index pages
     get "/books/:book_id/locations/new", BookLocationController, :new
     get "/books/:book_id/ratings/new", RatingController, :new
     get "/books/:id/duplicate", BookController, :duplicate
@@ -47,6 +47,7 @@ defmodule BooklistWeb.Router do
     pipe_through :authenticate
 
     get "/", ReportsController, :index
+    get "/years", ReportsController, :years_index
     get "/years/:year", ReportsController, :years_show
     get "/authors", ReportsController, :authors_index
     get "/genres", ReportsController, :genres_index

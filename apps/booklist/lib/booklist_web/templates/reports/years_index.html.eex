@@ -1,0 +1,24 @@
+<h1>Reporting Years Overview</h1>
+
+<section class="reporting_books_by_week">
+	<h2>Books Read Per Year</h2>
+
+	<%= render CommonWeb.ReportsView, "count_per_item_table.html",
+		table_class: "reporting_books_by_week_table reporting_books_per_year_table",
+		item_title: "Year",
+		items_with_counts: normalize_books_per_year_count(@years)
+	%>
+</section>
+
+<section>
+	<h2>Years</h2>
+	<ol class="reporting_top_rated_books_list">
+		<%= for {year, _count} <- @years do %>
+			<li>
+				<div>
+                    <%= link year, to: reports_for_year_path(@conn, year) %>
+				</div>
+			</li>
+		<% end %>
+	</ol>
+</section>

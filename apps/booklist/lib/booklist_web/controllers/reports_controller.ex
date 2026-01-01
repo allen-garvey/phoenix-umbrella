@@ -58,6 +58,12 @@ defmodule BooklistWeb.ReportsController do
     render(conn, "index.html")
   end
 
+  def years_index(conn, _params) do
+    years = Reports.get_num_ratings_per_year()
+
+    render(conn, "years_index.html", years: years)
+  end
+
   def years_show(conn, %{"year" => year_raw}) do
     case Integer.parse(year_raw) do
       {year, _} -> report_for_year_helper(conn, year)

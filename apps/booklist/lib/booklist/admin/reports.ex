@@ -29,6 +29,20 @@ defmodule Booklist.Reports do
     |> Repo.all()
   end
 
+  @doc """
+  Gets list of years with number of books read for each year
+  """
+  def get_num_ratings_per_year() do
+    from(
+      r in Rating,
+      order_by: [fragment("EXTRACT(year FROM ?)", r.date_scored)],
+      group_by: [fragment("EXTRACT(year FROM ?)", r.date_scored)],
+      # have to use type to cast as integer, otherwise returns decimal
+      select: {type(fragment("EXTRACT(year FROM ?)", r.date_scored), :integer), count()}
+    )
+    |> Repo.all()
+  end
+
   def calculate_rating_total(ratings) do
     Enum.reduce(ratings, 0, fn rating, total -> total + rating.score end)
   end
