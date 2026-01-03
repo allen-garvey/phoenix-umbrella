@@ -76,4 +76,9 @@
       <%= link "Genres Report", to: Routes.reports_path(@conn, :genres_index) %>
     </h2>
   </div>
+  <div class="home_section">
+    <h2 class="home_section_heading">
+      <%= link "Reports", to: Routes.reports_path(@conn, :index) %>
+    </h2>
+  </div>
 </div>

@@ -26,6 +26,8 @@ defmodule BooklistWeb.ReportsView do
         true -> 10
       end
 
-    Enum.map(years, fn {year, count} -> {year, Integer.floor_div(count, divisor)} end)
+    Enum.map(years, fn {year, count} ->
+      {year, round(count / divisor)}
+    end)
   end
 end
