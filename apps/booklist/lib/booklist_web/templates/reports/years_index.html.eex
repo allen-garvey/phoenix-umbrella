@@ -13,11 +13,12 @@
 <section>
 	<h2>Years</h2>
 	<ol class="reporting_top_rated_books_list">
-		<%= for {year, _count} <- @years do %>
+		<%= for {year, count} <- @years do %>
 			<li>
 				<div>
                     <%= link year, to: reports_for_year_path(@conn, year) %>
 				</div>
+				<div><%= count %></div>
 			</li>
 		<% end %>
 	</ol>
