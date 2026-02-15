@@ -16,6 +16,7 @@
 
   <%= Common.ViewHelpers.Form.date_input_group :date, f %>
 
+  <input type="hidden" name="redirect" value={assigns[:redirect]} />
 
   <div class="form-group right-reverse">
     <%= submit "Save", class: "btn btn-success" %>

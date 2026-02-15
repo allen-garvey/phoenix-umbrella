@@ -128,23 +128,56 @@ defmodule HabitsWeb.ActivityController do
     render(conn, "show.html", activity: activity)
   end
 
+  def edit(conn, %{"id" => id, "redirect" => redirect_action}) do
+    edit_page(conn, id, redirect_action)
+  end
+
   def edit(conn, %{"id" => id}) do
+    edit_page(conn, id, nil)
+  end
+
+  defp edit_page(conn, id, redirect_action) do
     activity = Admin.get_activity!(id)
     changeset = Admin.change_activity(activity)
-    render(conn, "edit.html", [activity: activity, changeset: changeset] ++ related_fields())
+
+    render(
+      conn,
+      "edit.html",
+      [activity: activity, changeset: changeset, redirect: redirect_action] ++ related_fields()
+    )
+  end
+
+  def update(conn, %{"id" => id, "activity" => activity_params, "redirect" => redirect_action}) do
+    update_action(conn, id, activity_params, redirect_action)
   end
 
   def update(conn, %{"id" => id, "activity" => activity_params}) do
+    update_action(conn, id, activity_params, nil)
+  end
+
+  defp update_action(conn, id, activity_params, redirect_action) do
     activity = Admin.get_activity!(id)
 
     case Admin.update_activity(activity, activity_params) do
       {:ok, _activity} ->
         conn
         |> put_flash(:info, "Activity updated successfully.")
-        |> redirect(to: Routes.activity_path(conn, :index))
+        |> redirect(to: update_redirect_path(conn, activity, redirect_action))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", [activity: activity, changeset: changeset] ++ related_fields())
+        render(
+          conn,
+          "edit.html",
+          [activity: activity, changeset: changeset, redirect: redirect_action] ++
+            related_fields()
+        )
+    end
+  end
+
+  defp update_redirect_path(conn, activity, redirect_action) do
+    case redirect_action do
+      nil -> Routes.activity_path(conn, :index)
+      "category" -> Routes.category_path(conn, :activities_list, activity.category_id)
     end
   end
 
