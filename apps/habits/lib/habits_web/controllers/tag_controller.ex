@@ -15,8 +15,9 @@ defmodule HabitsWeb.TagController do
     render(conn, "index.html", tags: tags)
   end
 
-  def new(conn, %{"redirect" => redirect_action}) do
-    new_page_initial(conn, redirect_action)
+  def new(conn, %{"category_id" => category_id}) do
+    changeset = Admin.change_tag(%Tag{category_id: category_id})
+    new_page(conn, changeset, "category")
   end
 
   def new(conn, _params) do

@@ -24,7 +24,7 @@ end %>
 
 <div class="category-show-title-container">
   <h1>Tags</h1>
-  <%= link "New Tag", to: Routes.tag_path(@conn, :new, redirect: "category"), class: "btn btn-success" %>
+  <%= link "New Tag", to: Routes.tag_path(@conn, :new, category_id: @category.id), class: "btn btn-success" %>
 </div>
 
 <table>
