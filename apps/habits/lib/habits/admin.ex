@@ -356,6 +356,15 @@ defmodule Habits.Admin do
     |> Repo.all()
   end
 
+  def list_tags_for_category(category_id) do
+    from(
+      tag in Tag,
+      where: tag.category_id == ^category_id,
+      order_by: [:name]
+    )
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single tag.
 

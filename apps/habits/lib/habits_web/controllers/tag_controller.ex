@@ -15,20 +15,41 @@ defmodule HabitsWeb.TagController do
     render(conn, "index.html", tags: tags)
   end
 
+  def new(conn, %{"redirect" => redirect_action}) do
+    new_page_initial(conn, redirect_action)
+  end
+
   def new(conn, _params) do
+    new_page_initial(conn, nil)
+  end
+
+  defp new_page_initial(conn, redirect_action) do
     changeset = Admin.change_tag(%Tag{})
-    render(conn, :new, [changeset: changeset] ++ related_fields())
+
+    new_page(conn, changeset, redirect_action)
+  end
+
+  defp new_page(conn, changeset, redirect_action) do
+    render(conn, :new, [changeset: changeset, redirect: redirect_action] ++ related_fields())
+  end
+
+  def create(conn, %{"tag" => tag_params, "redirect" => redirect_action}) do
+    create_action(conn, tag_params, redirect_action)
   end
 
   def create(conn, %{"tag" => tag_params}) do
+    create_action(conn, tag_params, nil)
+  end
+
+  defp create_action(conn, tag_params, redirect_action) do
     case Admin.create_tag(tag_params) do
       {:ok, tag} ->
         conn
         |> put_flash(:info, "Tag created successfully.")
-        |> redirect(to: Routes.tag_path(conn, :show, tag))
+        |> redirect(to: redirect_path(conn, tag, redirect_action))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :new, [changeset: changeset] ++ related_fields())
+        new_page(conn, changeset, redirect_action)
     end
   end
 
@@ -75,14 +96,14 @@ defmodule HabitsWeb.TagController do
       {:ok, tag} ->
         conn
         |> put_flash(:info, "Tag updated successfully.")
-        |> redirect(to: update_redirect_path(conn, tag, redirect_action))
+        |> redirect(to: redirect_path(conn, tag, redirect_action))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :edit, [tag: tag, changeset: changeset] ++ related_fields())
+        edit_page(conn, tag, changeset, redirect_action)
     end
   end
 
-  defp update_redirect_path(conn, tag, redirect_action) do
+  defp redirect_path(conn, tag, redirect_action) do
     case redirect_action do
       "category" -> Routes.category_path(conn, :show, tag.category_id)
       _ -> Routes.tag_path(conn, :index)

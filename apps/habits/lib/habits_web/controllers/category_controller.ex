@@ -83,6 +83,7 @@ defmodule HabitsWeb.CategoryController do
 
   def show(conn, %{"id" => id}) do
     category = Admin.get_category!(id)
+    tags = Admin.list_tags_for_category(id)
 
     today = Common.ModelHelpers.Date.today()
 
@@ -98,7 +99,8 @@ defmodule HabitsWeb.CategoryController do
     render(conn, "show.html",
       category: category,
       activity_streak: activity_streak,
-      activities: activities
+      activities: activities,
+      tags: tags
     )
   end
 
