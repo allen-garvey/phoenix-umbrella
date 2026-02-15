@@ -1,0 +1,20 @@
+<h1>Show Tag</h1>
+
+<%= form_for @conn, Routes.tag_path(@conn, :delete, @tag), [method: "delete", data_form: "delete", class: "inline"], fn _f -> %>
+    <input type="submit" value="Delete" class="btn btn-danger" data-button="delete" />
+<% end %>
+<span><%= link "Edit", to: Routes.tag_path(@conn, :edit, @tag), class: "btn btn-primary" %></span>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @tag.name %>
+  </li>
+
+  <li>
+    <strong>Category:</strong>
+    <%= link CategoryView.to_s(@tag.category), to: Routes.category_path(@conn, :show, @tag.category), class: CategoryView.color_style(@tag.category) %>
+  </li>
+
+</ul>

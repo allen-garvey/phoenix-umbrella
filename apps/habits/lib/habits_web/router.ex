@@ -32,6 +32,7 @@ defmodule HabitsWeb.Router do
 
     resources "/activities", ActivityController
     resources "/categories", CategoryController
+    resources "/tags", TagController
   end
 
   scope "/api", HabitsWeb do

@@ -11,6 +11,7 @@ defmodule Habits.Admin.Category do
     field :has_daily_activity, :boolean, virtual: true
 
     has_many :activities, Habits.Admin.Activity
+    has_many :tags, Habits.Admin.Tag
 
     timestamps()
   end

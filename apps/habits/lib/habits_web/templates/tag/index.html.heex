@@ -1,0 +1,36 @@
+<div class="category-show-title-container">
+  <div class="items-count-title">
+    <h1>Tags</h1>
+    <span>(<%= Enum.count(@tags) %>)</span>
+  </div>
+</div>
+
+<div class="form-group"><%= link "New Tag", to: Routes.tag_path(@conn, :new), class: "btn btn-success" %></div>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Category</th>
+      <th>Name</th>
+      <th>Description</th>
+
+      <th class="activity-index-button-heading"></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for tag <- @tags do %>
+    <tr>
+      <td></td>
+      <td class={["center", CategoryView.color_style(tag.category)]}><%= link CategoryView.to_s(tag.category), to: Routes.category_path(@conn, :show, tag.category) %></td>
+      <td><%= tag.name %></td>
+
+      <td>
+        <span>
+          <%= link "Edit", to: Routes.tag_path(@conn, :edit, tag), class: "btn btn-primary" %>
+        </span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

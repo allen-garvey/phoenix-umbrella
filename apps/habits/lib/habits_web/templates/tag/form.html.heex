@@ -1,0 +1,27 @@
+<.form :let={f} for={@changeset} action={@action}>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= Common.ViewHelpers.Form.select_group :category_id, f, HabitsWeb.CategoryView.map_for_form(@categories) %>
+
+  <%= Common.ViewHelpers.Form.input_group :name, f, &text_input/3, autofocus: true %>
+
+  <input type="hidden" name="redirect" value={assigns[:redirect]} />
+
+  <div class="form-group right-reverse">
+    <%= submit "Save", class: "btn btn-success" %>
+    <%= submit "Save and add another", class: "btn btn-light", name: "save_another", value: "true" %>
+    <%= if assigns[:tag] do
+        CommonWeb.FormView.delete_button()
+      end
+    %>
+  </div>
+</.form>
+
+<%= if assigns[:tag] do
+    CommonWeb.FormView.hidden_delete_form(@conn, Routes.tag_path(@conn, :delete, @tag))
+  end
+%>
