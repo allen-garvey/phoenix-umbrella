@@ -129,17 +129,21 @@ defmodule HabitsWeb.ActivityController do
   end
 
   def edit(conn, %{"id" => id, "redirect" => redirect_action}) do
-    edit_page(conn, id, redirect_action)
+    edit_page_initial(conn, id, redirect_action)
   end
 
   def edit(conn, %{"id" => id}) do
-    edit_page(conn, id, nil)
+    edit_page_initial(conn, id, nil)
   end
 
-  defp edit_page(conn, id, redirect_action) do
+  defp edit_page_initial(conn, id, redirect_action) do
     activity = Admin.get_activity!(id)
     changeset = Admin.change_activity(activity)
 
+    edit_page(conn, activity, changeset, redirect_action)
+  end
+
+  defp edit_page(conn, activity, changeset, redirect_action) do
     render(
       conn,
       "edit.html",
@@ -165,19 +169,14 @@ defmodule HabitsWeb.ActivityController do
         |> redirect(to: update_redirect_path(conn, activity, redirect_action))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(
-          conn,
-          "edit.html",
-          [activity: activity, changeset: changeset, redirect: redirect_action] ++
-            related_fields()
-        )
+        edit_page(conn, activity, changeset, redirect_action)
     end
   end
 
   defp update_redirect_path(conn, activity, redirect_action) do
     case redirect_action do
-      nil -> Routes.activity_path(conn, :index)
       "category" -> Routes.category_path(conn, :activities_list, activity.category_id)
+      _ -> Routes.activity_path(conn, :index)
     end
   end
 
