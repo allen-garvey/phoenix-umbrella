@@ -125,6 +125,8 @@ defmodule Habits.Admin do
     from(
       activity in Activity,
       where: activity.category_id == ^category_id,
+      join: tag in assoc(activity, :tag),
+      preload: [tag: tag],
       order_by: [desc: :date, desc: :id]
     )
   end
@@ -181,7 +183,9 @@ defmodule Habits.Admin do
     from(
       activity in Activity,
       join: category in assoc(activity, :category),
-      preload: [category: category],
+      join: tag in assoc(activity, :tag),
+      join: tag_category in assoc(tag, :category),
+      preload: [category: category, tag: {tag, category: tag_category}],
       order_by: [desc: activity.id]
     )
   end
@@ -210,6 +214,8 @@ defmodule Habits.Admin do
     from(
       activity in Activity,
       where: activity.date >= ^date,
+      join: tag in assoc(activity, :tag),
+      preload: [tag: tag],
       order_by: [desc: activity.date, asc: activity.id]
     )
     |> Repo.all()
@@ -233,6 +239,8 @@ defmodule Habits.Admin do
     from(
       activity in Activity,
       where: ilike(activity.title, ^like_query) or ilike(activity.description, ^like_query),
+      join: tag in assoc(activity, :tag),
+      preload: [tag: tag],
       order_by: [desc: activity.date, desc: activity.id]
     )
   end
@@ -266,7 +274,8 @@ defmodule Habits.Admin do
     from(
       activity in Activity,
       join: category in assoc(activity, :category),
-      preload: [category: category],
+      join: tag in assoc(activity, :tag),
+      preload: [category: category, tag: tag],
       where: activity.id == ^id
     )
     |> Repo.one!()
@@ -351,7 +360,7 @@ defmodule Habits.Admin do
       tag in Tag,
       join: category in assoc(tag, :category),
       preload: [category: category],
-      order_by: [tag.name, category.name]
+      order_by: [category.name, tag.name]
     )
     |> Repo.all()
   end

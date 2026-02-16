@@ -15,6 +15,7 @@
       <tr>
         <th></th>
         <th>Title</th>
+        <th>Tag</th>
         <th>Description</th>
         <th class="activity-index-date-heading">Date</th>
         <th></th>
@@ -26,6 +27,7 @@
       <tr>
         <td></td>
         <td class={HabitsWeb.CategoryView.color_style(assigns[:category] || activity.category)}><%= activity.title %></td>
+        <td class={HabitsWeb.CategoryView.color_style(assigns[:category] || activity.category)}><%= activity.tag.name %></td>
         <td><%= HabitsWeb.ActivityView.linkify_description(activity.description) %></td>
         <td><%= activity.date %></td>
         <td><%= link "Edit", to: Routes.activity_path(@conn, :edit, activity, redirect: "category"), class: "btn btn-primary" %></td>

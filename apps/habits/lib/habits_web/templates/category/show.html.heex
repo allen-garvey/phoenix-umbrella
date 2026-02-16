@@ -22,35 +22,37 @@ end %>
 
 <%= render "activity_streak_table.html", category: @category, activity_streak: @activity_streak %>
 
-<div class="category-show-title-container">
-  <h1>Tags</h1>
-  <%= link "New Tag", to: Routes.tag_path(@conn, :new, category_id: @category.id), class: "btn btn-success" %>
-</div>
+<%= if assigns[:tags] do %>
+  <div class="category-show-title-container">
+    <h1>Tags</h1>
+    <%= link "New Tag", to: Routes.tag_path(@conn, :new, category_id: @category.id), class: "btn btn-success" %>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th>Name</th>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
 
-      <th class="activity-index-button-heading"></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for tag <- @tags do %>
-    <tr>
-      <td></td>
-      <td><%= tag.name %></td>
+        <th class="activity-index-button-heading"></th>
+      </tr>
+    </thead>
+    <tbody>
+  <%= for tag <- @tags do %>
+      <tr>
+        <td></td>
+        <td><%= tag.name %></td>
 
-      <td>
-        <span>
-          <%= link "Edit", to: Routes.tag_path(@conn, :edit, tag, redirect: "category"), class: "btn btn-primary" %>
-        </span>
-      </td>
-    </tr>
+        <td>
+          <span>
+            <%= link "Edit", to: Routes.tag_path(@conn, :edit, tag, redirect: "category"), class: "btn btn-primary" %>
+          </span>
+        </td>
+      </tr>
+  <% end %>
+    </tbody>
+  </table>
 <% end %>
-  </tbody>
-</table>
 
 <%= if assigns[:activities] do
   render "activities_list.html", conn: @conn, activities: @activities, category: @category, title: "Recent activities", has_limit: true
