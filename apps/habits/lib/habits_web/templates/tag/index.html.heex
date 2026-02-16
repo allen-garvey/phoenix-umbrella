@@ -22,7 +22,7 @@
     <tr>
       <td></td>
       <td class={["center", CategoryView.color_style(tag.category)]}><%= link CategoryView.to_s(tag.category), to: Routes.category_path(@conn, :show, tag.category) %></td>
-      <td><%= tag.name %></td>
+      <td><%= link tag.name, to: Routes.tag_path(@conn, :show, tag) %></td>
 
       <td>
         <span>
