@@ -17,7 +17,7 @@ defmodule HabitsWeb.ApiActivityView do
     %{
       id: activity.id,
       category_id: activity.category_id,
-      title: activity.title,
+      title: activity.tag.name,
       description: activity.description,
       date: activity.date
     }

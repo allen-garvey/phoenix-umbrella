@@ -15,10 +15,11 @@ defmodule Habits.Api do
     from(
       activity in Activity,
       join: category in assoc(activity, :category),
+      join: tag in assoc(activity, :tag),
       where: activity.date >= ^from_date and activity.date <= ^to_date,
+      preload: [tag: tag],
       order_by: [activity.date, category.name]
     )
-    |> Repo.all
+    |> Repo.all()
   end
 end
-  
