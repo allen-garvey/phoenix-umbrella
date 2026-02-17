@@ -221,18 +221,6 @@ defmodule Habits.Admin do
     |> Repo.all()
   end
 
-  def recent_activity_titles_for(category_id) do
-    from(
-      activity in Activity,
-      group_by: [:title],
-      order_by: [desc: max(activity.id)],
-      where: activity.category_id == ^category_id,
-      limit: 5,
-      select: [:title]
-    )
-    |> Repo.all()
-  end
-
   defp activities_for_query_query(query) do
     like_query = "%#{query}%"
 
