@@ -226,7 +226,7 @@ defmodule Habits.Admin do
 
     from(
       activity in Activity,
-      where: ilike(activity.title, ^like_query) or ilike(activity.description, ^like_query),
+      where: ilike(activity.description, ^like_query),
       join: tag in assoc(activity, :tag),
       preload: [tag: tag],
       order_by: [desc: activity.date, desc: activity.id]

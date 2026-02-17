@@ -6,7 +6,6 @@ defmodule Habits.Admin.Activity do
   schema "activities" do
     field :date, :date
     field :description, :string
-    field :title, :string
 
     belongs_to :category, Habits.Admin.Category
     belongs_to :tag, Habits.Admin.Tag
@@ -17,9 +16,9 @@ defmodule Habits.Admin.Activity do
   @doc false
   def changeset(activity, attrs) do
     activity
-    |> cast(attrs, [:title, :description, :date, :category_id, :tag_id])
+    |> cast(attrs, [:description, :date, :category_id, :tag_id])
     |> Common.ModelHelpers.Date.default_date_today(:date)
-    |> validate_required([:title, :date, :category_id])
+    |> validate_required([:date, :category_id])
     |> assoc_constraint(:category)
     |> assoc_constraint(:tag)
   end

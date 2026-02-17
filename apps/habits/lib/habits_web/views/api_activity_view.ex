@@ -22,10 +22,4 @@ defmodule HabitsWeb.ApiActivityView do
       date: activity.date
     }
   end
-
-  def render("activity_titles.json", %{activities: activities}) do
-    %{
-      data: Enum.map(activities, fn activity -> %{title: activity.title} end)
-    }
-  end
 end

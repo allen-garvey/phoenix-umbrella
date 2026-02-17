@@ -14,7 +14,6 @@
       <th></th>
       <th>Category</th>
       <th>Tag</th>
-      <th>Title</th>
       <th>Description</th>
       <th class="activity-index-date-heading">Date</th>
 
@@ -27,7 +26,6 @@
       <td></td>
       <td class={["center", CategoryView.color_style(activity.category)]}><%= link CategoryView.to_s(activity.category), to: Routes.category_path(@conn, :show, activity.category) %></td>
       <td class={["center", CategoryView.color_style(activity.tag.category)]}><%= link activity.tag.name, to: Routes.tag_path(@conn, :show, activity.tag) %></td>
-      <td><%= activity.title %></td>
       <td><%= linkify_description(activity.description) %></td>
       <td><%= activity.date %></td>
 

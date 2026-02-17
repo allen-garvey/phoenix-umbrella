@@ -64,7 +64,7 @@ defmodule Habits.AdminTest do
 
     import Habits.AdminFixtures
 
-    @invalid_attrs %{date: nil, description: nil, title: nil}
+    @invalid_attrs %{date: nil, description: nil}
 
     test "list_activities/0 returns all activities" do
       activity = activity_fixture()
@@ -77,12 +77,11 @@ defmodule Habits.AdminTest do
     end
 
     test "create_activity/1 with valid data creates a activity" do
-      valid_attrs = %{date: ~D[2022-12-04], description: "some description", title: "some title"}
+      valid_attrs = %{date: ~D[2022-12-04], description: "some description"}
 
       assert {:ok, %Activity{} = activity} = Admin.create_activity(valid_attrs)
       assert activity.date == ~D[2022-12-04]
       assert activity.description == "some description"
-      assert activity.title == "some title"
     end
 
     test "create_activity/1 with invalid data returns error changeset" do
@@ -91,12 +90,15 @@ defmodule Habits.AdminTest do
 
     test "update_activity/2 with valid data updates the activity" do
       activity = activity_fixture()
-      update_attrs = %{date: ~D[2022-12-05], description: "some updated description", title: "some updated title"}
+
+      update_attrs = %{
+        date: ~D[2022-12-05],
+        description: "some updated description"
+      }
 
       assert {:ok, %Activity{} = activity} = Admin.update_activity(activity, update_attrs)
       assert activity.date == ~D[2022-12-05]
       assert activity.description == "some updated description"
-      assert activity.title == "some updated title"
     end
 
     test "update_activity/2 with invalid data returns error changeset" do

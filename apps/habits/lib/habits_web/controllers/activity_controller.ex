@@ -63,7 +63,7 @@ defmodule HabitsWeb.ActivityController do
 
     Admin.change_activity(%Activity{
       category_id: activity.category_id,
-      title: activity.title,
+      tag_id: activity.tag_id,
       description: activity.description,
       date: Common.ModelHelpers.Date.today()
     })
@@ -100,7 +100,7 @@ defmodule HabitsWeb.ActivityController do
       Admin.change_activity(%Activity{
         category_id: activity.category_id,
         date: activity.date,
-        title: activity.title,
+        tag_id: activity.tag_id,
         description: activity.description
       })
 
