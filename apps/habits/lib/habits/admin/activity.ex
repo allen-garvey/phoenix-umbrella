@@ -18,7 +18,7 @@ defmodule Habits.Admin.Activity do
     activity
     |> cast(attrs, [:description, :date, :category_id, :tag_id])
     |> Common.ModelHelpers.Date.default_date_today(:date)
-    |> validate_required([:date, :category_id])
+    |> validate_required([:date, :category_id, :tag_id])
     |> assoc_constraint(:category)
     |> assoc_constraint(:tag)
   end
