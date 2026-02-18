@@ -2,6 +2,7 @@ defmodule HabitsWeb.ActivityController do
   use HabitsWeb, :controller
 
   alias Habits.Admin
+  alias Habits.Api
   alias Habits.Admin.Activity
   alias Common.NumberHelpers
 
@@ -67,7 +68,7 @@ defmodule HabitsWeb.ActivityController do
       description: activity.description,
       date: Common.ModelHelpers.Date.today()
     })
-    |> new_route(conn)
+    |> new_route(conn, Api.list_tags_for_category(activity.category_id))
   end
 
   def new(conn, %{"category" => category_id}) do
@@ -91,8 +92,8 @@ defmodule HabitsWeb.ActivityController do
     |> new_route(conn)
   end
 
-  defp new_route(changeset, conn) do
-    render(conn, "new.html", [changeset: changeset] ++ related_fields())
+  defp new_route(changeset, conn, tags \\ []) do
+    render(conn, "new.html", [changeset: changeset, tags: tags] ++ related_fields())
   end
 
   def create_succeeded(conn, activity, "true") do
@@ -119,7 +120,7 @@ defmodule HabitsWeb.ActivityController do
         |> create_succeeded(activity, params["save_another"])
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", [changeset: changeset] ++ related_fields())
+        render(conn, "new.html", [changeset: changeset, tags: []] ++ related_fields())
     end
   end
 
@@ -144,10 +145,13 @@ defmodule HabitsWeb.ActivityController do
   end
 
   defp edit_page(conn, activity, changeset, redirect_action) do
+    tags = Api.list_tags_for_category(activity.category_id)
+
     render(
       conn,
       "edit.html",
-      [activity: activity, changeset: changeset, redirect: redirect_action] ++ related_fields()
+      [activity: activity, changeset: changeset, redirect: redirect_action, tags: tags] ++
+        related_fields()
     )
   end
 

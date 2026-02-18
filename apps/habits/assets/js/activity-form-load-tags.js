@@ -29,5 +29,7 @@ export const initializeActivityFormLoadTags = () => {
         updateTagSelect();
     });
 
-    updateTagSelect();
+    if (!tagSelectEl.hasChildNodes()) {
+        updateTagSelect();
+    }
 };
