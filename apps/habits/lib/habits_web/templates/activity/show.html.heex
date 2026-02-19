@@ -6,11 +6,11 @@
 <span><%= link "Duplicate", to: Routes.activity_path(@conn, :new, duplicate: @activity.id), class: "btn btn-light" %></span>
 <span><%= link "Edit", to: Routes.activity_path(@conn, :edit, @activity), class: "btn btn-primary" %></span>
 
-<ul>
+<ul class="show-page-attributes-list">
 
   <li>
     <strong>Tag:</strong>
-    <%= @activity.tag.name %>
+    <%= link @activity.tag.name, to: Routes.tag_path(@conn, :show, @activity.tag) %>
   </li>
 
   <li>
