@@ -20,13 +20,17 @@
         <input class="btn btn-success" type="submit" value="Update" />
       </div>
     </div>
-    <div class="activity-streak-form">
+    <div class="activity-streak-form form-group" id="summary_tags_list_container">
       <%= for tag <- @summary_tags do %>
         <label>
           <span><%= tag.name %></span>
           <input name="tags[]" value={tag.id} type="checkbox" checked={MapSet.member?(@checked_summary_tags, tag.id)} />
         </label>
       <% end %>
+    </div>
+    <div class="activity-streak-form form-group">
+      <input type="button" class="btn btn-sm btn-primary" value="Select all tags" id="button_select_all_tags" />
+      <input type="button" class="btn btn-sm btn-light" value="Clear all tags" id="button_clear_all_tags" />
     </div>
  <% end
 end %>
