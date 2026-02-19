@@ -12,12 +12,23 @@
 </div>
 
 <%= if assigns[:is_summary] do
-  form_for %{"from" => @start_date, "to" => @end_date}, Routes.category_path(@conn, :summary, @category), [method: "get", class: "activity-streak-form"], fn f ->
-    [Common.ViewHelpers.Form.input_group(:from, f, &date_input/3, autofocus: true),
-    Common.ViewHelpers.Form.input_group(:to, f, &date_input/3),
-    content_tag(:div, submit("Update", class: "btn btn-success"), class: "form-group")
-    ]
-  end
+  form_for %{"from" => @start_date, "to" => @end_date}, Routes.category_path(@conn, :summary, @category), [method: "get"], fn f -> %>
+    <div class="activity-streak-form">
+      <%= Common.ViewHelpers.Form.input_group(:from, f, &date_input/3, autofocus: true) %>
+      <%= Common.ViewHelpers.Form.input_group(:to, f, &date_input/3) %>
+      <div class="form-group">
+        <input class="btn btn-success" type="submit" value="Update" />
+      </div>
+    </div>
+    <div class="activity-streak-form">
+      <%= for tag <- @summary_tags do %>
+        <label>
+          <span><%= tag.name %></span>
+          <input name="tags[]" value={tag.id} type="checkbox" checked={MapSet.member?(@checked_summary_tags, tag.id)} />
+        </label>
+      <% end %>
+    </div>
+ <% end
 end %>
 
 <%= render "activity_streak_table.html", category: @category, activity_streak: @activity_streak %>

@@ -153,48 +153,106 @@ defmodule HabitsWeb.CategoryController do
     render(conn, "activities_list.html", category: category, activities: activities)
   end
 
-  def summary(conn, %{"id" => id, "from" => from, "to" => to}) do
+  def summary(conn, %{"id" => category_id, "from" => from, "to" => to, "tags" => checked_tags}) do
     case {Date.from_iso8601(from), Date.from_iso8601(to)} do
       {{:ok, start_date}, {:ok, end_date}} ->
-        summary_page(conn, id, start_date, end_date)
+        tags = Habits.Api.list_tags_for_category(category_id)
+
+        checked_tags_set =
+          Enum.map(checked_tags, fn id ->
+            case Integer.parse(id) do
+              {number, ""} -> number
+              _ -> nil
+            end
+          end)
+          |> Enum.filter(fn value -> !is_nil(value) end)
+          |> MapSet.new()
+
+        summary_page(conn, category_id, start_date, end_date, checked_tags_set, tags)
 
       _ ->
-        summary(conn, %{"id" => id})
+        summary(conn, %{"id" => category_id})
     end
   end
 
-  def summary(conn, %{"id" => id}) do
+  def summary(conn, %{"id" => category_id}) do
     today = Common.ModelHelpers.Date.today()
+    tags = Habits.Api.list_tags_for_category(category_id)
+    checked_tags = tags_to_set(tags)
 
     start_date =
       today
       |> Date.shift(month: -12)
 
-    summary_page(conn, id, start_date, today)
+    summary_page(conn, category_id, start_date, today, checked_tags, tags)
   end
 
-  defp summary_page(conn, category_id, %Date{} = start_date, %Date{} = end_date) do
+  defp summary_page(
+         conn,
+         category_id,
+         %Date{} = start_date,
+         %Date{} = end_date,
+         %MapSet{} = checked_tags,
+         tags
+       ) do
     category = Admin.get_category!(category_id)
 
     {activity_streak, adjusted_start_date} =
-      get_activity_streak(category_id, start_date, end_date)
+      get_activity_streak(
+        category_id,
+        start_date,
+        end_date,
+        checked_tags,
+        MapSet.equal?(checked_tags, tags_to_set(tags))
+      )
 
     render(conn, "show.html",
       category: category,
       activity_streak: activity_streak,
       is_summary: true,
+      summary_tags: tags,
+      checked_summary_tags: checked_tags,
       start_date: adjusted_start_date,
       end_date: end_date
     )
   end
 
-  defp get_activity_streak(category_id, %Date{} = start_date, %Date{} = end_date) do
+  defp tags_to_set(tags) do
+    MapSet.new(tags, fn tag -> tag.id end)
+  end
+
+  defp get_activity_streak(
+         category_id,
+         %Date{} = start_date,
+         %Date{} = end_date
+       ) do
+    get_activity_streak(category_id, start_date, end_date, MapSet.new(), true)
+  end
+
+  defp get_activity_streak(
+         category_id,
+         %Date{} = start_date,
+         %Date{} = end_date,
+         %MapSet{} = checked_tags,
+         are_all_tags_selected
+       ) do
     adjusted_start_date =
       start_date
       |> Date.beginning_of_week(:monday)
 
     activity_streak_activities =
-      Admin.activity_streak_for_category(category_id, adjusted_start_date, end_date)
+      case are_all_tags_selected do
+        true ->
+          Admin.activity_streak_for_category(category_id, adjusted_start_date, end_date)
+
+        false ->
+          Admin.activity_streak_for_category(
+            category_id,
+            adjusted_start_date,
+            end_date,
+            MapSet.to_list(checked_tags)
+          )
+      end
 
     activity_streak =
       Date.range(end_date, adjusted_start_date, -1)
