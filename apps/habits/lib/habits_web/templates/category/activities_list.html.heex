@@ -28,7 +28,7 @@
         <td class={HabitsWeb.CategoryView.color_style(assigns[:category] || activity.category)}><%= link activity.tag.name, to: Routes.tag_path(@conn, :show, activity.tag) %></td>
         <td><%= HabitsWeb.ActivityView.linkify_description(activity.description) %></td>
         <td><%= activity.date %></td>
-        <td><%= link "Edit", to: Routes.activity_path(@conn, :edit, activity, redirect: "category"), class: "btn btn-primary" %></td>
+        <td><%= link "Edit", to: Routes.activity_path(@conn, :edit, activity, redirect: @edit_redirect), class: "btn btn-primary" %></td>
         <td><%= link "Duplicate", to: Routes.activity_path(@conn, :new, duplicate: activity.id), class: "btn btn-light" %></td>
       </tr>
   <% end %>

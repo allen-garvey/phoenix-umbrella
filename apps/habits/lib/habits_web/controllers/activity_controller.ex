@@ -180,6 +180,8 @@ defmodule HabitsWeb.ActivityController do
   defp update_redirect_path(conn, activity, redirect_action) do
     case redirect_action do
       "category" -> Routes.category_path(conn, :activities_list, activity.category_id)
+      "tag" -> Routes.tag_path(conn, :activities_list, activity.tag_id)
+      "home" -> Routes.category_path(conn, :create_category_activity_index)
       _ -> Routes.activity_path(conn, :index)
     end
   end

@@ -143,6 +143,7 @@ defmodule HabitsWeb.CategoryController do
       category: category,
       activities: activities,
       all_activities_path: Routes.category_path(conn, :activities_list, category),
+      edit_redirect: "category",
       title: HabitsWeb.CategoryView.category_link_title(conn, category)
     )
   end
@@ -154,6 +155,7 @@ defmodule HabitsWeb.CategoryController do
     render(conn, "activities_list.html",
       category: category,
       activities: activities,
+      edit_redirect: "category",
       title: HabitsWeb.CategoryView.category_link_title(conn, category)
     )
   end

@@ -70,6 +70,7 @@ defmodule HabitsWeb.TagController do
       tag: tag,
       activities: activities,
       category: tag.category,
+      edit_redirect: "tag",
       title: HabitsWeb.TagView.tag_link_title(conn, tag)
     )
   end

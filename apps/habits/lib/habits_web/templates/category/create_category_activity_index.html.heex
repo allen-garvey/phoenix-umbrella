@@ -12,13 +12,13 @@
 <% end %>
 
 <%= if !Enum.empty?(@todays_activities) do %>
-    <%= render "activities_list.html", conn: @conn, activities: @todays_activities, title: "Today’s activities" %>
+    <%= render "activities_list.html", conn: @conn, activities: @todays_activities, title: "Today’s activities", edit_redirect: "home" %>
 <% end %>
 
 <%= if !Enum.empty?(@yesterdays_activities) do %>
-    <%= render "activities_list.html", conn: @conn, activities: @yesterdays_activities, title: "Yesterday’s activities" %>
+    <%= render "activities_list.html", conn: @conn, activities: @yesterdays_activities, title: "Yesterday’s activities", edit_redirect: "home" %>
 <% end %>
 
 <%= if !Enum.empty?(@day_before_yesterdays_activities) do %>
-    <%= render "activities_list.html", conn: @conn, activities: @day_before_yesterdays_activities, title: "Day before yesterday’s activities" %>
+    <%= render "activities_list.html", conn: @conn, activities: @day_before_yesterdays_activities, title: "Day before yesterday’s activities", edit_redirect: "home" %>
 <% end %>
