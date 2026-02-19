@@ -70,5 +70,5 @@ end %>
 <% end %>
 
 <%= if assigns[:activities] do
-  render "activities_list.html", conn: @conn, activities: @activities, category: @category, title: "Recent activities", has_limit: true
+  render "activities_list.html", conn: @conn, activities: @activities, category: @category, title: "Recent activities", all_activities_path: Routes.category_path(@conn, :activities_list, @category)
 end %>

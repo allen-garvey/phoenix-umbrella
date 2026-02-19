@@ -56,7 +56,22 @@ defmodule HabitsWeb.TagController do
 
   def show(conn, %{"id" => id}) do
     tag = Admin.get_tag!(id)
-    render(conn, :show, tag: tag)
+    activities = Admin.activities_for_tag(id, 12)
+    render(conn, :show, tag: tag, activities: activities)
+  end
+
+  @spec activities_list(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  def activities_list(conn, %{"id" => id}) do
+    tag = Admin.get_tag!(id)
+    activities = Admin.activities_for_tag(id)
+
+    put_view(conn, HabitsWeb.CategoryView)
+    |> render("activities_list.html",
+      tag: tag,
+      activities: activities,
+      category: tag.category,
+      title: HabitsWeb.TagView.tag_link_title(conn, tag)
+    )
   end
 
   def edit(conn, %{"id" => id, "redirect" => redirect_action}) do

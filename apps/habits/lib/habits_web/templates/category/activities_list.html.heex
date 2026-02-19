@@ -1,10 +1,10 @@
 <section>
   <div class="category-show-title-container">
     <h1>
-      <%= assigns[:title] || link(@category.name, to: Routes.category_path(@conn, :show, @category)) %>
+      <%= @title %>
     </h1>
-    <%= if assigns[:has_limit] do %>
-      <%= link "All activities", to: Routes.category_path(@conn, :activities_list, @category), class: "btn btn-sm btn-dark" %>
+    <%= if assigns[:all_activities_path] do %>
+      <%= link "All activities", to: @all_activities_path, class: "btn btn-sm btn-dark" %>
     <% else %>
       <span>(<%= Enum.count(@activities) %>)</span>
     <% end %>
@@ -25,7 +25,7 @@
   <%= for activity <- @activities do %>
       <tr>
         <td></td>
-        <td class={HabitsWeb.CategoryView.color_style(assigns[:category] || activity.category)}><%= activity.tag.name %></td>
+        <td class={HabitsWeb.CategoryView.color_style(assigns[:category] || activity.category)}><%= link activity.tag.name, to: Routes.tag_path(@conn, :show, activity.tag) %></td>
         <td><%= HabitsWeb.ActivityView.linkify_description(activity.description) %></td>
         <td><%= activity.date %></td>
         <td><%= link "Edit", to: Routes.activity_path(@conn, :edit, activity, redirect: "category"), class: "btn btn-primary" %></td>

@@ -29,6 +29,7 @@ defmodule HabitsWeb.Router do
     get "/categories/:id/activities", CategoryController, :activities_list
     get "/categories/:id/summary", CategoryController, :summary
     get "/activities/search", ActivityController, :search
+    get "/tags/:id/activities", TagController, :activities_list
 
     resources "/activities", ActivityController
     resources "/categories", CategoryController

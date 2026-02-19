@@ -18,3 +18,7 @@
   </li>
 
 </ul>
+
+<%= 
+  render HabitsWeb.CategoryView, "activities_list.html", conn: @conn, activities: @activities, category: @tag.category, title: "Recent activities", all_activities_path: Routes.tag_path(@conn, :activities_list, @tag)
+%>

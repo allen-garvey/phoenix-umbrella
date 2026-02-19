@@ -142,7 +142,8 @@ defmodule HabitsWeb.CategoryController do
     render(conn, "activities_list.html",
       category: category,
       activities: activities,
-      has_limit: true
+      all_activities_path: Routes.category_path(conn, :activities_list, category),
+      title: HabitsWeb.CategoryView.category_link_title(conn, category)
     )
   end
 
@@ -150,7 +151,11 @@ defmodule HabitsWeb.CategoryController do
     category = Admin.get_category!(id)
     activities = Admin.activities_for_category(id)
 
-    render(conn, "activities_list.html", category: category, activities: activities)
+    render(conn, "activities_list.html",
+      category: category,
+      activities: activities,
+      title: HabitsWeb.CategoryView.category_link_title(conn, category)
+    )
   end
 
   def summary(conn, %{"id" => category_id, "from" => from, "to" => to, "tags" => checked_tags}) do

@@ -121,6 +121,28 @@ defmodule Habits.Admin do
     Category.changeset(category, attrs)
   end
 
+  defp activities_for_tag_query(tag_id) do
+    from(
+      activity in Activity,
+      where: activity.tag_id == ^tag_id,
+      join: tag in assoc(activity, :tag),
+      join: category in assoc(tag, :category),
+      preload: [tag: {tag, [category: category]}],
+      order_by: [desc: :date, desc: :id]
+    )
+  end
+
+  def activities_for_tag(tag_id) do
+    activities_for_tag_query(tag_id)
+    |> Repo.all()
+  end
+
+  def activities_for_tag(tag_id, limit) do
+    activities_for_tag_query(tag_id)
+    |> limit(^limit)
+    |> Repo.all()
+  end
+
   defp activities_for_category_query(category_id) do
     from(
       activity in Activity,

@@ -58,4 +58,8 @@ defmodule HabitsWeb.CategoryView do
       _ -> color_style(category)
     end
   end
+
+  def category_link_title(conn, category) do
+    link(category.name, to: Routes.category_path(conn, :show, category))
+  end
 end
