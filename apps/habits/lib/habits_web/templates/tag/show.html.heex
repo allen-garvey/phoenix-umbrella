@@ -1,16 +1,10 @@
-<h1>Show Tag</h1>
+<h1><%= @tag.name %></h1>
 
 <%= form_for @conn, Routes.tag_path(@conn, :delete, @tag), [method: "delete", data_form: "delete", class: "inline"], fn _f -> %>
     <input type="submit" value="Delete" class="btn btn-danger" data-button="delete" />
 <% end %>
 <span><%= link "Edit", to: Routes.tag_path(@conn, :edit, @tag), class: "btn btn-primary" %></span>
 
-<ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @tag.name %>
-  </li>
 <ul class="show-page-attributes-list">
 
   <li>
