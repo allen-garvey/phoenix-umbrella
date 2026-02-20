@@ -15,7 +15,7 @@
 
   <li>
     <strong>Category:</strong>
-    <%= link CategoryView.to_s(@activity.category), to: Routes.category_path(@conn, :show, @activity.category), class: CategoryView.color_style(@activity.category) %>
+    <%= link CategoryView.to_s(@activity.tag.category), to: Routes.category_path(@conn, :show, @activity.tag.category), class: CategoryView.color_style(@activity.tag.category) %>
   </li>
 
   <li>

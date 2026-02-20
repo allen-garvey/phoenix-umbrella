@@ -4,6 +4,7 @@ defmodule HabitsWeb.CategoryController do
   alias Habits.Admin
   alias Habits.Admin.Activity
   alias Habits.Admin.Category
+  alias Habits.Admin.Tag
   alias HabitsWeb.CategoryView
   alias Common.NumberHelpers
 
@@ -19,7 +20,8 @@ defmodule HabitsWeb.CategoryController do
 
   defp preload_category(activities, category_map) do
     Enum.map(activities, fn activity ->
-      %Activity{activity | category: Map.get(category_map, activity.tag.category_id)}
+      tag = %Tag{activity.tag | category: Map.get(category_map, activity.tag.category_id)}
+      %Activity{activity | tag: tag}
     end)
   end
 

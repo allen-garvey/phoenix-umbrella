@@ -147,8 +147,9 @@ defmodule Habits.Admin do
     from(
       activity in Activity,
       join: tag in assoc(activity, :tag),
+      join: category in assoc(tag, :category),
       where: tag.category_id == ^category_id,
-      preload: [tag: tag],
+      preload: [tag: {tag, category: category}],
       order_by: [desc: :date, desc: :id]
     )
   end
@@ -221,10 +222,9 @@ defmodule Habits.Admin do
   defp list_activities_query do
     from(
       activity in Activity,
-      join: category in assoc(activity, :category),
       join: tag in assoc(activity, :tag),
-      join: tag_category in assoc(tag, :category),
-      preload: [category: category, tag: {tag, category: tag_category}],
+      join: category in assoc(tag, :category),
+      preload: [tag: {tag, category: category}],
       order_by: [desc: activity.id]
     )
   end
@@ -301,9 +301,9 @@ defmodule Habits.Admin do
   def get_activity!(id) do
     from(
       activity in Activity,
-      join: category in assoc(activity, :category),
       join: tag in assoc(activity, :tag),
-      preload: [category: category, tag: tag],
+      join: category in assoc(tag, :category),
+      preload: [tag: {tag, category: category}],
       where: activity.id == ^id
     )
     |> Repo.one!()
