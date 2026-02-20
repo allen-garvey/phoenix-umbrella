@@ -21,4 +21,11 @@ defmodule HabitsWeb.ActivityView do
   def linkify_description(description) do
     description
   end
+
+  def get_category_id(%Ecto.Changeset{} = changeset) do
+    case Ecto.Changeset.get_field(changeset, :tag, nil) do
+      nil -> nil
+      tag -> tag.category_id
+    end
+  end
 end

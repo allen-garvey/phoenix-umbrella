@@ -1,8 +1,10 @@
 import { fetchJson } from 'umbrella-common-js/ajax.js';
 
 export const initializeActivityFormLoadTags = () => {
-    const tagSelectEl = document.getElementById('activity_tag_id');
-    const categorySelectEl = document.getElementById('activity_category_id');
+    const tagSelectEl = document.querySelector('[data-id="activity_tag_id"]');
+    const categorySelectEl = document.querySelector(
+        '[data-id="activity_category_id"]'
+    );
 
     if (!tagSelectEl || !categorySelectEl) {
         return;

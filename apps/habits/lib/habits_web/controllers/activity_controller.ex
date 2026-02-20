@@ -4,13 +4,15 @@ defmodule HabitsWeb.ActivityController do
   alias Habits.Admin
   alias Habits.Api
   alias Habits.Admin.Activity
+  alias Habits.Admin.Tag
   alias Common.NumberHelpers
 
   defp preload_categories(activities, categories) do
     category_map = Map.new(categories, fn category -> {category.id, category} end)
 
     Enum.map(activities, fn activity ->
-      %Activity{activity | category: Map.get(category_map, activity.tag.category_id)}
+      tag = %Tag{category: Map.get(category_map, activity.tag.category_id)}
+      %Activity{activity | tag: tag}
     end)
   end
 
@@ -63,7 +65,7 @@ defmodule HabitsWeb.ActivityController do
     activity = Admin.get_activity!(id)
 
     Admin.change_activity(%Activity{
-      category_id: activity.tag.category_id,
+      tag: activity.tag,
       tag_id: activity.tag_id,
       description: activity.description,
       date: Common.ModelHelpers.Date.today()
@@ -72,8 +74,10 @@ defmodule HabitsWeb.ActivityController do
   end
 
   def new(conn, %{"category" => category_id}) do
+    tag = %Tag{category_id: category_id}
+
     Admin.change_activity(%Activity{
-      category_id: category_id
+      tag: tag
     })
     |> new_route(conn)
   end
@@ -85,8 +89,10 @@ defmodule HabitsWeb.ActivityController do
         {:error, _} -> Common.ModelHelpers.Date.today()
       end
 
+    tag = %Tag{category_id: Admin.get_recent_popular_category_id()}
+
     Admin.change_activity(%Activity{
-      category_id: Admin.get_recent_popular_category_id(),
+      tag: tag,
       date: date
     })
     |> new_route(conn)
@@ -102,7 +108,7 @@ defmodule HabitsWeb.ActivityController do
 
     changeset =
       Admin.change_activity(%Activity{
-        category_id: tag.category_id,
+        tag: tag,
         date: activity.date,
         tag_id: activity.tag_id,
         description: activity.description

@@ -5,9 +5,9 @@
     </div>
   <% end %>
 
-  <%= Common.ViewHelpers.Form.select_group :category_id, f, HabitsWeb.CategoryView.map_for_form(@categories), id: "activity_category_id" %>
+  <%= Common.ViewHelpers.Form.select_group :category_id, Phoenix.HTML.FormData.to_form(%{"category_id" => get_category_id(@changeset)}, []), HabitsWeb.CategoryView.map_for_form(@categories), data_id: "activity_category_id", name: "" %>
 
-  <%= Common.ViewHelpers.Form.select_group :tag_id, f, HabitsWeb.TagView.map_for_form(@tags), id: "activity_tag_id", autofocus: true %>
+  <%= Common.ViewHelpers.Form.select_group :tag_id, f, HabitsWeb.TagView.map_for_form(@tags), data_id: "activity_tag_id", autofocus: true %>
 
   <%= Common.ViewHelpers.Form.input_group :description, f, &textarea/3, [cols: 80, rows: 8] %>
 
