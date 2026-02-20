@@ -19,7 +19,7 @@ defmodule HabitsWeb.CategoryController do
 
   defp preload_category(activities, category_map) do
     Enum.map(activities, fn activity ->
-      %Activity{activity | category: Map.get(category_map, activity.category_id)}
+      %Activity{activity | category: Map.get(category_map, activity.tag.category_id)}
     end)
   end
 
@@ -39,7 +39,7 @@ defmodule HabitsWeb.CategoryController do
       )
 
     todays_categorys_set =
-      MapSet.new(Map.get(activities_map, :today, []), fn activity -> activity.category_id end)
+      MapSet.new(Map.get(activities_map, :today, []), fn activity -> activity.tag.category_id end)
 
     categories =
       Admin.list_categories()

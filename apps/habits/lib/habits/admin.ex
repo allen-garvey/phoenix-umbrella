@@ -146,8 +146,8 @@ defmodule Habits.Admin do
   defp activities_for_category_query(category_id) do
     from(
       activity in Activity,
-      where: activity.category_id == ^category_id,
       join: tag in assoc(activity, :tag),
+      where: tag.category_id == ^category_id,
       preload: [tag: tag],
       order_by: [desc: :date, desc: :id]
     )
@@ -167,8 +167,9 @@ defmodule Habits.Admin do
   def activity_streak_for_category(category_id, start_date, end_date) do
     from(
       activity in Activity,
+      join: tag in assoc(activity, :tag),
       where:
-        activity.category_id == ^category_id and activity.date >= ^start_date and
+        tag.category_id == ^category_id and activity.date >= ^start_date and
           activity.date <= ^end_date,
       group_by: [activity.date],
       order_by: [desc: activity.date],
@@ -180,8 +181,9 @@ defmodule Habits.Admin do
   def activity_streak_for_category(category_id, start_date, end_date, tag_ids) do
     from(
       activity in Activity,
+      join: tag in assoc(activity, :tag),
       where:
-        activity.category_id == ^category_id and activity.date >= ^start_date and
+        tag.category_id == ^category_id and activity.date >= ^start_date and
           activity.date <= ^end_date and
           activity.tag_id in ^tag_ids,
       group_by: [activity.date],
@@ -207,9 +209,10 @@ defmodule Habits.Admin do
 
     from(
       activity in subquery(activities_query),
-      group_by: [activity.category_id],
-      order_by: [desc: count(activity.category_id)],
-      select: activity.category_id,
+      join: tag in assoc(activity, :tag),
+      group_by: [tag.category_id],
+      order_by: [desc: count(tag.category_id)],
+      select: tag.category_id,
       limit: 1
     )
     |> Repo.one()
@@ -264,7 +267,8 @@ defmodule Habits.Admin do
       activity in Activity,
       where: ilike(activity.description, ^like_query),
       join: tag in assoc(activity, :tag),
-      preload: [tag: tag],
+      join: category in assoc(tag, :category),
+      preload: [tag: {tag, category: category}],
       order_by: [desc: activity.date, desc: activity.id]
     )
   end
@@ -276,7 +280,7 @@ defmodule Habits.Admin do
 
   def activities_for_query(query, category_id) do
     activities_for_query_query(query)
-    |> where([activity], activity.category_id == ^category_id)
+    |> where([_activity, tag], tag.category_id == ^category_id)
     |> Repo.all()
   end
 

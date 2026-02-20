@@ -16,7 +16,7 @@ defmodule HabitsWeb.ApiActivityView do
   def render("activity.json", %{api_activity: activity}) do
     %{
       id: activity.id,
-      category_id: activity.category_id,
+      category_id: activity.tag.category_id,
       title: activity.tag.name,
       description: activity.description,
       date: activity.date

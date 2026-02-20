@@ -10,7 +10,7 @@ defmodule HabitsWeb.ActivityController do
     category_map = Map.new(categories, fn category -> {category.id, category} end)
 
     Enum.map(activities, fn activity ->
-      %Activity{activity | category: Map.get(category_map, activity.category_id)}
+      %Activity{activity | category: Map.get(category_map, activity.tag.category_id)}
     end)
   end
 
@@ -63,12 +63,12 @@ defmodule HabitsWeb.ActivityController do
     activity = Admin.get_activity!(id)
 
     Admin.change_activity(%Activity{
-      category_id: activity.category_id,
+      category_id: activity.tag.category_id,
       tag_id: activity.tag_id,
       description: activity.description,
       date: Common.ModelHelpers.Date.today()
     })
-    |> new_route(conn, Api.list_tags_for_category(activity.category_id))
+    |> new_route(conn, Api.list_tags_for_category(activity.tag.category_id))
   end
 
   def new(conn, %{"category" => category_id}) do
@@ -96,20 +96,25 @@ defmodule HabitsWeb.ActivityController do
     render(conn, "new.html", [changeset: changeset, tags: tags] ++ related_fields())
   end
 
-  def create_succeeded(conn, activity, "true") do
+  defp create_succeeded(conn, activity, "true") do
+    tag = Admin.get_tag!(activity.tag_id)
+    tags = Admin.list_tags_for_category(tag.category_id)
+
     changeset =
       Admin.change_activity(%Activity{
-        category_id: activity.category_id,
+        category_id: tag.category_id,
         date: activity.date,
         tag_id: activity.tag_id,
         description: activity.description
       })
 
-    render(conn, "new.html", [changeset: changeset] ++ related_fields())
+    render(conn, "new.html", [changeset: changeset, tags: tags] ++ related_fields())
   end
 
-  def create_succeeded(conn, activity, _save_another) do
-    redirect(conn, to: Routes.category_path(conn, :show, activity.category_id))
+  defp create_succeeded(conn, activity, _save_another) do
+    tag = Admin.get_tag!(activity.tag_id)
+
+    redirect(conn, to: Routes.category_path(conn, :show, tag.category_id))
   end
 
   def create(conn, %{"activity" => activity_params} = params) do
@@ -145,7 +150,7 @@ defmodule HabitsWeb.ActivityController do
   end
 
   defp edit_page(conn, activity, changeset, redirect_action) do
-    tags = Api.list_tags_for_category(activity.category_id)
+    tags = Api.list_tags_for_category(activity.tag.category_id)
 
     render(
       conn,
@@ -179,7 +184,7 @@ defmodule HabitsWeb.ActivityController do
 
   defp update_redirect_path(conn, activity, redirect_action) do
     case redirect_action do
-      "category" -> Routes.category_path(conn, :activities_list, activity.category_id)
+      "category" -> Routes.category_path(conn, :activities_list, activity.tag.category_id)
       "tag" -> Routes.tag_path(conn, :activities_list, activity.tag_id)
       "home" -> Routes.category_path(conn, :create_category_activity_index)
       _ -> Routes.activity_path(conn, :index)
