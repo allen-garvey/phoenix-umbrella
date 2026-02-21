@@ -13,8 +13,8 @@
       <th></th>
       <th>Category</th>
       <th>Name</th>
-
-      <th class="activity-index-button-heading"></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -27,6 +27,12 @@
       <td>
         <span>
           <%= link "Edit", to: Routes.tag_path(@conn, :edit, tag), class: "btn btn-primary" %>
+        </span>
+      </td>
+
+      <td>
+        <span>
+          <%= link "Add activity", to: Routes.activity_path(@conn, :new, tag: tag.id), class: "btn btn-light" %>
         </span>
       </td>
     </tr>

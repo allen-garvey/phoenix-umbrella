@@ -453,6 +453,15 @@ defmodule Habits.Admin do
     |> Repo.one!()
   end
 
+  def get_category_id_for_tag(tag_id) do
+    from(
+      tag in Tag,
+      where: tag.id == ^tag_id,
+      select: tag.category_id
+    )
+    |> Repo.one()
+  end
+
   @doc """
   Creates a tag.
 

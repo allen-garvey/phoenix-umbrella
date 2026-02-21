@@ -83,6 +83,17 @@ defmodule HabitsWeb.ActivityController do
     |> new_route(conn)
   end
 
+  def new(conn, %{"tag" => tag_id}) do
+    category_id = Admin.get_category_id_for_tag(tag_id)
+    tag = %Tag{id: tag_id, category_id: category_id}
+
+    Admin.change_activity(%Activity{
+      tag_id: tag.id,
+      tag: tag
+    })
+    |> new_route(conn)
+  end
+
   def new(conn, params) do
     date =
       case Date.from_iso8601(params["date"] || "") do
