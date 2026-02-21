@@ -11,7 +11,8 @@ defmodule HabitsWeb.ActivityController do
     category_map = Map.new(categories, fn category -> {category.id, category} end)
 
     Enum.map(activities, fn activity ->
-      tag = %Tag{category: Map.get(category_map, activity.tag.category_id)}
+      tag = %Tag{activity.tag | category: Map.get(category_map, activity.tag.category_id)}
+      IO.inspect(tag)
       %Activity{activity | tag: tag}
     end)
   end
