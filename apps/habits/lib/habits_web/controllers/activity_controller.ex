@@ -12,7 +12,6 @@ defmodule HabitsWeb.ActivityController do
 
     Enum.map(activities, fn activity ->
       tag = %Tag{activity.tag | category: Map.get(category_map, activity.tag.category_id)}
-      IO.inspect(tag)
       %Activity{activity | tag: tag}
     end)
   end
