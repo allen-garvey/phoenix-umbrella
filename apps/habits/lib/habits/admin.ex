@@ -219,6 +219,33 @@ defmodule Habits.Admin do
     |> Repo.one()
   end
 
+  @doc """
+  Gets a single tag id or nil.
+
+  Looks at the last 10 activities
+  and finds the most popular tag id for the given category.
+  """
+  def get_recent_popular_tag_id(category_id) do
+    activities_query =
+      from(
+        activity in Activity,
+        join: tag in assoc(activity, :tag),
+        where: tag.category_id == ^category_id,
+        order_by: [desc: :inserted_at, desc: :id],
+        limit: 10
+      )
+
+    from(
+      activity in subquery(activities_query),
+      join: tag in assoc(activity, :tag),
+      group_by: [tag.id],
+      order_by: [desc: count(tag.id)],
+      select: tag.id,
+      limit: 1
+    )
+    |> Repo.one()
+  end
+
   defp list_activities_query do
     from(
       activity in Activity,

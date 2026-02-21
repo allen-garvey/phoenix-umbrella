@@ -70,13 +70,14 @@ defmodule HabitsWeb.ActivityController do
       description: activity.description,
       date: Common.ModelHelpers.Date.today()
     })
-    |> new_route(conn, Api.list_tags_for_category(activity.tag.category_id))
+    |> new_route(conn)
   end
 
   def new(conn, %{"category" => category_id}) do
-    tag = %Tag{category_id: category_id}
+    tag = %Tag{id: Admin.get_recent_popular_tag_id(category_id), category_id: category_id}
 
     Admin.change_activity(%Activity{
+      tag_id: tag.id,
       tag: tag
     })
     |> new_route(conn)
@@ -89,16 +90,22 @@ defmodule HabitsWeb.ActivityController do
         {:error, _} -> Common.ModelHelpers.Date.today()
       end
 
-    tag = %Tag{category_id: Admin.get_recent_popular_category_id()}
+    category_id = Admin.get_recent_popular_category_id()
+    tag = %Tag{id: Admin.get_recent_popular_tag_id(category_id), category_id: category_id}
 
     Admin.change_activity(%Activity{
       tag: tag,
+      tag_id: tag.id,
       date: date
     })
     |> new_route(conn)
   end
 
-  defp new_route(changeset, conn, tags \\ []) do
+  defp new_route(changeset, conn) do
+    tag = Ecto.Changeset.get_field(changeset, :tag)
+    IO.inspect(tag)
+    tags = Api.list_tags_for_category(tag.category_id)
+
     render(conn, "new.html", [changeset: changeset, tags: tags] ++ related_fields())
   end
 

@@ -30,8 +30,4 @@ export const initializeActivityFormLoadTags = () => {
     categorySelectEl.addEventListener('change', e => {
         updateTagSelect();
     });
-
-    if (!tagSelectEl.hasChildNodes()) {
-        updateTagSelect();
-    }
 };
