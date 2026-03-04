@@ -6,6 +6,15 @@
         <nav>
             <ul :class="$style.navList">
                 <li>
+                    <router-link
+                        :to="{
+                            name: 'albumsForYear',
+                            params: { year: currentYear },
+                        }"
+                        >{{ currentYear }}</router-link
+                    >
+                </li>
+                <li>
                     <router-link :to="{ name: 'albumsForYearIndex' }"
                         >Yearly Albums</router-link
                     >
