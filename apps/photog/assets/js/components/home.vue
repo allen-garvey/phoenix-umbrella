@@ -7,14 +7,14 @@
                 </router-link>
             </h3>
         </div>
-        <div 
-            :class="$style.section"
-            v-if="recentAlbums.length > 0"
-        >
+        <div :class="$style.section" v-if="recentAlbums.length > 0">
             <div :class="$style.flexHeader">
                 <h3 :class="$style.sectionHeading">Freshest Albums</h3>
-                <router-link 
-                    :to="{ name: 'albumsForYear', params: { year: currentYear } }"
+                <router-link
+                    :to="{
+                        name: 'albumsForYear',
+                        params: { year: currentYear },
+                    }"
                     :class="$style.headerSupplement"
                 >
                     {{ currentYear }}
@@ -27,10 +27,7 @@
             />
         </div>
 
-        <div 
-            :class="$style.section"
-            v-if="favoriteTags.length > 0"
-        >
+        <div :class="$style.section" v-if="favoriteTags.length > 0">
             <h3 :class="$style.sectionHeading">Favorite Tags</h3>
             <thumbnail-items-list
                 :items="favoriteTags"
@@ -39,11 +36,9 @@
             />
         </div>
 
-        <div 
-            :class="$style.section"
-        >
-            <router-link :to="{name: 'albumFavoritesIndex'}">
-                 <h3 :class="$style.sectionHeading">Favorite Albums</h3>
+        <div :class="$style.section">
+            <router-link :to="{ name: 'albumFavoritesIndex' }">
+                <h3 :class="$style.sectionHeading">Favorite Albums</h3>
             </router-link>
             <thumbnail-items-list
                 :items="favoriteAlbums"
@@ -56,23 +51,24 @@
 </template>
 
 <style lang="scss" module>
-    .section {
-    }
-    .sectionHeading {
-        margin: 0 0 0.5rem;
-    }
+.section {
+}
+.sectionHeading {
+    margin: 0 0 0.5rem;
+}
 
-    .flexHeader {
-        display: flex;
-    }
+.flexHeader {
+    display: flex;
+}
 
-    .headerSupplement {
-        align-self: center;
-        margin-left: 0.5em;
-    }
+.headerSupplement {
+    align-self: center;
+    margin-left: 0.5em;
+}
 </style>
 
 <script>
+import { getCurrentYear } from '../date-helpers';
 import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list.vue';
 
 export default {
@@ -93,10 +89,10 @@ export default {
     components: {
         ThumbnailItemsList,
     },
-    created(){
+    created() {
         this.setWindowTitle('');
 
-        this.getModel('/albums/fresh?limit=6').then((albums) => {
+        this.getModel('/albums/fresh?limit=6').then(albums => {
             this.recentAlbums = albums;
         });
 
@@ -104,15 +100,15 @@ export default {
             isPaginated: true,
             offset: 0,
             limit: 12,
-        }).then((albums) => {
+        }).then(albums => {
             this.favoriteAlbums = albums;
         });
 
-        this.getModel('/tags?is_favorite=true').then((tags) => {
+        this.getModel('/tags?is_favorite=true').then(tags => {
             this.favoriteTags = tags;
         });
     },
-    data(){
+    data() {
         return {
             recentAlbums: [],
             favoriteTags: [],
@@ -120,8 +116,8 @@ export default {
         };
     },
     computed: {
-        currentYear(){
-            return new Date().getFullYear();
+        currentYear() {
+            return getCurrentYear();
         },
     },
     methods: {
@@ -141,6 +137,6 @@ export default {
                 },
             };
         },
-    }
+    },
 };
 </script>
