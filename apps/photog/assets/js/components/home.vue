@@ -10,15 +10,6 @@
         <div :class="$style.section" v-if="recentAlbums.length > 0">
             <div :class="$style.flexHeader">
                 <h3 :class="$style.sectionHeading">Freshest Albums</h3>
-                <router-link
-                    :to="{
-                        name: 'albumsForYear',
-                        params: { year: currentYear },
-                    }"
-                    :class="$style.headerSupplement"
-                >
-                    {{ currentYear }}
-                </router-link>
             </div>
             <thumbnail-items-list
                 :items="recentAlbums"
@@ -60,15 +51,9 @@
 .flexHeader {
     display: flex;
 }
-
-.headerSupplement {
-    align-self: center;
-    margin-left: 0.5em;
-}
 </style>
 
 <script>
-import { getCurrentYear } from '../date-helpers';
 import ThumbnailItemsList from './thumbnail-list/components/thumbnail-items-list.vue';
 
 export default {
@@ -114,11 +99,6 @@ export default {
             favoriteTags: [],
             favoriteAlbums: [],
         };
-    },
-    computed: {
-        currentYear() {
-            return getCurrentYear();
-        },
     },
     methods: {
         showRouteForAlbum(item, _model) {
