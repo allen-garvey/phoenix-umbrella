@@ -4,6 +4,7 @@ import { initializeFormDeleteButton } from 'umbrella-common-js/form-delete-butto
 import { initializeActivityFormLoadTags } from './activity-form-load-tags';
 
 import { initializeSummaryTagsList } from './summary-tags-list';
+import { disableMultipleFormSubmit } from './disable-multiple-form-submit';
 
 import ActivityCalendar from './vue/activity-calendar.vue';
 
@@ -14,3 +15,4 @@ initializeFormDeleteButton();
 instantiateVue('activity-calendar', ActivityCalendar, ['newActivityUrl']);
 initializeActivityFormLoadTags();
 initializeSummaryTagsList();
+disableMultipleFormSubmit();
