@@ -59,8 +59,12 @@
 @media screen and (max-width: 500px) {
     .activity-streak-table {
         td, th {
-            height: 1.5em;
-            width: 1.5em;
+            height: 1.4em;
+            width: 1.4em;
+        }
+
+        td:first-of-type, th:first-of-type {
+            width: 6em;
         }
     }
 }
