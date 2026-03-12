@@ -56,6 +56,15 @@
     }
 }
 
+@media screen and (max-width: 500px) {
+    .activity-streak-table {
+        td, th {
+            height: 1.5em;
+            width: 1.5em;
+        }
+    }
+}
+
 @media (prefers-color-scheme: dark) {
     .activity-streak-table {
         background-color: variables.$background-color-dark;
