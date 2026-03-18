@@ -54,7 +54,7 @@ defmodule Photog.Shutterbug.Planner do
       extension == ".png" ->
         :convert_to_webp_lossless
 
-      convert_to_webp || extension == ".heic" ->
+      convert_to_webp || extension == ".heic" || extension == ".bmp" ->
         :convert_to_webp_lossy
 
       true ->
