@@ -20,14 +20,10 @@ $font_code : Menlo, Monaco, Consolas, Inconsolata, 'Courier New', monospace;
 //color names
 
 //color roles
-$color_primary_text : black !default;
 $color_primary_accent : dodgerblue !default;
-$color_primary_background : white !default;
 $color_nav_links: color.adjust($color_primary_accent, $lightness: 20%);
 $color_nav_background: black;
 $color_secondary_accent: #419641;
-
-$dark_mode_color_accent: #9fac86;
 
 //layout
 $container_width : 1000px;

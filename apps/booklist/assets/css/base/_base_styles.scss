@@ -4,15 +4,18 @@
 html{
 	font-size: variables.$rem_base;
 	box-sizing: border-box;
+	--color-primary-text: black;
+	--color-primary-background: white;
 	--color-unaccented: #666;
+	--color-primary-accent: dodgerblue;
 }
 *, *:before, *:after{
 	box-sizing: inherit;
 }
 body{
 	@include mixins.font_body;
-	color: variables.$color_primary_text;
-	background-color: variables.$color_primary_background;
+	color: var(--color-primary-text);
+	background-color: var(--color-primary-background);
 	margin: 0;
 }
 
@@ -52,7 +55,7 @@ img,svg{
 	max-width: 100%;
 }
 a{
-	color: variables.$color_primary_accent;
+	color: var(--color-primary-accent);
 	text-decoration: none;
 	&:hover{
 		text-decoration: underline;
@@ -62,14 +65,9 @@ a{
 @media (prefers-color-scheme: dark) {
 	html {
 		--color-unaccented: #a3a3a3;
-	}
-    body {
-        background-color: #2a2a2a;
-        color: #fff;
-    }
-
-	a {
-		color: variables.$dark_mode_color_accent;
+		--color-primary-text: #fff;
+		--color-primary-background: #2a2a2a;
+		--color-primary-accent: #9fac86;
 	}
 }
 
