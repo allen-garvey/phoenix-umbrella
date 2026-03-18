@@ -31,9 +31,8 @@ defmodule BooklistWeb.GenreController do
     genre = Admin.get_genre!(id)
     ratings = Admin.list_ratings_for_genre(id)
     ratings_count = Enum.count(ratings)
-    average_rating = Reports.calculate_rating_total(ratings)  / 100
-      |> Reports.calculate_percent_of_ratings(ratings_count)
-    render(conn, "show.html", genre: genre, ratings: ratings, average_rating: average_rating)
+
+    render(conn, "show.html", genre: genre, ratings: ratings, ratings_count: ratings_count)
   end
 
   def edit(conn, %{"id" => id}) do

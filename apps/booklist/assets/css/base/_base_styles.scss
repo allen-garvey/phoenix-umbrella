@@ -4,6 +4,7 @@
 html{
 	font-size: variables.$rem_base;
 	box-sizing: border-box;
+	--color-unaccented: #666;
 }
 *, *:before, *:after{
 	box-sizing: inherit;
@@ -59,6 +60,9 @@ a{
 }
 
 @media (prefers-color-scheme: dark) {
+	html {
+		--color-unaccented: #a3a3a3;
+	}
     body {
         background-color: #2a2a2a;
         color: #fff;
