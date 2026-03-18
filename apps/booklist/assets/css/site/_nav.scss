@@ -51,6 +51,6 @@
 
 @media (prefers-color-scheme: dark) {
 	.nav a {
-        color: variables.$dark_mode_color_accent;
+        color: var(--color-primary-accent);
     }
 }
