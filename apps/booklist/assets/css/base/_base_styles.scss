@@ -1,8 +1,7 @@
-@use 'variables';
 @use 'mixins';
 
 html{
-	font-size: variables.$rem_base;
+	font-size: 16px;
 	box-sizing: border-box;
 	--color-primary-text: black;
 	--color-primary-background: white;
