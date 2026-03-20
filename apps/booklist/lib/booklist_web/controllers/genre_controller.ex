@@ -3,7 +3,6 @@ defmodule BooklistWeb.GenreController do
 
   alias Booklist.Admin
   alias Booklist.Admin.Genre
-  alias Booklist.Reports
 
   def index(conn, _params) do
     genres = Admin.list_genres()
