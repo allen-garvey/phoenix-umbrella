@@ -90,9 +90,9 @@ figure{
 * Layout
 */
 .container{
-	max-width: variables.$container_width;
+	max-width: 1000px;
 	margin: 0 auto;
-	padding: 0 variables.$container_horizontal_padding;
+	padding: 0 1rem;
 }
 
 .clearfix:after {

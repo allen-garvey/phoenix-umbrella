@@ -24,10 +24,6 @@ $color_primary_accent : dodgerblue !default;
 $color_nav_links: color.adjust($color_primary_accent, $lightness: 20%);
 $color_nav_background: black;
 
-//layout
-$container_width : 1000px;
-$container_horizontal_padding : 1rem;
-
 //media queries
 $breakpoint_sm : 768px;
 $breakpoint_med : 992px;
