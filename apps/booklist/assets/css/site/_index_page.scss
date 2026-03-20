@@ -1,20 +1,4 @@
-@use 'sass:color';
-@use '../base/variables';
 @use '../base/mixins';
-
- @media (prefers-color-scheme: dark) {
-	.index_list {
-		li {
-			&:nth-of-type(even){
-				background-color: #444;
-				
-				a {
-					color: #fff;
-				}
-			}
-		}
-	}
-}
 
  .index_list{
  	li{
@@ -23,11 +7,15 @@
  		padding: 0.5em 5px;
  		min-height: 65px;
  		@include mixins.font_size(1);
+		 background-color: var(--color-index-list-background-even);
  		&:nth-of-type(odd){
-			background-color: color.adjust(variables.$color_secondary_accent, $lightness: 35%);
+			background-color: var(--color-index-list-background-odd);
+			a {
+				color: var(--color-index-list-link-odd);
+			}
  		}
  		a{
-			color: color.adjust(variables.$color_primary_accent, $lightness: -30%);
+			color: var(--color-index-list-link-even);
  		}
  		a:first-child{
  			flex-grow: 1;

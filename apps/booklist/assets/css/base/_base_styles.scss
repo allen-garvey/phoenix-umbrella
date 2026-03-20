@@ -8,6 +8,12 @@ html{
 	--color-primary-background: white;
 	--color-unaccented: #666;
 	--color-primary-accent: dodgerblue;
+
+	// index page
+	--color-index-list-link-even: rgb(0, 66.88, 132);
+	--color-index-list-link-odd: rgb(0, 66.88, 132);
+	--color-index-list-background-odd: rgb(173.7209302326, 219.7790697674, 173.7209302326);
+	--color-index-list-background-even: transparent;
 }
 *, *:before, *:after{
 	box-sizing: inherit;
@@ -68,6 +74,11 @@ a{
 		--color-primary-text: #fff;
 		--color-primary-background: #2a2a2a;
 		--color-primary-accent: #9fac86;
+
+		// index page
+		--color-index-list-link-odd: rgb(0, 66.88, 132);
+		--color-index-list-link-even: #fff;
+		--color-index-list-background-even: #444;
 	}
 }
 
