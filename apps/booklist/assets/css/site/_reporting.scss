@@ -22,9 +22,10 @@
 	border-collapse: collapse;
 	font-size: 0.75rem;
 	text-align: center;
+	background-color: var(--color-reporting-chart-background);
 	
 	th, td {
-		border: 1px solid rgba(204,204,204, 0.55);
+		border: 1px solid var(--color-reporting-chart-border-color);
 	}
 
 	tbody td {
@@ -40,16 +41,6 @@
 	.count-filled {
 		background-color: #049704;
 	}
-}
-
-@media (prefers-color-scheme: dark) {
-    .reporting_books_by_week_table  {
-        background-color: #404040;
-
-		th, td {
-			border-color: rgba(87,87,87, 0.55);
-		}
-    }
 }
 
 .reporting_top_rated_books_list{

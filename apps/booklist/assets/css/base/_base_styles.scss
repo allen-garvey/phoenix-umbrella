@@ -13,6 +13,10 @@ html{
 	--color-index-list-link-odd: rgb(0, 66.88, 132);
 	--color-index-list-background-odd: rgb(173.7209302326, 219.7790697674, 173.7209302326);
 	--color-index-list-background-even: transparent;
+
+	// reporting
+	--color-reporting-chart-background: transparent;
+	--color-reporting-chart-border-color: rgba(204,204,204, 0.55);
 }
 @media (prefers-color-scheme: dark) {
 	html {
@@ -25,6 +29,10 @@ html{
 		--color-index-list-link-odd: rgb(0, 66.88, 132);
 		--color-index-list-link-even: #fff;
 		--color-index-list-background-even: #444;
+
+		// reporting
+		--color-reporting-chart-background: #404040;
+		--color-reporting-chart-border-color: rgba(87,87,87, 0.55);
 	}
 }
 *, *:before, *:after{
