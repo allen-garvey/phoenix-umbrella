@@ -14,6 +14,19 @@ html{
 	--color-index-list-background-odd: rgb(173.7209302326, 219.7790697674, 173.7209302326);
 	--color-index-list-background-even: transparent;
 }
+@media (prefers-color-scheme: dark) {
+	html {
+		--color-unaccented: #a3a3a3;
+		--color-primary-text: #fff;
+		--color-primary-background: #2a2a2a;
+		--color-primary-accent: #9fac86;
+
+		// index page
+		--color-index-list-link-odd: rgb(0, 66.88, 132);
+		--color-index-list-link-even: #fff;
+		--color-index-list-background-even: #444;
+	}
+}
 *, *:before, *:after{
 	box-sizing: inherit;
 }
@@ -64,20 +77,6 @@ a{
 	text-decoration: none;
 	&:hover{
 		text-decoration: underline;
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	html {
-		--color-unaccented: #a3a3a3;
-		--color-primary-text: #fff;
-		--color-primary-background: #2a2a2a;
-		--color-primary-accent: #9fac86;
-
-		// index page
-		--color-index-list-link-odd: rgb(0, 66.88, 132);
-		--color-index-list-link-even: #fff;
-		--color-index-list-background-even: #444;
 	}
 }
 
