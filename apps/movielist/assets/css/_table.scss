@@ -11,29 +11,21 @@ table{
 	}
 }
 thead{
-	background-color: #eee;
+	background-color: var(--color-background-table-head);
+
+	&, a:not(.btn){
+		color: var(--color-table-head);
+	}
 }
 //for CSS row numbers in first td of row
 tbody{
 	counter-reset: rowNumber;
 }
 
-@media (prefers-color-scheme: dark) {
-	thead {
-		background-color: #cacaca;
-
-		&, a:not(.btn){
-			color: #727272;
-		}
-	}
-	
-
-    .default-table tbody{
-		background-color: variables.$dark_secondary_bg_color;
-
-		&, a:not(.btn) {
-			color: #fff;
-		}
+.default-table tbody{
+	background-color: var(--color-background-secondary);
+	a:not(.btn){
+		color: var(--color-font);
 	}
 }
 

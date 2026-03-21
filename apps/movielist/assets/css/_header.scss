@@ -1,7 +1,7 @@
 @use 'variables';
 
 .jumbotron{
-	background-color: #eee;
+	background-color: var(--color-background-secondary);
 	padding: 0.5rem variables.$horizontal_padding 2rem;
 }
 
@@ -15,7 +15,7 @@ h1.main_title{
 	font-weight: normal;
 	margin: 0 10px 20px;
 	a{
-		color: black;
+		color: var(--color-font-secondary);
 	}
 }
 
@@ -31,7 +31,7 @@ nav{
 	li a{
 		border-radius: 4px;
 		padding: 12px 15px;
-		color: #337ab7; //don't change color for visited links
+		color: var(--color-nav-link);
 	}
 }
 
@@ -41,23 +41,4 @@ nav{
 	background-color: #223;
 	color: white;
 	text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-    .jumbotron{
-		background-color: variables.$dark_secondary_bg_color;
-	}
-
-	h1.main_title{
-		a{
-			color: #eee;
-		}
-	}
-
-	nav{
-		//nav-pills styles
-		li a{
-			color: #c6dff5;
-		}
-	}
 }

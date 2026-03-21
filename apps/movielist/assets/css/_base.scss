@@ -1,21 +1,53 @@
 @use 'variables';
 
-body{
-	font-family: variables.$serif_font_family;
-	font-size : 19.2px;
-	color: #000;
-	margin: 0;
+html {
+	--color-font: #000;
+	--color-font-secondary: #000;
+	--color-background: white;
+	--color-background-secondary: #eee;
+	--color-link-default: #000;
+	
+	// nav
+	--color-nav-link: #337ab7;
+
+	// tables
+	--color-background-table-head: #dedede;
+	--color-table-head: #5a5a5a;
+
+	// reporting
+	--color-reporting-table-border: rgba(204,204,204, 0.55);
 }
 
 @media (prefers-color-scheme: dark) {
-    body {
-        background-color: #202020;
-        color: #fff;
-    }
+    html {
+        --color-font: #fff;
+		--color-font-secondary: #eee;
+        --color-background: #202020;
+		--color-background-secondary: #404040;
+		--color-link-default: #fff;
 
-	a {
-		color: #fff;
-	}
+		// nav
+		--color-nav-link: #c6dff5;
+
+		// tables
+		--color-background-table-head: #cacaca;
+		--color-table-head: #727272;
+
+		// reporting
+		--color-reporting-table-border: rgba(87,87,87, 0.55);
+    }
+}
+
+body{
+	font-family: variables.$serif_font_family;
+	font-size : 19.2px;
+	color: var(--color-font);
+	background-color: var(--color-background);
+	margin: 0;
+}
+
+a {
+	color: var(--color-link-default);
 }
 
 main{

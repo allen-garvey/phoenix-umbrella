@@ -9,12 +9,13 @@
 }
 
 .reporting_movies_by_month_table {
+	color: var(--color-font);
 	border-collapse: collapse;
 	font-size: 0.75rem;
 	text-align: center;
 	
 	th, td {
-		border: 1px solid rgba(204,204,204, 0.55);
+		border: 1px solid var(--color-reporting-table-border);
 	}
 
 	tbody td {
@@ -25,15 +26,4 @@
 	.count-filled {
 		background-color: #c60003;
 	}
-}
-
-@media (prefers-color-scheme: dark) {
-    .reporting_movies_by_month_table  {
-        background-color: #212121;
-		color: #fff;
-
-		th, td {
-			border-color: rgba(87,87,87, 0.55);
-		}
-    }
 }

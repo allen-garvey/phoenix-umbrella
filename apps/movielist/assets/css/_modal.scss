@@ -27,9 +27,10 @@
 	margin-top: auto;
 	margin-bottom: auto;
 	z-index: 2;
-	background-color: #fff;
-	color: #000;
+	color: var(--color-font);
+	background-color: var(--color-background);
 	padding: 4em 2em 2em;
+	border: 1px solid #cacaca;
 	border-radius: 6px;
 	box-shadow: 0 5px 15px rgba(0,0,0,.5);
 	max-height: 95vh;
@@ -57,13 +58,5 @@
 .modal_body{
 	img{
 		margin-top: 1em;
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	.modal {
-		background-color: #000;
-		color: #fff;
-		border: 1px solid #cacaca;
 	}
 }
