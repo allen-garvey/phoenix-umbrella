@@ -11,7 +11,7 @@
     <nav class='nav'>
       <div class="container nav_container">
         <%= link "Booklist", to: Routes.page_path(@conn, :index), class: "brand nav_heading" %>
-        <ul class='nav_links clearfix'>
+        <ul class='nav_links'>
           <li><%= link "Books", to: BooklistWeb.BookView.active_book_path(@conn) %></li>
           <li><%= link "Bookshelf", to: Routes.page_path(@conn, :bookshelf) %></li>
           <li><%= link "Libraries", to: Routes.library_path(@conn, :index) %></li>

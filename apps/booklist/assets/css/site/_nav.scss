@@ -3,14 +3,9 @@
 .nav{
 	@include mixins.font_heading;
 	@include mixins.font_size(3);
-	padding: 0.5rem 0 0; //some sort of extra padding on bottom for some reason
+	padding: 0.5rem 0;
 	background-color: black;
 	margin-bottom: 1rem;
-		a{
-			@include mixins.media_q_inverse(sm){
-				display: block;
-			}
-		}
 	.btn{
 		color: white;
 		padding-top: 8px;
@@ -19,9 +14,8 @@
 	.nav_container{
 		display: flex;
 		justify-content: space-between;
-		@include mixins.media_q_inverse(sm){
-			flex-direction: column;
-		}
+		flex-wrap: wrap;
+		gap: 0.5rem 2rem;
 	}
 	.nav_heading{
 		@include mixins.font_brand;
@@ -30,20 +24,11 @@
 	.nav_links{
 		@include mixins.font_size(2);
 		font-weight: 100;
-		margin-top: 0.1em;
-		margin-bottom: 0;
-		@include mixins.media_q(sm){
-			float: right;
-		}
-		li{
-			margin-right: 0.5rem;
-			@include mixins.media_q(sm){
-				display: inline-block;
-			}
-		}
-		li:last-of-type{
-			margin-right: 0;
-		}
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5em 0.75em;
+		align-items: center;
 	}
 }
 
