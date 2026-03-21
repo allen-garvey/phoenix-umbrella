@@ -16,13 +16,6 @@ $font_heading : 'FranklinGothic URW', 'ITC Franklin Gothic Std', 'Helvetica Neue
 $font_body : Georgia, 'Times', serif;
 $font_code : Menlo, Monaco, Consolas, Inconsolata, 'Courier New', monospace;
 
-//color names
-
-//color roles
-$color_primary_accent : dodgerblue !default;
-$color_nav_links: color.adjust($color_primary_accent, $lightness: 20%);
-$color_nav_background: black;
-
 //media queries
 $breakpoint_sm : 768px;
 $breakpoint_med : 992px;

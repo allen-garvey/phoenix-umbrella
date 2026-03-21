@@ -1,14 +1,12 @@
-@use '../base/variables';
 @use '../base/mixins';
 
 .nav{
 	@include mixins.font_heading;
 	@include mixins.font_size(3);
 	padding: 0.5rem 0 0; //some sort of extra padding on bottom for some reason
-	background-color: variables.$color_nav_background;
+	background-color: black;
 	margin-bottom: 1rem;
 		a{
-			color: variables.$color_nav_links;
 			@include mixins.media_q_inverse(sm){
 				display: block;
 			}
@@ -49,8 +47,3 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
-	.nav a {
-        color: var(--color-primary-accent);
-    }
-}
