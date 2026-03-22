@@ -3,7 +3,21 @@
 }
 
 html{
+    --color-background: #fff;
+    --color-text: #000;
     font-family: sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    html{
+        --color-background: #2a2a2a;
+        --color-text: #fff;
+    }
+}
+
+body{
+    color: var(--color-text);
+    background-color: var(--color-background);
 }
 
 a{
@@ -22,11 +36,4 @@ a{
 .help-block{
     // from bootstrap, can't use $danger variable since bootstrap isn't configured for @use
     color: #dc3545;
-}
-
-@media (prefers-color-scheme: dark) {
-	body{
-		color: #fff;
-		background-color: #2a2a2a;
-	}
 }
