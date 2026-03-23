@@ -1,43 +1,35 @@
-.stats_container{
-	display: flex;
-	flex-wrap: wrap;
+.stats_container {
+    display: flex;
+    flex-wrap: wrap;
 
-	margin: 2em 0;
+    margin: 2em 0;
 
-	& > *{
-		margin-right: 3em;
-	}
-	.heading{
-		font-weight: bold;
-	}
+    & > * {
+        margin-right: 3em;
+    }
+    .heading {
+        font-weight: bold;
+    }
 }
 
 .spending_per_year_table {
-	border-collapse: collapse;
-	font-size: 0.75rem;
-	text-align: center;
-	
-	th, td {
-		border: 1px solid rgba(204,204,204, 0.55);
-	}
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    text-align: center;
+    color: var(--color-font);
+    background-color: var(--color-background-secondary);
 
-	tbody td {
-		width: 1.25rem;
-		height: 1.25rem;
-	}
+    th,
+    td {
+        border: 1px solid var(--color-reports-table-border);
+    }
 
-	.count-filled {
-		background-color: #17adbd;
-	}
-}
+    tbody td {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
 
-@media (prefers-color-scheme: dark) {
-    .spending_per_year_table {
-        background-color: #212121;
-		color: #fff;
-
-		th, td {
-			border-color: rgba(87,87,87, 0.55);
-		}
+    .count-filled {
+        background-color: #17adbd;
     }
 }

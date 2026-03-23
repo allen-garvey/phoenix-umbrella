@@ -1,65 +1,87 @@
 @use 'variables';
 
-body{
-	font-family: variables.$serif_font_family;
-	font-size : 19.2px;
-	color: black;
-	margin: 0;
-}
+html {
+    --color-font: #000;
+    --color-background: #fff;
+    --color-background-secondary: #eee;
+    --color-link: blue;
 
-main{
-	padding-bottom: 15em;
-}
-
-ul,p,h1,h2,h3,h4 {
-	margin: 0 0 0.5rem;
-}
-
-ul {
-	padding-left: 1em;
-}
-
-section {
-	margin-bottom: 1.5rem;
-}
-
-h1,h2,h3,h4,button{
-	font-family: variables.$sans_serif_font_family;
-}
-
-a{
-	text-decoration: none;
-	&:hover{
-		text-decoration: underline;
-	}
-}
-
-.alert:empty{
-	display: none;
-}
-
-.spread_content{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-}
-
-.center{
-	text-align: center;
-}
-
-.container{
-	margin: 0 auto;
-	max-width: 1000px;
+    // reports
+    --color-reports-table-border: rgba(204, 204, 204, 0.55);
 }
 
 @media (prefers-color-scheme: dark) {
-	body {
-		color: #fff;
-		background-color: #2a2a2a;
-	}
+    html {
+        --color-font: #fff;
+        --color-background: #2a2a2a;
+        --color-background-secondary: #000;
+        --color-link: #337ab7;
 
-	a {
-		color: #337ab7;
-	}
+        // reports
+        --color-reports-table-border: rgba(87, 87, 87, 0.55);
+    }
+}
+
+body {
+    font-family: variables.$serif_font_family;
+    font-size: 19.2px;
+    color: var(--color-font);
+    background-color: var(--color-background);
+    margin: 0;
+}
+
+main {
+    padding-bottom: 15em;
+}
+
+ul,
+p,
+h1,
+h2,
+h3,
+h4 {
+    margin: 0 0 0.5rem;
+}
+
+ul {
+    padding-left: 1em;
+}
+
+section {
+    margin-bottom: 1.5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+button {
+    font-family: variables.$sans_serif_font_family;
+}
+
+a {
+    color: var(--color-link);
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.alert:empty {
+    display: none;
+}
+
+.spread_content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.center {
+    text-align: center;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1000px;
 }
