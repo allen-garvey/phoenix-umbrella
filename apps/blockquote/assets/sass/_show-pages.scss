@@ -1,34 +1,28 @@
-.show-header-title-container{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
+.show-header-title-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
-.show-header-buttons{
-	display: flex;
-	justify-content: flex-end;
+.show-header-buttons {
+    display: flex;
+    justify-content: flex-end;
 
-	.button + .button{
-		margin-left: 24px;
-	}
+    .button + .button {
+        margin-left: 24px;
+    }
 }
 
 .hidden-delete-form {
-	.button {
-		height: 100%;
-		margin-right: 1em;
-	}
+    .button {
+        height: 100%;
+        margin-right: 1em;
+    }
 }
 
-.related-fields-title{
-	color: #000;
+.related-fields-title {
+    color: var(--color-page-title);
 }
-.related-fields-list{
-	list-style-type: square;
-	padding-left: 2em;
-}
-
-@media (prefers-color-scheme: dark) {
-	.related-fields-title {
-		color: #666;
-	}
+.related-fields-list {
+    list-style-type: square;
+    padding-left: 2em;
 }

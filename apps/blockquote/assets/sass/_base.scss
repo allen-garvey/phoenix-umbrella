@@ -5,35 +5,65 @@
 
 @use 'variables';
 
-html{
+html {
+    --color-background: #fbfcf8;
+    --color-background-secondary: #fff;
+    --color-font: #333;
+    --color-font-secondary: #666;
+    --color-link-focus-hover: #204639;
+    --color-page-title: #666;
+
     font-size: 16px;
 }
+
+@media (prefers-color-scheme: dark) {
+    html {
+        --color-background: #2a2a2a;
+        --color-background-secondary: #000;
+        --color-font: #fff;
+        --color-font-secondary: #cacaca;
+        --color-link-focus-hover: #34705b;
+        --color-page-title: #888;
+    }
+
+    input,
+    select {
+        color-scheme: dark;
+    }
+}
+
 body {
     margin: 0;
     padding: 0;
-    font-family: "Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
-    color: #333;
-    background: #fbfcf8;
+    font-family: 'Roboto', 'Lucida Grande', 'DejaVu Sans', 'Bitstream Vera Sans',
+        Verdana, Arial, sans-serif;
+    color: var(--color-font);
+    background: var(--color-background);
 }
 
 /* LINKS */
 
-a{
+a {
     text-decoration: none;
 }
 
-a:link, a:visited {
+a:link,
+a:visited {
     color: #498878;
 }
 
-a:focus, a:hover {
-    color: #204639;
+a:focus,
+a:hover {
+    color: var(--color-link-focus-hover);
 }
 
 /* GLOBAL DEFAULTS */
 
-p, ol, ul, dl {
-    margin: .2em 0 .8em 0;
+p,
+ol,
+ul,
+dl {
+    margin: 0.2em 0 0.8em 0;
 }
 
 p {
@@ -41,17 +71,22 @@ p {
     line-height: 140%;
 }
 
-h1,h2,h3,h4,h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
     font-weight: bold;
 }
 //major 3rd type scale
-h1, .page-title {
+h1,
+.page-title {
     margin: 0 0 20px;
     font-weight: 300;
     font-size: 1.563rem;
-    color: #666;
+    color: var(--color-page-title);
 }
-.page-title{
+.page-title {
     margin-bottom: 2px;
 }
 
@@ -67,7 +102,7 @@ h2.subhead {
 
 h3 {
     font-size: 14px;
-    margin: .8em 0 0.3em 0;
+    margin: 0.8em 0 0.3em 0;
     color: #666;
     font-weight: bold;
 }
@@ -80,17 +115,17 @@ h4 {
 
 h5 {
     font-size: 0.8rem;
-    margin: 1.5em 0 .5em 0;
+    margin: 1.5em 0 0.5em 0;
     color: #666;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-ul{
+ul {
     list-style-type: none;
     padding: 0;
 }
-li{
+li {
     margin-bottom: 0.5em;
 }
 
@@ -102,25 +137,10 @@ li{
 }
 
 //alerts
-.alert:empty{
+.alert:empty {
     display: none;
 }
 
 .hidden {
     display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-    body {
-        color: #fff;
-        background-color: #2a2a2a;
-    }
-
-    a:focus, a:hover {
-        color: #34705b;
-    }
-
-    .page-title {
-        color: #888;
-    }
 }

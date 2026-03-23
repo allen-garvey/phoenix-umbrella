@@ -1,30 +1,22 @@
 @use 'variables';
 
-.admin-fields-list{
-	padding: 0;
-	width: 450px;
-	border-top: 20px solid variables.$secondary_color;
-	li{
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 0;
-		padding: 8px variables.$contentHorizontalPadding;
-		border-bottom: 1px solid #eee;
-		background-color: #fff;
+.admin-fields-list {
+    padding: 0;
+    width: 450px;
+    border-top: 20px solid variables.$secondary_color;
+    li {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0;
+        padding: 8px variables.$contentHorizontalPadding;
+        border-bottom: 1px solid #eee;
+        background-color: var(--color-background-secondary);
 
-		&:last-of-type{
-			border-bottom: none;
-		}
-	}
-	.field-title{
-		font-weight: 600;
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	.admin-fields-list {
-		li {
-			background-color: #000;
-		}
-	}
+        &:last-of-type {
+            border-bottom: none;
+        }
+    }
+    .field-title {
+        font-weight: 600;
+    }
 }
