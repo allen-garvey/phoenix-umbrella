@@ -1,24 +1,24 @@
 <template>
     <div :class="$style.container">
-        <div 
-            v-for="(week, weekNum) in weeks" 
+        <div
+            v-for="(week, weekNum) in weeks"
             :class="$style.week"
             :key="`${year}-${month}-${weekNum}`"
         >
-            <div 
-                v-for="(day, dayNum) in week" 
+            <div
+                v-for="(day, dayNum) in week"
                 :class="$style.day"
                 :key="`${year}-${month}-${weekNum}-${dayNum}`"
             >
-                <h4 :class="{[$style.today]: todaysDate === day.date}">
-                    <a 
-                        :href="generateNewActivityUrl(day.date)" 
+                <h4 :class="{ [$style.today]: todaysDate === day.date }">
+                    <a
+                        :href="generateNewActivityUrl(day.date)"
                         :class="$style.newActivityLink"
                     >
                         {{ formatDayDate(day.date) }}
                     </a>
                 </h4>
-                <div 
+                <div
                     v-for="activity in day.activities"
                     :key="activity.id"
                     :class="getCategoryClass(activity.category_id)"
@@ -38,15 +38,24 @@
                 <a :href="`/activities/${selectedActivity.id}`">
                     {{ selectedActivity.title }} - {{ selectedActivity.date }}
                 </a>
-                <a 
-                    class="btn btn-light" 
+                <a
+                    class="btn btn-light"
                     :class="$style.duplicateButton"
-                    :href="`/activities/new?duplicate=${selectedActivity.id}`">
-                        Duplicate
+                    :href="`/activities/new?duplicate=${selectedActivity.id}`"
+                >
+                    Duplicate
                 </a>
             </div>
             <div :class="$style.selectedActivityContent">
-                <div><a :href="`/categories/${selectedActivity.category_id}`" target="_blank">{{ categoriesMap.get(selectedActivity.category_id).name }}</a></div>
+                <div>
+                    <a
+                        :href="`/categories/${selectedActivity.category_id}`"
+                        target="_blank"
+                        >{{
+                            categoriesMap.get(selectedActivity.category_id).name
+                        }}</a
+                    >
+                </div>
                 <div>{{ selectedActivity.description }}</div>
             </div>
         </div>
@@ -54,60 +63,53 @@
 </template>
 
 <style lang="scss" module>
-    .container {
+.container {
+}
+.week {
+    display: flex;
+    padding: 0 0 3em;
+}
+.today {
+    color: magenta;
+}
+.day {
+    padding: 0 1em 1em;
+    width: 300px;
+}
+.newActivityLink {
+    color: var(--color-font);
+}
+.dayContents {
+    padding: 1em;
 
+    a {
+        color: inherit;
     }
+}
+
+a.duplicateButton {
+    display: inline-block;
+    margin-left: 1em;
+    color: #000;
+}
+
+.selectedActivityContent {
+    padding: 1em;
+}
+
+$portrait-width: 1000px;
+
+@media (max-width: $portrait-width) {
     .week {
-        display: flex;
-        padding: 0 0 3em;
+        flex-direction: column;
     }
-    .today {
-        color: magenta;
-    }
-    .day {
-        padding: 0 1em 1em;
-        width: 300px;
-    }
-    .newActivityLink {
-        color: #000;
-    }
+}
+
+@media (min-width: ($portrait-width + 1px)) and (hover: none) {
     .dayContents {
-        padding: 1em;
-
-        a {
-            color: inherit;
-        }
+        padding: 2em;
     }
-
-    a.duplicateButton {
-        display: inline-block;
-        margin-left: 1em;
-        color: #000;
-    }
-
-    .selectedActivityContent {
-        padding: 1em;
-    }
-
-    $portrait-width: 1000px;
-
-    @media (max-width: $portrait-width) {
-        .week {
-            flex-direction: column;
-        }
-    }
-
-    @media (min-width: ($portrait-width + 1px)) and (hover: none) {
-        .dayContents {
-            padding: 2em;
-        }
-    }
-
-    @media (prefers-color-scheme: dark) {
-        .newActivityLink {
-            color: #fff;
-        }
-    }
+}
 </style>
 
 <script>
@@ -148,57 +150,54 @@ export default {
             required: true,
         },
     },
-    created(){
+    created() {
         this.setupActivities();
     },
-    data(){
+    data() {
         return {
             daysMap: new Map(),
             weeks: [],
             selectedActivity: null,
         };
     },
-    computed: {
-    },
+    computed: {},
     watch: {
-        activities(){
+        activities() {
             this.setupActivities();
         },
     },
     methods: {
-        formatDayDate(dayDate){
-            return dayDate.split('-').slice(1,3).join('/');
+        formatDayDate(dayDate) {
+            return dayDate.split('-').slice(1, 3).join('/');
         },
-        getCategoryClass(categoryId){
+        getCategoryClass(categoryId) {
             return [
                 this.$style.dayContents,
-                'category-color', 
-                `category-color--${this.categoriesMap.get(categoryId).color}`
+                'category-color',
+                `category-color--${this.categoriesMap.get(categoryId).color}`,
             ];
         },
-        selectActivity(activity){
+        selectActivity(activity) {
             this.selectedActivity = activity;
         },
-        setupActivities(){
+        setupActivities() {
             this.selectedActivity = null;
             this.weeks = [];
             this.daysMap = new Map();
 
             this.activities.forEach(activity => {
-                if(this.daysMap.has(activity.date)){
+                if (this.daysMap.has(activity.date)) {
                     this.daysMap.get(activity.date).push(activity);
-                }
-                else {
+                } else {
                     this.daysMap.set(activity.date, [activity]);
                 }
             });
 
-
             let currentDate = this.startDate;
             const endDate = dateFromIso(this.endDate);
-            while(dateFromIso(currentDate) <= endDate){
+            while (dateFromIso(currentDate) <= endDate) {
                 const week = [];
-                for(let i=0;i<7;i++){
+                for (let i = 0; i < 7; i++) {
                     week.push({
                         date: currentDate,
                         activities: this.daysMap.get(currentDate),
@@ -210,9 +209,9 @@ export default {
                 this.weeks.push(week);
             }
         },
-        generateNewActivityUrl(date){
+        generateNewActivityUrl(date) {
             return `${this.newActivityUrl}?date=${date}`;
         },
-    }
+    },
 };
 </script>

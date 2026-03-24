@@ -58,8 +58,9 @@
 </template>
 
 <style lang="scss" module>
-@use '~habits-styles/variables';
-
+.container {
+    background-color: var(--color-background-secondary);
+}
 .yearInput {
     flex-basis: 5.5em;
     flex-shrink: 0;
@@ -77,11 +78,6 @@
     gap: 1rem;
     flex-wrap: wrap;
     margin: 1rem 0 2.5rem;
-}
-@media (prefers-color-scheme: dark) {
-    .container {
-        background-color: variables.$background-color-dark;
-    }
 }
 </style>
 

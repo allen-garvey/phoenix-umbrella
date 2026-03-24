@@ -1,74 +1,49 @@
 @use 'variables';
 
-.jumbotron{
-	background-color: #eee;
-	padding: 8px 0 1.5rem;
+.jumbotron {
+    background-color: var(--color-background-secondary);
+    padding: 8px 0 1.5rem;
 }
 
-header{
-	margin-bottom: 30px;
+header {
+    margin-bottom: 30px;
 }
 
-h1.main_title{
-	font-family: variables.$title_font_family;
-	font-size: 2.441em;
-	font-weight: normal;
-	margin: 0 10px 0.5rem;
-	
-	a{
-		color: black;
-	}
+h1.main_title {
+    font-family: variables.$title_font_family;
+    font-size: 2.441em;
+    font-weight: normal;
+    margin: 0 10px 0.5rem;
 }
 
 nav {
-	ul {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-		list-style-type: none;
-		margin: 0;
-		padding-left: 0;
-		gap: 10px;
-	}
-	li {
-		display: flex;
-		font-family: variables.$display_font_family;
-		font-size: 1.414em;
+    ul {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        list-style-type: none;
+        margin: 0;
+        padding-left: 0;
+        gap: 10px;
+    }
+    li {
+        display: flex;
+        font-family: variables.$display_font_family;
+        font-size: 1.414em;
 
-		//nav-pills styles
-		a{
-			border-radius: 4px;
-			padding: 12px 15px;
-			color: #337ab7; //don't change color for visited links
-		}
-	}
+        //nav-pills styles
+        a {
+            border-radius: 4px;
+            padding: 12px 15px;
+            color: var(--color-nav-links);
+        }
+    }
 }
 
 //Active nav styles
 .nav a.active,
 .nav > li:hover > a:not(.btn) {
-	background-color: #223;
-	color: white;
-	text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-    .jumbotron{
-		background-color: variables.$background-color-dark;
-	}
-
-	h1.main_title{
-		a{
-			color: #fff;
-		}
-	}
-
-	nav {
-		li {
-			//nav-pills styles
-			a{
-				color: #6cb1ed; //don't change color for visited links
-			}
-		}
-	}
+    background-color: #223;
+    color: white;
+    text-decoration: none;
 }

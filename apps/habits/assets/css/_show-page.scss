@@ -1,5 +1,3 @@
-@use './variables';
-
 .show-button-group {
     display: flex;
     flex-wrap: wrap;
@@ -34,13 +32,15 @@
 }
 
 .activity-streak-table {
+    background-color: var(--color-background-secondary);
     margin-bottom: 2rem;
-    
+
     tbody tr td:first-child::before {
         content: none;
     }
 
-    td, th {
+    td,
+    th {
         height: 2em;
         width: 2em;
         border: 1px solid #000;
@@ -51,26 +51,23 @@
         padding: 0.1em;
     }
 
-    td:first-of-type, th:first-of-type {
+    td:first-of-type,
+    th:first-of-type {
         width: 8em;
     }
 }
 
 @media screen and (max-width: 500px) {
     .activity-streak-table {
-        td, th {
+        td,
+        th {
             height: 1.4em;
             width: 1.4em;
         }
 
-        td:first-of-type, th:first-of-type {
+        td:first-of-type,
+        th:first-of-type {
             width: 6em;
         }
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    .activity-streak-table {
-        background-color: variables.$background-color-dark;
     }
 }
