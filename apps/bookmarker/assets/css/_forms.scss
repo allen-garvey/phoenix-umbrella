@@ -1,24 +1,17 @@
-.submit_buttons_container{
-	display: flex;
-	justify-content: space-between;
+.submit_buttons_container {
+    display: flex;
+    justify-content: space-between;
 }
 
 .form-group {
-	margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .form-check-input {
-	margin-left: 0.5em;
+    margin-left: 0.5em;
 }
 
 .help-block {
-	// from bootstrap, can't use $danger variable since bootstrap isn't configured for @use
+    // from bootstrap, can't use $danger variable since bootstrap isn't configured for @use
     color: #dc3545;
-}
-
-@media (prefers-color-scheme: dark) {
-	.btn-default {
-		--bs-btn-color: #fff;
-		--bs-btn-hover-color: #000;
-	}
 }

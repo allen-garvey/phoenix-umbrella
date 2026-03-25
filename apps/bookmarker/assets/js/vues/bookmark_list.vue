@@ -98,18 +98,13 @@
     border: none;
     width: 32%;
     padding: 10px 15px;
-    background-color: #f1f1f1;
+    background-color: var(--color-background-secondary);
 
     @media screen and (max-width: 1020px) {
         width: 48%;
     }
     @media screen and (max-width: 640px) {
         width: 100%;
-    }
-}
-@media (prefers-color-scheme: dark) {
-    .bookmarkItem {
-        background-color: #222;
     }
 }
 

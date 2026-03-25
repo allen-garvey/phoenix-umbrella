@@ -1,36 +1,29 @@
-
 /*
 * Home page
 */
 
 //override default bootstrap
-.home-jumbotron{
-	margin-bottom: 1em;
-	padding: 2em 1em;
-	background-color: #eee;
-	& > div{
-		margin: 0 auto;
-		max-width: 25em;
-	}
-	h1{
-		font-size: 2em;
-		margin-bottom: 0;
-	}
-	p{
-		font-size: 1em;
-	}
+.home-jumbotron {
+    margin-bottom: 1em;
+    padding: 2em 1em;
+    background-color: var(--color-background-secondary);
+    & > div {
+        margin: 0 auto;
+        max-width: 25em;
+    }
+    h1 {
+        font-size: 2em;
+        margin-bottom: 0;
+    }
+    p {
+        font-size: 1em;
+    }
 }
 
-@media (prefers-color-scheme: dark) {
-	.home-jumbotron {
-		background-color: #666;
-	}
-}
-
-.home-shortcuts-section{
-	ul{
-		font-size: 28px;
-		margin-top: 0;
-		padding: 0 1.5em;
-	}
+.home-shortcuts-section {
+    ul {
+        font-size: 28px;
+        margin-top: 0;
+        padding: 0 1.5em;
+    }
 }

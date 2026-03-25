@@ -2,71 +2,73 @@
 * Base Styles
 */
 
-body{
-	padding-bottom: 3em;
-}
-
-/* Space out content a bit */
-form, ul, table {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-/* Phoenix flash messages */
-.alert:empty { 
-	display: none; 
-}
-
-/* Phoenix inline forms in links and buttons */
-form.link, form.button {
-  display: inline;
-}
-
-.container{
-	margin: 0 auto;
-	max-width: 1200px;
-	padding: 0 15px;
-}
-
-img{
-	max-width: 100%;
-}
-
-a {
-	text-decoration: none;
-
-	&:hover {
-		text-decoration: underline;
-	}
+html {
+    --color-font: #000;
+    --color-background: #fff;
+    --color-background-secondary: #f1f1f1;
 }
 
 @media (prefers-color-scheme: dark) {
+    html {
+        --color-font: #fff;
+        --color-background: #2a2a2a;
+        --color-background-secondary: #000;
+    }
 
-	.table {
-		--bs-table-color: #fff;
-		--bs-table-bg: transparent;
-	}
+    .table {
+        --bs-table-color: #fff;
+        --bs-table-bg: transparent;
+    }
 
-	body {
-		color: #fff;
-		background-color: #2a2a2a;
-	}
+    .btn-default {
+        --bs-btn-color: #fff;
+        --bs-btn-hover-color: #000;
+    }
 
-	a {
-		&, &:link {
-			color: #5c9ad0;
-		}
+    a {
+        color: #5c9ad0;
+    }
+}
 
-		&.btn-success {
-			color: #fff;
-		}
-	}
+body {
+    color: var(--color-font);
+    background-color: var(--color-background);
+    padding-bottom: 3em;
+}
 
-	a.btn-success:link, a.btn-primary:link {
-		color: #fff;
-	}
+/* Space out content a bit */
+form,
+ul,
+table {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
-	a.btn-default:hover {
-		color: #000;
-	}
+/* Phoenix flash messages */
+.alert:empty {
+    display: none;
+}
+
+/* Phoenix inline forms in links and buttons */
+form.link,
+form.button {
+    display: inline;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 15px;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
