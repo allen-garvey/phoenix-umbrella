@@ -73,13 +73,7 @@
     margin-right: 3.126rem;
     font-weight: normal;
     a {
-        color: black;
-
-        @media (prefers-color-scheme: dark) {
-            & {
-                color: #fff;
-            }
-        }
+        color: var(--color-font);
     }
 }
 .navList {

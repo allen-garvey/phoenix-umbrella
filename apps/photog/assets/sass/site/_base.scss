@@ -1,25 +1,16 @@
-/*
-* Base
-*/
+html {
+    --color-background: #fff;
+    --color-font: #000;
 
-//change to box sizing from bootstrap _reboot.scss
-*,
-*::before,
-*::after {
-  box-sizing: border-box; // 1
-}
-
-body{
-    margin: 0;
-    font-family: sans-serif;
-    --background-color: #fff;
-    background-color: var(--background-color);
+    --color-heart-default: #aaa;
 }
 
 @media (prefers-color-scheme: dark) {
-    body {
-        --background-color: #2a2a2a;
-        color: #fff;
+    html {
+        --color-background: #2a2a2a;
+        --color-font: #fff;
+
+        --color-heart-default: #666;
     }
 
     a:link {
@@ -29,26 +20,57 @@ body{
     a:visited {
         color: #a56fd8;
     }
+
+    .btn-outline-dark {
+        --bs-btn-color: #748290;
+        --bs-btn-border-color: #748290;
+        --bs-btn-hover-bg: #748290;
+        --bs-btn-hover-border-color: #748290;
+        --bs-btn-active-bg: #748290;
+        --bs-btn-active-border-color: #748290;
+        --bs-btn-disabled-color: #748290;
+        --bs-btn-disabled-border-color: #748290;
+    }
+
+    .btn-outline-primary {
+        --bs-btn-color: #75acff;
+        --bs-btn-border-color: #75acff;
+    }
 }
 
-ul{
+//change to box sizing from bootstrap _reboot.scss
+*,
+*::before,
+*::after {
+    box-sizing: border-box; // 1
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-font);
+}
+
+ul {
     list-style-type: none;
     padding-left: 0;
     margin-top: 0;
 }
 
-a:link{
+a:link {
     text-decoration: none;
 }
-a:hover, a:target{
+a:hover,
+a:target {
     text-decoration: underline;
 }
 
-img{
+img {
     max-width: 100%;
 }
 
-fieldset{
+fieldset {
     border: 1px solid #ccc;
     border-radius: 2px;
 }
@@ -57,7 +79,7 @@ fieldset{
     margin-bottom: 1rem;
 }
 
-.container{
+.container {
     margin: 0 auto;
     padding: 0 2em;
 }
@@ -66,19 +88,19 @@ fieldset{
     margin: 0 auto;
     max-width: 1410px;
 }
-.main{
+.main {
     padding-bottom: 5rem;
 }
-.footer{
+.footer {
     padding-bottom: 2rem;
 }
 
-.invisible{
+.invisible {
     visibility: hidden;
 }
 
 //can't use display none or scrollIntoView won't work
-.alert:empty{
+.alert:empty {
     visibility: hidden;
     height: 0;
     overflow: hidden;
@@ -86,34 +108,38 @@ fieldset{
     margin: 0;
 }
 
-.spread-content, .pull-right{
+.spread-content,
+.pull-right {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
 }
 
-.spread-content{
+.spread-content {
     justify-content: space-between;
 }
 
-.pull-right{
+.pull-right {
     justify-content: flex-end;
     gap: 1em;
 }
 
-h1, h2, h3, h4{
+h1,
+h2,
+h3,
+h4 {
     margin-top: 0;
 }
 //major third type-scale
-h1{
+h1 {
     font-size: 3.052rem;
 }
-h2{
+h2 {
     font-size: 2.441rem;
 }
-h3{
+h3 {
     font-size: 1.953rem;
 }
 .root-svg {
-	display: none;
+    display: none;
 }

@@ -15,9 +15,6 @@
 * based on: https://css-tricks.com/hearts-in-html-and-css/
 */
 
-$heart_color_default: #aaa;
-$heart_color_default_dark: #666;
-$heart_color: #ff3919;
 $heart_size: 8px;
 
 .heart {
@@ -50,17 +47,7 @@ $heart_size: 8px;
     &,
     &:before,
     &:after {
-        background-color: $heart_color_default;
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    .heart {
-        &,
-        &:before,
-        &:after {
-            background-color: $heart_color_default_dark;
-        }
+        background-color: var(--color-heart-default);
     }
 }
 
@@ -68,7 +55,7 @@ $heart_size: 8px;
     &,
     &:before,
     &:after {
-        background-color: $heart_color;
+        background-color: #ff3919;
     }
 }
 

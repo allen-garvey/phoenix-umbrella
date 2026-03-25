@@ -1,8 +1,8 @@
-.btn{
-    &:hover{
+.btn {
+    &:hover {
         cursor: pointer;
     }
-    &[disabled]{
+    &[disabled] {
         cursor: not-allowed;
         // required due to bootstrap bug
         // https://stackoverflow.com/questions/50349017/how-can-i-change-cursor-for-disabled-button-or-a-in-bootstrap-4
@@ -10,41 +10,23 @@
     }
 }
 
-a.btn{
+a.btn {
     align-self: baseline;
 
     &.btn-success {
         color: #fff;
     }
 
-    &:hover{
+    &:hover {
         text-decoration: none;
     }
 }
 
 //bootstrap 4 no longer has btn-xs
 //based on: https://stackoverflow.com/questions/33911049/btn-xs-no-longer-a-valid-option-in-bootstrap-4
-.btn-xs{
-    padding  : 0.25rem 0.4rem;
-    font-size  : 0.875rem;
-    line-height  : 0.9;
-    border-radius : 0.2rem;
-}
-
-@media (prefers-color-scheme: dark) {
-    .btn-outline-dark {
-        --bs-btn-color: #748290;
-        --bs-btn-border-color: #748290;
-        --bs-btn-hover-bg: #748290;
-        --bs-btn-hover-border-color: #748290;
-        --bs-btn-active-bg: #748290;
-        --bs-btn-active-border-color: #748290;
-        --bs-btn-disabled-color: #748290;
-        --bs-btn-disabled-border-color: #748290;
-    }
-
-    .btn-outline-primary {
-        --bs-btn-color: #75acff;
-        --bs-btn-border-color: #75acff;
-    }
+.btn-xs {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.875rem;
+    line-height: 0.9;
+    border-radius: 0.2rem;
 }

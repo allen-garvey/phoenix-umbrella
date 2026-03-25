@@ -11,7 +11,7 @@
 
 <style lang="scss" module>
 .container {
-    background-color: var(--background-color);
+    background-color: var(--color-background);
     border: 2px solid #000;
     box-shadow: 2px 2px 5px rgba(63, 55, 55, 0.5);
     position: fixed;

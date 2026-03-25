@@ -137,13 +137,7 @@ $thumbnail_dimensions_big: 287px;
     font-size: 1.125rem;
 
     a {
-        color: black;
-
-        @media (prefers-color-scheme: dark) {
-            & {
-                color: #fff;
-            }
-        }
+        color: var(--color-font);
     }
 
     &.thumbnailTitleFavorite {
