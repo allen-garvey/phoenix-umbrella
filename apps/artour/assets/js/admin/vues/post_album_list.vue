@@ -70,14 +70,8 @@
     padding: 1em;
     border-radius: 3px;
     margin-top: 3em;
-    background-color: #d5d5d5;
+    background-color: var(--color-background-secondary);
     gap: 1em;
-}
-
-@media (prefers-color-scheme: dark) {
-    .postAlbumImageListControls {
-        background-color: #777;
-    }
 }
 
 .postAlbumImageList {

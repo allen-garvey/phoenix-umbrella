@@ -1,86 +1,90 @@
-/**
-* Base Styles
-*/
-body{
-	font-family: 'Consolas', 'Inconsolata', 'Noto Mono', 'Ubuntu Mono', 'Monaco', 'Menlo', monospace;
+html {
+    --color-font: #000;
+    --color-background: #fff;
 }
 
-.container{
-	max-width: 1064px;
-	margin: 0 auto;
-	padding: 0 1em 1em;
-}
-img{
-	max-width: 100%;
-}
-a{
-	text-decoration: none;
-}
-a:hover{
-	text-decoration: underline;
+@media (prefers-color-scheme: dark) {
+    html {
+        --color-font: #fff;
+        --color-background: #222;
+    }
+
+    body {
+        &.home {
+            background-color: #000;
+        }
+    }
+
+    a {
+        color: rgb(100, 159, 248);
+
+        &:visited {
+            color: rgb(176, 118, 231);
+        }
+
+        &:active {
+            color: red;
+        }
+    }
+
+    .post-title {
+        a {
+            color: var(--color-font);
+
+            &:active {
+                color: red;
+            }
+        }
+    }
 }
 
-.hidden{
-	display: none;
+body {
+    color: var(--color-font);
+    background-color: var(--color-background);
+    font-family: 'Consolas', 'Inconsolata', 'Noto Mono', 'Ubuntu Mono', 'Monaco',
+        'Menlo', monospace;
 }
 
-ul{
-	list-style-type: none;
-	padding-left: 0;
+.container {
+    max-width: 1064px;
+    margin: 0 auto;
+    padding: 0 1em 1em;
+}
+img {
+    max-width: 100%;
+}
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
 }
 
 //used for lists of text links, such as on browse and index pages
-.link-text-list li{
-	margin-bottom: 1em;
+.link-text-list li {
+    margin-bottom: 1em;
 }
 
 //major third type scale
 //https://type-scale.com/
-h1{
-	font-size: 3.052rem;
+h1 {
+    font-size: 3.052rem;
 }
-h2{
-	font-size: 2.441rem;
+h2 {
+    font-size: 2.441rem;
 }
-h3{
-	font-size: 1.953rem;
+h3 {
+    font-size: 1.953rem;
 }
-h4{
-	font-size: 1.25rem;
+h4 {
+    font-size: 1.25rem;
 }
-
-@media (prefers-color-scheme: dark) {
-	body {
-		background-color: #222;
-		color: #fff;
-
-		&.home {
-			background-color: #000;
-		}
-	}
-
-	a {
-		color: rgb(100, 159, 248);
-
-		&:visited {
-			color: rgb(176, 118, 231);
-		}
-
-		&:active {
-			color: red;
-		}
-	}
-
-	.post-title {
-		a {
-			color: #fff;
-	
-			&:active {
-				color: red;
-			}
-		}
-	}
-
-}
-
-

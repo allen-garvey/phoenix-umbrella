@@ -1,60 +1,77 @@
-/*
-* Base Styles
-*/
-
-.container{
-	max-width: 900px;
-	margin: 0 auto;
-	padding: 0 1em;
-}
-
-.main-content{
-	padding-bottom: 100px;
-}
-
-a {
-	text-decoration: none;
-
-	&:hover {
-		text-decoration: underline;
-	}
-}
-
-.btn:hover {
-	text-decoration: none;
-}
-
-img{
-	max-width: 100%;
-}
-
-/* Space out content a bit */
-form, ul, table {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-/* Phoenix flash messages */
-.alert:empty { display: none; }
-
-/* Phoenix inline forms in links and buttons */
-form.link, form.button {
-  display: inline;
-}
-
-.spread_content{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
+html {
+    --color-font: #000;
+    --color-background: #fff;
+    --color-link: blue;
+    --color-background-secondary: #d5d5d5;
 }
 
 @media (prefers-color-scheme: dark) {
-	body {
-		color: #fff;
-		background-color: #2a2a2a;
-	}
+    html {
+        --color-font: #fff;
+        --color-background: #2a2a2a;
+        --color-link: rgb(126, 175, 249);
+        --color-background-secondary: #777;
+    }
 
-	a {
-		color: rgb(126, 175, 249);
-	}
+    .table {
+        --bs-table-bg: #000;
+        --bs-table-color: #fff;
+    }
+}
+
+body {
+    color: var(--color-font);
+    background-color: var(--color-background);
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1em;
+}
+
+.main-content {
+    padding-bottom: 100px;
+}
+
+a {
+    color: var(--color-link);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.btn:hover {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* Space out content a bit */
+form,
+ul,
+table {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Phoenix flash messages */
+.alert:empty {
+    display: none;
+}
+
+/* Phoenix inline forms in links and buttons */
+form.link,
+form.button {
+    display: inline;
+}
+
+.spread_content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
