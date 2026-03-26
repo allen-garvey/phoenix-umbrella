@@ -38,17 +38,9 @@
     }
 
     &.routerLinkActive {
-        background: var(--seren-accent-color-text);
+        background: var(--color-nav-link-accent);
         color: white;
         border-radius: 4px;
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    .navPills li a {
-        &.routerLinkActive {
-            background: #6875ca;
-        }
     }
 }
 </style>
