@@ -10,4 +10,20 @@ defmodule BooklistWeb.GenreView do
   def to_is_fiction_map(genres) do
     Map.new(genres, &{&1.id, &1.is_fiction})
   end
+
+  def sort_link(conn, genre_id, current_sort) when is_atom(current_sort) do
+    case current_sort do
+      :new ->
+        link("Sort by rating",
+          to: Routes.genre_path(conn, :show, genre_id, sort: "score"),
+          class: "btn btn-sm btn-default"
+        )
+
+      :score ->
+        link("Sort by new",
+          to: Routes.genre_path(conn, :show, genre_id, sort: "new"),
+          class: "btn btn-sm btn-default"
+        )
+    end
+  end
 end

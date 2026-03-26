@@ -26,12 +26,30 @@ defmodule BooklistWeb.GenreController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => id, "sort" => "score"}) do
     genre = Admin.get_genre!(id)
-    ratings = Admin.list_ratings_for_genre(id)
+    ratings = Admin.list_ratings_for_genre(id, :score)
     ratings_count = Enum.count(ratings)
 
-    render(conn, "show.html", genre: genre, ratings: ratings, ratings_count: ratings_count)
+    render(conn, "show.html",
+      genre: genre,
+      ratings: ratings,
+      ratings_count: ratings_count,
+      sort: :score
+    )
+  end
+
+  def show(conn, %{"id" => id}) do
+    genre = Admin.get_genre!(id)
+    ratings = Admin.list_ratings_for_genre(id, :date_scored)
+    ratings_count = Enum.count(ratings)
+
+    render(conn, "show.html",
+      genre: genre,
+      ratings: ratings,
+      ratings_count: ratings_count,
+      sort: :new
+    )
   end
 
   def edit(conn, %{"id" => id}) do
