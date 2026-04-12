@@ -1,11 +1,12 @@
 export const disableMultipleFormSubmit = () => {
     document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('submit', () => {
-            form.querySelectorAll(
-                'input[type="submit"], button[type="submit"]'
-            ).forEach(button => {
-                button.disabled = true;
-            });
+        let hasSubmitted = false;
+        form.addEventListener('submit', e => {
+            if (hasSubmitted) {
+                e.preventDefault();
+            } else {
+                hasSubmitted = true;
+            }
         });
     });
 };
