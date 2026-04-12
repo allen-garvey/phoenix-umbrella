@@ -10,6 +10,7 @@ defmodule Bookmarker.Mixfile do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
+      listeners: [Phoenix.CodeReloader],
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: Mix.compilers,
       build_embedded: Mix.env == :prod,

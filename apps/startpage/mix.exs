@@ -10,6 +10,7 @@ defmodule Startpage.MixProject do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
+      listeners: [Phoenix.CodeReloader],
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -36,9 +37,10 @@ defmodule Startpage.MixProject do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
+    Code.require_file("deps.ex", "#{__DIR__}/../../lib/common/")
+
     Umbrella.Common.Deps.shared_authenticated_phoenix_deps() ++
-    [{:blockquote, in_umbrella: true}]
+      [{:blockquote, in_umbrella: true}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

@@ -10,6 +10,7 @@ defmodule Pluginista.MixProject do
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
       elixir: "~> 1.12",
+      listeners: [Phoenix.CodeReloader],
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -36,9 +37,10 @@ defmodule Pluginista.MixProject do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
-    Umbrella.Common.Deps.shared_authenticated_phoenix_deps()
-    ++ Umbrella.Common.Deps.phoenix_component()
+    Code.require_file("deps.ex", "#{__DIR__}/../../lib/common/")
+
+    Umbrella.Common.Deps.shared_authenticated_phoenix_deps() ++
+      Umbrella.Common.Deps.phoenix_component()
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
