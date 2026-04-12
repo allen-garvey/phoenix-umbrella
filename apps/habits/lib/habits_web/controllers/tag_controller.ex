@@ -1,5 +1,6 @@
 defmodule HabitsWeb.TagController do
   use HabitsWeb, :controller
+  plug(:put_view, html: HabitsWeb.TagView)
 
   alias Habits.Admin
   alias Habits.Admin.Tag

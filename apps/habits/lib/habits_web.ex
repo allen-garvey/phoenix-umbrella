@@ -19,7 +19,7 @@ defmodule HabitsWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: HabitsWeb
+      use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
       alias HabitsWeb.Router.Helpers, as: Routes

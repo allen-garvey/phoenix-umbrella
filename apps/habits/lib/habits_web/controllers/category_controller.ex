@@ -1,5 +1,6 @@
 defmodule HabitsWeb.CategoryController do
   use HabitsWeb, :controller
+  plug(:put_view, html: HabitsWeb.CategoryView)
 
   alias Habits.Admin
   alias Habits.Admin.Activity
