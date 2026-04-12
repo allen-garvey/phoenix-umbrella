@@ -56,7 +56,7 @@ end %>
   <%= for tag <- @tags do %>
       <tr>
         <td></td>
-        <td><%= tag.name %></td>
+        <td><%= link tag.name, to: Routes.tag_path(@conn, :show, tag) %></td>
 
         <td>
           <span>
