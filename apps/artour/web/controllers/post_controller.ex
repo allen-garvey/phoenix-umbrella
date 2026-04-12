@@ -1,18 +1,21 @@
 defmodule Artour.PostController do
   use Artour.Web, :controller
+  plug(:put_view, html: Artour.PostView)
 
   alias Artour.Admin
   alias Artour.Post
 
   def index(conn, _params) do
     posts = Admin.list_posts()
-    
+
     render(conn, "index.html", items: posts)
   end
 
   def new(conn, _params) do
-    #set new posts to use last added image by default
-    default_cover_image_id = Repo.one!(from i in Artour.Image, select: i.id, order_by: [desc: :id], limit: 1)
+    # set new posts to use last added image by default
+    default_cover_image_id =
+      Repo.one!(from(i in Artour.Image, select: i.id, order_by: [desc: :id], limit: 1))
+
     changeset = Post.changeset(%Post{cover_image_id: default_cover_image_id})
     render(conn, "new.html", changeset: changeset)
   end
@@ -25,6 +28,7 @@ defmodule Artour.PostController do
         conn
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: post_path(conn, :show, post))
+
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -51,6 +55,7 @@ defmodule Artour.PostController do
         conn
         |> put_flash(:info, "Post updated successfully.")
         |> redirect(to: post_path(conn, :show, post))
+
       {:error, changeset} ->
         render(conn, "edit.html", post: post, changeset: changeset)
     end
@@ -74,7 +79,7 @@ defmodule Artour.PostController do
   def add_images(conn, %{"post" => post_id}) do
     post = Repo.get!(Post, post_id)
 
-    render conn, "add_images.html", post: post, csrf_token: get_csrf_token()
+    render(conn, "add_images.html", post: post, csrf_token: get_csrf_token())
   end
 
   @doc """
@@ -84,17 +89,20 @@ defmodule Artour.PostController do
   def save_images(conn, %{"post" => post_id, "images" => images}) do
     post = Repo.get!(Post, post_id)
 
-    #add images to post
-    #reverse order so images are ordered oldest to newest
+    # add images to post
+    # reverse order so images are ordered oldest to newest
     for image_id <- Enum.reverse(images) do
-      changeset = Artour.PostImage.changeset(%Artour.PostImage{}, %{"post_id" => post.id, "image_id" => image_id})
+      changeset =
+        Artour.PostImage.changeset(%Artour.PostImage{}, %{
+          "post_id" => post.id,
+          "image_id" => image_id
+        })
+
       Repo.insert!(changeset)
     end
 
     conn
-        |> put_flash(:info, "Images added")
-        |> redirect(to: post_path(conn, :show, post))
+    |> put_flash(:info, "Images added")
+    |> redirect(to: post_path(conn, :show, post))
   end
-
-
 end

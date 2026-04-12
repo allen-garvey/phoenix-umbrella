@@ -1,5 +1,6 @@
 defmodule Artour.ApiPostController do
   use Artour.Web, :controller
+  plug(:put_view, json: Artour.ApiPostView)
 
   alias Artour.Api
 
@@ -30,22 +31,22 @@ defmodule Artour.ApiPostController do
     post_images = Api.list_post_images_for_post(post_id)
     render(conn, "post_images_list_export.json", post_images: post_images)
   end
-  
+
   def post_images(conn, %{"post_id" => post_id}) do
     post_images = Api.list_post_images_for_post(post_id)
     render(conn, "post_images_list.json", post_images: post_images)
   end
-
 
   @doc """
   Reorder post album images
   """
   def reorder_images(conn, %{"post_id" => _post_id, "post_images" => post_images}) do
     Api.reorder_post_images(post_images)
-    conn 
+
+    conn
     |> put_view(CommonWeb.ApiGenericView)
     |> render("ok.json", message: "Post image order updated")
-   end
+  end
 
   @doc """
   Gets images that are unused, either for a given post or that are unused altogether
@@ -59,5 +60,4 @@ defmodule Artour.ApiPostController do
     unused_images = Api.unused_images_for_post(post_id)
     render(conn, "image_excerpts.json", images: unused_images)
   end
-
 end

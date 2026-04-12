@@ -1,5 +1,6 @@
 defmodule Artour.ImageController do
   use Artour.Web, :controller
+  plug(:put_view, html: Artour.ImageView)
 
   alias Artour.Image
   alias Artour.Admin
@@ -22,14 +23,16 @@ defmodule Artour.ImageController do
       {:ok, image} ->
         if submit_type == "add_another" do
           changeset = Image.changeset(%Image{completion_date: image.completion_date})
+
           conn
-            |> put_flash(:info, Artour.ImageView.display_name(image) <> " saved.")
-            |> render("new.html", changeset: changeset)
+          |> put_flash(:info, Artour.ImageView.display_name(image) <> " saved.")
+          |> render("new.html", changeset: changeset)
         else
           conn
-            |> put_flash(:info, "Image created successfully.")
-            |> redirect(to: image_path(conn, :index))
+          |> put_flash(:info, "Image created successfully.")
+          |> redirect(to: image_path(conn, :index))
         end
+
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -37,11 +40,13 @@ defmodule Artour.ImageController do
 
   def show(conn, %{"id" => id}) do
     image = Admin.get_image!(id)
-    
-    thumbnail_sizes = case image.filename_large == image.filename_medium do
-      true -> [:thumbnail, :small]
-      false -> [:thumbnail, :small, :medium]
-    end
+
+    thumbnail_sizes =
+      case image.filename_large == image.filename_medium do
+        true -> [:thumbnail, :small]
+        false -> [:thumbnail, :small, :medium]
+      end
+
     render(conn, "show.html", image: image, thumbnail_sizes: thumbnail_sizes)
   end
 
@@ -59,6 +64,7 @@ defmodule Artour.ImageController do
         conn
         |> put_flash(:info, "Image updated successfully.")
         |> redirect(to: image_path(conn, :index))
+
       {:error, changeset} ->
         render(conn, "edit.html", image: image, changeset: changeset)
     end

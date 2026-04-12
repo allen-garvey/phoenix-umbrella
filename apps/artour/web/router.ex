@@ -2,76 +2,81 @@ defmodule Artour.Router do
   use Artour.Web, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_flash)
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
   end
 
-  #no need for CSRF protection, sessions or flash
-  #since we are just viewing pages
+  # no need for CSRF protection, sessions or flash
+  # since we are just viewing pages
   pipeline :public_browser do
-    plug :accepts, ["html"]
-    plug :put_secure_browser_headers
+    plug(:accepts, ["html"])
+    plug(:put_secure_browser_headers)
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
-    plug :fetch_session
-    plug :protect_from_forgery
+    plug(:accepts, ["json"])
+    plug(:fetch_session)
+    plug(:protect_from_forgery)
   end
 
   pipeline :authenticate do
-    plug GrenadierWeb.Plugs.Authenticate
+    plug(GrenadierWeb.Plugs.Authenticate)
   end
 
   # based on:
   # http://www.cultivatehq.com/posts/how-to-set-different-layouts-in-phoenix/
   pipeline :public_layout do
-    plug :put_layout, {Artour.LayoutView, :public}
+    plug(:put_layout, {Artour.LayoutView, :public})
+  end
+
+  pipeline :admin_layout do
+    plug(:put_layout, {Artour.LayoutView, :app})
   end
 
   # public site
   scope "/", Artour do
-    pipe_through [:public_browser, :public_layout]
+    pipe_through([:public_browser, :public_layout])
 
-    get "/", PageController, :index
+    get("/", PageController, :index)
 
-    get "/404.html", PageController, :error_404
+    get("/404.html", PageController, :error_404)
 
-    get "/posts/:slug", PublicPostController, :show
+    get("/posts/:slug", PublicPostController, :show)
   end
 
-  #Admin site
+  # Admin site
   scope "/admin", Artour do
-    pipe_through :browser
-    pipe_through :authenticate
+    pipe_through(:browser)
+    pipe_through(:admin_layout)
+    pipe_through(:authenticate)
 
-    get "/", AdminController, :index
+    get("/", AdminController, :index)
 
-    #displays form to add images to post
-    get "/posts/:post/images/add", PostController, :add_images
-    post "/posts/:post/images", PostController, :save_images
+    # displays form to add images to post
+    get("/posts/:post/images/add", PostController, :add_images)
+    post("/posts/:post/images", PostController, :save_images)
 
-    resources "/posts", PostController
-    resources "/images", ImageController
-    resources "/post_images", PostImageController
+    resources("/posts", PostController)
+    resources("/images", ImageController)
+    resources("/post_images", PostImageController)
   end
 
   # Other scopes may use custom stacks.
   scope "/admin/api", Artour do
-    pipe_through :api
-    pipe_through :authenticate
+    pipe_through(:api)
+    pipe_through(:authenticate)
 
-    #update post cover image
-    patch "/posts/:post_id", ApiPostController, :update
+    # update post cover image
+    patch("/posts/:post_id", ApiPostController, :update)
 
-    #reorder post images
-    get "/posts/:post_id/images", ApiPostController, :post_images
-    patch "/posts/:post_id/images/reorder", ApiPostController, :reorder_images
+    # reorder post images
+    get("/posts/:post_id/images", ApiPostController, :post_images)
+    patch("/posts/:post_id/images/reorder", ApiPostController, :reorder_images)
 
-    #add images to post
-    get "/posts/:post/images/addable", ApiPostController, :addable_images
+    # add images to post
+    get("/posts/:post/images/addable", ApiPostController, :addable_images)
   end
 end
