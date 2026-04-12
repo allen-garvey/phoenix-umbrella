@@ -114,7 +114,6 @@ defmodule HabitsWeb.ActivityController do
 
   defp new_route(changeset, conn) do
     tag = Ecto.Changeset.get_field(changeset, :tag)
-    IO.inspect(tag)
     tags = Api.list_tags_for_category(tag.category_id)
 
     render(conn, "new.html", [changeset: changeset, tags: tags] ++ related_fields())
