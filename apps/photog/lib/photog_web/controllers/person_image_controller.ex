@@ -5,6 +5,7 @@ defmodule PhotogWeb.PersonImageController do
   alias Photog.Api.PersonImage
 
   action_fallback PhotogWeb.FallbackController
+  plug(:put_view, json: PhotogWeb.PersonImageView)
 
   def index(conn, _params) do
     person_images = Api.list_person_images()

@@ -6,6 +6,7 @@ defmodule PhotogWeb.ImportController do
   alias Common.NumberHelpers
 
   action_fallback(PhotogWeb.FallbackController)
+  plug(:put_view, json: PhotogWeb.ImportView)
 
   def index(conn, %{"limit" => limit, "offset" => offset}) do
     imports = Api.list_imports_with_count_and_limited_images(limit, offset)

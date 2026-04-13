@@ -1,10 +1,11 @@
 defmodule PhotogWeb.YearController do
     use PhotogWeb, :controller
-  
+
     alias Photog.Api
     alias Photog.Api.Year
-  
+
     action_fallback PhotogWeb.FallbackController
+    plug(:put_view, json: PhotogWeb.YearView)
 
     @doc """
     Returns distinct years that exist for albums
@@ -15,7 +16,7 @@ defmodule PhotogWeb.YearController do
       |> put_view(CommonWeb.ApiGenericView)
       |> render("data.json", data: years)
     end
-    
+
     def delete(conn, %{"year" => year}) do
         Api.delete_year(year)
         conn
@@ -32,4 +33,3 @@ defmodule PhotogWeb.YearController do
       end
     end
 end
-  

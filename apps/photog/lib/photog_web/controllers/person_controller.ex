@@ -7,6 +7,7 @@ defmodule PhotogWeb.PersonController do
   alias Common.NumberHelpers
 
   action_fallback(PhotogWeb.FallbackController)
+  plug(:put_view, json: PhotogWeb.PersonView)
 
   def index(conn, %{"excerpt" => "true"}) do
     persons = Api.list_persons_excerpt()

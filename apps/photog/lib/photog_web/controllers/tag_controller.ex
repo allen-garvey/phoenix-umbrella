@@ -6,6 +6,7 @@ defmodule PhotogWeb.TagController do
   alias Common.NumberHelpers
 
   action_fallback(PhotogWeb.FallbackController)
+  plug(:put_view, json: PhotogWeb.TagView)
 
   def index(conn, %{"excerpt" => "true"}) do
     tags = Api.list_tags_excerpt()

@@ -4,6 +4,7 @@ defmodule PhotogWeb.B2Controller do
   alias Photog.B2.DownloadTokenResponse
 
   action_fallback(PhotogWeb.FallbackController)
+  plug(:put_view, json: PhotogWeb.B2View)
 
   def download_token(conn, _params) do
     case get_session(conn, :b2_download_token) do

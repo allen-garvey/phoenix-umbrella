@@ -5,6 +5,7 @@ defmodule PhotogWeb.AlbumImageController do
   alias Photog.Api.AlbumImage
 
   action_fallback PhotogWeb.FallbackController
+  plug(:put_view, json: PhotogWeb.AlbumImageView)
 
   def index(conn, _params) do
     album_images = Api.list_album_images()
