@@ -4,9 +4,11 @@ defmodule PluginistaWeb.CategoryController do
   alias Pluginista.Admin
   alias Pluginista.Admin.Category
 
+  plug(:put_view, html: PluginistaWeb.CategoryView)
+
   def related_fields() do
     [
-      groups: Admin.list_groups() |> PluginistaWeb.GroupView.map_for_form,
+      groups: Admin.list_groups() |> PluginistaWeb.GroupView.map_for_form()
     ]
   end
 
@@ -21,7 +23,7 @@ defmodule PluginistaWeb.CategoryController do
   end
 
   def create_succeeded(conn, category, "true") do
-    changeset = Admin.change_category(%Category{ group_id: category.group_id })
+    changeset = Admin.change_category(%Category{group_id: category.group_id})
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
 
@@ -44,7 +46,7 @@ defmodule PluginistaWeb.CategoryController do
   def show(conn, %{"id" => id}) do
     category = Admin.get_category!(id)
     plugin_stats = Pluginista.Reports.plugin_stats_for_category(id)
-    
+
     render(conn, "show.html", category: category, plugin_stats: plugin_stats)
   end
 
