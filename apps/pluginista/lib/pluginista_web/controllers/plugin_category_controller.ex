@@ -4,6 +4,8 @@ defmodule PluginistaWeb.PluginCategoryController do
   alias Pluginista.Admin
   alias Pluginista.Admin.PluginCategory
 
+  plug(:put_view, html: PluginistaWeb.PluginCategoryView)
+
   def index(conn, _params) do
     plugin_categories = Admin.list_plugin_categories()
     render(conn, "index.html", plugin_categories: plugin_categories)

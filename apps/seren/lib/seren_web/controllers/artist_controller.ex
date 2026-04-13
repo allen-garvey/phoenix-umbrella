@@ -5,6 +5,7 @@ defmodule SerenWeb.ArtistController do
   alias Seren.Player.Artist
 
   action_fallback SerenWeb.FallbackController
+  plug(:put_view, json: SerenWeb.ArtistView)
 
   def index(conn, _params) do
     artists = Player.list_artists()

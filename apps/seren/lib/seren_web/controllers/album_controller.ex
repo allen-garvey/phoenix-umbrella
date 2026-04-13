@@ -5,6 +5,7 @@ defmodule SerenWeb.AlbumController do
   alias Seren.Player.Album
 
   action_fallback SerenWeb.FallbackController
+  plug(:put_view, json: SerenWeb.AlbumView)
 
   def index(conn, _params) do
     albums = Player.list_albums()

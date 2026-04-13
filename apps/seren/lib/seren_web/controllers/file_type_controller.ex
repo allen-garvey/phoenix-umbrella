@@ -5,6 +5,7 @@ defmodule SerenWeb.FileTypeController do
   alias Seren.Player.FileType
 
   action_fallback SerenWeb.FallbackController
+  plug(:put_view, json: SerenWeb.FileTypeView)
 
   def index(conn, _params) do
     file_types = Player.list_file_types()

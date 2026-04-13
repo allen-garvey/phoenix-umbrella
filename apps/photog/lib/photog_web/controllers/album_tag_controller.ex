@@ -5,6 +5,7 @@ defmodule PhotogWeb.AlbumTagController do
   alias Photog.Api.AlbumTag
 
   action_fallback PhotogWeb.FallbackController
+  plug(:put_view, json: PhotogWeb.AlbumTagView)
 
   def index(conn, _params) do
     album_tags = Api.list_album_tags()

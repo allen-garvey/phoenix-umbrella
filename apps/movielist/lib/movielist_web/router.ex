@@ -7,6 +7,7 @@ defmodule MovielistWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :put_root_layout, {MovielistWeb.LayoutView, :app}
   end
 
   pipeline :api do
@@ -22,8 +23,10 @@ defmodule MovielistWeb.Router do
     pipe_through :authenticate
 
     get "/", PageController, :index
-    get "/movies/active", MovieController, :index_active #has to be before resources or conflicts with show pages
-    get "/movies/suggestions", MovieController, :index_suggestions #has to be before resources or conflicts with show pages
+    # has to be before resources or conflicts with show pages
+    get "/movies/active", MovieController, :index_active
+    # has to be before resources or conflicts with show pages
+    get "/movies/suggestions", MovieController, :index_suggestions
 
     get "/reports/:year", ReportsController, :show
 

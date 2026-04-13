@@ -18,6 +18,7 @@ defmodule Umbrella.MixProject do
         :seren,
         :startpage
       ],
+      listeners: [Phoenix.CodeReloader],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -30,13 +31,12 @@ defmodule Umbrella.MixProject do
   #
   # Run "mix help deps" for examples and options.
   defp deps do
-    [
-    ]
+    []
   end
 
   defp aliases do
     [
-      "ecto.setup": ["ecto.create", "ecto.migrate"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"]
     ]
   end
 end

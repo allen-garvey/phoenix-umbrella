@@ -4,6 +4,8 @@ defmodule BooklistWeb.AuthorController do
   alias Booklist.Admin
   alias Booklist.Admin.Author
 
+  plug(:put_view, html: BooklistWeb.AuthorView)
+
   def related_fields() do
     [
       # add empty item at start of genres since it is optional

@@ -8,6 +8,7 @@ defmodule PhotogWeb.AlbumController do
   alias Common.NumberHelpers
 
   action_fallback(PhotogWeb.FallbackController)
+  plug(:put_view, json: PhotogWeb.AlbumView)
 
   # used for forms when we only need name and id
   def index(conn, %{"excerpt" => "true"}) do

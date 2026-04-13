@@ -1,14 +1,15 @@
 defmodule Artour.PostImageController do
   use Artour.Web, :controller
+  plug(:put_view, html: Artour.PostImageView)
 
   alias Artour.PostImage
 
   def index(conn, _params) do
-    post_images = 
+    post_images =
       from(PostImage, order_by: [desc: :id])
-      |> Repo.all() 
+      |> Repo.all()
       |> Repo.preload([:image, :post])
-    
+
     render(conn, "index.html", items: post_images)
   end
 
@@ -24,14 +25,16 @@ defmodule Artour.PostImageController do
       {:ok, post_image} ->
         if submit_type == "add_another" do
           changeset = PostImage.changeset(%PostImage{post_id: post_image.post_id})
+
           conn
-            |> put_flash(:info, "Post image saved.")
-            |> render("new.html", changeset: changeset)
+          |> put_flash(:info, "Post image saved.")
+          |> render("new.html", changeset: changeset)
         else
           conn
-            |> put_flash(:info, "Post image created successfully.")
-            |> redirect(to: post_image_path(conn, :index))
+          |> put_flash(:info, "Post image created successfully.")
+          |> redirect(to: post_image_path(conn, :index))
         end
+
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -57,6 +60,7 @@ defmodule Artour.PostImageController do
         conn
         |> put_flash(:info, "Post image updated successfully.")
         |> redirect(to: post_image_path(conn, :show, post_image))
+
       {:error, changeset} ->
         render(conn, "edit.html", post_image: post_image, changeset: changeset)
     end

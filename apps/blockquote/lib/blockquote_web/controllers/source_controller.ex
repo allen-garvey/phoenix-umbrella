@@ -4,9 +4,11 @@ defmodule BlockquoteWeb.SourceController do
   alias Blockquote.Admin
   alias Blockquote.Admin.Source
 
+  plug(:put_view, html: BlockquoteWeb.SourceView)
+
   defp custom_render(conn, template, assigns) do
     assigns = [
-      item_name_singular: "source", 
+      item_name_singular: "source",
       breadcrumb: {"Sources", source_path(conn, :index)}
     ] ++ assigns
     render(conn, template, assigns)

@@ -1,5 +1,6 @@
 defmodule HabitsWeb.ApiTagController do
   use HabitsWeb, :controller
+  plug(:put_view, json: HabitsWeb.ApiTagView)
 
   alias Habits.Api
 

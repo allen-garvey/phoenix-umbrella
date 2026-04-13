@@ -4,6 +4,8 @@ defmodule Bookmarker.BookmarkController do
   alias Bookmarker.Bookmark
   alias Bookmarker.Admin
 
+  plug(:put_view, html: Bookmarker.BookmarkView)
+
   def index(conn, _params) do
     bookmarks = Repo.all(from(Bookmark, order_by: [desc: :id]))
     render(conn, "index.html", bookmarks: bookmarks)

@@ -19,7 +19,7 @@ defmodule PluginistaWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: PluginistaWeb
+      use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
       alias PluginistaWeb.Router.Helpers, as: Routes

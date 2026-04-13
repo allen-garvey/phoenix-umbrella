@@ -3,6 +3,8 @@ defmodule BooklistWeb.ReportsController do
 
   alias Booklist.Reports
 
+  plug(:put_view, html: BooklistWeb.ReportsView)
+
   def report_for_year(conn, year, current_year) when is_integer(year) do
     ratings = Reports.get_ratings(year)
     ratings_count = Enum.count(ratings)

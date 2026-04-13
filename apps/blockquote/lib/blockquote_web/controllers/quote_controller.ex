@@ -5,9 +5,11 @@ defmodule BlockquoteWeb.QuoteController do
   alias Blockquote.Admin.Quote
   alias Grenadier.Repo
 
+  plug(:put_view, html: BlockquoteWeb.QuoteView)
+
   defp custom_render(conn, template, assigns) do
     assigns = [
-      item_name_singular: "quote", 
+      item_name_singular: "quote",
       breadcrumb: {"Quotes", quote_path(conn, :index)}
     ] ++ assigns
     render(conn, template, assigns)

@@ -4,9 +4,11 @@ defmodule BlockquoteWeb.AuthorController do
   alias Blockquote.Admin
   alias Blockquote.Admin.Author
 
+  plug(:put_view, html: BlockquoteWeb.AuthorView)
+
   defp custom_render(conn, template, assigns) do
     assigns = [
-      item_name_singular: "author", 
+      item_name_singular: "author",
       breadcrumb: {"Authors", author_path(conn, :index)}
     ] ++ assigns
     render(conn, template, assigns)

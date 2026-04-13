@@ -5,6 +5,8 @@ defmodule PluginistaWeb.MakerController do
   alias Pluginista.Admin
   alias Pluginista.Admin.Maker
 
+  plug(:put_view, html: PluginistaWeb.MakerView)
+
   def index(conn, _params) do
     makers = Admin.list_makers()
     render(conn, "index.html", makers: makers)
@@ -39,7 +41,7 @@ defmodule PluginistaWeb.MakerController do
   def show(conn, %{"id" => id}) do
     maker = Admin.get_maker!(id)
     plugin_stats = Reports.plugin_stats_for_maker(id)
-    
+
     render(conn, "show.html", maker: maker, plugin_stats: plugin_stats)
   end
 

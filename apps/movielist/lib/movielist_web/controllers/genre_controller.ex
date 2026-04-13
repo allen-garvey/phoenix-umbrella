@@ -5,6 +5,8 @@ defmodule MovielistWeb.GenreController do
   alias Movielist.Reports
   alias Movielist.Admin.Genre
 
+  plug(:put_view, html: MovielistWeb.GenreView)
+
   def index(conn, _params) do
     genres = Admin.list_genres()
     render(conn, "index.html", genres: genres, page_atom: :genres_index)
@@ -31,13 +33,15 @@ defmodule MovielistWeb.GenreController do
     genre = Admin.get_genre!(id)
     movie_stats = Reports.movie_stats_for_genre(id)
     rating_stats = Reports.rating_stats_for_genre(id)
-    render(conn, "show.html", genre: genre, 
-                              require_modal: true,
-                              movie_count: movie_stats[:movie_count], 
-                              average_pre_rating: movie_stats[:average_pre_rating],
-                              rating_count: rating_stats[:rating_count],
-                              average_score: rating_stats[:average_score]
-                              )
+
+    render(conn, "show.html",
+      genre: genre,
+      require_modal: true,
+      movie_count: movie_stats[:movie_count],
+      average_pre_rating: movie_stats[:average_pre_rating],
+      rating_count: rating_stats[:rating_count],
+      average_score: rating_stats[:average_score]
+    )
   end
 
   def edit(conn, %{"id" => id}) do

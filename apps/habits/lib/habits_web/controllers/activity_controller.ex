@@ -1,5 +1,6 @@
 defmodule HabitsWeb.ActivityController do
   use HabitsWeb, :controller
+  plug(:put_view, html: HabitsWeb.ActivityView)
 
   alias Habits.Admin
   alias Habits.Api

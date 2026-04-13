@@ -4,6 +4,8 @@ defmodule PluginistaWeb.GroupController do
   alias Pluginista.Admin
   alias Pluginista.Admin.Group
 
+  plug(:put_view, html: PluginistaWeb.GroupView)
+
   def index(conn, _params) do
     groups = Admin.list_groups()
     render(conn, "index.html", groups: groups)
@@ -29,7 +31,7 @@ defmodule PluginistaWeb.GroupController do
   def show(conn, %{"id" => id}) do
     group = Admin.get_group!(id)
     plugin_stats = Pluginista.Reports.plugin_stats_for_group(id)
-    
+
     render(conn, "show.html", group: group, plugin_stats: plugin_stats)
   end
 

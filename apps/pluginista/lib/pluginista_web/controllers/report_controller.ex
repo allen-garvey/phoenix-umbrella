@@ -2,6 +2,8 @@ defmodule PluginistaWeb.ReportController do
   use PluginistaWeb, :controller
   alias Pluginista.Reports
 
+  plug(:put_view, html: PluginistaWeb.ReportView)
+
   def index(conn, _params) do
     years = Reports.years_summary()
     plugins_count = years |> Enum.reduce(0, fn year, total -> year[:count] + total end)

@@ -5,6 +5,7 @@ defmodule PhotogWeb.ClanPersonController do
   alias Photog.Api.ClanPerson
 
   action_fallback PhotogWeb.FallbackController
+  plug(:put_view, json: PhotogWeb.ClanPersonView)
 
   def index(conn, _params) do
     clan_persons = Api.list_clan_persons()

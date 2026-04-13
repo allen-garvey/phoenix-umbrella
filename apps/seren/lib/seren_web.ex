@@ -19,7 +19,7 @@ defmodule SerenWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: SerenWeb
+      use Phoenix.Controller, formats: [:html, :json]
       import Plug.Conn
       import SerenWeb.Router.Helpers
     end

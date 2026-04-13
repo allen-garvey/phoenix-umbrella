@@ -5,6 +5,8 @@ defmodule BooklistWeb.BookController do
   alias Booklist.Admin.Book
   alias Common.NumberHelpers
 
+  plug(:put_view, html: BooklistWeb.BookView)
+
   def related_fields() do
     genres = Admin.list_genres()
     authors = Admin.list_authors()

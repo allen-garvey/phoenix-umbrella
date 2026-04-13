@@ -23,9 +23,14 @@ defmodule StartpageWeb.Router do
     plug :put_layout, {StartpageWeb.LayoutView, :admin}
   end
 
+  pipeline :public_layout do
+    plug :put_layout, {StartpageWeb.LayoutView, :app}
+  end
+
   scope "/", StartpageWeb do
     pipe_through :browser
     pipe_through :authenticate
+    pipe_through :public_layout
 
     get "/", PageController, :index
   end

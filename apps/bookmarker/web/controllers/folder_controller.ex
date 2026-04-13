@@ -3,6 +3,8 @@ defmodule Bookmarker.FolderController do
 
   alias Bookmarker.Folder
 
+  plug(:put_view, html: Bookmarker.FolderView)
+
   def index(conn, _params) do
     folders = Folder.with_bookmarks_count_query() |> Repo.all()
 

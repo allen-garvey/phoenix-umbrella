@@ -29,7 +29,15 @@
         </nav>
       </div>
     </header>
-    <%= @inner_content %>
+    <main class="container">
+      <div class="main-padding">
+        <p class="alert alert-info" role="alert"><%= Phoenix.Flash.get(@flash, :info) %></p>
+        <p class="alert alert-danger" role="alert"><%= Phoenix.Flash.get(@flash, :error) %></p>
+      </div>
+      <div class={[main_padding(assigns[:no_main_padding]), assigns[:body_class]]}>
+        <%= @inner_content %>
+      </div>
+    </main>
     <script src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </body>
 </html>

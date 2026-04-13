@@ -10,6 +10,7 @@ defmodule Grenadier.MixProject do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
+      listeners: [Phoenix.CodeReloader],
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -36,9 +37,10 @@ defmodule Grenadier.MixProject do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
-    Umbrella.Common.Deps.shared_phoenix_deps()
-    ++ [Umbrella.Common.Deps.argon2()]
+    Code.require_file("deps.ex", "#{__DIR__}/../../lib/common/")
+
+    Umbrella.Common.Deps.shared_phoenix_deps() ++
+      [Umbrella.Common.Deps.argon2()]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

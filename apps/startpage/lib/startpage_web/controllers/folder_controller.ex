@@ -4,6 +4,8 @@ defmodule StartpageWeb.FolderController do
   alias Startpage.Admin
   alias Startpage.Admin.Folder
 
+  plug(:put_view, html: StartpageWeb.FolderView)
+
   def index(conn, _params) do
     folders = Admin.list_folders_in_order()
     render(conn, "index.html", folders: folders)

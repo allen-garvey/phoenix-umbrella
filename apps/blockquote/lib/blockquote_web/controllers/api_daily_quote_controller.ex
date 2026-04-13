@@ -3,6 +3,8 @@ defmodule BlockquoteWeb.ApiDailyQuoteController do
 
   alias Blockquote.Api
 
+  plug(:put_view, json: BlockquoteWeb.ApiDailyQuoteView)
+
   def get_daily_quote(conn, _params) do
     quote = get_todays_quote()
     render(conn, "show.json", quote: quote)

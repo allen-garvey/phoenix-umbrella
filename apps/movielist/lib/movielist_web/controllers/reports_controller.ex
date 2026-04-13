@@ -4,6 +4,8 @@ defmodule MovielistWeb.ReportsController do
   alias Movielist.Reports
   alias MovielistWeb.ReportsView
 
+  plug(:put_view, html: MovielistWeb.ReportsView)
+
   def report_for_year(conn, year, sort) when is_integer(year) and is_atom(sort) do
     today = Common.ModelHelpers.Date.today()
     current_year = today.year

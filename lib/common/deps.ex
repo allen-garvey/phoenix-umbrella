@@ -20,8 +20,8 @@ defmodule Umbrella.Common.Deps do
 
   def phoenix_html do
     [
-      {:phoenix, "~> 1.7.18"},
-      {:phoenix_html, "~> 4.2"},
+      {:phoenix, "~> 1.8.5"},
+      {:phoenix_html, "~> 4.3"},
       {:phoenix_html_helpers, "~> 1.0"},
       {:phoenix_view, "~> 2.0"},
     ]
@@ -29,7 +29,7 @@ defmodule Umbrella.Common.Deps do
 
   def ecto do
     [
-      {:phoenix_ecto, "~> 4.6.3"},
+      {:phoenix_ecto, "~> 4.7"},
       {:ecto_sql, "~> 3.12"},
       {:postgrex, "~> 0.19.3"},
     ]
@@ -55,7 +55,7 @@ defmodule Umbrella.Common.Deps do
 
   def phoenix_component do
     [
-      {:phoenix_live_view, "~> 1.0.1"},
+      {:phoenix_live_view, "~> 1.1.28"},
     ]
   end
 end

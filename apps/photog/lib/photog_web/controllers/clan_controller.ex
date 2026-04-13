@@ -7,6 +7,7 @@ defmodule PhotogWeb.ClanController do
   alias Common.NumberHelpers
 
   action_fallback(PhotogWeb.FallbackController)
+  plug(:put_view, json: PhotogWeb.ClanView)
 
   def index(conn, %{"excerpt" => "false"}) do
     clans = Api.list_clans_full()

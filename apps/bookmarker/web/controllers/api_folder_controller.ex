@@ -1,6 +1,8 @@
 defmodule Bookmarker.ApiFolderController do
   use Bookmarker.Web, :controller
 
+  plug(:put_view, json: Bookmarker.ApiFolderView)
+
   @doc """
   Returns a list of bookmarks in a folder for a given folder name
   """

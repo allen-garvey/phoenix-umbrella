@@ -8,6 +8,7 @@ defmodule PhotogWeb.ImageController do
   alias Common.NumberHelpers
 
   action_fallback(PhotogWeb.FallbackController)
+  plug(:put_view, json: PhotogWeb.ImageView)
 
   def index(conn, %{"favorites" => is_favorite_param, "limit" => limit, "offset" => offset}) do
     images =

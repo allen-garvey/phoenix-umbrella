@@ -19,7 +19,7 @@ defmodule GrenadierWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: GrenadierWeb
+      use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
       alias GrenadierWeb.Router.Helpers, as: Routes

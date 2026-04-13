@@ -4,6 +4,8 @@ defmodule PluginistaWeb.PluginController do
   alias Pluginista.Admin
   alias Pluginista.Admin.Plugin
 
+  plug(:put_view, html: PluginistaWeb.PluginView)
+
   def related_fields() do
     [
       groups: Admin.list_groups() |> PluginistaWeb.GroupView.map_for_form(),
