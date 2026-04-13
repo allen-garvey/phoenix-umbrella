@@ -3,6 +3,8 @@ defmodule GrenadierWeb.UserController do
 
   alias Grenadier.Account
 
+  plug(:put_view, html: GrenadierWeb.UserView)
+
   def index(conn, _params) do
     users = Account.list_users()
     render(conn, "index.html", users: users)

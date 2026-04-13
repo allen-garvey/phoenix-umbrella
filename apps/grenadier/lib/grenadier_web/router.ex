@@ -13,6 +13,10 @@ defmodule GrenadierWeb.Router do
     plug :put_layout, {GrenadierWeb.LayoutView, :bare}
   end
 
+  pipeline :admin_layout do
+    plug :put_layout, {GrenadierWeb.LayoutView, :app}
+  end
+
   pipeline :authenticate do
     plug GrenadierWeb.Plugs.Authenticate
   end
@@ -36,6 +40,7 @@ defmodule GrenadierWeb.Router do
   scope "/admin", GrenadierWeb do
     pipe_through :browser
     pipe_through :authenticate
+    pipe_through :admin_layout
 
     get "/", PageController, :index
 
