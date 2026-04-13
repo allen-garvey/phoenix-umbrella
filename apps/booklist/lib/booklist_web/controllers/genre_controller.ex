@@ -4,6 +4,8 @@ defmodule BooklistWeb.GenreController do
   alias Booklist.Admin
   alias Booklist.Admin.Genre
 
+  plug(:put_view, html: BooklistWeb.GenreView)
+
   def index(conn, _params) do
     genres = Admin.list_genres()
     render(conn, "index.html", genres: genres)

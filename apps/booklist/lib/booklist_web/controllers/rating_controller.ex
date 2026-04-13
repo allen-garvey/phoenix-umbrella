@@ -4,6 +4,8 @@ defmodule BooklistWeb.RatingController do
   alias Booklist.Admin
   alias Booklist.Admin.Rating
 
+  plug(:put_view, html: BooklistWeb.RatingView)
+
   def related_fields() do
     [
       books: Admin.list_books() |> BooklistWeb.BookView.map_for_form()

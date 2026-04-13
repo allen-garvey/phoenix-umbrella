@@ -4,6 +4,8 @@ defmodule BooklistWeb.LibraryController do
   alias Booklist.Admin
   alias Booklist.Admin.Library
 
+  plug(:put_view, html: BooklistWeb.LibraryView)
+
   def index(conn, _params) do
     libraries = Admin.list_libraries()
     render(conn, "index.html", libraries: libraries)

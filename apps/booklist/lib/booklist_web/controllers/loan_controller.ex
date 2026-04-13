@@ -4,9 +4,11 @@ defmodule BooklistWeb.LoanController do
   alias Booklist.Admin
   alias Booklist.Admin.Loan
 
+  plug(:put_view, html: BooklistWeb.LoanView)
+
   def related_fields() do
     [
-      libraries: Admin.list_libraries() |> BooklistWeb.LibraryView.map_for_form,
+      libraries: Admin.list_libraries() |> BooklistWeb.LibraryView.map_for_form()
     ]
   end
 
