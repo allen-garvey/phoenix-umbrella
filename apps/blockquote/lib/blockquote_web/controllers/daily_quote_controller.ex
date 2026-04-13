@@ -4,9 +4,11 @@ defmodule BlockquoteWeb.DailyQuoteController do
   alias Blockquote.Admin
   alias Blockquote.Admin.DailyQuote
 
+  plug(:put_view, html: BlockquoteWeb.DailyQuoteView)
+
   defp custom_render(conn, template, assigns) do
     assigns = [
-      item_name_singular: "daily quote", 
+      item_name_singular: "daily quote",
       breadcrumb: {"Daily quotes", daily_quote_path(conn, :index)}
     ] ++ assigns
     render(conn, template, assigns)

@@ -1,6 +1,8 @@
 defmodule BlockquoteWeb.AdminController do
   use BlockquoteWeb, :controller
-  
+
+  plug(:put_view, html: BlockquoteWeb.AdminView)
+
   def index(conn, _params) do
     fields = [
       {"Authors", &author_path/2},

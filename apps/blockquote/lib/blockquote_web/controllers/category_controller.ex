@@ -4,9 +4,11 @@ defmodule BlockquoteWeb.CategoryController do
   alias Blockquote.Admin
   alias Blockquote.Admin.Category
 
+  plug(:put_view, html: BlockquoteWeb.CategoryView)
+
   defp custom_render(conn, template, assigns) do
     assigns = [
-      item_name_singular: "category", 
+      item_name_singular: "category",
       breadcrumb: {"Categories", category_path(conn, :index)}
     ] ++ assigns
     render(conn, template, assigns)

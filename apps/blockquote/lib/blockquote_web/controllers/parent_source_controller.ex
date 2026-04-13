@@ -4,9 +4,11 @@ defmodule BlockquoteWeb.ParentSourceController do
   alias Blockquote.Admin
   alias Blockquote.Admin.ParentSource
 
+  plug(:put_view, html: BlockquoteWeb.ParentSourceView)
+
   defp custom_render(conn, template, assigns) do
     assigns = [
-      item_name_singular: "parent source", 
+      item_name_singular: "parent source",
       breadcrumb: {"Parent sources", parent_source_path(conn, :index)}
     ] ++ assigns
     render(conn, template, assigns)
