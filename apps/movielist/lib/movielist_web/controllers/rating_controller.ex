@@ -4,6 +4,8 @@ defmodule MovielistWeb.RatingController do
   alias Movielist.Admin
   alias Movielist.Admin.Rating
 
+  plug(:put_view, html: MovielistWeb.RatingView)
+
   def related_fields() do
     [
       movies: Admin.list_movies() |> MovielistWeb.MovieView.map_for_form()

@@ -4,6 +4,8 @@ defmodule MovielistWeb.StreamerController do
   alias Movielist.Admin
   alias Movielist.Admin.Streamer
 
+  plug(:put_view, html: MovielistWeb.StreamerView)
+
   def index(conn, _params) do
     streamers = Admin.list_streamers()
     render(conn, "index.html", streamers: streamers, page_atom: :streamers_index)

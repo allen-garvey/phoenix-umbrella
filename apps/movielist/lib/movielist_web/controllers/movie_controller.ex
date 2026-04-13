@@ -5,6 +5,8 @@ defmodule MovielistWeb.MovieController do
   alias Movielist.Admin.Movie
   alias MovielistWeb.MovieView
 
+  plug(:put_view, html: MovielistWeb.MovieView)
+
   def related_fields() do
     [
       genres: Admin.list_genres() |> MovielistWeb.GenreView.map_for_form(),
