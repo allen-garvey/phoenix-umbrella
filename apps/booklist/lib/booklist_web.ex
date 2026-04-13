@@ -19,7 +19,7 @@ defmodule BooklistWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: BooklistWeb
+      use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
       alias BooklistWeb.Router.Helpers, as: Routes

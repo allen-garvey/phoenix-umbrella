@@ -19,7 +19,7 @@ defmodule StartpageWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: StartpageWeb
+      use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
       alias StartpageWeb.Router.Helpers, as: Routes

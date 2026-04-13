@@ -19,7 +19,7 @@ defmodule BlockquoteWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: BlockquoteWeb
+      use Phoenix.Controller, formats: [:html, :json]
       import Plug.Conn
       import BlockquoteWeb.Router.Helpers
     end

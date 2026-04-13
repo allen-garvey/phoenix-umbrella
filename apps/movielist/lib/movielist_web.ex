@@ -19,7 +19,7 @@ defmodule MovielistWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: MovielistWeb
+      use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
       alias MovielistWeb.Router.Helpers, as: Routes

@@ -28,7 +28,7 @@ defmodule Bookmarker.Web do
 
   def controller do
     quote do
-      use Phoenix.Controller
+      use Phoenix.Controller, formats: [:html, :json]
 
       alias Grenadier.Repo
       import Ecto
