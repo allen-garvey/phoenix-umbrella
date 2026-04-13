@@ -4,6 +4,8 @@ defmodule Bookmarker.FolderPreviewController do
   alias Bookmarker.Folder
   alias Bookmarker.ImgElement
 
+  plug(:put_view, html: Bookmarker.FolderPreviewView)
+
   @doc """
   Show preview images for bookmarks in folder
   """
@@ -11,7 +13,7 @@ defmodule Bookmarker.FolderPreviewController do
     HTTPoison.start
     bookmarks_query = from bookmark in Bookmarker.Bookmark, where: not is_nil(bookmark.preview_image_selector), order_by: [desc: :id]
     folder = Repo.one! from folder in Folder, where: folder.name == ^folder_name, preload: [bookmarks: ^bookmarks_query]
-    
+
     preview_results = folder.bookmarks
                         |> Task.async_stream(&img_for_bookmark/1, max_concurrency: System.schedulers_online * 4, on_timeout: :kill_task, timeout: 15000)
                         |> Enum.to_list()
@@ -37,7 +39,7 @@ defmodule Bookmarker.FolderPreviewController do
     extract_img_html(bookmark.preview_image_selector, bookmark.url)
   end
 
-  def url_for_bookmark(bookmark) do 
+  def url_for_bookmark(bookmark) do
     case bookmark.rss_url do
       nil -> bookmark.url
       _ -> bookmark.rss_url
@@ -81,14 +83,14 @@ defmodule Bookmarker.FolderPreviewController do
       true -> URI.merge(base_url, url) |> URI.to_string
     end
   end
-  
+
   def get_first_safe(x) when is_list(x) do
-    case x do 
+    case x do
       [] -> ""
       _ -> hd(x)
     end
   end
-  
+
   def get_first_safe(x) do
     x
   end
