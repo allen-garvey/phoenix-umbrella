@@ -561,9 +561,9 @@ defmodule Photog.Api do
     recent_albums_first_offset = 3
 
     Enum.concat([
-      Enum.slice(non_favorite_albums, 0..(recent_albums_first_offset - 1)),
+      Enum.take(non_favorite_albums, recent_albums_first_offset),
       sorted_favorite_albums,
-      Enum.slice(non_favorite_albums, recent_albums_first_offset..-1)
+      Enum.drop(non_favorite_albums, recent_albums_first_offset)
     ])
   end
 
