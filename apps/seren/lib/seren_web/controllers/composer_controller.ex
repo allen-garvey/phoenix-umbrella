@@ -5,6 +5,7 @@ defmodule SerenWeb.ComposerController do
   alias Seren.Player.Composer
 
   action_fallback SerenWeb.FallbackController
+  plug(:put_view, json: SerenWeb.ComposerView)
 
   def index(conn, _params) do
     composers = Player.list_composers()

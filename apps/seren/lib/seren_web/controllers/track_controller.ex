@@ -5,6 +5,7 @@ defmodule SerenWeb.TrackController do
   alias Seren.Player.Track
 
   action_fallback SerenWeb.FallbackController
+  plug(:put_view, json: SerenWeb.TrackView)
 
   def index_page(conn, tracks) do
     render(conn, "index.json", tracks: tracks)

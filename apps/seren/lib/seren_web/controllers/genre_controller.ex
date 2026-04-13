@@ -5,6 +5,7 @@ defmodule SerenWeb.GenreController do
   alias Seren.Player.Genre
 
   action_fallback SerenWeb.FallbackController
+  plug(:put_view, json: SerenWeb.GenreView)
 
   def index(conn, _params) do
     genres = Player.list_genres()
