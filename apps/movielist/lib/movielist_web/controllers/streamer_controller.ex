@@ -21,7 +21,7 @@ defmodule MovielistWeb.StreamerController do
       {:ok, streamer} ->
         conn
         |> put_flash(:info, "Streamer created successfully.")
-        |> redirect(to: Routes.streamer_path(conn, :show, streamer))
+        |> redirect(to: ~p"/streamers/#{streamer}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -46,7 +46,7 @@ defmodule MovielistWeb.StreamerController do
       {:ok, streamer} ->
         conn
         |> put_flash(:info, "Streamer updated successfully.")
-        |> redirect(to: Routes.streamer_path(conn, :show, streamer))
+        |> redirect(to: ~p"/streamers/#{streamer}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", streamer: streamer, changeset: changeset)
@@ -59,6 +59,6 @@ defmodule MovielistWeb.StreamerController do
 
     conn
     |> put_flash(:info, "Streamer deleted successfully.")
-    |> redirect(to: Routes.streamer_path(conn, :index))
+    |> redirect(to: ~p"/streamers")
   end
 end

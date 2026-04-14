@@ -70,7 +70,7 @@ defmodule MovielistWeb.RatingController do
       {:ok, rating} ->
         conn
         |> put_flash(:info, "Rating updated successfully.")
-        |> redirect(to: Routes.rating_path(conn, :show, rating))
+        |> redirect(to: ~p"/ratings/#{rating}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", [rating: rating, changeset: changeset] ++ related_fields())
@@ -83,6 +83,6 @@ defmodule MovielistWeb.RatingController do
 
     conn
     |> put_flash(:info, "Rating deleted successfully.")
-    |> redirect(to: Routes.rating_path(conn, :index))
+    |> redirect(to: ~p"/ratings")
   end
 end

@@ -5,14 +5,14 @@
       <th></th>
       <th>Name</th>
 
-      <th><%= link "Add Streamer", to: Routes.streamer_path(@conn, :new), class: "btn btn-success" %></th>
+      <th><%= link "Add Streamer", to: ~p"/streamers/new", class: "btn btn-success" %></th>
     </tr>
   </thead>
   <tbody>
 <%= for streamer <- @streamers do %>
     <tr>
       <td></td>
-      <td><%= link streamer.name, to: Routes.streamer_path(@conn, :show, streamer) %></td>
+      <td><%= link streamer.name, to: ~p"/streamers/#{streamer}" %></td>
       <td></td>
     </tr>
 <% end %>

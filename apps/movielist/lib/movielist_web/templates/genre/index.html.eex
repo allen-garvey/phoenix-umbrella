@@ -5,7 +5,7 @@
       <th></th>
       <th>Name</th>
 
-      <th><%= link "Add Genre", to: Routes.genre_path(@conn, :new), class: "btn btn-success" %></th>
+      <th><%= link "Add Genre", to: ~p"/genres/new", class: "btn btn-success" %></th>
     </tr>
   </thead>
   <tbody>
@@ -13,7 +13,7 @@
     <tr>
       <td></td>
       <td>
-        <%= link genre.name, to: Routes.genre_path(@conn, :show, genre) %>
+        <%= link genre.name, to: ~p"/genres/#{genre}" %>
       </td>
       <td></td>
     </tr>

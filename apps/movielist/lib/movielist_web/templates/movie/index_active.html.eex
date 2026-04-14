@@ -21,7 +21,7 @@
       <tr class="<%= css_class_for_release_status(movie.release_status) %>">
         <td></td>
         <td><%= link to_s(movie), to: search_url_for(to_s(movie), movie.release_status) %></td>
-        <td><%= link MovielistWeb.GenreView.to_s(movie.genre), to: Routes.genre_path(@conn, :show, movie.genre) %></td>
+        <td><%= link MovielistWeb.GenreView.to_s(movie.genre), to: ~p"/genres/#{movie.genre}" %></td>
         <td><%= movie.pre_rating %></td>
         <td><%= format_length(movie.length) %></td>
         <%= if @page_atom != :movies_suggestions do %>
@@ -29,13 +29,13 @@
         <% end %>
         <td><%= MovielistWeb.StreamerView.show_link(movie.streamer) %></td>
         <td>
-          <%= link "Show", to: Routes.movie_path(@conn, :show, movie), class: "btn btn-sm btn-light" %>
+          <%= link "Show", to: ~p"/movies/#{movie}", class: "btn btn-sm btn-light" %>
         </td>
         <td>
-          <%= link "Edit", to: Routes.movie_path(@conn, :edit, movie), class: "btn btn-sm btn-primary" %>
+          <%= link "Edit", to: ~p"/movies/#{movie}/edit", class: "btn btn-sm btn-primary" %>
         </td>
         <td>
-          <%= link "Rate", to: Routes.rating_path(@conn, :new, movie.id), class: "btn btn-sm btn-success" %>
+          <%= link "Rate", to: ~p"/movies/#{movie}/ratings/new", class: "btn btn-sm btn-success" %>
         </td>
       </tr>
     <% end %>

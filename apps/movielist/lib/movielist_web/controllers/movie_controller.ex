@@ -69,7 +69,7 @@ defmodule MovielistWeb.MovieController do
       {:ok, movie} ->
         conn
         |> put_flash(:info, MovieView.movie_created_flash(movie))
-        |> redirect(to: Routes.movie_path(conn, :index_active))
+        |> redirect(to: ~p"/")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset] ++ related_fields())
@@ -102,7 +102,7 @@ defmodule MovielistWeb.MovieController do
       {:ok, movie} ->
         conn
         |> put_flash(:info, "Movie updated successfully.")
-        |> redirect(to: Routes.movie_path(conn, :show, movie))
+        |> redirect(to: ~p"/movies/#{movie}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", [movie: movie, changeset: changeset] ++ related_fields())
@@ -116,6 +116,6 @@ defmodule MovielistWeb.MovieController do
 
     conn
     |> put_flash(:info, "#{item_name} deleted successfully.")
-    |> redirect(to: Routes.movie_path(conn, :index))
+    |> redirect(to: ~p"/movies")
   end
 end
