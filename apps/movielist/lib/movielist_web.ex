@@ -42,6 +42,8 @@ defmodule MovielistWeb do
 
       alias MovielistWeb.Router.Helpers, as: Routes
       import Common.ViewHelpers.Form, only: [define_map_for_form: 1]
+
+      use Phoenix.VerifiedRoutes, router: MovielistWeb.Router, endpoint: MovielistWeb.Endpoint
     end
   end
 

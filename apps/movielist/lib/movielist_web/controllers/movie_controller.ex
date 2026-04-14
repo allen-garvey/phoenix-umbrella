@@ -33,7 +33,7 @@ defmodule MovielistWeb.MovieController do
     render(conn, "index_active.html",
       movies: movies,
       page_route: :index_active,
-      page_atom: :movies_index
+      page_atom: :movies_index_active
     )
   end
 

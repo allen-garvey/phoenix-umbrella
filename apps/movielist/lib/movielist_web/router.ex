@@ -22,7 +22,7 @@ defmodule MovielistWeb.Router do
     pipe_through :browser
     pipe_through :authenticate
 
-    get "/", PageController, :index
+    get "/", MovieController, :index_active
     # has to be before resources or conflicts with show pages
     get "/movies/active", MovieController, :index_active
     # has to be before resources or conflicts with show pages

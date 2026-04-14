@@ -9,10 +9,11 @@
   </head>
   <body>
     <header class='jumbotron'>
-      <h1 class='main_title'><%= link "Movie List", to: Routes.page_path(@conn, :index) %></h1>
+      <h1 class='main_title'><%= link "Movie List", to: ~p"/" %></h1>
       <nav>
         <ul class="nav">
-          <li><%= link "Movies", to: Routes.movie_path(@conn, :index_active), class: active_nav_class(assigns[:page_atom], :movies_index) %></li>
+          <li><%= link "Active Movies", to: Routes.movie_path(@conn, :index_active), class: active_nav_class(assigns[:page_atom], :movies_index_active) %></li>
+          <li><%= link "Movies", to: Routes.movie_path(@conn, :index), class: active_nav_class(assigns[:page_atom], :movies_index) %></li>
           <li><%= link "Suggestions", to: Routes.movie_path(@conn, :index_suggestions), class: active_nav_class(assigns[:page_atom], :movies_suggestions) %></li>
           <li><%= link "Ratings", to: Routes.rating_path(@conn, :index), class: active_nav_class(assigns[:page_atom], :ratings_index) %></li>
           <li><%= link "Genres", to: Routes.genre_path(@conn, :index), class: active_nav_class(assigns[:page_atom], :genres_index) %></li>
