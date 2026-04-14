@@ -51,6 +51,6 @@ defmodule MovielistWeb.ReportsController do
   end
 
   def invalid_year_redirect(conn) do
-    redirect(conn, to: ReportsView.reports_for_current_year_score_sorted_path(conn))
+    redirect(conn, to: ReportsView.reports_for_current_year_score_sorted_path())
   end
 end

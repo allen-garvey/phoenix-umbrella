@@ -2,17 +2,17 @@ defmodule MovielistWeb.StreamerView do
   use MovielistWeb, :view
 
   def to_s(nil) do
-  	""
+    ""
   end
 
   def to_s(streamer) do
-  	streamer.name
+    streamer.name
   end
 
-  def show_link(conn, streamer) do
+  def show_link(streamer) do
     case streamer do
       nil -> nil
-      _ -> link(to_s(streamer), to: Routes.streamer_path(conn, :show, streamer))
+      _ -> link(to_s(streamer), to: ~p"/streamers/#{streamer}")
     end
   end
 

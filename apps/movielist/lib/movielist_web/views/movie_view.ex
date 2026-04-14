@@ -15,10 +15,10 @@ defmodule MovielistWeb.MovieView do
 
   Common.ViewHelpers.Form.define_map_for_form()
 
-  def movie_created_flash(conn, movie) do
+  def movie_created_flash(movie) do
     [
       content_tag(:div, "#{to_s(movie)} created successfully."),
-      link("Add rating", to: Routes.rating_path(conn, :new, movie.id), class: "btn btn-success")
+      link("Add rating", to: ~p"/movies/#{movie}/ratings/new", class: "btn btn-success")
     ]
   end
 

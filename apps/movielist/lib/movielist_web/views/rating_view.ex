@@ -5,24 +5,22 @@ defmodule MovielistWeb.RatingView do
   alias Common.DateHelpers
 
   def to_s(rating) do
-  	MovieView.to_s(rating.movie) <> "—" <> DateHelpers.us_formatted_date(rating.date_scored)
+    MovieView.to_s(rating.movie) <> "—" <> DateHelpers.us_formatted_date(rating.date_scored)
   end
 
   def to_s_short(rating) do
-  	DateHelpers.us_formatted_date(rating.date_scored) <> "—" <> Integer.to_string(rating.score)
+    DateHelpers.us_formatted_date(rating.date_scored) <> "—" <> Integer.to_string(rating.score)
   end
 
-  def ratings_index_score_sorted_path(conn) do
-    Routes.rating_path(conn, :index, sort: :score)
+  def ratings_index_score_sorted_path() do
+    ~p"/ratings?sort=#{:score}"
   end
 
   def css_class_for_score(score) do
-  	cond do
-  		score >= 85 -> "tr_primary"
-  		score >= 79 -> "tr_warning"
-  		true 		-> "tr_error"
-  	end
+    cond do
+      score >= 85 -> "tr_primary"
+      score >= 79 -> "tr_warning"
+      true -> "tr_error"
+    end
   end
-
-
 end

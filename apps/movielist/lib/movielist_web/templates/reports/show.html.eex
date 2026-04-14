@@ -1,7 +1,7 @@
 <div class="spread_content">
-	<%= link "Previous year", to: reports_for_year_path_score_sorted(@conn, @year - 1) %>
+	<%= link "Previous year", to: reports_for_year_path_score_sorted(@year - 1) %>
 	<%= if @should_show_next_year do %>
-		<%= link "Next year", to: reports_for_year_path_score_sorted(@conn, @year + 1) %>
+		<%= link "Next year", to: reports_for_year_path_score_sorted(@year + 1) %>
 	<% end %>
 </div>
 
@@ -35,8 +35,8 @@
 	    <tr>
 	      <th></th>
 	      <th>Movie</th>
-	      <th><%= link "Date", to: reports_for_year_date_sorted_path(@conn, @year) %></th>
-	      <th><%= link "Score", to: reports_for_year_path_score_sorted(@conn, @year) %></th>
+	      <th><%= link "Date", to: reports_for_year_date_sorted_path(@year) %></th>
+	      <th><%= link "Score", to: reports_for_year_path_score_sorted(@year) %></th>
 	    </tr>
 	  </thead>
 	  <tbody>

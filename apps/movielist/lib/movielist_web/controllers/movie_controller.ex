@@ -68,7 +68,7 @@ defmodule MovielistWeb.MovieController do
     case Admin.create_movie(movie_params) do
       {:ok, movie} ->
         conn
-        |> put_flash(:info, MovieView.movie_created_flash(conn, movie))
+        |> put_flash(:info, MovieView.movie_created_flash(movie))
         |> redirect(to: Routes.movie_path(conn, :index_active))
 
       {:error, %Ecto.Changeset{} = changeset} ->

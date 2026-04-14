@@ -23,6 +23,8 @@ defmodule MovielistWeb do
 
       import Plug.Conn
       alias MovielistWeb.Router.Helpers, as: Routes
+
+      use Phoenix.VerifiedRoutes, router: MovielistWeb.Router, endpoint: MovielistWeb.Endpoint
     end
   end
 

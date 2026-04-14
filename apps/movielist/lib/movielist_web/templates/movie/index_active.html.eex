@@ -27,7 +27,7 @@
         <%= if @page_atom != :movies_suggestions do %>
           <td class="<%= css_class_for_release_date(movie.release_status, movie.home_release_date) %>"><%= Common.DateHelpers.us_formatted_date(movie.release_date) %></td>
         <% end %>
-        <td><%= MovielistWeb.StreamerView.show_link(@conn, movie.streamer) %></td>
+        <td><%= MovielistWeb.StreamerView.show_link(movie.streamer) %></td>
         <td>
           <%= link "Show", to: Routes.movie_path(@conn, :show, movie), class: "btn btn-sm btn-light" %>
         </td>

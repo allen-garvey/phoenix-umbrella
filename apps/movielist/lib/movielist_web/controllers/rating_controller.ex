@@ -44,11 +44,7 @@ defmodule MovielistWeb.RatingController do
           "Rating created successfully for #{MovielistWeb.MovieView.to_s(movie)}."
         )
         |> redirect(
-          to:
-            MovielistWeb.ReportsView.reports_for_year_path_score_sorted(
-              conn,
-              rating.date_scored.year
-            )
+          to: MovielistWeb.ReportsView.reports_for_year_path_score_sorted(rating.date_scored.year)
         )
 
       {:error, %Ecto.Changeset{} = changeset} ->
