@@ -4,12 +4,12 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Startpage</title>
-    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/assets/app.css") %>"/>
+    <link rel="stylesheet" href="/assets/app.css"/>
   </head>
   <body>
     <main role="main">
       <%= @inner_content %>
     </main>
-    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/assets/app.js") %>"></script>
+    <script type="text/javascript" src="/assets/app.js"></script>
   </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= site_title assigns[:page_title] %></title>
-    <%= tag :link, rel: "stylesheet", href: static_path(@conn, "/assets/app.css") %>
+    <%= tag :link, rel: "stylesheet", href: "/assets/app.css" %>
     <%= tag :meta, name: "description", content: site_description() %>
     <%= if assigns[:facebook_image] do
       tag :meta, property: "og:image", content: Artour.ImageView.url_for(@facebook_image, :small)
@@ -29,7 +29,7 @@
       <%= @inner_content %>
     </main>
     <%= if assigns[:javascript] do
-      content_tag :script, "", src: static_path(@conn, "/assets/app.js")
+      content_tag :script, "", src: "/assets/app.js"
     end %>
   </body>
 </html>

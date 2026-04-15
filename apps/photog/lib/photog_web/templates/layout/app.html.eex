@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Photog</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/assets/app.css") %>">
+    <link rel="stylesheet" href="/assets/app.css">
   </head>
 
   <body>
     <%= @inner_content %>
-    <script src="<%= static_path(@conn, "/assets/app.js") %>"></script>
+    <script src="/assets/app.js"></script>
   </body>
 </html>

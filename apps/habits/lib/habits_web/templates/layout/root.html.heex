@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="csrf-token" content={csrf_token_value()}>
     <.live_title prefix="Habits"><%= assigns[:page_title] %></.live_title>
-    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+    <link phx-track-static rel="stylesheet" href="/assets/app.css"/>
   </head>
   <body>
     <header class="jumbotron">
@@ -38,6 +38,6 @@
         <%= @inner_content %>
       </div>
     </main>
-    <script src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <script src="/assets/app.js"></script>
   </body>
 </html>

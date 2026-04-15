@@ -7,7 +7,7 @@
     <meta name="author" content="">
 
     <title><%= site_title() %> | Admin</title>
-    <%= tag :link, rel: "stylesheet", href: static_path(@conn, "/assets/admin.css") %>
+    <%= tag :link, rel: "stylesheet", href: "/assets/admin.css" %>
   </head>
 
   <body>
@@ -41,6 +41,6 @@
       </main>
 
     </div>
-    <%= content_tag :script, "", src: static_path(@conn, "/assets/admin.js") %>
+    <%= content_tag :script, "", src: "/assets/admin.js" %>
   </body>
 </html>

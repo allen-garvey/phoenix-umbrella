@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content="A CMS for inspiring quotes"/>
     <title>Blockquote</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/assets/app.css") %>"/>
+    <link rel="stylesheet" href="/assets/app.css"/>
   </head>
 
   <body>
@@ -22,7 +22,7 @@
         </div>
     </div>
     </header>
-    
+
     <div class="container">
       <p class="alert alert-info" role="alert"><%= Phoenix.Flash.get(@flash, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= Phoenix.Flash.get(@flash, :error) %></p>
@@ -32,6 +32,6 @@
       <%= @inner_content %>
     </main>
 
-    <script type="text/javascript" src="<%= static_path(@conn, "/assets/app.js") %>"></script>
+    <script type="text/javascript" src="/assets/app.js"></script>
   </body>
 </html>
