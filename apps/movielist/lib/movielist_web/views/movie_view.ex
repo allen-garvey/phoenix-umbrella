@@ -90,4 +90,11 @@ defmodule MovielistWeb.MovieView do
   def format_length(length) do
     "#{div(length, 60)}h #{rem(length, 60)}m"
   end
+
+  def movie_index_path(variant, sort) do
+    case variant do
+      :index_suggestions -> ~p"/movies/suggestions?sort=#{sort}"
+      :index_active -> ~p"/?sort=#{sort}"
+    end
+  end
 end

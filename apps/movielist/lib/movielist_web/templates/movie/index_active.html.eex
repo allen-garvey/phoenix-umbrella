@@ -3,14 +3,14 @@
   <thead>
     <tr>
       <th></th>
-      <th><%= link "Title", to: Routes.movie_path(@conn, @page_route, sort: "title") %></th>
-      <th><%= link "Genre", to: Routes.movie_path(@conn, @page_route, sort: "genre") %></th>
-      <th><%= link "Pre", to: Routes.movie_path(@conn, @page_route, sort: "score") %></th>
+      <th><%= link "Title", to: movie_index_path(@page_route, :title) %></th>
+      <th><%= link "Genre", to: movie_index_path(@page_route, :genre) %></th>
+      <th><%= link "Pre", to: movie_index_path(@page_route, :score) %></th>
       <th class="movie-length-column">Length</th>
       <%= if @page_atom != :movies_suggestions do %>
         <th>Release</th>
       <% end %>
-      <th><%= link "Streamer", to: Routes.movie_path(@conn, @page_route, sort: "streamer") %></th>
+      <th><%= link "Streamer", to: movie_index_path(@page_route, :streamer) %></th>
       <th></th>
       <th></th>
       <th></th>

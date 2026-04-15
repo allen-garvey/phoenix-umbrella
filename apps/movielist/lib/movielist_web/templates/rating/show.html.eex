@@ -1,8 +1,8 @@
 <%= render(MovielistWeb.SharedView, "show_header.html",
       conn: @conn,
       resource_title_plural: "Ratings",
-      resource_path_func: &Routes.rating_path/3,
-      item: @rating,
+      edit_path: ~p"/ratings/#{@rating}/edit",
+      delete_path: ~p"/ratings/#{@rating}",
       item_name: to_s(@rating)
     )
 %>
