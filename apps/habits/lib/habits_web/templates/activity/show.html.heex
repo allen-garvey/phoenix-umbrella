@@ -1,21 +1,21 @@
 <h1>Show Activity</h1>
 
-<%= form_for @conn, Routes.activity_path(@conn, :delete, @activity), [method: "delete", data_form: "delete", class: "inline"], fn _f -> %>
+<%= form_for @conn, ~p"/activities/#{@activity}", [method: "delete", data_form: "delete", class: "inline"], fn _f -> %>
     <input type="submit" value="Delete" class="btn btn-danger" data-button="delete" />
 <% end %>
-<span><%= link "Duplicate", to: Routes.activity_path(@conn, :new, duplicate: @activity.id), class: "btn btn-light" %></span>
-<span><%= link "Edit", to: Routes.activity_path(@conn, :edit, @activity), class: "btn btn-primary" %></span>
+<span><%= link "Duplicate", to: ~p"/activities/new?duplicate=#{@activity.id}", class: "btn btn-light" %></span>
+<span><%= link "Edit", to: ~p"/activities/#{@activity}/edit", class: "btn btn-primary" %></span>
 
 <ul class="show-page-attributes-list">
 
   <li>
     <strong>Tag:</strong>
-    <%= link @activity.tag.name, to: Routes.tag_path(@conn, :show, @activity.tag) %>
+    <%= link @activity.tag.name, to: ~p"/tags/#{@activity.tag}" %>
   </li>
 
   <li>
     <strong>Category:</strong>
-    <%= link CategoryView.to_s(@activity.tag.category), to: Routes.category_path(@conn, :show, @activity.tag.category), class: CategoryView.color_style(@activity.tag.category) %>
+    <%= link CategoryView.to_s(@activity.tag.category), to: ~p"/categories/#{@activity.tag.category}", class: CategoryView.color_style(@activity.tag.category) %>
   </li>
 
   <li>

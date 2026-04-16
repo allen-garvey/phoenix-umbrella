@@ -1,6 +1,6 @@
 <h1>Categories</h1>
 
-<div class="form-group"><%= link "New Category", to: Routes.category_path(@conn, :new), class: "btn btn-success" %></div>
+<div class="form-group"><%= link "New Category", to: ~p"/categories/new", class: "btn btn-success" %></div>
 
 <table>
   <thead>
@@ -16,11 +16,11 @@
 <%= for category <- @categories do %>
     <tr>
       <td></td>
-      <td><%= link category.name, to: Routes.category_path(@conn, :show, category) %></td>
+      <td><%= link category.name, to: ~p"/categories/#{category}" %></td>
       <td class={["center", color_style(category)]}><%= String.capitalize(category.color) %></td>
 
       <td>
-        <%= link "Edit", to: Routes.category_path(@conn, :edit, category), class: "btn btn-primary" %>
+        <%= link "Edit", to: ~p"/categories/#{category}/edit", class: "btn btn-primary" %>
       </td>
     </tr>
 <% end %>

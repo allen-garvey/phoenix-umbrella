@@ -1,19 +1,19 @@
 <h1><%= @tag.name %></h1>
 
-<%= form_for @conn, Routes.tag_path(@conn, :delete, @tag), [method: "delete", data_form: "delete", class: "inline"], fn _f -> %>
+<%= form_for @conn, ~p"/tags/#{@tag}", [method: "delete", data_form: "delete", class: "inline"], fn _f -> %>
     <input type="submit" value="Delete" class="btn btn-danger" data-button="delete" />
 <% end %>
-<span><%= link "Edit", to: Routes.tag_path(@conn, :edit, @tag), class: "btn btn-primary" %></span>
+<span><%= link "Edit", to: ~p"/tags/#{@tag}/edit", class: "btn btn-primary" %></span>
 
 <ul class="show-page-attributes-list">
 
   <li>
     <strong>Category:</strong>
-    <%= link CategoryView.to_s(@tag.category), to: Routes.category_path(@conn, :show, @tag.category), class: CategoryView.color_style(@tag.category) %>
+    <%= link CategoryView.to_s(@tag.category), to: ~p"/categories/#{@tag.category}", class: CategoryView.color_style(@tag.category) %>
   </li>
 
 </ul>
 
-<%= 
-  render HabitsWeb.CategoryView, "activities_list.html", conn: @conn, activities: @activities, category: @tag.category, title: "Recent activities", all_activities_path: Routes.tag_path(@conn, :activities_list, @tag), edit_redirect: "tag"
+<%=
+  render HabitsWeb.CategoryView, "activities_list.html", conn: @conn, activities: @activities, category: @tag.category, title: "Recent activities", all_activities_path: ~p"/tags/#{@tag}/activities", edit_redirect: "tag"
 %>

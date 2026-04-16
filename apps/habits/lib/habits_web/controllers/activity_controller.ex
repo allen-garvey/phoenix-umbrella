@@ -138,7 +138,7 @@ defmodule HabitsWeb.ActivityController do
   defp create_succeeded(conn, activity, _save_another) do
     tag = Admin.get_tag!(activity.tag_id)
 
-    redirect(conn, to: Routes.category_path(conn, :show, tag.category_id))
+    redirect(conn, to: ~p"/categories/#{tag.category_id}")
   end
 
   def create(conn, %{"activity" => activity_params} = params) do
@@ -199,19 +199,19 @@ defmodule HabitsWeb.ActivityController do
       {:ok, _activity} ->
         conn
         |> put_flash(:info, "Activity updated successfully.")
-        |> redirect(to: update_redirect_path(conn, activity, redirect_action))
+        |> redirect(to: update_redirect_path(activity, redirect_action))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         edit_page(conn, activity, changeset, redirect_action)
     end
   end
 
-  defp update_redirect_path(conn, activity, redirect_action) do
+  defp update_redirect_path(activity, redirect_action) do
     case redirect_action do
-      "category" -> Routes.category_path(conn, :activities_list, activity.tag.category_id)
-      "tag" -> Routes.tag_path(conn, :activities_list, activity.tag_id)
-      "home" -> Routes.category_path(conn, :create_category_activity_index)
-      _ -> Routes.activity_path(conn, :index)
+      "category" -> ~p"/categories/#{activity.tag.category_id}/activities"
+      "tag" -> ~p"/tags/#{activity.tag_id}/activities"
+      "home" -> ~p"/"
+      _ -> ~p"/activities"
     end
   end
 
@@ -221,6 +221,6 @@ defmodule HabitsWeb.ActivityController do
 
     conn
     |> put_flash(:info, "Activity deleted successfully.")
-    |> redirect(to: Routes.activity_path(conn, :index))
+    |> redirect(to: ~p"/activities")
   end
 end

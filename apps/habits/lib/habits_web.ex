@@ -22,7 +22,7 @@ defmodule HabitsWeb do
       use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
-      alias HabitsWeb.Router.Helpers, as: Routes
+      use Phoenix.VerifiedRoutes, router: HabitsWeb.Router, endpoint: HabitsWeb.Endpoint
     end
   end
 
@@ -39,6 +39,8 @@ defmodule HabitsWeb do
         only: [get_flash: 1, view_module: 1, view_template: 1]
 
       require Common.ViewHelpers.Form
+
+      use Phoenix.VerifiedRoutes, router: HabitsWeb.Router, endpoint: HabitsWeb.Endpoint
 
       # Include shared imports and aliases for views
       unquote(view_helpers())
@@ -77,8 +79,6 @@ defmodule HabitsWeb do
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
-
-      alias HabitsWeb.Router.Helpers, as: Routes
     end
   end
 

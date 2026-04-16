@@ -5,7 +5,7 @@ defmodule HabitsWeb.TagView do
 
   Common.ViewHelpers.Form.define_map_for_form(true)
 
-  def tag_link_title(conn, tag) do
-    link(tag.name, to: Routes.category_path(conn, :show, tag))
+  def tag_link_title(tag) do
+    link(tag.name, to: ~p"/tags/#{tag}")
   end
 end

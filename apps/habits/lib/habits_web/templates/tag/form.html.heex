@@ -22,6 +22,6 @@
 </.form>
 
 <%= if assigns[:tag] do
-    CommonWeb.FormView.hidden_delete_form(@conn, Routes.tag_path(@conn, :delete, @tag))
+    CommonWeb.FormView.hidden_delete_form(@conn, ~p"/tags/#{@tag}")
   end
 %>

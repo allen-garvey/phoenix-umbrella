@@ -26,6 +26,6 @@
 </.form>
 
 <%= if assigns[:activity] do
-    CommonWeb.FormView.hidden_delete_form(@conn, Routes.activity_path(@conn, :delete, @activity))
+    CommonWeb.FormView.hidden_delete_form(@conn, ~p"/activities/#{@activity}")
   end
 %>

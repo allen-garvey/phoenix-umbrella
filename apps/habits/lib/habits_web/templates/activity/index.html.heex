@@ -4,7 +4,7 @@
     <span>(<%= Enum.count(@activities) %>)</span>
   </div>
   <%= if assigns[:has_limit] do %>
-    <%= link "All activities", to: Routes.activity_path(@conn, :index), class: "btn btn-sm btn-dark" %>
+    <%= link "All activities", to: ~p"/activities", class: "btn btn-sm btn-dark" %>
   <% end %>
 </div>
 
@@ -24,17 +24,21 @@
 <%= for activity <- @activities do %>
     <tr>
       <td></td>
-      <td class={["center", CategoryView.color_style(activity.tag.category)]}><%= link CategoryView.to_s(activity.tag.category), to: Routes.category_path(@conn, :show, activity.tag.category) %></td>
-      <td class={["center", CategoryView.color_style(activity.tag.category)]}><%= link activity.tag.name, to: Routes.tag_path(@conn, :show, activity.tag) %></td>
+      <td class={["center", CategoryView.color_style(activity.tag.category)]}>
+        <%= link CategoryView.to_s(activity.tag.category), to: ~p"/categories/#{activity.tag.category}" %>
+      </td>
+      <td class={["center", CategoryView.color_style(activity.tag.category)]}>
+        <%= link activity.tag.name, to: ~p"/tags/#{activity.tag}" %>
+      </td>
       <td><%= linkify_description(activity.description) %></td>
       <td><%= activity.date %></td>
 
       <td>
         <span>
-          <%= link "Duplicate", to: Routes.activity_path(@conn, :new, duplicate: activity.id), class: "btn btn-light" %>
+          <%= link "Duplicate", to: ~p"/activities/new?duplicate=#{activity.id}", class: "btn btn-light" %>
         </span>
         <span>
-          <%= link "Edit", to: Routes.activity_path(@conn, :edit, activity), class: "btn btn-primary" %>
+          <%= link "Edit", to: ~p"/activities/#{activity}/edit", class: "btn btn-primary" %>
         </span>
       </td>
     </tr>

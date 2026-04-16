@@ -1,14 +1,14 @@
 <ul class="create-category-activity-list">
   <%= for category <- @categories do %>
     <li class={ [color_style(category), category_has_activity_style(category)] }>
-      <%= link HabitsWeb.CategoryView.to_s(category), to: Routes.category_path(@conn, :show, category) %>
-        <%= link "Add", to: Routes.activity_path(@conn, :new, category: category.id), class: "btn btn-sm btn-light" %>
+      <%= link HabitsWeb.CategoryView.to_s(category), to: ~p"/categories/#{category}" %>
+        <%= link "Add", to: ~p"/activities/new?category=#{category.id}", class: "btn btn-sm btn-light" %>
     </li>
   <% end %>
 </ul>
 
 <%= if Enum.empty?(@categories) do %>
-    <%= link "Create a category", to: Routes.category_path(@conn, :new), class: "btn btn-success" %>
+    <%= link "Create a category", to: ~p"/categories/new", class: "btn btn-success" %>
 <% end %>
 
 <%= if !Enum.empty?(@todays_activities) do %>

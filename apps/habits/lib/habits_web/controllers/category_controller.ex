@@ -77,7 +77,7 @@ defmodule HabitsWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "#{CategoryView.to_s(category)} created successfully.")
-        |> redirect(to: Routes.category_path(conn, :index))
+        |> redirect(to: ~p"/categories")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -120,7 +120,7 @@ defmodule HabitsWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "#{CategoryView.to_s(category)} updated successfully.")
-        |> redirect(to: Routes.category_path(conn, :index))
+        |> redirect(to: ~p"/categories")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", category: category, changeset: changeset)
@@ -133,7 +133,7 @@ defmodule HabitsWeb.CategoryController do
 
     conn
     |> put_flash(:info, "Category deleted successfully.")
-    |> redirect(to: Routes.category_path(conn, :index))
+    |> redirect(to: ~p"/categories")
   end
 
   def activities_list(conn, %{"id" => id, "limit" => limit}) do
@@ -145,9 +145,9 @@ defmodule HabitsWeb.CategoryController do
     render(conn, "activities_list.html",
       category: category,
       activities: activities,
-      all_activities_path: Routes.category_path(conn, :activities_list, category),
+      all_activities_path: ~p"/categories/#{category}/activities",
       edit_redirect: "category",
-      title: HabitsWeb.CategoryView.category_link_title(conn, category)
+      title: HabitsWeb.CategoryView.category_link_title(category)
     )
   end
 
@@ -159,7 +159,7 @@ defmodule HabitsWeb.CategoryController do
       category: category,
       activities: activities,
       edit_redirect: "category",
-      title: HabitsWeb.CategoryView.category_link_title(conn, category)
+      title: HabitsWeb.CategoryView.category_link_title(category)
     )
   end
 

@@ -59,7 +59,7 @@ defmodule HabitsWeb.CategoryView do
     end
   end
 
-  def category_link_title(conn, category) do
-    link(category.name, to: Routes.category_path(conn, :show, category))
+  def category_link_title(category) do
+    link(category.name, to: ~p"/categories/#{category}")
   end
 end

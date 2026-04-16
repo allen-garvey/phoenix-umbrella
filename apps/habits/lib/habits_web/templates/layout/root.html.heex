@@ -11,20 +11,20 @@
   <body>
     <header class="jumbotron">
       <div class="container main-padding">
-        <h1 class="main_title"><%= link "Habits", to: Routes.category_path(@conn, :create_category_activity_index) %></h1>
+        <h1 class="main_title"><%= link "Habits", to: ~p"/" %></h1>
         <nav>
           <ul class="nav">
-            <li><%= link "Calendar", to: Routes.page_path(@conn, :calendar) %></li>
-            <li><%= link "Categories", to: Routes.category_path(@conn, :index) %></li>
-            <li><%= link "Tags", to: Routes.tag_path(@conn, :index) %></li>
-            <li><%= link "Activities", to: Routes.activity_path(@conn, :index, limit: 50) %></li>
+            <li><%= link "Calendar", to: ~p"/calendar" %></li>
+            <li><%= link "Categories", to: ~p"/categories" %></li>
+            <li><%= link "Tags", to: ~p"/tags" %></li>
+            <li><%= link "Activities", to: ~p"/activities?limit=50" %></li>
             <%= for category <- Habits.Admin.list_favorite_categories(assigns[:categories]) do %>
               <li>
-                <%= link HabitsWeb.CategoryView.to_s(category), to: Routes.category_path(@conn, :show, category) %>
+                <%= link HabitsWeb.CategoryView.to_s(category), to: ~p"/categories/#{category}" %>
               </li>
             <% end %>
-            <li><%= link "Search", to: Routes.activity_path(@conn, :search) %></li>
-            <li><%= link "Add Activity", to: Routes.activity_path(@conn, :new), class: "btn btn-success" %></li>
+            <li><%= link "Search", to: ~p"/activities/search" %></li>
+            <li><%= link "Add Activity", to: ~p"/activities/new", class: "btn btn-success" %></li>
           </ul>
         </nav>
       </div>

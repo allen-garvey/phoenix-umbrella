@@ -5,7 +5,7 @@
   </div>
 </div>
 
-<div class="form-group"><%= link "New Tag", to: Routes.tag_path(@conn, :new), class: "btn btn-success" %></div>
+<div class="form-group"><%= link "New Tag", to: ~p"/tags/new", class: "btn btn-success" %></div>
 
 <table>
   <thead>
@@ -21,18 +21,18 @@
 <%= for tag <- @tags do %>
     <tr>
       <td></td>
-      <td class={["center", CategoryView.color_style(tag.category)]}><%= link CategoryView.to_s(tag.category), to: Routes.category_path(@conn, :show, tag.category) %></td>
-      <td><%= link tag.name, to: Routes.tag_path(@conn, :show, tag) %></td>
+      <td class={["center", CategoryView.color_style(tag.category)]}><%= link CategoryView.to_s(tag.category), to: ~p"/categories/#{tag.category}" %></td>
+      <td><%= link tag.name, to: ~p"/tags/#{tag}" %></td>
 
       <td>
         <span>
-          <%= link "Edit", to: Routes.tag_path(@conn, :edit, tag), class: "btn btn-primary" %>
+          <%= link "Edit", to: ~p"/tags/#{tag}/edit", class: "btn btn-primary" %>
         </span>
       </td>
 
       <td>
         <span>
-          <%= link "Add activity", to: Routes.activity_path(@conn, :new, tag: tag.id), class: "btn btn-light" %>
+          <%= link "Add activity", to: ~p"/activities/new?tag=#{tag.id}", class: "btn btn-light" %>
         </span>
       </td>
     </tr>

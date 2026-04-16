@@ -48,7 +48,7 @@ defmodule HabitsWeb.TagController do
       {:ok, tag} ->
         conn
         |> put_flash(:info, "Tag created successfully.")
-        |> redirect(to: redirect_path(conn, tag, redirect_action))
+        |> redirect(to: redirect_path(tag, redirect_action))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         new_page(conn, changeset, redirect_action)
@@ -61,7 +61,6 @@ defmodule HabitsWeb.TagController do
     render(conn, :show, tag: tag, activities: activities)
   end
 
-  @spec activities_list(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def activities_list(conn, %{"id" => id}) do
     tag = Admin.get_tag!(id)
     activities = Admin.activities_for_tag(id)
@@ -72,7 +71,7 @@ defmodule HabitsWeb.TagController do
       activities: activities,
       category: tag.category,
       edit_redirect: "tag",
-      title: HabitsWeb.TagView.tag_link_title(conn, tag)
+      title: HabitsWeb.TagView.tag_link_title(tag)
     )
   end
 
@@ -114,17 +113,17 @@ defmodule HabitsWeb.TagController do
       {:ok, tag} ->
         conn
         |> put_flash(:info, "Tag updated successfully.")
-        |> redirect(to: redirect_path(conn, tag, redirect_action))
+        |> redirect(to: redirect_path(tag, redirect_action))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         edit_page(conn, tag, changeset, redirect_action)
     end
   end
 
-  defp redirect_path(conn, tag, redirect_action) do
+  defp redirect_path(tag, redirect_action) do
     case redirect_action do
-      "category" -> Routes.category_path(conn, :show, tag.category_id)
-      _ -> Routes.tag_path(conn, :index)
+      "category" -> ~p"/categories/#{tag.category_id}"
+      _ -> ~p"/tags"
     end
   end
 
@@ -134,6 +133,6 @@ defmodule HabitsWeb.TagController do
 
     conn
     |> put_flash(:info, "Tag deleted successfully.")
-    |> redirect(to: Routes.tag_path(conn, :index))
+    |> redirect(to: ~p"/tags")
   end
 end
