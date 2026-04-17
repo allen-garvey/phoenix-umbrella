@@ -21,7 +21,7 @@ defmodule PluginistaWeb.PluginCategoryController do
       {:ok, plugin_category} ->
         conn
         |> put_flash(:info, "Plugin category created successfully.")
-        |> redirect(to: Routes.plugin_category_path(conn, :show, plugin_category))
+        |> redirect(to: ~p"/plugin_categories/#{plugin_category}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -46,7 +46,7 @@ defmodule PluginistaWeb.PluginCategoryController do
       {:ok, plugin_category} ->
         conn
         |> put_flash(:info, "Plugin category updated successfully.")
-        |> redirect(to: Routes.plugin_category_path(conn, :show, plugin_category))
+        |> redirect(to: ~p"/plugin_categories/#{plugin_category}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", plugin_category: plugin_category, changeset: changeset)
@@ -59,6 +59,6 @@ defmodule PluginistaWeb.PluginCategoryController do
 
     conn
     |> put_flash(:info, "Plugin category deleted successfully.")
-    |> redirect(to: Routes.plugin_category_path(conn, :index))
+    |> redirect(to: ~p"/plugin_categories")
   end
 end

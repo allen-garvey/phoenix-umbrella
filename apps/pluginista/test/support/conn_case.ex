@@ -24,8 +24,6 @@ defmodule PluginistaWeb.ConnCase do
       import Phoenix.ConnTest
       import PluginistaWeb.ConnCase
 
-      alias PluginistaWeb.Router.Helpers, as: Routes
-
       # The default endpoint for testing
       @endpoint PluginistaWeb.Endpoint
     end

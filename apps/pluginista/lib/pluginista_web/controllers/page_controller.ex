@@ -6,10 +6,10 @@ defmodule PluginistaWeb.PageController do
 
   def index(conn, _params) do
     resources_list = [
-      {"Categories", Routes.category_path(conn, :index)},
-      {"Groups", Routes.group_path(conn, :index)},
-      {"Makers", Routes.maker_path(conn, :index)},
-      {"Plugins", Routes.plugin_path(conn, :index)}
+      {"Categories", ~p"/categories"},
+      {"Groups", ~p"/groups"},
+      {"Makers", ~p"/makers"},
+      {"Plugins", ~p"/plugins"}
     ]
 
     current_year = Common.ModelHelpers.Date.today().year

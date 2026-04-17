@@ -4,5 +4,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.plugin_category_path(@conn, :edit, @plugin_category) %></span> |
-<span><%= link "Back", to: Routes.plugin_category_path(@conn, :index) %></span>
+<span><%= link "Edit", to: ~p"/plugin_categories/#{@plugin_category}/edit" %></span> |
+<span><%= link "Back", to: ~p"/plugin_categories" %></span>

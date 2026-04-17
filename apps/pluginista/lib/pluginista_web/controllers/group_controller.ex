@@ -21,7 +21,7 @@ defmodule PluginistaWeb.GroupController do
       {:ok, group} ->
         conn
         |> put_flash(:info, "#{group.name} created successfully.")
-        |> redirect(to: Routes.group_path(conn, :index))
+        |> redirect(to: ~p"/groups")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -48,7 +48,7 @@ defmodule PluginistaWeb.GroupController do
       {:ok, group} ->
         conn
         |> put_flash(:info, "#{group.name} updated successfully.")
-        |> redirect(to: Routes.group_path(conn, :show, group))
+        |> redirect(to: ~p"/groups/#{group}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", group: group, changeset: changeset)
@@ -61,6 +61,6 @@ defmodule PluginistaWeb.GroupController do
 
     conn
     |> put_flash(:info, "#{group.name} deleted successfully.")
-    |> redirect(to: Routes.group_path(conn, :index))
+    |> redirect(to: ~p"/groups")
   end
 end

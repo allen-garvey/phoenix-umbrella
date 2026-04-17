@@ -1,5 +1,5 @@
 <h1>Plugins (<%= Enum.count(@plugins) %>)</h1>
 
-<div class="form-group"><%= link "New Plugin", to: Routes.plugin_path(@conn, :new), class: "btn btn-success" %></div>
+<div class="form-group"><%= link "New Plugin", to: ~p"/plugins/new", class: "btn btn-success" %></div>
 
-<%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: Routes.api_plugin_path(@conn, :index)) %>
+<%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: ~p"/api/plugins") %>

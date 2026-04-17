@@ -22,7 +22,8 @@ defmodule PluginistaWeb do
       use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
-      alias PluginistaWeb.Router.Helpers, as: Routes
+
+      use Phoenix.VerifiedRoutes, router: PluginistaWeb.Router, endpoint: PluginistaWeb.Endpoint
     end
   end
 
@@ -39,6 +40,8 @@ defmodule PluginistaWeb do
         only: [get_flash: 1, view_module: 1, view_template: 1]
 
       require Common.ViewHelpers.Form
+
+      use Phoenix.VerifiedRoutes, router: PluginistaWeb.Router, endpoint: PluginistaWeb.Endpoint
 
       # Include shared imports and aliases for views
       unquote(view_helpers())
@@ -77,8 +80,6 @@ defmodule PluginistaWeb do
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
-
-      alias PluginistaWeb.Router.Helpers, as: Routes
     end
   end
 

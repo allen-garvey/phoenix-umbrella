@@ -1,4 +1,8 @@
-<%= render PluginistaWeb.SharedView, "show_header.html", conn: @conn, title: @group.name, index_path: Routes.group_path(@conn, :index), edit_path: Routes.group_path(@conn, :edit, @group), delete_path: Routes.group_path(@conn, :delete, @group) %>
+<%= render PluginistaWeb.SharedView, "show_header.html", conn: @conn,
+title: @group.name,
+index_path: ~p"/groups",
+edit_path: ~p"/groups/#{@group}/edit",
+delete_path: ~p"/groups/#{@group}" %>
 
 <ul>
   <li>
@@ -12,4 +16,4 @@
 </ul>
 
 <h3>Plugins</h3>
-<%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: Routes.api_plugin_path(@conn, :plugins_for_group, @group.id)) %>
+<%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: ~p"/api/groups/#{@group.id}/plugins") %>

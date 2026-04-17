@@ -1,4 +1,3 @@
 <h1>Edit Maker <%= @maker.name %></h1>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.maker_path(@conn, :update, @maker)) %>
-
+<%= render "form.html", Map.put(assigns, :action, ~p"/makers/#{@maker}") %>

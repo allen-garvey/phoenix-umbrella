@@ -11,15 +11,15 @@
   <body>
     <header class="jumbotron">
       <div class="container">
-        <h1 class="main_title"><%= link "Pluginista", to: Routes.page_path(@conn, :index) %></h1>
+        <h1 class="main_title"><%= link "Pluginista", to: ~p"/" %></h1>
         <nav>
           <ul class="nav">
             <%= for group <- assigns[:nav_groups] do %>
-              <li><%= link group.name, to: Routes.group_path(@conn, :show, group) %></li>
+              <li><%= link group.name, to: ~p"/groups/#{group}" %></li>
             <% end %>
-            <li><%= link "Plugins", to: Routes.plugin_path(@conn, :index, sort: "category") %></li>
-            <li><%= link "Reports", to: Routes.report_path(@conn, :index) %></li>
-            <li><%= link "Add Plugin", to: Routes.plugin_path(@conn, :new), class: "btn btn-success" %></li>
+            <li><%= link "Plugins", to: ~p"/plugins?sort=category" %></li>
+            <li><%= link "Reports", to: ~p"/reports" %></li>
+            <li><%= link "Add Plugin", to: ~p"/plugins/new", class: "btn btn-success" %></li>
           </ul>
         </nav>
       </div>

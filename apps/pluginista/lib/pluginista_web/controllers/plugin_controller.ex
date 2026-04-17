@@ -46,7 +46,7 @@ defmodule PluginistaWeb.PluginController do
   end
 
   defp create_succeeded(conn, _plugin, _save_another) do
-    redirect(conn, to: Routes.report_path(conn, :index))
+    redirect(conn, to: ~p"/reports")
   end
 
   def create(conn, %{"plugin" => plugin_params} = params) do
@@ -83,7 +83,7 @@ defmodule PluginistaWeb.PluginController do
       {:ok, plugin} ->
         conn
         |> put_flash(:info, "#{plugin.name} updated successfully.")
-        |> redirect(to: Routes.plugin_path(conn, :show, plugin))
+        |> redirect(to: ~p"/plugins/#{plugin}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", [plugin: plugin, changeset: changeset] ++ related_fields())
@@ -96,7 +96,7 @@ defmodule PluginistaWeb.PluginController do
 
     conn
     |> put_flash(:info, "#{plugin.name} deleted successfully.")
-    |> redirect(to: Routes.plugin_path(conn, :index))
+    |> redirect(to: ~p"/plugins")
   end
 
   def update_categories(conn, %{"id" => plugin_id, "categories" => category_ids}) do
@@ -104,7 +104,7 @@ defmodule PluginistaWeb.PluginController do
 
     create_categories_for_plugin(conn, plugin_id, category_ids)
     |> put_flash(:info, "Categories updated.")
-    |> redirect(to: Routes.plugin_path(conn, :show, plugin_id))
+    |> redirect(to: ~p"/plugins/#{plugin_id}")
   end
 
   def update_categories(conn, %{"id" => plugin_id}) do
@@ -112,7 +112,7 @@ defmodule PluginistaWeb.PluginController do
 
     conn
     |> put_flash(:info, "Categories updated.")
-    |> redirect(to: Routes.plugin_path(conn, :show, plugin_id))
+    |> redirect(to: ~p"/plugins/#{plugin_id}")
   end
 
   defp create_categories_for_plugin(conn, plugin_id, category_ids) when is_list(category_ids) do

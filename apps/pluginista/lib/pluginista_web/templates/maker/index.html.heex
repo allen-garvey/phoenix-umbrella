@@ -1,6 +1,6 @@
 <h1>Makers (<%= Enum.count(@makers) %>)</h1>
 
-<div class="form-group"><%= link "New Maker", to: Routes.maker_path(@conn, :new), class: "btn btn-success" %></div>
+<div class="form-group"><%= link "New Maker", to: ~p"/makers/new", class: "btn btn-success" %></div>
 
 <table>
   <thead>
@@ -14,10 +14,10 @@
 <%= for maker <- @makers do %>
     <tr>
       <td></td>
-      <td><%= link maker.name, to: Routes.maker_path(@conn, :show, maker) %></td>
+      <td><%= link maker.name, to: ~p"/makers/#{maker}" %></td>
 
       <td>
-        <span><%= link "Edit", to: Routes.maker_path(@conn, :edit, maker), class: "btn btn-primary" %></span>
+        <span><%= link "Edit", to: ~p"/makers/#{maker}/edit", class: "btn btn-primary" %></span>
       </td>
     </tr>
 <% end %>

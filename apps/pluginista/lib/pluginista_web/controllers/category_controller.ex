@@ -28,7 +28,7 @@ defmodule PluginistaWeb.CategoryController do
   end
 
   def create_succeeded(conn, category, _save_another) do
-    redirect(conn, to: Routes.category_path(conn, :show, category))
+    redirect(conn, to: ~p"/categories/#{category}")
   end
 
   def create(conn, %{"category" => category_params} = params) do
@@ -63,7 +63,7 @@ defmodule PluginistaWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "#{category.name} updated successfully.")
-        |> redirect(to: Routes.category_path(conn, :show, category))
+        |> redirect(to: ~p"/categories/#{category}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", [category: category, changeset: changeset] ++ related_fields())
@@ -76,6 +76,6 @@ defmodule PluginistaWeb.CategoryController do
 
     conn
     |> put_flash(:info, "#{category.name} deleted successfully.")
-    |> redirect(to: Routes.category_path(conn, :index))
+    |> redirect(to: ~p"/categories")
   end
 end

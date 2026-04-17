@@ -1,4 +1,9 @@
-<%= render PluginistaWeb.SharedView, "show_header.html", conn: @conn, title: @maker.name, index_path: Routes.maker_path(@conn, :index), edit_path: Routes.maker_path(@conn, :edit, @maker), delete_path: Routes.maker_path(@conn, :delete, @maker) %>
+<%= render PluginistaWeb.SharedView, "show_header.html", conn: @conn,
+title: @maker.name,
+index_path: ~p"/makers",
+edit_path: ~p"/makers/#{@maker}/edit",
+delete_path: ~p"/makers/#{@maker}"
+%>
 
 <ul>
   <li>
@@ -16,4 +21,4 @@
 </ul>
 
 <h3>Plugins</h3>
-<%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: Routes.api_plugin_path(@conn, :plugins_for_maker, @maker.id)) %>
+<%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: ~p"/api/makers/#{@maker.id}/plugins") %>
