@@ -21,7 +21,7 @@ defmodule StartpageWeb.FolderController do
       {:ok, _folder} ->
         conn
         |> put_flash(:info, "Folder created successfully.")
-        |> redirect(to: Routes.folder_path(conn, :index))
+        |> redirect(to: ~p"/admin/folders")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -46,7 +46,7 @@ defmodule StartpageWeb.FolderController do
       {:ok, _folder} ->
         conn
         |> put_flash(:info, "Folder updated successfully.")
-        |> redirect(to: Routes.folder_path(conn, :index))
+        |> redirect(to: ~p"/admin/folders")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", folder: folder, changeset: changeset)
@@ -59,6 +59,6 @@ defmodule StartpageWeb.FolderController do
 
     conn
     |> put_flash(:info, "Folder deleted successfully.")
-    |> redirect(to: Routes.folder_path(conn, :index))
+    |> redirect(to: ~p"/admin/folders")
   end
 end

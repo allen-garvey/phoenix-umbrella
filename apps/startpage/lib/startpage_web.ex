@@ -22,7 +22,8 @@ defmodule StartpageWeb do
       use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
-      alias StartpageWeb.Router.Helpers, as: Routes
+
+      use Phoenix.VerifiedRoutes, router: StartpageWeb.Router, endpoint: StartpageWeb.Endpoint
     end
   end
 
@@ -40,7 +41,7 @@ defmodule StartpageWeb do
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
 
-      alias StartpageWeb.Router.Helpers, as: Routes
+      use Phoenix.VerifiedRoutes, router: StartpageWeb.Router, endpoint: StartpageWeb.Endpoint
     end
   end
 

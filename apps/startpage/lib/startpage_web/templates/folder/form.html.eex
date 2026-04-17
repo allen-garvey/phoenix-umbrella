@@ -25,7 +25,7 @@ https://google.com --- Google
     </div>
 
   <div class="form-group form-button-container">
-    <%= link "Back", to: Routes.folder_path(@conn, :index), class: "btn btn-outline-secondary" %>
+    <%= link "Back", to: ~p"/admin/folders", class: "btn btn-outline-secondary" %>
     <%= submit "Save", class: "btn btn-success" %>
   </div>
 <% end %>
