@@ -11,7 +11,7 @@
             <tr>
                 <td class="reporting_top_rated_books_table__index"></td>
                 <td>
-                    <%= link(BooklistWeb.BookView.to_s(book), to: Routes.book_path(@conn, :show, book)) %>
+                    <%= link(BooklistWeb.BookView.to_s(book), to: ~p"/books/#{book}") %>
                 </td>
                 <td>
                     <%= ratings_count %>

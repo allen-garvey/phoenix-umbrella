@@ -16,7 +16,7 @@
 		<%= for {year, count} <- @years do %>
 			<li>
 				<div>
-                    <%= link year, to: reports_for_year_path(@conn, year) %>
+                    <%= link year, to: reports_for_year_path(year) %>
 				</div>
 				<div><%= count %></div>
 			</li>

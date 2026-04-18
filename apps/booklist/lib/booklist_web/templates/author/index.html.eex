@@ -2,6 +2,7 @@
   conn: @conn,
   item_name: "Author",
   items: @authors,
-  item_path: :author_path,
+  new_path: ~p"/authors/new",
+  show_path_func: &show_path/1,
   item_to_s: &to_sorted_name/1
 %>

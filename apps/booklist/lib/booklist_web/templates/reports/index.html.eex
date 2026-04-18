@@ -2,12 +2,12 @@
 
 <ul>
     <li>
-        <%= link "Years Overview", to: Routes.reports_path(@conn, :years_index) %>
+        <%= link "Years Overview", to: ~p"/reports/years" %>
     </li>
     <li>
-        <%= link "Current Year Report", to: BooklistWeb.ReportsView.reports_for_current_year_path(@conn) %>
+        <%= link "Current Year Report", to: BooklistWeb.ReportsView.reports_for_current_year_path() %>
     </li>
     <li>
-        <%= link "Authors Report", to: Routes.reports_path(@conn, :authors_index) %>
+        <%= link "Authors Report", to: ~p"/reports/authors" %>
     </li>
 </u>

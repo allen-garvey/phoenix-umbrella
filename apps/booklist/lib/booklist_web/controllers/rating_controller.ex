@@ -22,7 +22,7 @@ defmodule BooklistWeb.RatingController do
     render(conn, "index.html", ratings: ratings)
   end
 
-  def new(conn, %{"book_id" => book_id}) do
+  def new(conn, %{"book" => book_id}) do
     changeset = Admin.change_rating_with_book(%Rating{}, book_id)
     render(conn, "new.html", [changeset: changeset] ++ related_fields())
   end
@@ -40,9 +40,7 @@ defmodule BooklistWeb.RatingController do
 
         conn
         |> put_flash(:info, "Rating created successfully.")
-        |> redirect(
-          to: BooklistWeb.ReportsView.reports_for_year_path(conn, rating.date_scored.year)
-        )
+        |> redirect(to: BooklistWeb.ReportsView.reports_for_year_path(rating.date_scored.year))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset] ++ related_fields())
@@ -67,7 +65,7 @@ defmodule BooklistWeb.RatingController do
       {:ok, rating} ->
         conn
         |> put_flash(:info, "Rating updated successfully.")
-        |> redirect(to: Routes.rating_path(conn, :show, rating))
+        |> redirect(to: ~p"/ratings/#{rating}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", [rating: rating, changeset: changeset] ++ related_fields())
@@ -81,6 +79,6 @@ defmodule BooklistWeb.RatingController do
 
     conn
     |> put_flash(:info, item_name <> " deleted.")
-    |> redirect(to: Routes.rating_path(conn, :index))
+    |> redirect(to: ~p"/ratings")
   end
 end

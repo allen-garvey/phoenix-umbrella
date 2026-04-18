@@ -38,7 +38,6 @@ defmodule BooklistWeb.Router do
     # routes with duplicate methods have to be after resource routes, or they cause errors on index pages
     get "/books/:book_id/locations/new", BookLocationController, :new
     get "/books/:book_id/ratings/new", RatingController, :new
-    get "/books/:id/duplicate", BookController, :duplicate
 
     get "/libraries/:library_id/locations/new", LocationController, :new
   end

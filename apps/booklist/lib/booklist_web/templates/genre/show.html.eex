@@ -1,9 +1,11 @@
 <%= render(BooklistWeb.SharedView, "show-header.html",
       conn: @conn,
       resource_title_plural: "Genres",
-      resource_path_atom: :genre_path,
-      item: @genre,
-      item_name: to_s(@genre))
+      item_name: to_s(@genre),
+      index_path: ~p"/genres",
+      edit_path: ~p"/genres/#{@genre}/edit",
+      delete_path: ~p"/genres/#{@genre}"
+      )
 %>
 
 <ul>
@@ -20,11 +22,11 @@
 <div>
   <h3>Ratings <span class="items-count"><%= @ratings_count %></span></h3>
   <div>
-    <%= sort_link(@conn, @genre.id, @sort) %>
+    <%= sort_link(@genre.id, @sort) %>
   </div>
   <ol class="genre_ratings_list">
     <%= for rating <- @ratings do
-		  content_tag :li, link(BooklistWeb.RatingView.to_s(rating), to: Routes.book_path(@conn, :show, rating.book_id)), class: "genre_rating_item"
+		  content_tag :li, link(BooklistWeb.RatingView.to_s(rating), to: ~p"/books/#{rating.book_id}"), class: "genre_rating_item"
 	  end %>
   </ol>
 </div>

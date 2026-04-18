@@ -27,7 +27,7 @@ defmodule BooklistWeb.LoanController do
       {:ok, loan} ->
         conn
         |> put_flash(:info, "Loan created successfully.")
-        |> redirect(to: Routes.loan_path(conn, :show, loan))
+        |> redirect(to: ~p"/loans/#{loan}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset] ++ related_fields())
@@ -52,7 +52,7 @@ defmodule BooklistWeb.LoanController do
       {:ok, loan} ->
         conn
         |> put_flash(:info, "Loan updated successfully.")
-        |> redirect(to: Routes.loan_path(conn, :show, loan))
+        |> redirect(to: ~p"/loans/#{loan}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", [loan: loan, changeset: changeset] ++ related_fields())
@@ -66,6 +66,6 @@ defmodule BooklistWeb.LoanController do
 
     conn
     |> put_flash(:info, item_name <> " deleted.")
-    |> redirect(to: Routes.loan_path(conn, :index))
+    |> redirect(to: ~p"/loans")
   end
 end

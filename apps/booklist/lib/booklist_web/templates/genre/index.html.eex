@@ -2,6 +2,7 @@
   conn: @conn,
   item_name: "Genre",
   items: @genres,
-  item_path: :genre_path,
+  new_path: ~p"/genres/new",
+  show_path_func: &show_path/1,
   item_to_s: &to_s/1
 %>

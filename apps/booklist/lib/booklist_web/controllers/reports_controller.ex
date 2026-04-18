@@ -53,7 +53,7 @@ defmodule BooklistWeb.ReportsController do
   end
 
   def invalid_year_redirect(conn) do
-    redirect(conn, to: BooklistWeb.ReportsView.reports_for_current_year_path(conn))
+    redirect(conn, to: BooklistWeb.ReportsView.reports_for_current_year_path())
   end
 
   def index(conn, _params) do

@@ -31,7 +31,7 @@ defmodule BooklistWeb.AuthorController do
       {:ok, author} ->
         conn
         |> put_flash(:info, "Author created successfully.")
-        |> redirect(to: Routes.author_path(conn, :show, author))
+        |> redirect(to: ~p"/authors/#{author}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset] ++ related_fields())
@@ -57,7 +57,7 @@ defmodule BooklistWeb.AuthorController do
       {:ok, author} ->
         conn
         |> put_flash(:info, "Author updated successfully.")
-        |> redirect(to: Routes.author_path(conn, :show, author))
+        |> redirect(to: ~p"/authors/#{author}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", [author: author, changeset: changeset] ++ related_fields())
@@ -71,6 +71,6 @@ defmodule BooklistWeb.AuthorController do
 
     conn
     |> put_flash(:info, item_name <> " deleted.")
-    |> redirect(to: Routes.author_path(conn, :index))
+    |> redirect(to: ~p"/authors")
   end
 end

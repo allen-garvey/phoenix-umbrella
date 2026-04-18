@@ -1,8 +1,8 @@
 <div class="spread_content">
-	<%= link "Previous year", to: reports_for_year_path(@conn, @year - 1) %>
+	<%= link "Previous year", to: reports_for_year_path(@year - 1) %>
 	<%=
 		if @should_show_next_year == true do
-			link "Next year", to: reports_for_year_path(@conn, @year + 1)
+			link "Next year", to: reports_for_year_path(@year + 1)
 		end
 	%>
 </div>
@@ -30,7 +30,7 @@
 		<%= if !is_nil(@highest_rating) do %>
 			<div class="heading">Highest Rating</div>
 			<div class="info">
-				<%= link BooklistWeb.RatingView.to_reports_heading(@highest_rating), to: Routes.rating_path(@conn, :show, @highest_rating.id) %>
+				<%= link BooklistWeb.RatingView.to_reports_heading(@highest_rating), to: ~p"/ratings/#{@highest_rating.id}" %>
 			</div>
 		<% end %>
 	</div>
@@ -38,7 +38,7 @@
 		<%= if !is_nil(@lowest_rating) do  %>
 			<div class="heading">Lowest Rating</div>
 			<div class="info">
-				<%= link BooklistWeb.RatingView.to_reports_heading(@lowest_rating), to: Routes.rating_path(@conn, :show, @lowest_rating.id) %>
+				<%= link BooklistWeb.RatingView.to_reports_heading(@lowest_rating), to: ~p"/ratings/#{@lowest_rating.id}" %>
 			</div>
 		<% end %>
 	</div>
@@ -69,8 +69,8 @@
 		<%= for rating <- @ratings do %>
 			<li>
 				<div>
-					<%= link BooklistWeb.BookView.to_s(rating.book), to: Routes.book_path(@conn, :show, rating.book.id) %>
-					<%= link BooklistWeb.RatingView.to_s_short(rating), to: Routes.rating_path(@conn, :show, rating.id) %>
+					<%= link BooklistWeb.BookView.to_s(rating.book), to: ~p"/books/#{rating.book.id}" %>
+					<%= link BooklistWeb.RatingView.to_s_short(rating), to: ~p"/ratings/#{rating.id}" %>
 				</div>
 			</li>
 		<% end %>

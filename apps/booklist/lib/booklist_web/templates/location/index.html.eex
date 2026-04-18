@@ -2,6 +2,7 @@
   conn: @conn,
   item_name: "Location",
   items: @locations,
-  item_path: :location_path,
+  new_path: ~p"/locations/new",
+  show_path_func: &show_path/1,
   item_to_s: &to_s_full/1
 %>

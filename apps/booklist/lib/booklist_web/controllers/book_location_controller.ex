@@ -18,7 +18,7 @@ defmodule BooklistWeb.BookLocationController do
     render(conn, "index.html", book_locations: book_locations)
   end
 
-  def new(conn, %{"book_id" => book_id}) do
+  def new(conn, %{"book" => book_id}) do
     changeset = Admin.change_book_location_with_book(%BookLocation{}, book_id)
     render(conn, "new.html", [changeset: changeset, referrer: "book"] ++ related_fields())
   end
@@ -32,24 +32,24 @@ defmodule BooklistWeb.BookLocationController do
     create_action(
       conn,
       book_location_params,
-      fn conn, book_location -> Routes.book_path(conn, :show, book_location.book_id) end,
+      fn book_location -> ~p"/books/#{book_location.book_id}" end,
       "book"
     )
   end
 
   def create(conn, %{"book_location" => book_location_params}) do
-    create_action(conn, book_location_params, fn conn, book_location ->
-      Routes.book_location_path(conn, :show, book_location)
+    create_action(conn, book_location_params, fn book_location ->
+      ~p"/book-locations/#{book_location}"
     end)
   end
 
-  def create_action(conn, book_location_params, success_redirect_callback, referrer \\ nil)
-      when is_function(success_redirect_callback, 2) do
+  defp create_action(conn, book_location_params, success_redirect_callback, referrer \\ nil)
+       when is_function(success_redirect_callback, 1) do
     case Admin.create_book_location(book_location_params) do
       {:ok, book_location} ->
         conn
         |> put_flash(:info, "Book location created successfully.")
-        |> redirect(to: success_redirect_callback.(conn, book_location))
+        |> redirect(to: success_redirect_callback.(book_location))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset, referrer: referrer] ++ related_fields())
@@ -79,7 +79,7 @@ defmodule BooklistWeb.BookLocationController do
       {:ok, book_location} ->
         conn
         |> put_flash(:info, "Book location updated successfully.")
-        |> redirect(to: Routes.book_location_path(conn, :show, book_location))
+        |> redirect(to: ~p"/book-locations/#{book_location}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(
@@ -97,6 +97,6 @@ defmodule BooklistWeb.BookLocationController do
 
     conn
     |> put_flash(:info, item_name <> " deleted.")
-    |> redirect(to: Routes.book_location_path(conn, :index))
+    |> redirect(to: ~p"/book-locations")
   end
 end

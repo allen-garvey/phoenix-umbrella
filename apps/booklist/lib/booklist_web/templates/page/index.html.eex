@@ -4,7 +4,7 @@
       Due back soon:
       <ul>
         <%= for loan <- @loans_due_soon do %>
-          <li><%= link BooklistWeb.LoanView.to_s(loan), to: Routes.loan_path(@conn, :show, loan) %></li>
+          <li><%= link BooklistWeb.LoanView.to_s(loan), to: ~p"/loans/#{loan}" %></li>
         <% end %>
       </ul>
     </div>
@@ -13,72 +13,72 @@
 <div class="home_section_container">
   <div class="home_section">
     <h2 class="home_section_heading">
-      <%= link "Finished books", to: BooklistWeb.BookView.inactive_read_book_path(@conn) %>
+      <%= link "Finished books", to: BooklistWeb.BookView.inactive_read_book_path() %>
     </h2>
     <p class="description">Books you’ve read</p>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading">
-      <%= link "Authors", to: Routes.author_path(@conn, :index) %>
+      <%= link "Authors", to: ~p"/authors" %>
     </h2>
-    <%= link "Add Author", to: Routes.author_path(@conn, :new), class: "btn btn-success" %>
+    <%= link "Add Author", to: ~p"/authors/new", class: "btn btn-success" %>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading"
-      ><%= link "Resources", to: Routes.page_path(@conn, :resources) %>
+      ><%= link "Resources", to: ~p"/resources" %>
     </h2>
     <p class="description">All resources</p>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading">
-      <%= link "Genres", to: Routes.genre_path(@conn, :index) %>
+      <%= link "Genres", to: ~p"/genres" %>
     </h2>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading"
-      ><%= link "Ratings", to: Routes.rating_path(@conn, :index) %>
+      ><%= link "Ratings", to: ~p"/ratings" %>
     </h2>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading"
-      ><%= link "Top Ratings", to: Routes.rating_path(@conn, :index, sort: :score) %>
+      ><%= link "Top Ratings", to: ~p"/ratings?sort=score" %>
     </h2>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading"
-      ><%= link "Inactive books", to: BooklistWeb.BookView.inactive_unread_book_path(@conn) %>
+      ><%= link "Inactive books", to: BooklistWeb.BookView.inactive_unread_book_path() %>
     </h2>
     <p class="description">Books you decided not to read</p>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading"
-      ><%= link "No location books", to: BooklistWeb.BookView.no_location_active_book_path(@conn) %>
+      ><%= link "No location books", to: BooklistWeb.BookView.no_location_active_book_path() %>
     </h2>
     <p class="description">Books not assigned to a location</p>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading">
-      <%= link "Loans", to: Routes.loan_path(@conn, :index) %>
+      <%= link "Loans", to: ~p"/loans" %>
     </h2>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading">
-      <%= link "Authors Report", to: Routes.reports_path(@conn, :authors_index) %>
+      <%= link "Authors Report", to: ~p"/reports/authors" %>
     </h2>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading">
-      <%= link "Re-read books", to: Routes.reports_path(@conn, :reread_books_index) %>
+      <%= link "Re-read books", to: ~p"/reports/reread-books" %>
     </h2>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading">
-      <%= link "Genres Report", to: Routes.reports_path(@conn, :genres_index) %>
+      <%= link "Genres Report", to: ~p"/reports/genres" %>
     </h2>
   </div>
   <div class="home_section">
     <h2 class="home_section_heading">
-      <%= link "Reports", to: Routes.reports_path(@conn, :index) %>
+      <%= link "Reports", to: ~p"/reports" %>
     </h2>
   </div>
 </div>

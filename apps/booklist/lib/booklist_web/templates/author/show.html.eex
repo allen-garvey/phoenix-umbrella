@@ -1,12 +1,14 @@
 <%= render(BooklistWeb.SharedView, "show-header.html",
       conn: @conn,
       resource_title_plural: "Authors",
-      resource_path_atom: :author_path,
-      item: @author,
-      item_name: to_s(@author))
+      item_name: to_s(@author),
+      index_path: ~p"/authors",
+      edit_path: ~p"/authors/#{@author}/edit",
+      delete_path: ~p"/authors/#{@author}"
+      )
 %>
 
-<%= link "Add Book", to: Routes.book_path(@conn, :new, author: @author.id), class: "btn btn-success" %>
+<%= link "Add Book", to: ~p"/books/new?author=#{@author.id}", class: "btn btn-success" %>
 
 <ul>
 
@@ -28,7 +30,7 @@
   <%= if !is_nil(@author.genre) do %>
     <li>
       <strong>Genre:</strong>
-      <%= link BooklistWeb.GenreView.to_s(@author.genre), to: Routes.genre_path(@conn, :show, @author.genre) %>
+      <%= link BooklistWeb.GenreView.to_s(@author.genre), to: ~p"/genres/#{@author.genre}" %>
     </li>
   <% end %>
 
@@ -39,7 +41,7 @@
 
 <ul>
   <%= for book <- @author.books do %>
-    <li><%= link BooklistWeb.BookView.to_s(book), to: Routes.book_path(@conn, :show, book) %></li>
+    <li><%= link BooklistWeb.BookView.to_s(book), to: ~p"/books/#{book}" %></li>
   <% end %>
 </ul>
 
@@ -47,6 +49,6 @@
 
 <ol>
   <%= for rating <- @ratings do %>
-    <li><%= link BooklistWeb.RatingView.to_s(rating), to: Routes.rating_path(@conn, :show, rating) %></li>
+    <li><%= link BooklistWeb.RatingView.to_s(rating), to: ~p"/ratings/#{rating}" %></li>
   <% end %>
 </ol>

@@ -2,6 +2,7 @@
   conn: @conn,
   item_name: "Rating",
   items: @ratings,
-  item_path: :rating_path,
+  new_path: ~p"/ratings/new",
+  show_path_func: &show_path/1,
   item_to_s: &to_s/1
 %>

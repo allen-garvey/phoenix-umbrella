@@ -13,14 +13,14 @@ defmodule BooklistWeb.PageController do
 
   def resources(conn, _params) do
     resources_list = [
-      {"Authors", Routes.author_path(conn, :index)},
-      {"Books", Routes.book_path(conn, :index)},
-      {"Book Locations", Routes.book_location_path(conn, :index)},
-      {"Genres", Routes.genre_path(conn, :index)},
-      {"Libraries", Routes.library_path(conn, :index)},
-      {"Loans", Routes.loan_path(conn, :index)},
-      {"Locations", Routes.location_path(conn, :index)},
-      {"Ratings", Routes.rating_path(conn, :index)}
+      {"Authors", ~p"/authors"},
+      {"Books", ~p"/books"},
+      {"Book Locations", ~p"/book-locations"},
+      {"Genres", ~p"/genres"},
+      {"Libraries", ~p"/libraries"},
+      {"Loans", ~p"/loans"},
+      {"Locations", ~p"/locations"},
+      {"Ratings", ~p"/ratings"}
     ]
 
     render(conn, "resources.html", resources: resources_list)

@@ -1,10 +1,11 @@
 <%= render(BooklistWeb.SharedView, "show-header.html",
       conn: @conn,
       resource_title_plural: "Books",
-      resource_path_atom: :book_path,
-      item: @book,
       item_name: to_s(@book),
-      search_query: to_search_query(@book)
+      search_query: to_search_query(@book),
+      index_path: ~p"/books",
+      edit_path: ~p"/books/#{@book}/edit",
+      delete_path: ~p"/books/#{@book}"
     )
 %>
 
@@ -24,7 +25,7 @@
       button_class: changeset_button_css_class(@book.on_bookshelf))
 %>
 
-<%= link "Duplicate", to: Routes.book_path(@conn, :duplicate, @book), class: "btn btn-primary" %>
+<%= link "Duplicate", to: ~p"/books/new?book=#{@book}", class: "btn btn-primary" %>
 
 <ul>
 
@@ -46,14 +47,14 @@
   <li>
     <strong>Author:</strong>
     <%= if !is_nil(@book.author) do
-      link BooklistWeb.AuthorView.to_s(@book.author), to: Routes.author_path(@conn, :show, @book.author)
+      link BooklistWeb.AuthorView.to_s(@book.author), to: ~p"/authors/#{@book.author}"
     end
     %>
   </li>
 
   <li>
     <strong>Genre:</strong>
-    <%= link BooklistWeb.GenreView.to_s(@book.genre), to: Routes.genre_path(@conn, :show, @book.genre) %>
+    <%= link BooklistWeb.GenreView.to_s(@book.genre), to: ~p"/genres/#{@book.genre}" %>
   </li>
 
   <li>
@@ -67,12 +68,12 @@
   <div class="show_category_header">
     <h3>Locations</h3>
     <div class="btn_group">
-      <%= link "Add location", to: Routes.book_location_path(@conn, :new, @book.id), class: "btn btn-success" %>
+      <%= link "Add location", to: ~p"/book-locations/new?book=#{@book.id}", class: "btn btn-success" %>
     </div>
   </div>
   <ul class="show_categories_list indented_list">
     <%= for book_location <- @book.book_locations do %>
-      <li><%= link BooklistWeb.BookLocationView.to_s_location(book_location), to: Routes.book_location_path(@conn, :show, book_location) %></li>
+      <li><%= link BooklistWeb.BookLocationView.to_s_location(book_location), to: ~p"/book-locations/#{book_location}" %></li>
     <% end %>
   </ul>
 </div>
@@ -81,12 +82,12 @@
   <div class="show_category_header">
     <h3>Ratings</h3>
     <div class="btn_group">
-      <%= link "Add rating", to: Routes.rating_path(@conn, :new, @book.id), class: "btn btn-success" %>
+      <%= link "Add rating", to: ~p"/ratings/new?book=#{@book.id}", class: "btn btn-success" %>
     </div>
   </div>
   <ul class="show_categories_list indented_list">
     <%= for rating <- @book.ratings do %>
-      <li><%= link BooklistWeb.RatingView.to_s_short(rating), to: Routes.rating_path(@conn, :show, rating) %></li>
+      <li><%= link BooklistWeb.RatingView.to_s_short(rating), to: ~p"/ratings/#{rating}" %></li>
     <% end %>
   </ul>
 </div>

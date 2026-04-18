@@ -22,7 +22,8 @@ defmodule BooklistWeb do
       use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
-      alias BooklistWeb.Router.Helpers, as: Routes
+
+      use Phoenix.VerifiedRoutes, router: BooklistWeb.Router, endpoint: BooklistWeb.Endpoint
     end
   end
 
@@ -40,7 +41,7 @@ defmodule BooklistWeb do
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
 
-      alias BooklistWeb.Router.Helpers, as: Routes
+      use Phoenix.VerifiedRoutes, router: BooklistWeb.Router, endpoint: BooklistWeb.Endpoint
 
       import Common.ViewHelpers.Form, only: [error_tag: 2]
     end

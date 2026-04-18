@@ -1,9 +1,9 @@
 <h1><%= Common.StringHelpers.naive_pluralize(@item_name) %> <span class="index-items-count">(<%= Enum.count(@items) %>)</span></h1>
 
-<%= link "Add " <> @item_name, to: apply(Routes, @item_path, [@conn, :new]), class: "btn btn-success btn-sm" %>
+<%= link "Add " <> @item_name, to: @new_path, class: "btn btn-success btn-sm" %>
 
 <ul class="index_list">
 	<%= for item <- @items do %>
-		<li><%= link @item_to_s.(item), to: apply(Routes, @item_path, [@conn, :show, item]) %></li>
+		<li><%= link @item_to_s.(item), to: @show_path_func.(item) %></li>
 	<% end %>
 </ul>

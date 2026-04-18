@@ -1,8 +1,8 @@
 <%=
-  form_for @changeset, Routes.book_path(@conn, :update, @book), [class: "book_active_form"], fn f ->
+  form_for @changeset, ~p"/books/#{@book}", [class: "book_active_form"], fn f ->
     [
-      hidden_input(f, :is_active), 
-      hidden_input(f, :on_bookshelf), 
+      hidden_input(f, :is_active),
+      hidden_input(f, :on_bookshelf),
       submit(@button_text, class: @button_class)
     ]
   end

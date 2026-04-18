@@ -10,13 +10,13 @@
   <body>
     <nav class='nav'>
       <div class="container nav_container">
-        <%= link "Booklist", to: Routes.page_path(@conn, :index), class: "brand nav_heading" %>
+        <%= link "Booklist", to: ~p"/", class: "brand nav_heading" %>
         <ul class='nav_links'>
-          <li><%= link "Books", to: BooklistWeb.BookView.active_book_path(@conn) %></li>
-          <li><%= link "Bookshelf", to: Routes.page_path(@conn, :bookshelf) %></li>
-          <li><%= link "Libraries", to: Routes.library_path(@conn, :index) %></li>
-          <li><%= link "Reports", to: BooklistWeb.ReportsView.reports_for_current_year_path(@conn) %></li>
-          <li><%= link "Add Book", to: Routes.book_path(@conn, :new), class: "btn btn-success" %></li>
+          <li><%= link "Books", to: BooklistWeb.BookView.active_book_path() %></li>
+          <li><%= link "Bookshelf", to: ~p"/bookshelf" %></li>
+          <li><%= link "Libraries", to: ~p"/libraries" %></li>
+          <li><%= link "Reports", to: BooklistWeb.ReportsView.reports_for_current_year_path() %></li>
+          <li><%= link "Add Book", to: ~p"/books/new", class: "btn btn-success" %></li>
         </ul>
       </div>
     </nav>

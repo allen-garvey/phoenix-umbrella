@@ -12,7 +12,7 @@
             <tr>
                 <td class="reporting_top_rated_books_table__index"></td>
                 <td>
-                    <%= link(BooklistWeb.AuthorView.to_s(author), to: Routes.author_path(@conn, :show, author)) %>
+                    <%= link(BooklistWeb.AuthorView.to_s(author), to: ~p"/authors/#{author}") %>
                 </td>
                 <td>
                     <%= ratings_count %>

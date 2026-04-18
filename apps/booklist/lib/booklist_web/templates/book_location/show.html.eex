@@ -1,21 +1,23 @@
 <%= render(BooklistWeb.SharedView, "show-header.html",
       conn: @conn,
       resource_title_plural: "Book locations",
-      resource_path_atom: :book_location_path,
-      item: @book_location,
-      item_name: to_s(@book_location))
+      item_name: to_s(@book_location),
+	  index_path: ~p"/book-locations",
+	  edit_path: ~p"/book-locations/#{@book_location}/edit",
+	  delete_path: ~p"/book-locations/#{@book_location}"
+	  )
 %>
 
 <ul>
 
 	<li>
 		<strong>Book:</strong>
-		<%= link BooklistWeb.BookView.to_s(@book_location.book), to: Routes.book_path(@conn, :show, @book_location.book) %>
+		<%= link BooklistWeb.BookView.to_s(@book_location.book), to: ~p"/books/#{@book_location.book}" %>
 	</li>
 
 	<li>
 		<strong>Location:</strong>
-		<%= link BooklistWeb.LocationView.to_s(@book_location.location), to: Routes.location_path(@conn, :show, @book_location.location) %>
+		<%= link BooklistWeb.LocationView.to_s(@book_location.location), to: ~p"/locations/#{@book_location.location}" %>
 	</li>
 
 	<li>

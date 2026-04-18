@@ -2,7 +2,7 @@ defmodule BooklistWeb.BookView do
   use BooklistWeb, :view
 
   def to_s(book) do
-  	to_s_helper(book.title, book.subtitle)
+    to_s_helper(book.title, book.subtitle)
   end
 
   def to_s_helper(title, nil) do
@@ -11,6 +11,10 @@ defmodule BooklistWeb.BookView do
 
   def to_s_helper(title, subtitle) do
     title <> ": " <> subtitle
+  end
+
+  def show_path(book) do
+    ~p"/books/#{book}"
   end
 
   @doc """
@@ -23,38 +27,31 @@ defmodule BooklistWeb.BookView do
   Common.ViewHelpers.Form.define_map_for_form()
 
   @doc """
-  Path for active books 
+  Path for active books
   """
-  def active_book_path(conn) do
-    Routes.book_path(conn, :index, active: "true")
-  end
-
-  @doc """
-  Path for active books that are unread (i.e. have no ratings)
-  """
-  def active_unread_book_path(conn) do
-    Routes.book_path(conn, :index, active: "true", read: "false")
+  def active_book_path() do
+    ~p"/books?active=true"
   end
 
   @doc """
   Path for inactive books that are unread (i.e. have no ratings)
   """
-  def inactive_unread_book_path(conn) do
-    Routes.book_path(conn, :index, active: "false", read: "false")
+  def inactive_unread_book_path() do
+    ~p"/books?active=false&read=false"
   end
 
   @doc """
   Path for inactive books that have been read (i.e. have ratings)
   """
-  def inactive_read_book_path(conn) do
-    Routes.book_path(conn, :index, active: "false", read: "true")
+  def inactive_read_book_path() do
+    ~p"/books?active=false&read=true"
   end
 
   @doc """
   Path for books that have no location
   """
-  def no_location_active_book_path(conn) do
-    Routes.book_path(conn, :index, active: "true", location: "false")
+  def no_location_active_book_path() do
+    ~p"/books?active=true&location=false"
   end
 
   @doc """
@@ -92,5 +89,4 @@ defmodule BooklistWeb.BookView do
   def changeset_button_css_class(false) do
     "btn btn-default"
   end
-
 end

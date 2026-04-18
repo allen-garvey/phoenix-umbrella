@@ -14,7 +14,7 @@
             <tr>
                 <td class="reporting_top_rated_books_table__index"></td>
                 <td>
-                    <%= link(BooklistWeb.GenreView.to_s(genre), to: Routes.genre_path(@conn, :show, genre)) %>
+                    <%= link(BooklistWeb.GenreView.to_s(genre), to: ~p"/genres/#{genre}") %>
                 </td>
                 <td>
                     <%= ratings_count %>

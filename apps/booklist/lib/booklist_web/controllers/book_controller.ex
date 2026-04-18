@@ -73,6 +73,12 @@ defmodule BooklistWeb.BookController do
     render(conn, "new.html", [changeset: changeset] ++ fields)
   end
 
+  def new(conn, %{"book" => book_id}) do
+    book = Admin.get_book!(book_id)
+    changeset = Admin.change_book(%Book{}) |> Admin.duplicate_book(book)
+    render(conn, "new.html", [book: book, changeset: changeset] ++ related_fields())
+  end
+
   def new(conn, _params) do
     genre =
       case Admin.get_recent_popular_genre() do
@@ -94,7 +100,7 @@ defmodule BooklistWeb.BookController do
       {:ok, book} ->
         conn
         |> put_flash(:info, "Book created successfully.")
-        |> redirect(to: Routes.book_path(conn, :show, book))
+        |> redirect(to: ~p"/books/#{book}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset] ++ related_fields())
@@ -123,12 +129,6 @@ defmodule BooklistWeb.BookController do
     render(conn, "edit.html", [book: book, changeset: changeset] ++ related_fields())
   end
 
-  def duplicate(conn, %{"id" => id}) do
-    book = Admin.get_book!(id)
-    changeset = Admin.change_book(%Book{}) |> Admin.duplicate_book(book)
-    render(conn, "new.html", [book: book, changeset: changeset] ++ related_fields())
-  end
-
   def update(conn, %{"id" => id, "book" => book_params}) do
     book = Admin.get_book!(id)
 
@@ -136,7 +136,7 @@ defmodule BooklistWeb.BookController do
       {:ok, book} ->
         conn
         |> put_flash(:info, "Book updated successfully.")
-        |> redirect(to: Routes.book_path(conn, :show, book))
+        |> redirect(to: ~p"/books/#{book}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", [book: book, changeset: changeset] ++ related_fields())
@@ -150,6 +150,6 @@ defmodule BooklistWeb.BookController do
 
     conn
     |> put_flash(:info, item_name <> " deleted.")
-    |> redirect(to: Routes.book_path(conn, :index))
+    |> redirect(to: ~p"/books")
   end
 end

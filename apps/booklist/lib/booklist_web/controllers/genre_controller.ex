@@ -21,7 +21,7 @@ defmodule BooklistWeb.GenreController do
       {:ok, genre} ->
         conn
         |> put_flash(:info, "Genre created successfully.")
-        |> redirect(to: Routes.genre_path(conn, :show, genre))
+        |> redirect(to: ~p"/genres/#{genre}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -67,7 +67,7 @@ defmodule BooklistWeb.GenreController do
       {:ok, genre} ->
         conn
         |> put_flash(:info, "Genre updated successfully.")
-        |> redirect(to: Routes.genre_path(conn, :show, genre))
+        |> redirect(to: ~p"/genres/#{genre}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", genre: genre, changeset: changeset)
@@ -81,6 +81,6 @@ defmodule BooklistWeb.GenreController do
 
     conn
     |> put_flash(:info, item_name <> " deleted.")
-    |> redirect(to: Routes.genre_path(conn, :index))
+    |> redirect(to: ~p"/genres")
   end
 end

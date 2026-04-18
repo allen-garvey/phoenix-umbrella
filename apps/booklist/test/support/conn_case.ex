@@ -21,8 +21,6 @@ defmodule BooklistWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
 
-      alias BooklistWeb.Router.Helpers, as: Routes
-
       # The default endpoint for testing
       @endpoint BooklistWeb.Endpoint
     end
