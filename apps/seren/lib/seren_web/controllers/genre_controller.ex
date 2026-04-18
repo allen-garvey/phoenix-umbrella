@@ -4,7 +4,7 @@ defmodule SerenWeb.GenreController do
   alias Seren.Player
   alias Seren.Player.Genre
 
-  action_fallback SerenWeb.FallbackController
+  action_fallback(SerenWeb.FallbackController)
   plug(:put_view, json: SerenWeb.GenreView)
 
   def index(conn, _params) do
@@ -14,16 +14,16 @@ defmodule SerenWeb.GenreController do
 
   def tracks_for(conn, %{"id" => id}) do
     tracks = Player.tracks_for_genre(id)
+
     conn
-      |> put_view(SerenWeb.TrackView)
-      |> SerenWeb.TrackController.index_page(tracks)
+    |> put_view(SerenWeb.TrackView)
+    |> SerenWeb.TrackController.index_page(tracks)
   end
 
   def create(conn, %{"genre" => genre_params}) do
     with {:ok, %Genre{} = genre} <- Player.create_genre(genre_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", genre_path(conn, :show, genre))
       |> render("show.json", genre: genre)
     end
   end
@@ -43,6 +43,7 @@ defmodule SerenWeb.GenreController do
 
   def delete(conn, %{"id" => id}) do
     genre = Player.get_genre!(id)
+
     with {:ok, %Genre{}} <- Player.delete_genre(genre) do
       send_resp(conn, :no_content, "")
     end

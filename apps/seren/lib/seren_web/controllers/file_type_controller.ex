@@ -4,7 +4,7 @@ defmodule SerenWeb.FileTypeController do
   alias Seren.Player
   alias Seren.Player.FileType
 
-  action_fallback SerenWeb.FallbackController
+  action_fallback(SerenWeb.FallbackController)
   plug(:put_view, json: SerenWeb.FileTypeView)
 
   def index(conn, _params) do
@@ -16,7 +16,6 @@ defmodule SerenWeb.FileTypeController do
     with {:ok, %FileType{} = file_type} <- Player.create_file_type(file_type_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", file_type_path(conn, :show, file_type))
       |> render("show.json", file_type: file_type)
     end
   end
@@ -36,6 +35,7 @@ defmodule SerenWeb.FileTypeController do
 
   def delete(conn, %{"id" => id}) do
     file_type = Player.get_file_type!(id)
+
     with {:ok, %FileType{}} <- Player.delete_file_type(file_type) do
       send_resp(conn, :no_content, "")
     end

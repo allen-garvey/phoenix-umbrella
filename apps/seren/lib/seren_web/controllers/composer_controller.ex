@@ -4,7 +4,7 @@ defmodule SerenWeb.ComposerController do
   alias Seren.Player
   alias Seren.Player.Composer
 
-  action_fallback SerenWeb.FallbackController
+  action_fallback(SerenWeb.FallbackController)
   plug(:put_view, json: SerenWeb.ComposerView)
 
   def index(conn, _params) do
@@ -14,16 +14,16 @@ defmodule SerenWeb.ComposerController do
 
   def tracks_for(conn, %{"id" => id}) do
     tracks = Player.tracks_for_composer(id)
+
     conn
-      |> put_view(SerenWeb.TrackView)
-      |> SerenWeb.TrackController.index_page(tracks)
+    |> put_view(SerenWeb.TrackView)
+    |> SerenWeb.TrackController.index_page(tracks)
   end
 
   def create(conn, %{"composer" => composer_params}) do
     with {:ok, %Composer{} = composer} <- Player.create_composer(composer_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", composer_path(conn, :show, composer))
       |> render("show.json", composer: composer)
     end
   end
@@ -43,6 +43,7 @@ defmodule SerenWeb.ComposerController do
 
   def delete(conn, %{"id" => id}) do
     composer = Player.get_composer!(id)
+
     with {:ok, %Composer{}} <- Player.delete_composer(composer) do
       send_resp(conn, :no_content, "")
     end

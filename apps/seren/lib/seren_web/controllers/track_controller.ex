@@ -4,7 +4,7 @@ defmodule SerenWeb.TrackController do
   alias Seren.Player
   alias Seren.Player.Track
 
-  action_fallback SerenWeb.FallbackController
+  action_fallback(SerenWeb.FallbackController)
   plug(:put_view, json: SerenWeb.TrackView)
 
   def index_page(conn, tracks) do
@@ -30,7 +30,6 @@ defmodule SerenWeb.TrackController do
     with {:ok, %Track{} = track} <- Player.create_track(track_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", track_path(conn, :show, track))
       |> render("show.json", track: track)
     end
   end
@@ -50,6 +49,7 @@ defmodule SerenWeb.TrackController do
 
   def delete(conn, %{"id" => id}) do
     track = Player.get_track!(id)
+
     with {:ok, %Track{}} <- Player.delete_track(track) do
       send_resp(conn, :no_content, "")
     end

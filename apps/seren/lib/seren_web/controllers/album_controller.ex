@@ -4,7 +4,7 @@ defmodule SerenWeb.AlbumController do
   alias Seren.Player
   alias Seren.Player.Album
 
-  action_fallback SerenWeb.FallbackController
+  action_fallback(SerenWeb.FallbackController)
   plug(:put_view, json: SerenWeb.AlbumView)
 
   def index(conn, _params) do
@@ -14,16 +14,16 @@ defmodule SerenWeb.AlbumController do
 
   def tracks_for(conn, %{"id" => id}) do
     tracks = Player.tracks_for_album(id)
+
     conn
-      |> put_view(SerenWeb.TrackView)
-      |> SerenWeb.TrackController.index_page(tracks)
+    |> put_view(SerenWeb.TrackView)
+    |> SerenWeb.TrackController.index_page(tracks)
   end
 
   def create(conn, %{"album" => album_params}) do
     with {:ok, %Album{} = album} <- Player.create_album(album_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", album_path(conn, :show, album))
       |> render("show.json", album: album)
     end
   end
@@ -43,6 +43,7 @@ defmodule SerenWeb.AlbumController do
 
   def delete(conn, %{"id" => id}) do
     album = Player.get_album!(id)
+
     with {:ok, %Album{}} <- Player.delete_album(album) do
       send_resp(conn, :no_content, "")
     end

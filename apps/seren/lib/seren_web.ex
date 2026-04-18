@@ -21,19 +21,17 @@ defmodule SerenWeb do
     quote do
       use Phoenix.Controller, formats: [:html, :json]
       import Plug.Conn
-      import SerenWeb.Router.Helpers
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/seren_web/templates",
-                        namespace: SerenWeb
+      use Phoenix.View,
+        root: "lib/seren_web/templates",
+        namespace: SerenWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [view_module: 1]
-
-      import SerenWeb.Router.Helpers
     end
   end
 
