@@ -2,12 +2,12 @@
 	<div class="container">
 		<div class="post-heading">
 			<h2 class="post-title">
-				<%= link @post.title, to: show_path(@conn, @post) %>		
+				<%= link @post.title, to: show_path(@post) %>
 			</h2>
 			<div class="post-date"><%= datetime_to_display_date(@post.publication_date) %></div>
 		</div>
 		<div class="post-key-image-super-container">
-			<a href="<%= show_path(@conn, @post) %>">
+			<a href="<%= show_path(@post) %>">
 				<div class="post-key-image-container">
 					<%= Artour.ImageView.img_tag_with_srcset_for(@post.cover_image) %>
 				</div>

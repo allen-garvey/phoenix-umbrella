@@ -32,7 +32,7 @@ defmodule Artour.PostImageController do
         else
           conn
           |> put_flash(:info, "Post image created successfully.")
-          |> redirect(to: post_image_path(conn, :index))
+          |> redirect(to: ~p"/admin/post_images")
         end
 
       {:error, changeset} ->
@@ -75,6 +75,6 @@ defmodule Artour.PostImageController do
 
     conn
     |> put_flash(:info, "Post image deleted successfully.")
-    |> redirect(to: post_image_path(conn, :index))
+    |> redirect(to: ~p"/admin/post_images")
   end
 end

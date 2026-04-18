@@ -12,8 +12,8 @@
       <tr>
         <% [first_value | tail_values] = @row_values_func.(@conn, item) %>
 
-        <td><%= link first_value, to: @item_path_func.(@conn, :show, item) %></td>
-        
+        <td><%= link first_value, to: @show_path_func.(item) %></td>
+
         <%= for value <- tail_values do %>
           <% #test for html elements instead of numbers or strings so we don't add padding %>
           <%= if is_tuple(value) do %>
@@ -22,11 +22,11 @@
             <td><%= value %></td>
           <% end %>
         <% end %>
-        
+
         <td class="text-right">
-          <%= link "Edit", to: @item_path_func.(@conn, :edit, item), class: "btn btn-primary btn-sm" %>
+          <%= link "Edit", to: @edit_path_func.(item), class: "btn btn-primary btn-sm" %>
         </td>
-        
+
       </tr>
     <% end %>
   </tbody>

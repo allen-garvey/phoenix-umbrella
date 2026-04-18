@@ -1,4 +1,4 @@
-<%= link "All resources", to: admin_path(@conn, :index), class: "back-link" %>
+<%= link "All resources", to: ~p"/admin", class: "back-link" %>
 <h1 class="index-heading">
   <%= @heading %>
   <span class="index-heading-count">(<%= @count %>)</span>

@@ -70,7 +70,7 @@ defmodule Artour.PostController do
 
     conn
     |> put_flash(:info, "Post deleted successfully.")
-    |> redirect(to: post_path(conn, :index))
+    |> redirect(to: ~p"/admin/posts")
   end
 
   @doc """

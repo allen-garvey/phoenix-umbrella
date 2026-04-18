@@ -8,25 +8,39 @@ defmodule Artour.PostView do
     post.title
   end
 
+  def show_path(post) do
+    ~p"/admin/posts/#{post}"
+  end
+
+  def edit_path(post) do
+    ~p"/admin/posts/#{post}/edit"
+  end
+
   @doc """
   Renders page to create new post
   """
   def render("new.html", assigns) do
-    assigns = Map.merge(assigns, %{action: post_path(assigns[:conn], :create),
-                                   heading: Artour.SharedView.form_heading("post", :new)})
+    assigns =
+      Map.merge(assigns, %{
+        action: post_path(assigns[:conn], :create),
+        heading: Artour.SharedView.form_heading("post", :new)
+      })
 
-    render "form_page.html", assigns
+    render("form_page.html", assigns)
   end
 
   @doc """
   Renders page to edit post
   """
   def render("edit.html", assigns) do
-    assigns = Map.merge(assigns, %{action: post_path(assigns[:conn], :update, assigns[:post]),
-                                   heading: Artour.SharedView.form_heading(display_name(assigns[:post]), :edit),
-                                   show_delete: true})
+    assigns =
+      Map.merge(assigns, %{
+        action: post_path(assigns[:conn], :update, assigns[:post]),
+        heading: Artour.SharedView.form_heading(display_name(assigns[:post]), :edit),
+        show_delete: true
+      })
 
-    render "form_page.html", assigns
+    render("form_page.html", assigns)
   end
 
   @doc """
@@ -45,16 +59,26 @@ defmodule Artour.PostView do
   end
 
   @doc """
-  Used on index page - takes post instance and returns abbreviated list of 
+  Used on index page - takes post instance and returns abbreviated list of
   formatted values
   """
   def attribute_values_short(conn, post) do
-  	[
-      post.title, 
-      img_tag(Artour.ImageView.url_for(post.cover_image, :thumbnail), class: "thumbnail-sm", loading: "lazy"),
-      link(post.slug, to: Artour.PublicPostView.show_path(conn, post), class: publication_date_index_cell_class(post.is_published)), 
-      content_tag(:div, is_nsfw_index_cell_content(post.is_nsfw), class: is_nsfw_index_cell_class(post.is_nsfw)),
-      content_tag(:div, Common.DateHelpers.us_formatted_date(post.publication_date), class: publication_date_index_cell_class(post.is_published)), 
+    [
+      post.title,
+      img_tag(Artour.ImageView.url_for(post.cover_image, :thumbnail),
+        class: "thumbnail-sm",
+        loading: "lazy"
+      ),
+      link(post.slug,
+        to: Artour.PublicPostView.show_path(post),
+        class: publication_date_index_cell_class(post.is_published)
+      ),
+      content_tag(:div, is_nsfw_index_cell_content(post.is_nsfw),
+        class: is_nsfw_index_cell_class(post.is_nsfw)
+      ),
+      content_tag(:div, Common.DateHelpers.us_formatted_date(post.publication_date),
+        class: publication_date_index_cell_class(post.is_published)
+      )
     ]
   end
 
@@ -63,7 +87,7 @@ defmodule Artour.PostView do
   """
   def publication_date_index_cell_class(is_published) do
     case is_published do
-      true  -> ""
+      true -> ""
       false -> "alert-warning"
     end
   end
@@ -73,7 +97,7 @@ defmodule Artour.PostView do
   """
   def is_nsfw_index_cell_class(is_nsfw) do
     case is_nsfw do
-      true  -> "alert-danger"
+      true -> "alert-danger"
       false -> ""
     end
   end
@@ -83,34 +107,37 @@ defmodule Artour.PostView do
   """
   def is_nsfw_index_cell_content(is_nsfw) do
     case is_nsfw do
-      true  -> "yes"
+      true -> "yes"
       false -> ""
     end
   end
 
   @doc """
-  Used on show page - takes post instance and returns list of 
+  Used on show page - takes post instance and returns list of
   formatted values
   """
   def attributes(conn, post) do
     api_images_url = api_post_path(conn, :post_images, post.id, export: "true")
 
-    public_url = case post.is_published do
-      true -> 
-        show_url = Artour.PublicPostView.show_path(conn, post)
-        link(show_url, to: show_url)
-      false -> ""
-    end
+    public_url =
+      case post.is_published do
+        true ->
+          show_url = Artour.PublicPostView.show_path(post)
+          link(show_url, to: show_url)
+
+        false ->
+          ""
+      end
 
     [
-      {"Title", post.title}, 
-      {"Public Url", public_url}, 
-      {"Export Url", link(api_images_url, to: api_images_url)}, 
-      {"Publication Date", Common.DateHelpers.us_formatted_date(post.publication_date)}, 
-      {"NSFW", post.is_nsfw}, 
-      {"Markdown", post.is_markdown}, 
-      {"Published", post.is_published}, 
-      {"Body", Artour.PublicPostView.formatted_post_body(post.body, post.is_markdown)},
+      {"Title", post.title},
+      {"Public Url", public_url},
+      {"Export Url", link(api_images_url, to: api_images_url)},
+      {"Publication Date", Common.DateHelpers.us_formatted_date(post.publication_date)},
+      {"NSFW", post.is_nsfw},
+      {"Markdown", post.is_markdown},
+      {"Published", post.is_published},
+      {"Body", Artour.PublicPostView.formatted_post_body(post.body, post.is_markdown)}
     ]
   end
 end

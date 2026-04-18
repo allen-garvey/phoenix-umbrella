@@ -1,6 +1,6 @@
 <%= render Artour.SharedView, "show_heading.html",
                                 conn: @conn,
-                                index_path: post_image_path(@conn, :index),
+                                index_path: ~p"/admin/post_images",
                                 edit_path: post_image_path(@conn, :edit, @post_image),
                                 attributes: attributes(@conn, @post_image),
                                 item_name_plural: "post images",

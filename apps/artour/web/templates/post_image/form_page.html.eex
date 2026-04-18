@@ -1,6 +1,6 @@
 <%= render Artour.SharedView, "form_page_heading.html",
                                 item_name_plural: "post images",
-                                index_path: post_image_path(@conn, :index),
+                                index_path: ~p"/admin/post_images",
                                 heading: @heading
 %>
 

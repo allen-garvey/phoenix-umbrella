@@ -8,6 +8,14 @@ defmodule Artour.ImageView do
     image.title
   end
 
+  def show_path(image) do
+    ~p"/admin/images/#{image}"
+  end
+
+  def edit_path(image) do
+    ~p"/admin/images/#{image}/edit"
+  end
+
   @doc """
   Renders page to create new image
   """

@@ -3,31 +3,29 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title><%= site_title() %> | Admin</title>
-    <%= tag :link, rel: "stylesheet", href: "/assets/admin.css" %>
+    <link rel="stylesheet" href="/assets/admin.css" />
   </head>
 
   <body>
     <div class="container">
       <header class="header">
         <nav role="navigation" class="navbar">
-          <%= link site_title(), to: admin_path(@conn, :index), class: "navbar-brand" %>
+          <%= link site_title(), to: ~p"/admin", class: "navbar-brand" %>
 
           <ul class="navbar-nav">
             <li>
-              <%= link "Public", to: page_path(@conn, :index) %>
+              <%= link "Public", to: ~p"/" %>
             </li>
             <li>
-              <%= link "Posts", to: post_path(@conn, :index) %>
+              <%= link "Posts", to: ~p"/admin/posts" %>
             </li>
             <li>
-              <%= link "Images", to: image_path(@conn, :index) %>
+              <%= link "Images", to: ~p"/admin/images" %>
             </li>
             <li>
-              <%= link "Add post", to: post_path(@conn, :new), class: "btn btn-success btn-sm" %>
+              <%= link "Add post", to: ~p"/admin/posts/new", class: "btn btn-success btn-sm" %>
             </li>
           </ul>
         </nav>
@@ -41,6 +39,6 @@
       </main>
 
     </div>
-    <%= content_tag :script, "", src: "/assets/admin.js" %>
+    <script src="/assets/admin.js"></script>
   </body>
 </html>

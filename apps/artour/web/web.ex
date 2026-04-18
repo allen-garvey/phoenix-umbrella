@@ -36,6 +36,8 @@ defmodule Artour.Web do
       import Ecto.Query
 
       import Artour.Router.Helpers
+
+      use Phoenix.VerifiedRoutes, router: Artour.Router, endpoint: Artour.Endpoint
     end
   end
 
@@ -54,6 +56,8 @@ defmodule Artour.Web do
       import Artour.Router.Helpers
       import Artour.LayoutHelpers
       import Artour.DateHelpers, only: [datetime_to_display_date: 1]
+
+      use Phoenix.VerifiedRoutes, router: Artour.Router, endpoint: Artour.Endpoint
     end
   end
 

@@ -30,7 +30,7 @@ defmodule Artour.ImageController do
         else
           conn
           |> put_flash(:info, "Image created successfully.")
-          |> redirect(to: image_path(conn, :index))
+          |> redirect(to: ~p"/admin/images")
         end
 
       {:error, changeset} ->
@@ -63,7 +63,7 @@ defmodule Artour.ImageController do
       {:ok, _image} ->
         conn
         |> put_flash(:info, "Image updated successfully.")
-        |> redirect(to: image_path(conn, :index))
+        |> redirect(to: ~p"/admin/images")
 
       {:error, changeset} ->
         render(conn, "edit.html", image: image, changeset: changeset)
@@ -79,6 +79,6 @@ defmodule Artour.ImageController do
 
     conn
     |> put_flash(:info, "Image deleted successfully.")
-    |> redirect(to: image_path(conn, :index))
+    |> redirect(to: ~p"/admin/images")
   end
 end
