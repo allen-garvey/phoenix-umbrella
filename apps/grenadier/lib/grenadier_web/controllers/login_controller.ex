@@ -21,6 +21,6 @@ defmodule GrenadierWeb.LoginController do
 
     conn
     |> put_flash(:info, "Login deleted successfully.")
-    |> redirect(to: Routes.login_path(conn, :index))
+    |> redirect(to: ~p"/admin/logins")
   end
 end

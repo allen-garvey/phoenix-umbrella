@@ -22,7 +22,8 @@ defmodule GrenadierWeb do
       use Phoenix.Controller, formats: [:html, :json]
 
       import Plug.Conn
-      alias GrenadierWeb.Router.Helpers, as: Routes
+
+      use Phoenix.VerifiedRoutes, router: GrenadierWeb.Router, endpoint: GrenadierWeb.Endpoint
     end
   end
 
@@ -40,7 +41,7 @@ defmodule GrenadierWeb do
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
 
-      alias GrenadierWeb.Router.Helpers, as: Routes
+      use Phoenix.VerifiedRoutes, router: GrenadierWeb.Router, endpoint: GrenadierWeb.Endpoint
     end
   end
 

@@ -56,7 +56,7 @@ defmodule GrenadierWeb.PageController do
 
     conn
     |> put_flash(:error, "Invalid username or password")
-    |> redirect(to: Routes.page_path(conn, :login, query_params))
+    |> redirect(to: ~p"/login?#{query_params}")
   end
 
   defp is_request_url_valid?(original_request_url) do
@@ -77,7 +77,7 @@ defmodule GrenadierWeb.PageController do
   defp redirect_after_login(conn, original_request_url) do
     case is_request_url_valid?(original_request_url) do
       false ->
-        redirect(conn, to: Routes.page_path(conn, :index))
+        redirect(conn, to: ~p"/admin")
 
       true ->
         redirect(conn, external: original_request_url)

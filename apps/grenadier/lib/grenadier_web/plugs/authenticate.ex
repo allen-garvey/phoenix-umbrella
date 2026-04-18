@@ -1,12 +1,12 @@
 defmodule GrenadierWeb.Plugs.Authenticate do
   import Plug.Conn
 
-  Code.require_file("config.ex",  "#{__DIR__}/../../../../../lib/common/")
+  use Phoenix.VerifiedRoutes, router: GrenadierWeb.Router, endpoint: GrenadierWeb.Endpoint
+
+  Code.require_file("config.ex", "#{__DIR__}/../../../../../lib/common/")
 
   alias Grenadier.Account
   alias Grenadier.Account.User
-
-  alias GrenadierWeb.Router.Helpers, as: Routes
 
   # based on authentication plug from programming phoenix
 
@@ -16,9 +16,10 @@ defmodule GrenadierWeb.Plugs.Authenticate do
 
   def call(conn, _opts) do
     case get_user_from_session(conn) do
-      %User{} = user -> 
-        disable_caching(conn) 
+      %User{} = user ->
+        disable_caching(conn)
         |> assign(:current_user, user)
+
       nil ->
         conn
         |> disable_caching()
@@ -58,8 +59,8 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   """
   def get_failed_login_redirect_url(conn) do
     redirect_url_param = URI.encode_query(%{"redirect" => get_request_url(conn)})
-    
-    "#{scheme_to_string(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_failed_redirect_port(conn.port)}#{Routes.page_path(conn, :login)}?#{redirect_url_param}"
+
+    "#{scheme_to_string(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_failed_redirect_port(conn.port)}#{~p"/login"}?#{redirect_url_param}"
   end
 
   @doc """
@@ -68,11 +69,14 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   """
   def get_failed_login_redirect_host(origin_host) do
     case origin_host do
-      "localhost" -> "localhost"
-      host        -> host
-                     |> String.split(".")
-                     |> List.update_at(0, fn _ -> "grenadier" end)
-                     |> Enum.join(".")
+      "localhost" ->
+        "localhost"
+
+      host ->
+        host
+        |> String.split(".")
+        |> List.update_at(0, fn _ -> "grenadier" end)
+        |> Enum.join(".")
     end
   end
 
@@ -104,7 +108,7 @@ defmodule GrenadierWeb.Plugs.Authenticate do
   def scheme_to_string(origin_scheme) do
     case origin_scheme do
       :https -> "https"
-      _      -> "http"
+      _ -> "http"
     end
   end
 end

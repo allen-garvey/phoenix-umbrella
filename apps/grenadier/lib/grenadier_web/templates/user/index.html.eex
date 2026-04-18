@@ -14,7 +14,7 @@
       <td><%= user.name %></td>
 
       <td>
-        <%= link "Show", to: Routes.user_path(@conn, :show, user) %>
+        <%= link "Show", to: ~p"/admin/users/#{user}" %>
       </td>
     </tr>
 <% end %>

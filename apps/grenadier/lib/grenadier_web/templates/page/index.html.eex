@@ -1,8 +1,8 @@
 <h1>Grenadier</h1>
 
 <ul>
-  <li><%= link "Users", to: Routes.user_path(@conn, :index) %></li>
-  <li><%= link "Logins", to: Routes.login_path(@conn, :index) %></li>
+  <li><%= link "Users", to: ~p"/admin/users" %></li>
+  <li><%= link "Logins", to: ~p"/admin/logins" %></li>
 </ul>
 
 <div class="latest-logins-section">
