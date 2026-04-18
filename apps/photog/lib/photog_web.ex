@@ -21,19 +21,17 @@ defmodule PhotogWeb do
     quote do
       use Phoenix.Controller, formats: [:html, :json]
       import Plug.Conn
-      import PhotogWeb.Router.Helpers
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/photog_web/templates",
-                        namespace: PhotogWeb
+      use Phoenix.View,
+        root: "lib/photog_web/templates",
+        namespace: PhotogWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [view_module: 1]
-
-      import PhotogWeb.Router.Helpers
     end
   end
 

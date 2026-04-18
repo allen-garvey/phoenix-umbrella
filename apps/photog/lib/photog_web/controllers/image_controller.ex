@@ -50,7 +50,6 @@ defmodule PhotogWeb.ImageController do
     with {:ok, %Image{} = image} <- Api.create_image(image_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", image_path(conn, :show, image))
       |> render("show.json", image: image)
     end
   end

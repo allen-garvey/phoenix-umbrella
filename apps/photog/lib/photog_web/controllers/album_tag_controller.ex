@@ -4,7 +4,7 @@ defmodule PhotogWeb.AlbumTagController do
   alias Photog.Api
   alias Photog.Api.AlbumTag
 
-  action_fallback PhotogWeb.FallbackController
+  action_fallback(PhotogWeb.FallbackController)
   plug(:put_view, json: PhotogWeb.AlbumTagView)
 
   def index(conn, _params) do
@@ -21,31 +21,29 @@ defmodule PhotogWeb.AlbumTagController do
         {tags_added, errors} =
           Enum.reduce(tag_ids, {[], []}, fn tag_id, {tags_added, errors} ->
             album_tag_params = %{"album_id" => album_id, "tag_id" => tag_id}
-            case Api.create_album_tag(album_tag_params) do
-              {:ok, %AlbumTag{} = _album_tag} -> { [album_tag_params | tags_added], errors }
-              {:error, _changeset}                  -> { tags_added, [ album_tag_params | errors] }
 
+            case Api.create_album_tag(album_tag_params) do
+              {:ok, %AlbumTag{} = _album_tag} -> {[album_tag_params | tags_added], errors}
+              {:error, _changeset} -> {tags_added, [album_tag_params | errors]}
             end
           end)
+
         {tags_added ++ total_added, errors ++ total_errors}
       end)
 
     conn
     |> put_view(CommonWeb.ApiGenericView)
-    |> (&(
-      if Enum.empty?(total_errors) do
-        render(&1, "ok.json", message: total_added)
-      else
-        render(&1, "mixed_response.json", message: total_added, error: total_errors)
-      end
-    )).()
+    |> (&(if Enum.empty?(total_errors) do
+            render(&1, "ok.json", message: total_added)
+          else
+            render(&1, "mixed_response.json", message: total_added, error: total_errors)
+          end)).()
   end
 
   def create(conn, %{"album_tag" => album_tag_params}) do
     with {:ok, %AlbumTag{} = album_tag} <- Api.create_album_tag(album_tag_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", album_tag_path(conn, :show, album_tag))
       |> render("show.json", album_tag: album_tag)
     end
   end
