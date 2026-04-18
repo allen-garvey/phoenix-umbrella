@@ -19,7 +19,6 @@ defmodule SerenWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      import SerenWeb.Router.Helpers
 
       # The default endpoint for testing
       @endpoint SerenWeb.Endpoint

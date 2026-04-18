@@ -19,7 +19,6 @@ defmodule MovielistWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      alias MovielistWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
       @endpoint MovielistWeb.Endpoint

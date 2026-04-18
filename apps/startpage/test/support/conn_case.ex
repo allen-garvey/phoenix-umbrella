@@ -19,7 +19,6 @@ defmodule StartpageWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      alias StartpageWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
       @endpoint StartpageWeb.Endpoint

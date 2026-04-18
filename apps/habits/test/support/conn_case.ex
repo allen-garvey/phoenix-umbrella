@@ -24,8 +24,6 @@ defmodule HabitsWeb.ConnCase do
       import Phoenix.ConnTest
       import HabitsWeb.ConnCase
 
-      alias HabitsWeb.Router.Helpers, as: Routes
-
       # The default endpoint for testing
       @endpoint HabitsWeb.Endpoint
     end

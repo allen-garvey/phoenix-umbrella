@@ -25,8 +25,6 @@ defmodule Bookmarker.ConnCase do
       import Ecto.Changeset
       import Ecto.Query
 
-      import Bookmarker.Router.Helpers
-
       # The default endpoint for testing
       @endpoint Bookmarker.Endpoint
     end
