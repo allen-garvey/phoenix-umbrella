@@ -8,7 +8,7 @@
 <div class="home-shortcuts-section">
   <ul>
     <li>
-      <%= link "Add folder", to: folder_path(@conn, :new) %>
+      <%= link "Add folder", to: Bookmarker.FolderView.new_path() %>
     </li>
   </ul>
 </div>

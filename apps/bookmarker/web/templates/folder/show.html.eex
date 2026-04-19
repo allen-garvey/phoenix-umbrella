@@ -1,4 +1,4 @@
-<%= render Bookmarker.SharedView, "show_heading.html", heading: Bookmarker.Folder.to_s(@folder), back_path: folder_path(@conn, :index), edit_path: folder_path(@conn, :edit, @folder), model_name_plural: "folders" %>
+<%= render Bookmarker.SharedView, "show_heading.html", heading: Bookmarker.Folder.to_s(@folder), back_path: index_path(), edit_path: edit_path(@folder), model_name_plural: "folders" %>
 
 <ul class="show-attribute-list">
 	<%= if @folder.description != nil do %>
@@ -12,12 +12,9 @@
 		<%= @folder.is_favorite %>
 	</li>
 	<li>
-		<%= link "Preview bookmarks", to: folder_preview_path(@conn, :show, @folder.name) %>
+		<%= link "Preview bookmarks", to: ~p"/preview/folder/#{@folder.name}" %>
 	</li>
 </ul>
 
-<div id="bookmark_list" data-bookmarks-api-url="<%= api_folder_path(@conn, :bookmarks_for_folder, @folder.id) %>">
+<div id="bookmark_list" data-bookmarks-api-url="<%= ~p"/api/folders/#{@folder.id}/bookmarks" %>">
 </div>
-
-
-

@@ -1,9 +1,9 @@
-<%= render Bookmarker.SharedView, "show_heading.html", heading: @bookmark.title, back_path: bookmark_path(@conn, :index), edit_path: bookmark_path(@conn, :edit, @bookmark), model_name_plural: "bookmarks" %>
+<%= render Bookmarker.SharedView, "show_heading.html", heading: @bookmark.title, back_path: Bookmarker.BookmarkView.index_path(), edit_path: edit_path(@bookmark), model_name_plural: "bookmarks" %>
 
 <ul class="show-attribute-list">
   <li>
     <strong>Folder:</strong>
-    <%= link Bookmarker.Folder.to_s(@bookmark.folder), to: folder_path(@conn, :show, @bookmark.folder) %>
+    <%= link Bookmarker.Folder.to_s(@bookmark.folder), to: Bookmarker.FolderView.show_path(@bookmark.folder) %>
   </li>
   <li>
     <strong>Url:</strong>
@@ -31,6 +31,6 @@
 
 <div>
   <%= if @bookmark.thumbnail_url != nil do
-    link img_tag(@bookmark.thumbnail_url), to: @bookmark.thumbnail_url 
+    link img_tag(@bookmark.thumbnail_url), to: @bookmark.thumbnail_url
   end %>
 </div>

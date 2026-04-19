@@ -14,15 +14,15 @@
   <body>
     <div class="container">
       <header class="header">
-        <span class="logo"><%= link "Bookmarker", to: "/" %></span>
+        <span class="logo"><%= link "Bookmarker", to: ~p"/" %></span>
         <nav role="navigation">
           <ul class="nav">
             <%= for folder <- @conn.assigns[:favorite_folders] do %>
-              <li><%= link Bookmarker.Folder.to_s(folder), to: folder_path(@conn, :show, folder) %></li>
+              <li><%= link Bookmarker.Folder.to_s(folder), to: Bookmarker.FolderView.show_path(folder) %></li>
             <% end %>
-            <li><%= link "Bookmarks", to: bookmark_path(@conn, :index) %></li>
-            <li><%= link "Folders", to: folder_path(@conn, :index) %></li>
-            <li><%= link "Add Bookmark", to: bookmark_path(@conn, :new), class: "btn btn-xs btn-success" %></li>
+            <li><%= link "Bookmarks", to: Bookmarker.BookmarkView.index_path() %></li>
+            <li><%= link "Folders", to: Bookmarker.FolderView.index_path() %></li>
+            <li><%= link "Add Bookmark", to: Bookmarker.BookmarkView.new_path(), class: "btn btn-xs btn-success" %></li>
           </ul>
         </nav>
       </header>

@@ -1,5 +1,5 @@
 <h1>
-	<%= link Bookmarker.Folder.to_s(@folder), to: folder_path(@conn, :show, @folder) %>
+	<%= link Bookmarker.Folder.to_s(@folder), to: Bookmarker.FolderView.show_path(@folder) %>
 </h1>
 
 <ul class="folder-preview-list">
@@ -9,7 +9,7 @@
 				<h2 class="folder-preview-bookmark-title">
 					<%= link(Bookmarker.Bookmark.to_s(bookmark), to: bookmark.url) %>
 				</h2>
-				<%= link "Edit", to: bookmark_path(@conn, :edit, bookmark), class: "btn btn-default btn-sm" %>
+				<%= link "Edit", to: Bookmarker.BookmarkView.edit_path(bookmark), class: "btn btn-default btn-sm" %>
 			</div>
 			<%= link tag(:img, src: img_element.url, title: img_element.title, alt: img_element.alt, loading: "lazy"), to: bookmark.url %>
 		</li>

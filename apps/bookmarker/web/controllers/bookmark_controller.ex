@@ -34,7 +34,7 @@ defmodule Bookmarker.BookmarkController do
         else
           conn
           |> put_flash(:info, "Bookmark created successfully.")
-          |> redirect(to: folder_path(conn, :show, bookmark.folder_id))
+          |> redirect(to: Bookmarker.FolderView.show_path(bookmark.folder_id))
         end
 
       {:error, changeset} ->
@@ -77,7 +77,7 @@ defmodule Bookmarker.BookmarkController do
       {:ok, bookmark} ->
         conn
         |> put_flash(:info, "Bookmark updated successfully.")
-        |> redirect(to: bookmark_path(conn, :show, bookmark))
+        |> redirect(to: Bookmarker.BookmarkView.show_path(bookmark))
 
       {:error, changeset} ->
         folders = Admin.folder_form_list()
@@ -94,6 +94,6 @@ defmodule Bookmarker.BookmarkController do
 
     conn
     |> put_flash(:info, "Bookmark deleted successfully.")
-    |> redirect(to: bookmark_path(conn, :index))
+    |> redirect(to: Bookmarker.BookmarkView.index_path())
   end
 end

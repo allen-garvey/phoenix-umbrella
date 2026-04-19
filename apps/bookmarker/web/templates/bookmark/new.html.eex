@@ -1,9 +1,9 @@
-<%= render Bookmarker.SharedView, "form_header.html", heading: "New bookmark", back_path: bookmark_path(@conn, :index) %>
+<%= render Bookmarker.SharedView, "form_header.html", heading: "New bookmark", back_path: Bookmarker.BookmarkView.index_path() %>
 
 <p class="alert alert-info" role="alert"><%= Phoenix.Flash.get(@flash, :info) %></p>
 
 <%= render "form.html", changeset: @changeset,
 						folders: @folders,
-                        action: bookmark_path(@conn, :create),
+                        action: index_path(),
                         form_type: :new,
                         save_another: true %>

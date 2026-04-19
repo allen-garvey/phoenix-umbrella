@@ -23,7 +23,7 @@ defmodule Bookmarker.FolderController do
       {:ok, _folder} ->
         conn
         |> put_flash(:info, "Folder created successfully.")
-        |> redirect(to: folder_path(conn, :index))
+        |> redirect(to: Bookmarker.FolderView.index_path())
 
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -49,7 +49,7 @@ defmodule Bookmarker.FolderController do
       {:ok, folder} ->
         conn
         |> put_flash(:info, "Folder updated successfully.")
-        |> redirect(to: folder_path(conn, :show, folder))
+        |> redirect(to: Bookmarker.FolderView.show_path(folder))
 
       {:error, changeset} ->
         render(conn, "edit.html", folder: folder, changeset: changeset)
@@ -65,6 +65,6 @@ defmodule Bookmarker.FolderController do
 
     conn
     |> put_flash(:info, "Folder deleted successfully.")
-    |> redirect(to: folder_path(conn, :index))
+    |> redirect(to: Bookmarker.FolderView.index_path())
   end
 end

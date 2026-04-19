@@ -1,5 +1,5 @@
-<%= render Bookmarker.SharedView, "form_header.html", heading: "New folder", back_path: folder_path(@conn, :index) %>
+<%= render Bookmarker.SharedView, "form_header.html", heading: "New folder", back_path: Bookmarker.FolderView.index_path() %>
 
 <%= render "form.html", changeset: @changeset,
-                        action: folder_path(@conn, :create),
+                        action: index_path(),
                         form_type: :new %>

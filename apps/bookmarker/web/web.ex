@@ -34,7 +34,7 @@ defmodule Bookmarker.Web do
       import Ecto
       import Ecto.Query
 
-      import Bookmarker.Router.Helpers
+      use Phoenix.VerifiedRoutes, router: Bookmarker.Router, endpoint: Bookmarker.Endpoint
     end
   end
 
@@ -47,7 +47,7 @@ defmodule Bookmarker.Web do
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
 
-      import Bookmarker.Router.Helpers
+      use Phoenix.VerifiedRoutes, router: Bookmarker.Router, endpoint: Bookmarker.Endpoint
     end
   end
 

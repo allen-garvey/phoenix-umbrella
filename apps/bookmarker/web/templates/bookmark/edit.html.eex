@@ -1,7 +1,7 @@
-<%= render Bookmarker.SharedView, "form_header.html", heading: "Edit bookmark", back_path: bookmark_path(@conn, :show, @bookmark) %>
+<%= render Bookmarker.SharedView, "form_header.html", heading: "Edit bookmark", back_path: show_path(@bookmark) %>
 
 <%= render "form.html", changeset: @changeset,
 						folders: @folders,
-                        action: bookmark_path(@conn, :update, @bookmark),
+                        action: show_path(@bookmark),
                         form_type: :edit %>
-<%= CommonWeb.FormView.hidden_delete_form(@conn, bookmark_path(@conn, :delete, @bookmark)) %>
+<%= CommonWeb.FormView.hidden_delete_form(@conn, show_path(@bookmark)) %>
