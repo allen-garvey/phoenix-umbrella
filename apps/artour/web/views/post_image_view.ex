@@ -23,7 +23,7 @@ defmodule Artour.PostImageView do
   def render("new.html", assigns) do
     assigns =
       Map.merge(assigns, %{
-        action: post_image_path(assigns[:conn], :create),
+        action: ~p"/admin/post_images",
         heading: Artour.SharedView.form_heading("post image", :new),
         save_another: true
       })
@@ -37,7 +37,7 @@ defmodule Artour.PostImageView do
   def render("edit.html", assigns) do
     assigns =
       Map.merge(assigns, %{
-        action: post_image_path(assigns[:conn], :update, assigns[:post_image]),
+        action: show_path(assigns[:post_image]),
         heading: Artour.SharedView.form_heading(display_name(assigns[:post_image]), :edit),
         show_delete: true
       })
@@ -57,7 +57,7 @@ defmodule Artour.PostImageView do
   Used on index pages - takes post image instance and returns list of
   formatted values
   """
-  def attribute_values_short(_conn, post_image) do
+  def attribute_values_short(post_image) do
     [
       Artour.PostView.display_name(post_image.post),
       Artour.ImageView.display_name(post_image.image),
@@ -70,15 +70,15 @@ defmodule Artour.PostImageView do
   Used on show pages - takes post image instance and returns list of
   formatted values
   """
-  def attributes(conn, post_image) do
+  def attributes(post_image) do
     [
       {"Post",
        link(Artour.PostView.display_name(post_image.post),
-         to: post_path(conn, :show, post_image.post)
+         to: Artour.PostView.show_path(post_image.post)
        )},
       {"Image",
        link(Artour.ImageView.display_name(post_image.image),
-         to: image_path(conn, :show, post_image.image)
+         to: Artour.ImageView.show_path(post_image.image)
        )},
       {"Caption", post_image.caption},
       {"Order", post_image.order}

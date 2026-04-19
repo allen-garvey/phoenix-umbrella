@@ -3,7 +3,7 @@
     heading: "Post Images",
     item_name_singular: "post image",
     count: Enum.count(@items),
-    new_path: post_image_path(@conn, :new)
+    new_path: ~p"/admin/post_images/new"
 %>
 
 <%= render Artour.SharedView, "index.html",
@@ -12,5 +12,5 @@
     show_path_func: &show_path/1,
     edit_path_func: &edit_path/1,
     column_headings: attribute_names_short(),
-    row_values_func: &attribute_values_short/2
+    row_values_func: &attribute_values_short/1
 %>

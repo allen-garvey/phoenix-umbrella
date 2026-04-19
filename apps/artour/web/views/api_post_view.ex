@@ -27,20 +27,19 @@ defmodule Artour.ApiPostView do
   defp post_image_to_map(post_image) do
     %{
       id: post_image.id,
-      # post_id: post_image.post_id,
       order: post_image.order,
       caption: post_image.caption,
-      image: Artour.ApiImageView.render("image_thumbnail_excerpt.json", api_image: post_image.image),
+      image:
+        Artour.ApiImageView.render("image_thumbnail_excerpt.json", api_image: post_image.image),
       url: %{
-        # show: post_image_path(Artour.Endpoint, :show, post_image),
-        edit: post_image_path(Artour.Endpoint, :edit, post_image),
-      },
+        edit: Artour.PostImageView.edit_path(post_image)
+      }
     }
   end
 
   defp post_image_export_to_map(post_image) do
     image = post_image.image
-    
+
     %{
       id: image.id,
       caption: post_image.caption,
@@ -49,8 +48,8 @@ defmodule Artour.ApiPostView do
         large: ImageView.url_for(image, :large),
         medium: ImageView.url_for(image, :medium),
         small: ImageView.url_for(image, :small),
-        thumbnail: ImageView.url_for(image, :thumbnail),
-      },
+        thumbnail: ImageView.url_for(image, :thumbnail)
+      }
     }
   end
 end

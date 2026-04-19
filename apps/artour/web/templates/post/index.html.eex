@@ -3,7 +3,7 @@
     heading: "Posts",
     item_name_singular: "post",
     count: Enum.count(@items),
-    new_path: post_path(@conn, :new)
+    new_path: ~p"/admin/posts/new"
 %>
 
 <%= render Artour.SharedView, "index.html",
@@ -12,5 +12,5 @@
     show_path_func: &show_path/1,
     edit_path_func: &edit_path/1,
     column_headings: attribute_names_short(),
-    row_values_func: &attribute_values_short/2
+    row_values_func: &attribute_values_short/1
 %>

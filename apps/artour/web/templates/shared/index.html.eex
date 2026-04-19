@@ -10,7 +10,7 @@
   <tbody>
     <%= for item <- @items do %>
       <tr>
-        <% [first_value | tail_values] = @row_values_func.(@conn, item) %>
+        <% [first_value | tail_values] = @row_values_func.(item) %>
 
         <td><%= link first_value, to: @show_path_func.(item) %></td>
 

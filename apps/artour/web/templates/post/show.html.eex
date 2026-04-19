@@ -1,15 +1,22 @@
 <%= render Artour.SharedView, "show_heading.html",
                                 conn: @conn,
                                 index_path: ~p"/admin/posts",
-                                edit_path: post_path(@conn, :edit, @post),
-                                attributes: attributes(@conn, @post),
+                                edit_path: edit_path(@post),
+                                attributes: attributes(@post),
                                 item_name_plural: "posts",
                                 title: display_name(@post)
 %>
 
 
 <div class="button-container-right">
-	<%= link "Add images", to: post_path(@conn, :add_images, @post), class: "btn btn-success" %>
+	<%= link "Add images", to: ~p"/admin/posts/#{@post}/images/add", class: "btn btn-success" %>
 </div>
 
-<div id="post_album_list_component" data-csrf-token="<%= @csrf_token %>" data-cover-image-id="<%= @post.cover_image_id %>" data-post-images-api-url="<%= api_post_path(@conn, :post_images, @post) %>" data-edit-post-api-url="<%= api_post_path(@conn, :update, @post) %>" data-reorder-images-api-url="<%= api_post_path(@conn, :reorder_images, @post) %>"></div>
+<div
+    id="post_album_list_component"
+    data-csrf-token="<%= @csrf_token %>"
+    data-cover-image-id="<%= @post.cover_image_id %>" data-post-images-api-url="<%= ~p"/admin/api/posts/#{@post}/images" %>"
+    data-edit-post-api-url="<%= ~p"/admin/api/posts/#{@post}" %>"
+    data-reorder-images-api-url="<%= ~p"/admin/api/posts/#{@post}/images/reorder" %>"
+>
+</div>

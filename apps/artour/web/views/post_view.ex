@@ -22,7 +22,7 @@ defmodule Artour.PostView do
   def render("new.html", assigns) do
     assigns =
       Map.merge(assigns, %{
-        action: post_path(assigns[:conn], :create),
+        action: ~p"/admin/posts",
         heading: Artour.SharedView.form_heading("post", :new)
       })
 
@@ -35,7 +35,7 @@ defmodule Artour.PostView do
   def render("edit.html", assigns) do
     assigns =
       Map.merge(assigns, %{
-        action: post_path(assigns[:conn], :update, assigns[:post]),
+        action: show_path(assigns[:post]),
         heading: Artour.SharedView.form_heading(display_name(assigns[:post]), :edit),
         show_delete: true
       })
@@ -62,7 +62,7 @@ defmodule Artour.PostView do
   Used on index page - takes post instance and returns abbreviated list of
   formatted values
   """
-  def attribute_values_short(conn, post) do
+  def attribute_values_short(post) do
     [
       post.title,
       img_tag(Artour.ImageView.url_for(post.cover_image, :thumbnail),
@@ -116,8 +116,8 @@ defmodule Artour.PostView do
   Used on show page - takes post instance and returns list of
   formatted values
   """
-  def attributes(conn, post) do
-    api_images_url = api_post_path(conn, :post_images, post.id, export: "true")
+  def attributes(post) do
+    api_images_url = ~p"/admin/api/posts/#{post.id}/images?export=true"
 
     public_url =
       case post.is_published do

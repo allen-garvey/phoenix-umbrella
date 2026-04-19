@@ -22,7 +22,7 @@ defmodule Artour.ImageView do
   def render("new.html", assigns) do
     assigns =
       Map.merge(assigns, %{
-        action: image_path(assigns[:conn], :create),
+        action: ~p"/admin/images",
         heading: Artour.SharedView.form_heading("image", :new),
         save_another: true
       })
@@ -36,7 +36,7 @@ defmodule Artour.ImageView do
   def render("edit.html", assigns) do
     assigns =
       Map.merge(assigns, %{
-        action: image_path(assigns[:conn], :update, assigns[:image]),
+        action: show_path(assigns[:image]),
         heading: Artour.SharedView.form_heading(display_name(assigns[:image]), :edit),
         show_delete: true
       })
@@ -112,7 +112,7 @@ defmodule Artour.ImageView do
   Used on index page - takes image instance and returns abbreviated list of
   formatted values
   """
-  def attribute_values_short(_conn, image) do
+  def attribute_values_short(image) do
     [
       image.title,
       img_tag(url_for(image, :thumbnail), class: "thumbnail", loading: "lazy"),

@@ -3,6 +3,7 @@ defmodule Artour.PostImageController do
   plug(:put_view, html: Artour.PostImageView)
 
   alias Artour.PostImage
+  Artour.PostImageView
 
   def index(conn, _params) do
     post_images =
@@ -59,7 +60,7 @@ defmodule Artour.PostImageController do
       {:ok, post_image} ->
         conn
         |> put_flash(:info, "Post image updated successfully.")
-        |> redirect(to: post_image_path(conn, :show, post_image))
+        |> redirect(to: Artour.PostImageView.show_path(post_image))
 
       {:error, changeset} ->
         render(conn, "edit.html", post_image: post_image, changeset: changeset)

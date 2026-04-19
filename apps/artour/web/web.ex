@@ -35,8 +35,6 @@ defmodule Artour.Web do
       import Ecto
       import Ecto.Query
 
-      import Artour.Router.Helpers
-
       use Phoenix.VerifiedRoutes, router: Artour.Router, endpoint: Artour.Endpoint
     end
   end
@@ -53,7 +51,6 @@ defmodule Artour.Web do
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
 
-      import Artour.Router.Helpers
       import Artour.LayoutHelpers
       import Artour.DateHelpers, only: [datetime_to_display_date: 1]
 

@@ -4,6 +4,7 @@ defmodule Artour.PostController do
 
   alias Artour.Admin
   alias Artour.Post
+  alias Artour.PostView
 
   def index(conn, _params) do
     posts = Admin.list_posts()
@@ -27,7 +28,7 @@ defmodule Artour.PostController do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post created successfully.")
-        |> redirect(to: post_path(conn, :show, post))
+        |> redirect(to: PostView.show_path(post))
 
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -54,7 +55,7 @@ defmodule Artour.PostController do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post updated successfully.")
-        |> redirect(to: post_path(conn, :show, post))
+        |> redirect(to: PostView.show_path(post))
 
       {:error, changeset} ->
         render(conn, "edit.html", post: post, changeset: changeset)
@@ -103,6 +104,6 @@ defmodule Artour.PostController do
 
     conn
     |> put_flash(:info, "Images added")
-    |> redirect(to: post_path(conn, :show, post))
+    |> redirect(to: PostView.show_path(post))
   end
 end
