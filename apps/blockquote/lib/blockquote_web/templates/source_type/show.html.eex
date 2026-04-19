@@ -2,23 +2,23 @@
                                 conn: @conn,
                                 title: to_s(@source_type),
                                 item_name_singular: @item_name_singular,
-                                item: @source_type,
-                                item_path: &source_type_path/3,
-                                item_columns: item_columns(@conn, @source_type)
+                                delete_path: show_path(@source_type),
+                                edit_path: edit_path(@source_type),
+                                item_columns: item_columns(@source_type)
 %>
 
 <%= render BlockquoteWeb.SharedView, "related_fields_list.html",
                                 conn: @conn,
                                 heading: "Parent Sources",
-                                item_path: &parent_source_path/3,
                                 items: @source_type.parent_sources,
+                                show_path: &BlockquoteWeb.ParentSourceView.show_path/1,
                                 item_display_func: &BlockquoteWeb.ParentSourceView.to_s/1
 %>
 
 <%= render BlockquoteWeb.SharedView, "related_fields_list.html",
                                 conn: @conn,
                                 heading: "Sources",
-                                item_path: &source_path/3,
                                 items: @source_type.sources,
+                                show_path: &BlockquoteWeb.SourceView.show_path/1,
                                 item_display_func: &BlockquoteWeb.SourceView.to_s/1
 %>

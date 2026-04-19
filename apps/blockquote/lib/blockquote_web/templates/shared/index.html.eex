@@ -8,10 +8,10 @@
 <ol class="index-list">
   <%= for item <- @items do %>
       <li>
-        <div><%= link @item_display_func.(item) , to: @item_path_func.(@conn, :show, item) %></div>
+        <div><%= link @item_display_func.(item) , to: @show_path_func.(item) %></div>
 
         <div>
-          <%= link "Edit", to: @item_path_func.(@conn, :edit, item), class: "btn btn-default btn-xs" %>
+          <%= link "Edit", to: @edit_path_func.(item), class: "btn btn-default btn-xs" %>
         </div>
       </li>
   <% end %>

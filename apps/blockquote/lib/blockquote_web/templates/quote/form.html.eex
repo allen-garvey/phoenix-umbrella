@@ -1,14 +1,14 @@
 <%= if assigns[:quote] do %>
-    <%= render BlockquoteWeb.SharedView, "form_edit_heading.html", 
+    <%= render BlockquoteWeb.SharedView, "form_edit_heading.html",
         item_name: "Quote",
-        item_path: quote_path(@conn, :show, @quote)
+        item_path: show_path(@quote)
     %>
 
 <% else %>
     <%= render BlockquoteWeb.SharedView, "form_heading.html", heading: "Add quote"%>
 <% end %>
 
-<%= form_for @changeset, form_action(@conn, assigns[:quote]), fn f -> %>
+<%= form_for @changeset, form_action(assigns[:quote]), fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>

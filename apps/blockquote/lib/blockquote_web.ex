@@ -21,14 +21,16 @@ defmodule BlockquoteWeb do
     quote do
       use Phoenix.Controller, formats: [:html, :json]
       import Plug.Conn
-      import BlockquoteWeb.Router.Helpers
+
+      use Phoenix.VerifiedRoutes, router: BlockquoteWeb.Router, endpoint: BlockquoteWeb.Endpoint
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/blockquote_web/templates",
-                        namespace: BlockquoteWeb
+      use Phoenix.View,
+        root: "lib/blockquote_web/templates",
+        namespace: BlockquoteWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [view_module: 1]
@@ -38,7 +40,7 @@ defmodule BlockquoteWeb do
       import Phoenix.HTML.Form
       use PhoenixHTMLHelpers
 
-      import BlockquoteWeb.Router.Helpers
+      use Phoenix.VerifiedRoutes, router: BlockquoteWeb.Router, endpoint: BlockquoteWeb.Endpoint
 
       import Common.ViewHelpers.Form, only: [error_tag: 2]
     end

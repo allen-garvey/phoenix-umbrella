@@ -7,10 +7,12 @@ defmodule BlockquoteWeb.CategoryController do
   plug(:put_view, html: BlockquoteWeb.CategoryView)
 
   defp custom_render(conn, template, assigns) do
-    assigns = [
-      item_name_singular: "category",
-      breadcrumb: {"Categories", category_path(conn, :index)}
-    ] ++ assigns
+    assigns =
+      [
+        item_name_singular: "category",
+        breadcrumb: {"Categories", BlockquoteWeb.CategoryView.index_path()}
+      ] ++ assigns
+
     render(conn, template, assigns)
   end
 
@@ -29,7 +31,8 @@ defmodule BlockquoteWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category created successfully.")
-        |> redirect(to: category_path(conn, :show, category))
+        |> redirect(to: BlockquoteWeb.CategoryView.show_path(category))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         custom_render(conn, "form.html", changeset: changeset)
     end
@@ -53,7 +56,8 @@ defmodule BlockquoteWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: category_path(conn, :show, category))
+        |> redirect(to: BlockquoteWeb.CategoryView.show_path(category))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         custom_render(conn, "form.html", changeset: changeset, category: category)
     end
@@ -65,6 +69,6 @@ defmodule BlockquoteWeb.CategoryController do
 
     conn
     |> put_flash(:info, "Category deleted successfully.")
-    |> redirect(to: category_path(conn, :index))
+    |> redirect(to: BlockquoteWeb.CategoryView.index_path())
   end
 end

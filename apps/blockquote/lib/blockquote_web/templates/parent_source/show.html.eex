@@ -2,16 +2,16 @@
                                 conn: @conn,
                                 title: to_s(@parent_source),
                                 item_name_singular: @item_name_singular,
-                                item: @parent_source,
-                                item_path: &parent_source_path/3,
-                                item_columns: item_columns(@conn, @parent_source),
-                                extra_buttons: show_buttons(@conn, @parent_source)
+                                delete_path: show_path(@parent_source),
+                                edit_path: edit_path(@parent_source),
+                                item_columns: item_columns(@parent_source),
+                                extra_buttons: show_buttons(@parent_source)
 %>
 
 <%= render BlockquoteWeb.SharedView, "related_fields_list.html",
                                 conn: @conn,
                                 heading: "Sources",
-                                item_path: &source_path/3,
                                 items: @parent_source.sources,
+                                show_path: &BlockquoteWeb.SourceView.show_path/1,
                                 item_display_func: &BlockquoteWeb.SourceView.to_s/1
 %>

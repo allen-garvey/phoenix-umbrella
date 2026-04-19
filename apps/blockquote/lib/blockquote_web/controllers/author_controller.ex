@@ -7,10 +7,12 @@ defmodule BlockquoteWeb.AuthorController do
   plug(:put_view, html: BlockquoteWeb.AuthorView)
 
   defp custom_render(conn, template, assigns) do
-    assigns = [
-      item_name_singular: "author",
-      breadcrumb: {"Authors", author_path(conn, :index)}
-    ] ++ assigns
+    assigns =
+      [
+        item_name_singular: "author",
+        breadcrumb: {"Authors", BlockquoteWeb.AuthorView.index_path()}
+      ] ++ assigns
+
     render(conn, template, assigns)
   end
 
@@ -29,7 +31,8 @@ defmodule BlockquoteWeb.AuthorController do
       {:ok, author} ->
         conn
         |> put_flash(:info, "Author created successfully.")
-        |> redirect(to: author_path(conn, :show, author))
+        |> redirect(to: BlockquoteWeb.AuthorView.show_path(author))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         custom_render(conn, "form.html", changeset: changeset)
     end
@@ -53,7 +56,8 @@ defmodule BlockquoteWeb.AuthorController do
       {:ok, author} ->
         conn
         |> put_flash(:info, "Author updated successfully.")
-        |> redirect(to: author_path(conn, :show, author))
+        |> redirect(to: BlockquoteWeb.AuthorView.show_path(author))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         custom_render(conn, "form.html", author: author, changeset: changeset)
     end
@@ -65,6 +69,6 @@ defmodule BlockquoteWeb.AuthorController do
 
     conn
     |> put_flash(:info, "Author deleted successfully.")
-    |> redirect(to: author_path(conn, :index))
+    |> redirect(to: BlockquoteWeb.AuthorView.index_path())
   end
 end

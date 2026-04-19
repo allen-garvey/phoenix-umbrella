@@ -2,15 +2,15 @@
                                 conn: @conn,
                                 title: to_s(@category),
                                 item_name_singular: @item_name_singular,
-                                item: @category,
-                                item_path: &category_path/3,
-                                item_columns: item_columns(@conn, @category)
+                                delete_path: show_path(@category),
+                                edit_path: edit_path(@category),
+                                item_columns: item_columns(@category)
 %>
 
 <%= render BlockquoteWeb.SharedView, "related_fields_list.html",
                                 conn: @conn,
                                 heading: "Quotes",
-                                item_path: &quote_path/3,
                                 items: @category.quotes,
+                                show_path: &BlockquoteWeb.QuoteView.show_path/1,
                                 item_display_func: &BlockquoteWeb.QuoteView.to_excerpt/1
 %>

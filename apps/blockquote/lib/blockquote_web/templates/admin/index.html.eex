@@ -1,10 +1,10 @@
 <h2 class="page-title">Site administration</h2>
 
 <ul class="admin-fields-list">
-    <%= for {field_title, field_path_func} <- @fields do %>
+    <%= for {field_title, index_path, new_path} <- @fields do %>
         <li>
-        	<%= link field_title, to: field_path_func.(@conn, :index), class: "field-title" %>
-        	<%= link "Add", to: field_path_func.(@conn, :new), class: "addlink" %>
+        	<%= link field_title, to: index_path, class: "field-title" %>
+        	<%= link "Add", to: new_path, class: "addlink" %>
         </li>
     <% end %>
 </ul>

@@ -7,18 +7,23 @@ defmodule BlockquoteWeb.SourceController do
   plug(:put_view, html: BlockquoteWeb.SourceView)
 
   defp custom_render(conn, template, assigns) do
-    assigns = [
-      item_name_singular: "source",
-      breadcrumb: {"Sources", source_path(conn, :index)}
-    ] ++ assigns
+    assigns =
+      [
+        item_name_singular: "source",
+        breadcrumb: {"Sources", BlockquoteWeb.SourceView.index_path()}
+      ] ++ assigns
+
     render(conn, template, assigns)
   end
 
   defp related_fields do
-    authors = Admin.list_authors() |> BlockquoteWeb.AuthorView.map_for_form
-    source_types = Admin.list_source_types() |> BlockquoteWeb.SourceTypeView.map_for_form
-    #insert blank value since parent source is optional
-    parent_sources = Admin.list_parent_sources() |> BlockquoteWeb.ParentSourceView.map_for_form |> List.insert_at(0, {"", nil})
+    authors = Admin.list_authors() |> BlockquoteWeb.AuthorView.map_for_form()
+    source_types = Admin.list_source_types() |> BlockquoteWeb.SourceTypeView.map_for_form()
+    # insert blank value since parent source is optional
+    parent_sources =
+      Admin.list_parent_sources()
+      |> BlockquoteWeb.ParentSourceView.map_for_form()
+      |> List.insert_at(0, {"", nil})
 
     [authors: authors, source_types: source_types, parent_sources: parent_sources]
   end
@@ -33,7 +38,11 @@ defmodule BlockquoteWeb.SourceController do
   end
 
   defp edit_page(conn, changeset, source) do
-    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields(), source: source)
+    custom_render(conn, "form.html",
+      changeset: changeset,
+      related_fields: related_fields(),
+      source: source
+    )
   end
 
   def new(conn, %{"parent_source" => parent_source_id}) do
@@ -51,7 +60,8 @@ defmodule BlockquoteWeb.SourceController do
       {:ok, source} ->
         conn
         |> put_flash(:info, "Source created successfully.")
-        |> redirect(to: source_path(conn, :show, source))
+        |> redirect(to: BlockquoteWeb.SourceView.show_path(source))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         new_page(conn, changeset)
     end
@@ -75,7 +85,8 @@ defmodule BlockquoteWeb.SourceController do
       {:ok, source} ->
         conn
         |> put_flash(:info, "Source updated successfully.")
-        |> redirect(to: source_path(conn, :show, source))
+        |> redirect(to: BlockquoteWeb.SourceView.show_path(source))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         edit_page(conn, changeset, source)
     end
@@ -87,6 +98,6 @@ defmodule BlockquoteWeb.SourceController do
 
     conn
     |> put_flash(:info, "Source deleted successfully.")
-    |> redirect(to: source_path(conn, :index))
+    |> redirect(to: BlockquoteWeb.SourceView.index_path())
   end
 end

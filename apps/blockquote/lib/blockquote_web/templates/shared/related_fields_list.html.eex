@@ -3,7 +3,7 @@
     <ul class="related-fields-list">
         <%= for item <- @items do %>
             <li>
-                <%= link @item_display_func.(item) , to: @item_path.(@conn, :show, item) %>
+                <%= link @item_display_func.(item) , to: @show_path.(item) %>
             </li>
         <% end %>
     </ul>

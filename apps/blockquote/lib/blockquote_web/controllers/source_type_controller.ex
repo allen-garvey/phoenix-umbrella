@@ -7,10 +7,12 @@ defmodule BlockquoteWeb.SourceTypeController do
   plug(:put_view, html: BlockquoteWeb.SourceTypeView)
 
   defp custom_render(conn, template, assigns) do
-    assigns = [
-      item_name_singular: "source type",
-      breadcrumb: {"Source types", source_type_path(conn, :index)}
-    ] ++ assigns
+    assigns =
+      [
+        item_name_singular: "source type",
+        breadcrumb: {"Source types", BlockquoteWeb.SourceTypeView.index_path()}
+      ] ++ assigns
+
     render(conn, template, assigns)
   end
 
@@ -29,7 +31,8 @@ defmodule BlockquoteWeb.SourceTypeController do
       {:ok, source_type} ->
         conn
         |> put_flash(:info, "Source type created successfully.")
-        |> redirect(to: source_type_path(conn, :show, source_type))
+        |> redirect(to: BlockquoteWeb.SourceTypeView.show_path(source_type))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         custom_render(conn, "form.html", changeset: changeset)
     end
@@ -53,7 +56,8 @@ defmodule BlockquoteWeb.SourceTypeController do
       {:ok, source_type} ->
         conn
         |> put_flash(:info, "Source type updated successfully.")
-        |> redirect(to: source_type_path(conn, :show, source_type))
+        |> redirect(to: BlockquoteWeb.SourceTypeView.show_path(source_type))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         custom_render(conn, "form.html", source_type: source_type, changeset: changeset)
     end
@@ -65,6 +69,6 @@ defmodule BlockquoteWeb.SourceTypeController do
 
     conn
     |> put_flash(:info, "Source type deleted successfully.")
-    |> redirect(to: source_type_path(conn, :index))
+    |> redirect(to: BlockquoteWeb.SourceTypeView.index_path())
   end
 end

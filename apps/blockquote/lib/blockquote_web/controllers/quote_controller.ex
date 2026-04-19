@@ -8,18 +8,24 @@ defmodule BlockquoteWeb.QuoteController do
   plug(:put_view, html: BlockquoteWeb.QuoteView)
 
   defp custom_render(conn, template, assigns) do
-    assigns = [
-      item_name_singular: "quote",
-      breadcrumb: {"Quotes", quote_path(conn, :index)}
-    ] ++ assigns
+    assigns =
+      [
+        item_name_singular: "quote",
+        breadcrumb: {"Quotes", BlockquoteWeb.QuoteView.index_path()}
+      ] ++ assigns
+
     render(conn, template, assigns)
   end
 
   def related_fields do
-    #need to add empty value at start of authors since it is optional
-    authors = Admin.list_authors() |> BlockquoteWeb.AuthorView.map_for_form |> List.insert_at(0, {"", nil})
-    categories = Admin.list_categories() |> BlockquoteWeb.CategoryView.map_for_form
-    sources = Admin.list_sources() |> BlockquoteWeb.SourceView.map_for_form
+    # need to add empty value at start of authors since it is optional
+    authors =
+      Admin.list_authors()
+      |> BlockquoteWeb.AuthorView.map_for_form()
+      |> List.insert_at(0, {"", nil})
+
+    categories = Admin.list_categories() |> BlockquoteWeb.CategoryView.map_for_form()
+    sources = Admin.list_sources() |> BlockquoteWeb.SourceView.map_for_form()
     [authors: authors, categories: categories, sources: sources]
   end
 
@@ -44,20 +50,34 @@ defmodule BlockquoteWeb.QuoteController do
   end
 
   def new_page(conn, changeset) do
-    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields(), save_another: true)
+    custom_render(conn, "form.html",
+      changeset: changeset,
+      related_fields: related_fields(),
+      save_another: true
+    )
   end
 
   def edit_page(conn, changeset, quote) do
-    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields(), quote: quote)
+    custom_render(conn, "form.html",
+      changeset: changeset,
+      related_fields: related_fields(),
+      quote: quote
+    )
   end
 
   def create_succeeded(conn, quote, "true") do
-    changeset = Admin.change_quote(%Quote{author_id: quote.author_id, category_id: quote.category_id, source_id: quote.source_id})
+    changeset =
+      Admin.change_quote(%Quote{
+        author_id: quote.author_id,
+        category_id: quote.category_id,
+        source_id: quote.source_id
+      })
+
     new_page(conn, changeset)
   end
 
   def create_succeeded(conn, quote, _save_another) do
-    redirect(conn, to: quote_path(conn, :show, quote))
+    redirect(conn, to: BlockquoteWeb.QuoteView.show_path(quote))
   end
 
   def create(conn, %{"quote" => quote_params, "save_another" => save_another}) do
@@ -68,8 +88,9 @@ defmodule BlockquoteWeb.QuoteController do
     case Repo.insert(Quote.validate_author_id(changeset, source)) do
       {:ok, quote} ->
         conn
-          |> put_flash(:info, "Quote created successfully.")
-          |> create_succeeded(quote, save_another)
+        |> put_flash(:info, "Quote created successfully.")
+        |> create_succeeded(quote, save_another)
+
       {:error, %Ecto.Changeset{} = changeset} ->
         new_page(conn, changeset)
     end
@@ -97,7 +118,8 @@ defmodule BlockquoteWeb.QuoteController do
       {:ok, quote} ->
         conn
         |> put_flash(:info, "Quote updated successfully.")
-        |> redirect(to: quote_path(conn, :show, quote))
+        |> redirect(to: BlockquoteWeb.QuoteView.show_path(quote))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         edit_page(conn, changeset, quote)
     end
@@ -109,6 +131,6 @@ defmodule BlockquoteWeb.QuoteController do
 
     conn
     |> put_flash(:info, "Quote deleted successfully.")
-    |> redirect(to: quote_path(conn, :index))
+    |> redirect(to: BlockquoteWeb.QuoteView.index_path())
   end
 end

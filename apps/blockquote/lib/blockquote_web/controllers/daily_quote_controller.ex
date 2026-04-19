@@ -7,15 +7,17 @@ defmodule BlockquoteWeb.DailyQuoteController do
   plug(:put_view, html: BlockquoteWeb.DailyQuoteView)
 
   defp custom_render(conn, template, assigns) do
-    assigns = [
-      item_name_singular: "daily quote",
-      breadcrumb: {"Daily quotes", daily_quote_path(conn, :index)}
-    ] ++ assigns
+    assigns =
+      [
+        item_name_singular: "daily quote",
+        breadcrumb: {"Daily quotes", BlockquoteWeb.DailyQuoteView.index_path()}
+      ] ++ assigns
+
     render(conn, template, assigns)
   end
 
   defp related_fields do
-    quotes = Admin.list_quotes() |> BlockquoteWeb.QuoteView.map_for_form
+    quotes = Admin.list_quotes() |> BlockquoteWeb.QuoteView.map_for_form()
     [quotes: quotes]
   end
 
@@ -29,7 +31,11 @@ defmodule BlockquoteWeb.DailyQuoteController do
   end
 
   defp edit_page(conn, changeset, daily_quote) do
-    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields(), daily_quote: daily_quote)
+    custom_render(conn, "form.html",
+      changeset: changeset,
+      related_fields: related_fields(),
+      daily_quote: daily_quote
+    )
   end
 
   def new(conn, _params) do
@@ -42,7 +48,8 @@ defmodule BlockquoteWeb.DailyQuoteController do
       {:ok, daily_quote} ->
         conn
         |> put_flash(:info, "Daily quote created successfully.")
-        |> redirect(to: daily_quote_path(conn, :show, daily_quote))
+        |> redirect(to: BlockquoteWeb.DailyQuoteView.show_path(daily_quote))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         new_page(conn, changeset)
     end
@@ -66,7 +73,8 @@ defmodule BlockquoteWeb.DailyQuoteController do
       {:ok, daily_quote} ->
         conn
         |> put_flash(:info, "Daily quote updated successfully.")
-        |> redirect(to: daily_quote_path(conn, :show, daily_quote))
+        |> redirect(to: BlockquoteWeb.DailyQuoteView.show_path(daily_quote))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         edit_page(conn, changeset, daily_quote)
     end
@@ -78,6 +86,6 @@ defmodule BlockquoteWeb.DailyQuoteController do
 
     conn
     |> put_flash(:info, "Daily quote deleted successfully.")
-    |> redirect(to: daily_quote_path(conn, :index))
+    |> redirect(to: BlockquoteWeb.DailyQuoteView.index_path())
   end
 end

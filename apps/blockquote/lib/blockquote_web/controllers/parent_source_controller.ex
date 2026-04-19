@@ -7,15 +7,17 @@ defmodule BlockquoteWeb.ParentSourceController do
   plug(:put_view, html: BlockquoteWeb.ParentSourceView)
 
   defp custom_render(conn, template, assigns) do
-    assigns = [
-      item_name_singular: "parent source",
-      breadcrumb: {"Parent sources", parent_source_path(conn, :index)}
-    ] ++ assigns
+    assigns =
+      [
+        item_name_singular: "parent source",
+        breadcrumb: {"Parent sources", BlockquoteWeb.ParentSourceView.index_path()}
+      ] ++ assigns
+
     render(conn, template, assigns)
   end
 
   defp related_fields do
-    source_types = Admin.list_source_types() |> BlockquoteWeb.SourceTypeView.map_for_form
+    source_types = Admin.list_source_types() |> BlockquoteWeb.SourceTypeView.map_for_form()
 
     [source_types: source_types]
   end
@@ -30,7 +32,11 @@ defmodule BlockquoteWeb.ParentSourceController do
   end
 
   defp edit_page(conn, changeset, parent_source) do
-    custom_render(conn, "form.html", changeset: changeset, related_fields: related_fields(), parent_source: parent_source)
+    custom_render(conn, "form.html",
+      changeset: changeset,
+      related_fields: related_fields(),
+      parent_source: parent_source
+    )
   end
 
   def new(conn, _params) do
@@ -43,7 +49,8 @@ defmodule BlockquoteWeb.ParentSourceController do
       {:ok, parent_source} ->
         conn
         |> put_flash(:info, "Parent source created successfully.")
-        |> redirect(to: parent_source_path(conn, :show, parent_source))
+        |> redirect(to: BlockquoteWeb.ParentSourceView.show_path(parent_source))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         new_page(conn, changeset)
     end
@@ -67,7 +74,8 @@ defmodule BlockquoteWeb.ParentSourceController do
       {:ok, parent_source} ->
         conn
         |> put_flash(:info, "Parent source updated successfully.")
-        |> redirect(to: parent_source_path(conn, :show, parent_source))
+        |> redirect(to: BlockquoteWeb.ParentSourceView.show_path(parent_source))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         edit_page(conn, changeset, parent_source)
     end
@@ -79,6 +87,6 @@ defmodule BlockquoteWeb.ParentSourceController do
 
     conn
     |> put_flash(:info, "Parent source deleted successfully.")
-    |> redirect(to: parent_source_path(conn, :index))
+    |> redirect(to: BlockquoteWeb.ParentSourceView.index_path())
   end
 end

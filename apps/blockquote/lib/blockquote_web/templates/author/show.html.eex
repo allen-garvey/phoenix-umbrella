@@ -2,24 +2,24 @@
                                 conn: @conn,
                                 title: to_s(@author),
                                 item_name_singular: @item_name_singular,
-                                item: @author,
-                                item_path: &author_path/3,
-                                item_columns: item_columns(@conn, @author),
-                                extra_buttons: show_buttons(@conn, @author)
+                                delete_path: show_path(@author),
+                                edit_path: edit_path(@author),
+                                item_columns: item_columns(@author),
+                                extra_buttons: show_buttons(@author)
 %>
 
 <%= render BlockquoteWeb.SharedView, "related_fields_list.html",
                                 conn: @conn,
                                 heading: "Sources",
-                                item_path: &source_path/3,
                                 items: @author.sources,
+                                show_path: &BlockquoteWeb.SourceView.show_path/1,
                                 item_display_func: &BlockquoteWeb.SourceView.to_s/1
 %>
 
 <%= render BlockquoteWeb.SharedView, "related_fields_list.html",
                                 conn: @conn,
                                 heading: "Quotes",
-                                item_path: &quote_path/3,
                                 items: @author.quotes ++ Enum.flat_map(@author.sources, &(&1.quotes)),
+                                show_path: &BlockquoteWeb.QuoteView.show_path/1,
                                 item_display_func: &BlockquoteWeb.QuoteView.to_excerpt/1
 %>

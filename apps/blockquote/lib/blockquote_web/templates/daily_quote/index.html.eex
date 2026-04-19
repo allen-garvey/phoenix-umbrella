@@ -3,6 +3,7 @@
                             items: @daily_quotes,
                             item_name_singular: @item_name_singular,
                             item_display_func: &to_s/1,
-                            new_path: daily_quote_path(@conn, :new),
-                            item_path_func: &daily_quote_path/3
+                            new_path: new_path(),
+                            show_path_func: &show_path/1,
+                            edit_path_func: &edit_path/1
 %>
