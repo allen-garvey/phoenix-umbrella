@@ -16,4 +16,4 @@ delete_path: ~p"/groups/#{@group}" %>
 </ul>
 
 <h3>Plugins</h3>
-<%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: ~p"/api/groups/#{@group.id}/plugins") %>
+<div id="plugin-table" data-plugins-api-route={~p"/api/groups/#{@group.id}/plugins"}></div>

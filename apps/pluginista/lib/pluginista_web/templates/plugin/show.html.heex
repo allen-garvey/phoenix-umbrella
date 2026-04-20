@@ -25,7 +25,12 @@
 </ul>
 
 <%= form_for @conn, ~p"/plugins/#{@plugin}/update_categories", fn f -> %>
-  <%= PluginistaWeb.SharedView.multiselect_checkboxes(f, :categories, PluginistaWeb.CategoryView.map_for_form(@categories), Map.new(@plugin.plugin_categories, &{&1.category_id, true})) %>
+  <PluginistaWeb.PluginComponent.multiselect_checkboxes
+    form={f}
+    field={:categories}
+    options={PluginistaWeb.CategoryView.map_for_form(@categories)}
+    selected_options={Map.new(@plugin.plugin_categories, &{&1.category_id, true})}
+  />
 
   <div class="form-group right">
     <%= submit "Update Categories", class: "btn btn-success" %>

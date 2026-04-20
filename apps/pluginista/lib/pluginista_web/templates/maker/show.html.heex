@@ -21,4 +21,4 @@ delete_path: ~p"/makers/#{@maker}"
 </ul>
 
 <h3>Plugins</h3>
-<%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: ~p"/api/makers/#{@maker.id}/plugins") %>
+<div id="plugin-table" data-plugins-api-route={~p"/api/makers/#{@maker.id}/plugins"}></div>

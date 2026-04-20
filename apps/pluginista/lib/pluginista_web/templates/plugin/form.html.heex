@@ -18,7 +18,7 @@
   <%= if assigns[:show_categories] do %>
     <fieldset>
     <legend>Categories</legend>
-      <%= content_tag(:div, "", id: "plugin-categories", data_categories: PluginistaWeb.CategoryView.to_json(@categories)) %>
+      <div id="plugin-categories" data-categories={PluginistaWeb.CategoryView.to_json(@categories)}></div>
   </fieldset>
   <% end %>
 

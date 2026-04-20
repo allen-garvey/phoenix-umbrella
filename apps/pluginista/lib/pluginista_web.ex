@@ -52,6 +52,8 @@ defmodule PluginistaWeb do
     quote do
       use Phoenix.Component
 
+      use Phoenix.VerifiedRoutes, router: PluginistaWeb.Router, endpoint: PluginistaWeb.Endpoint
+
       unquote(view_helpers())
     end
   end

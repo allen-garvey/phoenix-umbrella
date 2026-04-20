@@ -2,4 +2,4 @@
 
 <div class="form-group"><%= link "New Plugin", to: ~p"/plugins/new", class: "btn btn-success" %></div>
 
-<%= content_tag(:div, "", id: "plugin-table", data_plugins_api_route: ~p"/api/plugins") %>
+<div id="plugin-table" data-plugins-api-route={~p"/api/plugins"}></div>
