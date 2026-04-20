@@ -1,13 +1,13 @@
 # For code shared across views that relates to whole application
 defmodule Artour.LayoutHelpers do
-	
+
   use PhoenixHTMLHelpers
 
 	@doc """
   	Used in title of site, in such places as the title tag
   	"""
 	def site_title() do
-		"Strange Scenery"	
+		"Strange Scenery"
 	end
 
   def site_title(nil) do
@@ -16,13 +16,6 @@ defmodule Artour.LayoutHelpers do
 
   def site_title(page_title) when is_binary(page_title) do
     site_title() <> " | " <> page_title
-  end
-
-  @doc """
-    Description of site, used in meta description tag on public pages
-    """
-  def site_description() do
-    "The artwork and photography of Allen Garvey"
   end
 
 	@doc """

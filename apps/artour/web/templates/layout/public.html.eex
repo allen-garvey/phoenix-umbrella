@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= site_title assigns[:page_title] %></title>
-    <%= tag :link, rel: "stylesheet", href: "/assets/app.css" %>
-    <%= tag :meta, name: "description", content: site_description() %>
-    <%= if assigns[:facebook_image] do
-      tag :meta, property: "og:image", content: Artour.ImageView.url_for(@facebook_image, :small)
-    end %>
-    <%= if assigns[:page_title] do
-      tag :meta, property: "og:title", content: @page_title
-    end %>
+    <link rel="stylesheet" href="/assets/app.css" />
+    <meta name="description" content="The artwork and photography of Allen Garvey" />
+    <%= if assigns[:facebook_image] do %>
+      <meta property="og:image" content="<%= Artour.ImageView.url_for(@facebook_image, :small) %>" />
+    <% end %>
+    <%= if assigns[:page_title] do %>
+      <meta property="og:title" content="<%= @page_title %>" />
+    <% end %>
   </head>
 
   <body class="<%= assigns[:body_class] %>">
@@ -28,8 +28,8 @@
     <main class="<%= main_container_class(assigns[:main_container_class]) %>" role="main">
       <%= @inner_content %>
     </main>
-    <%= if assigns[:javascript] do
-      content_tag :script, "", src: "/assets/app.js"
-    end %>
+    <%= if assigns[:javascript] do %>
+      <script src="/assets/app.js"></script>
+    <% end %>
   </body>
 </html>
