@@ -50,6 +50,7 @@ end %>
         <th>Name</th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -61,6 +62,11 @@ end %>
         <td>
           <span>
             <%= link "Edit", to: ~p"/tags/#{tag}/edit?redirect=category", class: "btn btn-primary" %>
+          </span>
+        </td>
+        <td>
+          <span>
+            <%= link "Summary", to: HabitsWeb.TagView.tag_summary_path(tag), class: "btn btn-dark" %>
           </span>
         </td>
         <td>

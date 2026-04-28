@@ -8,4 +8,8 @@ defmodule HabitsWeb.TagView do
   def tag_link_title(tag) do
     link(tag.name, to: ~p"/tags/#{tag}")
   end
+
+  def tag_summary_path(tag) do
+    ~p"/categories/#{tag.category_id}/summary?tags[]=#{tag}"
+  end
 end

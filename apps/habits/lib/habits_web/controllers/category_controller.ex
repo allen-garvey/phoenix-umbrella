@@ -167,16 +167,7 @@ defmodule HabitsWeb.CategoryController do
     case {Date.from_iso8601(from), Date.from_iso8601(to)} do
       {{:ok, start_date}, {:ok, end_date}} ->
         tags = Habits.Api.list_tags_for_category(category_id)
-
-        checked_tags_set =
-          Enum.map(checked_tags, fn id ->
-            case Integer.parse(id) do
-              {number, ""} -> number
-              _ -> nil
-            end
-          end)
-          |> Enum.filter(fn value -> !is_nil(value) end)
-          |> MapSet.new()
+        checked_tags_set = generate_checked_tags_set(checked_tags)
 
         summary_page(conn, category_id, start_date, end_date, checked_tags_set, tags)
 
@@ -185,10 +176,24 @@ defmodule HabitsWeb.CategoryController do
     end
   end
 
-  def summary(conn, %{"id" => category_id}) do
+  def summary(conn, %{"id" => category_id, "tags" => checked_tags}) do
+    tags = Habits.Api.list_tags_for_category(category_id)
+    checked_tags_set = generate_checked_tags_set(checked_tags)
+
     today = Common.ModelHelpers.Date.today()
+
+    start_date =
+      today
+      |> Date.shift(month: -12)
+
+    summary_page(conn, category_id, start_date, today, checked_tags_set, tags)
+  end
+
+  def summary(conn, %{"id" => category_id}) do
     tags = Habits.Api.list_tags_for_category(category_id)
     checked_tags = tags_to_set(tags)
+
+    today = Common.ModelHelpers.Date.today()
 
     start_date =
       today
@@ -229,6 +234,17 @@ defmodule HabitsWeb.CategoryController do
 
   defp tags_to_set(tags) do
     MapSet.new(tags, fn tag -> tag.id end)
+  end
+
+  defp generate_checked_tags_set(checked_tags) do
+    Enum.map(checked_tags, fn id ->
+      case Integer.parse(id) do
+        {number, ""} -> number
+        _ -> nil
+      end
+    end)
+    |> Enum.filter(fn value -> !is_nil(value) end)
+    |> MapSet.new()
   end
 
   defp get_activity_streak(

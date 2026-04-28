@@ -1,4 +1,7 @@
-<h1><%= @tag.name %></h1>
+<div class="category-show-title-container">
+  <h1><%= @tag.name %></h1>
+  <%= link "Summary", to: tag_summary_path(@tag), class: "btn btn-sm btn-dark" %>
+</div>
 
 <%= form_for @conn, ~p"/tags/#{@tag}", [method: "delete", data_form: "delete", class: "inline"], fn _f -> %>
     <input type="submit" value="Delete" class="btn btn-danger" data-button="delete" />
