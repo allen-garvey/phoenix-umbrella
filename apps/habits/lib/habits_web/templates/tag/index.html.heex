@@ -15,6 +15,7 @@
       <th>Name</th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -23,6 +24,12 @@
       <td></td>
       <td class={["center", CategoryView.color_style(tag.category)]}><%= link CategoryView.to_s(tag.category), to: ~p"/categories/#{tag.category}" %></td>
       <td><%= link tag.name, to: ~p"/tags/#{tag}" %></td>
+
+      <td>
+        <span>
+          <%= link "Summary", to: tag_summary_path(tag), class: "btn btn-dark" %>
+        </span>
+      </td>
 
       <td>
         <span>

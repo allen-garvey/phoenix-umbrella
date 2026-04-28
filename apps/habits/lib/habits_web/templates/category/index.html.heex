@@ -10,6 +10,7 @@
       <th>Color</th>
 
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -18,7 +19,9 @@
       <td></td>
       <td><%= link category.name, to: ~p"/categories/#{category}" %></td>
       <td class={["center", color_style(category)]}><%= String.capitalize(category.color) %></td>
-
+      <td>
+        <%= link "Summary", to: ~p"/categories/#{category}/summary", class: "btn btn-dark" %>
+      </td>
       <td>
         <%= link "Edit", to: ~p"/categories/#{category}/edit", class: "btn btn-primary" %>
       </td>
