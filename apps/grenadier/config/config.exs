@@ -7,13 +7,14 @@
 # General application configuration
 import Config
 
-Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+Code.require_file("config.ex", "#{__DIR__}/../../../lib/common/")
 
 config :grenadier,
   ecto_repos: [Grenadier.Repo]
 
 # Configures the endpoint
 config :grenadier, GrenadierWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   http: [port: Umbrella.Common.Config.grenadier_port()],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
@@ -27,8 +28,7 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 config :phoenix, :format_encoders, json: Jason
-config :grenadier, Grenadier.Repo,
-  types: Common.PostgrexTypes
+config :grenadier, Grenadier.Repo, types: Common.PostgrexTypes
 
 # Configure your database
 config :grenadier, Grenadier.Repo, Umbrella.Common.Config.postgres_config("umbrella")

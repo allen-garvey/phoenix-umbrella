@@ -7,13 +7,14 @@
 # General application configuration
 import Config
 
-Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+Code.require_file("config.ex", "#{__DIR__}/../../../lib/common/")
 
-#config :habits,
-  #ecto_repos: [Habits.Repo]
+# config :habits,
+# ecto_repos: [Habits.Repo]
 
 # Configures the endpoint
 config :habits, HabitsWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   http: [ip: {127, 0, 0, 1}, port: 6019],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),

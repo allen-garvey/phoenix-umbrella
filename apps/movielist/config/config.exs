@@ -7,13 +7,14 @@
 # General application configuration
 import Config
 
-Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+Code.require_file("config.ex", "#{__DIR__}/../../../lib/common/")
 
 # config :movielist,
 #   ecto_repos: [Movielist.Repo]
 
 # Configures the endpoint
 config :movielist, MovielistWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   http: [port: 6012],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
