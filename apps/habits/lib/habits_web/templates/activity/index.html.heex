@@ -30,7 +30,7 @@
       <td class={["center", CategoryView.color_style(activity.tag.category)]}>
         <%= link activity.tag.name, to: ~p"/tags/#{activity.tag}" %>
       </td>
-      <td><%= linkify_description(activity.description) %></td>
+      <td class="activity-description"><%= linkify_description(activity.description) %></td>
       <td><%= activity.date %></td>
 
       <td>
