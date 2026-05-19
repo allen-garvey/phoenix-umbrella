@@ -13,6 +13,7 @@ Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 
 # Configures the endpoint
 config :blockquote, BlockquoteWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   http: [port: 6011],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),

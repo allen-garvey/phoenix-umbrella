@@ -5,7 +5,7 @@ defmodule Umbrella.Common.Deps do
     phoenix_html() ++
     jason() ++
     [
-      {:plug_cowboy, "~> 2.7.2"},
+      {:bandit, "~> 1.8"},
       {:common, in_umbrella: true},
       {:assertions, "~> 0.20", only: :test},
     ]

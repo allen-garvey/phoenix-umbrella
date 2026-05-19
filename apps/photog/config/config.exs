@@ -17,6 +17,7 @@ config :photog,
 
 # Configures the endpoint
 config :photog, PhotogWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   http: [port: 6014],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),

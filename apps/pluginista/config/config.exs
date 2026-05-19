@@ -7,13 +7,14 @@
 # General application configuration
 import Config
 
-Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+Code.require_file("config.ex", "#{__DIR__}/../../../lib/common/")
 
 # config :pluginista,
 #   ecto_repos: [Pluginista.Repo]
 
 # Configures the endpoint
 config :pluginista, PluginistaWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   http: [port: 6018],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
