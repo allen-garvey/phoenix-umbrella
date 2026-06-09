@@ -58,7 +58,15 @@ defmodule HabitsWeb.TagController do
   def show(conn, %{"id" => id}) do
     tag = Admin.get_tag!(id)
     activities = Admin.activities_for_tag(id, 12)
-    render(conn, :show, tag: tag, activities: activities)
+
+
+    today = Common.ModelHelpers.Date.today()
+    start_date =
+      today
+      |> Date.shift(month: -2)
+    {activity_streak, _} = HabitsWeb.CategoryController.get_activity_streak(tag.category_id, start_date, today, MapSet.new([tag.id]), false)
+
+    render(conn, :show, tag: tag, activities: activities, activity_streak: activity_streak)
   end
 
   def activities_list(conn, %{"id" => id}) do

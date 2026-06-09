@@ -17,6 +17,8 @@
 
 </ul>
 
+<%= render HabitsWeb.CategoryView, "activity_streak_table.html", category: @tag.category, activity_streak: @activity_streak %>
+
 <%=
   render HabitsWeb.CategoryView, "activities_list.html", conn: @conn, activities: @activities, category: @tag.category, title: "Recent activities", all_activities_path: ~p"/tags/#{@tag}/activities", edit_redirect: "tag"
 %>

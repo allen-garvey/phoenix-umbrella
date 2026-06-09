@@ -247,7 +247,7 @@ defmodule HabitsWeb.CategoryController do
     |> MapSet.new()
   end
 
-  defp get_activity_streak(
+  def get_activity_streak(
          category_id,
          %Date{} = start_date,
          %Date{} = end_date
@@ -255,7 +255,7 @@ defmodule HabitsWeb.CategoryController do
     get_activity_streak(category_id, start_date, end_date, MapSet.new(), true)
   end
 
-  defp get_activity_streak(
+  def get_activity_streak(
          category_id,
          %Date{} = start_date,
          %Date{} = end_date,
