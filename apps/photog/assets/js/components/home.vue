@@ -15,6 +15,7 @@
                 :items="recentAlbums"
                 :showRouteFor="showRouteForAlbum"
                 :miniThumbnailUrlFor="miniThumbnailUrlFor"
+                :thumbnailOverlayTextFor="albumOverlayTextFor"
             />
         </div>
 
@@ -35,6 +36,7 @@
                 :items="favoriteAlbums"
                 :showRouteFor="showRouteForAlbum"
                 :miniThumbnailUrlFor="miniThumbnailUrlFor"
+                :thumbnailOverlayTextFor="albumOverlayTextFor"
                 v-if="favoriteAlbums"
             />
         </div>
@@ -116,6 +118,9 @@ export default {
                     id: item.id,
                 },
             };
+        },
+        albumOverlayTextFor(album) {
+            return album.year;
         },
     },
 };

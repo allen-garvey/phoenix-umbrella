@@ -130,6 +130,7 @@
                         ? item => updateItemFavorite(sendJson, item)
                         : null
                 "
+                :thumbnailOverlayTextFor="thumbnailOverlayTextFor"
             />
             <infinite-observer
                 :onTrigger="loadMoreThumbnails"
@@ -314,6 +315,10 @@ export default {
         showAlbumsSearchBar: {
             type: Boolean,
             default: false,
+        },
+        thumbnailOverlayTextFor: {
+            type: Function,
+            default: null,
         },
     },
     components: {

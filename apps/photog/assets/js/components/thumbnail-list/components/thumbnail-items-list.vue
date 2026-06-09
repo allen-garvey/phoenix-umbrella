@@ -12,6 +12,11 @@
             @mouseleave="onItemHoveredEnd"
         >
             <div :class="$style.thumbnailImageContainer" v-if="isLinkDisabled">
+                <span
+                    v-if="thumbnailOverlayTextFor"
+                    :class="$style.thumbnailOverlayText"
+                    >{{ thumbnailOverlayTextFor(item) }}</span
+                >
                 <img
                     :alt="altTextFor(item)"
                     :src="thumbnailUrlFor(item)"
@@ -29,6 +34,11 @@
                 :draggable="!isReordering"
                 v-else
             >
+                <span
+                    v-if="thumbnailOverlayTextFor"
+                    :class="$style.thumbnailOverlayText"
+                    >{{ thumbnailOverlayTextFor(item) }}</span
+                >
                 <img
                     :alt="altTextFor(item)"
                     :src="thumbnailUrlFor(item)"
@@ -151,6 +161,13 @@ $thumbnail_dimensions_big: 287px;
     }
 }
 
+.thumbnailOverlayText {
+    position: absolute;
+    right: 0;
+    background-color: #000;
+    color: #fff;
+}
+
 .big.thumbnailList {
     grid-template-columns: repeat(auto-fill, $thumbnail_dimensions_big);
 
@@ -224,6 +241,10 @@ export default {
         },
         updateItemFavorite: {
             type: Function,
+        },
+        thumbnailOverlayTextFor: {
+            type: Function,
+            default: null,
         },
     },
     components: {

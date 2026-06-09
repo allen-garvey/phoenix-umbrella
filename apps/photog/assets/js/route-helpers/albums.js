@@ -45,6 +45,7 @@ export function buildAlbumVariant(path, name, propsBuilder = null) {
                         },
                     };
                 },
+                thumbnailOverlayTextFor: item => item.year,
                 updateItemFavorite,
             };
             const props = propsBuilder ? propsBuilder(route) : {};

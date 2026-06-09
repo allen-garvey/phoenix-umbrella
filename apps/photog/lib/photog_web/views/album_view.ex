@@ -17,7 +17,7 @@ defmodule PhotogWeb.AlbumView do
   end
 
   def render("show.json", %{album: album, persons: persons}) do
-    %{data: 
+    %{data:
       %{
         id: album.id,
         name: album.name,
@@ -47,6 +47,7 @@ defmodule PhotogWeb.AlbumView do
       id: album.id,
       name: album.name,
       is_favorite: album.is_favorite,
+      year: album.year,
       cover_image: ImageView.image_thumbnail_to_map(album.cover_image),
       items_count: album.images_count,
     }
