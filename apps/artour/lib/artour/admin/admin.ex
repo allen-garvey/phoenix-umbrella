@@ -8,21 +8,20 @@ defmodule Artour.Admin do
 
   alias Artour.Post
   alias Artour.Image
-  # alias Artour.PostImage
+  alias Artour.PostImage
 
   @doc """
   Returns the list of posts.
   """
   def list_posts do
     from(
-          p in Post,
-          join: cover_image in assoc(p, :cover_image),
-          preload: [cover_image: cover_image],
-          order_by: [desc: :id]
-        )
-    |> Repo.all
+      p in Post,
+      join: cover_image in assoc(p, :cover_image),
+      preload: [cover_image: cover_image],
+      order_by: [desc: :id]
+    )
+    |> Repo.all()
   end
-
 
   @doc """
   Gets a single post by id
@@ -38,10 +37,10 @@ defmodule Artour.Admin do
   """
   def list_images do
     from(
-          Image,
-          order_by: [desc: :id]
-        )
-    |> Repo.all
+      Image,
+      order_by: [desc: :id]
+    )
+    |> Repo.all()
   end
 
   @doc """
@@ -49,14 +48,14 @@ defmodule Artour.Admin do
   """
   def get_image!(image_id) do
     from(
-          i in Image,
-          where: i.id == ^image_id,
-          limit: 1
+      i in Image,
+      where: i.id == ^image_id,
+      limit: 1
     )
-    |> Repo.one!
+    |> Repo.one!()
   end
 
-   @doc """
+  @doc """
   Creates a image.
 
   ## Examples
@@ -120,4 +119,11 @@ defmodule Artour.Admin do
     Image.changeset(image, %{})
   end
 
+  def delete_post_image_by_id(post_image_id) when is_binary(post_image_id) do
+    from(
+      post_image in PostImage,
+      where: post_image.id == ^post_image_id
+    )
+    |> Repo.delete_all()
+  end
 end

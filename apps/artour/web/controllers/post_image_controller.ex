@@ -1,9 +1,11 @@
 defmodule Artour.PostImageController do
   use Artour.Web, :controller
-  plug(:put_view, html: Artour.PostImageView)
 
   alias Artour.PostImage
-  Artour.PostImageView
+  alias Artour.Admin
+  alias Artour.PostImageView
+
+  plug(:put_view, html: PostImageView)
 
   def index(conn, _params) do
     post_images =
@@ -60,7 +62,7 @@ defmodule Artour.PostImageController do
       {:ok, post_image} ->
         conn
         |> put_flash(:info, "Post image updated successfully.")
-        |> redirect(to: Artour.PostImageView.show_path(post_image))
+        |> redirect(to: PostImageView.show_path(post_image))
 
       {:error, changeset} ->
         render(conn, "edit.html", post_image: post_image, changeset: changeset)
@@ -68,11 +70,7 @@ defmodule Artour.PostImageController do
   end
 
   def delete(conn, %{"id" => id}) do
-    post_image = Repo.get!(PostImage, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(post_image)
+    Admin.delete_post_image_by_id(id)
 
     conn
     |> put_flash(:info, "Post image deleted successfully.")
