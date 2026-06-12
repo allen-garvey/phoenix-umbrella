@@ -62,7 +62,7 @@ defmodule Artour.PostImageController do
       {:ok, post_image} ->
         conn
         |> put_flash(:info, "Post image updated successfully.")
-        |> redirect(to: PostImageView.show_path(post_image))
+        |> redirect(to: Artour.PostView.show_path(post_image.post_id))
 
       {:error, changeset} ->
         render(conn, "edit.html", post_image: post_image, changeset: changeset)
