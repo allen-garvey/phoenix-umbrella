@@ -167,7 +167,7 @@ export default {
     },
     created() {
         this.fetchImages();
-        this.coverImageIdModel = this.coverImageId;
+        this.coverImageIdModel = Number(this.coverImageId);
     },
     data() {
         return {
