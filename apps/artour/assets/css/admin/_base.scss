@@ -3,6 +3,7 @@ html {
     --color-background: #fff;
     --color-link: blue;
     --color-background-secondary: #d5d5d5;
+    --color-background-selected: #d9edf7;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -11,6 +12,7 @@ html {
         --color-background: #2a2a2a;
         --color-link: rgb(126, 175, 249);
         --color-background-secondary: #777;
+        --color-background-selected: #494949;
     }
 
     .table {

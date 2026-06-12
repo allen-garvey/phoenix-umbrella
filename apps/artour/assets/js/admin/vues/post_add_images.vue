@@ -1,27 +1,57 @@
 <template>
     <form accept-charset="UTF-8" :action="formUrl" method="post">
-        <input name="_csrf_token" type="hidden" :value="csrfToken">
-        <input name="_utf8" type="hidden" value="✓">
+        <input name="_csrf_token" type="hidden" :value="csrfToken" />
+        <input name="_utf8" type="hidden" value="✓" />
         <div class="button-container-right">
-            <button type="button" @click="toggleSelectAllImages" class="btn btn-primary" v-show="images.length > 0">{{this.selectAllButtonText}}</button>
-            <button type="button" @click="toggleUnusedImages" class="btn btn-primary">{{unusedImagesButtonText}}</button>
-            <button type="submit" class="btn btn-primary" :disabled="areAllImagesUnchecked">Save</button>
+            <button
+                type="button"
+                @click="toggleSelectAllImages"
+                class="btn btn-primary"
+                v-show="images.length > 0"
+            >
+                {{ this.selectAllButtonText }}
+            </button>
+            <button
+                type="button"
+                @click="toggleUnusedImages"
+                class="btn btn-primary"
+            >
+                {{ unusedImagesButtonText }}
+            </button>
+            <button
+                type="submit"
+                class="btn btn-primary"
+                :disabled="areAllImagesUnchecked"
+            >
+                Save
+            </button>
         </div>
         <ul :class="$style.postAddImagesList">
-            <li 
-                v-for="(image, index) in images" 
-                :key="index" 
-                :class="{[$style.itemSelected]: imagesSelected[index]}"
+            <li
+                v-for="(image, index) in images"
+                :key="index"
+                :class="{ [$style.itemSelected]: imagesSelected[index] }"
             >
                 <div>
                     <label>
-                        <input type="checkbox" @change="imageChecked(index)" :checked="imagesSelected[index]" name="images[]" :value="image.id"/>
-                        <img :src="image.url.thumbnail" :alt="image.description"/>
+                        <input
+                            type="checkbox"
+                            @change="imageChecked(index)"
+                            :checked="imagesSelected[index]"
+                            name="images[]"
+                            :value="image.id"
+                        />
+                        <img
+                            :src="image.url.thumbnail"
+                            :alt="image.description"
+                        />
                     </label>
                 </div>
 
                 <div>
-                    <a :href="image.url.self" target="_blank">{{image.title}}</a>
+                    <a :href="image.url.self" target="_blank">{{
+                        image.title
+                    }}</a>
                 </div>
             </li>
         </ul>
@@ -29,31 +59,29 @@
 </template>
 
 <style lang="scss" module>
-    @use '~artour-styles/admin/variables';
-    
-    .postAddImagesList{
-        $post_add_images_item_margin: 10px;
-        list-style-type: none;
-        padding-left: 0;
-        li{
-            display: flex;
-            align-items: center;
-            padding: 5px 8px;
-            & > *{
-                margin-right: $post_add_images_item_margin;
-            }
-            &.itemSelected{
-                background-color: variables.$item_selected_color;
-            }
-        }
-        img{
-            width: 115px;
-            cursor: pointer;
-        }
-        input[type="checkbox"]{
+.postAddImagesList {
+    $post_add_images_item_margin: 10px;
+    list-style-type: none;
+    padding-left: 0;
+    li {
+        display: flex;
+        align-items: center;
+        padding: 5px 8px;
+        & > * {
             margin-right: $post_add_images_item_margin;
         }
+        &.itemSelected {
+            background-color: var(--color-background-selected);
+        }
     }
+    img {
+        width: 115px;
+        cursor: pointer;
+    }
+    input[type='checkbox'] {
+        margin-right: $post_add_images_item_margin;
+    }
+}
 </style>
 
 <script>
@@ -74,12 +102,12 @@ export default {
             required: true,
         },
     },
-    created(){
+    created() {
         this.fetchImages();
     },
-    data(){
+    data() {
         return {
-            //whether or not to show images that have not been used with any other posts 
+            //whether or not to show images that have not been used with any other posts
             unusedImagesOnly: true,
             images: [],
             imagesSelected: [],
@@ -87,61 +115,61 @@ export default {
     },
     computed: {
         //save button is disabled if every image is unchecked
-        areAllImagesUnchecked(){
-            return !this.imagesSelected.some((value)=>{
+        areAllImagesUnchecked() {
+            return !this.imagesSelected.some(value => {
                 return value;
             });
         },
-        areAllImagesChecked(){
-            return !this.imagesSelected.some((value)=>{
+        areAllImagesChecked() {
+            return !this.imagesSelected.some(value => {
                 return !value;
             });
         },
-        ImageApiUrlFull(){
+        ImageApiUrlFull() {
             const queryParams = this.unusedImagesOnly ? '?unused=true' : '';
             return this.imagesApiUrl + queryParams;
         },
-        unusedImagesButtonText(){
-            if(this.unusedImagesOnly){
+        unusedImagesButtonText() {
+            if (this.unusedImagesOnly) {
                 return 'All images';
             }
             return 'Unused images';
         },
-        selectAllButtonText(){
-            if(this.areAllImagesChecked){
+        selectAllButtonText() {
+            if (this.areAllImagesChecked) {
                 return 'Deselect all';
             }
             return 'Select all';
         },
     },
     watch: {
-        unusedImagesOnly(){
+        unusedImagesOnly() {
             this.fetchImages();
-        }
+        },
     },
     methods: {
-        imageChecked(index){
+        imageChecked(index) {
             this.imagesSelected[index] = !this.imagesSelected[index];
         },
-        toggleSelectAllImages(){
-            if(this.areAllImagesChecked){
+        toggleSelectAllImages() {
+            if (this.areAllImagesChecked) {
                 this.imagesSelected = this.imagesSelected.map(() => false);
-            }
-            else{
+            } else {
                 this.imagesSelected = this.imagesSelected.map(() => true);
             }
         },
-        toggleUnusedImages(){
+        toggleUnusedImages() {
             this.unusedImagesOnly = !this.unusedImagesOnly;
         },
-        fetchImages(){
-            return fetchJson(this.ImageApiUrlFull).then((images)=>{
+        fetchImages() {
+            return fetchJson(this.ImageApiUrlFull).then(images => {
                 this.images = images;
                 //uncheck all images initially
-                this.imagesSelected = images.map(()=>{return false;});
+                this.imagesSelected = images.map(() => {
+                    return false;
+                });
             });
-        }
+        },
     },
-}
+};
 </script>
-

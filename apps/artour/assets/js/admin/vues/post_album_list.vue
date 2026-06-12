@@ -90,8 +90,6 @@
 </template>
 
 <style lang="scss" module>
-@use '~artour-styles/admin/variables';
-
 .postAlbumImageListControls {
     display: flex;
     justify-content: flex-end;
@@ -134,7 +132,7 @@
         }
     }
     .coverImageContainer {
-        background-color: variables.$item_selected_color;
+        background-color: var(--color-background-selected);
     }
 }
 </style>
