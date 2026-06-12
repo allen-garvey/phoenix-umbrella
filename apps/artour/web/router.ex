@@ -78,5 +78,8 @@ defmodule Artour.Router do
 
     # add images to post
     get("/posts/:post/images/addable", ApiPostController, :addable_images)
+
+    # remove image from post
+    delete("/post_images/:id", ApiPostImageController, :delete)
   end
 end

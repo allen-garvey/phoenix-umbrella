@@ -32,7 +32,8 @@ defmodule Artour.ApiPostView do
       image:
         Artour.ApiImageView.render("image_thumbnail_excerpt.json", api_image: post_image.image),
       url: %{
-        edit: Artour.PostImageView.edit_path(post_image)
+        edit: Artour.PostImageView.edit_path(post_image),
+        delete: ~p"/admin/api/post_images/#{post_image.id}"
       }
     }
   end

@@ -41,6 +41,13 @@
                     <p v-if="postImage.caption">{{ postImage.caption }}</p>
                 </div>
                 <div>
+                    <button
+                        v-if="!haveImagesBeenReordered"
+                        @click="deletePostImage(postImage, index)"
+                        class="btn btn-danger btn-sm"
+                    >
+                        Delete
+                    </button>
                     <a
                         :href="postImage.url.edit"
                         class="btn btn-light btn-sm"
@@ -177,6 +184,16 @@ export default {
                 this.haveImagesBeenReordered = false;
                 this.postImagesOriginal = this.postImages;
             });
+        },
+        deletePostImage(postImage, index) {
+            if (
+                confirm(
+                    `Are you sure you want to delete "${postImage.image.description}"?`
+                )
+            ) {
+                sendJson(postImage.url.delete, this.csrfToken, 'DELETE', {});
+                this.postImagesOriginal.splice(index, 1);
+            }
         },
         imageDragStart(e, index) {
             this.currentDragIndex = index;
