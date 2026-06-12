@@ -13,6 +13,25 @@
                 Save Image Order
             </button>
         </div>
+        <div
+            :class="$style.postAlbumImageListControls"
+            v-if="!haveImagesBeenReordered"
+        >
+            <button
+                class="btn btn-light"
+                v-if="isInEditMode"
+                @click="() => (isInEditMode = false)"
+            >
+                Exit delete mode
+            </button>
+            <button
+                class="btn btn-danger"
+                v-if="!isInEditMode"
+                @click="() => (isInEditMode = true)"
+            >
+                Enter delete mode
+            </button>
+        </div>
         <ol :class="$style.postAlbumImageList">
             <li
                 v-for="(postImage, index) in postImages"
@@ -42,7 +61,7 @@
                 </div>
                 <div>
                     <button
-                        v-if="!haveImagesBeenReordered"
+                        v-if="isInEditMode"
                         @click="deletePostImage(postImage, index)"
                         class="btn btn-danger btn-sm"
                     >
@@ -62,7 +81,9 @@
                         Make cover image
                     </button>
                 </div>
-                <div :class="$style.listItemDragger">&#9776;</div>
+                <div :class="$style.listItemDragger" v-if="!isInEditMode">
+                    &#9776;
+                </div>
             </li>
         </ol>
     </div>
@@ -155,6 +176,7 @@ export default {
             haveImagesBeenReordered: false,
             currentDragIndex: null,
             coverImageIdModel: '',
+            isInEditMode: false,
         };
     },
     computed: {},
@@ -186,14 +208,8 @@ export default {
             });
         },
         deletePostImage(postImage, index) {
-            if (
-                confirm(
-                    `Are you sure you want to delete "${postImage.image.description}"?`
-                )
-            ) {
-                sendJson(postImage.url.delete, this.csrfToken, 'DELETE', {});
-                this.postImagesOriginal.splice(index, 1);
-            }
+            sendJson(postImage.url.delete, this.csrfToken, 'DELETE', {});
+            this.postImagesOriginal.splice(index, 1);
         },
         imageDragStart(e, index) {
             this.currentDragIndex = index;
