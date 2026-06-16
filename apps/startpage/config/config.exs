@@ -7,13 +7,14 @@
 # General application configuration
 import Config
 
-Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+Code.require_file("config.ex", "#{__DIR__}/../../../lib/common/")
 
 # config :startpage,
 #   ecto_repos: [Startpage.Repo]
 
 # Configures the endpoint
 config :startpage, StartpageWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   http: [port: 6017],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
