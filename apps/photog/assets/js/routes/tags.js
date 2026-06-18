@@ -98,6 +98,7 @@ export default () => [
                     params: { tag_id: route.params.id },
                 },
                 updateItemFavorite,
+                thumbnailOverlayTextFor: item => item.year,
             };
 
             return props;
