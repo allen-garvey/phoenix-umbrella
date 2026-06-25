@@ -367,6 +367,24 @@ defmodule Photog.Api do
   end
 
   @doc """
+  Takes a list of image ids and date
+  and updates the related image to that date.
+  The original image time is preserved
+  """
+  def update_image_dates(image_ids, %Date{} = date) do
+    from(
+      image in Image,
+      where: image.id in ^image_ids,
+      update: [
+        set: [
+          creation_time: fragment("?::date + ?::time", ^date, image.creation_time)
+        ]
+      ]
+    )
+    |> Repo.update_all([])
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking image changes.
 
   ## Examples

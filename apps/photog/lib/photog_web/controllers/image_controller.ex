@@ -249,6 +249,22 @@ defmodule PhotogWeb.ImageController do
     end
   end
 
+  def update_dates(conn, %{"images" => image_ids, "date" => iso_date})
+      when is_list(image_ids) and is_binary(iso_date) do
+    view = put_view(conn, CommonWeb.ApiGenericView)
+
+    case Date.from_iso8601(iso_date) do
+      {:ok, date} ->
+        Api.update_image_dates(image_ids, date)
+        view |> render("ok.json", message: "Dates for image ids updated.")
+
+      _ ->
+        view
+        |> put_status(:bad_request)
+        |> render("error.json", message: "#{iso_date} is not a valid date.")
+    end
+  end
+
   def delete(conn, %{"id" => id}) do
     image = Api.get_image!(id)
 

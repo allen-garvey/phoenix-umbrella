@@ -434,10 +434,10 @@ export default {
         updateImageDates() {
             this.saveItemUpdates((sendJson, itemIds) => {
                 const apiUrl = `${API_URL_BASE}/images/date`;
-                const data = itemIds.map(id => ({
-                    id,
+                const data = {
+                    images: itemIds,
                     date: this.dateValue,
-                }));
+                };
 
                 return sendJson(apiUrl, 'PATCH', data);
             });
