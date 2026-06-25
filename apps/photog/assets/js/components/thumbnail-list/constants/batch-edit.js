@@ -3,4 +3,5 @@ export const BATCH_EDIT_RESOURCE_MODE = Object.freeze({
     ALBUMS: 1,
     PERSONS: 2,
     TAGS: 3,
+    DATE: 4,
 });

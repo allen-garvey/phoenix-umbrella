@@ -58,6 +58,15 @@
                     Add Persons
                 </button>
                 <button
+                    class="btn btn-primary"
+                    @click="setBatchResourceMode(batchEditResourceMode.DATE)"
+                    :class="
+                        buttonClassForResourceMode(batchEditResourceMode.DATE)
+                    "
+                >
+                    Change Date
+                </button>
+                <button
                     class="btn btn-outline-primary"
                     @click="createResourceWithImages('albumsNew')"
                     :disabled="!anyItemsBatchSelected"
@@ -100,7 +109,30 @@
             * List of batch edit resources that can be added to selected items
         -->
         <div
-            v-if="shouldShowBatchResources"
+            v-if="batchSelectResourceMode === batchEditResourceMode.DATE"
+            :class="$style.batchResourcesContainer"
+        >
+            <div :class="$style.inlineForm">
+                <label
+                    >Date
+                    <input
+                        class="form-control"
+                        type="date"
+                        v-model="dateValue"
+                        v-focus
+                /></label>
+                <spinner-button
+                    @buttonClick="updateImageDates"
+                    :isDisabled="!anyItemsBatchSelected || !dateValue"
+                    :isLoading="isCurrentlyBatchSaving"
+                    :buttonClasses="['btn-success']"
+                    buttonText="Save"
+                    spinnerText="Saving..."
+                />
+            </div>
+        </div>
+        <div
+            v-else-if="shouldShowBatchResources"
             :class="$style.batchResourcesContainer"
         >
             <Clan-Select
@@ -188,6 +220,16 @@
     display: flex;
     gap: 0.5em;
 }
+
+.inlineForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em 3.5em;
+
+    button {
+        align-self: flex-end;
+    }
+}
 .resourceButtonsContainer {
     width: 100%;
     display: flex;
@@ -207,6 +249,7 @@ import ClanSelect from '../../shared/clan-select.vue';
 import focus from 'umbrella-common-js/vue/directives/focus.js';
 import { BATCH_EDIT_RESOURCE_MODE } from '../constants/batch-edit.js';
 import SpinnerButton from '../../form/spinner-button.vue';
+import { API_URL_BASE } from '../../../request-helpers.js';
 
 const BATCH_RESOURCE_LENGTH_MAX_TO_SHOW_ALL = 40;
 const BATCH_RESOURCES_MORE_LIMIT = 16;
@@ -258,6 +301,10 @@ export default {
             required: true,
         },
         saveBatchSelected: {
+            type: Function,
+            required: true,
+        },
+        saveItemUpdates: {
             type: Function,
             required: true,
         },
@@ -351,6 +398,7 @@ export default {
             shouldShowAllBatchResources: false,
             selectedItemsMap: {},
             searchValue: '',
+            dateValue: null,
         };
     },
     methods: {
@@ -381,6 +429,17 @@ export default {
             this.setBatchResourceMode(mode);
             nextTick().then(() => {
                 this.$refs.searchInput.focus();
+            });
+        },
+        updateImageDates() {
+            this.saveItemUpdates((sendJson, itemIds) => {
+                const apiUrl = `${API_URL_BASE}/images/date`;
+                const data = itemIds.map(id => ({
+                    id,
+                    date: this.dateValue,
+                }));
+
+                return sendJson(apiUrl, 'PATCH', data);
             });
         },
     },

@@ -68,6 +68,7 @@
                     :anyItemsBatchSelected="anyItemsBatchSelected"
                     :enableRemoveItems="!!batchRemoveItemsCallback"
                     :isCurrentlyBatchSaving="isCurrentlyBatchSaving"
+                    :saveItemUpdates="saveItemUpdates"
                     @remove-items="batchRemoveItems"
                     :enableSetCoverImage="
                         !!setCoverImageCallback &&
@@ -653,7 +654,10 @@ export default {
                 return;
             }
             this.batchSelectResourceMode = newResourceMode;
-            if (newResourceMode === BATCH_EDIT_RESOURCE_MODE.NONE) {
+            if (
+                newResourceMode === BATCH_EDIT_RESOURCE_MODE.NONE ||
+                newResourceMode === BATCH_EDIT_RESOURCE_MODE.DATE
+            ) {
                 return;
             }
             let apiUrl = '/albums?excerpt=true';
@@ -696,27 +700,40 @@ export default {
             };
 
             this.sendJson(apiUrl, 'POST', data).then(response => {
-                const hasAtLeastOneThingSucceeded =
-                    response.data && response.data.length > 0;
-                const hasErrors = response.error && response.error.length > 0;
-                //don't do anything unless at 1 thing succeeded
-                if (hasAtLeastOneThingSucceeded) {
-                    this.toggleBatchSelect();
-                    this.refreshModel();
-                }
-                //show flash message based on results
-                if (hasAtLeastOneThingSucceeded && hasErrors) {
-                    this.putFlash(
-                        'Some updates succeeded and some failed',
-                        'warning'
-                    );
-                } else if (hasAtLeastOneThingSucceeded) {
-                    this.putFlash('All updates successful', 'info');
-                } else {
-                    this.putFlash('All updates failed', 'danger');
-                }
-                this.isCurrentlyBatchSaving = false;
+                this.afterSaveAttempted(response);
             });
+        },
+        // for when batch select wants to save items via inline form
+        saveItemUpdates(updateItemsCallback) {
+            this.isCurrentlyBatchSaving = true;
+            updateItemsCallback(
+                this.sendJson,
+                this.thumbnailListSelectedItems.map(item => item.id)
+            ).then(response => {
+                this.afterSaveAttempted(response);
+            });
+        },
+        afterSaveAttempted(response) {
+            const hasAtLeastOneThingSucceeded =
+                response.data && response.data.length > 0;
+            const hasErrors = response.error && response.error.length > 0;
+            //don't do anything unless at 1 thing succeeded
+            if (hasAtLeastOneThingSucceeded) {
+                this.toggleBatchSelect();
+                this.refreshModel();
+            }
+            //show flash message based on results
+            if (hasAtLeastOneThingSucceeded && hasErrors) {
+                this.putFlash(
+                    'Some updates succeeded and some failed',
+                    'warning'
+                );
+            } else if (hasAtLeastOneThingSucceeded) {
+                this.putFlash('All updates successful', 'info');
+            } else {
+                this.putFlash('All updates failed', 'danger');
+            }
+            this.isCurrentlyBatchSaving = false;
         },
         batchRemoveItems() {
             if (confirm('Sure you want to remove selected items?')) {
