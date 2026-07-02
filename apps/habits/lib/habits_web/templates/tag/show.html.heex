@@ -3,10 +3,11 @@
   <%= link "Summary", to: tag_summary_path(@tag), class: "btn btn-sm btn-dark" %>
 </div>
 
-<%= form_for @conn, ~p"/tags/#{@tag}", [method: "delete", data_form: "delete", class: "inline"], fn _f -> %>
-    <input type="submit" value="Delete" class="btn btn-danger" data-button="delete" />
-<% end %>
-<span><%= link "Edit", to: ~p"/tags/#{@tag}/edit", class: "btn btn-primary" %></span>
+<div class="show-button-group">
+    <%= CommonWeb.FormView.delete_button_with_form(@conn, ~p"/tags/#{@tag}", class: "btn btn-danger") %>
+    <%= link "Edit", to: ~p"/tags/#{@tag}/edit", class: "btn btn-primary" %>
+    <%= link "Add Activity", to: ~p"/activities/new?tag=#{@tag.id}&redirect=tag", class: "btn btn-success" %>
+</div>
 
 <ul class="show-page-attributes-list">
 
