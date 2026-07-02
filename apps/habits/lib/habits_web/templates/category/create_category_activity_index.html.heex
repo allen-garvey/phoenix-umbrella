@@ -2,7 +2,7 @@
   <%= for category <- @categories do %>
     <li class={ [color_style(category), category_has_activity_style(category)] }>
       <%= link HabitsWeb.CategoryView.to_s(category), to: ~p"/categories/#{category}" %>
-        <%= link "Add", to: ~p"/activities/new?category=#{category.id}", class: "btn btn-sm btn-light" %>
+        <%= link "Add", to: ~p"/activities/new?category=#{category.id}&redirect=home", class: "btn btn-sm btn-light" %>
     </li>
   <% end %>
 </ul>

@@ -62,7 +62,7 @@ defmodule HabitsWeb.ActivityController do
     render(conn, "index.html", activities: activities)
   end
 
-  def new(conn, %{"duplicate" => id}) do
+  def new(conn, %{"duplicate" => id} = params) do
     activity = Admin.get_activity!(id)
 
     Admin.change_activity(%Activity{
@@ -71,20 +71,20 @@ defmodule HabitsWeb.ActivityController do
       description: activity.description,
       date: Common.ModelHelpers.Date.today()
     })
-    |> new_route(conn)
+    |> new_route(conn, params["redirect"])
   end
 
-  def new(conn, %{"category" => category_id}) do
+  def new(conn, %{"category" => category_id} = params) do
     tag = %Tag{id: Admin.get_recent_popular_tag_id(category_id), category_id: category_id}
 
     Admin.change_activity(%Activity{
       tag_id: tag.id,
       tag: tag
     })
-    |> new_route(conn)
+    |> new_route(conn, params["redirect"])
   end
 
-  def new(conn, %{"tag" => tag_id}) do
+  def new(conn, %{"tag" => tag_id} = params) do
     category_id = Admin.get_category_id_for_tag(tag_id)
     tag = %Tag{id: tag_id, category_id: category_id}
 
@@ -92,7 +92,7 @@ defmodule HabitsWeb.ActivityController do
       tag_id: tag.id,
       tag: tag
     })
-    |> new_route(conn)
+    |> new_route(conn, params["redirect"])
   end
 
   def new(conn, params) do
@@ -110,17 +110,21 @@ defmodule HabitsWeb.ActivityController do
       tag_id: tag.id,
       date: date
     })
-    |> new_route(conn)
+    |> new_route(conn, params["redirect"])
   end
 
-  defp new_route(changeset, conn) do
+  defp new_route(changeset, conn, redirect) do
     tag = Ecto.Changeset.get_field(changeset, :tag)
     tags = Api.list_tags_for_category(tag.category_id)
 
-    render(conn, "new.html", [changeset: changeset, tags: tags] ++ related_fields())
+    render(
+      conn,
+      "new.html",
+      [changeset: changeset, tags: tags, redirect: redirect] ++ related_fields()
+    )
   end
 
-  defp create_succeeded(conn, activity, "true") do
+  defp create_succeeded(conn, activity, "true", redirect) do
     tag = Admin.get_tag!(activity.tag_id)
     tags = Admin.list_tags_for_category(tag.category_id)
 
@@ -132,13 +136,21 @@ defmodule HabitsWeb.ActivityController do
         description: activity.description
       })
 
-    render(conn, "new.html", [changeset: changeset, tags: tags] ++ related_fields())
+    render(
+      conn,
+      "new.html",
+      [changeset: changeset, tags: tags, redirect: redirect] ++ related_fields()
+    )
   end
 
-  defp create_succeeded(conn, activity, _save_another) do
+  defp create_succeeded(conn, activity, _save_another, redirect) do
     tag = Admin.get_tag!(activity.tag_id)
 
-    redirect(conn, to: ~p"/categories/#{tag.category_id}")
+    case redirect do
+      "home" -> redirect(conn, to: ~p"/")
+      "tag" -> redirect(conn, to: ~p"/tags/#{tag.id}")
+      _ -> redirect(conn, to: ~p"/categories/#{tag.category_id}")
+    end
   end
 
   def create(conn, %{"activity" => activity_params} = params) do
@@ -146,7 +158,7 @@ defmodule HabitsWeb.ActivityController do
       {:ok, activity} ->
         conn
         |> put_flash(:info, "Activity created successfully.")
-        |> create_succeeded(activity, params["save_another"])
+        |> create_succeeded(activity, params["save_another"], params["redirect"])
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", [changeset: changeset, tags: []] ++ related_fields())
