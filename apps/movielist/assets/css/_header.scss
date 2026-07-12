@@ -1,44 +1,45 @@
 @use 'variables';
 
-.jumbotron{
-	background-color: var(--color-background-secondary);
-	padding: 0.5rem variables.$horizontal_padding 2rem;
+.jumbotron {
+    background-color: var(--color-background-secondary);
+    padding: 0.5rem variables.$horizontal_padding 2rem;
 }
 
-header{
-	margin-bottom: 30px;
+header {
+    margin-bottom: 30px;
 }
 
-h1.main_title{
-	font-family: variables.$title_font_family;
-	font-size: 3.998em;
-	font-weight: normal;
-	margin: 0 10px 20px;
-	a{
-		color: var(--color-font-secondary);
-	}
+h1.main_title {
+    font-family: variables.$title_font_family;
+    font-size: 3.998em;
+    font-weight: normal;
+    margin: 0 10px 20px;
+    a {
+        color: var(--color-font-secondary);
+    }
 }
 
-nav{
-	ul{
-		display: flex;
-		flex-wrap: wrap;
-		list-style-type: none;
-		margin: 0;
-		padding-left: 0;
-	}
-	//nav-pills styles
-	li a{
-		border-radius: 4px;
-		padding: 12px 15px;
-		color: var(--color-nav-link);
-	}
+nav {
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        list-style-type: none;
+        margin: 0;
+        padding-left: 0;
+        gap: 1em;
+    }
+    //nav-pills styles
+    li a {
+        border-radius: 4px;
+        padding: 12px 15px;
+        color: var(--color-nav-link);
+    }
 }
 
 //Active nav styles
 .nav a.active,
 .nav > li:hover > a:not(.btn) {
-	background-color: #223;
-	color: white;
-	text-decoration: none;
+    background-color: #223;
+    color: white;
+    text-decoration: none;
 }

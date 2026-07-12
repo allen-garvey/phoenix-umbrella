@@ -1,114 +1,120 @@
 @use 'variables';
 
 html {
-	--color-font: #000;
-	--color-font-secondary: #000;
-	--color-background: white;
-	--color-background-secondary: #eee;
-	--color-link-default: #000;
-	
-	// nav
-	--color-nav-link: #337ab7;
+    --color-font: #000;
+    --color-font-secondary: #000;
+    --color-background: white;
+    --color-background-secondary: #eee;
+    --color-link-default: #000;
 
-	// tables
-	--color-background-table-head: #dedede;
-	--color-table-head: #5a5a5a;
+    // nav
+    --color-nav-link: #337ab7;
 
-	// reporting
-	--color-reporting-table-border: rgba(204,204,204, 0.55);
+    // tables
+    --color-background-table-head: #dedede;
+    --color-table-head: #5a5a5a;
+
+    // reporting
+    --color-reporting-table-border: rgba(204, 204, 204, 0.55);
 }
 
 @media (prefers-color-scheme: dark) {
     html {
         --color-font: #fff;
-		--color-font-secondary: #eee;
+        --color-font-secondary: #eee;
         --color-background: #202020;
-		--color-background-secondary: #404040;
-		--color-link-default: #fff;
+        --color-background-secondary: #404040;
+        --color-link-default: #fff;
 
-		// nav
-		--color-nav-link: #c6dff5;
+        // nav
+        --color-nav-link: #c6dff5;
 
-		// tables
-		--color-background-table-head: #cacaca;
-		--color-table-head: #727272;
+        // tables
+        --color-background-table-head: #cacaca;
+        --color-table-head: #727272;
 
-		// reporting
-		--color-reporting-table-border: rgba(87,87,87, 0.55);
+        // reporting
+        --color-reporting-table-border: rgba(87, 87, 87, 0.55);
     }
 }
 
-body{
-	font-family: variables.$serif_font_family;
-	font-size : 19.2px;
-	color: var(--color-font);
-	background-color: var(--color-background);
-	margin: 0;
+body {
+    font-family: variables.$serif_font_family;
+    font-size: 19.2px;
+    color: var(--color-font);
+    background-color: var(--color-background);
+    margin: 0;
 }
 
 a {
-	color: var(--color-link-default);
+    color: var(--color-link-default);
 }
 
-main{
-	padding: 0 variables.$horizontal_padding 15rem;
+main {
+    padding: 0 variables.$horizontal_padding 15rem;
 }
 
 section {
-	margin-bottom: 2em;
+    margin-bottom: 2em;
 }
 
-nav li{
-	font-family: variables.$display_font_family;
-	font-size: 1.414em;
-	margin-left: 10px;
+nav li {
+    font-family: variables.$display_font_family;
+    font-size: 1.414em;
 }
 
-h1,h2,h3,h4,button{
-	font-family: variables.$sans_serif_font_family;
+h1,
+h2,
+h3,
+h4,
+button {
+    font-family: variables.$sans_serif_font_family;
 }
 
-h1,h2,h3,h4 {
-	margin: 0 0 0.5em;
+h1,
+h2,
+h3,
+h4 {
+    margin: 0 0 0.5em;
 }
 
-a{
-	text-decoration: none;
-	&:hover{
-		text-decoration: underline;
-	}
+a {
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
-.alert:empty{
-	display: none;
+.alert:empty {
+    display: none;
 }
 
-.spread_content{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
+.spread_content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-.center{
-	text-align: center;
+.center {
+    text-align: center;
 }
 
-.container{
-	margin: 0 auto;
-	max-width: 1040px;
+.container {
+    margin: 0 auto;
+    max-width: 1040px;
 }
 
-.btn{
-	font-family: variables.$sans_serif_font_family;
+.btn {
+    font-family: variables.$sans_serif_font_family;
 }
 
 // bootstrap 3 button color
-.btn-primary{
-	background-color: #337ab7;
-	border-color: #2e6da4;
+.btn-primary {
+    background-color: #337ab7;
+    border-color: #2e6da4;
 
-	&:hover{
-		background-color: #286090;
-		border-color: #204d74;
-	}
+    &:hover {
+        background-color: #286090;
+        border-color: #204d74;
+    }
 }
