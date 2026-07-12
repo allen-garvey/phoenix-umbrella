@@ -21,7 +21,7 @@ defmodule SupersearchWeb.EngineController do
       {:ok, engine} ->
         conn
         |> put_flash(:info, "Engine created successfully.")
-        |> redirect(to: ~p"/search/admin/engines/#{engine}")
+        |> redirect(to: ~p"/admin/engines/#{engine}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -46,7 +46,7 @@ defmodule SupersearchWeb.EngineController do
       {:ok, engine} ->
         conn
         |> put_flash(:info, "Engine updated successfully.")
-        |> redirect(to: ~p"/search/admin/engines/#{engine}")
+        |> redirect(to: ~p"/admin/engines/#{engine}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", engine: engine, changeset: changeset)
@@ -59,6 +59,6 @@ defmodule SupersearchWeb.EngineController do
 
     conn
     |> put_flash(:info, "Engine deleted successfully.")
-    |> redirect(to: ~p"/search/admin/engines")
+    |> redirect(to: ~p"/admin/engines")
   end
 end

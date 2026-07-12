@@ -29,7 +29,7 @@ defmodule GrenadierWeb.Router do
     plug :put_layout, {SupersearchWeb.LayoutView, :app}
   end
 
-  scope "/search/admin", SupersearchWeb do
+  scope "/admin", SupersearchWeb, host: "search." do
     pipe_through :browser
     pipe_through :authenticate
     pipe_through :supersearch_app_layout
@@ -39,7 +39,7 @@ defmodule GrenadierWeb.Router do
     resources "/engines", EngineController
   end
 
-  scope "/search", SupersearchWeb do
+  scope "/", SupersearchWeb, host: "search." do
     pipe_through :browser
     pipe_through :supersearch_app_layout
 

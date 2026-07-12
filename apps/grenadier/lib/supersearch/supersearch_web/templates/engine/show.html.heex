@@ -1,9 +1,9 @@
 <div class="show_header">
     <h1>Engine</h1>
     <div class="btn_group">
-        <%= link "Back", to: ~p"/search/admin/engines" %>
-        <%= CommonWeb.FormView.delete_button_with_form(@conn, ~p"/search/admin/engines/#{@engine}") %>
-        <%= link "Edit", to: ~p"/search/admin/engines/#{@engine}/edit", class: "btn btn-primary" %>
+        <%= link "Back", to: ~p"/admin/engines" %>
+        <%= CommonWeb.FormView.delete_button_with_form(@conn, ~p"/admin/engines/#{@engine}") %>
+        <%= link "Edit", to: ~p"/admin/engines/#{@engine}/edit", class: "btn btn-primary" %>
     </div>
 </div>
 
