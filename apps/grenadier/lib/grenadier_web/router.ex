@@ -25,6 +25,17 @@ defmodule GrenadierWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :supersearch_app_layout do
+    plug :put_layout, {SupersearchWeb.LayoutView, :app}
+  end
+
+  scope "/search", SupersearchWeb do
+    pipe_through :browser
+    pipe_through :supersearch_app_layout
+
+    get "/", PageController, :index
+  end
+
   scope "/", GrenadierWeb do
     pipe_through :browser
     pipe_through :bare_layout
