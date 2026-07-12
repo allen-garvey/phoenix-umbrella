@@ -1,0 +1,25 @@
+<h1>Engines (<%= Enum.count(@engines) %>)</h1>
+
+<div class="form-group"><%= link "New Engine", to: ~p"/search/admin/engines/new", class: "btn btn-success" %></div>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for engine <- @engines do %>
+    <tr>
+      <td></td>
+      <td><%= link engine.name, to: ~p"/search/admin/engines/#{engine}" %></td>
+
+      <td>
+        <span><%= link "Edit", to: ~p"/search/admin/engines/#{engine}/edit", class: "btn btn-primary" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
