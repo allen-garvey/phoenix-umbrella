@@ -1,0 +1,23 @@
+<header class="container search_results_header">
+	<div class="ip_address alert" id="ip_container">
+		<span class="ip_info ip_ip" id="ip_ip"></span>
+		<span id="ip_location"></span>
+	</div>
+	<div class="results_heading">
+		<h1 class="results_brand"><a href="/">Super Search</a></h1>
+		<%= render SupersearchWeb.PageView, "search_form.html", query_value: @query %>
+	</div>
+</header>
+<main class="results_container container">
+	<ul class="results-list">
+        <%= for engine <- @engines do %>
+			<a href={SupersearchWeb.EngineView.to_query_url(engine, @query)} class="search-results__row search-results__link">
+				<li>
+					<h3 class="search-results__title">
+						<%= engine.name %>
+					</h3>
+				</li>
+			</a>
+		<% end %>
+	</ul>
+</main>
