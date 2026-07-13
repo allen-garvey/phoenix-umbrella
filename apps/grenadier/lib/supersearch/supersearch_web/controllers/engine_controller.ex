@@ -21,7 +21,7 @@ defmodule SupersearchWeb.EngineController do
       {:ok, engine} ->
         conn
         |> put_flash(:info, "Engine created successfully.")
-        |> redirect(to: ~p"/admin/engines/#{engine}")
+        |> redirect(to: ~p"/admin/engines")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
