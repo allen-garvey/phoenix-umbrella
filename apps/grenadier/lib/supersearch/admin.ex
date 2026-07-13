@@ -18,7 +18,8 @@ defmodule Supersearch.Admin do
 
   """
   def list_engines do
-    Repo.all(Engine)
+    from(Engine, order_by: [:order, :id])
+    |> Repo.all()
   end
 
   @doc """
