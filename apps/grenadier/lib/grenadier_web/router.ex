@@ -36,6 +36,7 @@ defmodule GrenadierWeb.Router do
     pipe_through :api
 
     get "/ip_class", ApiController, :ip_class
+    patch "/engines/reorder", ApiController, :reorder_engines
   end
 
   scope "/admin", SupersearchWeb, host: "search." do

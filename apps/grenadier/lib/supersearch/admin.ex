@@ -102,4 +102,19 @@ defmodule Supersearch.Admin do
   def change_engine(%Engine{} = engine, attrs \\ %{}) do
     Engine.changeset(engine, attrs)
   end
+
+  def reorder_engines(engine_ids) when is_list(engine_ids) do
+    Repo.transaction(fn ->
+      for {engine_id, i} <- engine_ids |> Enum.with_index() do
+        now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+        {1, nil} =
+          from(
+            engine in Engine,
+            where: engine.id == ^engine_id
+          )
+          |> Repo.update_all(set: [order: i, updated_at: now])
+      end
+    end)
+  end
 end
