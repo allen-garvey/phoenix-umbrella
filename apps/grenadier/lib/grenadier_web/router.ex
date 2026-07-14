@@ -23,10 +23,19 @@ defmodule GrenadierWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :authenticate
+    plug :protect_from_forgery
   end
 
   pipeline :supersearch_app_layout do
     plug :put_layout, {SupersearchWeb.LayoutView, :app}
+  end
+
+  scope "/api", SupersearchWeb, host: "search." do
+    pipe_through :api
+
+    get "/ip_class", ApiController, :ip_class
   end
 
   scope "/admin", SupersearchWeb, host: "search." do

@@ -21,3 +21,20 @@
 		<% end %>
 	</ul>
 </main>
+<script>
+	const fetchJson = (url) => fetch(url).then(res => res.json());
+
+	const displayIpAddress = () => {
+		fetchJson('https://ipinfo.io/json')
+		.then((data)=>{
+			document.getElementById('ip_ip').textContent = data.ip;
+			document.getElementById('ip_location').textContent = [data.city, data.region, data.country, data.org].join(' ');
+
+			const url = `<%= ~p"/api/ip_class" %>?ip=${encodeURIComponent(data.ip)}&org=${encodeURIComponent(data.org)}`;
+			return fetchJson(url);
+		}).then((data)=>{
+			document.getElementById('ip_container').classList.add(data.data);
+		});
+	};
+	displayIpAddress();
+</script>

@@ -18,7 +18,7 @@ defmodule SupersearchWeb.EngineController do
 
   def create(conn, %{"engine" => engine_params}) do
     case Admin.create_engine(engine_params) do
-      {:ok, engine} ->
+      {:ok, _engine} ->
         conn
         |> put_flash(:info, "Engine created successfully.")
         |> redirect(to: ~p"/admin/engines")
