@@ -16,7 +16,7 @@ module.exports = {
         booklist: pathHelpers.defaultEntrypointForApp('booklist'),
         bookmarker: pathHelpers.defaultEntrypointForApp('bookmarker'),
         movielist: pathHelpers.defaultEntrypointForApp('movielist'),
-        grenadier: pathHelpers.defaultEntrypointForApp('grenadier'),
+        grenadier: `${__dirname}/../apps/grenadier/assets/grenadier/js/index.js`,
         blockquote: pathHelpers.defaultEntrypointForApp('blockquote'),
         artour_admin: `${__dirname}/../apps/artour/assets/js/admin/index.js`,
         artour_public: `${__dirname}/../apps/artour/assets/js/public/index.js`,
