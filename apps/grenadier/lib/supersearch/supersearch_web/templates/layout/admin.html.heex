@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Super Search | Admin</title>
+    <meta name="description" content="Super search, your personal aggregate search engine"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/assets/supersearch-admin.css"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <meta name="google" content="notranslate"/>
+  </head>
+  <body>
+    <header class="jumbotron">
+      <div class="container">
+        <h1 class="main_title"><%= link "Super Search", to: ~p"/admin" %></h1>
+      </div>
+    </header>
+    <div class="container">
+        <%= @inner_content %>
+    </div>
+    <script src="/assets/supersearch-admin.js"></script>
+  </body>
+</html>

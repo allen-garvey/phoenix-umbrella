@@ -17,6 +17,7 @@ module.exports = {
         bookmarker: pathHelpers.defaultEntrypointForApp('bookmarker'),
         movielist: pathHelpers.defaultEntrypointForApp('movielist'),
         grenadier: `${__dirname}/../apps/grenadier/assets/grenadier/js/index.js`,
+        supersearch_admin: `${__dirname}/../apps/grenadier/assets/supersearch/admin/js/index.js`,
         supersearch_public: `${__dirname}/../apps/grenadier/assets/supersearch/public/app.scss`,
         blockquote: pathHelpers.defaultEntrypointForApp('blockquote'),
         artour_admin: `${__dirname}/../apps/artour/assets/js/admin/index.js`,
