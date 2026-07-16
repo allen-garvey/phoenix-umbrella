@@ -1,0 +1,72 @@
+@use './variables';
+
+$row-height: 100px;
+
+/*
+* Results heading
+*/
+
+.results_heading {
+    margin-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.results_brand {
+    align-self: center;
+    margin: 0 1em 0 0;
+}
+
+@media screen and (max-width: 697px) {
+    .results_brand {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/*
+* Results content
+*/
+
+.results_container {
+    margin-top: 2em;
+    padding-bottom: 3em;
+}
+
+.results-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0 1rem;
+    margin: 0;
+
+    // adapted from: https://stackoverflow.com/questions/38306127/css-flex-box-alternate-row-colors
+    background-image: linear-gradient(
+        180deg,
+        white 50%,
+        variables.$primary_color 50%
+    );
+    background-repeat: repeat;
+    background-size: 100px 2 * $row-height;
+}
+
+.search-results__row {
+    align-items: center;
+    display: flex;
+    flex-basis: 350px;
+    height: $row-height;
+}
+
+.search-results__title {
+    font-size: 24px;
+    margin: 0;
+    flex-basis: 365px;
+    font-weight: normal;
+}
+
+@media (prefers-color-scheme: dark) {
+    .results-list {
+        // adapted from: https://stackoverflow.com/questions/38306127/css-flex-box-alternate-row-colors
+        background-image: linear-gradient(180deg, #333 50%, #666 50%);
+    }
+}

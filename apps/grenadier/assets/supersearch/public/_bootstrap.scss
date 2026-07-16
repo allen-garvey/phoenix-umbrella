@@ -1,0 +1,10 @@
+@use '~bootstrap-custom/root';
+@use '~bootstrap-custom/forms';
+@use '~bootstrap-custom/buttons';
+@use '~bootstrap-custom/alert';
+
+// form-control-lg has been removed in bootstrap 5
+.form-control-lg {
+    min-height: calc(1.5em + 1rem + calc(var(--bs-border-width) * 2));
+    font-size: 1.25rem;
+}

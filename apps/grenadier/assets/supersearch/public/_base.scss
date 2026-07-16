@@ -1,0 +1,45 @@
+@use './variables';
+
+* {
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+	font-size: 16px;
+    font-family: variables.$font_body;
+    padding-bottom: 4rem;
+}
+h1{
+    margin: 0;
+	font-family: 'Aachen', 'Helvetica', sans-serif;
+	font-weight: bold;
+}
+
+.container{
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+a{
+    text-decoration: none;
+    &:hover{
+        text-decoration: underline;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #333;
+        color: #fff;
+    }
+
+    a:link {
+        color: #fff;
+    }
+
+    a:visited {
+        color: #999;
+    }
+}

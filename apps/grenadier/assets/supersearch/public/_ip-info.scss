@@ -1,0 +1,25 @@
+/*
+* Styles for ip info
+*/
+
+.alert-danger {
+    color: #a94442;
+    background-image: linear-gradient(to bottom, #f2dede 0, #e7c3c3 100%);
+}
+
+.ip_address {
+    padding-top: 1em;
+    &.alert {
+        margin-top: 1rem;
+        padding: 1.3em;
+    }
+    &.alert-danger {
+        padding: 2em;
+        font-size: 3em;
+    }
+
+    .ip_ip {
+        font-weight: bold;
+        margin-right: 1em;
+    }
+}

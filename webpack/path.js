@@ -1,24 +1,30 @@
-
-function defaultEntrypointForApp(appName){
+function defaultEntrypointForApp(appName) {
     return `${__dirname}/../apps/${appName}/assets/js/index.js`;
 }
 
-function outputPathForApp(appName, extension){
+function outputPathForApp(appName, extension) {
     let appDir = appName;
     let fileName = 'app';
 
-    if(appName.match(/^artour_/)){
+    if (appName.match(/^artour_/)) {
         appDir = 'artour';
 
-        if(appName === 'artour_admin'){
+        if (appName === 'artour_admin') {
             fileName = 'admin';
         }
-    }
-    else if(appName.match(/^startpage_/)){
+    } else if (appName.match(/^startpage_/)) {
         appDir = 'startpage';
 
-        if(appName === 'startpage_admin'){
+        if (appName === 'startpage_admin') {
             fileName = 'admin';
+        }
+    } else if (appName.match(/^supersearch_/)) {
+        appDir = 'grenadier';
+
+        if (appName === 'supersearch_admin') {
+            fileName = 'supersearch-admin';
+        } else {
+            fileName = 'supersearch';
         }
     }
 

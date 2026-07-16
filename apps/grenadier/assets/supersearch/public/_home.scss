@@ -1,0 +1,28 @@
+@use './variables';
+
+.jumbotron{
+	padding: 3rem 0 2rem;
+	background-color: variables.$primary_color;
+	margin-bottom: 2rem;
+}
+.jumbotron h1{
+	font-size: 2.5em;
+}
+p.tag_line{
+	font-size: 1em;
+	font-family: variables.$font_body;
+	font-style: italic;
+	margin: 0.5em 0 0;
+}
+
+@media screen and (min-width: 768px){
+	.jumbotron h1{
+		font-size: 5.5em;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+    .jumbotron {
+        background-color: #000;
+    }
+}
