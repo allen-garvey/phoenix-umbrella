@@ -56,14 +56,6 @@ module.exports = {
                 __dirname,
                 '../apps/photog/assets/sass/'
             ),
-            'artour-styles': path.resolve(
-                __dirname,
-                '../apps/artour/assets/css/'
-            ),
-            'habits-styles': path.resolve(
-                __dirname,
-                '../apps/habits/assets/css/'
-            ),
             'seren-styles': path.resolve(
                 __dirname,
                 '../apps/seren/assets/sass/'
