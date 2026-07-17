@@ -8,7 +8,7 @@ defmodule SupersearchWeb.EngineController do
 
   def index(conn, _params) do
     engines = Admin.list_engines()
-    render(conn, "index.html", engines: engines)
+    render(conn, "index.html", engines: engines, csrf_token: get_csrf_token())
   end
 
   def new(conn, _params) do

@@ -2,24 +2,11 @@
 
 <div class="form-group"><%= link "New Engine", to: ~p"/admin/engines/new", class: "btn btn-success" %></div>
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for engine <- @engines do %>
-    <tr>
-      <td></td>
-      <td><%= link engine.name, to: ~p"/admin/engines/#{engine}" %></td>
-
-      <td>
-        <span><%= link "Edit", to: ~p"/admin/engines/#{engine}/edit", class: "btn btn-primary" %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+<div
+  id="engines-list"
+  data-admin-engines-url-base={~p"/admin/engines"}
+  data-reorder-engines-url={~p"/api/engines/reorder"}
+  data-engines-api-url={~p"/api/engines"}
+  data-csrf-token={@csrf_token}
+>
+</div>
