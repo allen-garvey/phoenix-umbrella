@@ -40,4 +40,12 @@ defmodule SupersearchWeb.ApiController do
         |> render("error.json", message: "Could not reorder engines.")
     end
   end
+
+  def list_engines(conn, _params) do
+    engines = Admin.list_engines()
+
+    conn
+    |> put_view(SupersearchWeb.EngineView)
+    |> render("engines.json", engines: engines)
+  end
 end
