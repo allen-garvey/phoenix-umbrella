@@ -45,6 +45,10 @@ defmodule Umbrella.Common.Deps do
     {:httpoison, "~> 2.2"}
   end
 
+  def req do
+    {:req, "~> 0.6.3"}
+  end
+
   def floki do
     {:floki, "~> 0.37"}
   end

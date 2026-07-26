@@ -37,6 +37,12 @@ JPEG, PNG, WebP and SVG image types are supported. This mix task both adds the i
 
 * Set environment variable `UMBRELLA_PHOTOG_B2_BUCKET_PREFIX` . The value should be the B2 bucket name and then the path to the masters directory (e.g. `bucket-name/path/to/masters-dir` note no forward slash at the end)
 
+## Rekog Image Description Mix Task
+
+* `brew install ollama`
+* `brew services start ollama`
+* `ollama pull gemma4:e2b`
+* `mix rekog /path/to/image.jpg`
 
 ## License
 

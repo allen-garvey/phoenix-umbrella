@@ -11,9 +11,9 @@ defmodule Photog.Mixfile do
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
       listeners: [Phoenix.CodeReloader],
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: Mix.compilers,
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      compilers: Mix.compilers(),
+      start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
     ]
@@ -31,17 +31,21 @@ defmodule Photog.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
+    Code.require_file("deps.ex", "#{__DIR__}/../../lib/common/")
+
     Umbrella.Common.Deps.shared_authenticated_phoenix_deps() ++
-    [
-      Umbrella.Common.Deps.http_poison(), #for b2
-    ]
+      [
+        # for b2
+        Umbrella.Common.Deps.http_poison(),
+        # for image descriptions
+        Umbrella.Common.Deps.req()
+      ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
