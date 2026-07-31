@@ -45,6 +45,11 @@ defmodule BlockquoteWeb.SourceController do
     )
   end
 
+  def new(conn, %{"author" => author_id}) do
+    changeset = Admin.change_source(%Source{author_id: author_id})
+    new_page(conn, changeset)
+  end
+
   def new(conn, %{"parent_source" => parent_source_id}) do
     changeset = Admin.change_source(%Source{parent_source_id: parent_source_id})
     new_page(conn, changeset)

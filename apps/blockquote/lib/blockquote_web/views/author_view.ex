@@ -78,6 +78,7 @@ defmodule BlockquoteWeb.AuthorView do
 
   def show_buttons(author) do
     [
+      %BlockquoteWeb.Link{title: "Add source", path: ~p"/sources/new?author=#{author.id}"},
       %BlockquoteWeb.Link{title: "Add quote", path: ~p"/quotes/new?author=#{author.id}"}
     ]
   end
