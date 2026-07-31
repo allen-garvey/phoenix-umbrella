@@ -11,11 +11,11 @@
   <body>
     <header class="header">
       <div class="container branding">
-        <h1 class="site-name"><a href="/admin">Block Quote</a></h1>
+        <h1 class="site-name"><a href="/">Block Quote</a></h1>
       </div>
       <div class="breadcrumbs">
         <div class="container">
-          <a href="/admin">Home</a>
+          <a href="/">Home</a>
           <%= if assigns[:breadcrumb] do
               BlockquoteWeb.SharedView.breadcrumb_link(@breadcrumb)
           end %>
