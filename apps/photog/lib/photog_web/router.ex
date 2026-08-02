@@ -20,6 +20,13 @@ defmodule PhotogWeb.Router do
     plug(GrenadierWeb.Plugs.Authenticate)
   end
 
+  scope "/media", PhotogWeb do
+    pipe_through(:fetch_session)
+    pipe_through(:authenticate)
+    get("/thumbnails/*path", StaticFileController, :serve_thumbnail, log: false)
+    get("/images/*path", StaticFileController, :serve_image, log: false)
+  end
+
   # Other scopes may use custom stacks.
   scope "/api", PhotogWeb do
     pipe_through(:api)

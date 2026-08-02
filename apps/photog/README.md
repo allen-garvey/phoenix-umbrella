@@ -24,8 +24,8 @@ JPEG, PNG, WebP and SVG image types are supported. This mix task both adds the i
 
 ## Image url setup
 
-* You can optionally set the environment variable `UMBRELLA_PHOTOG_IMAGE_URL_PREFIX` as a random string, which is used as a prefix for image urls
-* If you do that, add aliases in your server configuration for image paths 
+* Set `UMBRELLA_PHOTOG_THUMBNAIL_SOURCE_PATH="/path/to/image/thumbnails"` environment variable
+* Set `UMBRELLA_PHOTOG_THUMBNAIL_IMAGE_PATH="/path/to/image/masters"` environment variable
 
 * You can also optionally set environment variable `UMBRELLA_PHOTOG_IMAGE_THUMBNAILS_ONLY`. Set it to `1` to only use thumbnail images in the Vue client, and not the master images
 

@@ -19,6 +19,7 @@ erl_crash.dump
 priv/static/css/*
 priv/static/js/*
 priv/static/assets/*
+priv/media/*
 
 #linked image files
 priv/static/media/*
