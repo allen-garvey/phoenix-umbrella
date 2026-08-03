@@ -12,21 +12,28 @@ defmodule PhotogWeb.StaticFileController do
   defp serve_file(conn, source_path_env_key, path) when is_list(path) do
     case Application.fetch_env(:photog, source_path_env_key) do
       {:ok, image_dir} ->
-        full_path = Path.join([image_dir] ++ path) |> Path.expand()
-
-        # check for directory traversal
-        case String.starts_with?(full_path, image_dir) do
-          true ->
+        case safe_path_join(path, image_dir) do
+          {:ok, full_path} ->
             conn
             |> put_resp_header("cache-control", "private, max-age=86400")
             |> send_file(200, full_path)
 
-          false ->
+          _ ->
             send_resp(conn, 404, "File not found")
         end
 
       _ ->
         send_resp(conn, 500, "#{source_path_env_key} not set")
+    end
+  end
+
+  # joins paths if there is no directory traversal
+  defp safe_path_join(path, base_path) do
+    full_path = Path.join([base_path] ++ path) |> Path.expand()
+
+    case String.starts_with?(full_path, base_path) do
+      true -> {:ok, full_path}
+      _ -> :error
     end
   end
 end
