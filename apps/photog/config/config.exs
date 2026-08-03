@@ -8,12 +8,8 @@ import Config
 Code.require_file("config.ex", "#{__DIR__}/../../../lib/common/")
 
 # General application configuration
-config :photog,
-  # ecto_repos: [Photog.Repo],
-  image_url_prefix: "",
-  image_thumbnails_only: System.get_env("UMBRELLA_PHOTOG_IMAGE_THUMBNAILS_ONLY", "0"),
-  b2_bucket_prefix: System.get_env("UMBRELLA_PHOTOG_B2_BUCKET_PREFIX", ""),
-  b2_application_key: System.get_env("UMBRELLA_PHOTOG_B2_APPLICATION_KEY", "")
+# config :photog,
+#   # ecto_repos: [Photog.Repo],
 
 # Configures the endpoint
 config :photog, PhotogWeb.Endpoint,
