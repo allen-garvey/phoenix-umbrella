@@ -28,7 +28,7 @@ defmodule PhotogWeb.StaticFileController do
   end
 
   # joins paths if there is no directory traversal
-  defp safe_path_join(path, base_path) do
+  def safe_path_join(path, base_path) when is_list(path) do
     full_path = Path.join([base_path] ++ path) |> Path.expand()
 
     case String.starts_with?(full_path, base_path) do
