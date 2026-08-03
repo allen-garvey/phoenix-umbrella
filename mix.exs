@@ -18,6 +18,7 @@ defmodule Umbrella.MixProject do
         :seren,
         :startpage
       ],
+      elixir: "~> 1.11",
       listeners: [Phoenix.CodeReloader],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
