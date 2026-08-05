@@ -16,7 +16,7 @@ defmodule Mix.Tasks.Shutterbug do
   Given a directory of images, will copy image files to masters directory, create thumbnails, and add image resources to database
   """
   @doc """
-  Imports images from source directory to ./priv/static/media. Will create image resources in the database and group the images in an import resources.
+  Imports images from source directory to `UMBRELLA_PHOTOG_THUMBNAIL_IMAGE_PATH` and `UMBRELLA_PHOTOG_THUMBNAIL_IMAGE_PATH`. Will create image resources in the database and group the images in an import resources.
   """
   def run([source_directory_name]) do
     import_images_from_directory(source_directory_name, false)
@@ -42,8 +42,8 @@ defmodule Mix.Tasks.Shutterbug do
   """
   def import_images_from_directory(source_directory_name, convert_to_webp)
       when is_boolean(convert_to_webp) do
-    masters_destination_path = Photog.Image.masters_directory()
-    thumbnails_destination_path = Photog.Image.thumbnails_directory()
+    masters_destination_path = System.fetch_env!("UMBRELLA_PHOTOG_IMAGE_SOURCE_PATH")
+    thumbnails_destination_path = System.fetch_env!("UMBRELLA_PHOTOG_THUMBNAIL_SOURCE_PATH")
 
     if validate_args([
          source_directory_name,
