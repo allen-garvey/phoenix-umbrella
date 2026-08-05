@@ -1,17 +1,4 @@
 defmodule Photog.Image.Exif do
-  alias Photog.Api.Image
-
-  @doc """
-  Gets a the exif data from an image's master image using exiftool
-  https://stackoverflow.com/questions/26654709/extract-exif-data-as-text-using-imagemagick
-  requires the `exiftool` command from libimage-exiftool-perl
-  `# exiftool -duplicates -unknown -tab image.jpg`
-  """
-  def exif_for(%Image{} = image) do
-    Photog.Image.master_file_path(image)
-    |> Common.ImageHelpers.Exif.exif_for()
-  end
-
   @doc """
   Gets creation datetime string for an image from exif_map returned from exif_for/1
   example return is:
