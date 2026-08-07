@@ -172,7 +172,7 @@ defmodule Movielist.Admin do
         # can't use release_status in release_date without subquery, and can't have nested maps or structs in ecto subqueries, so easiest just to repeat release_status logic here
         release_date:
           fragment(
-            "CASE WHEN ? <= CURRENT_DATE THEN NULL WHEN ? <= CURRENT_DATE THEN COALESCE(?, ? + INTERVAL '? DAY') ELSE COALESCE(?, ?) END AS release_date",
+            "CASE WHEN ? <= CURRENT_DATE THEN NULL WHEN ? <= CURRENT_DATE THEN COALESCE(?, ? + ?) ELSE COALESCE(?, ?) END AS release_date",
             m.home_release_date,
             m.theater_release_date,
             m.home_release_date,
