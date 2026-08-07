@@ -170,12 +170,16 @@ defmodule Movielist.Admin do
             m.theater_release_date
           ),
         # can't use release_status in release_date without subquery, and can't have nested maps or structs in ecto subqueries, so easiest just to repeat release_status logic here
+        # SQL logic for adding days to date, but making sure the arrived at date is a Tuesday, adding days if necessary
+        # SELECT theater_release_date + INTERVAL '45 DAY' +   make_interval(days => ((2 - EXTRACT(ISODOW FROM (theater_release_date + INTERVAL '45 DAY')) + 7) % 7)::integer) from movies where theater_release_date is not null limit 1;
         release_date:
           fragment(
-            "CASE WHEN ? <= CURRENT_DATE THEN NULL WHEN ? <= CURRENT_DATE THEN COALESCE(?, ? + ?) ELSE COALESCE(?, ?) END AS release_date",
+            "CASE WHEN ? <= CURRENT_DATE THEN NULL WHEN ? <= CURRENT_DATE THEN COALESCE(?, ? + INTERVAL '? DAY' + make_interval(days => ((2 - EXTRACT(ISODOW FROM (? + INTERVAL '? DAY')) + 7) % 7)::integer)) ELSE COALESCE(?, ?) END AS release_date",
             m.home_release_date,
             m.theater_release_date,
             m.home_release_date,
+            m.theater_release_date,
+            @movie_home_release_estimated_lead_time,
             m.theater_release_date,
             @movie_home_release_estimated_lead_time,
             m.theater_release_date,
