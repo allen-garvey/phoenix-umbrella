@@ -66,6 +66,12 @@ config :movielist, MovielistWeb.Endpoint,
   render_errors: [view: MovielistWeb.ErrorView, accepts: ~w(html json)]
 
 # Photog
+config :photog, PhotogWeb.Endpoint,
+  url: [host: "localhost"],
+  http: [port: 6014],
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
+  render_errors: [view: PhotogWeb.ErrorView, accepts: ~w(html json)]
+
 config :photog,
   image_url_prefix: "",
   image_thumbnails_only: System.get_env("UMBRELLA_PHOTOG_IMAGE_THUMBNAILS_ONLY", "0"),
