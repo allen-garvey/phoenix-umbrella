@@ -93,3 +93,10 @@ config :seren, SerenWeb.Endpoint,
   http: [port: 6013],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: SerenWeb.ErrorView, accepts: ~w(html json)]
+
+# Startpage
+config :startpage, StartpageWeb.Endpoint,
+  url: [host: "localhost"],
+  http: [port: 6017],
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
+  render_errors: [view: StartpageWeb.ErrorView, accepts: ~w(html json)]
