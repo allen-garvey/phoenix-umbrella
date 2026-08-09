@@ -58,6 +58,13 @@ config :habits, HabitsWeb.Endpoint,
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: HabitsWeb.ErrorView, accepts: ~w(html json), layout: false]
 
+# Movielist
+config :movielist, MovielistWeb.Endpoint,
+  url: [host: "localhost"],
+  http: [port: 6012],
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
+  render_errors: [view: MovielistWeb.ErrorView, accepts: ~w(html json)]
+
 # Photog
 config :photog,
   image_url_prefix: "",

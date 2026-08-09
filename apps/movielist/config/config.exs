@@ -7,17 +7,10 @@
 # General application configuration
 import Config
 
-Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+Code.require_file("config.ex", "#{__DIR__}/../../../lib/common/")
 
 # config :movielist,
 #   ecto_repos: [Movielist.Repo]
-
-# Configures the endpoint
-config :movielist, MovielistWeb.Endpoint,
-  url: [host: "localhost"],
-  http: [port: 6012],
-  secret_key_base: Umbrella.Common.Config.secret_key_base(),
-  render_errors: [view: MovielistWeb.ErrorView, accepts: ~w(html json)]
 
 # Configures Elixir's Logger
 config :logger, :console,
