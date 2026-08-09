@@ -5,7 +5,7 @@ Code.require_file("config.ex", "#{__DIR__}/../lib/common/")
 # Grenadier
 config :grenadier, GrenadierWeb.Endpoint,
   url: [host: "localhost"],
-  http: [port: Umbrella.Common.Config.grenadier_port()],
+  http: [port: 6009],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: GrenadierWeb.ErrorView, accepts: ~w(html json)]
 
