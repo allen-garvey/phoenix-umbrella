@@ -79,3 +79,10 @@ config :photog,
   b2_application_key: System.get_env("UMBRELLA_PHOTOG_B2_APPLICATION_KEY", ""),
   thumbnail_source_path: System.get_env("UMBRELLA_PHOTOG_THUMBNAIL_SOURCE_PATH", ""),
   image_source_path: System.get_env("UMBRELLA_PHOTOG_IMAGE_SOURCE_PATH", "")
+
+# Pluginista
+config :pluginista, PluginistaWeb.Endpoint,
+  url: [host: "localhost"],
+  http: [port: 6018],
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
+  render_errors: [view: PluginistaWeb.ErrorView, accepts: ~w(html json), layout: false]
