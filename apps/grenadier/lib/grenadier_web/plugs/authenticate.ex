@@ -36,38 +36,26 @@ defmodule GrenadierWeb.Plugs.Authenticate do
     user_id && Account.get_user(user_id)
   end
 
-  @doc """
-  Disables caching for authenticated requests so can't use back button after logging out
-  based on: https://stackoverflow.com/questions/33554022/prevent-user-from-accessing-previous-page-using-back-button-after-logout
-  """
-  def disable_caching(conn) do
+  # Disables caching for authenticated requests so can't use back button after logging out
+  # based on: https://stackoverflow.com/questions/33554022/#prevent-user-from-accessing-previous-page-using-back-button-after-logout
+  defp disable_caching(conn) do
     conn
     |> put_resp_header("cache-control", "no-cache, no-store, must-revalidate")
     |> put_resp_header("pragma", "no-cache")
     |> put_resp_header("expires", "0")
   end
 
-  @doc """
-  Get the original url to redirect back to after logged in
-  """
-  def get_request_url(conn) do
-    "#{scheme_to_string(conn.scheme)}://#{conn.host}#{get_redirect_port(conn.port)}#{conn.request_path}"
+  defp get_request_url(conn) do
+    "#{scheme_to_string(conn.scheme)}://#{conn.host}#{conn.request_path}"
   end
 
-  @doc """
-  Gets url to redirect to after failed login
-  """
-  def get_failed_login_redirect_url(conn) do
+  defp get_failed_login_redirect_url(conn) do
     redirect_url_param = URI.encode_query(%{"redirect" => get_request_url(conn)})
 
-    "#{scheme_to_string(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{get_failed_redirect_port(conn.port)}#{~p"/login"}?#{redirect_url_param}"
+    "#{scheme_to_string(conn.scheme)}://#{get_failed_login_redirect_host(conn.host)}#{~p"/login"}?#{redirect_url_param}"
   end
 
-  @doc """
-  Gets host to redirect to in url after failed login
-  Does this by using the grenadier subdomain of the current host, or localhost
-  """
-  def get_failed_login_redirect_host(origin_host) do
+  defp get_failed_login_redirect_host(origin_host) do
     case origin_host do
       "localhost" ->
         "localhost"
@@ -80,32 +68,7 @@ defmodule GrenadierWeb.Plugs.Authenticate do
     end
   end
 
-  @doc """
-  Gets the port to redirect to in url after successful login
-  """
-  def get_redirect_port(origin_port) do
-    if origin_port == 80 or origin_port == 443 do
-      ""
-    else
-      ":#{origin_port}"
-    end
-  end
-
-  @doc """
-  Gets the port to redirect back to grenadier after failed login
-  """
-  def get_failed_redirect_port(origin_port) do
-    if origin_port == 80 or origin_port == 443 do
-      ""
-    else
-      ":#{Umbrella.Common.Config.grenadier_port()}"
-    end
-  end
-
-  @doc """
-  Gets the scheme to redirect to in url after failed login
-  """
-  def scheme_to_string(origin_scheme) do
+  defp scheme_to_string(origin_scheme) do
     case origin_scheme do
       :https -> "https"
       _ -> "http"
