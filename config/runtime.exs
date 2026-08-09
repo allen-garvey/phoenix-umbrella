@@ -19,6 +19,11 @@ config :grenadier, Grenadier.Repo,
   pool_size: 10,
   queue_target: 5000
 
+# Common
+
+config :common,
+  super_search_url: System.get_env("UMBRELLA_SUPER_SEARCH_URL", "http://search.alaska.test")
+
 # Photog
 config :photog,
   image_url_prefix: "",
