@@ -14,9 +14,7 @@ defmodule PhotogWeb.StaticFileController do
       {:ok, image_dir} ->
         case safe_path_join(path, image_dir) do
           {:ok, full_path} ->
-            conn
-            |> put_resp_header("cache-control", "private, max-age=86400")
-            |> send_file(200, full_path)
+            send_file(conn, 200, full_path)
 
           _ ->
             send_resp(conn, 404, "File not found")

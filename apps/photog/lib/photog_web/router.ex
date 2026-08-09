@@ -20,9 +20,13 @@ defmodule PhotogWeb.Router do
     plug(GrenadierWeb.Plugs.Authenticate)
   end
 
+  pipeline :authenticate_with_cache do
+    plug(GrenadierWeb.Plugs.Authenticate, disable_cache: false)
+  end
+
   scope "/media", PhotogWeb do
     pipe_through(:fetch_session)
-    pipe_through(:authenticate)
+    pipe_through(:authenticate_with_cache)
     get("/thumbnails/*path", StaticFileController, :serve_thumbnail, log: false)
     get("/images/*path", StaticFileController, :serve_image, log: false)
   end

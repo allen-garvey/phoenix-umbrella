@@ -14,15 +14,15 @@ defmodule GrenadierWeb.Plugs.Authenticate do
     opts
   end
 
-  def call(conn, _opts) do
+  def call(conn, opts) do
     case get_user_from_session(conn) do
       %User{} = user ->
-        disable_caching(conn)
+        disable_caching(conn, Keyword.get(opts, :disable_cache, true))
         |> assign(:current_user, user)
 
       nil ->
         conn
-        |> disable_caching()
+        |> disable_caching(true)
         |> Phoenix.Controller.redirect(external: get_failed_login_redirect_url(conn))
         |> halt()
     end
@@ -38,11 +38,16 @@ defmodule GrenadierWeb.Plugs.Authenticate do
 
   # Disables caching for authenticated requests so can't use back button after logging out
   # based on: https://stackoverflow.com/questions/33554022/#prevent-user-from-accessing-previous-page-using-back-button-after-logout
-  defp disable_caching(conn) do
+  defp disable_caching(conn, true) do
     conn
     |> put_resp_header("cache-control", "no-cache, no-store, must-revalidate")
     |> put_resp_header("pragma", "no-cache")
     |> put_resp_header("expires", "0")
+  end
+
+  defp disable_caching(conn, false) do
+    conn
+    |> put_resp_header("cache-control", "private, max-age=86400")
   end
 
   defp get_request_url(conn) do
