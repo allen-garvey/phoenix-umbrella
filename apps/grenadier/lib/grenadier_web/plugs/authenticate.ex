@@ -47,7 +47,8 @@ defmodule GrenadierWeb.Plugs.Authenticate do
 
   defp disable_caching(conn, false) do
     conn
-    |> put_resp_header("cache-control", "private, max-age=86400")
+    |> put_resp_header("cache-control", "no-cache, private, max-age=86400, must-revalidate")
+    |> put_resp_header("pragma", "no-cache")
   end
 
   defp get_request_url(conn) do
