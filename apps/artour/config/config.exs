@@ -11,13 +11,6 @@ Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 # config :artour,
 #   ecto_repos: [Artour.Repo]
 
-# Configures the endpoint
-config :artour, Artour.Endpoint,
-  url: [host: "localhost"],
-  http: [port: 6010],
-  secret_key_base: Umbrella.Common.Config.secret_key_base(),
-  render_errors: [view: Artour.ErrorView, accepts: ~w(html json)]
-
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

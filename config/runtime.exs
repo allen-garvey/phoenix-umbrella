@@ -19,8 +19,15 @@ config :grenadier, Grenadier.Repo,
   pool_size: 10,
   queue_target: 5000
 
-# Common
+# Artour
 
+config :artour, Artour.Endpoint,
+  url: [host: "localhost"],
+  http: [port: 6010],
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
+  render_errors: [view: Artour.ErrorView, accepts: ~w(html json)]
+
+# Common
 config :common,
   super_search_url: System.get_env("UMBRELLA_SUPER_SEARCH_URL", "http://search.alaska.test")
 
