@@ -51,6 +51,13 @@ config :bookmarker, Bookmarker.Endpoint,
 config :common,
   super_search_url: System.get_env("UMBRELLA_SUPER_SEARCH_URL", "http://search.alaska.test")
 
+# Habits
+config :habits, HabitsWeb.Endpoint,
+  url: [host: "localhost"],
+  http: [port: 6019],
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
+  render_errors: [view: HabitsWeb.ErrorView, accepts: ~w(html json), layout: false]
+
 # Photog
 config :photog,
   image_url_prefix: "",
