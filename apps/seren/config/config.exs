@@ -11,13 +11,6 @@ Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 # config :seren,
 #   ecto_repos: [Seren.Repo]
 
-# Configures the endpoint
-config :seren, SerenWeb.Endpoint,
-  url: [host: "localhost"],
-  http: [port: 6013],
-  secret_key_base: Umbrella.Common.Config.secret_key_base(),
-  render_errors: [view: SerenWeb.ErrorView, accepts: ~w(html json)]
-
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
