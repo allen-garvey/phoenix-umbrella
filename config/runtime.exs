@@ -20,12 +20,18 @@ config :grenadier, Grenadier.Repo,
   queue_target: 5000
 
 # Artour
-
 config :artour, Artour.Endpoint,
   url: [host: "localhost"],
   http: [port: 6010],
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: Artour.ErrorView, accepts: ~w(html json)]
+
+# BlockQuote
+config :blockquote, BlockquoteWeb.Endpoint,
+  url: [host: "localhost"],
+  http: [port: 6011],
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
+  render_errors: [view: BlockquoteWeb.ErrorView, accepts: ~w(html json)]
 
 # Common
 config :common,

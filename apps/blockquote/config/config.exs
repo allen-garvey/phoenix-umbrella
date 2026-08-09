@@ -11,13 +11,6 @@ Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
 # config :blockquote,
 #   ecto_repos: [Blockquote.Repo]
 
-# Configures the endpoint
-config :blockquote, BlockquoteWeb.Endpoint,
-  url: [host: "localhost"],
-  http: [port: 6011],
-  secret_key_base: Umbrella.Common.Config.secret_key_base(),
-  render_errors: [view: BlockquoteWeb.ErrorView, accepts: ~w(html json)]
-
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
