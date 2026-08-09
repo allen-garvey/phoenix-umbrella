@@ -33,6 +33,13 @@ config :blockquote, BlockquoteWeb.Endpoint,
   secret_key_base: Umbrella.Common.Config.secret_key_base(),
   render_errors: [view: BlockquoteWeb.ErrorView, accepts: ~w(html json)]
 
+# Booklist
+config :booklist, BooklistWeb.Endpoint,
+  url: [host: "localhost"],
+  http: [port: 6015],
+  secret_key_base: Umbrella.Common.Config.secret_key_base(),
+  render_errors: [view: BooklistWeb.ErrorView, accepts: ~w(html json)]
+
 # Common
 config :common,
   super_search_url: System.get_env("UMBRELLA_SUPER_SEARCH_URL", "http://search.alaska.test")

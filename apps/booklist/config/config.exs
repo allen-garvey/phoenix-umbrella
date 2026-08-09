@@ -7,17 +7,10 @@
 # General application configuration
 import Config
 
-Code.require_file("config.ex",  "#{__DIR__}/../../../lib/common/")
+Code.require_file("config.ex", "#{__DIR__}/../../../lib/common/")
 
 # config :booklist,
 #   ecto_repos: [Booklist.Repo]
-
-# Configures the endpoint
-config :booklist, BooklistWeb.Endpoint,
-  url: [host: "localhost"],
-  http: [port: 6015],
-  secret_key_base: Umbrella.Common.Config.secret_key_base(),
-  render_errors: [view: BooklistWeb.ErrorView, accepts: ~w(html json)]
 
 # Configures Elixir's Logger
 config :logger, :console,
