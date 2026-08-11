@@ -3,8 +3,6 @@ defmodule GrenadierWeb.Plugs.Authenticate do
 
   use Phoenix.VerifiedRoutes, router: GrenadierWeb.Router, endpoint: GrenadierWeb.Endpoint
 
-  Code.require_file("config.ex", "#{__DIR__}/../../../../../lib/common/")
-
   alias Grenadier.Account
   alias Grenadier.Account.User
 
