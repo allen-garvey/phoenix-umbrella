@@ -66,8 +66,17 @@ defmodule GrenadierWeb.PageController do
     end
   end
 
+  defp get_header_value(conn, key) do
+    Plug.Conn.get_req_header(conn, key) |> List.first()
+  end
+
   defp get_remote_ip(conn) do
-    Plug.Conn.get_req_header(conn, "x-real-ip") |> List.first()
+    # x-forwarded-for is from Cloudflare https://developers.cloudflare.com/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips
+    # otherwise comes from nginx
+    case get_header_value(conn, "x-forwarded-for") do
+      nil -> get_header_value(conn, "x-real-ip")
+      ip -> ip
+    end
   end
 
   defp login_failed(conn, ip, params) do
@@ -113,17 +122,8 @@ defmodule GrenadierWeb.PageController do
   Creates login resource to keep record of login attempts
   """
   def generate_login_resource(conn, username, was_successful) do
-    [user_agent] = get_req_header(conn, "user-agent")
-
-    remote_ip =
-      conn.remote_ip
-      |> Tuple.to_list()
-      |> Enum.join(".")
-
-    ip =
-      conn
-      |> Plug.Conn.get_req_header("x-forwarded-for")
-      |> List.first(remote_ip)
+    user_agent = get_header_value(conn, "user-agent")
+    ip = get_remote_ip(conn)
 
     login_params = %{
       username: username,
