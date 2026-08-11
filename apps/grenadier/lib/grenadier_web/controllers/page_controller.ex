@@ -28,8 +28,11 @@ defmodule GrenadierWeb.PageController do
   end
 
   def login_submit(conn, params = %{"username" => username, "password" => password}) do
-    case Account.authenticate_user(username, password) do
+    ip = get_remote_ip(conn)
+
+    case authenticate(ip, username, password) do
       {:ok, %User{} = user} ->
+        # TODO delete failed login attempts
         conn
         |> generate_login_resource(username, true)
         |> put_session(:user_id, user.id)
@@ -39,15 +42,37 @@ defmodule GrenadierWeb.PageController do
       _ ->
         conn
         |> generate_login_resource(username, false)
-        |> login_failed(params)
+        |> login_failed(ip, params)
     end
   end
 
   def login_submit(conn, _params) do
-    login_failed(conn, nil)
+    login_failed(conn, get_remote_ip(conn), nil)
   end
 
-  defp login_failed(conn, params) do
+  defp authenticate(ip, username, password) do
+    failed_attempts = GrenadierWeb.AccessFailedCounter.get_count(ip)
+
+    cond do
+      failed_attempts > 50 ->
+        nil
+
+      failed_attempts > 20 ->
+        Process.sleep(2000)
+        Account.authenticate_user(username, password)
+
+      true ->
+        Account.authenticate_user(username, password)
+    end
+  end
+
+  defp get_remote_ip(conn) do
+    Plug.Conn.get_req_header(conn, "x-real-ip") |> List.first()
+  end
+
+  defp login_failed(conn, ip, params) do
+    GrenadierWeb.AccessFailedCounter.increment_counter(ip)
+
     query_params =
       case params["redirect"] do
         nil -> []

@@ -6,6 +6,7 @@ defmodule Grenadier.Application do
   use Application
 
   def start(_type, _args) do
+    GrenadierWeb.AccessFailedCounter.init()
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
