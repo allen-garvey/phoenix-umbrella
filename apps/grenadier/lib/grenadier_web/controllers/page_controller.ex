@@ -32,7 +32,8 @@ defmodule GrenadierWeb.PageController do
 
     case authenticate(ip, username, password) do
       {:ok, %User{} = user} ->
-        # TODO delete failed login attempts
+        GrenadierWeb.AccessFailedCounter.clear_count(ip)
+
         conn
         |> generate_login_resource(username, true)
         |> put_session(:user_id, user.id)
