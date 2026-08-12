@@ -57,13 +57,19 @@ defmodule GrenadierWeb.PageController do
 
   defp authenticate(ip, username, password) do
     failed_attempts = GrenadierWeb.AccessFailedCounter.get_count(ip)
+    total_number_blocked = GrenadierWeb.AccessFailedCounter.size()
 
     cond do
-      failed_attempts > 50 ->
+      failed_attempts > 50 or total_number_blocked > 1000 ->
+        Process.sleep(3000)
         nil
 
-      failed_attempts > 20 ->
-        Process.sleep(2000)
+      total_number_blocked > 100 and failed_attempts > 3 ->
+        Process.sleep(3000)
+        nil
+
+      failed_attempts > 10 or total_number_blocked > 50 ->
+        Process.sleep(3000)
         Account.authenticate_user(username, password)
 
       true ->

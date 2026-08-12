@@ -30,4 +30,8 @@ defmodule GrenadierWeb.AccessFailedCounter do
   def get_rows do
     :ets.tab2list(@table)
   end
+
+  def size do
+    :ets.info(@table, :size)
+  end
 end
