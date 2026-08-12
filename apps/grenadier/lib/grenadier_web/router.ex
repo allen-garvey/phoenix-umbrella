@@ -79,6 +79,7 @@ defmodule GrenadierWeb.Router do
     pipe_through :admin_layout
 
     get "/", PageController, :index
+    get "/stats/logins", PageController, :failed_login_stats
 
     resources "/users", UserController, only: [:index, :show]
     resources "/logins", LoginController, only: [:index, :show]

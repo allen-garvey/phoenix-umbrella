@@ -12,6 +12,10 @@ defmodule GrenadierWeb.PageController do
     render(conn, "index.html", logins: logins)
   end
 
+  def failed_login_stats(conn, _params) do
+    render(conn, "failed_login_stats.html")
+  end
+
   def login(conn, params) do
     redirect_url = params["redirect"]
 

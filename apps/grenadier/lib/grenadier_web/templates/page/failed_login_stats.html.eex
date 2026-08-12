@@ -1,0 +1,10 @@
+<h1>Failed Login Stats</h1>
+
+<ul>
+    <%= for {key, value} <- GrenadierWeb.AccessFailedCounter.get_rows() do %>
+        <li>
+            <span><%= key %></span>
+            <span><%= value %></span>
+        </li>
+    <% end %>
+</ul>

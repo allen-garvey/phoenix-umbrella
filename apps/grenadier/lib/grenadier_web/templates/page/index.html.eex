@@ -3,6 +3,7 @@
 <ul>
   <li><%= link "Users", to: ~p"/admin/users" %></li>
   <li><%= link "Logins", to: ~p"/admin/logins" %></li>
+  <li><%= link "Failed Login Stats", to: ~p"/admin/stats/logins" %></li>
 </ul>
 
 <div class="latest-logins-section">

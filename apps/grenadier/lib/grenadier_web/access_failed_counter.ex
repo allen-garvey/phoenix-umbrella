@@ -26,4 +26,8 @@ defmodule GrenadierWeb.AccessFailedCounter do
   def clear_count(identifier) do
     :ets.delete(@table, identifier)
   end
+
+  def get_rows do
+    :ets.tab2list(@table)
+  end
 end
