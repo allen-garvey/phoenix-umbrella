@@ -10,7 +10,6 @@ defmodule Bookmarker.FolderPreviewController do
   Show preview images for bookmarks in folder
   """
   def show(conn, %{"folder_name" => folder_name}) do
-    HTTPoison.start
     bookmarks_query = from bookmark in Bookmarker.Bookmark, where: not is_nil(bookmark.preview_image_selector), order_by: [desc: :id]
     folder = Repo.one! from folder in Folder, where: folder.name == ^folder_name, preload: [bookmarks: ^bookmarks_query]
 
@@ -47,11 +46,11 @@ defmodule Bookmarker.FolderPreviewController do
   end
 
   def html_body(url) do
-    case HTTPoison.get(url, [], [follow_redirect: true, max_redirect: 4]) do
-        {:ok, resp} ->
-            resp.body
-        {:error, _error} ->
-            nil
+    case Req.get(url) do
+      {:ok, resp} ->
+          resp.body
+      {:error, _error} ->
+          nil
     end
   end
 
