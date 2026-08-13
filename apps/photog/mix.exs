@@ -40,7 +40,7 @@ defmodule Photog.Mixfile do
     Code.require_file("deps.ex",  "#{__DIR__}/../../lib/common/")
     Umbrella.Common.Deps.shared_authenticated_phoenix_deps() ++
     [
-      Umbrella.Common.Deps.http_poison(), #for b2
+      Umbrella.Common.Deps.req(), #for b2
     ]
   end
 

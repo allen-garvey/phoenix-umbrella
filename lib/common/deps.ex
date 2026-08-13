@@ -41,6 +41,10 @@ defmodule Umbrella.Common.Deps do
     ]
   end
 
+  def req do
+    {:req, "0.7.2"}
+  end
+
   def http_poison do
     {:httpoison, "~> 2.2"}
   end
