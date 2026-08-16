@@ -6,7 +6,7 @@
 	<%= render CommonWeb.ReportsView, "count_per_item_table.html",
 		table_class: "reporting_books_by_week_table reporting_books_per_year_table",
 		item_title: "Year",
-		items_with_counts: normalize_books_per_year_count(@years)
+		items_with_counts: CommonWeb.ReportsView.normalize_items_with_counts(@years)
 	%>
 </section>
 

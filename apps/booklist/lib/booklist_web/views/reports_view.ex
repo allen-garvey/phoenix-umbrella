@@ -15,19 +15,4 @@ defmodule BooklistWeb.ReportsView do
   def reports_for_year_path(year) do
     ~p"/reports/years/#{year}"
   end
-
-  def normalize_books_per_year_count(years) do
-    max_count = Enum.max_by(years, fn {_year, count} -> count end, &>=/2, fn -> 0 end)
-
-    divisor =
-      cond do
-        max_count <= 24 -> 1
-        max_count <= 99 -> 5
-        true -> 10
-      end
-
-    Enum.map(years, fn {year, count} ->
-      {year, round(count / divisor)}
-    end)
-  end
 end
