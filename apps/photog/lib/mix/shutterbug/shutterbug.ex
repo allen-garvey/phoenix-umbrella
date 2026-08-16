@@ -82,6 +82,17 @@ defmodule Mix.Tasks.Shutterbug do
     image_plans =
       Planner.make_plan_for_images(image_files, masters_path, thumbnails_path, convert_to_webp)
 
+    case Planner.evaluate_plans(image_plans) do
+      :ok ->
+        true
+
+      {:error, map_of_duplicate_output_plans} ->
+        Error.exit_with_error(
+          "The following input files have the same output path: #{Planner.format_evaluate_plans_error(map_of_duplicate_output_plans)}",
+          :duplicate_output_paths
+        )
+    end
+
     for {image_plan, index} <- Enum.with_index(image_plans) do
       IO.puts(
         "Converting image #{index + 1}/#{image_file_count} #{image_plan.master_plan.source_path}"

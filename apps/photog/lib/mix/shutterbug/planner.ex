@@ -5,6 +5,31 @@ defmodule Photog.Shutterbug.Planner do
   alias Photog.Shutterbug.ImageMasterPlan
   alias Photog.Shutterbug.ImageThumbnailPlan
 
+  # checks plan to ensure that we are not trying to create output files with duplicate paths
+  # only checking master plan for now, since if there are duplicates here, there should also be duplicates in thumbnails
+  # returns either :ok or {:error, map_of_duplicate_output_plans}
+  def evaluate_plans(plans) when is_list(plans) do
+    map_of_duplicate_output_plans =
+      Enum.group_by(plans, fn plan -> plan.master_plan.destination_path end)
+      |> Map.filter(fn {_key, plans} -> Enum.count_until(plans, 2) > 1 end)
+      |> Map.new(fn {key, plans} ->
+        {key, Enum.map(plans, fn plan -> plan.master_plan.source_path end)}
+      end)
+
+    case map_of_duplicate_output_plans == %{} do
+      true -> :ok
+      false -> {:error, map_of_duplicate_output_plans}
+    end
+  end
+
+  # turns error output of evaluate_plans/1 into string
+  def format_evaluate_plans_error(map_of_duplicate_output_plans)
+      when is_map(map_of_duplicate_output_plans) do
+    Enum.map_join(map_of_duplicate_output_plans, " --- ", fn {key, source_paths} ->
+      "#{Enum.join(source_paths, ", ")} ==> #{key}"
+    end)
+  end
+
   def make_plan_for_images(image_files, masters_path, thumbnails_path, convert_to_webp)
       when is_boolean(convert_to_webp) do
     directory_prefix_map = File.get_directory_prefix_map(image_files)

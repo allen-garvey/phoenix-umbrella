@@ -330,4 +330,75 @@ defmodule Photog.Shutterbug.PlannerTest do
              }
            ]
   end
+
+  test "evaluate_plans/1 with valid plans" do
+    assert Planner.evaluate_plans([]) == :ok
+
+    assert [
+             "something/image.jpg",
+             "image.jpg",
+             "test.webp",
+             "/a/b/test.webp",
+             "something.svg",
+             "a/b/iphone.heic",
+             "image.png"
+           ]
+           |> Planner.make_plan_for_images("masters/path", "thumbnails/path", false)
+           |> Planner.evaluate_plans() == :ok
+
+    assert [
+             "something/image.jpg",
+             "image.jpg",
+             "test.webp",
+             "/a/b/test.webp",
+             "something.svg",
+             "a/b/iphone.heic",
+             "image2.png"
+           ]
+           |> Planner.make_plan_for_images("masters/path", "thumbnails/path", true)
+           |> Planner.evaluate_plans() == :ok
+  end
+
+  test "evaluate_plans/1 with invalid plans" do
+    assert [
+             "image.webp",
+             "image.heic"
+           ]
+           |> Planner.make_plan_for_images("masters/path", "thumbnails/path", false)
+           |> Planner.evaluate_plans() ==
+             {:error, %{"masters/path/1_image.webp" => ["image.webp", "image.heic"]}}
+
+    assert [
+             "image.png",
+             "image.webp"
+           ]
+           |> Planner.make_plan_for_images("masters/path", "thumbnails/path", false)
+           |> Planner.evaluate_plans() ==
+             {:error, %{"masters/path/1_image.webp" => ["image.png", "image.webp"]}}
+
+    assert [
+             "image.jpg",
+             "image.png",
+             "image.webp"
+           ]
+           |> Planner.make_plan_for_images("masters/path", "thumbnails/path", true)
+           |> Planner.evaluate_plans() ==
+             {:error, %{"masters/path/1_image.webp" => ["image.jpg", "image.png", "image.webp"]}}
+  end
+
+  test "format_evaluate_plans_error/1" do
+    {:error, invalid_plans_map} =
+      [
+        "image.jpg",
+        "something/another.jpg",
+        "image.png",
+        "image.webp",
+        "something/another.png"
+      ]
+      |> Planner.make_plan_for_images("masters/path", "thumbnails/path", true)
+      |> Planner.evaluate_plans()
+
+    assert Planner.format_evaluate_plans_error(invalid_plans_map) ==
+             "image.jpg, image.png, image.webp ==> masters/path/1_image.webp --- something/another.jpg, something/another.png ==> masters/path/2_another.webp"
+  end
 end
