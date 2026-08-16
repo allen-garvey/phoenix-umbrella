@@ -2,103 +2,105 @@
 * Styles for reporting
 */
 
-.stat_boxes{
-	display: flex;
-	flex-wrap: wrap;
-	margin: 1em 0 2em;
-	font-size: 1.4rem;
-	gap: 1em 2em;
-	
-	.heading {
-		font-weight: bold;
-	}
+.stat_boxes {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1em 0 2em;
+    font-size: 1.4rem;
+    gap: 1em 2em;
+
+    .heading {
+        font-weight: bold;
+    }
 }
 
-.reporting_books_by_week{
-	margin: 1.5em 0 1em;
+.reporting_books_by_week {
+    margin: 1.5em 0 1em;
 }
 
 .reporting_books_by_week_table {
-	border-collapse: collapse;
-	font-size: 0.75rem;
-	text-align: center;
-	background-color: var(--color-reporting-chart-background);
-	
-	th, td {
-		border: 1px solid var(--color-reporting-chart-border-color);
-	}
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    text-align: center;
+    background-color: var(--color-reporting-chart-background);
 
-	tbody td {
-		width: 1.25rem;
-		height: 1.25rem;
-	}
+    th,
+    td {
+        border: 1px solid var(--color-reporting-chart-border-color);
+    }
 
-	&.reporting_books_per_year_table tbody td {
-		width: 2.25rem;
-		height: 2.25rem;
-	}
+    tbody td {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
 
-	.count-filled {
-		background-color: #049704;
-	}
+    &.reporting_books_per_year_table tbody td {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+
+    .count-filled {
+        background-color: #049704;
+    }
 }
 
-.reporting_top_rated_books_list{
-	list-style: none;
-	counter-reset: item;
-	font-size: 1.67rem;
-	padding-bottom: 4em;
+.reporting_top_rated_books_list {
+    list-style: none;
+    counter-reset: item;
+    font-size: 1.67rem;
+    padding-bottom: 4em;
 
-	li {
-		counter-increment: item;
-		margin: 0 0 0.5em -0.3em;
-		display: flex;
-		gap: 0.5em;
-	}
-	li:before {
-		content: counter(item);
-		color: #cacaca;
-		min-width: 1.2em;
-		text-align: center;
-		display: inline-block;
-	}
+    li {
+        counter-increment: item;
+        margin: 0 0 0.5em -0.3em;
+        display: flex;
+        gap: 0.5em;
+    }
+    li:before {
+        content: counter(item) '.';
+        color: #cacaca;
+        min-width: 1.2em;
+        text-align: center;
+        display: inline-block;
+    }
 }
 
-.reporting_top_rated_books_table{
-	font-size: 1.67rem;
-	margin: 1rem 0 8rem;
+.reporting_top_rated_books_table {
+    font-size: 1.67rem;
+    margin: 1rem 0 8rem;
 
-	th {
-		font-weight: normal;
-		text-align: left;
-		color: #cacaca;
-	}
+    th {
+        font-weight: normal;
+        text-align: left;
+        color: #cacaca;
+    }
 
-	th, td {
-		padding: 0.5rem 2rem 0.5rem 0;
-	}
+    th,
+    td {
+        padding: 0.5rem 2rem 0.5rem 0;
+    }
 
-	tbody {
-		counter-reset: rowNumber;
-		tr {
-			counter-increment: rowNumber;
-		}
-	}
+    tbody {
+        counter-reset: rowNumber;
+        tr {
+            counter-increment: rowNumber;
+        }
+    }
 
-	.reporting_top_rated_books_table__index {
-		padding-right: 1rem;
-		
-		&::before {
-			content: counter(rowNumber);
-			color: #cacaca;
-		}
-	}
+    .reporting_top_rated_books_table__index {
+        padding-right: 1rem;
 
-	.reporting_top_rated_books_table__author {
-		width: 14em;
-	}
+        &::before {
+            content: counter(rowNumber);
+            color: #cacaca;
+        }
+    }
 
-	.reporting_top_rated_books_table__count {
-		width: 4em;
-	}
+    .reporting_top_rated_books_table__author {
+        width: 14em;
+    }
+
+    .reporting_top_rated_books_table__count {
+        width: 4em;
+    }
 }
