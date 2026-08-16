@@ -10,7 +10,17 @@ defmodule Movielist.Reports do
   alias Movielist.Admin.Movie
   alias Movielist.Admin.Rating
 
-  @spec calculate_percent_of_ratings(number(), any()) :: float()
+  def list_years_with_ratings_counts do
+    from(
+      r in Rating,
+      order_by: [fragment("EXTRACT(year FROM ?)", r.date_scored)],
+      group_by: [fragment("EXTRACT(year FROM ?)", r.date_scored)],
+      # have to use type to cast as integer, otherwise returns decimal
+      select: {type(fragment("EXTRACT(year FROM ?)", r.date_scored), :integer), count()}
+    )
+    |> Repo.all()
+  end
+
   def calculate_percent_of_ratings(total, ratings_count) do
     (total / max(ratings_count, 1)) |> Float.round(2)
   end

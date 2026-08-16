@@ -1,8 +1,11 @@
 <div class="spread_content">
 	<%= link "Previous year", to: reports_for_year_path_score_sorted(@year - 1) %>
-	<%= if @should_show_next_year do %>
-		<%= link "Next year", to: reports_for_year_path_score_sorted(@year + 1) %>
-	<% end %>
+	<%= link "Overview", to: ~p"/reports/years" %>
+	<%= if @should_show_next_year do
+		link "Next year", to: reports_for_year_path_score_sorted(@year + 1)
+	else
+	  content_tag(:div, "Next year", style: "visibility:hidden")
+	end %>
 </div>
 
 <h1>Reporting for <%= Integer.to_string(@year) %></h1>

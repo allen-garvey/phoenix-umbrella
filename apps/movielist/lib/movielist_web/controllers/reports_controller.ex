@@ -6,7 +6,13 @@ defmodule MovielistWeb.ReportsController do
 
   plug(:put_view, html: MovielistWeb.ReportsView)
 
-  def report_for_year(conn, year, sort) when is_integer(year) and is_atom(sort) do
+  def index(conn, _params) do
+    years = Reports.list_years_with_ratings_counts()
+
+    render(conn, "index.html", years: years)
+  end
+
+  defp report_for_year(conn, year, sort) when is_integer(year) and is_atom(sort) do
     today = Common.ModelHelpers.Date.today()
     current_year = today.year
 
@@ -50,7 +56,7 @@ defmodule MovielistWeb.ReportsController do
     end
   end
 
-  def invalid_year_redirect(conn) do
+  defp invalid_year_redirect(conn) do
     redirect(conn, to: ReportsView.reports_for_current_year_score_sorted_path())
   end
 end

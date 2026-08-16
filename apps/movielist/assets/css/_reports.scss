@@ -1,29 +1,51 @@
-.stats_container{
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1em 3em;
+.stats_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em 3em;
 
-	.heading{
-		font-weight: bold;
-	}
+    .heading {
+        font-weight: bold;
+    }
 }
 
 .reporting_movies_by_month_table {
-	color: var(--color-font);
-	border-collapse: collapse;
-	font-size: 0.75rem;
-	text-align: center;
-	
-	th, td {
-		border: 1px solid var(--color-reporting-table-border);
-	}
+    color: var(--color-font);
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    text-align: center;
 
-	tbody td {
-		width: 1.25rem;
-		height: 1.25rem;
-	}
+    th,
+    td {
+        border: 1px solid var(--color-reporting-table-border);
+    }
 
-	.count-filled {
-		background-color: #c60003;
-	}
+    tbody td {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .count-filled {
+        background-color: #c60003;
+    }
+}
+
+.reporting_text_list {
+    list-style: none;
+    counter-reset: item;
+    font-size: 1.67rem;
+    padding-bottom: 4em;
+
+    li {
+        counter-increment: item;
+        margin: 0 0 0.5em -0.3em;
+        display: flex;
+        gap: 0.5em;
+    }
+    li:before {
+        content: counter(item) '.';
+        color: var(--color-font-tertiary);
+        min-width: 1.2em;
+        text-align: center;
+        display: inline-block;
+    }
 }

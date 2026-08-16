@@ -1,0 +1,25 @@
+<h1>Years Overview</h1>
+
+<section>
+	<h2>Movies Watched Per Year</h2>
+
+	<%= render CommonWeb.ReportsView, "count_per_item_table.html",
+		table_class: "reporting_movies_by_month_table",
+		item_title: "Year",
+		items_with_counts: CommonWeb.ReportsView.normalize_items_with_counts(@years)
+	%>
+</section>
+
+<section>
+	<h2>Years</h2>
+	<ol class="reporting_text_list">
+		<%= for {year, count} <- @years do %>
+			<li>
+				<span>
+                    <%= link year, to: reports_for_year_path_score_sorted(year) %>
+				</span>
+				<span><%= count %></span>
+			</li>
+		<% end %>
+	</ol>
+</section>
