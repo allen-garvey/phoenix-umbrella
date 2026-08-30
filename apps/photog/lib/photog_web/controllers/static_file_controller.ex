@@ -14,7 +14,9 @@ defmodule PhotogWeb.StaticFileController do
       {:ok, image_dir} ->
         case safe_path_join(path, image_dir) do
           {:ok, full_path} ->
-            send_file(conn, 200, full_path)
+            conn
+            |> put_resp_header("content-type", get_image_mime_type(full_path))
+            |> send_file(200, full_path)
 
           _ ->
             send_resp(conn, 404, "File not found")
@@ -32,6 +34,19 @@ defmodule PhotogWeb.StaticFileController do
     case String.starts_with?(full_path, base_path) do
       true -> {:ok, full_path}
       _ -> :error
+    end
+  end
+
+  defp get_image_mime_type(path) do
+    extension =
+      Path.extname(path)
+      |> String.slice(1..-1//-1)
+      |> String.downcase()
+
+    case extension do
+      "jpg" -> "image/jpeg"
+      "svg" -> "image/svg+xml"
+      _ -> "image/#{extension}"
     end
   end
 end
