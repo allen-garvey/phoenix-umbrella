@@ -40,7 +40,7 @@ defmodule PhotogWeb.StaticFileController do
   defp get_image_mime_type(path) do
     extension =
       Path.extname(path)
-      |> String.slice(1..-1//-1)
+      |> String.slice(1..-1//1)
       |> String.downcase()
 
     case extension do
