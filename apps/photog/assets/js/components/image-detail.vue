@@ -34,6 +34,7 @@
                 :image="image"
                 :updateImage="updateImage"
                 :hasParent="!!parent"
+                :sourceImageUrl="sourceImageUrl"
             />
             <Image-Versions
                 :versions="image.versions"
@@ -158,6 +159,10 @@ export default {
         parent: {
             type: Object,
         },
+        miniThumbnailUrlFor: {
+            type: Function,
+            required: true,
+        },
         thumbnailUrlFor: {
             type: Function,
             required: true,
@@ -196,9 +201,15 @@ export default {
             images: null, // for when is image in parent
             hasExifBeenRequested: false,
             imageExif: null,
+            sourceImage: null,
         };
     },
     computed: {
+        sourceImageUrl() {
+            return this.sourceImage
+                ? this.miniThumbnailUrlFor(this.sourceImage)
+                : '';
+        },
         image() {
             return this.model;
         },
@@ -236,12 +247,28 @@ export default {
                 this.setup();
             });
         },
+        model: {
+            handler(newValue, oldValue) {
+                const newSourceImageId = newValue.source_image_id;
+                if (
+                    newSourceImageId === null ||
+                    newSourceImageId === oldValue?.source_image_id
+                ) {
+                    return;
+                }
+                this.getModel(`/images/${newSourceImageId}`).then(image => {
+                    this.sourceImage = image;
+                });
+            },
+            deep: true,
+        },
     },
     methods: {
         setup() {
             this.isModelLoaded = false;
             this.hasExifBeenRequested = false;
             this.imageExif = null;
+            this.sourceImage = null;
             this.loadModel(`/images/${this.imageId}`);
             this.loadExif(true);
         },

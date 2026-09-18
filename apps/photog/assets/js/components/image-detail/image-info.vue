@@ -55,7 +55,12 @@
                     }"
                     v-if="image.source_image_id"
                 >
-                    View source image
+                    <img
+                        :src="sourceImageUrl"
+                        :class="$style.sourceImage"
+                        v-if="sourceImageUrl"
+                    />
+                    <span v-else> View source image </span>
                 </router-link>
             </image-info-form>
 
@@ -93,7 +98,12 @@
     </image-info-section>
 </template>
 
-<style lang="scss" module></style>
+<style lang="scss" module>
+.sourceImage {
+    max-width: 200px;
+    max-height: 200px;
+}
+</style>
 
 <script>
 import { isoFormattedDateToUs } from '../../date-helpers';
@@ -115,6 +125,9 @@ export default {
         hasParent: {
             type: Boolean,
             required: true,
+        },
+        sourceImageUrl: {
+            type: String,
         },
     },
     components: {
