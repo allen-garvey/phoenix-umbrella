@@ -6,7 +6,7 @@ Elixir umbrella project containing several custom CMSs made with Elixir/Phoenix.
 
 * Elixir >= 1.17
 
-* node >= 20
+* node >= 26
 
 * PostgreSQL 
 
