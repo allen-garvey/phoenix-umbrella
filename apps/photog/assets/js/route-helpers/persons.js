@@ -1,5 +1,5 @@
-import { API_URL_BASE } from '../request-helpers';
-import { imagePreviewContentCallback } from './images';
+import { API_URL_BASE } from '../request-helpers.js';
+import { imagePreviewContentCallback } from './images.js';
 
 export const getPersonsShowApiPath = personId => `/persons/${personId}`;
 

@@ -1,4 +1,8 @@
-import { IMAGE_QUERY_STRING_KEY, setImageUrl, clearImageUrl } from './history';
+import {
+    IMAGE_QUERY_STRING_KEY,
+    setImageUrl,
+    clearImageUrl,
+} from './history.js';
 
 const FIRST_IMAGE_CLASS = 'first-image';
 const LAST_IMAGE_CLASS = 'last-image';
@@ -14,7 +18,7 @@ let currentImageIndex = null;
 let isLightboxVisible = false;
 
 function initializeSlideData(links) {
-    return [...links].map((link) => ({
+    return [...links].map(link => ({
         caption: link.dataset.caption,
         src: link.dataset.src,
         srcset: link.dataset.srcset,
@@ -81,7 +85,7 @@ function hideLightbox() {
 
 function initializeImageLinkClickHandlers(imageLinks) {
     imageLinks.forEach((el, i) => {
-        el.onclick = (e) => {
+        el.onclick = e => {
             e.preventDefault();
             setVisibleImageAt(i);
             displayLightbox();
@@ -166,7 +170,7 @@ function initializeImageSwipeHandlers() {
 }
 
 function initializeKeyboardShortcuts() {
-    document.onkeydown = (e) => {
+    document.onkeydown = e => {
         if (!isLightboxVisible) {
             return;
         }
@@ -199,7 +203,7 @@ function showPreviousImage() {
 
 // display image in lightbox on page load if image id is in hash url
 function displayImageFromUrl(slideData, imageId) {
-    const imageIndex = slideData.findIndex((item) => item.id === imageId);
+    const imageIndex = slideData.findIndex(item => item.id === imageId);
     if (imageIndex >= 0) {
         setVisibleImageAt(imageIndex);
         displayLightbox();

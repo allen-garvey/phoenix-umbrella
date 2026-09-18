@@ -2,11 +2,9 @@ import {
     getPersonsShowApiPath,
     getPersonsShowSharedProps,
     getPersonsIndexSharedProps,
-} from '../route-helpers/persons';
+} from '../route-helpers/persons.js';
 
-import { updateItemFavorite } from '../route-helpers/images';
-
-import { API_URL_BASE } from '../request-helpers';
+import { updateItemFavorite } from '../route-helpers/images.js';
 
 import ThumbnailList from '../components/thumbnail-list.vue';
 import PersonForm from '../components/person-form.vue';

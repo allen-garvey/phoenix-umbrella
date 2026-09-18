@@ -1,4 +1,4 @@
-import { API_URL_BASE } from '../request-helpers';
+import { API_URL_BASE } from '../request-helpers.js';
 import { importRelatedFields } from './related-fields.js';
 import { updateItemFavorite } from './images.js';
 import { imagePreviewContentCallback } from './images.js';

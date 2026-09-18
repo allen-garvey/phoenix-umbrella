@@ -1,5 +1,5 @@
 function defaultEntrypointForApp(appName) {
-    return `${__dirname}/../apps/${appName}/assets/js/index.js`;
+    return `${import.meta.dirname}/../apps/${appName}/assets/js/index.js`;
 }
 
 function outputPathForApp(appName, extension) {
@@ -31,7 +31,7 @@ function outputPathForApp(appName, extension) {
     return `${appDir}/priv/static/assets/${fileName}.${extension}`;
 }
 
-module.exports = {
+export default {
     defaultEntrypointForApp,
     outputPathForApp,
 };

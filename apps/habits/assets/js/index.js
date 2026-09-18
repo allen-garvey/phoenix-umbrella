@@ -1,10 +1,10 @@
 import { instantiateVue } from 'umbrella-common-js/vue/instantiate-vue.js';
 import { initializeYesterdayButton } from 'umbrella-common-js/date-input.js';
 import { initializeFormDeleteButton } from 'umbrella-common-js/form-delete-button.js';
-import { initializeActivityFormLoadTags } from './activity-form-load-tags';
+import { initializeActivityFormLoadTags } from './activity-form-load-tags.js';
 
-import { initializeSummaryTagsList } from './summary-tags-list';
-import { disableMultipleFormSubmit } from './disable-multiple-form-submit';
+import { initializeSummaryTagsList } from './summary-tags-list.js';
+import { disableMultipleFormSubmit } from './disable-multiple-form-submit.js';
 
 import ActivityCalendar from './vue/activity-calendar.vue';
 

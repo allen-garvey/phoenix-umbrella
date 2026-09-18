@@ -9,7 +9,7 @@ import {
 } from '../route-helpers/images.js';
 import { imageListRelatedFields } from '../route-helpers/related-fields.js';
 
-import { getCurrentYear } from '../date-helpers';
+import { getCurrentYear } from '../date-helpers.js';
 
 import ThumbnailList from '../components/thumbnail-list.vue';
 import ListPage from '../components/list-page.vue';

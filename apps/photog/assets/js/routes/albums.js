@@ -1,4 +1,4 @@
-import { API_URL_BASE } from '../request-helpers';
+import { API_URL_BASE } from '../request-helpers.js';
 import { buildAlbumVariant } from '../route-helpers/albums.js';
 import { albumRelatedFields } from '../route-helpers/related-fields.js';
 import { sortImagesCallback } from '../route-helpers/sorting.js';

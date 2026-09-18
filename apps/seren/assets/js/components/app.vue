@@ -37,10 +37,10 @@ import SearchBar from './search-bar.vue';
 import NavTabs from './nav-tabs.vue';
 import MediaControls from './media-controls.vue';
 
-import { loadModelAndMap } from '../models';
+import { loadModelAndMap } from '../models.js';
 import { fetchJson } from 'umbrella-common-js/ajax.js';
-import { API_URL_BASE } from '../api-helpers';
-import { getUserVolume, saveUserVolume } from '../user-settings';
+import { API_URL_BASE } from '../api-helpers.js';
+import { getUserVolume, saveUserVolume } from '../user-settings.js';
 
 let audio = null;
 

@@ -106,7 +106,7 @@ import { formMixinBuilder } from './mixins/form-mixin.js';
 import { albumAndPersonFormMixinBuilder } from './mixins/album-and-person-form-mixin.js';
 import { toApiResource } from '../form-helpers.js';
 import { API_URL_BASE } from '../request-helpers.js';
-import { getCurrentYear } from '../date-helpers';
+import { getCurrentYear } from '../date-helpers.js';
 
 import SpinnerButton from './form/spinner-button.vue';
 

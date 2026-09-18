@@ -108,7 +108,7 @@
 </style>
 
 <script>
-import { getCurrentYear } from '../../date-helpers';
+import { getCurrentYear } from '../../date-helpers.js';
 
 export default {
     computed: {

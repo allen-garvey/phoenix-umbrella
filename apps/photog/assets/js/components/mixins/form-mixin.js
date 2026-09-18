@@ -1,4 +1,4 @@
-import { API_URL_BASE } from '../../request-helpers';
+import { API_URL_BASE } from '../../request-helpers.js';
 
 import FormSection from '../form/form-section.vue';
 import FormInput from '../form/form-input.vue';

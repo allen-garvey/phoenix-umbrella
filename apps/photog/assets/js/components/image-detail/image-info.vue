@@ -106,7 +106,7 @@
 </style>
 
 <script>
-import { isoFormattedDateToUs } from '../../date-helpers';
+import { isoFormattedDateToUs } from '../../date-helpers.js';
 
 import ImageInfoSection from './image-info-section.vue';
 import ImagePath from './image-info-image-path.vue';

@@ -1,4 +1,4 @@
-import { API_URL_BASE } from '../request-helpers';
+import { API_URL_BASE } from '../request-helpers.js';
 import { sortAlbumsCallback } from '../route-helpers/sorting.js';
 import { updateItemFavorite } from '../route-helpers/albums.js';
 

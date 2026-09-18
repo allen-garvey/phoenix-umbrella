@@ -1,5 +1,5 @@
-const config = require('./webpack.config.js');
+import config from './webpack.config.js';
 
 config.mode = 'production';
 
-module.exports = config;
+export default config;

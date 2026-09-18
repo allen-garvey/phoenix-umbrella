@@ -1,4 +1,4 @@
-import { API_URL_BASE } from '../request-helpers';
+import { API_URL_BASE } from '../request-helpers.js';
 
 import ThumbnailList from '../components/thumbnail-list.vue';
 

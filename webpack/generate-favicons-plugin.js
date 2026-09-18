@@ -1,5 +1,5 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
 
 function createFileIfNotExists(filename) {
     return new Promise((resolve, reject) => {
@@ -7,7 +7,7 @@ function createFileIfNotExists(filename) {
             if (err) {
                 return reject(err);
             }
-            fs.close(f, (err) => {
+            fs.close(f, err => {
                 if (err) {
                     return reject(err);
                 }
@@ -17,15 +17,15 @@ function createFileIfNotExists(filename) {
     });
 }
 
-function createPlugin(appNames) {
+export function generateFaviconsPlugin(appNames) {
     return {
         apply(compiler) {
             compiler.hooks.done.tapAsync(
                 'Generate favicon plugin',
                 (_stats, callback) => {
-                    const promises = appNames.map((appName) => {
+                    const promises = appNames.map(appName => {
                         const directory = path.join(
-                            __dirname,
+                            import.meta.dirname,
                             '..',
                             'apps',
                             appName,
@@ -43,5 +43,3 @@ function createPlugin(appNames) {
         },
     };
 }
-
-module.exports = createPlugin;

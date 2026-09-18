@@ -1,5 +1,5 @@
 import { fetchJson } from 'umbrella-common-js/ajax.js';
-import { API_URL_BASE } from './api-helpers';
+import { API_URL_BASE } from './api-helpers.js';
 
 export const loadModelAndMap = (modelName, target, itemsMap) => {
     const url = `${API_URL_BASE}/${modelName}`;
