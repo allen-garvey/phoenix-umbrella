@@ -18,11 +18,6 @@
             <li><%= link "Categories", to: ~p"/categories" %></li>
             <li><%= link "Tags", to: ~p"/tags" %></li>
             <li><%= link "Activities", to: ~p"/activities?limit=50" %></li>
-            <%= for category <- Habits.Admin.list_favorite_categories(assigns[:categories]) do %>
-              <li>
-                <%= link HabitsWeb.CategoryView.to_s(category), to: ~p"/categories/#{category}" %>
-              </li>
-            <% end %>
             <li><%= link "Search", to: ~p"/activities/search" %></li>
             <li><%= link "Add Activity", to: ~p"/activities/new", class: "btn btn-success" %></li>
           </ul>

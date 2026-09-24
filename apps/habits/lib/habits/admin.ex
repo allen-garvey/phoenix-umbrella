@@ -27,19 +27,6 @@ defmodule Habits.Admin do
     |> Repo.all()
   end
 
-  def list_favorite_categories(nil) do
-    from(
-      category in Category,
-      where: category.is_favorite == true,
-      order_by: category.name
-    )
-    |> Repo.all()
-  end
-
-  def list_favorite_categories(categories) do
-    Enum.filter(categories, fn category -> category.is_favorite end)
-  end
-
   @doc """
   Gets a single category.
 
