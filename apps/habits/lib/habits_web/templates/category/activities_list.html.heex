@@ -34,7 +34,7 @@
           <%= link "Edit", to: ~p"/activities/#{activity}/edit?redirect=#{@edit_redirect}", class: "btn btn-primary" %>
         </td>
         <td>
-          <%= link "Duplicate", to: ~p"/activities/new?duplicate=#{activity.id}", class: "btn btn-light" %>
+          <%= link "Duplicate", to: ~p"/activities/new?duplicate=#{activity.id}&redirect=#{@edit_redirect}", class: "btn btn-light" %>
         </td>
       </tr>
   <% end %>
